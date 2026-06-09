@@ -3417,13 +3417,14 @@ function parseMealInfo(value) {
 }
 
 function getXlsxLib() {
-  if (typeof XLSX !== "undefined") return XLSX;
-  if (window.XLSX) return window.XLSX;
+  if (window.XLSX && window.XLSX.read && window.XLSX.utils) return window.XLSX;
+  if (typeof XLSX !== "undefined" && XLSX.read && XLSX.utils) return XLSX;
   return null;
 }
 
 function parseMenuWorkbook(workbook) {
   const xlsx = getXlsxLib();
+  if (!xlsx) throw new Error("엑셀 읽기 도구를 불러오지 못했습니다. 페이지를 새로고침한 뒤 다시 업로드해 주세요.");
   const items = [];
   workbook.SheetNames.forEach(sheetName => {
     const sheet = workbook.Sheets[sheetName];
@@ -3435,9 +3436,12 @@ function parseMenuWorkbook(workbook) {
     rows.forEach(row => {
       const dateCell = row.find(cell => parseMenuDate(cell));
       if (dateCell) {
-        currentDate = parseMenuDate(dateCell);
-        currentMeal = {label:"", count:"", raw:""};
-        currentItem = null;
+        const nextDate = parseMenuDate(dateCell);
+        if (nextDate !== currentDate) {
+          currentMeal = {label:"", count:"", raw:""};
+          currentItem = null;
+        }
+        currentDate = nextDate;
         return;
       }
 
@@ -3476,6 +3480,16 @@ function parseMenuWorkbook(workbook) {
 
 function availableMenuDates() {
   return [...new Set(uploadedMenuItems.map(item => item.date))].sort();
+}
+
+function showMenuError(message) {
+  const title = document.getElementById("todayMenuTitle");
+  const meta = document.getElementById("todayMenuMeta");
+  const results = document.getElementById("todayMenuResults");
+  const fallback = "파일 형식을 확인해 주세요.";
+  if (title) title.textContent = "엑셀 파일을 읽지 못했습니다";
+  if (meta) meta.textContent = message || fallback;
+  if (results) results.innerHTML = `<div class="today-menu-empty">${escapeHtml(message || fallback)}</div>`;
 }
 
 function renderMenuItems() {
@@ -3569,13 +3583,19 @@ function setupTodayMenu() {
       const workbook = xlsx.read(data, {type:"array"});
       uploadedMenuItems = parseMenuWorkbook(workbook);
       uploadedMenuFileName = file.name;
+      const dates = availableMenuDates();
+      if (!uploadedMenuItems.length) {
+        showMenuError("급식일과 메뉴 정보를 찾지 못했습니다. 조리방법조회 엑셀 파일인지 확인해 주세요.");
+        return;
+      }
+      if (dateInput && !uploadedMenuItems.some(item => item.date === dateInput.value) && dates.length) {
+        dateInput.value = dates[0];
+      }
       renderMenuItems();
     } catch (error) {
       uploadedMenuItems = [];
       uploadedMenuFileName = "";
-      if (title) title.textContent = "엑셀 파일을 읽지 못했습니다";
-      if (meta) meta.textContent = error.message || "파일 형식을 확인해 주세요.";
-      renderMenuItems();
+      showMenuError(error.message || "파일 형식을 확인해 주세요.");
     }
   });
 }
