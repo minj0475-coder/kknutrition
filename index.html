@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>꿀꿀이의 급식 업무 포털</title>
+<title>급식 업무 포털</title>
 <style>
 
 :root{
@@ -28,7 +28,7 @@ body{
   color:var(--ink);
   font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",Arial,sans-serif;
   line-height:1.6;
-  letter-spacing:-.025em;
+  letter-spacing:0;
 }
 a{color:inherit;text-decoration:none}
 .top{
@@ -1937,13 +1937,300 @@ table{
   }
 }
 
+/* 꿀꿀이가 안내하는 업무 포털 리디자인 */
+:root{
+  --bg:#f7faf9;
+  --paper:#ffffff;
+  --ink:#243040;
+  --muted:#5f6f82;
+  --line:#dfe7ea;
+  --navy:#214160;
+  --blue:#4b82c3;
+  --blue-soft:#edf6ff;
+  --pink:#f48aa5;
+  --pink-soft:#fff1f5;
+  --mint:#dff5ec;
+  --yellow:#fff4cc;
+  --shadow:0 10px 26px rgba(33,65,96,.07);
+}
+body{
+  background:
+    linear-gradient(180deg,#fffafc 0%,#f7fbff 36%,#f8fbf7 100%);
+}
+.top{
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(223,231,234,.9);
+}
+.brand{
+  color:#27445e;
+}
+.logo{
+  width:40px!important;
+  height:40px!important;
+  border-radius:50%!important;
+  background:#fff6f8!important;
+  border:1px solid #ffd5df!important;
+  box-shadow:0 6px 14px rgba(244,138,165,.18)!important;
+}
+.logo:before{
+  width:38px;
+  height:38px;
+  background:url("assets/pig-home.png") center / 165% no-repeat;
+}
+nav a{
+  border-radius:999px;
+  color:#52616f;
+  background:transparent;
+}
+nav a:hover,
+nav a.active{
+  color:#8c2f4b;
+  background:#fff1f5;
+  border-color:#ffd4df;
+}
+.hero{
+  border:1px solid rgba(223,231,234,.95);
+  border-radius:18px;
+  background:
+    radial-gradient(circle at 92% 12%,rgba(255,216,226,.9) 0 80px,transparent 81px),
+    linear-gradient(135deg,#ffffff 0%,#fff8fb 48%,#eff8ff 100%);
+  box-shadow:0 16px 34px rgba(33,65,96,.08);
+}
+.kicker{
+  color:#9b3653;
+  background:#fff1f5;
+  border-color:#ffd6df;
+}
+.kicker:before{
+  content:"";
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#f48aa5;
+  margin-right:7px;
+}
+h1{
+  color:#24405d;
+  letter-spacing:0;
+}
+.subtitle{
+  color:#4d5b68;
+}
+.hero-asset{
+  filter:drop-shadow(0 18px 22px rgba(33,65,96,.12));
+}
+#home .hero{
+  min-height:292px;
+  padding:44px 390px 44px 38px;
+  border-color:#ffd6df;
+  background:
+    radial-gradient(circle at 86% 18%,rgba(255,224,231,.86) 0 104px,transparent 105px),
+    radial-gradient(circle at 15% 95%,rgba(223,245,236,.95) 0 130px,transparent 131px),
+    linear-gradient(135deg,#ffffff 0%,#fff5f8 56%,#eef8ff 100%);
+}
+#home .hero h1{
+  color:#223b59;
+}
+#home .hero-asset{
+  width:330px;
+  max-height:330px;
+  right:32px;
+  bottom:-18px;
+}
+.page-section:not(#home) .hero{
+  min-height:166px;
+  padding-right:240px;
+}
+.page-section:not(#home) .hero-asset{
+  width:170px;
+  max-height:178px;
+  right:28px;
+  bottom:-16px;
+}
+.card{
+  border:1px solid rgba(223,231,234,.95);
+  border-radius:14px;
+  box-shadow:0 10px 24px rgba(33,65,96,.055);
+}
+.section-title{
+  color:#24405d;
+}
+.section-title .num{
+  border-radius:999px;
+  background:#fff1f5;
+  color:#a73555;
+  border:1px solid #ffd6df;
+}
+.home-portal{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:14px;
+}
+.portal-tile{
+  min-height:168px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  position:relative;
+  overflow:hidden;
+  padding:18px 16px 16px;
+  border:1px solid rgba(223,231,234,.95);
+  border-radius:14px;
+  background:#fff;
+  box-shadow:0 10px 24px rgba(33,65,96,.055);
+}
+.portal-tile:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:.72;
+  background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.86) 64%,#fff 100%);
+  z-index:1;
+}
+.portal-tile img{
+  position:absolute;
+  right:-10px;
+  top:4px;
+  width:118px;
+  height:118px;
+  object-fit:contain;
+  z-index:2;
+  padding:7px;
+  border-radius:50%;
+  background:rgba(255,241,245,.82);
+  box-shadow:0 10px 18px rgba(244,138,165,.12);
+  filter:drop-shadow(0 10px 16px rgba(33,65,96,.10));
+}
+.portal-tile strong,
+.portal-tile span{
+  position:relative;
+  z-index:3;
+}
+.portal-tile strong{
+  color:#243f5d;
+  font-size:18px;
+  line-height:1.25;
+}
+.portal-tile span{
+  margin-top:5px;
+  color:#5d6b78;
+  font-size:13px;
+  font-weight:800;
+}
+.portal-tile.daily{background:linear-gradient(135deg,#fff 0%,#fff4f7 100%)}
+.portal-tile.monthly{background:linear-gradient(135deg,#fff 0%,#fff9dd 100%)}
+.portal-tile.annual{background:linear-gradient(135deg,#fff 0%,#eef7ff 100%)}
+.portal-tile.staff{background:linear-gradient(135deg,#fff 0%,#f2fbf6 100%)}
+.portal-tile.recipes{background:linear-gradient(135deg,#fff 0%,#fff0f4 100%)}
+.portal-tile:hover{
+  transform:translateY(-2px);
+  border-color:#ffc7d5;
+  box-shadow:0 14px 30px rgba(33,65,96,.10);
+}
+.schedule-table th,
+.simple-table th,
+.clean-annual-table th{
+  background:#f1f8ff;
+  color:#24405d;
+}
+.table-list li::marker{
+  color:#f48aa5;
+}
+.annual-month-card h3{
+  background:#fff1f5;
+  color:#9b3653;
+  border-color:#ffd6df;
+}
+.annual-task strong{
+  color:#24405d;
+}
+.section-link-list a{
+  border-radius:12px;
+  background:linear-gradient(135deg,#fff 0%,#f8fbff 100%);
+}
+.section-link-list a:hover,
+.download-btn:hover{
+  border-color:#ffc7d5;
+}
+body,
+body *{
+  letter-spacing:0;
+}
+@media(max-width:1000px){
+  .home-portal{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+}
+@media(max-width:900px){
+  #home .hero,
+  .page-section:not(#home) .hero{
+    padding-right:112px;
+  }
+  #home .hero{
+    min-height:auto;
+  }
+  #home .hero-asset,
+  .page-section:not(#home) .hero-asset{
+    width:88px;
+    max-height:96px;
+    right:14px;
+    top:16px;
+    bottom:auto;
+  }
+}
+@media(max-width:640px){
+  .top-inner{
+    align-items:flex-start;
+  }
+  .brand{
+    white-space:normal;
+    line-height:1.25;
+  }
+  .logo{
+    width:32px!important;
+    height:32px!important;
+    flex:0 0 32px;
+  }
+  .logo:before{
+    width:31px;
+    height:31px;
+  }
+  #home .hero,
+  .page-section:not(#home) .hero{
+    padding:18px 84px 18px 16px;
+  }
+  #home .hero-asset,
+  .page-section:not(#home) .hero-asset{
+    width:64px;
+    max-height:70px;
+    right:10px;
+    top:18px;
+  }
+  .home-portal{
+    grid-template-columns:1fr;
+    gap:10px;
+  }
+  .portal-tile{
+    min-height:118px;
+    padding:16px 134px 16px 15px;
+  }
+  .portal-tile img{
+    right:14px;
+    top:12px;
+    width:98px;
+    height:98px;
+    opacity:1;
+  }
+}
+
 </style>
 </head>
 <body>
 
 <header class="top">
   <div class="top-inner">
-    <a class="brand" href="#home"><span class="logo"></span>꿀꿀이의 급식 업무 포털</a>
+    <a class="brand" href="#home"><span class="logo"></span>급식 업무 포털</a>
     <nav>
       <a href="#home">홈</a>
       <a href="#daily">하루 일정</a>
@@ -1955,9 +2242,15 @@ table{
   </div>
 </header>
 
-<section id="home" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">영양교사 김민정</div><h1>꿀꿀이의 급식 업무 포털</h1><p class="subtitle">급식 업무를 깔끔하게 정리해서 보기 위해 만든 꿀꿀이의 급식 업무 포털입니다.<br><br>
-하루 일정, 한 달 일정, 연간 일정, 조리종사원 안내, 레시피를 한눈에 볼 수 있도록 담아두었습니다.<br><br>
-웹, 모바일로 볼 수 있고, 필요할 때 출력해서 사용하기 편하도록 정리했습니다.</p><img class="hero-asset" src="assets/pig-home.png" alt=""></section>
+<section id="home" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">영양교사 꿀꿀이</div><h1>급식 업무 포털</h1><p class="subtitle">급식업무를 웹, 모바일로 깔끔하게 정리해서 보기 위해 만든 영양교사 꿀꿀이의 급식 업무 포털입니다. 하루 일정, 한 달 일정, 연간 일정, 조리종사원 관리, 레시피를 한눈에 볼 수 있도록 담아두었습니다.</p><img class="hero-asset" src="assets/pig-home.png" alt=""></section>
+
+<section class="home-portal" aria-label="업무 바로가기">
+  <a class="portal-tile daily" href="#daily"><img src="assets/pig-daily-icon.png" alt=""><strong>하루 일정</strong><span>검수부터 마무리까지</span></a>
+  <a class="portal-tile monthly" href="#monthly"><img src="assets/pig-monthly-icon.png" alt=""><strong>한 달 일정</strong><span>매월 반복 업무 확인</span></a>
+  <a class="portal-tile annual" href="#annual"><img src="assets/pig-annual-icon.png" alt=""><strong>연간 일정</strong><span>월별 업무와 마감 관리</span></a>
+  <a class="portal-tile staff" href="#staff"><img src="assets/pig-staff-icon.png" alt=""><strong>조리종사원</strong><span>문자·안내문·복무</span></a>
+  <a class="portal-tile recipes" href="#recipes"><img src="assets/pig-recipes-icon.png" alt=""><strong>레시피</strong><span>학교별 메뉴 검색</span></a>
+</section>
 
 </main></section>
 <section id="daily" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">일일 업무</div><h1>하루 일정</h1><p class="subtitle">검수부터 퇴근 전 마무리까지 하루 업무 흐름을 시간대별로 정리했습니다.</p><img class="hero-asset" src="assets/pig-daily.png" alt=""></section>
