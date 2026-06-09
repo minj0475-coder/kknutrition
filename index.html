@@ -1670,6 +1670,34 @@ button,
   font-size:13px;
   font-weight:850;
 }
+.today-menu-facts{
+  display:grid;
+  grid-template-columns:180px minmax(0,1fr);
+  gap:0;
+  border-bottom:1px solid var(--line);
+  background:#fff;
+}
+.today-menu-fact{
+  padding:12px 16px;
+  min-width:0;
+}
+.today-menu-fact + .today-menu-fact{
+  border-left:1px solid var(--line);
+}
+.today-menu-fact b{
+  display:block;
+  margin-bottom:4px;
+  color:#6b3f74;
+  font-size:13px;
+  font-weight:950;
+}
+.today-menu-fact span{
+  display:block;
+  color:#344054;
+  font-size:15px;
+  font-weight:850;
+  overflow-wrap:anywhere;
+}
 .today-menu-detail{
   display:grid;
   grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);
@@ -1708,6 +1736,7 @@ button,
 @media(max-width:900px){
   .menu-upload-panel,
   .menu-control-grid,
+  .today-menu-facts,
   .today-menu-detail{
     grid-template-columns:1fr;
   }
@@ -1715,6 +1744,10 @@ button,
     align-items:stretch;
   }
   .today-menu-detail > div + div{
+    border-left:0;
+    border-top:1px solid var(--line);
+  }
+  .today-menu-fact + .today-menu-fact{
     border-left:0;
     border-top:1px solid var(--line);
   }
@@ -3404,6 +3437,20 @@ function cleanMenuText(value) {
   return String(value || "").replace(/\r/g, "").trim();
 }
 
+function parseMealInfo(value) {
+  const text = cleanMenuText(value);
+  if (!text || text.includes("식사구분") || text.includes("비   고")) {
+    return null;
+  }
+  const lines = text.split("\n").map(line => line.trim()).filter(Boolean);
+  const countMatch = text.match(/\(([^)]*명)\)/);
+  return {
+    label: lines[0] || "",
+    count: countMatch ? countMatch[1].replace(/\s+/g, " ").trim() : "",
+    raw: text
+  };
+}
+
 function getXlsxLib() {
   if (typeof XLSX !== "undefined") return XLSX;
   if (window.XLSX) return window.XLSX;
@@ -3417,14 +3464,14 @@ function parseMenuWorkbook(workbook) {
     const sheet = workbook.Sheets[sheetName];
     const rows = xlsx.utils.sheet_to_json(sheet, {header:1, defval:"", raw:false});
     let currentDate = "";
-    let currentMeal = "";
+    let currentMeal = {label:"", count:"", raw:""};
     let currentItem = null;
 
     rows.forEach(row => {
       const dateCell = row.find(cell => parseMenuDate(cell));
       if (dateCell) {
         currentDate = parseMenuDate(dateCell);
-        currentMeal = "";
+        currentMeal = {label:"", count:"", raw:""};
         currentItem = null;
         return;
       }
@@ -3435,13 +3482,16 @@ function parseMenuWorkbook(workbook) {
       const method = cleanMenuText(row[8]);
 
       if (!currentDate) return;
-      if (meal && !meal.includes("식사구분") && !meal.includes("비   고")) currentMeal = meal;
+      const mealInfo = parseMealInfo(meal);
+      if (mealInfo) currentMeal = mealInfo;
       if (name === "구   분" || name === "비   고") return;
 
       if (name) {
         currentItem = {
           date: currentDate,
-          meal: currentMeal,
+          meal: currentMeal.label,
+          mealCount: currentMeal.count,
+          mealRaw: currentMeal.raw,
           name,
           ingredients,
           method
@@ -3495,12 +3545,22 @@ function renderMenuItems() {
     article.className = "today-menu-item";
     article.innerHTML = `
       <div class="today-menu-item-head">
-        <strong>${escapeHtml(item.name)}</strong>
+        <strong>${escapeHtml(formatKoreanDate(item.date))}</strong>
         <span>${escapeHtml(item.meal || "식사구분 없음")}</span>
+      </div>
+      <div class="today-menu-facts">
+        <div class="today-menu-fact">
+          <b>급식인원</b>
+          <span>${escapeHtml(item.mealCount || "등록된 급식인원이 없습니다.")}</span>
+        </div>
+        <div class="today-menu-fact">
+          <b>메뉴</b>
+          <span>${escapeHtml(item.name || "메뉴명이 없습니다.")}</span>
+        </div>
       </div>
       <div class="today-menu-detail">
         <div>
-          <h3>사용재료</h3>
+          <h3>사용재료(kg)</h3>
           <pre>${escapeHtml(item.ingredients || "등록된 재료가 없습니다.")}</pre>
         </div>
         <div>
