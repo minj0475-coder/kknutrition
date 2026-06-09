@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>청수초 급식실 근무 안내</title>
+  <style>
+    :root{
+      --bg:#f4f7fb;
+      --paper:#ffffff;
+      --ink:#1f2937;
+      --muted:#64748b;
+      --navy:#17345f;
+      --blue:#2f6fcb;
+      --line:#d8e2ef;
+      --soft:#eef6ff;
+      --green:#eef8f3;
+      --yellow:#fff7df;
+      --shadow:0 10px 28px rgba(23,52,95,.08);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",Arial,sans-serif;
+      line-height:1.65;
+    }
+    a{color:inherit}
+    .wrap{
+      max-width:1120px;
+      margin:0 auto;
+      padding:28px 20px 46px;
+    }
+    .hero{
+      background:linear-gradient(135deg,#fff 0%,#edf6ff 100%);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:32px;
+      box-shadow:var(--shadow);
+    }
+    .hero h1{
+      margin:0;
+      color:var(--navy);
+      font-size:clamp(32px,4vw,48px);
+      line-height:1.15;
+    }
+    .hero p{
+      margin:14px 0 0;
+      max-width:780px;
+      color:#334155;
+      font-size:18px;
+      font-weight:700;
+    }
+    .toc{
+      margin-top:18px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .toc a{
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      padding:8px 11px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:#fff;
+      color:#31547f;
+      font-size:14px;
+      font-weight:900;
+    }
+    .toc span{
+      width:21px;
+      height:21px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:var(--blue);
+      color:#fff;
+      font-size:12px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+      margin-top:20px;
+      align-items:stretch;
+    }
+    #edu{
+      grid-column:1 / -1;
+    }
+    .card{
+      background:var(--paper);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:22px;
+      box-shadow:var(--shadow);
+    }
+    .grid .card{
+      display:flex;
+      flex-direction:column;
+    }
+    .card.full{
+      margin-top:18px;
+    }
+    .card p{
+      margin:0 0 14px;
+      color:#334155;
+      font-weight:750;
+    }
+    h2{
+      margin:0 0 14px;
+      color:var(--navy);
+      font-size:22px;
+      line-height:1.3;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .num{
+      width:32px;
+      height:32px;
+      border-radius:8px;
+      display:grid;
+      place-items:center;
+      background:var(--blue);
+      color:#fff;
+      font-size:16px;
+      font-weight:900;
+      flex:0 0 auto;
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:#fff;
+      font-size:15px;
+    }
+    th,td{
+      border:1px solid var(--line);
+      padding:12px 11px;
+      text-align:left;
+      vertical-align:top;
+    }
+    th{
+      background:#f1f7ff;
+      color:var(--navy);
+      font-weight:900;
+    }
+    td:first-child{
+      width:34%;
+      background:#f8fbff;
+      color:#263c5a;
+      font-weight:900;
+    }
+    .note{
+      margin-top:12px;
+      border-radius:10px;
+      padding:12px 13px;
+      background:var(--soft);
+      border:1px solid #c9e0ff;
+      color:#245080;
+      font-weight:850;
+    }
+    #work .note{
+      margin-top:auto;
+    }
+    .note.strong{
+      margin-top:0;
+      margin-bottom:12px;
+      background:#dcecff;
+      border:2px solid #8eb8f3;
+      color:#163a70;
+      font-size:16px;
+      line-height:1.6;
+    }
+    .warning{
+      margin-top:12px;
+      border-radius:10px;
+      padding:12px 13px;
+      background:var(--yellow);
+      border:1px solid #f4d787;
+      color:#6b4b00;
+      font-weight:850;
+    }
+    .checklist{
+      list-style:none;
+      margin:0;
+      padding:0;
+      display:grid;
+      gap:9px;
+    }
+    .checklist li{
+      display:flex;
+      gap:9px;
+      align-items:flex-start;
+      font-weight:850;
+    }
+    .check{
+      color:var(--blue);
+      font-weight:900;
+    }
+    .links{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:12px;
+    }
+    .link-card{
+      display:block;
+      text-decoration:none;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:13px 14px;
+      background:#fff;
+    }
+    .link-card:hover{
+      border-color:#9fc4ff;
+      background:#f8fbff;
+    }
+    .link-card strong{
+      display:block;
+      color:var(--navy);
+      font-size:16px;
+      margin-bottom:4px;
+    }
+    .link-card span{
+      display:block;
+      color:#475569;
+      font-size:14px;
+      font-weight:800;
+    }
+    .steps{
+      counter-reset:step;
+      list-style:none;
+      margin:16px 0 0;
+      padding:0;
+      display:grid;
+      gap:10px;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+    .steps li{
+      counter-increment:step;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:13px 14px;
+      font-weight:750;
+    }
+    .steps li:before{
+      content:counter(step);
+      width:28px;
+      height:28px;
+      display:grid;
+      place-items:center;
+      border-radius:8px;
+      background:var(--blue);
+      color:#fff;
+      font-weight:900;
+      flex:0 0 auto;
+    }
+    .sub{
+      display:block;
+      margin-top:5px;
+      color:#64748b;
+      font-weight:750;
+    }
+    .hl{
+      display:inline-block;
+      margin:4px 4px 0 0;
+      padding:3px 7px;
+      border-radius:7px;
+      background:#fff3bf;
+      border:1px solid #f5d36a;
+      color:#755300;
+      font-weight:900;
+    }
+    .info-list{
+      display:grid;
+      gap:10px;
+    }
+    .info-item{
+      display:grid;
+      grid-template-columns:112px minmax(0,1fr);
+      gap:12px;
+      align-items:start;
+      padding:12px 13px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:#f8fbff;
+    }
+    .info-item strong{
+      color:var(--navy);
+      font-weight:900;
+    }
+    .info-item span{
+      color:var(--ink);
+      font-weight:750;
+    }
+    .edu-layout{
+      display:grid;
+      grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);
+      gap:16px;
+      align-items:start;
+    }
+    .edu-side{
+      display:grid;
+      gap:12px;
+    }
+    .edu-side .warning,
+    .edu-side .note,
+    .edu-side .links{
+      margin-top:0;
+    }
+    .crime-link{
+      margin-top:4px;
+    }
+    footer{
+      margin-top:18px;
+    }
+    .phone{
+      background:#fff;
+      border:1px solid #bad4fb;
+      border-radius:10px;
+      padding:9px 12px;
+      white-space:nowrap;
+    }
+    @media(max-width:980px){
+      .grid{grid-template-columns:1fr}
+      #edu{grid-column:auto}
+      .edu-layout{grid-template-columns:1fr}
+      .steps{grid-template-columns:1fr}
+      .hero{padding:28px 22px}
+    }
+    @media(max-width:560px){
+      .wrap{padding:12px 10px 34px}
+      .hero{padding:24px 18px;border-radius:14px}
+      .hero h1{font-size:32px}
+      .hero p{font-size:16px}
+      .grid{gap:14px;margin-top:14px}
+      .card{padding:16px}
+      .card.full{margin-top:14px}
+      h2{font-size:20px}
+      table,
+      thead,
+      tbody,
+      tr,
+      th,
+      td{
+        display:block;
+        width:100%;
+      }
+      thead{display:none}
+      tr{
+        border:1px solid var(--line);
+        border-radius:10px;
+        overflow:hidden;
+        background:#fff;
+      }
+      tr + tr{margin-top:8px}
+      th,td{
+        border:0;
+        font-size:14px;
+        padding:10px 11px;
+      }
+      td:first-child{
+        width:100%;
+        background:#eef6ff;
+      }
+      td[data-label]::before{
+        content:attr(data-label);
+        display:block;
+        margin-bottom:3px;
+        color:var(--navy);
+        font-size:12px;
+        font-weight:900;
+      }
+      td[data-label]:first-child::before{display:none}
+      .links{grid-template-columns:1fr}
+      .toc{gap:7px;margin-top:14px}
+      .toc a{
+        width:calc(50% - 4px);
+        border-radius:10px;
+        padding:8px 9px;
+        font-size:13px;
+      }
+      .toc span{
+        width:19px;
+        height:19px;
+        font-size:11px;
+      }
+      .steps li{
+        gap:8px;
+        padding:11px 12px;
+      }
+      .steps li:before{
+        width:26px;
+        height:26px;
+      }
+      #work .note{
+        margin-top:10px;
+        padding:10px 12px;
+        border-radius:9px;
+        font-size:14px;
+        line-height:1.5;
+      }
+      .info-item{
+        grid-template-columns:1fr;
+        gap:4px;
+      }
+    }
+    @media(max-width:360px){
+      .toc a{width:100%}
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <h1>청수초 급식실 근무 안내</h1>
+      <p>안녕하세요. 청수초등학교 영양교사입니다.<br>출근 전 확인하실 내용을 안내드립니다.</p>
+      <div class="toc">
+        <a href="#work"><span>1</span>근무시간 확인</a>
+        <a href="#docs"><span>2</span>준비서류 확인</a>
+        <a href="#edu"><span>3</span>안전보건교육 이수</a>
+        <a href="#crime"><span>4</span>성범죄경력조회 안내</a>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card" id="work">
+        <h2><span class="num">1</span>근무 안내</h2>
+        <div class="info-list">
+          <div class="info-item"><strong>근무시간</strong><span>07:30 ~ 15:30</span></div>
+          <div class="info-item"><strong>급식실 위치</strong><span>본관 건물 2층</span></div>
+          <div class="info-item"><strong>안내사항</strong><span>처음 오시면 김포제일고등학교가 바로 옆에 붙어 있어서 헷갈리실 수 있습니다. 학교는 본관 건물 2층입니다.</span></div>
+        </div>
+      </article>
+
+      <article class="card" id="docs">
+        <h2><span class="num">2</span>준비서류</h2>
+        <div class="note strong">출력 가능한 서류는 미리 출력해 오시면 좋습니다. 출력이 어려운 경우 출근 후 행정실에서 함께 안내드리겠습니다.</div>
+        <ul class="checklist">
+          <li><span class="check">✓</span>건강진단결과서 또는 보건증</li>
+          <li><span class="check">✓</span>통장사본</li>
+          <li><span class="check">✓</span>주민등록등본</li>
+          <li><span class="check">✓</span>채용건강검진대체통보서(일반건강검진결과서 가능)</li>
+          <li><span class="check">✓</span>성범죄경력조회 동의서</li>
+        </ul>
+        <div class="note">채용건강검진대체통보서는 최근 2년 이내 건강검진 이력이 있어야 합니다.<br>국민건강보험공단 홈페이지 &gt; 건강IN &gt; 나의 건강관리 &gt; 건강검진정보 &gt; 채용건강검진 대체통보서 출력</div>
+      </article>
+
+      <article class="card" id="edu">
+        <h2><span class="num">3</span>안전보건교육</h2>
+        <div class="edu-layout">
+          <table>
+            <thead>
+              <tr><th>근로기간</th><th>교육 내용</th><th>비고</th></tr>
+            </thead>
+            <tbody>
+              <tr><td data-label="근로기간">1주일 이하 근로</td><td data-label="교육 내용">유튜브 교육 1시간 시청</td><td data-label="비고">출근 후 안전보건일지 서명</td></tr>
+              <tr><td data-label="근로기간">1주일 초과 ~ 1개월 이하 근로</td><td data-label="교육 내용">신규채용자교육 1 수강</td><td data-label="비고">이수증 행정실 제출</td></tr>
+              <tr><td data-label="근로기간">1개월 초과 근로</td><td data-label="교육 내용">신규채용자교육 1, 2 모두 수강</td><td data-label="비고">이수증 행정실 제출</td></tr>
+            </tbody>
+          </table>
+          <div class="edu-side">
+            <div class="warning">산업안전보건교육은 근로계약 전 필요한 절차입니다. 출근 전 이수가 완료되지 않으면 계약 진행이 어려울 수 있으니 꼭 확인해 주세요.</div>
+            <div class="links">
+              <a class="link-card" href="https://www.youtube.com/watch?v=443cmandj7c" target="_blank" rel="noopener">
+                <strong>1주일 이하 근로자</strong>
+                <span>유튜브 교육 영상 바로가기</span>
+              </a>
+              <a class="link-card" href="https://www.gtie.go.kr/lh/ms/ac/atnlcAplyListView.do?srchCrseNm=%EC%95%88%EC%A0%84%EB%B3%B4%EA%B1%B4&menuId=null" target="_blank" rel="noopener">
+                <strong>1주일 초과 근로자</strong>
+                <span>교육 사이트 바로가기</span>
+              </a>
+            </div>
+            <div class="note">교육 이수 후 이수증을 행정실에 제출하시면 교육수당 지급이 가능합니다.</div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="card full" id="crime">
+      <h2><span class="num">4</span>성범죄경력조회 안내</h2>
+      <p><strong>취업예정자 범죄경력회보서</strong>는 본인인증 후 발급하는 서류입니다. 직접 출력이 가능하시면 미리 출력해 오시면 좋습니다. 출력이 어려우시면 본인 휴대폰만 준비해 오셔도 출근 후 함께 진행하겠습니다.</p>
+      <a class="link-card crime-link" href="https://crims.police.go.kr/" target="_blank" rel="noopener">
+        <strong>범죄경력회보서 발급시스템 바로가기</strong>
+        <span>https://crims.police.go.kr/</span>
+      </a>
+
+      <ol class="steps">
+        <li><div>포털사이트에서 범죄경력회보서 발급시스템을 검색하거나 위 바로가기 버튼으로 접속합니다.</div></li>
+        <li><div>메인 페이지 오른쪽 상단에서 로그인을 선택합니다.</div></li>
+        <li><div>취업예정자가 본인 명의 인증방식을 선택해 로그인합니다.</div></li>
+        <li><div>메인화면에서 취업예정자 발급동의 신청을 선택합니다.</div></li>
+        <li><div>시설 아이디와 검증번호를 입력 후 조회합니다.<span class="sub"><span class="hl">시설번호: ADKKRW</span><span class="hl">검증번호: 3712</span></span></div></li>
+        <li><div>취업하려는 시설이 맞는지 확인 후 동의 버튼을 선택합니다.</div></li>
+        <li><div>회보서 발급을 신청합니다.<span class="sub">인쇄유형은 직접출력을 선택합니다.</span></div></li>
+        <li><div>신청 내역을 작성하고 발급 진행 상태를 확인합니다.</div></li>
+        <li><div>회보서 발급대기 상태가 되면 범죄경력 확인 버튼을 선택해 본인의 범죄경력을 확인합니다.</div></li>
+        <li><div>회보서 범죄경력 확인 후 직접출력 버튼을 선택하여 출력합니다.</div></li>
+        <li><div>출력한 회보서를 학교 업무 담당자에게 제출합니다.</div></li>
+      </ol>
+    </section>
+
+    <footer>
+      <div class="phone">문의 | 급식실 031-997-2567</div>
+    </footer>
+  </main>
+</body>
+</html>
