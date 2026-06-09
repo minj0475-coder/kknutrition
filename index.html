@@ -2241,6 +2241,18 @@ body{
 }
 nav{
   gap:6px;
+  scrollbar-color:#f4bdd6 transparent;
+  scrollbar-width:thin;
+}
+nav::-webkit-scrollbar{
+  height:6px;
+}
+nav::-webkit-scrollbar-track{
+  background:transparent;
+}
+nav::-webkit-scrollbar-thumb{
+  background:#f4bdd6;
+  border-radius:999px;
 }
 nav a{
   border-radius:999px;
@@ -2378,6 +2390,91 @@ td:first-child,
 .page-section + .page-section{
   border-top:10px solid rgba(255,216,235,.72);
 }
+
+/* 실사용 가독성 보정 */
+.top{
+  box-shadow:0 4px 18px rgba(107,63,116,.06);
+}
+nav a{
+  min-height:38px;
+  display:inline-flex;
+  align-items:center;
+}
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible{
+  outline:3px solid rgba(255,143,189,.38);
+  outline-offset:3px;
+}
+.card,
+.hero{
+  border-color:#efddea;
+}
+.card{
+  border-width:1px;
+  background:rgba(255,255,255,.96);
+}
+.section-title{
+  line-height:1.35;
+}
+.subtitle,
+.table-list li,
+.message-box,
+.detail-item p,
+.today-menu-detail pre{
+  line-height:1.72;
+}
+table{
+  font-size:15px;
+}
+tbody tr:nth-child(even) td{
+  background:#fffdfd;
+}
+tbody tr:hover td{
+  background:#fff8fb;
+}
+tbody tr:nth-child(even) td:first-child,
+tbody tr:hover td:first-child,
+.schedule-table tbody tr:nth-child(even) td:first-child,
+.schedule-table tbody tr:hover td:first-child{
+  background:#fff7e8;
+}
+.schedule-table td:nth-child(2){
+  background:#ffffff;
+}
+.menu-upload-panel{
+  background:#fff;
+  box-shadow:0 8px 18px rgba(145,83,120,.06);
+}
+.menu-file-input,
+.menu-date-input,
+.sheet-link-input,
+.recipe-textarea{
+  border-color:#e8d7e4;
+}
+.menu-file-input:hover,
+.menu-date-input:hover,
+.sheet-link-input:hover,
+.recipe-textarea:hover{
+  border-color:#d9bdd1;
+}
+.today-menu-summary{
+  border-width:1px;
+}
+.today-menu-item{
+  box-shadow:0 8px 18px rgba(145,83,120,.055);
+}
+.download-btn,
+.btn{
+  min-height:42px;
+}
+.home-charm{
+  border-width:1px;
+}
+.home-charm small{
+  color:#746a76;
+}
 @media(max-width:900px){
   #home .hero{
     min-height:auto;
@@ -2403,6 +2500,16 @@ td:first-child,
   .page-section:not(#home) .hero{
     border-radius:18px;
     padding-right:86px;
+  }
+  #home .hero{
+    padding-right:18px;
+  }
+  #home .hero-asset{
+    display:none;
+  }
+  #home .hero h1{
+    font-size:30px;
+    line-height:1.22;
   }
   .page-section:not(#home) .hero .subtitle{
     max-width:calc(100% - 92px);
@@ -2433,6 +2540,16 @@ td:first-child,
   }
   .home-charm{
     min-height:118px;
+  }
+  table{
+    font-size:14px;
+  }
+  .subtitle,
+  .table-list li,
+  .message-box,
+  .detail-item p,
+  .today-menu-detail pre{
+    line-height:1.68;
   }
 }
 
