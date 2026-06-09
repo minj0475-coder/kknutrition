@@ -7,18 +7,18 @@
 <style>
 
 :root{
-  --bg:#f5f7fa;
+  --bg:#f7f6f2;
   --paper:#ffffff;
-  --ink:#1f2937;
-  --muted:#667085;
-  --line:#d9dee7;
-  --navy:#1e3a5f;
-  --blue:#2563eb;
-  --blue-soft:#eef4ff;
-  --gray-soft:#f8fafc;
-  --green-soft:#eef8f3;
-  --warning-soft:#fff7ed;
-  --shadow:0 8px 20px rgba(15,23,42,.06);
+  --ink:#34343a;
+  --muted:#67686d;
+  --line:#ded9d3;
+  --navy:#4d5961;
+  --blue:#7ea6bd;
+  --blue-soft:#edf6fa;
+  --gray-soft:#f3f2ef;
+  --green-soft:#eef3ea;
+  --warning-soft:#fff8dc;
+  --shadow:0 8px 20px rgba(77,89,97,.07);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -2225,32 +2225,45 @@ table{
   }
 }
 
-/* 꿀꿀이 포털 리디자인 */
+/* 올해의 팬톤 파스텔 팔레트 적용 */
 :root{
-  --bg:#fbf8fc;
+  --pantone-lemon:#f7edc4;
+  --pantone-nimbus:#d6d6d9;
+  --pantone-rose:#ead7dc;
+  --pantone-cloud:#f0efeb;
+  --pantone-ice:#cfe1ee;
+  --pantone-peach:#eed8cb;
+  --pantone-aqua:#c9d2c1;
+  --pantone-orchid:#d8d0da;
+  --bg:#f7f6f2;
   --paper:#ffffff;
-  --ink:#302d36;
-  --muted:#6f6875;
-  --line:#e9dee7;
-  --navy:#5f456d;
-  --blue:#5b8def;
-  --blue-soft:#f4effb;
-  --gray-soft:#fffaf0;
-  --green-soft:#eaf8ef;
-  --warning-soft:#fff4d8;
-  --shadow:0 14px 28px rgba(145,83,120,.12);
+  --ink:#33353a;
+  --muted:#686a70;
+  --line:#ddd8d1;
+  --navy:#4d5961;
+  --blue:#7fa7bd;
+  --blue-soft:#edf6fa;
+  --gray-soft:#f2f1ed;
+  --green-soft:#eef3ea;
+  --warning-soft:#fff8dc;
+  --rose-soft:#fbf0f2;
+  --peach-soft:#fff2ea;
+  --orchid-soft:#f4f0f6;
+  --aqua-strong:#879a80;
+  --rose-strong:#b48795;
+  --shadow:0 14px 28px rgba(77,89,97,.08);
 }
 *{
   letter-spacing:0!important;
 }
 body{
   background:
-    linear-gradient(180deg, #fffafd 0%, #f9f6ff 38%, #f5fbfa 68%, #fffdf8 100%);
+    linear-gradient(180deg, #fbfaf6 0%, #f4f7f7 36%, #f8f1f0 72%, #fffdf7 100%);
   background-attachment:fixed;
 }
 .top{
-  background:rgba(255,255,255,.92);
-  border-bottom:1px solid #f0d7e7;
+  background:rgba(255,255,255,.94);
+  border-bottom:1px solid rgba(214,214,217,.78);
   backdrop-filter:blur(12px);
 }
 .top-inner{
@@ -2258,22 +2271,23 @@ body{
   padding:14px 20px;
 }
 .brand{
-  color:#5f456d;
+  color:var(--navy);
   font-size:17px;
 }
 .logo{
-  background:#ee86b3!important;
-  border:2px solid #f9d7e7!important;
+  background:var(--pantone-ice)!important;
+  border:2px solid #ffffff!important;
   border-radius:12px!important;
-  box-shadow:0 6px 14px rgba(255,143,189,.28)!important;
+  box-shadow:0 6px 14px rgba(126,166,189,.22)!important;
 }
 .logo:before{
   content:"꿀";
   font-size:14px;
+  color:#3f4d55;
 }
 nav{
   gap:6px;
-  scrollbar-color:#f4bdd6 transparent;
+  scrollbar-color:#c9d2c1 transparent;
   scrollbar-width:thin;
 }
 nav::-webkit-scrollbar{
@@ -2283,58 +2297,64 @@ nav::-webkit-scrollbar-track{
   background:transparent;
 }
 nav::-webkit-scrollbar-thumb{
-  background:#f4bdd6;
+  background:var(--pantone-aqua);
   border-radius:999px;
 }
 nav a{
   border-radius:999px;
-  color:#745f74;
+  color:#5f6268;
   background:#fff;
-  border-color:#f1dbe9;
+  border-color:#e3dfd8;
 }
 nav a:hover,
 nav a.active{
-  color:#5f456d;
-  background:#fff4f8;
-  border-color:#f4c8dc;
+  color:#3f4d55;
+  background:var(--blue-soft);
+  border-color:#c7dbe5;
 }
 .wrap{
   max-width:1180px;
 }
 .hero{
-  border:2px solid #f4d5e7;
-  border-radius:24px;
+  border:1px solid #dfdbd2;
+  border-radius:18px;
   background:#fff;
-  box-shadow:0 18px 36px rgba(145,83,120,.14);
+  box-shadow:0 18px 36px rgba(77,89,97,.08);
 }
 #home .hero{
   min-height:330px;
   padding:42px 360px 42px 42px;
+  border-color:#dfdbd2;
   background:
-    linear-gradient(135deg, #fff 0%, #fff3f9 48%, #eefbf3 100%);
+    linear-gradient(135deg, #fff 0%, #f8f6ec 34%, #ecf5f9 68%, #f7f0f2 100%);
   overflow:hidden;
 }
 .page-section:not(#home) .hero{
   background:
-    linear-gradient(135deg, #fff 0%, #fff8dc 48%, #eef7ff 100%);
+    linear-gradient(135deg, #fff 0%, #f8f7f1 48%, #edf6fa 100%);
 }
 .kicker{
-  background:#fff4f8;
-  color:#6d4266;
-  border-color:#f4c8dc;
+  background:#f7f4df;
+  color:#5e5740;
+  border-color:#e8ddb3;
   border-radius:999px;
   padding:6px 12px;
 }
+#home .kicker{
+  background:#f7f4df;
+  color:#5e5740;
+  border-color:#e8ddb3;
+}
 h1{
-  color:#5f456d;
+  color:#43525a;
   font-size:clamp(31px,4vw,48px);
 }
 .subtitle{
-  color:#625865;
+  color:#555a60;
   font-weight:750;
 }
 .hero-asset{
-  filter:drop-shadow(0 16px 18px rgba(145,83,120,.18));
+  filter:drop-shadow(0 16px 18px rgba(77,89,97,.16));
 }
 #home .hero-asset{
   width:280px;
@@ -2347,18 +2367,18 @@ h1{
   max-height:160px;
 }
 .card{
-  border:2px solid #eadfe8;
-  border-radius:18px;
+  border:1px solid #dfdbd2;
+  border-radius:14px;
   box-shadow:var(--shadow);
 }
 .section-title{
-  color:#5f456d;
+  color:#43525a;
 }
 .num{
-  background:#fff4f8;
-  border-color:#f4c8dc;
-  color:#6d4266;
-  border-radius:12px;
+  background:var(--blue-soft);
+  border-color:#c7dbe5;
+  color:#43525a;
+  border-radius:10px;
 }
 .quick,
 .download-card,
@@ -2367,54 +2387,54 @@ h1{
 .recipe-sidebar,
 .today-menu-item,
 .menu-upload-panel{
-  border-color:#eadfe8;
+  border-color:#dfdbd2;
 }
 .quick:hover{
-  border-color:#f4c8dc;
+  border-color:#a9c6d6;
 }
 th{
-  background:#faf6fb;
-  color:#5f456d;
+  background:#f1f2ee;
+  color:#43525a;
 }
 td:first-child,
 .schedule-table td:first-child{
-  background:#fffaf3;
-  color:#5f456d;
+  background:#f7f4df;
+  color:#43525a;
 }
 .btn,
 .download-btn{
-  background:#e77fae;
-  border-color:#e77fae;
+  background:#6f93a6;
+  border-color:#6f93a6;
   color:#fff;
-  box-shadow:0 8px 16px rgba(255,143,189,.22);
+  box-shadow:0 8px 16px rgba(111,147,166,.18);
 }
 .btn.light{
   background:#fff;
-  color:#5f456d;
-  border-color:#eadfe8;
+  color:#43525a;
+  border-color:#dfdbd2;
   box-shadow:none;
 }
 .section-link-list a:hover,
 .recipe-list-item:hover,
 .recipe-list-item.active{
-  background:#fff4f8;
-  border-color:#f4c8dc;
-  color:#5f456d;
+  background:var(--blue-soft);
+  border-color:#a9c6d6;
+  color:#43525a;
 }
 .today-menu-summary{
-  background:#fff4f8;
-  border-color:#f4c8dc;
+  background:#f7f0f2;
+  border-color:#e8cfd5;
 }
 .today-menu-item-head{
-  background:#fffaf3;
+  background:#f7f4df;
 }
 .page-section + .page-section{
-  border-top:10px solid rgba(244,225,238,.72);
+  border-top:10px solid rgba(214,214,217,.5);
 }
 
 /* 실사용 가독성 보정 */
 .top{
-  box-shadow:0 4px 18px rgba(107,63,116,.06);
+  box-shadow:0 4px 18px rgba(77,89,97,.055);
 }
 nav a{
   min-height:38px;
@@ -2425,12 +2445,12 @@ a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible{
-  outline:3px solid rgba(255,143,189,.38);
+  outline:3px solid rgba(126,166,189,.38);
   outline-offset:3px;
 }
 .card,
 .hero{
-  border-color:#efddea;
+  border-color:#dfdbd2;
 }
 .card{
   border-width:1px;
@@ -2450,41 +2470,41 @@ table{
   font-size:15px;
 }
 tbody tr:nth-child(even) td{
-  background:#fffdfd;
+  background:#fbfaf7;
 }
 tbody tr:hover td{
-  background:#fff7fa;
+  background:#f1f7f9;
 }
 tbody tr:nth-child(even) td:first-child,
 tbody tr:hover td:first-child,
 .schedule-table tbody tr:nth-child(even) td:first-child,
 .schedule-table tbody tr:hover td:first-child{
-  background:#fff7e8;
+  background:#f4edd1;
 }
 .schedule-table td:nth-child(2){
   background:#ffffff;
 }
 .menu-upload-panel{
   background:#fff;
-  box-shadow:0 8px 18px rgba(145,83,120,.06);
+  box-shadow:0 8px 18px rgba(77,89,97,.055);
 }
 .menu-file-input,
 .menu-date-input,
 .sheet-link-input,
 .recipe-textarea{
-  border-color:#e8d7e4;
+  border-color:#ded9d3;
 }
 .menu-file-input:hover,
 .menu-date-input:hover,
 .sheet-link-input:hover,
 .recipe-textarea:hover{
-  border-color:#d9bdd1;
+  border-color:#b7c7cc;
 }
 .today-menu-summary{
   border-width:1px;
 }
 .today-menu-item{
-  box-shadow:0 8px 18px rgba(145,83,120,.055);
+  box-shadow:0 8px 18px rgba(77,89,97,.055);
 }
 .download-btn,
 .btn{
@@ -2493,8 +2513,104 @@ tbody tr:hover td:first-child,
 .home-charm{
   border-width:1px;
 }
+.home-guide-card{
+  background:
+    linear-gradient(135deg, #ffffff 0%, #f8f6ec 38%, #eef3ea 70%, #f6f2f6 100%);
+}
+.home-guide-card:before{
+  background:linear-gradient(90deg, rgba(207,225,238,.18), rgba(247,237,196,.72), rgba(201,210,193,.22));
+}
+.home-charm{
+  border-color:#dfdbd2;
+  border-radius:14px;
+  min-width:0;
+  box-shadow:0 8px 18px rgba(77,89,97,.06);
+}
+.home-charm:hover{
+  border-color:#a9c6d6;
+  background:#fbfefe;
+}
+.home-charm span{
+  background:#edf6fa;
+  border-color:#c7dbe5;
+  color:#43525a;
+}
+.home-charm strong{
+  color:#43525a;
+  overflow-wrap:anywhere;
+}
 .home-charm small{
-  color:#746a76;
+  color:#686a70;
+  overflow-wrap:anywhere;
+}
+.note{
+  background:#f2f1ed;
+  color:#42474c;
+}
+.note.success{
+  background:#eef3ea;
+  border-color:#d3dccb;
+  color:#4f6748;
+}
+.note.warning{
+  background:#fff8dc;
+  border-color:#eadfae;
+  color:#6c6038;
+}
+.note.pink,
+.table-subtitle,
+.inner-subtitle,
+.notice-box,
+.print-reminder,
+.hero-emphasis,
+.annual-mobile-card .annual-month-card h3{
+  background:#edf6fa;
+  border-color:#c7dbe5;
+  color:#43525a;
+}
+.clean-annual-table td.month-cell,
+.annual-table td.month-cell,
+.home-daily-card .schedule-table td:first-child,
+main .schedule-table.monthly-table td:first-child,
+body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-child,
+.weekly-check-card .simple-table th{
+  background:#f7f4df;
+  color:#43525a;
+}
+.clean-annual-table td.task-cell,
+.annual-table td.task-cell,
+.cal-cell.wide,
+.short-summary,
+.flow-line,
+.table-group,
+.section-link-list a,
+.recipe-sidebar,
+.recipe-editor-head,
+.staff-block-head,
+.detail-full,
+.today-menu-item-head,
+.menu-upload-panel{
+  background:#f6f5f1;
+}
+.clean-annual-table tr.month-start td,
+.annual-table tr.month-start td{
+  border-top-color:#a9c6d6;
+}
+.checklist li:before{
+  background:#7fa7bd;
+}
+.recipe-list-item:hover,
+.recipe-list-item.active{
+  background:#edf6fa;
+}
+.recipe-editor-head h3,
+.recipe-edit-grid label,
+.today-menu-table td:nth-child(1),
+.today-menu-table td:nth-child(2),
+.today-menu-fact b,
+.inline-guide h3,
+.inline-guide-box h4{
+  color:#43525a;
 }
 @media(max-width:900px){
   #home .hero{
@@ -2510,6 +2626,15 @@ tbody tr:hover td:first-child,
   }
 }
 @media(max-width:640px){
+  .page-section{
+    overflow-x:hidden;
+  }
+  .top-inner{
+    min-width:0;
+  }
+  nav{
+    min-width:0;
+  }
   .top-inner{
     padding:10px;
   }
@@ -2539,13 +2664,15 @@ tbody tr:hover td:first-child,
     border-radius:16px;
   }
   .home-guide-card{
-    padding:18px;
+    padding:14px;
   }
   .home-charm-grid{
-    grid-template-columns:repeat(2,minmax(0,1fr));
+    grid-template-columns:1fr;
+    gap:10px;
   }
   .home-charm{
-    min-height:118px;
+    min-height:auto;
+    padding:14px 12px;
   }
   table{
     font-size:14px;
