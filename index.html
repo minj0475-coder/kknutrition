@@ -1,9 +1,10 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>급식 업무 포털</title>
+<link rel="preload" as="image" href="assets/pig-home.webp" type="image/webp" fetchpriority="high">
 <style>
 
 :root{
@@ -1714,6 +1715,13 @@ nav a{
   pointer-events:none;
   user-select:none;
 }
+.hero-asset img{
+  width:100%;
+  height:auto;
+  max-height:inherit;
+  object-fit:contain;
+  display:block;
+}
 .card{
   border-radius:14px;
   padding:22px;
@@ -1839,7 +1847,7 @@ table{
   content:"";
   width:30px;
   height:30px;
-  background:url("assets/pig-home.png") center / 145% no-repeat;
+  background:url("assets/pig-home.webp") center / 145% no-repeat;
 }
 .hero{
   background:linear-gradient(135deg,#ffffff 0%,#fbfdff 100%);
@@ -1976,7 +1984,7 @@ body{
 .logo:before{
   width:38px;
   height:38px;
-  background:url("assets/pig-home.png") center / 165% no-repeat;
+  background:url("assets/pig-home.webp") center / 165% no-repeat;
 }
 nav a{
   border-radius:999px;
@@ -2102,6 +2110,28 @@ h1{
   box-shadow:0 10px 18px rgba(244,138,165,.12);
   filter:drop-shadow(0 10px 16px rgba(33,65,96,.10));
 }
+.portal-tile picture{
+  position:absolute;
+  right:-10px;
+  top:4px;
+  width:118px;
+  height:118px;
+  z-index:2;
+  padding:7px;
+  border-radius:50%;
+  background:rgba(255,241,245,.82);
+  box-shadow:0 10px 18px rgba(244,138,165,.12);
+}
+.portal-tile picture img{
+  position:static;
+  width:100%;
+  height:100%;
+  padding:0;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  object-fit:contain;
+}
 .portal-tile strong,
 .portal-tile span{
   position:relative;
@@ -2215,7 +2245,7 @@ body *{
     min-height:118px;
     padding:16px 134px 16px 15px;
   }
-  .portal-tile img{
+  .portal-tile picture{
     right:14px;
     top:12px;
     width:98px;
@@ -2242,18 +2272,18 @@ body *{
   </div>
 </header>
 
-<section id="home" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">영양교사 꿀꿀이</div><h1>급식 업무 포털</h1><p class="subtitle">급식업무를 웹, 모바일로 깔끔하게 정리해서 보기 위해 만든 영양교사 꿀꿀이의 급식 업무 포털입니다. 하루 일정, 한 달 일정, 연간 일정, 조리종사원 관리, 레시피를 한눈에 볼 수 있도록 담아두었습니다.</p><img class="hero-asset" src="assets/pig-home.png" alt=""></section>
+<section id="home" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">영양교사 꿀꿀이</div><h1>급식 업무 포털</h1><p class="subtitle">급식업무를 웹, 모바일로 깔끔하게 정리해서 보기 위해 만든 영양교사 꿀꿀이의 급식 업무 포털입니다. 하루 일정, 한 달 일정, 연간 일정, 조리종사원 관리, 레시피를 한눈에 볼 수 있도록 담아두었습니다.</p><picture class="hero-asset"><source srcset="assets/pig-home.webp" type="image/webp"><img src="assets/pig-home.png" alt="" width="560" height="470" decoding="async" fetchpriority="high"></picture></section>
 
 <section class="home-portal" aria-label="업무 바로가기">
-  <a class="portal-tile daily" href="#daily"><img src="assets/pig-daily-icon.png" alt=""><strong>하루 일정</strong><span>검수부터 마무리까지</span></a>
-  <a class="portal-tile monthly" href="#monthly"><img src="assets/pig-monthly-icon.png" alt=""><strong>한 달 일정</strong><span>매월 반복 업무 확인</span></a>
-  <a class="portal-tile annual" href="#annual"><img src="assets/pig-annual-icon.png" alt=""><strong>연간 일정</strong><span>월별 업무와 마감 관리</span></a>
-  <a class="portal-tile staff" href="#staff"><img src="assets/pig-staff-icon.png" alt=""><strong>조리종사원</strong><span>문자·안내문·복무</span></a>
-  <a class="portal-tile recipes" href="#recipes"><img src="assets/pig-recipes-icon.png" alt=""><strong>레시피</strong><span>학교별 메뉴 검색</span></a>
+  <a class="portal-tile daily" href="#daily"><picture><source srcset="assets/pig-daily-icon.webp" type="image/webp"><img src="assets/pig-daily-icon.png" alt="" width="203" height="220" decoding="async"></picture><strong>하루 일정</strong><span>검수부터 마무리까지</span></a>
+  <a class="portal-tile monthly" href="#monthly"><picture><source srcset="assets/pig-monthly-icon.webp" type="image/webp"><img src="assets/pig-monthly-icon.png" alt="" width="198" height="220" decoding="async"></picture><strong>한 달 일정</strong><span>매월 반복 업무 확인</span></a>
+  <a class="portal-tile annual" href="#annual"><picture><source srcset="assets/pig-annual-icon.webp" type="image/webp"><img src="assets/pig-annual-icon.png" alt="" width="198" height="220" decoding="async"></picture><strong>연간 일정</strong><span>월별 업무와 마감 관리</span></a>
+  <a class="portal-tile staff" href="#staff"><picture><source srcset="assets/pig-staff-icon.webp" type="image/webp"><img src="assets/pig-staff-icon.png" alt="" width="210" height="220" decoding="async"></picture><strong>조리종사원</strong><span>문자·안내문·복무</span></a>
+  <a class="portal-tile recipes" href="#recipes"><picture><source srcset="assets/pig-recipes-icon.webp" type="image/webp"><img src="assets/pig-recipes-icon.png" alt="" width="220" height="213" decoding="async"></picture><strong>레시피</strong><span>학교별 메뉴 검색</span></a>
 </section>
 
 </main></section>
-<section id="daily" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">일일 업무</div><h1>하루 일정</h1><p class="subtitle">검수부터 퇴근 전 마무리까지 하루 업무 흐름을 시간대별로 정리했습니다.</p><img class="hero-asset" src="assets/pig-daily.png" alt=""></section>
+<section id="daily" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">일일 업무</div><h1>하루 일정</h1><p class="subtitle">검수부터 퇴근 전 마무리까지 하루 업무 흐름을 시간대별로 정리했습니다.</p><picture class="hero-asset"><source srcset="assets/pig-daily.webp" type="image/webp"><img src="assets/pig-daily.png" alt="" width="332" height="360" loading="lazy" decoding="async"></picture></section>
 <section class="card"><h2 class="section-title"><span class="num">1</span>하루 일정표</h2><div class="schedule-wrap"><table class="schedule-table"><thead><tr><th>구분</th><th>시간</th><th>주요 업무</th></tr></thead><tbody><tr><td data-label="구분">검수</td><td data-label="시간">07:30</td><td data-label="주요 업무"><ul class="table-list"><li>식재료 검수</li><li>여름철 벌레 먹은 농산물은 일반농산물로 교환 요청</li><li>식재료 문제 발생 시 사진 기록 및 사유서 작성</li><li>검수 후 명세서·검수서·나이스 대조</li></ul></td></tr><tr><td data-label="구분">조회</td><td data-label="시간">검수 직후</td><td data-label="주요 업무"><ul class="table-list"><li>일일위생안전점검표 작성</li><li>알레르기 제거식 확인 및 공지</li><li>배식량 정해주기</li></ul></td></tr><tr><td data-label="구분">조리</td><td data-label="시간">오전~배식 전</td><td data-label="주요 업무"><ul class="table-list"><li>조리 진행상황 확인</li><li>급식일지 작성</li><li>식사 후 식판 사진 홈페이지 업로드</li><li>조리 완료 후 보존식 담기</li></ul></td></tr><tr><td data-label="구분">배식</td><td data-label="시간">11:50~13:45</td><td data-label="주요 업무"><ul class="table-list"><li>교직원부터 배식 시작</li><li>배식, 식사 지도</li><li>잔반량 체크</li></ul></td></tr><tr><td data-label="구분">마무리</td><td data-label="시간">배식 후 오후</td><td data-label="주요 업무"><ul class="table-list"><li>그날 총 잔반량 확인</li><li>다음날 발주, 레시피 및 전달사항 확인</li></ul></td></tr><tr><td data-label="구분">퇴근</td><td data-label="시간">15:30</td><td data-label="주요 업무"><ul class="table-list"></ul></td></tr></tbody></table></div></section>
 
 <section class="card weekly-check-card">
@@ -2275,7 +2305,7 @@ body *{
   </div>
 </section></main></section>
 <section id="monthly" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">월간 업무</div><h1>한 달 일정</h1><p class="subtitle">매월 반복되는 급식 업무를 시기별로 보기 쉽게 정리한 한 달 일정표입니다.<br>
-해야 할 일을 미리 확인하고 준비할 수 있도록 구성했으며, 여유가 있을 때는 다음 달 식단도 조금씩 준비할 수 있습니다.</p><img class="hero-asset" src="assets/pig-monthly.png" alt=""></section>
+해야 할 일을 미리 확인하고 준비할 수 있도록 구성했으며, 여유가 있을 때는 다음 달 식단도 조금씩 준비할 수 있습니다.</p><picture class="hero-asset"><source srcset="assets/pig-monthly.webp" type="image/webp"><img src="assets/pig-monthly.png" alt="" width="325" height="360" loading="lazy" decoding="async"></picture></section>
 
 <section class="card">
   <h2 class="section-title"><span class="num">1</span>한 달 일정표</h2>
@@ -2368,7 +2398,7 @@ body *{
     </table>
   </div>
 </section></main></section>
-<section id="annual" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">연간 업무</div><h1>연간 일정</h1><p class="subtitle">1년 동안 반복되는 급식 업무를 월별로 확인할 수 있도록 정리했습니다.</p><img class="hero-asset" src="assets/pig-annual.png" alt=""></section>
+<section id="annual" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">연간 업무</div><h1>연간 일정</h1><p class="subtitle">1년 동안 반복되는 급식 업무를 월별로 확인할 수 있도록 정리했습니다.</p><picture class="hero-asset"><source srcset="assets/pig-annual.webp" type="image/webp"><img src="assets/pig-annual.png" alt="" width="325" height="360" loading="lazy" decoding="async"></picture></section>
 
 <section class="card annual-mobile-card">
   <h2 class="section-title"><span class="num">1</span>연간 일정표</h2>
@@ -2754,7 +2784,7 @@ body *{
     </table>
   </div>
 </section></main></section>
-<section id="staff" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">조리종사원 관리</div><h1>조리종사원</h1><p class="subtitle">조리종사원, 대체조리종사원이 숙지해야 할 사항을 정리했습니다.</p><img class="hero-asset" src="assets/pig-staff.png" alt=""></section>
+<section id="staff" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">조리종사원 관리</div><h1>조리종사원</h1><p class="subtitle">조리종사원, 대체조리종사원이 숙지해야 할 사항을 정리했습니다.</p><picture class="hero-asset"><source srcset="assets/pig-staff.webp" type="image/webp"><img src="assets/pig-staff.png" alt="" width="346" height="360" loading="lazy" decoding="async"></picture></section>
 
 <section class="card section-nav-card">
   <h2 class="section-title"><span class="num">조리종사원</span>바로가기</h2>
@@ -2911,7 +2941,7 @@ body *{
     <p id="sheetLinkStatus" class="mini">모바일 미리보기에서는 링크 저장 기능이 제한될 수 있습니다. 링크가 바뀌면 컴퓨터에서 수정하는 것이 가장 안정적입니다.</p>
   </div>
 </section></main></section>
-<section id="recipes" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">학교별 레시피</div><h1>레시피</h1><p class="subtitle">급식 메뉴별 레시피를 모아두는 공간입니다.<br>청수초에서 작성한 레시피는 청수초 카테고리에서 검색하고 수정할 수 있습니다.</p><img class="hero-asset" src="assets/pig-recipes.png" alt=""></section>
+<section id="recipes" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">학교별 레시피</div><h1>레시피</h1><p class="subtitle">급식 메뉴별 레시피를 모아두는 공간입니다.<br>청수초에서 작성한 레시피는 청수초 카테고리에서 검색하고 수정할 수 있습니다.</p><picture class="hero-asset"><source srcset="assets/pig-recipes.webp" type="image/webp"><img src="assets/pig-recipes.png" alt="" width="360" height="349" loading="lazy" decoding="async"></picture></section>
 
 <section class="card section-nav-card">
   <h2 class="section-title"><span class="num">레시피</span>바로가기</h2>
