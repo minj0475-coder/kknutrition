@@ -1648,6 +1648,51 @@ button,
   display:grid;
   gap:12px;
 }
+.today-menu-table-wrap{
+  overflow-x:auto;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#fff;
+  box-shadow:0 8px 18px rgba(145,83,120,.055);
+}
+.today-menu-table{
+  min-width:980px;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+}
+.today-menu-table th{
+  text-align:center;
+  white-space:nowrap;
+}
+.today-menu-table th:nth-child(1){
+  width:130px;
+}
+.today-menu-table th:nth-child(2){
+  width:180px;
+}
+.today-menu-table th:nth-child(3){
+  width:320px;
+}
+.today-menu-table td{
+  vertical-align:top;
+  background:#fff;
+}
+.today-menu-table td:nth-child(1),
+.today-menu-table td:nth-child(2){
+  text-align:center;
+  font-weight:900;
+  color:#5f456d;
+}
+.today-menu-table pre{
+  margin:0;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  font-family:inherit;
+  font-size:14px;
+  line-height:1.68;
+  color:#344054;
+}
 .today-menu-item{
   border:1px solid var(--line);
   border-radius:12px;
@@ -3459,36 +3504,30 @@ function renderMenuItems() {
     return;
   }
 
-  matches.forEach(item => {
-    const article = document.createElement("article");
-    article.className = "today-menu-item";
-    article.innerHTML = `
-      <div class="today-menu-item-head">
-        <strong>${escapeHtml(formatKoreanDate(item.date))}</strong>
-        <span>${escapeHtml(item.meal || "식사구분 없음")}</span>
-      </div>
-      <div class="today-menu-facts">
-        <div class="today-menu-fact">
-          <b>급식인원</b>
-          <span>${escapeHtml(item.mealCount || "등록된 급식인원이 없습니다.")}</span>
-        </div>
-        <div class="today-menu-fact">
-          <b>메뉴</b>
-          <span>${escapeHtml(item.name || "메뉴명이 없습니다.")}</span>
-        </div>
-      </div>
-      <div class="today-menu-detail">
-        <div>
-          <h3>사용재료(kg)</h3>
-          <pre>${escapeHtml(item.ingredients || "등록된 재료가 없습니다.")}</pre>
-        </div>
-        <div>
-          <h3>조리방법</h3>
-          <pre>${escapeHtml(item.method || "등록된 조리방법이 없습니다.")}</pre>
-        </div>
-      </div>`;
-    results.appendChild(article);
-  });
+  const tableWrap = document.createElement("div");
+  tableWrap.className = "today-menu-table-wrap";
+  tableWrap.innerHTML = `
+    <table class="today-menu-table">
+      <thead>
+        <tr>
+          <th>급식인원</th>
+          <th>메뉴</th>
+          <th>사용재료(kg)</th>
+          <th>요리방법</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${matches.map(item => `
+          <tr>
+            <td>${escapeHtml(item.mealCount || "-")}</td>
+            <td>${escapeHtml(item.name || "-")}</td>
+            <td><pre>${escapeHtml(item.ingredients || "-")}</pre></td>
+            <td><pre>${escapeHtml(item.method || "-")}</pre></td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>`;
+  results.appendChild(tableWrap);
 }
 
 function escapeHtml(value) {
