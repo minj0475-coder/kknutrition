@@ -1778,52 +1778,6 @@ button,
   background:linear-gradient(90deg, rgba(255,211,230,.18), rgba(255,244,207,.78), rgba(223,247,238,.18));
   opacity:.9;
 }
-.home-guide-head{
-  position:relative;
-  display:grid;
-  grid-template-columns:120px minmax(0,1fr);
-  gap:18px;
-  align-items:center;
-  margin-bottom:18px;
-}
-.home-guide-pig{
-  width:120px;
-  height:120px;
-  object-fit:contain;
-  filter:drop-shadow(0 12px 14px rgba(145,83,120,.16));
-}
-.home-guide-bubble{
-  position:relative;
-  padding:18px 20px;
-  border:2px solid #ffd3e6;
-  border-radius:22px;
-  background:#fff;
-  box-shadow:0 10px 18px rgba(145,83,120,.08);
-}
-.home-guide-bubble:before{
-  content:"";
-  position:absolute;
-  left:-11px;
-  top:38px;
-  width:18px;
-  height:18px;
-  background:#fff;
-  border-left:2px solid #ffd3e6;
-  border-bottom:2px solid #ffd3e6;
-  transform:rotate(45deg);
-}
-.home-guide-bubble strong{
-  display:block;
-  color:#6b3f74;
-  font-size:24px;
-  font-weight:950;
-  margin-bottom:6px;
-}
-.home-guide-bubble span{
-  display:block;
-  color:#625865;
-  font-weight:800;
-}
 .home-charm-grid{
   position:relative;
   display:grid;
@@ -2553,21 +2507,6 @@ tbody tr:hover td:first-child,
   .home-guide-card{
     padding:18px;
   }
-  .home-guide-head{
-    grid-template-columns:72px minmax(0,1fr);
-    gap:12px;
-  }
-  .home-guide-pig{
-    width:72px;
-    height:72px;
-  }
-  .home-guide-bubble{
-    padding:14px;
-    border-radius:18px;
-  }
-  .home-guide-bubble strong{
-    font-size:18px;
-  }
   .home-charm-grid{
     grid-template-columns:repeat(2,minmax(0,1fr));
   }
@@ -2610,13 +2549,6 @@ tbody tr:hover td:first-child,
 웹, 모바일로 볼 수 있고, 필요할 때 출력해서 사용하기 편하도록 정리했습니다.</p><img class="hero-asset" src="assets/pig-home.png" alt=""></section>
 
 <section class="card home-guide-card">
-  <div class="home-guide-head">
-    <img class="home-guide-pig" src="assets/pig-home.png" alt="">
-    <div class="home-guide-bubble">
-      <strong>안녕하세요, 꿀꿀이 급식 도우미예요.</strong>
-      <span>오늘 확인할 조리방법부터 월간 업무, 조리종사원 안내, 레시피까지 한 번에 데려다드릴게요.</span>
-    </div>
-  </div>
   <div class="home-charm-grid">
     <a class="home-charm" href="#daily"><span>1</span><strong>하루 일정</strong><small>검수부터 마무리까지</small></a>
     <a class="home-charm" href="#today-menu"><span>2</span><strong>오늘의 메뉴</strong><small>엑셀로 조리방법 확인</small></a>
