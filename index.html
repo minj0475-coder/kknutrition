@@ -94,6 +94,9 @@ nav a.active{
   background:var(--blue-soft);
   border-color:#c7d7fe;
 }
+.mobile-nav{
+  display:none;
+}
 .wrap{
   max-width:1240px;
   margin:0 auto;
@@ -2662,21 +2665,77 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
   }
 }
 @media(max-width:640px){
-  .page-section{
+  html,
+  body,
+  .top{
     overflow-x:hidden;
   }
+  .page-section{
+    overflow-x:hidden;
+    scroll-margin-top:132px;
+  }
   .top-inner{
+    width:100%;
+    max-width:100%;
     min-width:0;
   }
   nav{
-    min-width:0;
+    display:none;
   }
   .top-inner{
     padding:10px;
   }
-  nav a{
-    padding:7px 10px;
+  .mobile-nav{
+    display:block;
+    width:100%;
+  }
+  .mobile-nav summary{
+    min-height:38px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid #dfdbd2;
+    border-radius:999px;
+    background:#fff;
+    color:#43525a;
     font-size:13px;
+    font-weight:900;
+    cursor:pointer;
+    list-style:none;
+  }
+  .mobile-nav summary::-webkit-details-marker{
+    display:none;
+  }
+  .mobile-nav summary:after{
+    content:"";
+    width:7px;
+    height:7px;
+    margin-left:8px;
+    border-right:2px solid #879a80;
+    border-bottom:2px solid #879a80;
+    transform:rotate(45deg) translateY(-2px);
+  }
+  .mobile-nav[open] summary:after{
+    transform:rotate(225deg) translateY(-1px);
+  }
+  .mobile-nav-list{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:7px;
+    margin-top:8px;
+  }
+  .mobile-nav-list a{
+    min-height:38px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid #dfdbd2;
+    border-radius:12px;
+    background:#f8f7f1;
+    color:#43525a;
+    font-size:13px;
+    font-weight:900;
+    text-align:center;
   }
   #home .hero,
   .page-section:not(#home) .hero{
@@ -2738,6 +2797,17 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
       <a href="#staff">조리종사원</a>
       <a href="#recipes">레시피</a>
     </nav>
+    <details class="mobile-nav">
+      <summary>메뉴</summary>
+      <div class="mobile-nav-list">
+        <a href="#daily">하루 일정</a>
+        <a href="#today-menu">오늘의 메뉴</a>
+        <a href="#monthly">한 달 일정</a>
+        <a href="#annual">연간 일정</a>
+        <a href="#staff">조리종사원</a>
+        <a href="#recipes">레시피</a>
+      </div>
+    </details>
   </div>
 </header>
 
