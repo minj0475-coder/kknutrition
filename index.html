@@ -1829,7 +1829,7 @@ button,
 .home-charm-grid{
   position:relative;
   display:grid;
-  grid-template-columns:repeat(6,minmax(0,1fr));
+  grid-template-columns:repeat(5,minmax(0,1fr));
   gap:12px;
 }
 .home-charm{
@@ -2795,7 +2795,6 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
       <a href="#monthly">한 달 일정</a>
       <a href="#annual">연간 일정</a>
       <a href="#staff">조리종사원</a>
-      <a href="#recipes">레시피</a>
     </nav>
     <details class="mobile-nav">
       <summary>메뉴</summary>
@@ -2805,7 +2804,6 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
         <a href="#monthly">한 달 일정</a>
         <a href="#annual">연간 일정</a>
         <a href="#staff">조리종사원</a>
-        <a href="#recipes">레시피</a>
       </div>
     </details>
   </div>
@@ -2820,7 +2818,6 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
     <a class="home-charm" href="#monthly"><span>3</span><strong>한 달 일정</strong><small>월간 반복 업무</small></a>
     <a class="home-charm" href="#annual"><span>4</span><strong>연간 일정</strong><small>1년 업무 흐름</small></a>
     <a class="home-charm" href="#staff"><span>5</span><strong>조리종사원</strong><small>안내문과 복무 현황</small></a>
-    <a class="home-charm" href="#recipes"><span>6</span><strong>레시피</strong><small>청수초 레시피 검색</small></a>
   </div>
 </section>
 
@@ -3510,62 +3507,6 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
     <p id="sheetLinkStatus" class="mini">모바일 미리보기에서는 링크 저장 기능이 제한될 수 있습니다. 링크가 바뀌면 컴퓨터에서 수정하는 것이 가장 안정적입니다.</p>
   </div>
 </section></main></section>
-<section id="recipes" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">학교별 레시피</div><h1>레시피</h1><p class="subtitle">급식 메뉴별 레시피를 모아두는 공간입니다.</p><img class="hero-asset" src="assets/pig-recipes.png" alt=""></section>
-
-<section class="card section-nav-card">
-  <h2 class="section-title"><span class="num">레시피</span>바로가기</h2>
-  <div class="section-link-list">
-    <a href="#cheongsu-recipes">
-      <strong>청수초</strong>
-      <span>청수초 레시피 검색·수정</span>
-    </a>
-  </div>
-</section>
-
-<section class="card" id="cheongsu-recipes">
-  <h2 class="section-title"><span class="num">1</span>청수초 레시피</h2>
-  <p class="muted">총 480개 레시피가 등록되어 있습니다. 수정한 내용은 현재 브라우저에 저장됩니다.</p>
-
-  <div class="recipe-tool">
-    <div class="recipe-sidebar">
-      <label class="sheet-link-label" for="recipeSearch">레시피 검색</label>
-      <input id="recipeSearch" class="sheet-link-input" type="search" placeholder="식단명, 재료, 조리방법 검색">
-      <div class="recipe-count" id="recipeCount"></div>
-      <div class="recipe-list" id="recipeList"></div>
-    </div>
-
-    <div class="recipe-editor">
-      <div class="recipe-editor-head">
-        <div>
-          <span class="mini">선택한 레시피</span>
-          <h3 id="selectedRecipeTitle">레시피를 선택해 주세요</h3>
-        </div>
-        <div class="recipe-actions">
-          <button class="btn light" type="button" onclick="resetRecipe()">선택 레시피 원본 복원</button>
-          <button class="btn light" type="button" onclick="resetAllRecipes()">전체 원본 불러오기</button>
-          <button class="download-btn" type="button" onclick="saveRecipe()">수정 내용 저장</button>
-        </div>
-      </div>
-
-      <div class="recipe-edit-grid">
-        <label>식단명
-          <input id="recipeName" class="sheet-link-input" type="text">
-        </label>
-        <label>재료(1인량)
-          <textarea id="recipeIngredients" class="recipe-textarea"></textarea>
-        </label>
-        <label>조리방법
-          <textarea id="recipeMethod" class="recipe-textarea large"></textarea>
-        </label>
-        <label>중점관리사항(특이사항)
-          <textarea id="recipeNotes" class="recipe-textarea"></textarea>
-        </label>
-      </div>
-      <p id="recipeStatus" class="mini">목록에서 레시피를 선택하면 수정할 수 있습니다.</p>
-    </div>
-  </div>
-</section></main></section>
-
 <script src="assets/xlsx.full.min.js"></script>
 <script>
 const DEFAULT_SHEET_LINK = "https://docs.google.com/spreadsheets/d/1qlBNjqRtXsD-R8zTbEGudD4LLcNjL1VmM_J0MIOVVEE/edit?usp=sharing";
@@ -3866,6 +3807,7 @@ function persistRecipes() {
 function renderRecipeList() {
   const q = normalizeText(document.getElementById("recipeSearch")?.value || "");
   const list = document.getElementById("recipeList");
+  if (!list) return;
   list.innerHTML = "";
 
   const filtered = recipes.map((r, i) => ({...r, index:i})).filter(r => {
@@ -3944,6 +3886,7 @@ function resetAllRecipes() {
 
 document.addEventListener("DOMContentLoaded", () => {
   const search = document.getElementById("recipeSearch");
+  if (!search) return;
   if (search) search.addEventListener("input", renderRecipeList);
   renderRecipeList();
   if (selectedIndex >= 0) selectRecipe(selectedIndex);
