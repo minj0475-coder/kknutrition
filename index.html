@@ -2630,11 +2630,17 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
 .annual-desktop-card .clean-annual-table tbody tr:nth-child(even) td.task-cell{
   background:#edf6fa!important;
 }
+.annual-desktop-card .clean-annual-table tbody tr{
+  cursor:default;
+}
+.annual-desktop-card .clean-annual-table tbody td{
+  transition:background-color .14s ease;
+}
 .annual-desktop-card .clean-annual-table tbody tr:hover td{
-  background:#f4f8f8!important;
+  background:#f1f7f9!important;
 }
 .annual-desktop-card .clean-annual-table tbody tr:hover td.month-cell{
-  background:#f7f4df!important;
+  background:#eef3ea!important;
 }
 .annual-desktop-card .clean-annual-table tbody tr:hover td.task-cell{
   background:#e6f1f5!important;
@@ -2651,6 +2657,9 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
 }
 .annual-task:nth-child(even){
   background:#fbfaf4;
+}
+.annual-task:hover{
+  background:#f1f7f9;
 }
 .annual-task strong{
   color:#43525a!important;
@@ -3017,7 +3026,8 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
     <div class="annual-month-card">
       <h3>3월</h3>
       <div class="annual-task"><strong>학기 초 조사</strong><ul><li>알레르기 학생 조사</li><li>우유 수요 조사</li></ul></div>
-      <div class="annual-task"><strong>교육·연수</strong><ul><li>위생·안전 교육</li><li>영양사 보수교육·위생교육 이수</li><li>영양사 실태조사 신고: 3년 주기, 2027년 신고 대상자는 3월 신고</li><li>조리사 위생교육 이수 안내</li><li>1분기 교직원·학부모 영양교육 홈페이지 게시</li></ul></div>
+      <div class="annual-task"><strong>교육·연수</strong><ul><li>위생·안전 교육</li><li>영양사 보수교육·위생교육 이수</li><li>조리사 위생교육 이수 안내</li><li>1분기 교직원·학부모 영양교육 홈페이지 게시</li></ul></div>
+      <div class="annual-task"><strong>영양사 실태조사</strong><ul><li>영양사 실태조사 신고: 3년 주기, 2027년 신고 대상자</li></ul></div>
       <div class="annual-task"><strong>학부모 모니터링</strong><ul><li>학부모 모니터링 명단 취합 및 일정 편성</li><li>학부모 급식대표 선정 준비</li></ul></div>
       <div class="annual-task"><strong>영양교육</strong><ul><li>영양수업 준비 시작(3~5월 준비)</li></ul></div>
     </div>
@@ -3109,7 +3119,7 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
         </tr>
 
         <tr class="month-start">
-          <td class="month-cell" rowspan="4">3월</td>
+          <td class="month-cell" rowspan="5">3월</td>
           <td class="task-cell">학기 초 조사</td>
           <td>
             <ul class="table-list">
@@ -3124,9 +3134,16 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
             <ul class="table-list">
               <li>위생·안전 교육</li>
               <li>영양사 보수교육·위생교육 이수</li>
-              <li>영양사 실태조사 신고: 3년 주기, 2027년 신고 대상자는 3월 신고</li>
               <li>조리사 위생교육 이수 안내</li>
               <li>1분기 교직원·학부모 영양교육 홈페이지 게시</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="task-cell">영양사 실태조사</td>
+          <td>
+            <ul class="table-list">
+              <li>영양사 실태조사 신고: 3년 주기, 2027년 신고 대상자</li>
             </ul>
           </td>
         </tr>
