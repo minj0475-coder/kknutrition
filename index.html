@@ -2005,6 +2005,9 @@ nav a{
   pointer-events:none;
   user-select:none;
 }
+.mobile-home-asset{
+  display:none;
+}
 .card{
   border-radius:14px;
   padding:22px;
@@ -2743,14 +2746,33 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
     padding-right:86px;
   }
   #home .hero{
-    padding-right:18px;
+    padding-right:116px;
+    min-height:206px;
   }
   #home .hero-asset{
     display:none;
   }
+  #home .mobile-home-asset{
+    display:block!important;
+    position:absolute;
+    width:92px!important;
+    height:100px!important;
+    max-width:92px!important;
+    max-height:100px!important;
+    left:clamp(220px, 60vw, 260px)!important;
+    right:auto!important;
+    top:70px!important;
+    bottom:auto!important;
+    object-fit:contain!important;
+    z-index:1!important;
+    pointer-events:none!important;
+  }
   #home .hero h1{
     font-size:30px;
     line-height:1.22;
+  }
+  #home .hero .subtitle{
+    max-width:calc(100% - 98px);
   }
   .page-section:not(#home) .hero .subtitle{
     max-width:calc(100% - 92px);
@@ -2809,7 +2831,7 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
   </div>
 </header>
 
-<section id="home" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">영양교사 꿀꿀이</div><h1>급식 업무 포털</h1><p class="subtitle">급식 업무를 깔끔하게 정리해서 보기 위해 만든 꿀꿀이의 급식 업무 포털입니다.</p><img class="hero-asset" src="assets/pig-home.png" alt=""></section>
+<section id="home" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">영양교사 꿀꿀이</div><h1>급식 업무 포털</h1><p class="subtitle">급식 업무를 깔끔하게 정리해서 보기 위해 만든 꿀꿀이의 급식 업무 포털입니다.</p><img class="hero-asset" src="assets/pig-home.png" alt=""><img class="mobile-home-asset" src="assets/pig-daily-icon.webp" alt=""></section>
 
 <section class="card home-guide-card">
   <div class="home-charm-grid">
