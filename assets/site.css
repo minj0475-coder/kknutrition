@@ -863,46 +863,6 @@ td:first-child{
   border-top:1px solid var(--line);
 }
 
-.section-nav-card{
-  margin-bottom:18px;
-}
-.section-link-list{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:12px;
-}
-.section-link-list a{
-  display:block;
-  padding:14px 15px;
-  border:1px solid var(--line);
-  border-radius:12px;
-  background:#f8fafc;
-  transition:.12s ease;
-}
-.section-link-list a:hover{
-  border-color:#9bb7f5;
-  background:#eef4ff;
-}
-.section-link-list strong{
-  display:block;
-  color:var(--navy);
-  font-size:15px;
-  font-weight:900;
-  margin-bottom:4px;
-}
-.section-link-list span{
-  display:block;
-  color:#667085;
-  font-size:13px;
-  font-weight:750;
-  line-height:1.45;
-}
-@media(max-width:900px){
-  .section-link-list{
-    grid-template-columns:1fr;
-  }
-}
-
 .staff-layout{
   display:grid;
   gap:18px;
@@ -1041,7 +1001,6 @@ td:first-child{
 button,
 .btn,
 .download-btn,
-.section-link-list a,
 .quick{
   cursor:pointer;
 }
@@ -1240,9 +1199,6 @@ button,
   }
   .quick{
     min-height:auto;
-  }
-  .section-link-list{
-    grid-template-columns:1fr;
   }
   .mobile-scroll-note{
     display:block;
@@ -2013,12 +1969,8 @@ nav a{
 .grid3,
 .staff-layout,
 .recipe-tool,
-.section-link-list,
 .detail-grid{
   gap:18px;
-}
-.section-nav-card{
-  margin-bottom:0;
 }
 .download-card,
 .sheet-link-card{
@@ -2410,7 +2362,6 @@ td:first-child,
   border-color:#dfdbd2;
   box-shadow:none;
 }
-.section-link-list a:hover,
 .recipe-list-item:hover,
 .recipe-list-item.active{
   background:var(--blue-soft);
@@ -2579,7 +2530,6 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
 .short-summary,
 .flow-line,
 .table-group,
-.section-link-list a,
 .recipe-sidebar,
 .recipe-editor-head,
 .staff-block-head,
@@ -3369,7 +3319,6 @@ nav{
 .schedule-wrap{
   margin-top:2px;
 }
-.section-link-list,
 .staff-layout,
 .detail-grid{
   gap:16px;
@@ -3428,5 +3377,151 @@ nav{
   }
   .date-section-v2{
     padding:14px;
+  }
+}
+
+/* Daily character, staff accordion, and app logo polish */
+.brand .logo{
+  width:42px!important;
+  height:42px!important;
+  flex:0 0 42px!important;
+  border-radius:13px!important;
+  background:#fffaf4!important;
+  border:1px solid #f0ded4!important;
+  box-shadow:0 6px 14px rgba(126,166,189,.16)!important;
+  overflow:hidden!important;
+}
+.brand .logo:before{
+  content:""!important;
+  width:100%!important;
+  height:100%!important;
+  display:block!important;
+  background:url("pig-logo.webp") center / 92% no-repeat!important;
+}
+.brand .logo:after{
+  display:none!important;
+}
+.daily-kkul-card{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 170px;
+  align-items:center;
+  gap:18px;
+  background:linear-gradient(135deg,#ffffff 0%,#fffaf4 48%,#edf6fa 100%);
+  overflow:hidden;
+}
+.daily-kkul-copy{
+  min-width:0;
+}
+.daily-kkul-message{
+  margin:0;
+  color:#43525a;
+  font-size:18px;
+  font-weight:900;
+  line-height:1.55;
+}
+.daily-kkul-image-wrap{
+  width:170px;
+  height:170px;
+  display:grid;
+  place-items:center;
+}
+.daily-kkul-image{
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
+  opacity:0;
+  transform:translateY(4px);
+  transition:opacity .28s ease, transform .28s ease;
+  filter:drop-shadow(0 10px 16px rgba(77,89,97,.10));
+}
+.daily-kkul-image.is-ready{
+  opacity:1;
+  transform:translateY(0);
+}
+.compact-list{
+  margin-top:6px;
+  margin-bottom:0;
+}
+.staff-accordion-card{
+  padding:0;
+  overflow:hidden;
+}
+.staff-accordion summary{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:20px 22px;
+  color:#43525a;
+  font-size:22px;
+  font-weight:950;
+  cursor:pointer;
+  list-style:none;
+}
+.staff-accordion summary::-webkit-details-marker{
+  display:none;
+}
+.staff-accordion summary:after{
+  content:"+";
+  margin-left:auto;
+  width:30px;
+  height:30px;
+  display:grid;
+  place-items:center;
+  border:1px solid #c7dbe5;
+  border-radius:999px;
+  background:#edf6fa;
+  color:#43525a;
+  font-size:18px;
+  line-height:1;
+}
+.staff-accordion[open] summary{
+  border-bottom:1px solid #ece7df;
+}
+.staff-accordion[open] summary:after{
+  content:"−";
+}
+.staff-accordion-body{
+  padding:20px 22px 22px;
+}
+.copy-btn{
+  margin:10px 0 12px;
+}
+tbody tr:hover td,
+.simple-table tr:hover th,
+.simple-table tr:hover td{
+  background:#f1f7f9;
+}
+@media(max-width:900px){
+  .daily-kkul-card{
+    grid-template-columns:minmax(0,1fr) 132px;
+  }
+  .daily-kkul-image-wrap{
+    width:132px;
+    height:132px;
+  }
+}
+@media(max-width:640px){
+  .brand .logo{
+    width:36px!important;
+    height:36px!important;
+    flex-basis:36px!important;
+  }
+  .daily-kkul-card{
+    grid-template-columns:minmax(0,1fr) 116px;
+    gap:12px;
+  }
+  .daily-kkul-message{
+    font-size:15px;
+  }
+  .daily-kkul-image-wrap{
+    width:116px;
+    height:116px;
+  }
+  .staff-accordion summary{
+    padding:16px 15px;
+    font-size:20px;
+  }
+  .staff-accordion-body{
+    padding:16px 15px 18px;
   }
 }

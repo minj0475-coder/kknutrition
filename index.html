@@ -3,8 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
 <title>급식 업무 포털</title>
 <link rel="stylesheet" href="assets/site.css">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="assets/app-icon-180.png">
 </head>
 <body>
 
@@ -43,9 +46,19 @@
   <div id="homeTodayMenu"></div>
 </section>
 
+<section class="card daily-kkul-card">
+  <div class="daily-kkul-copy">
+    <h2 class="section-title"><span class="num">오늘의</span>꿀꿀이</h2>
+    <p id="dailyKkulMessage" class="daily-kkul-message">오늘도 꿀꿀이가 응원해요!</p>
+  </div>
+  <div class="daily-kkul-image-wrap">
+    <img id="dailyKkulImage" class="daily-kkul-image" alt="오늘의 꿀꿀이" loading="lazy" decoding="async">
+  </div>
+</section>
+
 </main></section>
 <section id="daily" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">일일 업무</div><h1>하루 일정</h1><p class="subtitle">검수부터 퇴근 전 마무리까지 하루 업무 흐름을 시간대별로 정리했습니다.</p><img class="hero-asset" src="assets/pig-daily.png" alt=""></section>
-<section class="card"><h2 class="section-title"><span class="num">1</span>하루 일정표</h2><div class="schedule-wrap"><table class="schedule-table"><thead><tr><th>구분</th><th>시간</th><th>주요 업무</th></tr></thead><tbody><tr><td data-label="구분">검수</td><td data-label="시간">07:30</td><td data-label="주요 업무"><ul class="table-list"><li>식재료 검수</li><li>여름철 벌레 먹은 농산물은 일반농산물로 교환 요청</li><li>식재료 문제 발생 시 사진 기록 및 사유서 작성</li><li>검수 후 명세서·검수서·나이스 대조</li></ul></td></tr><tr><td data-label="구분">조회</td><td data-label="시간">검수 직후</td><td data-label="주요 업무"><ul class="table-list"><li>일일위생안전점검표 작성</li><li>알레르기 제거식 확인 및 공지</li><li>배식량 정해주기</li></ul></td></tr><tr><td data-label="구분">조리</td><td data-label="시간">오전~배식 전</td><td data-label="주요 업무"><ul class="table-list"><li>조리 진행 상황 확인</li><li>급식일지 작성</li><li>식사 후 식판 사진 홈페이지 업로드</li><li>조리 완료 후 보존식 담기</li></ul></td></tr><tr><td data-label="구분">배식</td><td data-label="시간">11:50~13:45</td><td data-label="주요 업무"><ul class="table-list"><li>교직원부터 배식 시작</li><li>배식, 식사 지도</li><li>잔반량 체크</li></ul></td></tr><tr><td data-label="구분">마무리</td><td data-label="시간">배식 후 오후</td><td data-label="주요 업무"><ul class="table-list"><li>그날 총 잔반량 확인</li><li>다음 날 발주, 레시피 및 전달 사항 확인</li></ul></td></tr><tr><td data-label="구분">퇴근</td><td data-label="시간">15:30</td><td data-label="주요 업무"><ul class="table-list"></ul></td></tr></tbody></table></div></section>
+<section class="card"><h2 class="section-title"><span class="num">1</span>하루 일정표</h2><div class="schedule-wrap"><table class="schedule-table"><thead><tr><th>구분</th><th>시간</th><th>주요 업무</th></tr></thead><tbody><tr><td data-label="구분">검수</td><td data-label="시간">07:30</td><td data-label="주요 업무"><ul class="table-list"><li>식재료 검수</li><li>여름철 벌레 먹은 농산물은 일반농산물로 교환 요청</li><li>식재료 문제 발생 시 사진 기록 및 사유서 작성</li><li>검수 후 명세서·검수서·나이스 대조</li></ul></td></tr><tr><td data-label="구분">조회</td><td data-label="시간">검수 직후</td><td data-label="주요 업무"><ul class="table-list"><li>일일위생안전점검표 작성</li><li><strong>알레르기 안내 체크리스트</strong><ul class="table-list compact-list"><li>알레르기 유발식품 확인</li><li>제거식 가능 여부 확인</li><li>담임·학년 안내 여부 확인</li></ul></li><li>배식량 정해주기</li></ul></td></tr><tr><td data-label="구분">조리</td><td data-label="시간">오전~배식 전</td><td data-label="주요 업무"><ul class="table-list"><li>조리 진행 상황 확인</li><li>급식일지 작성</li><li>식사 후 식판 사진 홈페이지 업로드</li><li>조리 완료 후 보존식 담기</li></ul></td></tr><tr><td data-label="구분">배식</td><td data-label="시간">11:50~13:45</td><td data-label="주요 업무"><ul class="table-list"><li>교직원부터 배식 시작</li><li>배식, 식사 지도</li><li>잔반량 체크</li></ul></td></tr><tr><td data-label="구분">마무리</td><td data-label="시간">배식 후 오후</td><td data-label="주요 업무"><ul class="table-list"><li>그날 총 잔반량 확인</li><li>다음 날 발주, 레시피 및 전달 사항 확인</li></ul></td></tr><tr><td data-label="구분">퇴근</td><td data-label="시간">15:30</td><td data-label="주요 업무"><ul class="table-list"></ul></td></tr></tbody></table></div></section>
 
 <section class="card weekly-check-card">
   <h2 class="section-title"><span class="num">2</span>매주 금요일 확인</h2>
@@ -589,40 +602,34 @@
 </section></main></section>
 <section id="staff" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">조리종사원 관리</div><h1>조리종사원</h1><p class="subtitle">조리종사원, 대체조리종사원이 숙지해야 할 사항을 정리했습니다.</p><img class="hero-asset" src="assets/pig-staff.png" alt=""></section>
 
-<section class="card section-nav-card">
-  <h2 class="section-title"><span class="num">조리종사원</span>바로가기</h2>
-  <div class="section-link-list">
-    <a href="#new-substitute">
-      <strong>1. 신규 대체 조리종사원 문자 발송</strong>
-      <span>문자 내용과 첨부용 안내문 파일</span>
-    </a>
-    <a href="#staff-notice">
-      <strong>2. 조리종사원 전달 사항</strong>
-      <span>첫 출근 조회 및 인사말, 상세 안내문</span>
-    </a>
-    <a href="#service-sheet">
-      <strong>3. 조리종사원 복무</strong>
-      <span>복무 사용 현황표 및 스프레드시트 링크</span>
-    </a>
-  </div>
-</section>
+<section class="card staff-accordion-card" id="new-substitute">
+  <details class="staff-accordion" open>
+    <summary><span class="num">1</span>신규 대체 조리종사원 문자 발송</summary>
+    <div class="staff-accordion-body">
+  <p class="muted">아래 내용을 복사해서 문자로 보내고, 안내 링크를 함께 보내면 됩니다.</p>
+  <div id="substituteCopyText" class="message-box">안녕하세요. 청수초등학교 급식실입니다.
 
-<section class="card" id="new-substitute">
-  <h2 class="section-title"><span class="num">1</span>신규 대체 조리종사원 문자 발송</h2>
-  <p class="muted">아래 내용을 복사해서 문자로 보내고, 첨부용 안내문 파일을 함께 보내면 됩니다.</p>
-  <div class="message-box">안녕하세요. 청수초등학교 급식실입니다.
-출근 전 확인사항을 첨부파일에 정리해 두었습니다.
+출근 전 확인사항을 안내 링크에 정리해 두었습니다.
 확인 부탁드립니다.
-서류 출력이 어려우시면 출근 후 도와드리겠습니다.</div>
+
+서류 출력이 어려우시면 출근 후 도와드리겠습니다.
+
+https://minj0475-coder.github.io/kknutrition/신규대체조리종사원_안내.html</div>
+  <button id="substituteCopyBtn" class="btn light copy-btn" type="button">복사하기</button>
+  <p id="substituteCopyStatus" class="mini" aria-live="polite"></p>
 
   <div class="download-card button-row">
     <a class="download-btn" href="신규대체조리종사원_안내.html" target="_blank" rel="noopener">신규 대체 조리종사원 안내</a>
     <a class="download-btn" href="신규대체조리종사원_안내.html" download>다운로드</a>
   </div>
+    </div>
+  </details>
 </section>
 
-<section class="card" id="staff-notice">
-  <h2 class="section-title"><span class="num">2</span>조리종사원 전달 사항</h2>
+<section class="card staff-accordion-card" id="staff-notice">
+  <details class="staff-accordion">
+    <summary><span class="num">2</span>조리종사원 전달 사항</summary>
+    <div class="staff-accordion-body">
 
   <div class="staff-layout">
     <div class="staff-block">
@@ -714,6 +721,8 @@
 
     </div>
   </div>
+    </div>
+  </details>
 </section>
 <section class="card" id="service-sheet">
   <h2 class="section-title"><span class="num">3</span>조리종사원 복무</h2>
@@ -755,4 +764,3 @@
 
 </body>
 </html>
-

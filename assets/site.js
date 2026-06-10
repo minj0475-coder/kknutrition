@@ -4,8 +4,82 @@ window.addEventListener("load",function(){if(typeof XLSX==="undefined"){var s=do
 
 const DEFAULT_SHEET_LINK = "https://docs.google.com/spreadsheets/d/1qlBNjqRtXsD-R8zTbEGudD4LLcNjL1VmM_J0MIOVVEE/edit?usp=sharing";
 const SHEET_LINK_KEY = "kkulkkoori_service_sheet_link";
+const DAILY_KKUL_KEY = "kkulkkoori_daily_character";
+const DAILY_KKUL_IMAGES = [
+  "assets/daily-kkul-chart.webp",
+  "assets/daily-kkul-meal.webp",
+  "assets/daily-kkul-heart.webp",
+  "assets/daily-kkul-question.webp",
+  "assets/daily-kkul-loupe.webp",
+  "assets/daily-kkul-cheer.webp",
+  "assets/daily-kkul-worry.webp",
+  "assets/daily-kkul-sparkle.webp",
+  "assets/daily-kkul-think.webp"
+];
+const DAILY_KKUL_MESSAGES = [
+  "오늘도 맛있는 급식을 준비해 볼까요?",
+  "오늘 일정도 미리 확인해 볼까요?",
+  "오늘도 즐겁고 안전하게 급식 운영해요!",
+  "필요한 자료도 꼼꼼히 확인해 볼까요?",
+  "오늘도 하나씩 확인하면 문제없어요!",
+  "작은 개선이 더 좋은 급식을 만듭니다.",
+  "오늘도 꿀꿀이가 응원해요!"
+];
 let uploadedMenuItems = [];
 let uploadedMenuFileName = "";
+
+function readDailyKkul() {
+  const today = getKoreanTodayKey();
+  try {
+    const saved = JSON.parse(localStorage.getItem(DAILY_KKUL_KEY) || "null");
+    if (saved && saved.date === today && Number.isInteger(saved.imageIndex) && Number.isInteger(saved.messageIndex)) {
+      return saved;
+    }
+  } catch(e) {}
+  const picked = {
+    date: today,
+    imageIndex: Math.floor(Math.random() * DAILY_KKUL_IMAGES.length),
+    messageIndex: Math.floor(Math.random() * DAILY_KKUL_MESSAGES.length)
+  };
+  try {
+    localStorage.setItem(DAILY_KKUL_KEY, JSON.stringify(picked));
+  } catch(e) {}
+  return picked;
+}
+
+function setupDailyKkul() {
+  const image = document.getElementById("dailyKkulImage");
+  const message = document.getElementById("dailyKkulMessage");
+  if (!image || !message) return;
+  const picked = readDailyKkul();
+  image.classList.remove("is-ready");
+  image.addEventListener("load", () => image.classList.add("is-ready"), { once: true });
+  image.src = DAILY_KKUL_IMAGES[picked.imageIndex % DAILY_KKUL_IMAGES.length];
+  message.textContent = DAILY_KKUL_MESSAGES[picked.messageIndex % DAILY_KKUL_MESSAGES.length];
+}
+
+async function copySubstituteMessage() {
+  const textBox = document.getElementById("substituteCopyText");
+  const status = document.getElementById("substituteCopyStatus");
+  if (!textBox) return;
+  const text = textBox.innerText.trim();
+  try {
+    await navigator.clipboard.writeText(text);
+    if (status) status.textContent = "문구를 복사했습니다.";
+  } catch(e) {
+    if (status) status.textContent = "복사할 문구를 선택해서 직접 복사해 주세요.";
+  }
+}
+
+function setupStaffAccordion() {
+  const copyBtn = document.getElementById("substituteCopyBtn");
+  if (copyBtn) copyBtn.addEventListener("click", copySubstituteMessage);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  setupDailyKkul();
+  setupStaffAccordion();
+});
 
 function getSheetInput() {
   return document.getElementById("sheetLinkInput");
