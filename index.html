@@ -2005,9 +2005,6 @@ nav a{
   pointer-events:none;
   user-select:none;
 }
-.mobile-home-asset{
-  display:none;
-}
 .card{
   border-radius:14px;
   padding:22px;
@@ -2665,6 +2662,13 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
 .annual-task strong{
   color:#43525a!important;
 }
+#home .hero-asset{
+  width:280px!important;
+  max-height:280px!important;
+  right:42px!important;
+  bottom:12px!important;
+  object-fit:contain!important;
+}
 .checklist li:before{
   background:#7fa7bd;
 }
@@ -2687,11 +2691,11 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
     padding:28px 112px 28px 24px;
   }
   #home .hero-asset{
-    width:86px;
-    max-height:96px;
-    right:18px;
-    top:24px;
-    bottom:auto;
+    width:110px!important;
+    max-height:112px!important;
+    right:16px!important;
+    top:64px!important;
+    bottom:auto!important;
   }
 }
 @media(max-width:640px){
@@ -2758,13 +2762,9 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
     min-height:206px;
   }
   #home .hero-asset{
-    display:none;
-  }
-  #home .mobile-home-asset{
     display:block!important;
-    position:absolute;
     width:108px!important;
-    height:108px!important;
+    height:auto!important;
     max-width:108px!important;
     max-height:108px!important;
     left:clamp(216px, 58vw, 252px)!important;
@@ -2839,7 +2839,7 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
   </div>
 </header>
 
-<section id="home" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">영양교사 꿀꿀이</div><h1>급식 업무 포털</h1><p class="subtitle">급식 업무를 깔끔하게 정리해서 보기 위해 만든 꿀꿀이의 급식 업무 포털입니다.</p><img class="hero-asset" src="assets/pig-home.png" alt=""><img class="mobile-home-asset" src="assets/pig-home.webp" alt=""></section>
+<section id="home" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">영양교사 꿀꿀이</div><h1>급식 업무 포털</h1><p class="subtitle">급식 업무를 깔끔하게 정리해서 보기 위해 만든 꿀꿀이의 급식 업무 포털입니다.</p><img class="hero-asset" src="assets/pig-home.webp" alt=""></section>
 
 </main></section>
 <section id="daily" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">일일 업무</div><h1>하루 일정</h1><p class="subtitle">검수부터 퇴근 전 마무리까지 하루 업무 흐름을 시간대별로 정리했습니다.</p><img class="hero-asset" src="assets/pig-daily.png" alt=""></section>
