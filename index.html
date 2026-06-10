@@ -3031,6 +3031,241 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
   }
 }
 
+/* 2026-06 mobile/header/table/menu polish */
+.home-today-card{
+  overflow:hidden;
+}
+.home-today-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+  margin-bottom:14px;
+}
+.home-today-date{
+  margin:4px 0 0;
+  color:#686a70;
+  font-weight:800;
+}
+.home-today-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:38px;
+  padding:8px 13px;
+  border-radius:999px;
+  border:1px solid #c7dbe5;
+  background:#edf6fa;
+  color:#43525a;
+  font-size:13px;
+  font-weight:900;
+  white-space:nowrap;
+}
+.home-today-empty{
+  margin:0;
+  padding:16px;
+  border:1px dashed #d7d0c7;
+  border-radius:14px;
+  background:#fbfaf7;
+  color:#686a70;
+  font-weight:800;
+}
+.home-today-summary{
+  margin:0 0 12px;
+  padding:12px 14px;
+  border:1px solid #e8ddb3;
+  border-radius:14px;
+  background:#fffdf2;
+  color:#43525a;
+  font-weight:900;
+  line-height:1.55;
+}
+.home-today-list{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+.home-today-menu-card{
+  min-width:0;
+  border:1px solid #dfdbd2;
+  border-left:5px solid #7fa7bd;
+  border-radius:12px;
+  background:#fff;
+  padding:14px;
+  box-shadow:0 8px 18px rgba(77,89,97,.055);
+}
+.home-today-menu-card h3{
+  margin:0 0 8px;
+  color:#43525a;
+  font-size:17px;
+  line-height:1.35;
+}
+.home-today-menu-card pre{
+  margin:0;
+  color:#444950;
+  font-family:inherit;
+  font-size:14px;
+  line-height:1.62;
+  white-space:pre-wrap;
+  word-break:keep-all;
+  overflow-wrap:anywhere;
+}
+.schedule-table,
+.simple-table,
+.clean-annual-table{
+  border-collapse:separate;
+  border-spacing:0;
+  overflow:hidden;
+  border:1px solid #dfdbd2;
+  border-radius:14px;
+  background:#fff;
+}
+.schedule-table th,
+.simple-table th,
+.clean-annual-table th{
+  background:#f1f2ee!important;
+  color:#43525a!important;
+  border-bottom:1px solid #dfdbd2;
+}
+.schedule-table td,
+.simple-table td,
+.clean-annual-table td{
+  border-bottom:1px solid #ece7df;
+}
+.schedule-table tbody tr:last-child td,
+.simple-table tbody tr:last-child td,
+.clean-annual-table tbody tr:last-child td{
+  border-bottom:0;
+}
+@media(max-width:900px){
+  body{
+    padding-top:112px;
+  }
+  .top{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    width:100%;
+  }
+  .top-inner{
+    flex-direction:column;
+    align-items:stretch;
+    gap:10px;
+  }
+  .brand{
+    justify-content:center;
+  }
+  nav{
+    display:flex;
+    flex-wrap:nowrap;
+    justify-content:flex-start;
+    overflow-x:auto;
+    padding:2px 0 6px;
+    -webkit-overflow-scrolling:touch;
+  }
+  nav a{
+    flex:0 0 auto;
+    min-height:36px;
+    padding:7px 12px;
+    font-size:13px;
+  }
+  .mobile-nav{
+    display:none!important;
+  }
+  .page-section{
+    scroll-margin-top:116px;
+  }
+  #home .hero{
+    min-height:260px;
+    padding:30px 220px 30px 26px;
+  }
+  #home .hero-asset{
+    display:block!important;
+    width:190px!important;
+    max-width:190px!important;
+    max-height:200px!important;
+    right:18px!important;
+    left:auto!important;
+    top:46px!important;
+    bottom:auto!important;
+  }
+}
+@media(max-width:640px){
+  body{
+    padding-top:112px;
+  }
+  .top{
+    overflow-x:hidden;
+  }
+  .top-inner{
+    padding:9px 10px 8px;
+  }
+  .brand{
+    font-size:16px;
+  }
+  nav{
+    display:flex!important;
+    width:100%;
+    gap:6px;
+  }
+  nav a{
+    border-radius:999px;
+    background:#fff;
+    border:1px solid #e3dfd8;
+    box-shadow:0 3px 8px rgba(77,89,97,.045);
+  }
+  .page-section{
+    scroll-margin-top:124px;
+  }
+  #home .hero{
+    min-height:246px;
+    padding:24px 132px 24px 18px;
+  }
+  #home .hero-asset{
+    width:122px!important;
+    max-width:122px!important;
+    max-height:132px!important;
+    right:6px!important;
+    left:auto!important;
+    top:72px!important;
+  }
+  #home .hero .subtitle{
+    max-width:none;
+  }
+  .home-today-head{
+    flex-direction:column;
+    gap:8px;
+  }
+  .home-today-link{
+    width:100%;
+  }
+  .home-today-list{
+    grid-template-columns:1fr;
+  }
+  .schedule-wrap{
+    border-radius:14px;
+  }
+  .schedule-table tr,
+  main .schedule-table.monthly-table tr,
+  body:has(.weekly-check-card) main .schedule-table:not(.annual-table) tr{
+    border:1px solid #dfdbd2!important;
+    border-radius:14px!important;
+    background:#fff!important;
+    box-shadow:0 8px 16px rgba(77,89,97,.055);
+  }
+  .schedule-table td,
+  main .schedule-table.monthly-table td,
+  body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td{
+    border-bottom:1px solid #ece7df!important;
+  }
+  .schedule-table td:last-child,
+  main .schedule-table.monthly-table td:last-child,
+  body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:last-child{
+    border-bottom:0!important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -3060,6 +3295,17 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
 </header>
 
 <section id="home" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">영양교사 꿀꿀이</div><h1>급식 업무 포털</h1><p class="subtitle">급식 업무를 깔끔하게 정리해서 보기 위해 만든 꿀꿀이의 급식 업무 포털입니다.</p><img class="hero-asset" src="assets/pig-home.webp" alt=""></section>
+
+<section class="card home-today-card">
+  <div class="home-today-head">
+    <div>
+      <h2 class="section-title"><span class="num">오늘</span>오늘의 메뉴</h2>
+      <p id="homeTodayDate" class="home-today-date"></p>
+    </div>
+    <a class="home-today-link" href="#today-menu">전체 메뉴 보기</a>
+  </div>
+  <div id="homeTodayMenu"></div>
+</section>
 
 </main></section>
 <section id="daily" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">일일 업무</div><h1>하루 일정</h1><p class="subtitle">검수부터 퇴근 전 마무리까지 하루 업무 흐름을 시간대별로 정리했습니다.</p><img class="hero-asset" src="assets/pig-daily.png" alt=""></section>
@@ -3099,7 +3345,7 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
       <div class="menu-upload-row">
         <label class="file-label-v2" for="menuExcelInput">엑셀 업로드</label>
         <input id="menuExcelInput" class="menu-file-hidden" type="file" accept=".xlsx,.xls">
-        <span id="todayMenuStatus" class="upload-status-v2">조리방법조회 엑셀 파일을 선택하면 화면이 바뀌고 자동저장됩니다.</span>
+        <span id="todayMenuStatus" class="upload-status-v2">조리방법조회 엑셀 파일을 선택하면 화면이 바뀌고 현재 브라우저에 자동저장됩니다.</span>
       </div>
     </div>
     <div id="todayMenuList" class="today-menu-results"></div>
@@ -3796,6 +4042,7 @@ const MENU_LEGACY_STORAGE_KEYS = ["cookingMethodUploadedData_v4", "cookingMethod
 const MENU_WINDOW_PREFIX = "COOKING_METHOD_DATA::";
 const MENU_DB_NAME = "CookingMethodUploadDB";
 const MENU_DB_STORE = "payload";
+const MENU_REMOTE_URL = "data/today-menu.json";
 let currentMenuData = [];
 let currentMenuFileName = "";
 
@@ -3975,6 +4222,36 @@ function parseMenuPayload(payload) {
   return null;
 }
 
+function normalizeMenuPayloadObject(parsed, source) {
+  const data = Array.isArray(parsed) ? parsed : parsed && parsed.data;
+  if (!Array.isArray(data) || !data.length) return null;
+  return {
+    version: parsed.version || 5,
+    savedAt: Number(parsed.savedAt || 0),
+    fileName: parsed.fileName || "",
+    data,
+    source: source || parsed.source || ""
+  };
+}
+
+function chooseNewestMenuPayload(current, candidate) {
+  if (!candidate) return current;
+  if (!current) return candidate;
+  return Number(candidate.savedAt || 0) > Number(current.savedAt || 0) ? candidate : current;
+}
+
+async function loadRemoteMenuData() {
+  if (!location.protocol.startsWith("http")) return null;
+  try {
+    const response = await fetch(`${MENU_REMOTE_URL}?v=${Date.now()}`, { cache: "no-store" });
+    if (!response.ok) return null;
+    return normalizeMenuPayloadObject(await response.json(), "remote");
+  } catch (error) {
+    console.warn("remote menu load failed", error);
+    return null;
+  }
+}
+
 function openMenuDB() {
   return new Promise((resolve, reject) => {
     if (!window.indexedDB) return reject(new Error("IndexedDB unavailable"));
@@ -4030,18 +4307,17 @@ async function saveUploadedMenuData(data, fileName) {
 
 async function loadSavedMenuData() {
   let obj = null;
+  obj = chooseNewestMenuPayload(obj, await loadRemoteMenuData());
   try {
-    obj = parseMenuPayload(localStorage.getItem(MENU_STORAGE_KEY));
-    if (obj) return obj;
+    obj = chooseNewestMenuPayload(obj, parseMenuPayload(localStorage.getItem(MENU_STORAGE_KEY)));
     for (const key of MENU_LEGACY_STORAGE_KEYS) {
-      obj = parseMenuPayload(localStorage.getItem(key));
-      if (obj) return obj;
+      obj = chooseNewestMenuPayload(obj, parseMenuPayload(localStorage.getItem(key)));
     }
   } catch (error) { console.warn("localStorage load failed", error); }
-  try { obj = parseMenuPayload(await loadMenuFromIndexedDB()); if (obj) return obj; } catch (error) { console.warn("IndexedDB load failed", error); }
-  try { obj = parseMenuPayload(sessionStorage.getItem(MENU_STORAGE_KEY)); if (obj) return obj; } catch (error) { console.warn("sessionStorage load failed", error); }
-  try { obj = parseMenuPayload(window.name); if (obj) return obj; } catch (error) { console.warn("window.name load failed", error); }
-  return null;
+  try { obj = chooseNewestMenuPayload(obj, parseMenuPayload(await loadMenuFromIndexedDB())); } catch (error) { console.warn("IndexedDB load failed", error); }
+  try { obj = chooseNewestMenuPayload(obj, parseMenuPayload(sessionStorage.getItem(MENU_STORAGE_KEY))); } catch (error) { console.warn("sessionStorage load failed", error); }
+  try { obj = chooseNewestMenuPayload(obj, parseMenuPayload(window.name)); } catch (error) { console.warn("window.name load failed", error); }
+  return obj;
 }
 
 function formatMenuDateVariants(dateText) {
@@ -4081,6 +4357,57 @@ function matchMenuQuery(haystack, query) {
   });
 }
 
+function getKoreanTodayKey() {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Seoul",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).formatToParts(new Date()).reduce((acc, part) => {
+    if (part.type !== "literal") acc[part.type] = part.value;
+    return acc;
+  }, {});
+  return `${parts.year}-${parts.month}-${parts.day}`;
+}
+
+function formatKoreanTodayLabel() {
+  return new Intl.DateTimeFormat("ko-KR", {
+    timeZone: "Asia/Seoul",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    weekday: "long"
+  }).format(new Date());
+}
+
+function getTodayMenuSection(data) {
+  const key = getKoreanTodayKey();
+  return (data || []).find(section => section.key === key) || null;
+}
+
+function renderHomeTodayMenu(data) {
+  const dateEl = document.getElementById("homeTodayDate");
+  const target = document.getElementById("homeTodayMenu");
+  if (dateEl) dateEl.textContent = formatKoreanTodayLabel();
+  if (!target) return;
+  const section = getTodayMenuSection(data);
+  if (!section) {
+    target.innerHTML = `<p class="home-today-empty">오늘 날짜의 메뉴가 아직 없습니다. 오늘의 메뉴 탭에서 조리방법조회 엑셀을 업로드하면 당일 메뉴만 홈에 표시됩니다.</p>`;
+    return;
+  }
+  const names = section.items.map(item => item.name);
+  target.innerHTML = `
+    <p class="home-today-summary">${menuEsc(names.join(", "))}</p>
+    <div class="home-today-list">
+      ${section.items.map(item => `
+        <article class="home-today-menu-card">
+          <h3>${menuEsc(item.name)}</h3>
+          <pre>${menuEsc(item.method || "등록된 조리방법 없음")}</pre>
+        </article>
+      `).join("")}
+    </div>`;
+}
+
 function renderTodayMenu(data) {
   currentMenuData = data || [];
   const list = document.getElementById("todayMenuList");
@@ -4102,6 +4429,7 @@ function renderTodayMenu(data) {
       </section>`;
   }).join("");
   filterTodayMenuList();
+  renderHomeTodayMenu(currentMenuData);
 }
 
 function updateTodayMenuHeader(data, fileName, statusMessage) {
@@ -4168,7 +4496,7 @@ async function handleTodayMenuUpload(event) {
     const savedMethods = await saveUploadedMenuData(best.data, file.name);
     renderTodayMenu(best.data);
     const menuCount = best.data.reduce((sum, section) => sum + section.items.length, 0);
-    updateTodayMenuHeader(best.data, file.name, `<span class="ok">${menuEsc(file.name)} 적용 완료 · ${best.data.length}일 / ${menuCount}개 메뉴${savedMethods.length ? " · 자동저장 완료" : " · 화면 적용 완료(자동저장은 브라우저 제한으로 실패)"}</span>`);
+    updateTodayMenuHeader(best.data, file.name, `<span class="ok">${menuEsc(file.name)} 적용 완료 · ${best.data.length}일 / ${menuCount}개 메뉴${savedMethods.length ? " · 현재 브라우저 자동저장 완료" : " · 화면 적용 완료(자동저장은 브라우저 제한으로 실패)"}</span>`);
   } catch (error) {
     currentMenuData = [];
     currentMenuFileName = "";
@@ -4194,10 +4522,11 @@ async function setupTodayMenu() {
     currentMenuFileName = saved.fileName || "";
     renderTodayMenu(saved.data);
     const menuCount = saved.data.reduce((sum, section) => sum + section.items.length, 0);
-    updateTodayMenuHeader(saved.data, currentMenuFileName, `<span class="ok">마지막 업로드 자료 유지 중${currentMenuFileName ? " · " + menuEsc(currentMenuFileName) : ""} · ${saved.data.length}일 / ${menuCount}개 메뉴</span>`);
+    const sourceText = saved.source === "remote" ? "공유 데이터 적용 중" : "마지막 업로드 자료 유지 중";
+    updateTodayMenuHeader(saved.data, currentMenuFileName, `<span class="ok">${sourceText}${currentMenuFileName ? " · " + menuEsc(currentMenuFileName) : ""} · ${saved.data.length}일 / ${menuCount}개 메뉴</span>`);
   } else {
     renderTodayMenu([]);
-    updateTodayMenuHeader([], "", "조리방법조회 엑셀 파일을 선택하면 화면이 바뀌고 자동저장됩니다.");
+    updateTodayMenuHeader([], "", "조리방법조회 엑셀 파일을 선택하면 화면이 바뀌고 현재 브라우저에 자동저장됩니다.");
   }
 }
 
