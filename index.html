@@ -2611,22 +2611,33 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
   background:#ffffff!important;
   color:#33353a!important;
 }
+.annual-desktop-card .clean-annual-table tbody tr:nth-child(odd) td:not(.month-cell){
+  background:#ffffff!important;
+}
+.annual-desktop-card .clean-annual-table tbody tr:nth-child(even) td:not(.month-cell){
+  background:#fbfaf4!important;
+}
 .annual-desktop-card .clean-annual-table td.month-cell{
   background:#f7f4df!important;
   color:#43525a!important;
 }
 .annual-desktop-card .clean-annual-table td.task-cell{
-  background:#f6f5f1!important;
   color:#43525a!important;
 }
+.annual-desktop-card .clean-annual-table tbody tr:nth-child(odd) td.task-cell{
+  background:#f6f5f1!important;
+}
+.annual-desktop-card .clean-annual-table tbody tr:nth-child(even) td.task-cell{
+  background:#edf6fa!important;
+}
 .annual-desktop-card .clean-annual-table tbody tr:hover td{
-  background:#ffffff!important;
+  background:#f4f8f8!important;
 }
 .annual-desktop-card .clean-annual-table tbody tr:hover td.month-cell{
   background:#f7f4df!important;
 }
 .annual-desktop-card .clean-annual-table tbody tr:hover td.task-cell{
-  background:#f6f5f1!important;
+  background:#e6f1f5!important;
 }
 .annual-month-card h3{
   background:#f7f4df!important;
@@ -2634,6 +2645,12 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
 }
 .annual-task{
   background:#ffffff;
+}
+.annual-task:nth-child(odd){
+  background:#ffffff;
+}
+.annual-task:nth-child(even){
+  background:#fbfaf4;
 }
 .annual-task strong{
   color:#43525a!important;
