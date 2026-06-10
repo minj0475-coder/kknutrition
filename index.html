@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
@@ -2811,6 +2811,226 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
   }
 }
 
+
+
+/* 오늘의 메뉴 탭: 급식일별 조리방법 조회 */
+.menu-upload-panel-v2{
+  grid-template-columns:1fr;
+  align-items:stretch;
+  gap:12px;
+  background:linear-gradient(135deg,#fff 0%,#f8f7f1 54%,#edf6fa 100%);
+}
+.menu-search-row,
+.menu-upload-row{
+  display:grid;
+  gap:7px;
+}
+.menu-search-box{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+.menu-search-input{
+  width:100%;
+  min-height:44px;
+  padding:10px 13px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#fff;
+  color:var(--ink);
+  font:inherit;
+  font-weight:750;
+}
+.menu-search-input:focus{
+  border-color:#a9c6d6;
+  outline:3px solid rgba(126,166,189,.22);
+}
+
+#menuClearBtn{
+  flex:0 0 auto;
+  min-width:76px;
+  padding-left:16px;
+  padding-right:16px;
+  white-space:nowrap;
+  word-break:keep-all;
+}
+.menu-upload-row{
+  grid-template-columns:auto minmax(0,1fr);
+  align-items:center;
+}
+.file-label-v2{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:42px;
+  padding:10px 14px;
+  border-radius:999px;
+  background:#6f93a6;
+  border:1px solid #6f93a6;
+  color:#fff;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 8px 16px rgba(111,147,166,.18);
+}
+.menu-file-hidden{
+  position:absolute;
+  inline-size:1px;
+  block-size:1px;
+  opacity:0;
+  overflow:hidden;
+}
+.upload-status-v2{
+  min-width:0;
+  color:#686a70;
+  font-size:13px;
+  font-weight:800;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.ok{color:#4f6748;font-weight:900}
+.error{color:#9f3a38;font-weight:900}
+.date-section-v2{
+  background:#fffdf8;
+  border:1px solid #dfdbd2;
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 10px 24px rgba(77,89,97,.07);
+}
+.date-head-v2{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:flex-start;
+  border-bottom:2px solid #eef0ea;
+  padding-bottom:12px;
+  margin-bottom:12px;
+}
+.date-head-v2 h2{
+  margin:0;
+  color:#43525a;
+  font-size:22px;
+  font-weight:950;
+}
+.meal-line-v2{
+  margin:4px 0 0;
+  color:#686a70;
+  font-size:14px;
+  font-weight:800;
+}
+.count-v2{
+  flex:0 0 auto;
+  background:#f7f4df;
+  color:#5e5740;
+  border:1px solid #e8ddb3;
+  border-radius:999px;
+  padding:5px 10px;
+  font-size:13px;
+  font-weight:900;
+}
+.menu-summary-v2{
+  margin:0 0 14px;
+  padding:12px 14px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#f7f4df 0%,#f7f0f2 100%);
+  border:1px solid #e9ddd8;
+  color:#4b4743;
+  font-weight:900;
+  overflow-wrap:anywhere;
+}
+.items-v2{
+  display:grid;
+  gap:12px;
+}
+.menu-card-v2{
+  border:1px solid #e7e0d9;
+  border-radius:16px;
+  padding:14px;
+  background:#fff;
+  box-shadow:0 5px 14px rgba(216,200,220,.10);
+}
+.menu-card-v2:nth-child(4n+1){border-left:6px solid #8fb4c8}
+.menu-card-v2:nth-child(4n+2){border-left:6px solid #ead7dc}
+.menu-card-v2:nth-child(4n+3){border-left:6px solid #c9d2c1}
+.menu-card-v2:nth-child(4n+4){border-left:6px solid #eed8cb}
+.menu-card-v2 h3{
+  margin:0 0 10px;
+  color:#43525a;
+  font-size:19px;
+  font-weight:950;
+}
+.materials-detail{
+  margin:0 0 10px;
+  color:#555a60;
+}
+.materials-detail summary{
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  padding:5px 10px;
+  border-radius:999px;
+  background:#edf6fa;
+  border:1px solid #c7dbe5;
+  color:#43525a;
+  font-size:13px;
+  font-weight:900;
+}
+.materials-detail pre{
+  margin:8px 0 0;
+  padding:10px 12px;
+  border-radius:12px;
+  background:#f6f5f1;
+  border:1px solid #dfdbd2;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  font-family:inherit;
+  font-size:14px;
+  line-height:1.65;
+}
+.plain-method{
+  margin:0;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  font-family:inherit;
+  font-size:15px;
+  line-height:1.72;
+  color:#33353a;
+  background:transparent;
+  border:0;
+  padding:0;
+}
+.plain-method.muted{
+  color:#888;
+}
+@media(max-width:640px){
+  .menu-search-box,
+  .menu-upload-row{
+    grid-template-columns:1fr;
+    display:grid;
+  }
+  .menu-search-box .btn,
+  .file-label-v2{
+    width:100%;
+  }
+  .upload-status-v2{
+    white-space:normal;
+  }
+  .date-section-v2{
+    padding:14px;
+    border-radius:16px;
+  }
+  .date-head-v2{
+    flex-direction:column;
+    gap:8px;
+  }
+  .date-head-v2 h2{
+    font-size:20px;
+  }
+  .menu-card-v2{
+    border-radius:14px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2863,31 +3083,27 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
     </table>
   </div>
 </section></main></section>
-<section id="today-menu" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">두근두근 오늘의 식단</div><h1>오늘의 메뉴</h1><p class="subtitle">조리방법 엑셀 파일을 업로드하면 선택한 날짜의 메뉴별 재료와 조리방법을 바로 확인할 수 있습니다.</p><img class="hero-asset" src="assets/pig-recipes.png" alt=""></section>
+<section id="today-menu" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">두근두근 오늘의 식단</div><h1>오늘의 메뉴</h1><p class="subtitle">조리방법 조회 엑셀 파일을 업로드하면 급식일별로 메뉴가 묶여 표시됩니다. 업로드한 자료는 자동저장되어 새로고침 후에도 유지됩니다.</p><img class="hero-asset" src="assets/pig-recipes.png" alt=""></section>
 
 <section class="card">
-  <h2 class="section-title"><span class="num">1</span>조리방법 조회</h2>
+  <h2 class="section-title">조리방법 조회</h2>
   <div class="today-menu-tool">
-    <div class="menu-upload-panel">
-      <div class="menu-control-grid">
-        <label class="sheet-link-label" for="menuExcelInput">조리방법 엑셀 파일
-          <input id="menuExcelInput" class="menu-file-input" type="file" accept=".xlsx,.xls">
-        </label>
-        <label class="sheet-link-label" for="menuDateInput">조회 날짜
-          <input id="menuDateInput" class="menu-date-input" type="date">
-        </label>
+    <div class="menu-upload-panel menu-upload-panel-v2">
+      <div class="menu-search-row">
+        <label class="sheet-link-label" for="menuSearchInput">검색</label>
+        <div class="menu-search-box">
+          <input id="menuSearchInput" class="menu-search-input" type="search" placeholder="급식일·메뉴명 검색 예) 7월 1일, 7/1, 한우쌀국수">
+          <button id="menuClearBtn" class="btn light" type="button">초기화</button>
+        </div>
       </div>
-      <button class="download-btn" type="button" onclick="showTodayMenu()">오늘 날짜 보기</button>
-    </div>
-    <div class="today-menu-summary">
-      <div>
-        <strong id="todayMenuTitle">엑셀 파일을 업로드해 주세요</strong>
-        <span id="todayMenuMeta">업로드한 파일은 서버로 전송되지 않고 현재 브라우저에서만 읽습니다.</span>
+      <div class="menu-upload-row">
+        <label class="file-label-v2" for="menuExcelInput">엑셀 업로드</label>
+        <input id="menuExcelInput" class="menu-file-hidden" type="file" accept=".xlsx,.xls">
+        <span id="todayMenuStatus" class="upload-status-v2">조리방법조회 엑셀 파일을 선택하면 화면이 바뀌고 자동저장됩니다.</span>
       </div>
     </div>
-    <div id="todayMenuResults" class="today-menu-results">
-      <div class="today-menu-empty">조리방법조회 엑셀 파일을 선택하면 날짜별 메뉴가 표시됩니다.</div>
-    </div>
+    <div id="todayMenuList" class="today-menu-results"></div>
+    <div id="todayMenuNoResult" class="today-menu-empty" style="display:none;">검색 결과가 없습니다.</div>
   </div>
 </section></main></section>
 <section id="monthly" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">월간 업무</div><h1>한 달 일정</h1><p class="subtitle">매월 반복되는 급식 업무를 시기별로 보기 쉽게 정리한 한 달 일정표입니다.<br>
@@ -3536,6 +3752,7 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
   </div>
 </section></main></section>
 <script src="assets/xlsx.full.min.js"></script>
+<script>window.addEventListener("load",function(){if(typeof XLSX==="undefined"){var s=document.createElement("script");s.src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js";document.head.appendChild(s);}});</script>
 <script>
 const DEFAULT_SHEET_LINK = "https://docs.google.com/spreadsheets/d/1qlBNjqRtXsD-R8zTbEGudD4LLcNjL1VmM_J0MIOVVEE/edit?usp=sharing";
 const SHEET_LINK_KEY = "kkulkkoori_service_sheet_link";
@@ -3574,48 +3791,356 @@ function openSheetLink() {
 
 document.addEventListener("DOMContentLoaded", loadSheetLink);
 
-function getKoreaToday() {
-  const parts = new Intl.DateTimeFormat("en", {
-    timeZone: "Asia/Seoul",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit"
-  }).formatToParts(new Date()).reduce((acc, part) => {
-    acc[part.type] = part.value;
-    return acc;
-  }, {});
-  return `${parts.year}-${parts.month}-${parts.day}`;
+const MENU_STORAGE_KEY = "cookingMethodUploadedData_v5";
+const MENU_LEGACY_STORAGE_KEYS = ["cookingMethodUploadedData_v4", "cookingMethodUploadedData_v3", "cookingMethodUploadedData_v2"];
+const MENU_WINDOW_PREFIX = "COOKING_METHOD_DATA::";
+const MENU_DB_NAME = "CookingMethodUploadDB";
+const MENU_DB_STORE = "payload";
+let currentMenuData = [];
+let currentMenuFileName = "";
+
+function menuEsc(value) {
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"}[ch]));
 }
 
-function formatKoreanDate(dateKey) {
-  if (!dateKey) return "";
-  const [year, month, day] = dateKey.split("-");
-  return `${Number(year)}년 ${Number(month)}월 ${Number(day)}일`;
-}
-
-function parseMenuDate(value) {
-  const text = String(value || "").replace(/\s+/g, " ");
-  const match = text.match(/급식일\s*:\s*(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일/);
-  if (!match) return "";
-  return `${match[1]}-${match[2].padStart(2, "0")}-${match[3].padStart(2, "0")}`;
-}
-
-function cleanMenuText(value) {
-  return String(value || "").replace(/\r/g, "").trim();
-}
-
-function parseMealInfo(value) {
-  const text = cleanMenuText(value);
-  if (!text || text.includes("식사구분") || text.includes("비   고")) {
-    return null;
+function menuCleanText(value) {
+  let text = String(value ?? "").replace(/\r\n/g, "\n").replace(/\r/g, "\n").replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, "");
+  const lines = text.split("\n").map(line => line.replace(/\s+$/g, ""));
+  const output = [];
+  let blankCount = 0;
+  for (const line of lines) {
+    if (line.trim() === "") {
+      blankCount += 1;
+      if (blankCount <= 2) output.push("");
+    } else {
+      blankCount = 0;
+      output.push(line);
+    }
   }
-  const lines = text.split("\n").map(line => line.trim()).filter(Boolean);
-  const countMatch = text.match(/\(([^)]*명)\)/);
-  return {
-    label: lines[0] || "",
-    count: countMatch ? countMatch[1].replace(/\s+/g, " ").trim() : "",
-    raw: text
-  };
+  return output.join("\n").trim();
+}
+
+function menuCompact(value) {
+  return menuCleanText(value).replace(/[ \n\t\r]/g, "");
+}
+
+function menuDateKeyAndDisplay(value) {
+  const match = String(value || "").match(/(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일\s*\(?([^)]*)\)?/);
+  if (!match) return null;
+  const year = match[1];
+  const month = String(Number(match[2])).padStart(2, "0");
+  const day = String(Number(match[3])).padStart(2, "0");
+  const weekday = (match[4] || "").trim();
+  return { key: `${year}-${month}-${day}`, date: `${year}년 ${month}월 ${day}일${weekday ? `(${weekday})` : ""}` };
+}
+
+function updateMenuColumns(cells, cols) {
+  cells.forEach((cell, index) => {
+    const text = menuCompact(cell);
+    if (text.includes("식사구분")) cols.meal = index;
+    else if (text === "구분" || (text.endsWith("구분") && !text.includes("식사"))) cols.menu = index;
+    else if (text.includes("사용재료")) cols.materials = index;
+    else if (text.includes("요리방법")) cols.method = index;
+  });
+}
+
+function getMenuCell(cells, index) {
+  return index < cells.length ? menuCleanText(cells[index]) : "";
+}
+
+function parseMenuRows(rows) {
+  const map = new Map();
+  let currentKey = null;
+  let currentMeal = "";
+  let lastItem = null;
+  const cols = { meal: 1, menu: 2, materials: 3, method: 8 };
+
+  for (const rawRow of rows) {
+    const cells = (rawRow || []).map(menuCleanText);
+    if (!cells.some(Boolean)) continue;
+
+    let foundDate = null;
+    for (const cell of cells) {
+      foundDate = menuDateKeyAndDisplay(cell);
+      if (foundDate) break;
+    }
+    if (foundDate) {
+      if (!map.has(foundDate.key)) map.set(foundDate.key, { key: foundDate.key, date: foundDate.date, meal: "", items: [] });
+      if (currentKey !== foundDate.key) {
+        currentKey = foundDate.key;
+        currentMeal = "";
+        lastItem = null;
+      }
+      continue;
+    }
+
+    if (cells.some(cell => menuCompact(cell).includes("요리방법") || menuCompact(cell) === "구분" || menuCompact(cell).includes("식사구분"))) {
+      updateMenuColumns(cells, cols);
+      continue;
+    }
+
+    const meal = getMenuCell(cells, cols.meal);
+    const name = getMenuCell(cells, cols.menu);
+    const materials = getMenuCell(cells, cols.materials);
+    const method = getMenuCell(cells, cols.method);
+    const joined = cells.join(" ");
+
+    if (!meal && !name && !materials && !method) continue;
+    if (meal === "청수초등학교" || meal.startsWith("비") || /^\s*-\s*\d+\s*-\s*$/.test(joined)) continue;
+    if (!currentKey) continue;
+
+    const section = map.get(currentKey);
+    if (meal && (meal.includes("명") || ["중식", "석식", "조식"].some(word => meal.includes(word)))) {
+      currentMeal = meal.split(/\s+/).join(" ");
+      if (!section.meal) section.meal = currentMeal;
+    }
+
+    if (name && menuCompact(name) !== "구분") {
+      const item = { name, materials, method, meal: currentMeal || section.meal };
+      section.items.push(item);
+      lastItem = item;
+    } else if (lastItem && (materials || method)) {
+      if (materials) lastItem.materials = menuCleanText(lastItem.materials ? `${lastItem.materials}\n${materials}` : materials);
+      if (method) lastItem.method = menuCleanText(lastItem.method ? `${lastItem.method}\n${method}` : method);
+    }
+  }
+
+  const parsed = [];
+  for (const section of map.values()) {
+    const items = [];
+    for (const item of section.items) {
+      item.name = menuCleanText(item.name);
+      if (!item.name) continue;
+      item.materials = menuCleanText(item.materials || "");
+      item.method = menuCleanText(item.method || "");
+      if (!item.method) {
+        item.method = "등록된 조리방법 없음";
+        item.muted = true;
+      } else {
+        item.muted = false;
+      }
+      items.push(item);
+    }
+    if (items.length) {
+      section.items = items;
+      parsed.push(section);
+    }
+  }
+  parsed.sort((a, b) => a.key.localeCompare(b.key));
+  return parsed;
+}
+
+function menuSheetToRows(sheet) {
+  const xlsx = getXlsxLib();
+  const ref = sheet["!ref"];
+  if (!ref || !xlsx) return [];
+  const range = xlsx.utils.decode_range(ref);
+  const rows = [];
+  for (let row = range.s.r; row <= range.e.r; row++) {
+    const arr = [];
+    for (let col = range.s.c; col <= range.e.c; col++) {
+      const addr = xlsx.utils.encode_cell({ r: row, c: col });
+      const cell = sheet[addr];
+      arr[col] = menuCleanText(cell ? (cell.w ?? cell.v ?? "") : "");
+    }
+    rows.push(arr);
+  }
+  return rows;
+}
+
+function chooseAndParseMenuWorkbook(workbook) {
+  let best = { name: "", data: [], score: -1 };
+  for (const sheetName of workbook.SheetNames) {
+    const sheet = workbook.Sheets[sheetName];
+    const rows = menuSheetToRows(sheet);
+    const data = parseMenuRows(rows);
+    const flat = rows.flat().join(" ");
+    const score = data.reduce((sum, section) => sum + section.items.length, 0) * 100 + (flat.match(/급식일/g) || []).length * 10 + (flat.includes("요") && flat.includes("방법") ? 5 : 0);
+    if (score > best.score) best = { name: sheetName, data, score };
+  }
+  return best;
+}
+
+function makeMenuPayload(data, fileName) {
+  return JSON.stringify({ version: 5, savedAt: Date.now(), fileName: fileName || "", data });
+}
+
+function parseMenuPayload(payload) {
+  if (!payload) return null;
+  if (String(payload).startsWith(MENU_WINDOW_PREFIX)) payload = String(payload).slice(MENU_WINDOW_PREFIX.length);
+  try {
+    const parsed = JSON.parse(payload);
+    if (parsed && Array.isArray(parsed.data) && parsed.data.length) return parsed;
+  } catch (error) {}
+  return null;
+}
+
+function openMenuDB() {
+  return new Promise((resolve, reject) => {
+    if (!window.indexedDB) return reject(new Error("IndexedDB unavailable"));
+    const request = indexedDB.open(MENU_DB_NAME, 1);
+    request.onupgradeneeded = () => request.result.createObjectStore(MENU_DB_STORE);
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error || new Error("IndexedDB open failed"));
+  });
+}
+
+async function saveMenuToIndexedDB(payload) {
+  const db = await openMenuDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(MENU_DB_STORE, "readwrite");
+    tx.objectStore(MENU_DB_STORE).put(payload, "latest");
+    tx.oncomplete = () => { db.close(); resolve(); };
+    tx.onerror = () => { db.close(); reject(tx.error || new Error("IndexedDB save failed")); };
+  });
+}
+
+async function loadMenuFromIndexedDB() {
+  const db = await openMenuDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(MENU_DB_STORE, "readonly");
+    const request = tx.objectStore(MENU_DB_STORE).get("latest");
+    request.onsuccess = () => { db.close(); resolve(request.result || null); };
+    request.onerror = () => { db.close(); reject(request.error || new Error("IndexedDB load failed")); };
+  });
+}
+
+async function saveUploadedMenuData(data, fileName) {
+  const payload = makeMenuPayload(data, fileName);
+  const methods = [];
+  try {
+    localStorage.setItem(MENU_STORAGE_KEY, payload);
+    if (localStorage.getItem(MENU_STORAGE_KEY) === payload) methods.push("localStorage");
+  } catch (error) { console.warn("localStorage save failed", error); }
+  try {
+    sessionStorage.setItem(MENU_STORAGE_KEY, payload);
+    if (sessionStorage.getItem(MENU_STORAGE_KEY) === payload) methods.push("sessionStorage");
+  } catch (error) { console.warn("sessionStorage save failed", error); }
+  try {
+    window.name = MENU_WINDOW_PREFIX + payload;
+    if (window.name === MENU_WINDOW_PREFIX + payload) methods.push("window.name");
+  } catch (error) { console.warn("window.name save failed", error); }
+  try {
+    await saveMenuToIndexedDB(payload);
+    const back = parseMenuPayload(await loadMenuFromIndexedDB());
+    if (back && back.data.length) methods.push("IndexedDB");
+  } catch (error) { console.warn("IndexedDB save failed", error); }
+  return methods;
+}
+
+async function loadSavedMenuData() {
+  let obj = null;
+  try {
+    obj = parseMenuPayload(localStorage.getItem(MENU_STORAGE_KEY));
+    if (obj) return obj;
+    for (const key of MENU_LEGACY_STORAGE_KEYS) {
+      obj = parseMenuPayload(localStorage.getItem(key));
+      if (obj) return obj;
+    }
+  } catch (error) { console.warn("localStorage load failed", error); }
+  try { obj = parseMenuPayload(await loadMenuFromIndexedDB()); if (obj) return obj; } catch (error) { console.warn("IndexedDB load failed", error); }
+  try { obj = parseMenuPayload(sessionStorage.getItem(MENU_STORAGE_KEY)); if (obj) return obj; } catch (error) { console.warn("sessionStorage load failed", error); }
+  try { obj = parseMenuPayload(window.name); if (obj) return obj; } catch (error) { console.warn("window.name load failed", error); }
+  return null;
+}
+
+function formatMenuDateVariants(dateText) {
+  const variants = [dateText];
+  const match = String(dateText || "").match(/(\d{4})년\s*0?(\d{1,2})월\s*0?(\d{1,2})일\s*\(?([^)]*)\)?/);
+  if (match) {
+    const year = match[1];
+    const month = String(Number(match[2]));
+    const day = String(Number(match[3]));
+    const weekday = (match[4] || "").replace(/요일/g, "").trim();
+    const mm = month.padStart(2, "0");
+    const dd = day.padStart(2, "0");
+    const yy = year.slice(2);
+    variants.push(`${year}년 ${month}월 ${day}일`, `${month}월 ${day}일`, `${month}월${day}일`, `${month}/${day}`, `${mm}/${dd}`, `${year}-${mm}-${dd}`, `${yy}-${mm}-${dd}`, `${year}.${mm}.${dd}`, `${month}.${day}`, `${weekday}요일`, weekday);
+  }
+  return variants.filter(Boolean).join(" ");
+}
+
+function normalizeMenuSearch(value) {
+  return String(value || "").normalize("NFKC").toLowerCase().replace(/[()\[\]{}.,，·ㆍ:：\/\\\-–—_\s]+/g, " ").trim();
+}
+
+function compactMenuSearch(value) {
+  return normalizeMenuSearch(value).replace(/\s+/g, "");
+}
+
+function matchMenuQuery(haystack, query) {
+  const raw = String(query || "").trim();
+  if (!raw) return true;
+  const hayText = normalizeMenuSearch(haystack);
+  const hayCompact = compactMenuSearch(haystack);
+  const tokens = raw.split(/[\s,，]+/).filter(Boolean);
+  return (tokens.length ? tokens : [raw]).every(token => {
+    const tokenText = normalizeMenuSearch(token);
+    const tokenCompact = tokenText.replace(/\s+/g, "");
+    return (tokenText && hayText.includes(tokenText)) || (tokenCompact && hayCompact.includes(tokenCompact));
+  });
+}
+
+function renderTodayMenu(data) {
+  currentMenuData = data || [];
+  const list = document.getElementById("todayMenuList");
+  if (!list) return;
+  list.innerHTML = currentMenuData.map(section => {
+    const names = section.items.map(item => item.name);
+    const meal = section.meal ? `<p class="meal-line-v2">${menuEsc(section.meal)}</p>` : "";
+    const cards = section.items.map(item => `
+      <article class="menu-card-v2">
+        <h3>${menuEsc(item.name)}</h3>
+        <details class="materials-detail"><summary>사용재료 보기</summary><pre>${menuEsc(item.materials || "등록된 사용재료 없음")}</pre></details>
+        <pre class="plain-method${item.muted ? " muted" : ""}">${menuEsc(item.method || "등록된 조리방법 없음")}</pre>
+      </article>`).join("");
+    return `
+      <section class="date-section-v2" data-date="${menuEsc(section.date)}" data-menu="${menuEsc(names.join(", "))}">
+        <div class="date-head-v2"><div><h2>${menuEsc(section.date)}</h2>${meal}</div><span class="count-v2">${names.length}개 메뉴</span></div>
+        <div class="menu-summary-v2">${menuEsc(names.join(", "))}</div>
+        <div class="items-v2">${cards}</div>
+      </section>`;
+  }).join("");
+  filterTodayMenuList();
+}
+
+function updateTodayMenuHeader(data, fileName, statusMessage) {
+  const title = document.getElementById("todayMenuTitle");
+  const meta = document.getElementById("todayMenuMeta");
+  const menuCount = (data || []).reduce((sum, section) => sum + section.items.length, 0);
+  if (title) title.textContent = data && data.length ? "급식일별 조리방법 조회" : "엑셀 파일을 업로드해 주세요";
+  if (meta) meta.textContent = data && data.length ? `${fileName || "업로드 자료"} · ${data.length}일 / ${menuCount}개 메뉴` : "업로드한 파일은 서버로 전송되지 않고 현재 브라우저에서만 읽습니다.";
+  const status = document.getElementById("todayMenuStatus");
+  if (status && statusMessage) status.innerHTML = statusMessage;
+}
+
+function filterTodayMenuList() {
+  const search = document.getElementById("menuSearchInput");
+  const list = document.getElementById("todayMenuList");
+  const noResult = document.getElementById("todayMenuNoResult");
+  if (!search || !list || !noResult) return;
+  const query = search.value || "";
+  let shownSections = 0;
+  list.querySelectorAll(".date-section-v2").forEach(section => {
+    const dateTitle = section.querySelector("h2")?.innerText || section.dataset.date || "";
+    const summary = section.querySelector(".menu-summary-v2")?.innerText || section.dataset.menu || "";
+    const sectionHaystack = [dateTitle, formatMenuDateVariants(dateTitle), summary].join(" ");
+    let shownCards = 0;
+    section.querySelectorAll(".menu-card-v2").forEach(card => {
+      const title = card.querySelector("h3")?.innerText || "";
+      const method = card.querySelector(".plain-method")?.innerText || "";
+      const materials = card.querySelector(".materials-detail pre")?.innerText || "";
+      const ok = matchMenuQuery([sectionHaystack, title, method, materials].join(" "), query);
+      card.style.display = ok ? "" : "none";
+      if (ok) shownCards += 1;
+    });
+    const showSection = shownCards > 0 || matchMenuQuery(sectionHaystack, query);
+    section.style.display = showSection ? "" : "none";
+    if (showSection) shownSections += 1;
+    const count = section.querySelector(".count-v2");
+    if (count) count.textContent = `${query.trim() ? shownCards : section.querySelectorAll(".menu-card-v2").length}개 메뉴`;
+  });
+  noResult.style.display = shownSections ? "none" : "block";
 }
 
 function getXlsxLib() {
@@ -3624,182 +4149,56 @@ function getXlsxLib() {
   return null;
 }
 
-function parseMenuWorkbook(workbook) {
-  const xlsx = getXlsxLib();
-  if (!xlsx) throw new Error("엑셀 읽기 도구를 불러오지 못했습니다. 페이지를 새로고침한 뒤 다시 업로드해 주세요.");
-  const items = [];
-  workbook.SheetNames.forEach(sheetName => {
-    const sheet = workbook.Sheets[sheetName];
-    const rows = xlsx.utils.sheet_to_json(sheet, {header:1, defval:"", raw:false});
-    let currentDate = "";
-    let currentMeal = {label:"", count:"", raw:""};
-    let currentItem = null;
-
-    rows.forEach(row => {
-      const dateCell = row.find(cell => parseMenuDate(cell));
-      if (dateCell) {
-        const nextDate = parseMenuDate(dateCell);
-        if (nextDate !== currentDate) {
-          currentMeal = {label:"", count:"", raw:""};
-          currentItem = null;
-        }
-        currentDate = nextDate;
-        return;
-      }
-
-      const meal = cleanMenuText(row[1]);
-      const name = cleanMenuText(row[2]);
-      const ingredients = cleanMenuText(row[3]);
-      const method = cleanMenuText(row[8]);
-
-      if (!currentDate) return;
-      const mealInfo = parseMealInfo(meal);
-      if (mealInfo) currentMeal = mealInfo;
-      if (name === "구   분" || name === "비   고") return;
-
-      if (name) {
-        currentItem = {
-          date: currentDate,
-          meal: currentMeal.label,
-          mealCount: currentMeal.count,
-          mealRaw: currentMeal.raw,
-          name,
-          ingredients,
-          method
-        };
-        items.push(currentItem);
-        return;
-      }
-
-      if (currentItem && (ingredients || method)) {
-        if (ingredients) currentItem.ingredients = [currentItem.ingredients, ingredients].filter(Boolean).join("\n");
-        if (method) currentItem.method = [currentItem.method, method].filter(Boolean).join("\n");
-      }
-    });
-  });
-  return items.filter(item => item.name && item.name !== "구   분");
-}
-
-function availableMenuDates() {
-  return [...new Set(uploadedMenuItems.map(item => item.date))].sort();
-}
-
-function showMenuError(message) {
-  const title = document.getElementById("todayMenuTitle");
-  const meta = document.getElementById("todayMenuMeta");
-  const results = document.getElementById("todayMenuResults");
-  const fallback = "파일 형식을 확인해 주세요.";
-  if (title) title.textContent = "엑셀 파일을 읽지 못했습니다";
-  if (meta) meta.textContent = message || fallback;
-  if (results) results.innerHTML = `<div class="today-menu-empty">${escapeHtml(message || fallback)}</div>`;
-}
-
-function renderMenuItems() {
-  const dateInput = document.getElementById("menuDateInput");
-  const title = document.getElementById("todayMenuTitle");
-  const meta = document.getElementById("todayMenuMeta");
-  const results = document.getElementById("todayMenuResults");
-  if (!dateInput || !title || !meta || !results) return;
-
-  const selectedDate = dateInput.value || getKoreaToday();
-  const matches = uploadedMenuItems.filter(item => item.date === selectedDate);
-  results.innerHTML = "";
-
-  if (!uploadedMenuItems.length) {
-    title.textContent = "엑셀 파일을 업로드해 주세요";
-    meta.textContent = "업로드한 파일은 서버로 전송되지 않고 현재 브라우저에서만 읽습니다.";
-    results.innerHTML = '<div class="today-menu-empty">조리방법조회 엑셀 파일을 선택하면 날짜별 메뉴가 표시됩니다.</div>';
-    return;
+async function handleTodayMenuUpload(event) {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+  const status = document.getElementById("todayMenuStatus");
+  const search = document.getElementById("menuSearchInput");
+  if (status) status.textContent = "엑셀 파일 읽는 중...";
+  try {
+    const xlsx = getXlsxLib();
+    if (!xlsx) throw new Error("엑셀 읽기 기능을 불러오지 못했습니다. 인터넷 연결 후 다시 열어 주세요.");
+    const buffer = await file.arrayBuffer();
+    const workbook = xlsx.read(buffer, { type: "array", cellDates: false });
+    const best = chooseAndParseMenuWorkbook(workbook);
+    if (!best.data.length) throw new Error("급식일/메뉴/조리방법을 찾지 못했습니다. 기존 조리방법조회 엑셀 양식인지 확인해 주세요.");
+    if (search) search.value = "";
+    currentMenuData = best.data;
+    currentMenuFileName = file.name;
+    const savedMethods = await saveUploadedMenuData(best.data, file.name);
+    renderTodayMenu(best.data);
+    const menuCount = best.data.reduce((sum, section) => sum + section.items.length, 0);
+    updateTodayMenuHeader(best.data, file.name, `<span class="ok">${menuEsc(file.name)} 적용 완료 · ${best.data.length}일 / ${menuCount}개 메뉴${savedMethods.length ? " · 자동저장 완료" : " · 화면 적용 완료(자동저장은 브라우저 제한으로 실패)"}</span>`);
+  } catch (error) {
+    currentMenuData = [];
+    currentMenuFileName = "";
+    renderTodayMenu([]);
+    updateTodayMenuHeader([], "", `<span class="error">업로드 실패: ${menuEsc(error.message || error)}</span>`);
+  } finally {
+    event.target.value = "";
   }
-
-  title.textContent = `${formatKoreanDate(selectedDate)} 오늘의 메뉴`;
-  meta.textContent = `${uploadedMenuFileName} · ${matches.length}개 메뉴 표시`;
-
-  if (!matches.length) {
-    const dates = availableMenuDates().map(formatKoreanDate).join(", ");
-    results.innerHTML = `<div class="today-menu-empty">선택한 날짜의 조리방법이 없습니다.${dates ? " 이 파일에 있는 급식일: " + dates : ""}</div>`;
-    return;
-  }
-
-  const tableWrap = document.createElement("div");
-  tableWrap.className = "today-menu-table-wrap";
-  tableWrap.innerHTML = `
-    <table class="today-menu-table">
-      <thead>
-        <tr>
-          <th>급식인원</th>
-          <th>메뉴</th>
-          <th>사용재료(kg)</th>
-          <th>요리방법</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${matches.map(item => `
-          <tr>
-            <td>${escapeHtml(item.mealCount || "-")}</td>
-            <td>${escapeHtml(item.name || "-")}</td>
-            <td><pre>${escapeHtml(item.ingredients || "-")}</pre></td>
-            <td><pre>${escapeHtml(item.method || "-")}</pre></td>
-          </tr>
-        `).join("")}
-      </tbody>
-    </table>`;
-  results.appendChild(tableWrap);
 }
 
-function escapeHtml(value) {
-  return String(value || "").replace(/[&<>"']/g, ch => ({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#39;"
-  }[ch]));
-}
-
-function showTodayMenu() {
-  const input = document.getElementById("menuDateInput");
-  if (input) input.value = getKoreaToday();
-  renderMenuItems();
-}
-
-function setupTodayMenu() {
-  const dateInput = document.getElementById("menuDateInput");
+async function setupTodayMenu() {
   const fileInput = document.getElementById("menuExcelInput");
-  if (dateInput) {
-    dateInput.value = getKoreaToday();
-    dateInput.addEventListener("change", renderMenuItems);
+  const search = document.getElementById("menuSearchInput");
+  const clearBtn = document.getElementById("menuClearBtn");
+  if (fileInput) fileInput.addEventListener("change", handleTodayMenuUpload);
+  if (search) search.addEventListener("input", filterTodayMenuList);
+  if (clearBtn) clearBtn.addEventListener("click", () => { if (search) { search.value = ""; filterTodayMenuList(); search.focus(); } });
+
+  const status = document.getElementById("todayMenuStatus");
+  if (status) status.textContent = "저장된 업로드 자료 확인 중...";
+  const saved = await loadSavedMenuData();
+  if (saved) {
+    currentMenuFileName = saved.fileName || "";
+    renderTodayMenu(saved.data);
+    const menuCount = saved.data.reduce((sum, section) => sum + section.items.length, 0);
+    updateTodayMenuHeader(saved.data, currentMenuFileName, `<span class="ok">마지막 업로드 자료 유지 중${currentMenuFileName ? " · " + menuEsc(currentMenuFileName) : ""} · ${saved.data.length}일 / ${menuCount}개 메뉴</span>`);
+  } else {
+    renderTodayMenu([]);
+    updateTodayMenuHeader([], "", "조리방법조회 엑셀 파일을 선택하면 화면이 바뀌고 자동저장됩니다.");
   }
-  if (!fileInput) return;
-  fileInput.addEventListener("change", async event => {
-    const file = event.target.files && event.target.files[0];
-    if (!file) return;
-    const title = document.getElementById("todayMenuTitle");
-    const meta = document.getElementById("todayMenuMeta");
-    try {
-      const xlsx = getXlsxLib();
-      if (!xlsx) throw new Error("XLSX 라이브러리를 불러오지 못했습니다.");
-      if (title) title.textContent = "엑셀 파일을 읽는 중입니다";
-      if (meta) meta.textContent = file.name;
-      const data = await file.arrayBuffer();
-      const workbook = xlsx.read(data, {type:"array"});
-      uploadedMenuItems = parseMenuWorkbook(workbook);
-      uploadedMenuFileName = file.name;
-      const dates = availableMenuDates();
-      if (!uploadedMenuItems.length) {
-        showMenuError("급식일과 메뉴 정보를 찾지 못했습니다. 조리방법조회 엑셀 파일인지 확인해 주세요.");
-        return;
-      }
-      if (dateInput && !uploadedMenuItems.some(item => item.date === dateInput.value) && dates.length) {
-        dateInput.value = dates[0];
-      }
-      renderMenuItems();
-    } catch (error) {
-      uploadedMenuItems = [];
-      uploadedMenuFileName = "";
-      showMenuError(error.message || "파일 형식을 확인해 주세요.");
-    }
-  });
 }
 
 document.addEventListener("DOMContentLoaded", setupTodayMenu);
