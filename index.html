@@ -3100,6 +3100,9 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
   font-size:17px;
   line-height:1.35;
 }
+.home-today-menu-card .materials-detail{
+  margin:8px 0 10px;
+}
 .home-today-menu-card pre{
   margin:0;
   color:#444950;
@@ -4572,6 +4575,7 @@ function renderHomeTodayMenu(data) {
       ${section.items.map(item => `
         <article class="home-today-menu-card">
           <h3>${menuEsc(item.name)}</h3>
+          <details class="materials-detail"><summary>사용재료 보기</summary><pre>${menuEsc(item.materials || "등록된 사용재료 없음")}</pre></details>
           <pre>${menuEsc(item.method || "등록된 조리방법 없음")}</pre>
         </article>
       `).join("")}
