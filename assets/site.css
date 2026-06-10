@@ -3249,9 +3249,11 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
   nav{
     display:flex!important;
     width:100%;
-    gap:6px;
+    gap:4px;
   }
   nav a{
+    padding:7px 8px;
+    font-size:12.5px;
     border-radius:999px;
     background:#fff;
     border:1px solid #e3dfd8;
@@ -3325,6 +3327,20 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
 .page-section + .page-section{
   border-top-width:8px;
 }
+.top-inner{
+  position:relative;
+  justify-content:flex-start;
+}
+nav{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  width:max-content;
+  justify-content:center;
+}
+.brand{
+  flex:0 0 auto;
+}
 .hero{
   margin-bottom:0;
 }
@@ -3368,6 +3384,13 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
   gap:16px;
 }
 @media(max-width:900px){
+  nav{
+    position:static;
+    transform:none;
+    width:100%;
+    flex:1 1 auto;
+    justify-content:center;
+  }
   .wrap{
     padding-top:24px;
     padding-bottom:52px;
@@ -3387,6 +3410,9 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
   .page-section .wrap{
     padding:16px 10px 40px;
     gap:14px;
+  }
+  nav{
+    justify-content:center;
   }
   .card{
     padding:16px;

@@ -508,7 +508,7 @@ function renderHomeTodayMenu(data) {
   if (!target) return;
   const section = getTodayMenuSection(data);
   if (!section) {
-    target.innerHTML = `<p class="home-today-empty">오늘 날짜의 식단이 아직 없습니다. 식단 탭에서 조리방법조회 엑셀을 업로드하면 당일 식단만 홈에 표시됩니다.</p>`;
+    target.innerHTML = `<p class="home-today-empty">오늘 날짜의 식단이 아직 없습니다. 식단 탭에서 조리방법 조회 엑셀을 업로드하면 당일 식단만 홈에 표시됩니다.</p>`;
     return;
   }
   const names = section.items.map(item => item.name);
@@ -606,7 +606,7 @@ async function handleTodayMenuUpload(event) {
     const buffer = await file.arrayBuffer();
     const workbook = xlsx.read(buffer, { type: "array", cellDates: false });
     const best = chooseAndParseMenuWorkbook(workbook);
-    if (!best.data.length) throw new Error("급식일/메뉴/조리방법을 찾지 못했습니다. 기존 조리방법조회 엑셀 양식인지 확인해 주세요.");
+    if (!best.data.length) throw new Error("급식일/메뉴/조리방법을 찾지 못했습니다. 기존 조리방법 조회 엑셀 양식인지 확인해 주세요.");
     if (search) search.value = "";
     currentMenuData = best.data;
     currentMenuFileName = file.name;
@@ -649,7 +649,7 @@ async function setupTodayMenu() {
     updateTodayMenuHeader(saved.data, currentMenuFileName, `<span class="ok">${sourceText}${currentMenuFileName ? " · " + menuEsc(currentMenuFileName) : ""} · ${saved.data.length}일 / ${menuCount}개 메뉴</span>`);
   } else {
     renderTodayMenu([]);
-    updateTodayMenuHeader([], "", "조리방법조회 엑셀 파일을 선택하면 화면이 바뀌고 저장됩니다.");
+    updateTodayMenuHeader([], "", "조리방법 조회 엑셀 파일을 선택하면 화면이 바뀌고 저장됩니다.");
   }
 }
 
