@@ -3110,6 +3110,53 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
   word-break:keep-all;
   overflow-wrap:anywhere;
 }
+.menu-sync-panel{
+  border:1px solid #dfdbd2;
+  border-radius:14px;
+  background:rgba(255,255,255,.78);
+  padding:0;
+  overflow:hidden;
+}
+.menu-sync-panel summary{
+  cursor:pointer;
+  padding:11px 13px;
+  color:#43525a;
+  font-weight:950;
+  list-style-position:inside;
+}
+.menu-sync-panel[open] summary{
+  border-bottom:1px solid #ece7df;
+  background:#f6f5f1;
+}
+.menu-sync-grid{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto auto;
+  align-items:end;
+  gap:8px;
+  padding:12px 13px 8px;
+}
+.menu-sync-panel .upload-status-v2{
+  display:block;
+  padding:0 13px 12px;
+}
+.menu-sync-panel .ok{
+  color:#4f6748;
+  font-weight:950;
+}
+.menu-sync-panel .error{
+  color:#9a3412;
+  font-weight:950;
+}
+.annual-desktop-card .clean-annual-table tbody tr:hover td:not(.month-cell){
+  background:#f1f7f9!important;
+}
+.annual-desktop-card .clean-annual-table tbody tr:hover td.month-cell{
+  background:#f7f4df!important;
+  color:#43525a!important;
+}
+#home .hero-asset{
+  object-position:center top!important;
+}
 .schedule-table,
 .simple-table,
 .clean-annual-table{
@@ -3177,17 +3224,17 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
     scroll-margin-top:116px;
   }
   #home .hero{
-    min-height:260px;
-    padding:30px 220px 30px 26px;
+    min-height:270px;
+    padding:32px 220px 32px 26px;
   }
   #home .hero-asset{
     display:block!important;
-    width:190px!important;
-    max-width:190px!important;
-    max-height:200px!important;
+    width:198px!important;
+    max-width:198px!important;
+    max-height:208px!important;
     right:18px!important;
     left:auto!important;
-    top:46px!important;
+    top:34px!important;
     bottom:auto!important;
   }
 }
@@ -3220,15 +3267,15 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
   }
   #home .hero{
     min-height:246px;
-    padding:24px 132px 24px 18px;
+    padding:24px 136px 24px 18px;
   }
   #home .hero-asset{
-    width:122px!important;
-    max-width:122px!important;
-    max-height:132px!important;
+    width:126px!important;
+    max-width:126px!important;
+    max-height:138px!important;
     right:6px!important;
     left:auto!important;
-    top:72px!important;
+    top:42px!important;
   }
   #home .hero .subtitle{
     max-width:none;
@@ -3242,6 +3289,12 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
   }
   .home-today-list{
     grid-template-columns:1fr;
+  }
+  .menu-sync-grid{
+    grid-template-columns:1fr;
+  }
+  .menu-sync-grid .btn{
+    width:100%;
   }
   .schedule-wrap{
     border-radius:14px;
@@ -3274,18 +3327,16 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
   <div class="top-inner">
     <a class="brand" href="#home"><span class="logo"></span>급식 업무 포털</a>
     <nav>
-      <a href="#home">홈</a>
       <a href="#daily">하루 일정</a>
-      <a href="#today-menu">오늘의 메뉴</a>
+      <a href="#today-menu">식단</a>
       <a href="#monthly">한 달 일정</a>
       <a href="#annual">연간 일정</a>
       <a href="#staff">조리종사원</a>
     </nav>
     <div class="mobile-nav">
       <div class="mobile-nav-list">
-        <a href="#home">홈</a>
         <a href="#daily">하루 일정</a>
-        <a href="#today-menu">오늘의 메뉴</a>
+        <a href="#today-menu">식단</a>
         <a href="#monthly">한 달 일정</a>
         <a href="#annual">연간 일정</a>
         <a href="#staff">조리종사원</a>
@@ -3299,10 +3350,10 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
 <section class="card home-today-card">
   <div class="home-today-head">
     <div>
-      <h2 class="section-title"><span class="num">오늘</span>오늘의 메뉴</h2>
+      <h2 class="section-title"><span class="num">오늘</span>식단</h2>
       <p id="homeTodayDate" class="home-today-date"></p>
     </div>
-    <a class="home-today-link" href="#today-menu">전체 메뉴 보기</a>
+    <a class="home-today-link" href="#today-menu">전체 식단 보기</a>
   </div>
   <div id="homeTodayMenu"></div>
 </section>
@@ -3329,7 +3380,7 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
     </table>
   </div>
 </section></main></section>
-<section id="today-menu" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">두근두근 오늘의 식단</div><h1>오늘의 메뉴</h1><p class="subtitle">조리방법 조회 엑셀 파일을 업로드하면 급식일별로 메뉴가 묶여 표시됩니다. 업로드한 자료는 자동저장되어 새로고침 후에도 유지됩니다.</p><img class="hero-asset" src="assets/pig-recipes.png" alt=""></section>
+<section id="today-menu" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">두근두근 오늘의 식단</div><h1>식단</h1><p class="subtitle">조리방법 조회 엑셀 파일을 업로드하면 급식일별로 메뉴가 묶여 표시됩니다. GitHub 동기화를 켜면 컴퓨터와 모바일에서 같은 식단 자료를 볼 수 있습니다.</p><img class="hero-asset" src="assets/pig-recipes.png" alt=""></section>
 
 <section class="card">
   <h2 class="section-title">조리방법 조회</h2>
@@ -3345,8 +3396,19 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
       <div class="menu-upload-row">
         <label class="file-label-v2" for="menuExcelInput">엑셀 업로드</label>
         <input id="menuExcelInput" class="menu-file-hidden" type="file" accept=".xlsx,.xls">
-        <span id="todayMenuStatus" class="upload-status-v2">조리방법조회 엑셀 파일을 선택하면 화면이 바뀌고 현재 브라우저에 자동저장됩니다.</span>
+        <span id="todayMenuStatus" class="upload-status-v2">조리방법조회 엑셀 파일을 선택하면 화면이 바뀌고 저장됩니다.</span>
       </div>
+      <details class="menu-sync-panel">
+        <summary>기기 간 동기화 설정</summary>
+        <div class="menu-sync-grid">
+          <label class="sheet-link-label" for="menuGithubTokenInput">GitHub 토큰</label>
+          <input id="menuGithubTokenInput" class="menu-search-input" type="password" autocomplete="off" placeholder="fine-grained token: Contents 읽기/쓰기">
+          <button id="menuGithubTokenSaveBtn" class="btn light" type="button">저장</button>
+          <button id="menuGithubTokenClearBtn" class="btn light" type="button">삭제</button>
+        </div>
+        <p id="menuGithubSyncStatus" class="upload-status-v2">토큰을 저장한 기기에서는 엑셀 업로드 시 GitHub Pages 공용 식단 파일도 함께 갱신됩니다.</p>
+      </details>
+    </div>
     </div>
     <div id="todayMenuList" class="today-menu-results"></div>
     <div id="todayMenuNoResult" class="today-menu-empty" style="display:none;">검색 결과가 없습니다.</div>
@@ -4043,6 +4105,9 @@ const MENU_WINDOW_PREFIX = "COOKING_METHOD_DATA::";
 const MENU_DB_NAME = "CookingMethodUploadDB";
 const MENU_DB_STORE = "payload";
 const MENU_REMOTE_URL = "data/today-menu.json";
+const MENU_GITHUB_TOKEN_KEY = "kkulkkoori_menu_github_token";
+const MENU_GITHUB_API_URL = "https://api.github.com/repos/minj0475-coder/kknutrition/contents/data/today-menu.json";
+const MENU_GITHUB_BRANCH = "main";
 let currentMenuData = [];
 let currentMenuFileName = "";
 
@@ -4212,6 +4277,10 @@ function makeMenuPayload(data, fileName) {
   return JSON.stringify({ version: 5, savedAt: Date.now(), fileName: fileName || "", data });
 }
 
+function makeMenuPayloadObject(data, fileName) {
+  return { version: 5, savedAt: Date.now(), fileName: fileName || "", data };
+}
+
 function parseMenuPayload(payload) {
   if (!payload) return null;
   if (String(payload).startsWith(MENU_WINDOW_PREFIX)) payload = String(payload).slice(MENU_WINDOW_PREFIX.length);
@@ -4252,6 +4321,94 @@ async function loadRemoteMenuData() {
   }
 }
 
+function getMenuGithubToken() {
+  try {
+    return localStorage.getItem(MENU_GITHUB_TOKEN_KEY) || "";
+  } catch (error) {
+    return "";
+  }
+}
+
+function setMenuGithubSyncStatus(message, type) {
+  const target = document.getElementById("menuGithubSyncStatus");
+  if (!target) return;
+  target.innerHTML = type ? `<span class="${type}">${menuEsc(message)}</span>` : menuEsc(message);
+}
+
+function loadMenuGithubTokenUI() {
+  const input = document.getElementById("menuGithubTokenInput");
+  if (!input) return;
+  const token = getMenuGithubToken();
+  if (token) {
+    input.value = token;
+    setMenuGithubSyncStatus("GitHub 동기화가 켜져 있습니다. 엑셀 업로드 시 PC와 모바일 공용 식단 파일도 갱신됩니다.", "ok");
+  }
+}
+
+function saveMenuGithubToken() {
+  const input = document.getElementById("menuGithubTokenInput");
+  const token = input ? input.value.trim() : "";
+  if (!token) {
+    setMenuGithubSyncStatus("토큰을 입력해 주세요.", "error");
+    return;
+  }
+  try {
+    localStorage.setItem(MENU_GITHUB_TOKEN_KEY, token);
+    setMenuGithubSyncStatus("토큰을 저장했습니다. 다음 엑셀 업로드부터 공용 식단 파일도 함께 갱신됩니다.", "ok");
+  } catch (error) {
+    setMenuGithubSyncStatus("토큰 저장에 실패했습니다. 브라우저 저장 권한을 확인해 주세요.", "error");
+  }
+}
+
+function clearMenuGithubToken() {
+  try {
+    localStorage.removeItem(MENU_GITHUB_TOKEN_KEY);
+  } catch (error) {}
+  const input = document.getElementById("menuGithubTokenInput");
+  if (input) input.value = "";
+  setMenuGithubSyncStatus("토큰을 삭제했습니다. 엑셀 업로드 자료는 현재 브라우저에만 저장됩니다.");
+}
+
+function utf8ToBase64(value) {
+  const bytes = new TextEncoder().encode(value);
+  let binary = "";
+  bytes.forEach(byte => { binary += String.fromCharCode(byte); });
+  return btoa(binary);
+}
+
+async function uploadMenuPayloadToGitHub(payloadObject) {
+  const token = getMenuGithubToken();
+  if (!token) return { ok: false, skipped: true, message: "GitHub 토큰 없음" };
+
+  const headers = {
+    "Accept": "application/vnd.github+json",
+    "Authorization": `Bearer ${token}`,
+    "X-GitHub-Api-Version": "2022-11-28"
+  };
+  const current = await fetch(`${MENU_GITHUB_API_URL}?ref=${MENU_GITHUB_BRANCH}&v=${Date.now()}`, { headers, cache: "no-store" });
+  if (!current.ok) {
+    throw new Error("GitHub 공용 식단 파일 정보를 가져오지 못했습니다.");
+  }
+  const currentJson = await current.json();
+  const body = {
+    message: `Update menu data: ${payloadObject.fileName || "uploaded menu"}`,
+    content: utf8ToBase64(JSON.stringify(payloadObject, null, 2) + "\n"),
+    sha: currentJson.sha,
+    branch: MENU_GITHUB_BRANCH
+  };
+  const response = await fetch(MENU_GITHUB_API_URL, {
+    method: "PUT",
+    headers: { ...headers, "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  });
+  if (!response.ok) {
+    let detail = "";
+    try { detail = (await response.json()).message || ""; } catch (error) {}
+    throw new Error(detail || "GitHub 공용 식단 파일 갱신에 실패했습니다.");
+  }
+  return { ok: true, message: "GitHub 공용 식단 파일 갱신 완료" };
+}
+
 function openMenuDB() {
   return new Promise((resolve, reject) => {
     if (!window.indexedDB) return reject(new Error("IndexedDB unavailable"));
@@ -4283,7 +4440,8 @@ async function loadMenuFromIndexedDB() {
 }
 
 async function saveUploadedMenuData(data, fileName) {
-  const payload = makeMenuPayload(data, fileName);
+  const payloadObject = makeMenuPayloadObject(data, fileName);
+  const payload = JSON.stringify(payloadObject);
   const methods = [];
   try {
     localStorage.setItem(MENU_STORAGE_KEY, payload);
@@ -4302,6 +4460,18 @@ async function saveUploadedMenuData(data, fileName) {
     const back = parseMenuPayload(await loadMenuFromIndexedDB());
     if (back && back.data.length) methods.push("IndexedDB");
   } catch (error) { console.warn("IndexedDB save failed", error); }
+  try {
+    const githubResult = await uploadMenuPayloadToGitHub(payloadObject);
+    if (githubResult.ok) {
+      methods.push("GitHub");
+      setMenuGithubSyncStatus("GitHub 공용 식단 파일을 갱신했습니다. 다른 기기에서는 새로고침하면 같은 식단이 표시됩니다.", "ok");
+    } else if (githubResult.skipped) {
+      setMenuGithubSyncStatus("GitHub 토큰이 없어 현재 브라우저에만 저장했습니다. 기기 간 동기화를 쓰려면 토큰을 저장해 주세요.");
+    }
+  } catch (error) {
+    console.warn("GitHub sync failed", error);
+    setMenuGithubSyncStatus(`GitHub 동기화 실패: ${error.message || error}`, "error");
+  }
   return methods;
 }
 
@@ -4392,7 +4562,7 @@ function renderHomeTodayMenu(data) {
   if (!target) return;
   const section = getTodayMenuSection(data);
   if (!section) {
-    target.innerHTML = `<p class="home-today-empty">오늘 날짜의 메뉴가 아직 없습니다. 오늘의 메뉴 탭에서 조리방법조회 엑셀을 업로드하면 당일 메뉴만 홈에 표시됩니다.</p>`;
+    target.innerHTML = `<p class="home-today-empty">오늘 날짜의 식단이 아직 없습니다. 식단 탭에서 조리방법조회 엑셀을 업로드하면 당일 식단만 홈에 표시됩니다.</p>`;
     return;
   }
   const names = section.items.map(item => item.name);
@@ -4496,7 +4666,8 @@ async function handleTodayMenuUpload(event) {
     const savedMethods = await saveUploadedMenuData(best.data, file.name);
     renderTodayMenu(best.data);
     const menuCount = best.data.reduce((sum, section) => sum + section.items.length, 0);
-    updateTodayMenuHeader(best.data, file.name, `<span class="ok">${menuEsc(file.name)} 적용 완료 · ${best.data.length}일 / ${menuCount}개 메뉴${savedMethods.length ? " · 현재 브라우저 자동저장 완료" : " · 화면 적용 완료(자동저장은 브라우저 제한으로 실패)"}</span>`);
+    const syncText = savedMethods.includes("GitHub") ? " · 기기 간 동기화 완료" : (savedMethods.length ? " · 현재 브라우저 저장 완료" : " · 화면 적용 완료(저장은 브라우저 제한으로 실패)");
+    updateTodayMenuHeader(best.data, file.name, `<span class="ok">${menuEsc(file.name)} 적용 완료 · ${best.data.length}일 / ${menuCount}개 메뉴${syncText}</span>`);
   } catch (error) {
     currentMenuData = [];
     currentMenuFileName = "";
@@ -4511,9 +4682,14 @@ async function setupTodayMenu() {
   const fileInput = document.getElementById("menuExcelInput");
   const search = document.getElementById("menuSearchInput");
   const clearBtn = document.getElementById("menuClearBtn");
+  const tokenSaveBtn = document.getElementById("menuGithubTokenSaveBtn");
+  const tokenClearBtn = document.getElementById("menuGithubTokenClearBtn");
   if (fileInput) fileInput.addEventListener("change", handleTodayMenuUpload);
   if (search) search.addEventListener("input", filterTodayMenuList);
   if (clearBtn) clearBtn.addEventListener("click", () => { if (search) { search.value = ""; filterTodayMenuList(); search.focus(); } });
+  if (tokenSaveBtn) tokenSaveBtn.addEventListener("click", saveMenuGithubToken);
+  if (tokenClearBtn) tokenClearBtn.addEventListener("click", clearMenuGithubToken);
+  loadMenuGithubTokenUI();
 
   const status = document.getElementById("todayMenuStatus");
   if (status) status.textContent = "저장된 업로드 자료 확인 중...";
@@ -4526,7 +4702,7 @@ async function setupTodayMenu() {
     updateTodayMenuHeader(saved.data, currentMenuFileName, `<span class="ok">${sourceText}${currentMenuFileName ? " · " + menuEsc(currentMenuFileName) : ""} · ${saved.data.length}일 / ${menuCount}개 메뉴</span>`);
   } else {
     renderTodayMenu([]);
-    updateTodayMenuHeader([], "", "조리방법조회 엑셀 파일을 선택하면 화면이 바뀌고 현재 브라우저에 자동저장됩니다.");
+    updateTodayMenuHeader([], "", "조리방법조회 엑셀 파일을 선택하면 화면이 바뀌고 저장됩니다.");
   }
 }
 
