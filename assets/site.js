@@ -516,10 +516,10 @@ function renderHomeTodayMenu(data) {
     <p class="home-today-summary">${menuEsc(names.join(", "))}</p>
     <div class="home-today-list">
       ${section.items.map(item => `
-        <article class="home-today-menu-card">
+        <article class="menu-card-v2 home-today-menu-card">
           <h3>${menuEsc(item.name)}</h3>
           <details class="materials-detail"><summary>사용재료 보기</summary><pre>${menuEsc(item.materials || "등록된 사용재료 없음")}</pre></details>
-          <pre>${menuEsc(item.method || "등록된 조리방법 없음")}</pre>
+          <pre class="plain-method">${menuEsc(item.method || "등록된 조리방법 없음")}</pre>
         </article>
       `).join("")}
     </div>`;
