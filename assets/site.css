@@ -254,7 +254,7 @@ h1{
 }
 .note.pink{
   background:var(--blue-soft);
-  border-color:var(--card-soft);
+  border-color: var(--heading) !important;
   color:var(--text);
 }
 table{
@@ -595,7 +595,7 @@ td:first-child{
   font-weight:900;
   font-size:14px;
   background:var(--card-soft);
-  color:var(--card-soft);
+  color: var(--heading) !important;
   padding:12px 10px;
 }
 .clean-annual-table th:first-child{
@@ -620,7 +620,7 @@ td:first-child{
   text-align:center;
   vertical-align:middle;
   background:var(--card-soft);
-  color:var(--card-soft);
+  color: var(--heading) !important;
   font-weight:900;
   font-size:15px;
   letter-spacing:-.02em;
@@ -630,7 +630,7 @@ td:first-child{
   min-width:190px;
   vertical-align:middle;
   background:#f8fafc;
-  color:var(--card-soft);
+  color: var(--heading) !important;
   font-weight:850;
   text-align:center;
   letter-spacing:-.02em;
@@ -653,7 +653,7 @@ td:first-child{
   font-weight:650;
 }
 .clean-annual-table .table-list li b{
-  color:var(--card-soft);
+  color: var(--heading) !important;
   font-weight:900;
 }
 .clean-annual-table .sub{
@@ -699,7 +699,7 @@ td:first-child{
   padding:4px 9px;
   border-radius:6px;
   background:var(--card-soft);
-  color:var(--card-soft);
+  color: var(--heading) !important;
   border:1px solid var(--card-soft);
   font-weight:900;
   font-size:13px;
@@ -711,7 +711,7 @@ td:first-child{
   display:inline-block;
   margin-left:10px;
   font-weight:900;
-  color:var(--card-soft);
+  color: var(--heading) !important;
   white-space:nowrap;
 }
 
@@ -730,7 +730,7 @@ td:first-child{
   border-bottom:1px solid var(--card-soft);
   border-radius:0;
   background:transparent;
-  color:var(--card-soft);
+  color: var(--heading) !important;
   font-weight:900;
   font-size:14px;
 }
@@ -750,7 +750,7 @@ td:first-child{
   border:1px solid var(--card-soft);
   border-radius:12px;
   background:var(--card-soft);
-  color:var(--card-soft);
+  color: var(--heading) !important;
 }
 .notice-box strong{
   flex:0 0 auto;
@@ -839,7 +839,7 @@ td:first-child{
   padding:8px 10px;
   border-radius:8px;
   background:var(--card-soft);
-  color:var(--card-soft);
+  color: var(--heading) !important;
   font-weight:900;
   font-size:15px;
 }
@@ -913,7 +913,7 @@ td:first-child{
   border-radius:10px;
   background:var(--card-soft);
   border:1px solid var(--card-soft);
-  color:var(--card-soft);
+  color: var(--heading) !important;
   font-weight:850;
 }
 .detail-grid{
@@ -1035,7 +1035,7 @@ button,
   border-radius:10px;
   background:var(--card-soft);
   border:1px solid var(--card-soft);
-  color:var(--card-soft);
+  color: var(--heading) !important;
   font-weight:900;
   line-height:1.5;
 }
@@ -1061,13 +1061,13 @@ button,
 .annual-table td.month-cell{
   vertical-align:middle;
   background:var(--card-soft);
-  color:var(--card-soft);
+  color: var(--heading) !important;
   font-weight:900;
   font-size:16px;
 }
 .annual-table td.task-cell{
   background:#f8fafc;
-  color:var(--card-soft);
+  color: var(--heading) !important;
   font-weight:850;
   vertical-align:middle;
 }
@@ -1124,13 +1124,13 @@ button,
     content:attr(data-label);
     display:block;
     margin-bottom:4px;
-    color:var(--card-soft);
+    color: var(--heading) !important;
     font-size:12px;
     font-weight:900;
   }
   .home-daily-card .schedule-table td:first-child{
     background:var(--card-soft);
-    color:var(--card-soft);
+    color: var(--heading) !important;
     font-size:16px;
     font-weight:900;
   }
@@ -1274,7 +1274,7 @@ button,
     content:attr(data-label);
     display:block;
     margin-bottom:4px;
-    color:var(--card-soft);
+    color: var(--heading) !important;
     font-size:12px;
     font-weight:900;
   }
@@ -1282,7 +1282,7 @@ button,
   main .schedule-table.monthly-table td:first-child,
   body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-child{
     background:var(--card-soft);
-    color:var(--card-soft);
+    color: var(--heading) !important;
     font-size:16px;
     font-weight:900;
   }
@@ -1334,7 +1334,7 @@ button,
   .weekly-check-card .simple-table th{
     border-right:0;
     background:var(--card-soft);
-    color:var(--card-soft);
+    color: var(--heading) !important;
   }
 }
 
@@ -1363,7 +1363,7 @@ button,
     margin:0;
     padding:12px 14px;
     background:var(--card-soft);
-    color:var(--card-soft);
+    color: var(--heading) !important;
     font-size:19px;
     font-weight:900;
     border-bottom:1px solid var(--line);
@@ -1378,7 +1378,7 @@ button,
   .annual-task strong{
     display:block;
     margin-bottom:7px;
-    color:var(--card-soft);
+    color: var(--heading) !important;
     font-size:15px;
     font-weight:900;
   }
@@ -1459,7 +1459,7 @@ button,
 }
 .recipe-editor-head h3{
   margin:2px 0 0;
-  color:var(--card-soft);
+  color: var(--heading) !important;
   font-size:22px;
   font-weight:900;
 }
@@ -1477,7 +1477,7 @@ button,
 .recipe-edit-grid label{
   display:grid;
   gap:6px;
-  color:var(--card-soft);
+  color: var(--heading) !important;
   font-weight:900;
 }
 .recipe-textarea{
@@ -1853,7 +1853,7 @@ nav a{
 }
 .inline-guide h3{
   margin:0 0 8px;
-  color:var(--card-soft);
+  color: var(--heading) !important;
   font-size:26px;
   font-weight:900;
 }
@@ -1876,7 +1876,7 @@ nav a{
 }
 .inline-guide-box h4{
   margin:0 0 10px;
-  color:var(--card-soft);
+  color: var(--heading) !important;
   font-size:17px;
   font-weight:900;
 }
@@ -2289,7 +2289,7 @@ nav a{
   border-color:#e8ddb3;
 }
 h1{
-  color:var(--card-soft);
+  color: var(--heading) !important;
   font-size:clamp(31px,4vw,48px);
 }
 .subtitle{
@@ -2315,12 +2315,12 @@ h1{
   box-shadow:var(--shadow-flat);
 }
 .section-title{
-  color:var(--card-soft);
+  color: var(--heading) !important;
 }
 .num{
   background:var(--blue-soft);
-  border-color:var(--card-soft);
-  color:var(--card-soft);
+  border-color: var(--heading) !important;
+  color: var(--heading) !important;
   border-radius:10px;
 }
 .quick,
@@ -2334,23 +2334,23 @@ h1{
 }
 th{
   background:#f1f2ee;
-  color:var(--card-soft);
+  color: var(--heading) !important;
 }
 td:first-child,
 .schedule-table td:first-child{
   background:#f7f4df;
-  color:var(--card-soft);
+  color: var(--heading) !important;
 }
 .btn,
 .download-btn{
   background:var(--card-soft);
-  border-color:var(--card-soft);
+  border-color: var(--heading) !important;
   color:var(--text);
   box-shadow: var(--shadow-flat);
 }
 .btn.light{
   background:#fff;
-  color:var(--card-soft);
+  color: var(--heading) !important;
   border-color:#dfdbd2;
   box-shadow:none;
 }
@@ -2417,11 +2417,11 @@ tbody tr:nth-child(even) td{
 }
 .annual-desktop-card .clean-annual-table td.month-cell{
   background:#f7f4df!important;
-  color:var(--card-soft)!important;
+  color: var(--heading) !important;
 }
 .annual-desktop-card .clean-annual-table td.task-cell{
   background:#ffffff!important;
-  color:var(--card-soft)!important;
+  color: var(--heading) !important;
 }
 .annual-desktop-card .clean-annual-table tbody tr:nth-child(odd) td.task-cell{
   background:#ffffff!important;
@@ -2437,7 +2437,7 @@ tbody tr:nth-child(even) td{
 }
 .annual-month-card h3{
   background:#f7f4df!important;
-  color:var(--card-soft)!important;
+  color: var(--heading) !important;
 }
 .annual-task{
   background:#ffffff;
@@ -2449,7 +2449,7 @@ tbody tr:nth-child(even) td{
   background:#ffffff;
 }
 .annual-task strong{
-  color:var(--card-soft)!important;
+  color: var(--heading) !important;
 }
 #home .hero-asset{
   width:270px!important;
@@ -2468,7 +2468,7 @@ tbody tr:nth-child(even) td{
 .today-menu-fact b,
 .inline-guide h3,
 .inline-guide-box h4{
-  color:var(--card-soft);
+  color: var(--heading) !important;
 }
 @media(max-width:900px){
   #home .hero{
@@ -2524,7 +2524,7 @@ tbody tr:nth-child(even) td{
     border:1px solid #dfdbd2;
     border-radius:999px;
     background:#f8f7f1;
-    color:var(--card-soft);
+    color: var(--heading) !important;
     font-size:12px;
     font-weight:900;
     text-align:center;
@@ -2628,7 +2628,7 @@ tbody tr:nth-child(even) td{
   font-weight:750;
 }
 .menu-search-input:focus{
-  border-color:var(--card-soft);
+  border-color: var(--heading) !important;
   outline:3px solid rgba(126,166,189,.22);
 }
 
@@ -2694,7 +2694,7 @@ tbody tr:nth-child(even) td{
 }
 .date-head-v2 h2{
   margin:0;
-  color:var(--card-soft);
+  color: var(--heading) !important;
   font-size:22px;
   font-weight:950;
 }
@@ -2741,7 +2741,7 @@ tbody tr:nth-child(even) td{
 .menu-card-v2:nth-child(4n+4){border-left:6px solid #eed8cb}
 .menu-card-v2 h3{
   margin:0 0 10px;
-  color:var(--card-soft);
+  color: var(--heading) !important;
   font-size:19px;
   font-weight:950;
 }
@@ -2757,7 +2757,7 @@ tbody tr:nth-child(even) td{
   border-radius:999px;
   background:var(--card-soft);
   border:1px solid var(--card-soft);
-  color:var(--card-soft);
+  color: var(--heading) !important;
   font-size:13px;
   font-weight:900;
 }
@@ -2842,7 +2842,7 @@ tbody tr:nth-child(even) td{
   border-radius:999px;
   border:1px solid var(--card-soft);
   background:var(--card-soft);
-  color:var(--card-soft);
+  color: var(--heading) !important;
   font-size:13px;
   font-weight:900;
   white-space:nowrap;
@@ -2862,7 +2862,7 @@ tbody tr:nth-child(even) td{
   border:1px solid #e8ddb3;
   border-radius:14px;
   background:#fffdf2;
-  color:var(--card-soft);
+  color: var(--heading) !important;
   font-weight:900;
   line-height:1.55;
 }
@@ -2900,7 +2900,7 @@ tbody tr:nth-child(even) td{
 .menu-sync-panel summary{
   cursor:pointer;
   padding:11px 13px;
-  color:var(--card-soft);
+  color: var(--heading) !important;
   font-weight:950;
   list-style-position:inside;
 }
@@ -2944,7 +2944,7 @@ tbody tr:nth-child(even) td{
 .simple-table th,
 .clean-annual-table th{
   background:#f1f2ee!important;
-  color:var(--card-soft)!important;
+  color: var(--heading) !important;
   border-bottom:1px solid #dfdbd2;
 }
 .schedule-table td,
@@ -3242,7 +3242,7 @@ nav{
 }
 .daily-kkul-message{
   margin:0;
-  color:var(--card-soft);
+  color: var(--heading) !important;
   font-size:18px;
   font-weight:900;
   line-height:1.55;
@@ -3279,7 +3279,7 @@ nav{
   align-items:center;
   gap:10px;
   padding:20px 22px;
-  color:var(--card-soft);
+  color: var(--heading) !important;
   font-size:22px;
   font-weight:950;
   cursor:pointer;
@@ -3298,7 +3298,7 @@ nav{
   border:1px solid var(--card-soft);
   border-radius:999px;
   background:var(--card-soft);
-  color:var(--card-soft);
+  color: var(--heading) !important;
   font-size:18px;
   line-height:1;
 }
@@ -3377,7 +3377,7 @@ nav{
   margin-top:8px;
   padding-top:8px;
 }
-.today-menu-show-all-btn{min-height:46px;padding:12px 28px;border-radius:999px;background:var(--primary); color:var(--card)!important;color:var(--text)!important;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:15px;font-weight:700;text-decoration:none;border:none;cursor:pointer;transition:all 0.2s ease;box-shadow:var(--shadow-flat);}
+.today-menu-show-all-btn{min-height:46px;padding:12px 28px;border-radius:999px;background:var(--primary); color: var(--heading) !important;color:var(--text)!important;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:15px;font-weight:700;text-decoration:none;border:none;cursor:pointer;transition:all 0.2s ease;box-shadow:var(--shadow-flat);}
 .today-menu-show-all-btn.bottom-btn{margin:0 auto;background:var(--muted);color:var(--text)!important;box-shadow:var(--shadow-flat);}
 .today-menu-all-section-wrap{
   display:grid;
@@ -3412,7 +3412,7 @@ nav{
   border-radius:10px;
   background:var(--card-soft);
   border:1px solid var(--card-soft);
-  color:var(--card-soft);
+  color: var(--heading) !important;
   font-size:15px;
   font-weight:900;
   cursor:pointer;
@@ -3608,8 +3608,9 @@ nav{
   --card: #FFFFFF !important;
   --card-soft: #FBF9F5 !important;
 
-  --text: #354247 !important;
-  --muted: #74706A !important;
+  --text: #3F3A35 !important;
+  --heading: #2F2A26 !important;
+  --muted: #6F665E !important;
 
   --line: #E2DDD3 !important;
   --line-strong: #D2C8BC !important;
@@ -3690,7 +3691,7 @@ nav a.active {
 .btn,
 .file-label-v2 {
   background: var(--primary) !important;
-  color: #FFFFFF !important;
+  color: var(--heading) !important;
   border: 1px solid var(--primary) !important;
   box-shadow: var(--shadow) !important;
   transition: all 0.18s ease-in-out !important;
@@ -4020,4 +4021,54 @@ tbody tr:hover td,
     align-items: flex-start !important;
     padding: 24px !important;
   }
+}
+
+/* ==============================================================
+글자색 및 가독성 강제 보정 (Gravity 긴급 수정)
+============================================================== */
+h1, h2, h3, h4, h5, h6,
+.section-title,
+.hero h1,
+.page-section h1,
+.page-section h2,
+.section-head,
+.daily-kkul-copy h2,
+.daily-kkul-message {
+  color: var(--heading) !important;
+  opacity: 1 !important;
+}
+
+body,
+p,
+span,
+div,
+li,
+td,
+th {
+  /* Only apply default text color to general elements, 
+     preventing light color bleed from legacy CSS */
+  color: var(--text);
+}
+
+.subtitle,
+.muted-text,
+.summary-box p,
+.info-box p {
+  color: var(--muted) !important;
+}
+
+/* 뱃지/라벨 글자색 강제 보정 */
+.badge,
+.kicker,
+.num,
+.count-v2 {
+  color: var(--heading) !important;
+}
+
+/* 버튼 글자색 강제 (흰색은 주요버튼만) */
+.btn, .file-label-v2 {
+  color: #FFFFFF !important;
+}
+.btn.light, .download-btn, .copy-btn, .copy-btn-inline, .today-menu-show-all-btn, .materials-detail summary, .add-btn, .plus-btn, .sync-btn, .small-btn {
+  color: var(--text) !important;
 }
