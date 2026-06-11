@@ -3685,145 +3685,178 @@ tbody tr:hover td,
 
 
 
+
 /* ==============================================================
-   ✨ 2026 팬톤 컬러 'Cloud Dancer' & 세련된 꿀꿀이 톤온톤 팔레트 적용 (최종본)
+2026 팬톤 Cloud Dancer & 로즈 핑크 포인트 최종 리파인
 ============================================================== */
 
 :root {
-  --bg: #F0EEE9 !important;
-  --card: #FFFFFF !important;
-  --card-soft: #F9F8F6 !important;
+--bg: #F0EEE9 !important;
+--card: #FFFFFF !important;
+--card-soft: #F9F8F6 !important;
 
-  --primary: #E29596 !important;
-  --primary-dark: #D17E80 !important;
-  --primary-soft: #FDF4F5 !important;
+--primary: #E29596 !important;
+--primary-dark: #C46D6F !important;
+--primary-soft: #FDF6F6 !important;
 
-  --line: #E2DFD8 !important;
-  --text: #4A4443 !important;
-  --muted: #8D8685 !important;
+--line: #E6E3DB !important;
+--text: #4A4443 !important;
+--muted: #8D8685 !important;
 
-  --shadow-flat: 0 6px 16px rgba(74, 68, 67, 0.05) !important;
+--shadow-flat: 0 4px 12px rgba(74, 68, 67, 0.04) !important;
 
-  --navy: var(--text) !important;
-  --blue: var(--primary) !important;
-  --blue-soft: var(--primary-soft) !important;
-  --gray-soft: var(--card-soft) !important;
-  --pink-soft: var(--primary) !important;
-  --green-soft: var(--primary-soft) !important;
-  --warning-soft: var(--primary-soft) !important;
+--navy: var(--text) !important;
+--blue: var(--primary) !important;
+--blue-soft: var(--primary-soft) !important;
+--gray-soft: var(--card-soft) !important;
+--pink-soft: var(--primary) !important;
 }
 
-body { background: var(--bg); color: var(--text); }
-.top { 
-  background: rgba(255, 255, 255, 0.88); 
-  backdrop-filter: blur(12px); 
-  border-bottom: 1px solid var(--line); 
+body {
+background: var(--bg);
+color: var(--text);
 }
 
-/* Hover 효과 통일 */
-nav a, .btn, .download-btn, .file-label-v2, .today-menu-show-all-btn, .quick, .recipe-list-item, .card {
-  transition: all 0.2s ease-in-out !important;
+.top {
+background: rgba(255, 255, 255, 0.92);
+backdrop-filter: blur(12px);
+border-bottom: 1px solid var(--line);
 }
 
-nav a:hover, nav a.active {
-  color: var(--primary-dark) !important;
-  background: var(--primary-soft) !important;
-  border-color: #F8D3D5 !important;
+/* 클릭 요소 전용 hover 모션 */
+nav a,
+.btn,
+.download-btn,
+.file-label-v2,
+.today-menu-show-all-btn,
+.quick,
+.recipe-list-item,
+.materials-detail summary {
+transition: all 0.2s ease-in-out !important;
 }
 
-.btn, .download-btn, .file-label-v2, .today-menu-show-all-btn {
-  background: var(--primary) !important;
-  border-color: var(--primary) !important;
-  color: #fff !important;
-  box-shadow: 0 2px 6px rgba(226, 149, 150, 0.25) !important;
+nav a:hover,
+nav a.active {
+color: var(--primary-dark) !important;
+background: var(--primary-soft) !important;
+border-color: #F6E2E3 !important;
 }
 
-.btn:hover, .download-btn:hover, .file-label-v2:hover, .today-menu-show-all-btn:hover {
-  background: var(--primary-dark) !important;
-  border-color: var(--primary-dark) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: var(--shadow-flat) !important;
+.btn:hover,
+.download-btn:hover,
+.file-label-v2:hover,
+.today-menu-show-all-btn:hover {
+background: var(--primary-dark) !important;
+border-color: var(--primary-dark) !important;
+color: #FFFFFF !important;
+transform: translateY(-2px) !important;
+box-shadow: 0 4px 10px rgba(226, 149, 150, 0.15) !important;
 }
 
-.btn.light, .download-btn.copy-btn-inline {
-  background: var(--primary-soft) !important;
-  color: var(--primary-dark) !important;
-  border-color: var(--line) !important;
-  box-shadow: none !important;
+.btn.light,
+.download-btn.copy-btn-inline {
+background: #FFFFFF !important;
+color: var(--text) !important;
+border-color: var(--line) !important;
+box-shadow: none !important;
 }
 
-.btn.light:hover, .download-btn.copy-btn-inline:hover {
-  background: var(--primary-soft) !important;
-  color: var(--primary-dark) !important;
-  border-color: var(--primary) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: var(--shadow-flat) !important;
+.btn.light:hover,
+.download-btn.copy-btn-inline:hover {
+background: var(--primary-soft) !important;
+border-color: var(--primary) !important;
+color: var(--primary-dark) !important;
+transform: translateY(-2px) !important;
 }
 
-.recipe-list-item:hover, .quick:hover {
-  background: var(--primary-soft) !important;
-  border-color: var(--primary) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: var(--shadow-flat) !important;
+.quick:hover,
+.recipe-list-item:hover,
+.recipe-list-item.active,
+.materials-detail summary:hover {
+background: var(--primary-soft) !important;
+border-color: #F6E2E3 !important;
+color: var(--text) !important;
+transform: translateY(-2px) !important;
 }
 
-/* 표, 카드, 배지 색상 정리 */
-th, .schedule-table th, .clean-annual-table th {
-  background: var(--card-soft) !important;
-  color: var(--text) !important;
+/* 표와 비클릭 정보 요소 색상 정돈 */
+th,
+.schedule-table th,
+.clean-annual-table th {
+background: #F4F2EC !important;
+color: var(--text) !important;
 }
 
-td:first-child, .schedule-table td:first-child, .annual-desktop-card .clean-annual-table td.month-cell {
-  background: var(--primary-soft) !important;
-  color: var(--primary-dark) !important;
-  font-weight: 900;
+td:first-child,
+.schedule-table td:first-child,
+.annual-desktop-card .clean-annual-table td.month-cell {
+background: #FAF8F5 !important;
+color: var(--text) !important;
+font-weight: 800 !important;
 }
 
-.kicker, #home .kicker, .count-v2, .badge, .note {
-  background: var(--primary-soft) !important;
-  color: var(--primary-dark) !important;
-  border: 1px solid #F8D3D5 !important;
+/* 일반 표 hover 효과 제거 */
+.schedule-table tbody tr:hover td,
+.clean-annual-table tbody tr:hover td,
+.simple-table tbody tr:hover td {
+transform: none !important;
 }
 
-/* 홈 탭 히어로 섹션 정리 */
-#home .hero, .page-section:not(#home) .hero {
-  background: linear-gradient(135deg, #FFFFFF 0%, var(--primary-soft) 100%) !important;
-  border-color: var(--line) !important;
+/* hover 시에도 기존 셀 배경이 과하게 바뀌지 않도록 유지 */
+.schedule-table tbody tr:hover td:not(:first-child),
+.clean-annual-table tbody tr:hover td:not(.month-cell),
+.simple-table tbody tr:hover td:not(:first-child) {
+background: #FFFFFF !important;
+color: inherit !important;
 }
 
-/* 식단 카드 테두리 */
-.menu-card-v2 { border-left: 6px solid var(--primary) !important; }
+.schedule-table tbody tr:hover td:first-child,
+.simple-table tbody tr:hover td:first-child,
+.annual-desktop-card .clean-annual-table tbody tr:hover td.month-cell {
+background: #FAF8F5 !important;
+color: var(--text) !important;
+}
 
-/* 모바일 홈 탭 꿀꿀이 캐릭터 레이아웃 수정 */
-@keyframes floatUpMobileCenter {
+/* 배지 색상 정돈 */
+.kicker,
+#home .kicker,
+.count-v2 {
+background: #F4F2EC !important;
+color: var(--text) !important;
+border-color: var(--line) !important;
+}
+
+/* 식단 카드: 왼쪽 강조선만 핑크 포인트 유지 */
+.menu-card-v2 {
+border-left: 5px solid var(--primary) !important;
+}
+
+/* 히어로 배경: 핑크 비중 축소 */
+#home .hero,
+.page-section:not(#home) .hero {
+background: linear-gradient(135deg, #FFFFFF 0%, #FAF8F5 100%) !important;
+border-color: var(--line) !important;
+}
+
+/* 모바일 홈 탭 캐릭터 보정 */
+@keyframes floatBreathing {
   0% { transform: translateY(-50%); }
   50% { transform: translateY(calc(-50% - 3px)); }
   100% { transform: translateY(-50%); }
 }
 
 @media(max-width:640px) {
-  #home .hero {
-    position: relative !important;
-    padding: 24px 145px 24px 20px !important;
-    min-height: 150px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-  }
+#home .hero {
+padding: 24px 150px 24px 20px !important;
+}
 
-  #home .hero-asset {
-    position: absolute !important;
-    display: block !important;
-    width: 125px !important;
-    max-width: 125px !important;
-    height: auto !important;
-    right: 12px !important;
-    top: 50% !important;
-    bottom: auto !important;
-    transform: translateY(-50%) !important;
-    object-fit: contain !important;
-    object-position: center right !important;
-    z-index: 1 !important;
-    animation: floatUpMobileCenter 3s ease-in-out infinite !important;
-  }
+#home .hero-asset {
+width: 120px !important;
+max-width: 120px !important;
+right: 10px !important;
+top: 50% !important;
+bottom: auto !important;
+transform: translateY(-50%) !important;
+animation: floatBreathing 4s ease-in-out infinite !important;
+}
 }
