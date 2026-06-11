@@ -3514,9 +3514,10 @@ tbody tr:hover td,
     height:132px;
   }
   #monthly .hero-asset{
-    bottom:0!important;
-    top:auto!important;
-    transform:translateY(0)!important;
+    top:50%!important;
+    bottom:auto!important;
+    translate:0 -50%!important;
+    transform:none!important;
   }
 }
 @media(max-width:640px){
@@ -3546,10 +3547,12 @@ tbody tr:hover td,
     padding:16px 15px 18px;
   }
   #monthly .hero-asset{
-    bottom:0!important;
-    top:auto!important;
+    top:50%!important;
+    bottom:auto!important;
     max-height:90%!important;
-    object-position:center bottom!important;
+    translate:0 -50%!important;
+    transform:none!important;
+    object-position:center center!important;
   }
 }
 
