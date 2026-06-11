@@ -3598,206 +3598,33 @@ nav{
 
 
 
+
 /* ==============================================================
-눈이 편안한 웜 아이보리 & 차분한 로즈 브라운 업무용 포털 리팩토링
+통합 디자인 시스템 V2 (하늘색/연노랑 완벽 제거, 톤온톤 정돈)
 ============================================================== */
 
 :root {
-  --bg: #F7F5F0 !important;              /* 전체 배경: 부드러운 웜 아이보리 */
-  --card: #FFFFFF !important;            /* 기본 카드 */
-  --card-soft: #FBFAF7 !important;       /* 보조 카드 */
-  
-  --primary: #C9827D !important;         /* 차분한 로즈 브라운 포인트 */
-  --primary-dark: #A86460 !important;    /* hover 및 강조 */
-  --primary-soft: #F5E9E6 !important;    /* 아주 연한 포인트 배경 */
-  
-  --line: #E5E0D8 !important;            /* 연한 테두리 */
-  --text: #3F3A35 !important;            /* 본문 글자 */
-  --muted: #837A72 !important;           /* 보조 글자 */
-  
-  --shadow-flat: 0 4px 14px rgba(63, 58, 53, 0.06) !important;
-
-  /* Legacy Fallbacks */
-  --navy: var(--text) !important;
-  --blue: var(--primary) !important;
-  --blue-soft: var(--primary-soft) !important;
-  --gray-soft: var(--card-soft) !important;
-  --pink-soft: var(--primary) !important;
-}
-
-body {
-  background: var(--bg);
-  color: var(--text);
-}
-
-.top {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--line);
-}
-
-/* =========================================
-   클릭 가능한 요소에만 Hover 모션 적용
-========================================= */
-nav a,
-.btn,
-.download-btn,
-.file-label-v2,
-.today-menu-show-all-btn,
-.quick,
-.recipe-list-item,
-.materials-detail summary {
-  transition: all 0.18s ease-in-out !important;
-}
-
-.btn.light,
-.download-btn.copy-btn-inline {
-  background: #FFFFFF !important;
-  color: var(--text) !important;
-  border-color: var(--line) !important;
-  box-shadow: none !important;
-}
-
-/* =========================================
-   가독성 우선 - 비클릭 요소 정돈
-========================================= */
-th,
-.schedule-table th,
-.clean-annual-table th {
-  background: var(--card-soft) !important;
-  color: var(--text) !important;
-  border-bottom: 1px solid var(--line) !important;
-}
-
-td:first-child,
-.schedule-table td:first-child,
-.annual-desktop-card .clean-annual-table td.month-cell {
-  background: #FDFBFA !important;
-  color: var(--text) !important;
-  font-weight: 800 !important;
-}
-
-/* 배지 색상 정돈 (연한 웜 아이보리 배경) */
-.kicker,
-#home .kicker,
-.count-v2 {
-  background: var(--card-soft) !important;
-  color: var(--text) !important;
-  border: 1px solid var(--line) !important;
-}
-
-/* 식단 카드 왼쪽 강조선 */
-.menu-card-v2 {
-  border-left: 5px solid var(--primary) !important;
-}
-
-/* 히어로 배경 핑크 완전히 걷어내기 */
-#home .hero,
-.page-section:not(#home) .hero {
-  background: var(--card) !important;
-  border-color: var(--line) !important;
-}
-
-/* =========================================
-   모바일 캐릭터 여백 및 정렬
-========================================= */
-@keyframes floatBreathing {
-  0% { transform: translateY(-50%); }
-  50% { transform: translateY(calc(-50% - 3px)); }
-  100% { transform: translateY(-50%); }
-}
-
-@media(max-width:640px) {
-  #home .hero {
-    position: relative !important;
-    padding: 24px 155px 24px 20px !important; /* 텍스트 가리지 않게 오른쪽 여백 확보 */
-    min-height: 150px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-  }
-
-  #home .hero-asset {
-    position: absolute !important;
-    display: block !important;
-    width: 120px !important;
-    max-width: 120px !important;
-    right: 12px !important;
-    top: 50% !important;
-    bottom: auto !important;
-    transform: translateY(-50%) !important;
-    animation: floatBreathing 4s ease-in-out infinite !important;
-    z-index: 1 !important;
-  }
-}
-
-
-
-/* ==============================================================
-PC 화면 홈탭 히어로 레이아웃 (사용자 요청)
-============================================================== */
-@media(min-width: 641px) {
-  #home .hero {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    gap: 48px !important;
-    position: relative !important;
-  }
-  #home .hero-content {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    max-width: 620px !important;
-  }
-  #home .kicker {
-    margin-bottom: 14px !important;
-  }
-  #home .hero h1 {
-    margin: 0 0 16px 0 !important;
-    white-space: nowrap !important;
-  }
-  #home .hero p {
-    margin: 0 !important;
-    max-width: 620px !important;
-    line-height: 1.7 !important;
-  }
-  #home .hero-asset {
-    position: static !important;
-    flex-shrink: 0 !important;
-    align-self: center !important;
-    transform: none !important;
-    width: 280px !important;
-    max-height: 280px !important;
-    object-position: center !important;
-  }
-}
-
-/* ==============================================================
-통합 디자인 시스템 (웜 아이보리 & 차분한 로즈 브라운)
-============================================================== */
-
-:root {
-  --bg: #F7F5F0 !important;
+  --bg: #F6F3EE !important;
   --card: #FFFFFF !important;
-  --card-soft: #FBFAF7 !important;
+  --card-soft: #FBF9F5 !important;
 
-  --primary: #B97772 !important;
-  --primary-dark: #965C58 !important;
-  --primary-soft: #F3E7E3 !important;
+  --text: #354247 !important;
+  --muted: #74706A !important;
 
-  --line: #E4DED5 !important;
-  --text: #3E3934 !important;
-  --muted: #7F766E !important;
+  --line: #E2DDD3 !important;
+  --line-strong: #D2C8BC !important;
 
-  --table-head: #EFEAE2 !important;
+  --primary: #A96F68 !important;
+  --primary-dark: #86544F !important;
+  --primary-soft: #F1E7E3 !important;
+
+  --table-head: #EEE8DF !important;
   --table-cell-soft: #FAF8F4 !important;
-  --hover-soft: #F3EDE7 !important;
+  --hover-soft: #F2ECE4 !important;
 
-  --shadow: 0 4px 14px rgba(62, 57, 52, 0.06) !important;
+  --shadow: 0 6px 18px rgba(53, 66, 71, 0.06) !important;
 
-  /* Fallbacks for legacy CSS vars */
+  /* Legacy variable overrides to safely neutralize old hardcoded colors */
   --navy: var(--text) !important;
   --blue: var(--primary) !important;
   --blue-soft: var(--primary-soft) !important;
@@ -3810,36 +3637,14 @@ body {
   color: var(--text) !important;
 }
 
-/* 1. 상단 Header */
+/* 1. 상단 Header & 탭 */
 .top {
   background: rgba(255, 255, 255, 0.95) !important;
   border-bottom: 1px solid var(--line) !important;
 }
-
-/* 2. 카드 & 보조 박스 */
-.card {
-  background: var(--card) !important;
-  border: 1px solid var(--line) !important;
-  box-shadow: var(--shadow) !important;
-}
-.menu-card-v2 {
-  background: var(--card) !important;
-  border: 1px solid var(--line) !important;
-  border-left: 5px solid var(--primary) !important;
-}
-.recipe-list-item,
-.menu-upload-panel,
-.staff-accordion-card,
-.annual-month-card,
-.checklist {
-  background: var(--card) !important;
-  border: 1px solid var(--line) !important;
-}
-
-/* 3. 탭 / 네비게이션 통일 */
 nav a {
-  background: transparent !important;
-  color: var(--muted) !important;
+  background: var(--card) !important;
+  color: var(--text) !important;
   border-color: var(--line) !important;
   transition: all 0.18s ease-in-out !important;
 }
@@ -3855,9 +3660,36 @@ nav a.active {
   border-color: var(--primary) !important;
 }
 
-/* 4. 버튼 통일 */
+/* 2. 카드 및 배경 통일 */
+.card,
+.menu-card-v2,
+.recipe-list-item,
+.menu-upload-panel,
+.staff-accordion-card,
+.annual-month-card,
+.today-menu-all-section-wrap {
+  background: var(--card) !important;
+  border: 1px solid var(--line) !important;
+  box-shadow: var(--shadow) !important;
+}
+.menu-card-v2 {
+  border-left: 5px solid var(--primary) !important;
+}
+
+/* 보조 박스 (연노랑/하늘색 완벽 제거) */
+.checklist,
+.info-box,
+.summary-box,
+.daily-kkul-copy,
+.home-today-card .daily-kkul-copy,
+.today-menu-all-section-wrap .menu-card-v2 .summary-box {
+  background: var(--card-soft) !important;
+  border: 1px solid var(--line) !important;
+}
+
+/* 3. 버튼 시스템 통일 */
+/* 주요 버튼 */
 .btn,
-.today-menu-show-all-btn,
 .file-label-v2 {
   background: var(--primary) !important;
   color: #FFFFFF !important;
@@ -3866,20 +3698,21 @@ nav a.active {
   transition: all 0.18s ease-in-out !important;
 }
 .btn:hover,
-.today-menu-show-all-btn:hover,
 .file-label-v2:hover {
   background: var(--primary-dark) !important;
   border-color: var(--primary-dark) !important;
   transform: translateY(-1px) !important;
-  box-shadow: 0 4px 10px rgba(150, 92, 88, 0.15) !important;
+  box-shadow: 0 4px 10px rgba(134, 84, 79, 0.15) !important;
 }
 
-/* 보조 버튼 */
+/* 보조 버튼 (전체보기, 재료보기, 복사 등 하늘색 제거) */
 .btn.light,
 .download-btn,
 .copy-btn,
-.copy-btn-inline {
-  background: #FFFFFF !important;
+.copy-btn-inline,
+.today-menu-show-all-btn,
+.materials-detail summary {
+  background: var(--card) !important;
   color: var(--text) !important;
   border: 1px solid var(--line) !important;
   box-shadow: none !important;
@@ -3888,31 +3721,34 @@ nav a.active {
 .btn.light:hover,
 .download-btn:hover,
 .copy-btn:hover,
-.copy-btn-inline:hover {
+.copy-btn-inline:hover,
+.today-menu-show-all-btn:hover,
+.materials-detail summary:hover {
   background: var(--hover-soft) !important;
   border-color: var(--primary) !important;
   color: var(--primary-dark) !important;
   transform: translateY(-1px) !important;
 }
 
-/* 5. 배지 / 라벨 / 강조 박스 통일 */
+/* 4. 배지 / 라벨 통일 */
 .kicker,
 .count-v2,
 .num,
 .badge {
-  background: var(--table-head) !important;
+  background: var(--card-soft) !important;
   color: var(--text) !important;
   border: 1px solid var(--line) !important;
 }
-/* 강조 배지 (예: 오늘의 식단 배지 등) */
+/* 강조 배지 */
 #home .kicker,
-#today-menu .kicker {
+#today-menu .kicker,
+.home-today-head .kicker {
   background: var(--primary-soft) !important;
   color: var(--primary-dark) !important;
   border: 1px solid var(--primary) !important;
 }
 
-/* 6. 표 통일 */
+/* 5. 표 색상 시스템 */
 th,
 .schedule-table th,
 .clean-annual-table th {
@@ -3948,21 +3784,20 @@ tbody tr:hover td,
   color: inherit !important;
 }
 
-/* 7. 기타 상호작용 요소 */
+/* 6. 기타 상호작용 요소 */
 .quick,
-.recipe-list-item,
-.materials-detail summary {
+.recipe-list-item {
   transition: all 0.18s ease-in-out !important;
 }
 .quick:hover,
 .recipe-list-item:hover,
-.materials-detail summary:hover {
+.recipe-list-item.active {
   background: var(--hover-soft) !important;
   border-color: var(--primary) !important;
   transform: translateY(-1px) !important;
 }
 
-/* 8. 홈 탭 히어로 영역 레이아웃 (이전 설정 보존 + 배경 톤업) */
+/* 7. 홈 탭 히어로 영역 레이아웃 */
 #home .hero,
 .page-section:not(#home) .hero {
   background: var(--card) !important;
