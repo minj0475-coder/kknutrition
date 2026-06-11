@@ -302,7 +302,7 @@ td:first-child{
 .schedule-table td:first-child{
   text-align:center;
   white-space:nowrap;
-  background:#f8fafc;
+  background:var(--card-soft);
   color:var(--text);
   width:130px;
 }
@@ -378,7 +378,7 @@ td:first-child{
   padding-top:0;
 }
 .short-summary{
-  background:#f8fafc;
+  background:var(--card-soft);
 }
 .btn,
 .download-btn{
@@ -409,7 +409,7 @@ td:first-child{
   gap:14px;
   padding:14px 16px;
   border-radius:14px;
-  background:#f8fafc;
+  background:var(--card-soft);
   border:1px solid var(--line);
 }
 .download-card strong{
@@ -437,7 +437,7 @@ td:first-child{
   display:none;
 }
 .flow-line{
-  background:#f8fafc;
+  background:var(--card-soft);
   border:1px solid var(--line);
   border-radius:12px;
   padding:14px 16px;
@@ -484,7 +484,7 @@ td:first-child{
 .cal-cell.wide{
   grid-column:span 3;
   min-height:122px;
-  background:#f8fafc;
+  background:var(--card-soft);
 }
 .recipe-card{
   border:1px solid var(--line);
@@ -629,7 +629,7 @@ td:first-child{
   width:190px;
   min-width:190px;
   vertical-align:middle;
-  background:#f8fafc;
+  background:var(--card-soft);
   color: var(--heading) !important;
   font-weight:850;
   text-align:center;
@@ -779,7 +779,7 @@ td:first-child{
   margin-top:12px;
   padding:14px 16px;
   border-radius:14px;
-  background:#f8fafc;
+  background:var(--card-soft);
   border:1px solid var(--line);
 }
 .sheet-link-head{
@@ -945,7 +945,7 @@ td:first-child{
 }
 .detail-full{
   grid-column:1 / -1;
-  background:#f8fafc;
+  background:var(--card-soft);
 }
 @media(max-width:900px){
   .detail-grid{
@@ -1066,7 +1066,7 @@ button,
   font-size:16px;
 }
 .annual-table td.task-cell{
-  background:#f8fafc;
+  background:var(--card-soft);
   color: var(--heading) !important;
   font-weight:850;
   vertical-align:middle;
@@ -1414,7 +1414,7 @@ button,
   border:1px solid var(--line);
   border-radius:14px;
   padding:14px;
-  background:#f8fafc;
+  background:var(--card-soft);
 }
 .recipe-count{
   margin:8px 0 10px;
@@ -1549,7 +1549,7 @@ button,
   padding:16px;
   border:1px solid var(--line);
   border-radius:12px;
-  background:#f8fafc;
+  background:var(--card-soft);
 }
 .menu-control-grid{
   display:grid;
@@ -1655,7 +1655,7 @@ button,
 }
 .today-menu-item-head{
   padding:14px 16px;
-  background:#f8fafc;
+  background:var(--card-soft);
   border-bottom:1px solid var(--line);
 }
 .today-menu-item-head strong{
@@ -1872,7 +1872,7 @@ nav a{
   border:1px solid var(--line);
   border-radius:12px;
   padding:14px;
-  background:#f8fafc;
+  background:var(--card-soft);
 }
 .inline-guide-box h4{
   margin:0 0 10px;
@@ -4071,4 +4071,53 @@ th {
 }
 .btn.light, .download-btn, .copy-btn, .copy-btn-inline, .today-menu-show-all-btn, .materials-detail summary, .add-btn, .plus-btn, .sync-btn, .small-btn {
   color: var(--text) !important;
+}
+
+/* ==============================================================
+조리종사원 탭 잔여 하늘색(블루그레이) 및 입력창/버튼 완벽 정화
+============================================================== */
+.sheet-link-card,
+.attendance-box,
+.staff-link-box,
+.staff-layout > div,
+.checklist-box {
+  background: var(--card-soft) !important;
+  border: 1px solid var(--line) !important;
+  color: var(--text) !important;
+}
+
+.sheet-link-card input,
+.sync-box input,
+.staff-link-box input {
+  background: #FFFFFF !important;
+  border: 1px solid var(--line) !important;
+  color: var(--text) !important;
+}
+
+#staff .add-btn,
+#staff .plus-btn,
+#staff .download-btn,
+#staff .sync-btn,
+#staff .copy-btn,
+.sheet-link-card .download-btn,
+.sheet-link-card .sync-btn,
+.staff-accordion-body .btn.light {
+  background: #FFFFFF !important;
+  color: var(--text) !important;
+  border: 1px solid var(--line) !important;
+  box-shadow: none !important;
+}
+
+#staff .add-btn:hover,
+#staff .plus-btn:hover,
+#staff .download-btn:hover,
+#staff .sync-btn:hover,
+#staff .copy-btn:hover,
+.sheet-link-card .download-btn:hover,
+.sheet-link-card .sync-btn:hover,
+.staff-accordion-body .btn.light:hover {
+  background: var(--hover-soft) !important;
+  border-color: var(--primary) !important;
+  color: var(--primary-dark) !important;
+  transform: translateY(-1px) !important;
 }
