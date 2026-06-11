@@ -1997,7 +1997,7 @@ table{
 }
 @media(max-width:900px){
   .page-section .wrap{
-    gap:16px;
+    gap:24px;
   }
   .hero .subtitle{
     max-width:none;
@@ -3263,7 +3263,7 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
   padding-bottom:64px;
 }
 .page-section .wrap{
-  gap:20px;
+  gap:32px;
 }
 .page-section + .page-section{
   border-top-width:8px;
@@ -3304,8 +3304,8 @@ nav{
 }
 .today-menu-results{
   display:grid;
-  gap:18px;
-  margin-top:18px;
+  gap:24px;
+  margin-top:24px;
 }
 .date-section-v2{
   margin:0;
@@ -3336,7 +3336,7 @@ nav{
     padding-bottom:52px;
   }
   .page-section .wrap{
-    gap:16px;
+    gap:24px;
   }
   .card{
     padding:18px;
@@ -3349,7 +3349,7 @@ nav{
   .wrap,
   .page-section .wrap{
     padding:16px 10px 40px;
-    gap:14px;
+    gap:20px;
   }
   nav{
     justify-content:center;
