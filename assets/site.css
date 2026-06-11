@@ -3384,7 +3384,7 @@ tbody tr:hover td,
 .simple-table tr:hover th,
 .simple-table tr:hover td{
   background:var(--card-soft)!important;
-    padding-bottom:14px!important;
+    
   }
   .daily-kkul-image-wrap{
     width:132px;
