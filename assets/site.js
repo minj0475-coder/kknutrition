@@ -686,8 +686,8 @@ function filterTodayMenuListV2() {
         let initialHtml = "";
         initialData.forEach((section, idx) => {
           let label = null;
-          if (section.key === todayKey) label = "오늘 식단";
-          else if (idx === 1 && initialData[0].key === todayKey) label = "내일 식단";
+          if (section.key === todayKey) label = `오늘 식단 (${section.date})`;
+          else if (idx === 1 && initialData[0].key === todayKey) label = `내일 식단 (${section.date})`;
           initialHtml += renderSectionHTML(section, label);
         });
         todaySection.innerHTML = initialHtml;
@@ -697,7 +697,7 @@ function filterTodayMenuListV2() {
           allSection.innerHTML = remainingData.map(s => renderSectionHTML(s)).join("");
           if (showAllWrap) showAllWrap.style.display = "";
           const showAllBtn = document.getElementById("todayMenuShowAllBtn");
-          if (showAllBtn) showAllBtn.textContent = `📋 나머지 식단 전체 보기 (${remainingData.length}일)`;
+          if (showAllBtn) showAllBtn.textContent = `나머지 식단 전체 보기 (${remainingData.length}일)`;
         } else {
           allSection.innerHTML = "";
           if (showAllWrap) showAllWrap.style.display = "none";
@@ -804,10 +804,10 @@ async function setupTodayMenu() {
       if (isOpen) {
         allSection.style.display = "none";
         const count = allSection.querySelectorAll(".date-section-v2").length;
-        showAllBtn.textContent = `📋 나머지 식단 전체 보기 (${count}일)`;
+        showAllBtn.textContent = `나머지 식단 전체 보기 (${count}일)`;
       } else {
         allSection.style.display = "";
-        showAllBtn.textContent = "📋 나머지 식단 접기";
+        showAllBtn.textContent = "나머지 식단 접기";
         allSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
       }
     });
