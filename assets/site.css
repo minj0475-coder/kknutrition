@@ -4326,3 +4326,58 @@ th {
   box-shadow: var(--shadow) !important;
   border-radius: 22px !important;
 }
+
+/* ==============================================================
+글자색 전면 통일 (링크 파란색 제거 및 다크 브라운톤 고정)
+============================================================== */
+/* 큰 제목: 다크 차콜 */
+h1, h2, h3, h4, h5, h6,
+.section-title,
+.hero h1,
+.page-section h1,
+.page-section h2,
+.section-head,
+.daily-kkul-copy h2,
+.daily-kkul-message,
+strong, b,
+th {
+  color: var(--heading) !important;
+}
+
+/* 본문/일반 글자: 다크 브라운 */
+body, p, span, div, li, td, label, input, textarea, select {
+  color: var(--text);
+}
+
+/* 보조 설명/부가 정보: 연한 브라운 */
+.subtitle,
+.muted-text,
+.summary-box p,
+.info-box p,
+.mini,
+.caption,
+.table-list.compact-list li::before {
+  color: var(--muted) !important;
+}
+
+/* 링크 및 강조 라벨: 로즈브라운 다크 */
+a,
+a:visited,
+a:hover,
+a:active,
+.real-link,
+.badge,
+.kicker,
+.num,
+.count-v2 {
+  color: var(--primary-dark) !important;
+  text-decoration: none !important;
+}
+
+/* 버튼: 기본적으로 텍스트 색상, 주요 버튼만 흰색 */
+button, .btn {
+  color: var(--text) !important;
+}
+.btn.primary {
+  color: #FFFFFF !important;
+}
