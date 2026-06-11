@@ -3702,3 +3702,46 @@ tbody tr:hover td,
   }
 }
 
+
+/* --- Ultimate Robust Mobile Hero Layout --- */
+@media(max-width:640px) {
+  #home .hero {
+    position: relative !important;
+    padding: 24px 130px 24px 20px !important;
+    min-height: 180px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+    overflow: hidden !important; /* ensures background radius works */
+  }
+  #home .hero .kicker {
+    align-self: flex-start !important;
+  }
+  #home .hero h1 {
+    text-align: left !important;
+  }
+  #home .hero .subtitle {
+    margin: 8px 0 0 !important;
+    max-width: none !important;
+    text-align: left !important;
+  }
+  #home .hero-asset {
+    position: absolute !important;
+    display: block !important;
+    width: 120px !important;
+    height: auto !important;
+    max-width: none !important;
+    max-height: 140px !important;
+    right: 8px !important;
+    bottom: -6px !important; /* Slight drop for natural weight, but within bounds */
+    left: auto !important;
+    top: auto !important;
+    margin: 0 !important;
+    object-fit: contain !important;
+    object-position: bottom right !important;
+    z-index: 1 !important;
+    pointer-events: none !important;
+  }
+}
