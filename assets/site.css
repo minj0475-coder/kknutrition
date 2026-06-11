@@ -3745,3 +3745,51 @@ tbody tr:hover td,
     pointer-events: none !important;
   }
 }
+
+/* --- Ultimate Robust Mobile Hero Layout --- */
+@media(max-width:640px) {
+  #home .hero {
+    position: relative !important;
+    padding: 20px 120px 20px 20px !important; /* 120px right padding gives text plenty of room */
+    min-height: 140px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+    overflow: hidden !important;
+  }
+  #home .hero .kicker {
+    align-self: flex-start !important;
+  }
+  #home .hero h1 {
+    font-size: 26px !important; /* Slightly smaller to prevent word wrap */
+    text-align: left !important;
+    word-break: keep-all !important;
+    white-space: nowrap !important;
+  }
+  #home .hero .subtitle {
+    margin: 8px 0 0 !important;
+    font-size: 13px !important;
+    max-width: none !important;
+    text-align: left !important;
+    word-break: keep-all !important;
+  }
+  #home .hero-asset {
+    position: absolute !important;
+    display: block !important;
+    width: 105px !important; /* Smaller, very safe size */
+    height: auto !important;
+    max-width: 105px !important;
+    max-height: 120px !important;
+    right: 8px !important; /* Safely tucked on the right */
+    bottom: -5px !important; /* Sat firmly on the bottom edge */
+    left: auto !important;
+    top: auto !important;
+    margin: 0 !important;
+    object-fit: contain !important;
+    object-position: bottom right !important;
+    z-index: 1 !important;
+    pointer-events: none !important;
+  }
+}
