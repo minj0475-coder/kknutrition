@@ -3332,17 +3332,23 @@ nav{
     flex-basis:36px!important;
   }
   .daily-kkul-card{
-    grid-template-columns:minmax(0,1fr) 130px;
-    gap:10px;
-    padding-top:12px!important;
-    padding-bottom:12px!important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding-top: 16px!important;
+    padding-bottom: 0!important;
+  }
+  .daily-kkul-copy{
+    width: 100%;
   }
   .daily-kkul-message{
-    font-size:15px;
+    font-size: 16px;
   }
   .daily-kkul-image-wrap{
-    width:130px;
-    height:130px;
+    width: 160px;
+    height: 160px;
+    margin: 0 auto -8px auto;
   }
   .staff-accordion summary{
     padding:16px 15px;
