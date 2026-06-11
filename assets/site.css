@@ -3691,3 +3691,28 @@ tbody tr:hover td,
     animation: none !important;
   }
 }
+
+@media(max-width:900px) {
+  /* Compact Daily Schedule Time on Mobile */
+  #daily .schedule-table td:nth-child(2)::before,
+  #daily .schedule-table td:nth-child(3)::before {
+    display: none !important;
+  }
+  
+  #daily .schedule-table td:nth-child(2) {
+    display: inline-block !important;
+    width: auto !important;
+    padding: 4px 10px !important;
+    margin: 14px 12px 0 !important;
+    background: #f1f2ee !important;
+    color: #63727a !important;
+    border-radius: 6px !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    border-bottom: none !important;
+  }
+  
+  #daily .schedule-table td:nth-child(3) {
+    padding-top: 8px !important;
+  }
+}
