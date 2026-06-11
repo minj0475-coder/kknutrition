@@ -825,9 +825,8 @@ https://minj0475-coder.github.io/kknutrition/신규대체조리종사원_안내.
       if (showAllBtn) showAllBtn.textContent = '📋 전체 식단 보기 (' + currentData.length + '일)';
     };
 
-    /* filterTodayMenuList 래핑: 검색어 있을 때 todaySection 숨기기 */
+    /* filterTodayMenuList 래핑: 검색어 있을 때 원본 배열 필터링 */
     if (typeof filterTodayMenuList === 'function') {
-      var _origFilter = filterTodayMenuList;
       window.filterTodayMenuList = function() {
         var search = document.getElementById('menuSearchInput');
         var todaySection = document.getElementById('todayMenuTodaySection');
@@ -837,33 +836,74 @@ https://minj0475-coder.github.io/kknutrition/신규대체조리종사원_안내.
         var searchResult = document.getElementById('todayMenuSearchResult');
 
         var query = search ? (search.value || '').trim() : '';
+        var currentData = window.currentMenuData || [];
 
         if (!query) {
-          /* 검색어 없음: 오늘 섹션 보이기, 전체 보기 버튼 유지 */
+          /* 검색어 없음: 가벼운 초기 상태 유지 */
           if (todaySection) todaySection.style.display = '';
-          if (showAllWrap) showAllWrap.style.display = (window.currentMenuData || []).length > 0 ? '' : 'none';
+          if (showAllWrap) showAllWrap.style.display = currentData.length > 0 ? '' : 'none';
           if (allSection) allSection.style.display = 'none';
           if (noResult) noResult.style.display = 'none';
           if (searchResult) { searchResult.innerHTML = ''; searchResult.style.display = 'none'; }
+          
+          /* 전체 보기 닫힘 상태로 초기화 */
+          var showAllBtn = document.getElementById('todayMenuShowAllBtn');
+          if (showAllBtn) showAllBtn.textContent = '📋 전체 식단 보기 (' + currentData.length + '일)';
           return;
         }
 
-        /* 검색어 있음 */
+        /* 검색어 있음: 전체 데이터 기반 배열 필터링 렌더링 */
         if (todaySection) todaySection.style.display = 'none';
         if (showAllWrap) showAllWrap.style.display = 'none';
         if (allSection) allSection.style.display = 'none';
 
-        /* 원본 filter로 todayMenuList 내부 필터링 */
-        _origFilter();
+        var shownSections = 0;
+        var html = '';
 
-        /* 검색 결과를 searchResult에 복사 */
-        if (searchResult) {
-          var list = document.getElementById('todayMenuList');
-          if (list) {
-            searchResult.innerHTML = list.innerHTML;
-            searchResult.style.display = '';
-            list.style.display = 'none';
+        currentData.forEach(function(section) {
+          var dateTitle = section.date || '';
+          var summary = section.items.map(function(i) { return i.name; }).join(', ');
+          var sectionHaystack = [dateTitle, window.formatMenuDateVariants ? window.formatMenuDateVariants(dateTitle) : '', summary].join(' ');
+          var sectionMatched = window.matchMenuQuery ? window.matchMenuQuery(sectionHaystack, query) : false;
+          
+          var filteredItems = section.items.filter(function(item) {
+            var itemHaystack = [item.name, item.method || '', item.materials || ''].join(' ');
+            return sectionMatched || (window.matchMenuQuery ? window.matchMenuQuery(sectionHaystack + ' ' + itemHaystack, query) : false);
+          });
+
+          if (filteredItems.length > 0) {
+            shownSections++;
+            var meal = section.meal ? '<p class="meal-line-v2">' + (window.menuEsc ? window.menuEsc(section.meal) : section.meal) + '</p>' : '';
+            var cards = filteredItems.map(function(item) {
+              var muted = item.muted ? ' muted' : '';
+              var escName = window.menuEsc ? window.menuEsc(item.name) : item.name;
+              var escMat = window.menuEsc ? window.menuEsc(item.materials || '등록된 사용재료 없음') : (item.materials || '등록된 사용재료 없음');
+              var escMet = window.menuEsc ? window.menuEsc(item.method || '등록된 조리방법 없음') : (item.method || '등록된 조리방법 없음');
+              return '<article class="menu-card-v2">' +
+                     '<h3>' + escName + '</h3>' +
+                     '<details class="materials-detail"><summary>사용재료 보기</summary><pre>' + escMat + '</pre></details>' +
+                     '<pre class="plain-method' + muted + '">' + escMet + '</pre>' +
+                     '</article>';
+            }).join('');
+            
+            var escDate = window.menuEsc ? window.menuEsc(dateTitle) : dateTitle;
+            var escSummary = window.menuEsc ? window.menuEsc(filteredItems.map(function(i){return i.name;}).join(', ')) : filteredItems.map(function(i){return i.name;}).join(', ');
+            
+            html += '<section class="date-section-v2">' +
+                    '<div class="date-head-v2"><div><h2>' + escDate + '</h2>' + meal + '</div>' +
+                    '<span class="count-v2">' + filteredItems.length + '개 메뉴</span></div>' +
+                    '<div class="menu-summary-v2">' + escSummary + '</div>' +
+                    '<div class="items-v2">' + cards + '</div>' +
+                    '</section>';
           }
+        });
+
+        if (searchResult) {
+          searchResult.innerHTML = html;
+          searchResult.style.display = shownSections ? '' : 'none';
+        }
+        if (noResult) {
+          noResult.style.display = shownSections ? 'none' : 'block';
         }
       };
     }
