@@ -4257,3 +4257,72 @@ th {
     height: auto !important;
   }
 }
+
+/* ==============================================================
+전체 탭 히어로(Hero) 영역 완벽 통일 (Gravity 3차 긴급 수정)
+============================================================== */
+/* 1. 라벨(Kicker) 통일 */
+.kicker,
+.hero .kicker,
+#home .kicker,
+#daily .kicker,
+#monthly .kicker,
+#annual .kicker,
+#menu .kicker,
+#staff .kicker {
+  background: var(--primary-soft) !important;
+  color: var(--primary-dark) !important;
+  border: 1px solid var(--primary) !important;
+  border-radius: 999px !important;
+  font-weight: 700 !important;
+  padding: 4px 12px !important;
+  display: inline-block !important;
+  margin-bottom: 14px !important;
+}
+
+/* 2. 큰 제목(h1) 통일 */
+.hero h1,
+.page-section h1,
+#home .hero h1,
+#daily .hero h1,
+#monthly .hero h1,
+#annual .hero h1,
+#menu .hero h1,
+#staff .hero h1 {
+  color: var(--heading) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.04em !important;
+  opacity: 1 !important;
+  margin: 0 0 16px 0 !important;
+}
+
+/* 3. 설명 문구(p) 통일 */
+.hero p,
+.hero .subtitle,
+#home .hero p,
+#daily .hero p,
+#monthly .hero p,
+#annual .hero p,
+#menu .hero p,
+#staff .hero p {
+  color: var(--text) !important;
+  line-height: 1.65 !important;
+  word-break: keep-all !important;
+  opacity: 1 !important;
+  margin: 0 !important;
+}
+
+/* 4. 히어로 카드(Hero Card) 배경/테두리 통일 */
+.hero,
+.page-section .hero,
+#home .hero,
+#daily .hero,
+#monthly .hero,
+#annual .hero,
+#menu .hero,
+#staff .hero {
+  background: var(--card) !important;
+  border: 1px solid var(--line) !important;
+  box-shadow: var(--shadow) !important;
+  border-radius: 22px !important;
+}
