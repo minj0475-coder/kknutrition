@@ -3914,3 +3914,42 @@ tbody tr:hover td,
   color: var(--primary-dark) !important;
   border-color: var(--primary) !important;
 }
+
+/* ==============================================================
+연간 일정표 색상 통일 (연노랑 완벽 제거)
+============================================================== */
+.clean-annual-table th,
+.annual-desktop-card .clean-annual-table th {
+  background: var(--table-head) !important;
+  color: var(--text) !important;
+  border-color: var(--line) !important;
+}
+
+.clean-annual-table td,
+.annual-desktop-card .clean-annual-table td {
+  background: #FFFFFF !important;
+  color: var(--text) !important;
+  border-color: var(--line) !important;
+}
+
+.clean-annual-table td.month-cell,
+.clean-annual-table .month-cell,
+.annual-desktop-card .clean-annual-table td.month-cell {
+  background: var(--table-cell-soft) !important;
+  color: var(--text) !important;
+  font-weight: 700 !important;
+  border-color: var(--line) !important;
+}
+
+/* 모바일 연간 일정표 카드 통일 */
+.annual-month-card .month-header {
+  background: var(--table-head) !important;
+  color: var(--text) !important;
+  border-bottom: 1px solid var(--line) !important;
+}
+.annual-month-card .task-group .task-category {
+  color: var(--primary-dark) !important;
+}
+.annual-month-card .task-item {
+  color: var(--text) !important;
+}
