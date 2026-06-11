@@ -643,22 +643,22 @@ function filterTodayMenuList() {
   const searchResult = document.getElementById("todayMenuSearchResult");
 
   const query = search ? (search.value || "").trim() : "";
-  const data = window.currentMenuData || [];
+  const data = currentMenuData || [];
 
   const renderSectionHTML = (section, customTitleLabel = null) => {
     const names = section.items.map(i => i.name);
-    const meal = section.meal ? `<p class="meal-line-v2">${window.menuEsc(section.meal)}</p>` : "";
+    const meal = section.meal ? `<p class="meal-line-v2">${menuEsc(section.meal)}</p>` : "";
     const cards = section.items.map(item => `
       <article class="menu-card-v2">
-        <h3>${window.menuEsc(item.name)}</h3>
-        <details class="materials-detail"><summary>사용재료 보기</summary><pre>${window.menuEsc(item.materials || "등록된 사용재료 없음")}</pre></details>
-        <pre class="plain-method${item.muted ? " muted" : ""}">${window.menuEsc(item.method || "등록된 조리방법 없음")}</pre>
+        <h3>${menuEsc(item.name)}</h3>
+        <details class="materials-detail"><summary>사용재료 보기</summary><pre>${menuEsc(item.materials || "등록된 사용재료 없음")}</pre></details>
+        <pre class="plain-method${item.muted ? " muted" : ""}">${menuEsc(item.method || "등록된 조리방법 없음")}</pre>
       </article>`).join("");
-    const h2Title = customTitleLabel || window.menuEsc(section.date);
+    const h2Title = customTitleLabel || menuEsc(section.date);
     return `
       <section class="date-section-v2">
         <div class="date-head-v2"><div><h2>${h2Title}</h2>${meal}</div><span class="count-v2">${names.length}개 메뉴</span></div>
-        <div class="menu-summary-v2">${window.menuEsc(names.join(", "))}</div>
+        <div class="menu-summary-v2">${menuEsc(names.join(", "))}</div>
         <div class="items-v2">${cards}</div>
       </section>`;
   };
