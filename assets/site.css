@@ -4121,3 +4121,28 @@ th {
   color: var(--primary-dark) !important;
   transform: translateY(-1px) !important;
 }
+
+/* ==============================================================
+알레르기 안내 체크리스트 박스 스타일링
+============================================================== */
+.checklist-box {
+  background: var(--card-soft) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 12px !important;
+  padding: 14px 18px !important;
+  margin-top: 10px !important;
+  margin-bottom: 8px !important;
+}
+
+.checklist-box-title {
+  font-weight: 700 !important;
+  color: var(--heading) !important;
+  margin-bottom: 8px !important;
+}
+
+.checklist-box ul {
+  margin: 0 !important;
+  padding-left: 18px !important;
+  color: var(--text) !important;
+  line-height: 1.7 !important;
+}
