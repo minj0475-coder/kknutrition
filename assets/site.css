@@ -636,7 +636,7 @@ td:first-child{
   letter-spacing:-.02em;
 }
 .clean-annual-table tr.month-start td{
-  border-top:2px solid var(--card-soft);
+  border-top:1px solid var(--line);
 }
 .clean-annual-table tbody tr:first-child td{
   border-top:none;
@@ -718,7 +718,7 @@ td:first-child{
 .table-group{
   margin-top:10px;
   padding:11px 12px 12px;
-  border:1px solid var(--card-soft);
+  border:1px solid var(--line);
   border-radius:10px;
   background:var(--card-soft);
 }
@@ -727,7 +727,7 @@ td:first-child{
   margin:0 0 8px;
   padding:0 0 6px;
   border:0;
-  border-bottom:1px solid var(--card-soft);
+  border-bottom:1px solid var(--line);
   border-radius:0;
   background:transparent;
   color: var(--heading) !important;
@@ -1072,7 +1072,7 @@ button,
   vertical-align:middle;
 }
 .annual-table tr.month-start td{
-  border-top:2px solid var(--card-soft);
+  border-top:1px solid var(--line);
 }
 .annual-table tbody tr:first-child td{
   border-top:none;
