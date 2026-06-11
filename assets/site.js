@@ -645,47 +645,70 @@ function filterTodayMenuList() {
   const query = search ? (search.value || "").trim() : "";
   const data = window.currentMenuData || [];
 
+  const renderSectionHTML = (section, customTitleLabel = null) => {
+    const names = section.items.map(i => i.name);
+    const meal = section.meal ? `<p class="meal-line-v2">${window.menuEsc(section.meal)}</p>` : "";
+    const cards = section.items.map(item => `
+      <article class="menu-card-v2">
+        <h3>${window.menuEsc(item.name)}</h3>
+        <details class="materials-detail"><summary>사용재료 보기</summary><pre>${window.menuEsc(item.materials || "등록된 사용재료 없음")}</pre></details>
+        <pre class="plain-method${item.muted ? " muted" : ""}">${window.menuEsc(item.method || "등록된 조리방법 없음")}</pre>
+      </article>`).join("");
+    const h2Title = customTitleLabel || window.menuEsc(section.date);
+    return `
+      <section class="date-section-v2">
+        <div class="date-head-v2"><div><h2>${h2Title}</h2>${meal}</div><span class="count-v2">${names.length}개 메뉴</span></div>
+        <div class="menu-summary-v2">${window.menuEsc(names.join(", "))}</div>
+        <div class="items-v2">${cards}</div>
+      </section>`;
+  };
+
   if (!query) {
     if (searchResult) { searchResult.innerHTML = ""; searchResult.style.display = "none"; }
     if (noResult) noResult.style.display = "none";
     if (allSection) allSection.style.display = "none";
     
-    if (todaySection) {
-      const todayKey = (() => {
-        const p = new Intl.DateTimeFormat("en-CA", {
-          timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit"
-        }).formatToParts(new Date()).reduce((a, x) => { if (x.type !== "literal") a[x.type] = x.value; return a; }, {});
-        return `${p.year}-${p.month}-${p.day}`;
-      })();
-      const nearData = data.find(s => s.key === todayKey) || data.find(s => s.key >= todayKey) || data[data.length - 1];
-      
-      if (nearData) {
-        const isToday = nearData.key === todayKey;
-        const names = nearData.items.map(i => i.name);
-        const meal = nearData.meal ? `<p class="meal-line-v2">${menuEsc(nearData.meal)}</p>` : "";
-        const cards = nearData.items.map(item => `
-          <article class="menu-card-v2">
-            <h3>${menuEsc(item.name)}</h3>
-            <details class="materials-detail"><summary>사용재료 보기</summary><pre>${menuEsc(item.materials || "등록된 사용재료 없음")}</pre></details>
-            <pre class="plain-method${item.muted ? " muted" : ""}">${menuEsc(item.method || "등록된 조리방법 없음")}</pre>
-          </article>`).join("");
-        todaySection.innerHTML = `
-          <section class="date-section-v2">
-            <div class="date-head-v2"><div><h2>${isToday ? "오늘 식단" : menuEsc(nearData.date)}</h2>${meal}</div><span class="count-v2">${names.length}개 메뉴</span></div>
-            <div class="menu-summary-v2">${menuEsc(names.join(", "))}</div>
-            <div class="items-v2">${cards}</div>
-          </section>`;
-      } else if (data.length === 0) {
-        todaySection.innerHTML = '<p class="today-menu-no-data">업로드된 식단이 없습니다. 엑셀 파일을 업로드해 주세요.</p>';
+    if (todaySection && allSection) {
+      if (data.length > 0) {
+        const todayKey = (() => {
+          const p = new Intl.DateTimeFormat("en-CA", {
+            timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit"
+          }).formatToParts(new Date()).reduce((a, x) => { if (x.type !== "literal") a[x.type] = x.value; return a; }, {});
+          return `${p.year}-${p.month}-${p.day}`;
+        })();
+
+        let startIndex = data.findIndex(s => s.key >= todayKey);
+        if (startIndex === -1) startIndex = Math.max(0, data.length - 2);
+
+        const initialData = data.slice(startIndex, startIndex + 2);
+        const remainingData = data.filter(s => !initialData.includes(s));
+
+        let initialHtml = "";
+        initialData.forEach((section, idx) => {
+          let label = null;
+          if (section.key === todayKey) label = "오늘 식단";
+          else if (idx === 1 && initialData[0].key === todayKey) label = "내일 식단";
+          initialHtml += renderSectionHTML(section, label);
+        });
+        todaySection.innerHTML = initialHtml;
+        todaySection.style.display = "";
+
+        if (remainingData.length > 0) {
+          allSection.innerHTML = remainingData.map(s => renderSectionHTML(s)).join("");
+          if (showAllWrap) showAllWrap.style.display = "";
+          const showAllBtn = document.getElementById("todayMenuShowAllBtn");
+          if (showAllBtn) showAllBtn.textContent = `📋 나머지 식단 전체 보기 (${remainingData.length}일)`;
+        } else {
+          allSection.innerHTML = "";
+          if (showAllWrap) showAllWrap.style.display = "none";
+        }
       } else {
-        todaySection.innerHTML = '';
+        todaySection.innerHTML = '<p class="today-menu-no-data">업로드된 식단이 없습니다. 엑셀 파일을 업로드해 주세요.</p>';
+        todaySection.style.display = "";
+        allSection.innerHTML = "";
+        if (showAllWrap) showAllWrap.style.display = "none";
       }
-      todaySection.style.display = "";
     }
-    
-    if (showAllWrap) showAllWrap.style.display = data.length > 0 ? "" : "none";
-    const showAllBtn = document.getElementById("todayMenuShowAllBtn");
-    if (showAllBtn) showAllBtn.textContent = `📋 전체 식단 보기 (${data.length}일)`;
     return;
   }
 
@@ -709,20 +732,8 @@ function filterTodayMenuList() {
 
     if (filteredItems.length > 0) {
       shownSections++;
-      const meal = section.meal ? `<p class="meal-line-v2">${menuEsc(section.meal)}</p>` : "";
-      const cards = filteredItems.map(item => `
-        <article class="menu-card-v2">
-          <h3>${menuEsc(item.name)}</h3>
-          <details class="materials-detail"><summary>사용재료 보기</summary><pre>${menuEsc(item.materials || "등록된 사용재료 없음")}</pre></details>
-          <pre class="plain-method${item.muted ? " muted" : ""}">${menuEsc(item.method || "등록된 조리방법 없음")}</pre>
-        </article>`).join("");
-      
-      html += `
-        <section class="date-section-v2">
-          <div class="date-head-v2"><div><h2>${menuEsc(dateTitle)}</h2>${meal}</div><span class="count-v2">${filteredItems.length}개 메뉴</span></div>
-          <div class="menu-summary-v2">${menuEsc(filteredItems.map(i => i.name).join(", "))}</div>
-          <div class="items-v2">${cards}</div>
-        </section>`;
+      const filteredSection = Object.assign({}, section, { items: filteredItems });
+      html += renderSectionHTML(filteredSection);
     }
   });
 
@@ -792,10 +803,11 @@ async function setupTodayMenu() {
       const isOpen = allSection.style.display !== "none";
       if (isOpen) {
         allSection.style.display = "none";
-        showAllBtn.textContent = `📋 전체 식단 보기 (${(window.currentMenuData || []).length}일)`;
+        const count = allSection.querySelectorAll(".date-section-v2").length;
+        showAllBtn.textContent = `📋 나머지 식단 전체 보기 (${count}일)`;
       } else {
         allSection.style.display = "";
-        showAllBtn.textContent = "📋 전체 식단 닫기";
+        showAllBtn.textContent = "📋 나머지 식단 접기";
         allSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
       }
     });
