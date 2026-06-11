@@ -2700,7 +2700,7 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
     padding-right:86px;
   }
   #home .hero{
-    padding: 36px 20px 0;
+    padding: 36px 20px 32px;
     min-height: auto;
     align-items: center;
     text-align: center;
@@ -2714,15 +2714,15 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
   #home .hero-asset{
     display:block!important;
     position:relative!important;
-    width:150px!important;
+    width:130px!important;
     height:auto!important;
     max-width:none!important;
-    max-height:150px!important;
+    max-height:130px!important;
     left:auto!important;
     right:auto!important;
     top:auto!important;
     bottom:auto!important;
-    margin: 24px auto 0!important;
+    margin: 32px auto 0!important;
     object-fit:contain!important;
     z-index:1!important;
     pointer-events:none!important;
