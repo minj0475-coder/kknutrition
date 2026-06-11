@@ -666,7 +666,7 @@ function filterTodayMenuListV2() {
   if (!query) {
     if (searchResult) { searchResult.innerHTML = ""; searchResult.style.display = "none"; }
     if (noResult) noResult.style.display = "none";
-    if (allSection) allSection.style.display = "none";
+    if (allSection) allSection.style.display = "";
     
     if (todaySection && allSection) {
       if (data.length > 0) {
@@ -697,7 +697,11 @@ function filterTodayMenuListV2() {
           allSection.innerHTML = remainingData.map(s => renderSectionHTML(s)).join("");
           if (showAllWrap) showAllWrap.style.display = "";
           const showAllBtn = document.getElementById("todayMenuShowAllBtn");
-          if (showAllBtn) showAllBtn.textContent = `나머지 식단 전체 보기 (${remainingData.length}일)`;
+          if (showAllBtn) {
+            const wrap = document.getElementById("todayMenuAllSectionWrap");
+            if (wrap && wrap.classList.contains("open")) showAllBtn.textContent = "전체 식단 접기 🔼";
+            else showAllBtn.textContent = `나머지 식단 전체 보기 🔽 (${remainingData.length}일)`;
+          }
         } else {
           allSection.innerHTML = "";
           if (showAllWrap) showAllWrap.style.display = "none";
@@ -714,7 +718,11 @@ function filterTodayMenuListV2() {
 
   if (todaySection) todaySection.style.display = "none";
   if (showAllWrap) showAllWrap.style.display = "none";
+  const allWrap = document.getElementById("todayMenuAllSectionWrap");
+  if (allWrap) allWrap.classList.remove("open");
   if (allSection) allSection.style.display = "none";
+  const botWrap = document.getElementById("todayMenuShowAllWrapBottom");
+  if (botWrap) botWrap.style.display = "none";
 
   let shownSections = 0;
   let html = "";
@@ -798,20 +806,28 @@ async function setupTodayMenu() {
   if (tokenSaveBtn) tokenSaveBtn.addEventListener("click", saveMenuGithubToken);
   if (tokenClearBtn) tokenClearBtn.addEventListener("click", clearMenuGithubToken);
   
-  if (showAllBtn && allSection) {
-    showAllBtn.addEventListener("click", () => {
-      const isOpen = allSection.style.display !== "none";
-      if (isOpen) {
-        allSection.style.display = "none";
-        const count = allSection.querySelectorAll(".date-section-v2").length;
-        showAllBtn.textContent = `나머지 식단 전체 보기 (${count}일)`;
-      } else {
-        allSection.style.display = "";
-        showAllBtn.textContent = "나머지 식단 접기";
-        allSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
-      }
-    });
-  }
+  const allSectionWrap = document.getElementById("todayMenuAllSectionWrap");
+  const showAllWrapBottom = document.getElementById("todayMenuShowAllWrapBottom");
+  const showAllBtnBottom = document.getElementById("todayMenuShowAllBtnBottom");
+
+  const toggleAccordion = () => {
+    if (!allSectionWrap || !allSection) return;
+    const isOpen = allSectionWrap.classList.contains("open");
+    if (isOpen) {
+      allSectionWrap.classList.remove("open");
+      if (showAllWrapBottom) showAllWrapBottom.style.display = "none";
+      const count = allSection.querySelectorAll(".date-section-v2").length;
+      if (showAllBtn) showAllBtn.textContent = `나머지 식단 전체 보기 🔽 (${count}일)`;
+      document.getElementById("todayMenuTodaySection")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      allSectionWrap.classList.add("open");
+      if (showAllWrapBottom) showAllWrapBottom.style.display = "";
+      if (showAllBtn) showAllBtn.textContent = "전체 식단 접기 🔼";
+    }
+  };
+
+  if (showAllBtn) showAllBtn.addEventListener("click", toggleAccordion);
+  if (showAllBtnBottom) showAllBtnBottom.addEventListener("click", toggleAccordion);
   
   loadMenuGithubTokenUI();
 
