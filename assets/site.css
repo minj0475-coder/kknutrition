@@ -3547,9 +3547,7 @@ tbody tr:hover td,
 .today-menu-today-section{
   margin-top:4px;
 }
-.today-menu-today-section .date-section-v2{
-  border:2px solid #c7dbe5;
-}
+
 .today-menu-today-section .date-head-v2 h2::before{
   display: none;
 }
