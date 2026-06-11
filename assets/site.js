@@ -599,7 +599,7 @@ function renderHomeTodayMenu(data) {
     </div>`;
 }
 
-function renderTodayMenu(data) {
+function renderTodayMenuV2(data) {
   currentMenuData = data || [];
   const list = document.getElementById("todayMenuList");
   if (list) {
@@ -620,7 +620,7 @@ function renderTodayMenu(data) {
         </section>`;
     }).join("");
   }
-  filterTodayMenuList();
+  filterTodayMenuListV2();
   renderHomeTodayMenu(currentMenuData);
 }
 
@@ -634,7 +634,7 @@ function updateTodayMenuHeader(data, fileName, statusMessage) {
   if (status && statusMessage) status.innerHTML = statusMessage;
 }
 
-function filterTodayMenuList() {
+function filterTodayMenuListV2() {
   const search = document.getElementById("menuSearchInput");
   const todaySection = document.getElementById("todayMenuTodaySection");
   const showAllWrap = document.getElementById("todayMenuShowAllWrap");
@@ -769,14 +769,14 @@ async function handleTodayMenuUpload(event) {
     currentMenuData = best.data;
     currentMenuFileName = file.name;
     const savedMethods = await saveUploadedMenuData(best.data, file.name);
-    renderTodayMenu(best.data);
+    renderTodayMenuV2(best.data);
     const menuCount = best.data.reduce((sum, section) => sum + section.items.length, 0);
     const syncText = savedMethods.includes("GitHub") ? " · 기기 간 동기화 완료" : (savedMethods.length ? " · 현재 브라우저 저장 완료" : " · 화면 적용 완료(저장은 브라우저 제한으로 실패)");
     updateTodayMenuHeader(best.data, file.name, `<span class="ok">${menuEsc(file.name)} 적용 완료 · ${best.data.length}일 / ${menuCount}개 메뉴${syncText}</span>`);
   } catch (error) {
     currentMenuData = [];
     currentMenuFileName = "";
-    renderTodayMenu([]);
+    renderTodayMenuV2([]);
     updateTodayMenuHeader([], "", `<span class="error">업로드 실패: ${menuEsc(error.message || error)}</span>`);
   } finally {
     event.target.value = "";
@@ -793,8 +793,8 @@ async function setupTodayMenu() {
   const allSection = document.getElementById("todayMenuAllSection");
 
   if (fileInput) fileInput.addEventListener("change", handleTodayMenuUpload);
-  if (search) search.addEventListener("input", filterTodayMenuList);
-  if (clearBtn) clearBtn.addEventListener("click", () => { if (search) { search.value = ""; filterTodayMenuList(); search.focus(); } });
+  if (search) search.addEventListener("input", filterTodayMenuListV2);
+  if (clearBtn) clearBtn.addEventListener("click", () => { if (search) { search.value = ""; filterTodayMenuListV2(); search.focus(); } });
   if (tokenSaveBtn) tokenSaveBtn.addEventListener("click", saveMenuGithubToken);
   if (tokenClearBtn) tokenClearBtn.addEventListener("click", clearMenuGithubToken);
   
@@ -820,12 +820,12 @@ async function setupTodayMenu() {
   const saved = await loadSavedMenuData();
   if (saved) {
     currentMenuFileName = saved.fileName || "";
-    renderTodayMenu(saved.data);
+    renderTodayMenuV2(saved.data);
     const menuCount = saved.data.reduce((sum, section) => sum + section.items.length, 0);
     const sourceText = saved.source === "remote" ? "공유 데이터 적용 중" : "마지막 업로드 자료 유지 중";
     updateTodayMenuHeader(saved.data, currentMenuFileName, `<span class="ok">${sourceText}${currentMenuFileName ? " · " + menuEsc(currentMenuFileName) : ""} · ${saved.data.length}일 / ${menuCount}개 메뉴</span>`);
   } else {
-    renderTodayMenu([]);
+    renderTodayMenuV2([]);
     updateTodayMenuHeader([], "", "조리방법 조회 엑셀 파일을 선택하면 화면이 바뀌고 저장됩니다.");
   }
 }
