@@ -4192,3 +4192,68 @@ th {
   margin: 0 !important;
   padding-left: 18px !important;
 }
+
+/* ==============================================================
+모바일 홈 카드 및 오늘의 꿀꿀이 카드 레이아웃 정리 (Gravity 수정)
+============================================================== */
+@media(max-width: 640px) {
+  #home .hero {
+    min-height: 150px !important;
+    padding: 24px 110px 24px 22px !important;
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+  }
+  
+  #home .hero-content {
+    max-width: none !important;
+  }
+
+  #home .hero p {
+    word-break: keep-all !important;
+    line-height: 1.55 !important;
+    margin: 0 !important;
+  }
+
+  #home .hero-asset {
+    position: absolute !important;
+    right: 16px !important;
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translateY(-50%) !important;
+    width: 96px !important;
+    max-width: 96px !important;
+    height: auto !important;
+  }
+
+  .daily-kkul-card {
+    min-height: 140px !important;
+    padding: 24px 110px 24px 22px !important;
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+  }
+
+  .daily-kkul-copy {
+    width: 100% !important;
+  }
+
+  .daily-kkul-image-wrap {
+    position: static !important;
+  }
+
+  .daily-kkul-card img {
+    position: absolute !important;
+    right: 16px !important;
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translateY(-50%) !important;
+    width: 96px !important;
+    max-width: 96px !important;
+    height: auto !important;
+  }
+}
