@@ -2753,13 +2753,18 @@ tbody tr:nth-child(even) td{
   cursor:pointer;
   display:inline-flex;
   align-items:center;
-  padding:5px 10px;
+  padding:5px 12px;
   border-radius:999px;
   background:var(--card-soft);
-  border:1px solid var(--card-soft);
+  border:1px solid var(--line);
   color: var(--heading) !important;
   font-size:13px;
   font-weight:900;
+  list-style: none;
+  outline: none;
+}
+.materials-detail summary::-webkit-details-marker {
+  display: none;
 }
 .materials-detail pre{
   margin:8px 0 0;
@@ -3722,6 +3727,11 @@ nav a.active {
   border: 1px solid var(--line) !important;
   box-shadow: none !important;
   transition: all 0.18s ease-in-out !important;
+  list-style: none !important;
+  outline: none !important;
+}
+.materials-detail summary::-webkit-details-marker {
+  display: none !important;
 }
 .btn.light:hover,
 .download-btn:hover,
