@@ -3858,3 +3858,23 @@ td:first-child,
     z-index: 1 !important;
   }
 }
+
+
+/* PC 화면 홈탭 꿀꿀이 위치 중앙 정렬 보정 */
+@media(min-width: 641px) {
+  #home .hero {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+  #home .hero-asset {
+    position: absolute !important;
+    top: 50% !important;
+    right: 46px !important;
+    bottom: auto !important;
+    transform: translateY(-50%) !important;
+    width: 250px !important;
+    max-height: 250px !important;
+    object-position: center !important;
+  }
+}
