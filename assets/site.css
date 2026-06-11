@@ -3716,3 +3716,43 @@ tbody tr:hover td,
     padding-top: 8px !important;
   }
 }
+
+/* --- Definitive Mobile Stacked Hero Layout --- */
+@media(max-width:640px) {
+  #home .hero {
+    padding: 36px 20px 32px !important;
+    min-height: auto !important;
+    align-items: center !important;
+    text-align: center !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+  }
+  #home .hero .kicker {
+    align-self: center !important;
+  }
+  #home .hero h1 {
+    text-align: center !important;
+  }
+  #home .hero .subtitle {
+    margin: 12px auto 0 !important;
+    max-width: none !important;
+    text-align: center !important;
+  }
+  #home .hero-asset {
+    display: block !important;
+    position: relative !important;
+    width: 130px !important;
+    height: auto !important;
+    max-width: none !important;
+    max-height: 130px !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    margin: 32px auto 0 !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    z-index: 1 !important;
+    pointer-events: none !important;
+  }
+}
