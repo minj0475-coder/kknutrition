@@ -3451,7 +3451,6 @@ tbody tr:hover td,
 }
 .today-menu-show-all-btn{min-height:46px;padding:12px 28px;border-radius:999px;background:var(--primary); color:var(--card)!important;color:var(--text)!important;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:15px;font-weight:700;text-decoration:none;border:none;cursor:pointer;transition:all 0.2s ease;box-shadow:var(--shadow-flat);}
 .today-menu-show-all-btn:hover{
-  transform:translateY(-2px) scale(1.02);
   box-shadow: var(--shadow-flat);
 }
 .today-menu-show-all-btn.bottom-btn{margin:0 auto;background:var(--muted);color:var(--text)!important;box-shadow:var(--shadow-flat);}
@@ -3794,7 +3793,6 @@ font-weight: 800 !important;
 .schedule-table tbody tr:hover td,
 .clean-annual-table tbody tr:hover td,
 .simple-table tbody tr:hover td {
-transform: none !important;
 }
 
 /* hover 시에도 기존 셀 배경이 과하게 바뀌지 않도록 유지 */
