@@ -3551,7 +3551,7 @@ tbody tr:hover td,
   border:2px solid #c7dbe5;
 }
 .today-menu-today-section .date-head-v2 h2::before{
-  content:"🍽️ ";
+  display: none;
 }
 .today-menu-show-all-wrap{
   display:flex;
