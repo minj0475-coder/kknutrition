@@ -100,12 +100,6 @@ nav a{
   font-weight:800;
   border:1px solid transparent;
 }
-nav a:hover,
-nav a.active{
-  color:var(--text);
-  background:var(--blue-soft);
-  border-color:#c7d7fe;
-}
 .mobile-nav{
   display:none;
 }
@@ -204,10 +198,6 @@ h1{
   padding:16px;
   min-height:118px;
   transition:.12s ease;
-  box-shadow: var(--shadow-flat);
-}
-.quick:hover{
-  border-color:#9bb7f5;
   box-shadow: var(--shadow-flat);
 }
 .quick:before{
@@ -1452,12 +1442,6 @@ button,
   font-weight:750;
   cursor:pointer;
 }
-.recipe-list-item:hover,
-.recipe-list-item.active{
-  background:#eef4ff;
-  border-color:#9bb7f5;
-  color:#1e3a5f;
-}
 .recipe-editor{
   border:1px solid var(--line);
   border-radius:14px;
@@ -1809,9 +1793,6 @@ button,
   text-align:center;
   box-shadow: var(--shadow-flat);
   transition:.12s ease;
-}
-.home-charm:hover{
-  border-color:#f4c8dc;
 }
 .home-charm span{
   display:grid;
@@ -2276,12 +2257,6 @@ nav a{
   background:#fff;
   border-color:#e3dfd8;
 }
-nav a:hover,
-nav a.active{
-  color:#3f4d55;
-  background:var(--blue-soft);
-  border-color:#c7dbe5;
-}
 .wrap{
   max-width:1180px;
 }
@@ -2357,9 +2332,6 @@ h1{
 .menu-upload-panel{
   border-color:#dfdbd2;
 }
-.quick:hover{
-  border-color:#a9c6d6;
-}
 th{
   background:#f1f2ee;
   color:#43525a;
@@ -2381,12 +2353,6 @@ td:first-child,
   color:#43525a;
   border-color:#dfdbd2;
   box-shadow:none;
-}
-.recipe-list-item:hover,
-.recipe-list-item.active{
-  background:var(--blue-soft);
-  border-color:#a9c6d6;
-  color:#43525a;
 }
 .today-menu-summary{
   background:#f7f0f2;
@@ -2439,10 +2405,6 @@ table{
 tbody tr:nth-child(even) td{
   background:#fbfaf7;
 }
-tbody tr:hover td{
-  background:var(--card-soft)!important;
-  color:#43525a!important;
-}
 .annual-desktop-card .clean-annual-table td{
   background:#ffffff!important;
   color:#33353a!important;
@@ -2473,15 +2435,6 @@ tbody tr:hover td{
 .annual-desktop-card .clean-annual-table tbody td{
   transition:background-color .14s ease;
 }
-.annual-desktop-card .clean-annual-table tbody tr:hover td{
-  background:var(--card-soft)!important;
-}
-.annual-desktop-card .clean-annual-table tbody tr:hover td.month-cell{
-  background:#f4edd1!important;
-}
-.annual-desktop-card .clean-annual-table tbody tr:hover td.task-cell{
-  background:#ffffff!important;
-}
 .annual-month-card h3{
   background:#f7f4df!important;
   color:#43525a!important;
@@ -2495,9 +2448,6 @@ tbody tr:hover td{
 .annual-task:nth-child(even){
   background:#ffffff;
 }
-.annual-task:hover{
-  background:#f1f7f9;
-}
 .annual-task strong{
   color:#43525a!important;
 }
@@ -2510,10 +2460,6 @@ tbody tr:hover td{
 }
 .checklist li:before{
   background:#7fa7bd;
-}
-.recipe-list-item:hover,
-.recipe-list-item.active{
-  background:#edf6fa;
 }
 .recipe-editor-head h3,
 .recipe-edit-grid label,
@@ -2585,11 +2531,6 @@ tbody tr:hover td{
     line-height:1.15;
     padding:6px 4px;
     overflow-wrap:anywhere;
-  }
-  .mobile-nav-list a:hover,
-  .mobile-nav-list a.active{
-    background:#edf6fa;
-    border-color:#c7dbe5;
   }
   #home .hero,
   .page-section:not(#home) .hero{
@@ -2986,13 +2927,6 @@ tbody tr:hover td{
   color:#9a3412;
   font-weight:950;
 }
-.annual-desktop-card .clean-annual-table tbody tr:hover td:not(.month-cell){
-  background:#f1f7f9!important;
-}
-.annual-desktop-card .clean-annual-table tbody tr:hover td.month-cell{
-  background:#f7f4df!important;
-  color:#43525a!important;
-}
 #home .hero-asset{
   object-position:center top!important;
 }
@@ -3380,12 +3314,6 @@ nav{
 .copy-btn{
   margin:10px 0 12px;
 }
-tbody tr:hover td,
-.simple-table tr:hover th,
-.simple-table tr:hover td{
-  background:var(--card-soft)!important;
-    
-  }
   .daily-kkul-image-wrap{
     width:132px;
     height:132px;
@@ -3450,13 +3378,7 @@ tbody tr:hover td,
   padding-top:8px;
 }
 .today-menu-show-all-btn{min-height:46px;padding:12px 28px;border-radius:999px;background:var(--primary); color:var(--card)!important;color:var(--text)!important;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:15px;font-weight:700;text-decoration:none;border:none;cursor:pointer;transition:all 0.2s ease;box-shadow:var(--shadow-flat);}
-.today-menu-show-all-btn:hover{
-  box-shadow: var(--shadow-flat);
-}
 .today-menu-show-all-btn.bottom-btn{margin:0 auto;background:var(--muted);color:var(--text)!important;box-shadow:var(--shadow-flat);}
-.today-menu-show-all-btn.bottom-btn:hover{
-  box-shadow: var(--shadow-flat);
-}
 .today-menu-all-section-wrap{
   display:grid;
   grid-template-rows:0fr;
@@ -3496,9 +3418,6 @@ tbody tr:hover td,
   cursor:pointer;
   transition:background .15s;
 }
-.copy-btn-inline:hover{
-  background:#d8edf5;
-}
 @media(max-width:640px){
   .today-menu-show-all-btn{
     width:100%;
@@ -3532,11 +3451,6 @@ tbody tr:hover td,
   scale: 1;
   transition: scale 0.3s ease;
 }
-
-@media (hover: hover) and (pointer: fine) {
-  #home .hero-asset:hover {
-    scale: 1.03;
-  }
 }
 
 .daily-kkul-card {
@@ -3736,45 +3650,12 @@ nav a,
   transition: all 0.18s ease-in-out !important;
 }
 
-nav a:hover,
-nav a.active {
-  color: var(--primary-dark) !important;
-  background: var(--primary-soft) !important;
-  border-color: #EEDDDB !important;
-}
-
-.btn:hover,
-.download-btn:hover,
-.file-label-v2:hover,
-.today-menu-show-all-btn:hover {
-  background: var(--primary-dark) !important;
-  border-color: var(--primary-dark) !important;
-  color: #FFFFFF !important;
-  box-shadow: 0 4px 8px rgba(168, 100, 96, 0.15) !important;
-}
-
 .btn.light,
 .download-btn.copy-btn-inline {
   background: #FFFFFF !important;
   color: var(--text) !important;
   border-color: var(--line) !important;
   box-shadow: none !important;
-}
-
-.btn.light:hover,
-.download-btn.copy-btn-inline:hover {
-  background: var(--primary-soft) !important;
-  border-color: var(--primary) !important;
-  color: var(--primary-dark) !important;
-}
-
-.quick:hover,
-.recipe-list-item:hover,
-.recipe-list-item.active,
-.materials-detail summary:hover {
-  background: var(--primary-soft) !important;
-  border-color: #EEDDDB !important;
-  color: var(--text) !important;
 }
 
 /* =========================================
@@ -3794,15 +3675,6 @@ td:first-child,
   background: #FDFBFA !important;
   color: var(--text) !important;
   font-weight: 800 !important;
-}
-
-/* 모든 일반 표 셀 hover 제거 */
-.schedule-table tbody tr:hover td,
-.clean-annual-table tbody tr:hover td,
-.simple-table tbody tr:hover td {
-  transform: none !important;
-  background: inherit !important;
-  color: inherit !important;
 }
 
 /* 배지 색상 정돈 (연한 웜 아이보리 배경) */
