@@ -3741,7 +3741,6 @@ nav a.active {
   color: var(--primary-dark) !important;
   background: var(--primary-soft) !important;
   border-color: #EEDDDB !important;
-  transform: translateY(-1px) !important;
 }
 
 .btn:hover,
@@ -3751,7 +3750,6 @@ nav a.active {
   background: var(--primary-dark) !important;
   border-color: var(--primary-dark) !important;
   color: #FFFFFF !important;
-  transform: translateY(-1px) !important;
   box-shadow: 0 4px 8px rgba(168, 100, 96, 0.15) !important;
 }
 
@@ -3768,7 +3766,6 @@ nav a.active {
   background: var(--primary-soft) !important;
   border-color: var(--primary) !important;
   color: var(--primary-dark) !important;
-  transform: translateY(-1px) !important;
 }
 
 .quick:hover,
@@ -3778,7 +3775,6 @@ nav a.active {
   background: var(--primary-soft) !important;
   border-color: #EEDDDB !important;
   color: var(--text) !important;
-  transform: translateY(-1px) !important;
 }
 
 /* =========================================
