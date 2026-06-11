@@ -3682,3 +3682,99 @@ tbody tr:hover td,
     pointer-events: none !important;
   }
 }
+
+
+/* ==============================================================
+   ✨ 2026 팬톤 컬러 'Cloud Dancer' & 세련된 꿀꿀이 톤온톤 팔레트 적용
+============================================================== */
+
+:root {
+  /* 바탕색: 2026 팬톤 컬러 'Cloud Dancer' (#F0EEE9) - 차분하고 고급스러운 웜톤 화이트 */
+  --bg: #F0EEE9 !important;           
+  --card: #FFFFFF !important;         
+  --card-soft: #F9F8F6 !important;    
+  
+  /* 포인트 컬러: 꿀꿀이와 어울리지만 유치하지 않은 '뮤트 로즈 핑크' */
+  --primary: #E29596 !important;      /* 차분한 핑크 (버튼, 메인 포인트) */
+  --primary-dark: #C46D6F !important; /* 깊이감 있는 핑크 (마우스 오버 시) */
+  --primary-soft: #FDF4F5 !important; /* 아주 연한 핑크 캔버스 (활성 탭, 뱃지) */
+  
+  /* 테두리와 글자: 부드러운 웜 다크브라운 사용 */
+  --line: #E2DFD8 !important;         
+  --text: #4A4443 !important;         
+  --muted: #8D8685 !important;        
+  
+  /* 그림자를 더 맑고 은은하게 넓게 퍼뜨려 모던함 추가 */
+  --shadow-flat: 0 6px 16px rgba(74, 68, 67, 0.06) !important; 
+
+  /* 기존 레거시 변수 덮어쓰기 */
+  --navy: var(--text) !important;
+  --blue: var(--primary) !important;
+  --blue-soft: var(--primary-soft) !important;
+  --gray-soft: var(--card-soft) !important;
+  --pink-soft: var(--primary) !important;
+}
+
+/* 1. 배경 및 상단 헤더 보정 */
+body { background: var(--bg); color: var(--text); }
+.top { 
+  background: rgba(255, 255, 255, 0.85); 
+  backdrop-filter: blur(12px); 
+  border-bottom: 1px solid var(--line); 
+}
+
+/* 2. 네비게이션 탭 통일 */
+nav a:hover, nav a.active {
+  color: var(--primary-dark) !important;
+  background: var(--primary-soft) !important;
+  border-color: #F8D3D5 !important;
+}
+
+/* 3. 버튼 디자인 세련되게 통일 */
+.btn, .download-btn, .file-label-v2, .today-menu-show-all-btn {
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: #fff !important;
+  box-shadow: 0 2px 6px rgba(226, 149, 150, 0.25) !important;
+}
+.btn:hover, .download-btn:hover, .file-label-v2:hover, .today-menu-show-all-btn:hover {
+  background: var(--primary-dark) !important;
+  border-color: var(--primary-dark) !important;
+  transform: translateY(-2px);
+}
+.btn.light, .download-btn.copy-btn-inline {
+  background: #fff !important;
+  color: var(--text) !important;
+  border-color: var(--line) !important;
+}
+
+/* 4. 히어로(메인) 섹션 배경 톤온톤 적용 */
+#home .hero, .page-section:not(#home) .hero {
+  background: linear-gradient(135deg, #FFFFFF 0%, var(--primary-soft) 100%) !important;
+  border-color: var(--line) !important;
+}
+
+/* 5. 표/라벨 디자인 색상 교체 */
+th, .schedule-table th, .clean-annual-table th {
+  background: #F8F7F4 !important;
+  color: var(--text) !important;
+}
+td:first-child, .schedule-table td:first-child, .annual-desktop-card .clean-annual-table td.month-cell {
+  background: var(--primary-soft) !important;
+  color: var(--primary-dark) !important;
+  font-weight: 900;
+}
+.kicker, #home .kicker, .count-v2 {
+  background: var(--primary-soft) !important;
+  color: var(--primary-dark) !important;
+  border-color: #F8D3D5 !important;
+}
+
+/* 6. 식단 카드 테두리 톤온톤 정돈 */
+.menu-card-v2:nth-child(n) { border-left: 6px solid var(--primary) !important; }
+.menu-card-v2:nth-child(2n) { border-left: 6px solid #F0C4C5 !important; }
+
+/* 7. 스크롤바 포인트 통일 */
+nav::-webkit-scrollbar-thumb {
+  background: var(--primary) !important;
+}
