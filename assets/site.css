@@ -207,7 +207,6 @@ h1{
   box-shadow: var(--shadow-flat);
 }
 .quick:hover{
-  transform:translateY(-1px);
   border-color:#9bb7f5;
   box-shadow: var(--shadow-flat);
 }
@@ -1812,7 +1811,6 @@ button,
   transition:.12s ease;
 }
 .home-charm:hover{
-  transform:translateY(-2px);
   border-color:#f4c8dc;
 }
 .home-charm span{
@@ -3749,7 +3747,6 @@ border-color: #F6E2E3 !important;
 background: var(--primary-dark) !important;
 border-color: var(--primary-dark) !important;
 color: #FFFFFF !important;
-transform: translateY(-2px) !important;
 box-shadow: 0 4px 10px rgba(226, 149, 150, 0.15) !important;
 }
 
@@ -3766,7 +3763,6 @@ box-shadow: none !important;
 background: var(--primary-soft) !important;
 border-color: var(--primary) !important;
 color: var(--primary-dark) !important;
-transform: translateY(-2px) !important;
 }
 
 .quick:hover,
@@ -3776,7 +3772,6 @@ transform: translateY(-2px) !important;
 background: var(--primary-soft) !important;
 border-color: #F6E2E3 !important;
 color: var(--text) !important;
-transform: translateY(-2px) !important;
 }
 
 /* 표와 비클릭 정보 요소 색상 정돈 */
