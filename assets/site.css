@@ -129,7 +129,7 @@ nav a{
   align-items:center;
   background:var(--blue-soft);
   color:var(--text);
-  border:1px solid #c7d7fe;
+  border:1px solid var(--card-soft);
   border-radius:999px;
   padding:5px 10px;
   font-weight:900;
@@ -176,7 +176,7 @@ h1{
   display:grid;
   place-items:center;
   background:var(--blue-soft);
-  border:1px solid #c7d7fe;
+  border:1px solid var(--card-soft);
   color:var(--text);
   font-size:14px;
   font-weight:900;
@@ -254,7 +254,7 @@ h1{
 }
 .note.pink{
   background:var(--blue-soft);
-  border-color:#c7d7fe;
+  border-color:var(--card-soft);
   color:var(--text);
 }
 table{
@@ -532,7 +532,7 @@ td:first-child{
   height:28px;
   border-radius:8px;
   background:var(--blue-soft);
-  border:1px solid #c7d7fe;
+  border:1px solid var(--card-soft);
   color:var(--text);
   font-weight:900;
   flex:0 0 auto;
@@ -594,8 +594,8 @@ td:first-child{
   vertical-align:middle;
   font-weight:900;
   font-size:14px;
-  background:#eaf0f7;
-  color:#1e3a5f;
+  background:var(--card-soft);
+  color:var(--card-soft);
   padding:12px 10px;
 }
 .clean-annual-table th:first-child{
@@ -619,8 +619,8 @@ td:first-child{
   min-width:78px;
   text-align:center;
   vertical-align:middle;
-  background:#eef4ff;
-  color:#1e3a5f;
+  background:var(--card-soft);
+  color:var(--card-soft);
   font-weight:900;
   font-size:15px;
   letter-spacing:-.02em;
@@ -630,13 +630,13 @@ td:first-child{
   min-width:190px;
   vertical-align:middle;
   background:#f8fafc;
-  color:#1e3a5f;
+  color:var(--card-soft);
   font-weight:850;
   text-align:center;
   letter-spacing:-.02em;
 }
 .clean-annual-table tr.month-start td{
-  border-top:2px solid #9bb7f5;
+  border-top:2px solid var(--card-soft);
 }
 .clean-annual-table tbody tr:first-child td{
   border-top:none;
@@ -653,7 +653,7 @@ td:first-child{
   font-weight:650;
 }
 .clean-annual-table .table-list li b{
-  color:#1e3a5f;
+  color:var(--card-soft);
   font-weight:900;
 }
 .clean-annual-table .sub{
@@ -698,9 +698,9 @@ td:first-child{
   margin:10px 0 6px;
   padding:4px 9px;
   border-radius:6px;
-  background:#eef4ff;
-  color:#1e3a5f;
-  border:1px solid #c7d7fe;
+  background:var(--card-soft);
+  color:var(--card-soft);
+  border:1px solid var(--card-soft);
   font-weight:900;
   font-size:13px;
 }
@@ -711,26 +711,26 @@ td:first-child{
   display:inline-block;
   margin-left:10px;
   font-weight:900;
-  color:#1e3a5f;
+  color:var(--card-soft);
   white-space:nowrap;
 }
 
 .table-group{
   margin-top:10px;
   padding:11px 12px 12px;
-  border:1px solid #d9e4f7;
+  border:1px solid var(--card-soft);
   border-radius:10px;
-  background:#f8fbff;
+  background:var(--card-soft);
 }
 .table-group .table-subtitle{
   display:block;
   margin:0 0 8px;
   padding:0 0 6px;
   border:0;
-  border-bottom:1px solid #d9e4f7;
+  border-bottom:1px solid var(--card-soft);
   border-radius:0;
   background:transparent;
-  color:#1e3a5f;
+  color:var(--card-soft);
   font-weight:900;
   font-size:14px;
 }
@@ -747,10 +747,10 @@ td:first-child{
   align-items:flex-start;
   margin:0 0 14px;
   padding:12px 14px;
-  border:1px solid #c7d7fe;
+  border:1px solid var(--card-soft);
   border-radius:12px;
-  background:#eef4ff;
-  color:#1e3a5f;
+  background:var(--card-soft);
+  color:var(--card-soft);
 }
 .notice-box strong{
   flex:0 0 auto;
@@ -838,8 +838,8 @@ td:first-child{
   margin:0 0 12px;
   padding:8px 10px;
   border-radius:8px;
-  background:#eef4ff;
-  color:#1e3a5f;
+  background:var(--card-soft);
+  color:var(--card-soft);
   font-weight:900;
   font-size:15px;
 }
@@ -911,9 +911,9 @@ td:first-child{
   margin:14px 16px 0;
   padding:12px 14px;
   border-radius:10px;
-  background:#eef4ff;
-  border:1px solid #c7d7fe;
-  color:#1e3a5f;
+  background:var(--card-soft);
+  border:1px solid var(--card-soft);
+  color:var(--card-soft);
   font-weight:850;
 }
 .detail-grid{
@@ -1033,9 +1033,9 @@ button,
   margin-top:4px;
   padding:11px 15px;
   border-radius:10px;
-  background:#eef4ff;
-  border:1px solid #c7d7fe;
-  color:#1e3a5f;
+  background:var(--card-soft);
+  border:1px solid var(--card-soft);
+  color:var(--card-soft);
   font-weight:900;
   line-height:1.5;
 }
@@ -1060,19 +1060,19 @@ button,
 }
 .annual-table td.month-cell{
   vertical-align:middle;
-  background:#eef4ff;
-  color:#1e3a5f;
+  background:var(--card-soft);
+  color:var(--card-soft);
   font-weight:900;
   font-size:16px;
 }
 .annual-table td.task-cell{
   background:#f8fafc;
-  color:#1e3a5f;
+  color:var(--card-soft);
   font-weight:850;
   vertical-align:middle;
 }
 .annual-table tr.month-start td{
-  border-top:2px solid #9bb7f5;
+  border-top:2px solid var(--card-soft);
 }
 .annual-table tbody tr:first-child td{
   border-top:none;
@@ -1124,13 +1124,13 @@ button,
     content:attr(data-label);
     display:block;
     margin-bottom:4px;
-    color:#1e3a5f;
+    color:var(--card-soft);
     font-size:12px;
     font-weight:900;
   }
   .home-daily-card .schedule-table td:first-child{
-    background:#eef4ff;
-    color:#1e3a5f;
+    background:var(--card-soft);
+    color:var(--card-soft);
     font-size:16px;
     font-weight:900;
   }
@@ -1274,15 +1274,15 @@ button,
     content:attr(data-label);
     display:block;
     margin-bottom:4px;
-    color:#1e3a5f;
+    color:var(--card-soft);
     font-size:12px;
     font-weight:900;
   }
   .home-daily-card .schedule-table td:first-child,
   main .schedule-table.monthly-table td:first-child,
   body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-child{
-    background:#eef4ff;
-    color:#1e3a5f;
+    background:var(--card-soft);
+    color:var(--card-soft);
     font-size:16px;
     font-weight:900;
   }
@@ -1333,8 +1333,8 @@ button,
   }
   .weekly-check-card .simple-table th{
     border-right:0;
-    background:#eef4ff;
-    color:#1e3a5f;
+    background:var(--card-soft);
+    color:var(--card-soft);
   }
 }
 
@@ -1362,8 +1362,8 @@ button,
   .annual-month-card h3{
     margin:0;
     padding:12px 14px;
-    background:#eef4ff;
-    color:#1e3a5f;
+    background:var(--card-soft);
+    color:var(--card-soft);
     font-size:19px;
     font-weight:900;
     border-bottom:1px solid var(--line);
@@ -1378,7 +1378,7 @@ button,
   .annual-task strong{
     display:block;
     margin-bottom:7px;
-    color:#1e3a5f;
+    color:var(--card-soft);
     font-size:15px;
     font-weight:900;
   }
@@ -1459,7 +1459,7 @@ button,
 }
 .recipe-editor-head h3{
   margin:2px 0 0;
-  color:#1e3a5f;
+  color:var(--card-soft);
   font-size:22px;
   font-weight:900;
 }
@@ -1477,7 +1477,7 @@ button,
 .recipe-edit-grid label{
   display:grid;
   gap:6px;
-  color:#1e3a5f;
+  color:var(--card-soft);
   font-weight:900;
 }
 .recipe-textarea{
@@ -1583,7 +1583,7 @@ button,
   justify-content:space-between;
   gap:12px;
   padding:14px 16px;
-  border:1px solid #c7d7fe;
+  border:1px solid var(--card-soft);
   border-radius:12px;
   background:var(--blue-soft);
 }
@@ -1726,7 +1726,7 @@ button,
 }
 .today-menu-empty{
   padding:18px;
-  border:1px dashed #c7d7fe;
+  border:1px dashed var(--card-soft);
   border-radius:12px;
   background:#fff;
   color:#475467;
@@ -1825,7 +1825,7 @@ button,
   scroll-margin-top:74px;
 }
 .page-section + .page-section{
-  border-top:10px solid #eef4ff;
+  border-top:10px solid var(--card-soft);
 }
 nav a{
   cursor:pointer;
@@ -1835,7 +1835,7 @@ nav a{
     scroll-margin-top:88px;
   }
   .page-section + .page-section{
-    border-top:8px solid #eef4ff;
+    border-top:8px solid var(--card-soft);
   }
 }
 
@@ -1853,7 +1853,7 @@ nav a{
 }
 .inline-guide h3{
   margin:0 0 8px;
-  color:#1e3a5f;
+  color:var(--card-soft);
   font-size:26px;
   font-weight:900;
 }
@@ -1876,7 +1876,7 @@ nav a{
 }
 .inline-guide-box h4{
   margin:0 0 10px;
-  color:#1e3a5f;
+  color:var(--card-soft);
   font-size:17px;
   font-weight:900;
 }
@@ -2289,7 +2289,7 @@ nav a{
   border-color:#e8ddb3;
 }
 h1{
-  color:#43525a;
+  color:var(--card-soft);
   font-size:clamp(31px,4vw,48px);
 }
 .subtitle{
@@ -2315,12 +2315,12 @@ h1{
   box-shadow:var(--shadow-flat);
 }
 .section-title{
-  color:#43525a;
+  color:var(--card-soft);
 }
 .num{
   background:var(--blue-soft);
-  border-color:#c7dbe5;
-  color:#43525a;
+  border-color:var(--card-soft);
+  color:var(--card-soft);
   border-radius:10px;
 }
 .quick,
@@ -2334,23 +2334,23 @@ h1{
 }
 th{
   background:#f1f2ee;
-  color:#43525a;
+  color:var(--card-soft);
 }
 td:first-child,
 .schedule-table td:first-child{
   background:#f7f4df;
-  color:#43525a;
+  color:var(--card-soft);
 }
 .btn,
 .download-btn{
-  background:#6f93a6;
-  border-color:#6f93a6;
+  background:var(--card-soft);
+  border-color:var(--card-soft);
   color:var(--text);
   box-shadow: var(--shadow-flat);
 }
 .btn.light{
   background:#fff;
-  color:#43525a;
+  color:var(--card-soft);
   border-color:#dfdbd2;
   box-shadow:none;
 }
@@ -2417,11 +2417,11 @@ tbody tr:nth-child(even) td{
 }
 .annual-desktop-card .clean-annual-table td.month-cell{
   background:#f7f4df!important;
-  color:#43525a!important;
+  color:var(--card-soft)!important;
 }
 .annual-desktop-card .clean-annual-table td.task-cell{
   background:#ffffff!important;
-  color:#43525a!important;
+  color:var(--card-soft)!important;
 }
 .annual-desktop-card .clean-annual-table tbody tr:nth-child(odd) td.task-cell{
   background:#ffffff!important;
@@ -2437,7 +2437,7 @@ tbody tr:nth-child(even) td{
 }
 .annual-month-card h3{
   background:#f7f4df!important;
-  color:#43525a!important;
+  color:var(--card-soft)!important;
 }
 .annual-task{
   background:#ffffff;
@@ -2449,7 +2449,7 @@ tbody tr:nth-child(even) td{
   background:#ffffff;
 }
 .annual-task strong{
-  color:#43525a!important;
+  color:var(--card-soft)!important;
 }
 #home .hero-asset{
   width:270px!important;
@@ -2459,7 +2459,7 @@ tbody tr:nth-child(even) td{
   object-fit:contain!important;
 }
 .checklist li:before{
-  background:#7fa7bd;
+  background:var(--card-soft);
 }
 .recipe-editor-head h3,
 .recipe-edit-grid label,
@@ -2468,7 +2468,7 @@ tbody tr:nth-child(even) td{
 .today-menu-fact b,
 .inline-guide h3,
 .inline-guide-box h4{
-  color:#43525a;
+  color:var(--card-soft);
 }
 @media(max-width:900px){
   #home .hero{
@@ -2524,7 +2524,7 @@ tbody tr:nth-child(even) td{
     border:1px solid #dfdbd2;
     border-radius:999px;
     background:#f8f7f1;
-    color:#43525a;
+    color:var(--card-soft);
     font-size:12px;
     font-weight:900;
     text-align:center;
@@ -2628,7 +2628,7 @@ tbody tr:nth-child(even) td{
   font-weight:750;
 }
 .menu-search-input:focus{
-  border-color:#a9c6d6;
+  border-color:var(--card-soft);
   outline:3px solid rgba(126,166,189,.22);
 }
 
@@ -2651,8 +2651,8 @@ tbody tr:nth-child(even) td{
   min-height:42px;
   padding:10px 14px;
   border-radius:999px;
-  background:#6f93a6;
-  border:1px solid #6f93a6;
+  background:var(--card-soft);
+  border:1px solid var(--card-soft);
   color:var(--text);
   font-weight:900;
   cursor:pointer;
@@ -2694,7 +2694,7 @@ tbody tr:nth-child(even) td{
 }
 .date-head-v2 h2{
   margin:0;
-  color:#43525a;
+  color:var(--card-soft);
   font-size:22px;
   font-weight:950;
 }
@@ -2735,13 +2735,13 @@ tbody tr:nth-child(even) td{
   background:#fff;
   box-shadow: var(--shadow-flat);
 }
-.menu-card-v2:nth-child(4n+1){border-left:6px solid #8fb4c8}
+.menu-card-v2:nth-child(4n+1){border-left:6px solid var(--card-soft)}
 .menu-card-v2:nth-child(4n+2){border-left:6px solid #ead7dc}
 .menu-card-v2:nth-child(4n+3){border-left:6px solid #c9d2c1}
 .menu-card-v2:nth-child(4n+4){border-left:6px solid #eed8cb}
 .menu-card-v2 h3{
   margin:0 0 10px;
-  color:#43525a;
+  color:var(--card-soft);
   font-size:19px;
   font-weight:950;
 }
@@ -2755,9 +2755,9 @@ tbody tr:nth-child(even) td{
   align-items:center;
   padding:5px 10px;
   border-radius:999px;
-  background:#edf6fa;
-  border:1px solid #c7dbe5;
-  color:#43525a;
+  background:var(--card-soft);
+  border:1px solid var(--card-soft);
+  color:var(--card-soft);
   font-size:13px;
   font-weight:900;
 }
@@ -2840,9 +2840,9 @@ tbody tr:nth-child(even) td{
   min-height:38px;
   padding:8px 13px;
   border-radius:999px;
-  border:1px solid #c7dbe5;
-  background:#edf6fa;
-  color:#43525a;
+  border:1px solid var(--card-soft);
+  background:var(--card-soft);
+  color:var(--card-soft);
   font-size:13px;
   font-weight:900;
   white-space:nowrap;
@@ -2862,7 +2862,7 @@ tbody tr:nth-child(even) td{
   border:1px solid #e8ddb3;
   border-radius:14px;
   background:#fffdf2;
-  color:#43525a;
+  color:var(--card-soft);
   font-weight:900;
   line-height:1.55;
 }
@@ -2900,7 +2900,7 @@ tbody tr:nth-child(even) td{
 .menu-sync-panel summary{
   cursor:pointer;
   padding:11px 13px;
-  color:#43525a;
+  color:var(--card-soft);
   font-weight:950;
   list-style-position:inside;
 }
@@ -2944,7 +2944,7 @@ tbody tr:nth-child(even) td{
 .simple-table th,
 .clean-annual-table th{
   background:#f1f2ee!important;
-  color:#43525a!important;
+  color:var(--card-soft)!important;
   border-bottom:1px solid #dfdbd2;
 }
 .schedule-table td,
@@ -3242,7 +3242,7 @@ nav{
 }
 .daily-kkul-message{
   margin:0;
-  color:#43525a;
+  color:var(--card-soft);
   font-size:18px;
   font-weight:900;
   line-height:1.55;
@@ -3279,7 +3279,7 @@ nav{
   align-items:center;
   gap:10px;
   padding:20px 22px;
-  color:#43525a;
+  color:var(--card-soft);
   font-size:22px;
   font-weight:950;
   cursor:pointer;
@@ -3295,10 +3295,10 @@ nav{
   height:30px;
   display:grid;
   place-items:center;
-  border:1px solid #c7dbe5;
+  border:1px solid var(--card-soft);
   border-radius:999px;
-  background:#edf6fa;
-  color:#43525a;
+  background:var(--card-soft);
+  color:var(--card-soft);
   font-size:18px;
   line-height:1;
 }
@@ -3366,7 +3366,7 @@ nav{
   margin-top:4px;
 }
 .today-menu-today-section .date-section-v2{
-  border:2px solid #c7dbe5;
+  border:2px solid var(--card-soft);
 }
 .today-menu-today-section .date-head-v2 h2::before{
   display: none;
@@ -3410,9 +3410,9 @@ nav{
   min-height:46px;
   padding:10px 18px;
   border-radius:10px;
-  background:#edf6fa;
-  border:1px solid #c7dbe5;
-  color:#43525a;
+  background:var(--card-soft);
+  border:1px solid var(--card-soft);
+  color:var(--card-soft);
   font-size:15px;
   font-weight:900;
   cursor:pointer;
@@ -3866,3 +3866,51 @@ tbody tr:hover td,
   }
 }
 
+
+/* ==============================================================
+조리종사원, 오늘식단 등 하위 요소 하늘색 완벽 제거
+============================================================== */
+.info-box,
+.notice-box,
+.sync-box,
+.today-menu-box,
+.menu-today-card,
+.staff-link-box,
+.menu-card-v2,
+.today-menu-all-section-wrap,
+#staff-sheet-sync,
+.attendance-box,
+.summary-box {
+  background: var(--card-soft) !important;
+  border: 1px solid var(--line) !important;
+  color: var(--text) !important;
+}
+
+.info-btn,
+.materials-btn,
+.today-menu-show-all-btn,
+.staff-link-btn,
+.copy-btn,
+.add-btn,
+.plus-btn,
+.sync-btn,
+.small-btn {
+  background: #FFFFFF !important;
+  color: var(--text) !important;
+  border: 1px solid var(--line) !important;
+  box-shadow: none !important;
+}
+
+.info-btn:hover,
+.materials-btn:hover,
+.today-menu-show-all-btn:hover,
+.staff-link-btn:hover,
+.copy-btn:hover,
+.add-btn:hover,
+.plus-btn:hover,
+.sync-btn:hover,
+.small-btn:hover {
+  background: var(--hover-soft) !important;
+  color: var(--primary-dark) !important;
+  border-color: var(--primary) !important;
+}
