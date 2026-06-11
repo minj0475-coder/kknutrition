@@ -16,17 +16,17 @@
     <a class="brand" href="#home"><span class="logo"></span>급식 업무 포털</a>
     <nav>
       <a href="#daily">하루 일정</a>
-      <a href="#today-menu">식단</a>
       <a href="#monthly">한 달 일정</a>
       <a href="#annual">연간 일정</a>
+      <a href="#today-menu">식단</a>
       <a href="#staff">조리종사원</a>
     </nav>
     <div class="mobile-nav">
       <div class="mobile-nav-list">
         <a href="#daily">하루 일정</a>
-        <a href="#today-menu">식단</a>
         <a href="#monthly">한 달 일정</a>
         <a href="#annual">연간 일정</a>
+        <a href="#today-menu">식단</a>
         <a href="#staff">조리종사원</a>
       </div>
     </div>
@@ -34,6 +34,16 @@
 </header>
 
 <section id="home" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">영양교사 꿀꿀이의</div><h1>급식 업무 포털</h1><p class="subtitle">급식 업무를 깔끔하게 정리해서 보기 위해 만든 꿀꿀이의 급식 업무 포털입니다.</p><img class="hero-asset" src="assets/pig-home.webp" alt=""></section>
+
+<section class="card daily-kkul-card">
+  <div class="daily-kkul-copy">
+    <h2 class="section-title"><span class="num">오늘의</span>꿀꿀이</h2>
+    <p id="dailyKkulMessage" class="daily-kkul-message">오늘도 꿀꿀이가 응원해요!</p>
+  </div>
+  <div class="daily-kkul-image-wrap">
+    <img id="dailyKkulImage" class="daily-kkul-image" alt="오늘의 꿀꿀이" loading="lazy" decoding="async">
+  </div>
+</section>
 
 <section class="card home-today-card">
   <div class="home-today-head">
@@ -44,16 +54,6 @@
     <a class="home-today-link" href="#today-menu">전체 식단 보기</a>
   </div>
   <div id="homeTodayMenu"></div>
-</section>
-
-<section class="card daily-kkul-card">
-  <div class="daily-kkul-copy">
-    <h2 class="section-title"><span class="num">오늘의</span>꿀꿀이</h2>
-    <p id="dailyKkulMessage" class="daily-kkul-message">오늘도 꿀꿀이가 응원해요!</p>
-  </div>
-  <div class="daily-kkul-image-wrap">
-    <img id="dailyKkulImage" class="daily-kkul-image" alt="오늘의 꿀꿀이" loading="lazy" decoding="async">
-  </div>
 </section>
 
 </main></section>
@@ -108,12 +108,19 @@
       </details>
     </div>
     </div>
-    <div id="todayMenuList" class="today-menu-results"></div>
+    <div id="todayMenuTodaySection" class="today-menu-today-section"></div>
+    <div id="todayMenuSearchResult" class="today-menu-results" style="display:none;"></div>
     <div id="todayMenuNoResult" class="today-menu-empty" style="display:none;">검색 결과가 없습니다.</div>
+    <div id="todayMenuAllSection" class="today-menu-all-section" style="display:none;">
+      <div id="todayMenuList" class="today-menu-results"></div>
+    </div>
+    <div id="todayMenuShowAllWrap" class="today-menu-show-all-wrap" style="display:none;">
+      <button id="todayMenuShowAllBtn" class="btn today-menu-show-all-btn" type="button">📋 전체 식단 보기</button>
+    </div>
   </div>
 </section></main></section>
-<section id="monthly" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">월간 업무</div><h1>한 달 일정</h1><p class="subtitle">매월 반복되는 급식 업무를 시기별로 보기 쉽게 정리한 한 달 일정표입니다.<br>
-해야 할 일을 미리 확인하고 준비할 수 있도록 구성했으며, 여유가 있을 때는 다음 달 식단도 조금씩 준비할 수 있습니다.</p><img class="hero-asset" src="assets/pig-monthly.png" alt=""></section>
+<section id="monthly" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">월간 업무</div><h1>한 달 일정</h1><p class="subtitle">매월 반복되는 급식 업무를 한눈에 확인할 수 있는 일정표입니다.<br>
+업무를 미리 살펴보고, 여유가 있을 때 식단도 미리 준비해 보세요.</p><img class="hero-asset" src="assets/pig-monthly.png" alt=""></section>
 
 <section class="card">
   <h2 class="section-title"><span class="num">1</span>한 달 일정표</h2>
@@ -615,12 +622,11 @@
 서류 출력이 어려우시면 출근 후 도와드리겠습니다.
 
 https://minj0475-coder.github.io/kknutrition/신규대체조리종사원_안내.html</div>
-  <button id="substituteCopyBtn" class="btn light copy-btn" type="button">복사하기</button>
   <p id="substituteCopyStatus" class="mini" aria-live="polite"></p>
 
   <div class="download-card button-row">
     <a class="download-btn" href="신규대체조리종사원_안내.html" target="_blank" rel="noopener">신규 대체 조리종사원 안내</a>
-    <a class="download-btn" href="신규대체조리종사원_안내.html" download>다운로드</a>
+    <button id="substituteCopyBtn" class="download-btn copy-btn-inline" type="button">복사하기</button>
   </div>
     </div>
   </details>
@@ -755,12 +761,142 @@ https://minj0475-coder.github.io/kknutrition/신규대체조리종사원_안내.
 </section></main></section>
 <script src="assets/xlsx.full.min.js"></script>
 <script src="assets/site.js"></script>
+<script>
+/* ===== 식단 탭 최적화 패치 (2026-06) ===== */
+(function() {
+  /* renderTodayMenu 원본을 저장하고 래핑 */
+  function patchMenuTab() {
+    if (typeof renderTodayMenu !== 'function') return;
 
+    var _origRenderTodayMenu = renderTodayMenu;
 
+    window.renderTodayMenu = function(data) {
+      /* 원본 실행 (todayMenuList 렌더링 + renderHomeTodayMenu) */
+      _origRenderTodayMenu(data);
 
+      /* ─── 새 구조 처리 ─── */
+      var currentData = window.currentMenuData || [];
+      var todaySection = document.getElementById('todayMenuTodaySection');
+      var showAllWrap = document.getElementById('todayMenuShowAllWrap');
+      var allSection = document.getElementById('todayMenuAllSection');
+      var showAllBtn = document.getElementById('todayMenuShowAllBtn');
 
+      /* 오늘/가까운 날짜 섹션 */
+      if (todaySection) {
+        var todayKey = (function() {
+          var p = new Intl.DateTimeFormat('en-CA', {
+            timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit'
+          }).formatToParts(new Date()).reduce(function(a, x) { if (x.type !== 'literal') a[x.type] = x.value; return a; }, {});
+          return p.year + '-' + p.month + '-' + p.day;
+        })();
 
+        var nearData = currentData.find(function(s) { return s.key === todayKey; })
+          || currentData.find(function(s) { return s.key >= todayKey; })
+          || currentData[currentData.length - 1];
 
+        if (nearData) {
+          /* 원본 todayMenuList의 해당 날짜 섹션을 복사해서 표시 */
+          var listEl = document.getElementById('todayMenuList');
+          var matchEl = listEl && listEl.querySelector('[data-key="' + nearData.key + '"]');
+          if (matchEl) {
+            var clone = matchEl.cloneNode(true);
+            var h2 = clone.querySelector('h2');
+            if (h2 && nearData.key === todayKey) h2.textContent = '오늘 식단';
+            todaySection.innerHTML = '';
+            todaySection.appendChild(clone);
+          } else {
+            var names = nearData.items.map(function(i) { return i.name; });
+            var isToday = nearData.key === todayKey;
+            todaySection.innerHTML = '<section class="date-section-v2">'
+              + '<div class="date-head-v2"><div><h2>' + (isToday ? '오늘 식단' : nearData.date) + '</h2></div>'
+              + '<span class="count-v2">' + names.length + '개 메뉴</span></div>'
+              + '<div class="menu-summary-v2">' + names.join(', ') + '</div></section>';
+          }
+        } else if (currentData.length === 0) {
+          todaySection.innerHTML = '<p class="today-menu-no-data">업로드된 식단이 없습니다. 엑셀 파일을 업로드해 주세요.</p>';
+        } else {
+          todaySection.innerHTML = '';
+        }
+      }
+
+      /* 전체 보기 버튼 */
+      if (showAllWrap) showAllWrap.style.display = currentData.length > 0 ? '' : 'none';
+      if (allSection) allSection.style.display = 'none';
+      if (showAllBtn) showAllBtn.textContent = '📋 전체 식단 보기 (' + currentData.length + '일)';
+    };
+
+    /* filterTodayMenuList 래핑: 검색어 있을 때 todaySection 숨기기 */
+    if (typeof filterTodayMenuList === 'function') {
+      var _origFilter = filterTodayMenuList;
+      window.filterTodayMenuList = function() {
+        var search = document.getElementById('menuSearchInput');
+        var todaySection = document.getElementById('todayMenuTodaySection');
+        var showAllWrap = document.getElementById('todayMenuShowAllWrap');
+        var allSection = document.getElementById('todayMenuAllSection');
+        var noResult = document.getElementById('todayMenuNoResult');
+        var searchResult = document.getElementById('todayMenuSearchResult');
+
+        var query = search ? (search.value || '').trim() : '';
+
+        if (!query) {
+          /* 검색어 없음: 오늘 섹션 보이기, 전체 보기 버튼 유지 */
+          if (todaySection) todaySection.style.display = '';
+          if (showAllWrap) showAllWrap.style.display = (window.currentMenuData || []).length > 0 ? '' : 'none';
+          if (allSection) allSection.style.display = 'none';
+          if (noResult) noResult.style.display = 'none';
+          if (searchResult) { searchResult.innerHTML = ''; searchResult.style.display = 'none'; }
+          return;
+        }
+
+        /* 검색어 있음 */
+        if (todaySection) todaySection.style.display = 'none';
+        if (showAllWrap) showAllWrap.style.display = 'none';
+        if (allSection) allSection.style.display = 'none';
+
+        /* 원본 filter로 todayMenuList 내부 필터링 */
+        _origFilter();
+
+        /* 검색 결과를 searchResult에 복사 */
+        if (searchResult) {
+          var list = document.getElementById('todayMenuList');
+          if (list) {
+            searchResult.innerHTML = list.innerHTML;
+            searchResult.style.display = '';
+            list.style.display = 'none';
+          }
+        }
+      };
+    }
+
+    /* 전체 보기 버튼 이벤트 */
+    var showAllBtn2 = document.getElementById('todayMenuShowAllBtn');
+    var allSection2 = document.getElementById('todayMenuAllSection');
+    if (showAllBtn2 && allSection2) {
+      showAllBtn2.addEventListener('click', function() {
+        var isOpen = allSection2.style.display !== 'none';
+        if (isOpen) {
+          allSection2.style.display = 'none';
+          showAllBtn2.textContent = '📋 전체 식단 보기 (' + (window.currentMenuData || []).length + '일)';
+        } else {
+          /* allSection2에 todayMenuList 내용 복사 */
+          var list = document.getElementById('todayMenuList');
+          var innerList = document.getElementById('todayMenuList');
+          allSection2.style.display = '';
+          showAllBtn2.textContent = '📋 전체 식단 닫기';
+          allSection2.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
+    }
+  }
+
+  /* DOMContentLoaded 후 패치 적용 */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() { setTimeout(patchMenuTab, 100); });
+  } else {
+    setTimeout(patchMenuTab, 100);
+  }
+})();
+</script>
 
 </body>
 </html>

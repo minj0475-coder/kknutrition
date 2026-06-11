@@ -3204,16 +3204,16 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
     scroll-margin-top:124px;
   }
   #home .hero{
-    min-height:246px;
-    padding:24px 136px 24px 18px;
+    min-height:256px;
+    padding:24px 176px 24px 18px;
   }
   #home .hero-asset{
-    width:126px!important;
-    max-width:126px!important;
-    max-height:138px!important;
-    right:6px!important;
+    width:164px!important;
+    max-width:164px!important;
+    max-height:178px!important;
+    right:8px!important;
     left:auto!important;
-    top:42px!important;
+    top:36px!important;
   }
   #home .hero .subtitle{
     max-width:none;
@@ -3406,6 +3406,8 @@ nav{
   grid-template-columns:minmax(0,1fr) 170px;
   align-items:center;
   gap:18px;
+  padding-top:16px!important;
+  padding-bottom:16px!important;
   background:linear-gradient(135deg,#ffffff 0%,#fffaf4 48%,#edf6fa 100%);
   overflow:hidden;
 }
@@ -3494,10 +3496,17 @@ tbody tr:hover td,
 @media(max-width:900px){
   .daily-kkul-card{
     grid-template-columns:minmax(0,1fr) 132px;
+    padding-top:14px!important;
+    padding-bottom:14px!important;
   }
   .daily-kkul-image-wrap{
     width:132px;
     height:132px;
+  }
+  #monthly .hero-asset{
+    bottom:0!important;
+    top:auto!important;
+    transform:translateY(0)!important;
   }
 }
 @media(max-width:640px){
@@ -3507,15 +3516,17 @@ tbody tr:hover td,
     flex-basis:36px!important;
   }
   .daily-kkul-card{
-    grid-template-columns:minmax(0,1fr) 116px;
-    gap:12px;
+    grid-template-columns:minmax(0,1fr) 130px;
+    gap:10px;
+    padding-top:12px!important;
+    padding-bottom:12px!important;
   }
   .daily-kkul-message{
     font-size:15px;
   }
   .daily-kkul-image-wrap{
-    width:116px;
-    height:116px;
+    width:130px;
+    height:130px;
   }
   .staff-accordion summary{
     padding:16px 15px;
@@ -3523,5 +3534,82 @@ tbody tr:hover td,
   }
   .staff-accordion-body{
     padding:16px 15px 18px;
+  }
+  #monthly .hero-asset{
+    bottom:0!important;
+    top:auto!important;
+    max-height:90%!important;
+    object-position:center bottom!important;
+  }
+}
+
+/* 식단 탭 최적화: 오늘 식단 섹션 & 전체 보기 버튼 */
+.today-menu-today-section{
+  margin-top:4px;
+}
+.today-menu-today-section .date-section-v2{
+  border:2px solid #c7dbe5;
+}
+.today-menu-today-section .date-head-v2 h2::before{
+  content:"🍽️ ";
+}
+.today-menu-show-all-wrap{
+  display:flex;
+  justify-content:center;
+  margin-top:8px;
+  padding-top:8px;
+}
+.today-menu-show-all-btn{
+  min-height:46px;
+  padding:12px 28px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#6f93a6 0%,#5a7d91 100%);
+  color:#fff;
+  font-size:15px;
+  font-weight:900;
+  border:none;
+  box-shadow:0 6px 18px rgba(111,147,166,.28);
+  cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.today-menu-show-all-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 24px rgba(111,147,166,.38);
+}
+.today-menu-all-section{
+  margin-top:8px;
+}
+.today-menu-no-data{
+  margin:0;
+  padding:20px;
+  border:1px dashed #d7d0c7;
+  border-radius:14px;
+  background:#fbfaf7;
+  color:#686a70;
+  font-weight:800;
+  text-align:center;
+}
+/* 복사하기 버튼 스타일 (하단 버튼과 통일감) */
+.copy-btn-inline{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:46px;
+  padding:10px 18px;
+  border-radius:10px;
+  background:#edf6fa;
+  border:1px solid #c7dbe5;
+  color:#43525a;
+  font-size:15px;
+  font-weight:900;
+  cursor:pointer;
+  transition:background .15s;
+}
+.copy-btn-inline:hover{
+  background:#d8edf5;
+}
+@media(max-width:640px){
+  .today-menu-show-all-btn{
+    width:100%;
   }
 }
