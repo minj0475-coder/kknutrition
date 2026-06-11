@@ -1,16 +1,28 @@
+/* --- PANTONE POWDERED PASTELS PALETTE --- */
 :root{
-  --bg:#f7f6f2;
-  --paper:#ffffff;
-  --ink:#34343a;
-  --muted:#67686d;
-  --line:#ded9d3;
-  --navy:#4d5961;
-  --blue:#7ea6bd;
-  --blue-soft:#edf6fa;
-  --gray-soft:#f3f2ef;
-  --green-soft:#eef3ea;
-  --warning-soft:#fff8dc;
-  --shadow:0 8px 20px rgba(77,89,97,.07);
+  --pantone-lemon: #f3e9b5; /* Lemon Icing */
+  --pantone-nimbus: #d5d9dc; /* Nimbus Cloud */
+  --pantone-raindrops: #f0d8d9; /* Raindrops on Roses */
+  --pantone-cloud: #f0eee9; /* Cloud Dancer */
+  --pantone-ice: #c7def2; /* Ice Melt */
+  --pantone-peach: #f1d4cc; /* Peach Dust */
+  --pantone-aqua: #c5dbcc; /* Almost Aqua */
+  --pantone-orchid: #dfd0e2; /* Orchid Tint */
+
+  --bg: #f9f8f6;
+  --paper: #ffffff;
+  --ink: #3a4250;
+  --muted: #6b7280;
+  --line: var(--pantone-nimbus);
+  --navy: #4d5961;
+  --blue: #a3c4df;
+  --blue-soft: var(--pantone-ice);
+  --gray-soft: #f1f3f5;
+  --green-soft: var(--pantone-aqua);
+  --warning-soft: var(--pantone-lemon);
+  --pink-soft: var(--pantone-raindrops);
+  --peach-soft: var(--pantone-peach);
+  --shadow: 0 8px 24px rgba(100,110,120,.05);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -61,7 +73,7 @@ a{color:inherit;text-decoration:none}
 }
 .logo:before{
   content:"급";
-  color:#fff;
+  color:var(--ink);
   font-size:15px;
   font-weight:900;
 }
@@ -380,7 +392,7 @@ td:first-child{
   border-radius:8px;
   padding:10px 14px;
   background:var(--navy);
-  color:#fff;
+  color:var(--ink);
   font-weight:900;
   font-size:14px;
   border:1px solid var(--navy);
@@ -2205,7 +2217,7 @@ table{
 }
 body{
   background:
-    linear-gradient(180deg, #fbfaf6 0%, #f4f7f7 36%, #f8f1f0 72%, #fffdf7 100%);
+    linear-gradient(180deg, var(--bg) 0%, var(--pantone-cloud) 50%, var(--bg) 100%);
   background-attachment:fixed;
 }
 .top{
@@ -2272,14 +2284,14 @@ nav a.active{
 #home .hero{
   min-height:330px;
   padding:42px 360px 42px 42px;
-  border-color:#dfdbd2;
+  border-color:var(--pantone-nimbus);
   background:
-    linear-gradient(135deg, #fff 0%, #f8f6ec 34%, #ecf5f9 68%, #f7f0f2 100%);
+    linear-gradient(135deg, var(--paper) 0%, var(--pantone-cloud) 34%, var(--pantone-raindrops) 68%, var(--pantone-peach) 100%);
   overflow:hidden;
 }
 .page-section:not(#home) .hero{
   background:
-    linear-gradient(135deg, #fff 0%, #f8f7f1 48%, #edf6fa 100%);
+    linear-gradient(135deg, var(--paper) 0%, var(--pantone-ice) 48%, var(--pantone-orchid) 100%);
 }
 .kicker{
   background:#f7f4df;
@@ -2353,7 +2365,7 @@ td:first-child,
 .download-btn{
   background:#6f93a6;
   border-color:#6f93a6;
-  color:#fff;
+  color:var(--ink);
   box-shadow:0 8px 16px rgba(111,147,166,.18);
 }
 .btn.light{
@@ -2462,7 +2474,7 @@ tbody tr:hover td:first-child,
 }
 .home-guide-card{
   background:
-    linear-gradient(135deg, #ffffff 0%, #f8f6ec 38%, #eef3ea 70%, #f6f2f6 100%);
+    linear-gradient(135deg, var(--paper) 0%, var(--pantone-ice) 38%, var(--pantone-aqua) 70%, var(--pantone-cloud) 100%);
 }
 .home-guide-card:before{
   background:linear-gradient(90deg, rgba(207,225,238,.18), rgba(247,237,196,.72), rgba(201,210,193,.22));
@@ -2766,7 +2778,7 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
   grid-template-columns:1fr;
   align-items:stretch;
   gap:12px;
-  background:linear-gradient(135deg,#fff 0%,#f8f7f1 54%,#edf6fa 100%);
+  background:linear-gradient(135deg,var(--paper) 0%,var(--pantone-cloud) 54%,var(--pantone-ice) 100%);
 }
 .menu-search-row,
 .menu-upload-row{
@@ -2815,7 +2827,7 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
   border-radius:999px;
   background:#6f93a6;
   border:1px solid #6f93a6;
-  color:#fff;
+  color:var(--ink);
   font-weight:900;
   cursor:pointer;
   box-shadow:0 8px 16px rgba(111,147,166,.18);
@@ -2880,7 +2892,7 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
   margin:0 0 14px;
   padding:12px 14px;
   border-radius:14px;
-  background:linear-gradient(135deg,#f7f4df 0%,#f7f0f2 100%);
+  background:linear-gradient(135deg,var(--pantone-lemon) 0%,var(--pantone-peach) 100%);
   border:1px solid #e9ddd8;
   color:#4b4743;
   font-weight:900;
@@ -3403,7 +3415,7 @@ nav{
   gap:18px;
   padding-top:16px!important;
   padding-bottom:16px!important;
-  background:linear-gradient(135deg,#ffffff 0%,#fffaf4 48%,#edf6fa 100%);
+  background:linear-gradient(135deg,var(--paper) 0%,var(--pantone-lemon) 48%,var(--pantone-aqua) 100%);
   overflow:hidden;
 }
 .daily-kkul-copy{
@@ -3561,8 +3573,9 @@ tbody tr:hover td,
   min-height:46px;
   padding:12px 28px;
   border-radius:999px;
-  background:linear-gradient(135deg,#3b82f6 0%,#2563eb 100%);
-  color:#fff;
+  background:linear-gradient(135deg,var(--pantone-ice) 0%,var(--pantone-orchid) 100%);
+  color:var(--ink)!important;
+  color:var(--ink);
   font-size:15px;
   font-weight:900;
   border:none;
@@ -3575,7 +3588,8 @@ tbody tr:hover td,
   box-shadow:0 6px 20px rgba(59,130,246,.5);
 }
 .today-menu-show-all-btn.bottom-btn{
-  background:linear-gradient(135deg,#475569 0%,#334155 100%);
+  background:linear-gradient(135deg,var(--pantone-nimbus) 0%,var(--pantone-peach) 100%);
+  color:var(--ink)!important;
   box-shadow:0 4px 14px rgba(71,85,105,.4);
 }
 .today-menu-show-all-btn.bottom-btn:hover{
