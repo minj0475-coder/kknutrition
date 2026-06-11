@@ -602,23 +602,24 @@ function renderHomeTodayMenu(data) {
 function renderTodayMenu(data) {
   currentMenuData = data || [];
   const list = document.getElementById("todayMenuList");
-  if (!list) return;
-  list.innerHTML = currentMenuData.map(section => {
-    const names = section.items.map(item => item.name);
-    const meal = section.meal ? `<p class="meal-line-v2">${menuEsc(section.meal)}</p>` : "";
-    const cards = section.items.map(item => `
-      <article class="menu-card-v2">
-        <h3>${menuEsc(item.name)}</h3>
-        <details class="materials-detail"><summary>사용재료 보기</summary><pre>${menuEsc(item.materials || "등록된 사용재료 없음")}</pre></details>
-        <pre class="plain-method${item.muted ? " muted" : ""}">${menuEsc(item.method || "등록된 조리방법 없음")}</pre>
-      </article>`).join("");
-    return `
-      <section class="date-section-v2" data-date="${menuEsc(section.date)}" data-menu="${menuEsc(names.join(", "))}">
-        <div class="date-head-v2"><div><h2>${menuEsc(section.date)}</h2>${meal}</div><span class="count-v2">${names.length}개 메뉴</span></div>
-        <div class="menu-summary-v2">${menuEsc(names.join(", "))}</div>
-        <div class="items-v2">${cards}</div>
-      </section>`;
-  }).join("");
+  if (list) {
+    list.innerHTML = currentMenuData.map(section => {
+      const names = section.items.map(item => item.name);
+      const meal = section.meal ? `<p class="meal-line-v2">${menuEsc(section.meal)}</p>` : "";
+      const cards = section.items.map(item => `
+        <article class="menu-card-v2">
+          <h3>${menuEsc(item.name)}</h3>
+          <details class="materials-detail"><summary>사용재료 보기</summary><pre>${menuEsc(item.materials || "등록된 사용재료 없음")}</pre></details>
+          <pre class="plain-method${item.muted ? " muted" : ""}">${menuEsc(item.method || "등록된 조리방법 없음")}</pre>
+        </article>`).join("");
+      return `
+        <section class="date-section-v2" data-date="${menuEsc(section.date)}" data-menu="${menuEsc(names.join(", "))}">
+          <div class="date-head-v2"><div><h2>${menuEsc(section.date)}</h2>${meal}</div><span class="count-v2">${names.length}개 메뉴</span></div>
+          <div class="menu-summary-v2">${menuEsc(names.join(", "))}</div>
+          <div class="items-v2">${cards}</div>
+        </section>`;
+    }).join("");
+  }
   filterTodayMenuList();
   renderHomeTodayMenu(currentMenuData);
 }
@@ -635,31 +636,103 @@ function updateTodayMenuHeader(data, fileName, statusMessage) {
 
 function filterTodayMenuList() {
   const search = document.getElementById("menuSearchInput");
-  const list = document.getElementById("todayMenuList");
+  const todaySection = document.getElementById("todayMenuTodaySection");
+  const showAllWrap = document.getElementById("todayMenuShowAllWrap");
+  const allSection = document.getElementById("todayMenuAllSection");
   const noResult = document.getElementById("todayMenuNoResult");
-  if (!search || !list || !noResult) return;
-  const query = search.value || "";
+  const searchResult = document.getElementById("todayMenuSearchResult");
+
+  const query = search ? (search.value || "").trim() : "";
+  const data = window.currentMenuData || [];
+
+  if (!query) {
+    if (searchResult) { searchResult.innerHTML = ""; searchResult.style.display = "none"; }
+    if (noResult) noResult.style.display = "none";
+    if (allSection) allSection.style.display = "none";
+    
+    if (todaySection) {
+      const todayKey = (() => {
+        const p = new Intl.DateTimeFormat("en-CA", {
+          timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit"
+        }).formatToParts(new Date()).reduce((a, x) => { if (x.type !== "literal") a[x.type] = x.value; return a; }, {});
+        return `${p.year}-${p.month}-${p.day}`;
+      })();
+      const nearData = data.find(s => s.key === todayKey) || data.find(s => s.key >= todayKey) || data[data.length - 1];
+      
+      if (nearData) {
+        const isToday = nearData.key === todayKey;
+        const names = nearData.items.map(i => i.name);
+        const meal = nearData.meal ? `<p class="meal-line-v2">${menuEsc(nearData.meal)}</p>` : "";
+        const cards = nearData.items.map(item => `
+          <article class="menu-card-v2">
+            <h3>${menuEsc(item.name)}</h3>
+            <details class="materials-detail"><summary>사용재료 보기</summary><pre>${menuEsc(item.materials || "등록된 사용재료 없음")}</pre></details>
+            <pre class="plain-method${item.muted ? " muted" : ""}">${menuEsc(item.method || "등록된 조리방법 없음")}</pre>
+          </article>`).join("");
+        todaySection.innerHTML = `
+          <section class="date-section-v2">
+            <div class="date-head-v2"><div><h2>${isToday ? "오늘 식단" : menuEsc(nearData.date)}</h2>${meal}</div><span class="count-v2">${names.length}개 메뉴</span></div>
+            <div class="menu-summary-v2">${menuEsc(names.join(", "))}</div>
+            <div class="items-v2">${cards}</div>
+          </section>`;
+      } else if (data.length === 0) {
+        todaySection.innerHTML = '<p class="today-menu-no-data">업로드된 식단이 없습니다. 엑셀 파일을 업로드해 주세요.</p>';
+      } else {
+        todaySection.innerHTML = '';
+      }
+      todaySection.style.display = "";
+    }
+    
+    if (showAllWrap) showAllWrap.style.display = data.length > 0 ? "" : "none";
+    const showAllBtn = document.getElementById("todayMenuShowAllBtn");
+    if (showAllBtn) showAllBtn.textContent = `📋 전체 식단 보기 (${data.length}일)`;
+    return;
+  }
+
+  if (todaySection) todaySection.style.display = "none";
+  if (showAllWrap) showAllWrap.style.display = "none";
+  if (allSection) allSection.style.display = "none";
+
   let shownSections = 0;
-  list.querySelectorAll(".date-section-v2").forEach(section => {
-    const dateTitle = section.querySelector("h2")?.innerText || section.dataset.date || "";
-    const summary = section.querySelector(".menu-summary-v2")?.innerText || section.dataset.menu || "";
+  let html = "";
+
+  data.forEach(section => {
+    const dateTitle = section.date || "";
+    const summary = section.items.map(i => i.name).join(", ");
     const sectionHaystack = [dateTitle, formatMenuDateVariants(dateTitle), summary].join(" ");
-    let shownCards = 0;
-    section.querySelectorAll(".menu-card-v2").forEach(card => {
-      const title = card.querySelector("h3")?.innerText || "";
-      const method = card.querySelector(".plain-method")?.innerText || "";
-      const materials = card.querySelector(".materials-detail pre")?.innerText || "";
-      const ok = matchMenuQuery([sectionHaystack, title, method, materials].join(" "), query);
-      card.style.display = ok ? "" : "none";
-      if (ok) shownCards += 1;
+    const sectionMatched = matchMenuQuery(sectionHaystack, query);
+    
+    const filteredItems = section.items.filter(item => {
+      const itemHaystack = [item.name, item.method || "", item.materials || ""].join(" ");
+      return sectionMatched || matchMenuQuery(sectionHaystack + " " + itemHaystack, query);
     });
-    const showSection = shownCards > 0 || matchMenuQuery(sectionHaystack, query);
-    section.style.display = showSection ? "" : "none";
-    if (showSection) shownSections += 1;
-    const count = section.querySelector(".count-v2");
-    if (count) count.textContent = `${query.trim() ? shownCards : section.querySelectorAll(".menu-card-v2").length}개 메뉴`;
+
+    if (filteredItems.length > 0) {
+      shownSections++;
+      const meal = section.meal ? `<p class="meal-line-v2">${menuEsc(section.meal)}</p>` : "";
+      const cards = filteredItems.map(item => `
+        <article class="menu-card-v2">
+          <h3>${menuEsc(item.name)}</h3>
+          <details class="materials-detail"><summary>사용재료 보기</summary><pre>${menuEsc(item.materials || "등록된 사용재료 없음")}</pre></details>
+          <pre class="plain-method${item.muted ? " muted" : ""}">${menuEsc(item.method || "등록된 조리방법 없음")}</pre>
+        </article>`).join("");
+      
+      html += `
+        <section class="date-section-v2">
+          <div class="date-head-v2"><div><h2>${menuEsc(dateTitle)}</h2>${meal}</div><span class="count-v2">${filteredItems.length}개 메뉴</span></div>
+          <div class="menu-summary-v2">${menuEsc(filteredItems.map(i => i.name).join(", "))}</div>
+          <div class="items-v2">${cards}</div>
+        </section>`;
+    }
   });
-  noResult.style.display = shownSections ? "none" : "block";
+
+  if (searchResult) {
+    searchResult.innerHTML = html;
+    searchResult.style.display = shownSections ? "" : "none";
+  }
+  if (noResult) {
+    noResult.style.display = shownSections ? "none" : "block";
+  }
 }
 
 function getXlsxLib() {
@@ -705,11 +778,29 @@ async function setupTodayMenu() {
   const clearBtn = document.getElementById("menuClearBtn");
   const tokenSaveBtn = document.getElementById("menuGithubTokenSaveBtn");
   const tokenClearBtn = document.getElementById("menuGithubTokenClearBtn");
+  const showAllBtn = document.getElementById("todayMenuShowAllBtn");
+  const allSection = document.getElementById("todayMenuAllSection");
+
   if (fileInput) fileInput.addEventListener("change", handleTodayMenuUpload);
   if (search) search.addEventListener("input", filterTodayMenuList);
   if (clearBtn) clearBtn.addEventListener("click", () => { if (search) { search.value = ""; filterTodayMenuList(); search.focus(); } });
   if (tokenSaveBtn) tokenSaveBtn.addEventListener("click", saveMenuGithubToken);
   if (tokenClearBtn) tokenClearBtn.addEventListener("click", clearMenuGithubToken);
+  
+  if (showAllBtn && allSection) {
+    showAllBtn.addEventListener("click", () => {
+      const isOpen = allSection.style.display !== "none";
+      if (isOpen) {
+        allSection.style.display = "none";
+        showAllBtn.textContent = `📋 전체 식단 보기 (${(window.currentMenuData || []).length}일)`;
+      } else {
+        allSection.style.display = "";
+        showAllBtn.textContent = "📋 전체 식단 닫기";
+        allSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+    });
+  }
+  
   loadMenuGithubTokenUI();
 
   const status = document.getElementById("todayMenuStatus");
