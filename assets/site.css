@@ -3953,3 +3953,71 @@ tbody tr:hover td,
 .annual-month-card .task-item {
   color: var(--text) !important;
 }
+
+/* ==============================================================
+홈 탭 히어로 및 오늘의 꿀꿀이 레이아웃 보정 (유실본 복구)
+============================================================== */
+@media(min-width: 641px) {
+  #home .hero {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 48px !important;
+    padding: 56px 64px !important;
+    position: relative !important;
+  }
+  #home .hero-content {
+    flex: 1 !important;
+    max-width: 560px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  #home .hero h1 {
+    margin: 0 0 16px 0 !important;
+    white-space: nowrap !important;
+  }
+  #home .hero p {
+    margin: 0 !important;
+    max-width: 520px !important;
+    line-height: 1.7 !important;
+    word-break: keep-all !important;
+  }
+  #home .hero-asset {
+    position: static !important;
+    flex-shrink: 0 !important;
+    width: 260px !important;
+    max-width: 32% !important;
+    object-fit: contain !important;
+    transform: none !important;
+  }
+}
+
+/* 오늘의 꿀꿀이 카드 레이아웃 정리 */
+.daily-kkul-card {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 32px !important;
+  padding: 36px 48px !important;
+}
+.daily-kkul-copy {
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  flex: 1 !important;
+}
+.daily-kkul-image-wrap img {
+  flex-shrink: 0 !important;
+  width: 120px !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+
+@media(max-width: 640px) {
+  .daily-kkul-card {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 24px !important;
+  }
+}
