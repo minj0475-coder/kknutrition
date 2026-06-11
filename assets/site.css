@@ -3698,15 +3698,25 @@ tbody tr:hover td,
     display: none !important;
   }
   
+  #daily .schedule-table tr {
+    position: relative !important;
+  }
+  #daily .schedule-table td:first-child {
+    padding-right: 90px !important;
+  }
+  
   #daily .schedule-table td:nth-child(2) {
+    position: absolute !important;
+    top: 10px !important;
+    right: 12px !important;
+    margin: 0 !important;
     display: inline-block !important;
     width: auto !important;
     padding: 4px 10px !important;
-    margin: 14px 12px 0 !important;
-    background: #f1f2ee !important;
-    color: #63727a !important;
+    background: var(--pantone-lemon) !important;
+    color: var(--ink) !important;
     border-radius: 6px !important;
-    font-size: 13px !important;
+    font-size: 12px !important;
     font-weight: 800 !important;
     border-bottom: none !important;
   }
