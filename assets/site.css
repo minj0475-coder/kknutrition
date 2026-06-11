@@ -2083,8 +2083,8 @@ table{
   filter:drop-shadow(0 12px 18px rgba(30,58,95,.12));
 }
 #home .hero{
-  min-height:390px;
-  padding:38px 440px 38px 34px;
+  min-height:238px;
+  padding:38px 320px 38px 34px;
   border-color:#f8c9d5;
   background:
     linear-gradient(135deg,#ffffff 0%,#fff7fa 58%,#f3f8ff 100%);
@@ -2103,8 +2103,8 @@ table{
   color:#3f4b5f;
 }
 #home .hero-asset{
-  width:378px;
-  max-height:389px;
+  width:270px;
+  max-height:278px;
   right:34px;
   bottom:-22px;
 }
@@ -2270,8 +2270,8 @@ nav a.active{
   box-shadow:0 18px 36px rgba(77,89,97,.08);
 }
 #home .hero{
-  min-height:440px;
-  padding:42px 480px 42px 42px;
+  min-height:330px;
+  padding:42px 360px 42px 42px;
   border-color:#dfdbd2;
   background:
     linear-gradient(135deg, #fff 0%, #f8f6ec 34%, #ecf5f9 68%, #f7f0f2 100%);
@@ -2305,8 +2305,8 @@ h1{
   filter:drop-shadow(0 16px 18px rgba(77,89,97,.16));
 }
 #home .hero-asset{
-  width:392px;
-  max-height:420px;
+  width:280px;
+  max-height:300px;
   right:46px;
   bottom:-8px;
 }
@@ -2605,8 +2605,8 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
   color:#43525a!important;
 }
 #home .hero-asset{
-  width:392px!important;
-  max-height:392px!important;
+  width:320px!important;
+  max-height:320px!important;
   right:42px!important;
   bottom:12px!important;
   object-fit:contain!important;
@@ -2630,11 +2630,11 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
 @media(max-width:900px){
   #home .hero{
     min-height:auto;
-    padding:28px 164px 28px 24px;
+    padding:28px 140px 28px 24px;
   }
   #home .hero-asset{
-    width:154px!important;
-    max-height:156px!important;
+    width:130px!important;
+    max-height:132px!important;
     right:16px!important;
     top:64px!important;
     bottom:auto!important;
@@ -2700,16 +2700,16 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
     padding-right:86px;
   }
   #home .hero{
-    padding-right:160px;
-    min-height:230px;
+    padding-right:136px;
+    min-height:220px;
   }
   #home .hero-asset{
     display:block!important;
-    width:151px!important;
+    width:128px!important;
     height:auto!important;
-    max-width:151px!important;
-    max-height:151px!important;
-    left:clamp(190px, 50vw, 220px)!important;
+    max-width:128px!important;
+    max-height:128px!important;
+    left:clamp(200px, 56vw, 230px)!important;
     right:auto!important;
     top:68px!important;
     bottom:auto!important;
@@ -3160,14 +3160,14 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
     scroll-margin-top:116px;
   }
   #home .hero{
-    min-height:440px;
-    padding:32px 300px 32px 26px;
+    min-height:290px;
+    padding:32px 250px 32px 26px;
   }
   #home .hero-asset{
     display:block!important;
-    width:277px!important;
-    max-width:277px!important;
-    max-height:291px!important;
+    width:230px!important;
+    max-width:230px!important;
+    max-height:240px!important;
     right:18px!important;
     left:auto!important;
     top:34px!important;
@@ -3204,13 +3204,13 @@ body:has(.weekly-check-card) main .schedule-table:not(.annual-table) td:first-ch
     scroll-margin-top:124px;
   }
   #home .hero{
-    min-height:300px;
-    padding:24px 250px 24px 18px;
+    min-height:270px;
+    padding:24px 200px 24px 18px;
   }
   #home .hero-asset{
-    width:230px!important;
-    max-width:230px!important;
-    max-height:249px!important;
+    width:190px!important;
+    max-width:190px!important;
+    max-height:200px!important;
     right:8px!important;
     left:auto!important;
     top:36px!important;
@@ -3547,7 +3547,9 @@ tbody tr:hover td,
 .today-menu-today-section{
   margin-top:4px;
 }
-
+.today-menu-today-section .date-section-v2{
+  border:2px solid #c7dbe5;
+}
 .today-menu-today-section .date-head-v2 h2::before{
   display: none;
 }
