@@ -3732,23 +3732,44 @@ td:first-child,
 }
 
 
-/* PC 화면 홈탭 꿀꿀이 위치 중앙 정렬 보정 */
+
+/* ==============================================================
+PC 화면 홈탭 히어로 레이아웃 (사용자 요청)
+============================================================== */
 @media(min-width: 641px) {
   #home .hero {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 48px !important;
     position: relative !important;
+  }
+  #home .hero-content {
     display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
-    justify-content: center !important;
+    max-width: 620px !important;
+  }
+  #home .kicker {
+    margin-bottom: 14px !important;
+  }
+  #home .hero h1 {
+    margin: 0 0 16px 0 !important;
+    white-space: nowrap !important;
+  }
+  #home .hero p {
+    margin: 0 !important;
+    max-width: 620px !important;
+    line-height: 1.7 !important;
   }
   #home .hero-asset {
-    position: absolute !important;
-    top: 50% !important;
-    right: 46px !important;
-    bottom: auto !important;
-    transform: translateY(-50%) !important;
-    width: 250px !important;
-    max-height: 250px !important;
+    position: static !important;
+    flex-shrink: 0 !important;
+    align-self: center !important;
+    transform: none !important;
+    width: 280px !important;
+    max-height: 280px !important;
     object-position: center !important;
   }
 }
