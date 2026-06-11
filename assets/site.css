@@ -3640,3 +3640,51 @@ tbody tr:hover td,
     width:100%;
   }
 }
+
+
+/* --- Animation and Hover Effects --- */
+@keyframes floatBreathing {
+  0%, 100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -6px;
+  }
+}
+
+@keyframes fadeUpIn {
+  from {
+    opacity: 0;
+    translate: 0 20px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+#home .hero-asset {
+  animation: floatBreathing 3.5s ease-in-out infinite;
+  scale: 1;
+  transition: scale 0.3s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  #home .hero-asset:hover {
+    scale: 1.03;
+  }
+}
+
+.daily-kkul-card {
+  animation: fadeUpIn 0.6s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #home .hero-asset {
+    animation: none !important;
+    transition: none !important;
+  }
+  .daily-kkul-card {
+    animation: none !important;
+  }
+}
