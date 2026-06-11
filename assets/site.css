@@ -1,34 +1,36 @@
 :root {
-  /* 🎨 파우더리 파스텔 컬러 시스템 */
-  --bg-main: #f0ece4;       /* Cloud Dancer (전체 배경) */
-  --bg-card: #ffffff;       /* 흰색 (카드, 컨텐츠 영역) */
-  
-  --primary: #ebd2d6;       /* Raindrops on Roses (메인 핑크 포인트) */
-  --accent-1: #c8dced;      /* Ice Melt (버튼, 활성화 탭) */
-  --accent-2: #ecd3c6;      /* Peach Dust (서브 영역) */
-  --accent-3: #cadbcb;      /* Almost Aqua (표 헤더, 성공 뱃지) */
-  --accent-4: #d5cad5;      /* Orchid Tint (스태프 영역 등) */
-  --warning: #f7e8b6;       /* Lemon Icing (알림 뱃지) */
-  
-  --line: #d3d7d8;          /* Nimbus Cloud (테두리, 선) */
+  /* 🎨 정돈된 2026 팬톤 컬러 시스템 (Cloud Dancer & Coral/Apricot) */
+  --bg: #F8F6F1;          /* 부드러운 크림 화이트 배경 (80%) */
+  --card: #FFFFFF;        /* 기본 카드 (흰색) */
+  --card-soft: #FFFDF8;   /* 보조 카드 (아주 연한 크림톤) */
+  --primary: #EFA6A6;     /* 꿀꿀이 포인트 핑크 (15%) */
+  --primary-dark: #C97878;/* 강조 핑크 */
+  --accent: #F5D7C6;      /* 살구 포인트 (5%) */
+  --line: #E8E1D8;        /* 연한 테두리 (베이지 그레이) */
+  --text: #3F3A35;        /* 본문 글자 (다크 브라운/차콜) */
+  --muted: #8A8178;       /* 보조 글자 (연한 브라운 그레이) */
 
-  /* 📏 가독성을 위한 텍스트 색상 (Charcoal/Navy 톤) */
-  --text-main: #3a4250;     
-  --text-muted: #6b7280;    
-
-  /* Legacy variable mapping to ensure nothing breaks */
-  --bg: var(--bg-main);
-  --paper: var(--bg-card);
-  --ink: var(--text-main);
-  --muted: var(--text-muted);
-  --navy: var(--text-main);
-  --blue: var(--accent-1);
-  --blue-soft: var(--accent-1);
-  --gray-soft: #f8f9fa;
-  --green-soft: var(--accent-3);
-  --warning-soft: var(--warning);
+  /* Legacy variable mapping to force everything into the new palette */
+  --bg-main: var(--bg);
+  --bg-card: var(--card);
+  --text-main: var(--text);
+  --text-muted: var(--muted);
+  
+  /* Force all previously colorful variables to the coral/apricot/cream family */
+  --accent-1: var(--primary);      /* Was Ice Melt, now Coral Pink */
+  --accent-2: var(--card-soft);    /* Was Peach Dust, now soft cream */
+  --accent-3: var(--accent);       /* Was Almost Aqua, now Apricot */
+  --accent-4: var(--card-soft);    /* Was Orchid Tint, now soft cream */
+  --warning: var(--accent);        /* Was Lemon Icing, now Apricot */
+  
+  --navy: var(--text);
+  --blue: var(--primary);
+  --blue-soft: var(--card-soft);
+  --gray-soft: var(--card-soft);
+  --green-soft: var(--accent);
+  --warning-soft: var(--accent);
   --pink-soft: var(--primary);
-  --peach-soft: var(--accent-2);
+  --peach-soft: var(--accent);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -2094,7 +2096,7 @@ table{
   background:url("pig-home.webp") center / 170% no-repeat;
 }
 .hero{
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent-2) 50%, var(--accent-1) 100%);
+  background: linear-gradient(135deg, var(--card-soft) 0%, var(--accent) 100%);
 }
 .hero-asset{
   filter:drop-shadow(0 12px 18px rgba(30,58,95,.12));
@@ -2103,7 +2105,7 @@ table{
   min-height:238px;
   padding:38px 320px 38px 34px;
   border-color:#f8c9d5;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent-2) 50%, var(--accent-1) 100%);
+  background: linear-gradient(135deg, var(--card-soft) 0%, var(--accent) 100%);
   box-shadow:var(--shadow);
 }
 #home .kicker{
@@ -2190,36 +2192,38 @@ table{
 
 /* 올해의 팬톤 파스텔 팔레트 적용 */
 :root {
-  /* 🎨 파우더리 파스텔 컬러 시스템 */
-  --bg-main: #f0ece4;       /* Cloud Dancer (전체 배경) */
-  --bg-card: #ffffff;       /* 흰색 (카드, 컨텐츠 영역) */
-  
-  --primary: #ebd2d6;       /* Raindrops on Roses (메인 핑크 포인트) */
-  --accent-1: #c8dced;      /* Ice Melt (버튼, 활성화 탭) */
-  --accent-2: #ecd3c6;      /* Peach Dust (서브 영역) */
-  --accent-3: #cadbcb;      /* Almost Aqua (표 헤더, 성공 뱃지) */
-  --accent-4: #d5cad5;      /* Orchid Tint (스태프 영역 등) */
-  --warning: #f7e8b6;       /* Lemon Icing (알림 뱃지) */
-  
-  --line: #d3d7d8;          /* Nimbus Cloud (테두리, 선) */
+  /* 🎨 정돈된 2026 팬톤 컬러 시스템 (Cloud Dancer & Coral/Apricot) */
+  --bg: #F8F6F1;          /* 부드러운 크림 화이트 배경 (80%) */
+  --card: #FFFFFF;        /* 기본 카드 (흰색) */
+  --card-soft: #FFFDF8;   /* 보조 카드 (아주 연한 크림톤) */
+  --primary: #EFA6A6;     /* 꿀꿀이 포인트 핑크 (15%) */
+  --primary-dark: #C97878;/* 강조 핑크 */
+  --accent: #F5D7C6;      /* 살구 포인트 (5%) */
+  --line: #E8E1D8;        /* 연한 테두리 (베이지 그레이) */
+  --text: #3F3A35;        /* 본문 글자 (다크 브라운/차콜) */
+  --muted: #8A8178;       /* 보조 글자 (연한 브라운 그레이) */
 
-  /* 📏 가독성을 위한 텍스트 색상 (Charcoal/Navy 톤) */
-  --text-main: #3a4250;     
-  --text-muted: #6b7280;    
-
-  /* Legacy variable mapping to ensure nothing breaks */
-  --bg: var(--bg-main);
-  --paper: var(--bg-card);
-  --ink: var(--text-main);
-  --muted: var(--text-muted);
-  --navy: var(--text-main);
-  --blue: var(--accent-1);
-  --blue-soft: var(--accent-1);
-  --gray-soft: #f8f9fa;
-  --green-soft: var(--accent-3);
-  --warning-soft: var(--warning);
+  /* Legacy variable mapping to force everything into the new palette */
+  --bg-main: var(--bg);
+  --bg-card: var(--card);
+  --text-main: var(--text);
+  --text-muted: var(--muted);
+  
+  /* Force all previously colorful variables to the coral/apricot/cream family */
+  --accent-1: var(--primary);      /* Was Ice Melt, now Coral Pink */
+  --accent-2: var(--card-soft);    /* Was Peach Dust, now soft cream */
+  --accent-3: var(--accent);       /* Was Almost Aqua, now Apricot */
+  --accent-4: var(--card-soft);    /* Was Orchid Tint, now soft cream */
+  --warning: var(--accent);        /* Was Lemon Icing, now Apricot */
+  
+  --navy: var(--text);
+  --blue: var(--primary);
+  --blue-soft: var(--card-soft);
+  --gray-soft: var(--card-soft);
+  --green-soft: var(--accent);
+  --warning-soft: var(--accent);
   --pink-soft: var(--primary);
-  --peach-soft: var(--accent-2);
+  --peach-soft: var(--accent);
 }
 *{
   letter-spacing:0!important;
@@ -2293,11 +2297,11 @@ nav a.active{
   min-height:330px;
   padding:42px 360px 42px 42px;
   border-color:var(--pantone-nimbus);
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent-2) 50%, var(--accent-1) 100%);
+  background: linear-gradient(135deg, var(--card-soft) 0%, var(--accent) 100%);
   overflow:hidden;
 }
 .page-section:not(#home) .hero{
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent-2) 50%, var(--accent-1) 100%);
+  background: linear-gradient(135deg, var(--card-soft) 0%, var(--accent) 100%);
 }
 .kicker{
   background:#f7f4df;
