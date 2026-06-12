@@ -2964,7 +2964,8 @@ tbody tr:nth-child(even) td{
   border-collapse:separate;
   border-spacing:0;
   overflow:hidden;
-  border:1px solid var(--line);
+  border:none;
+  box-shadow: 0 0 0 1px var(--line);
   border-radius:14px;
   background:#fff;
 }
@@ -3820,6 +3821,8 @@ tbody tr:last-child th,
 .schedule-table tbody tr:last-child th,
 .clean-annual-table tbody tr:last-child td,
 .clean-annual-table tbody tr:last-child th,
+.clean-annual-table tbody tr.month-start:last-of-type td.month-cell,
+.clean-annual-table tbody tr.month-start:nth-last-child(3) td.month-cell,
 .simple-table tbody tr:last-child td,
 .simple-table tbody tr:last-child th {
   border-bottom: 0 !important;
