@@ -239,7 +239,7 @@ h1{
   padding:12px 14px;
   background:var(--gray-soft);
   border:1px solid var(--line);
-  color:#344054;
+  color:var(--text);
   font-weight:750;
 }
 .note.success{
@@ -323,7 +323,7 @@ td:first-child{
   position:relative;
   padding-left:22px;
   font-weight:750;
-  color:#344054;
+  color:var(--text);
 }
 .checklist li:before{
   content:"";
@@ -357,7 +357,7 @@ td:first-child{
   white-space:pre-line;
   font-size:16px;
   font-weight:650;
-  color:#344054;
+  color:var(--text);
   text-align:left;
 }
 .grouped-message{
@@ -441,7 +441,7 @@ td:first-child{
   border:1px solid var(--line);
   border-radius:12px;
   padding:14px 16px;
-  color:#344054;
+  color:var(--text);
   font-weight:800;
   line-height:1.7;
 }
@@ -476,7 +476,7 @@ td:first-child{
 .cal-cell ul{
   margin:0;
   padding-left:18px;
-  color:#344054;
+  color:var(--text);
   font-weight:650;
   font-size:14px;
   line-height:1.55;
@@ -611,7 +611,7 @@ td:first-child{
   vertical-align:top;
   padding:12px 14px;
   font-weight:650;
-  color:#344054;
+  color:var(--text);
   background:#fff;
 }
 .clean-annual-table td.month-cell{
@@ -758,7 +758,7 @@ td:first-child{
 }
 .notice-box span{
   font-weight:750;
-  color:#344054;
+  color:var(--text);
 }
 @media(max-width:640px){
   .notice-box{
@@ -819,7 +819,7 @@ td:first-child{
   border-radius:8px;
   padding:10px 12px;
   font:inherit;
-  color:#344054;
+  color:var(--text);
   background:#fff;
 }
 .sheet-link-card .mini{
@@ -936,7 +936,7 @@ td:first-child{
 }
 .detail-item p{
   margin:0 0 8px;
-  color:#344054;
+  color:var(--text);
   font-weight:650;
   line-height:1.62;
 }
@@ -986,7 +986,7 @@ td:first-child{
 }
 .print-doc p{
   margin:0 0 8px;
-  color:#344054;
+  color:var(--text);
   font-weight:650;
   line-height:1.7;
 }
@@ -1389,7 +1389,7 @@ button,
     gap:4px;
   }
   .annual-task li{
-    color:#344054;
+    color:var(--text);
     font-size:14px;
     font-weight:650;
     line-height:1.55;
@@ -1435,7 +1435,7 @@ button,
   border:1px solid var(--line);
   border-radius:9px;
   background:#fff;
-  color:#344054;
+  color:var(--text);
   text-align:left;
   font:inherit;
   font-size:14px;
@@ -1489,7 +1489,7 @@ button,
   padding:12px;
   font:inherit;
   line-height:1.6;
-  color:#344054;
+  color:var(--text);
   background:#fff;
 }
 .recipe-textarea.large{
@@ -1645,7 +1645,7 @@ button,
   font-family:inherit;
   font-size:14px;
   line-height:1.68;
-  color:#344054;
+  color:var(--text);
 }
 .today-menu-item{
   border:1px solid var(--line);
@@ -1692,7 +1692,7 @@ button,
 }
 .today-menu-fact span{
   display:block;
-  color:#344054;
+  color:var(--text);
   font-size:15px;
   font-weight:850;
   overflow-wrap:anywhere;
@@ -1722,7 +1722,7 @@ button,
   font-family:inherit;
   font-size:14px;
   line-height:1.65;
-  color:#344054;
+  color:var(--text);
 }
 .today-menu-empty{
   padding:18px;
@@ -1859,7 +1859,7 @@ nav a{
 }
 .inline-guide .lead{
   margin:0 0 16px;
-  color:#344054;
+  color:var(--text);
   font-weight:700;
   line-height:1.65;
 }
