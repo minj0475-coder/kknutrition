@@ -4245,31 +4245,38 @@ th {
   }
 
   .daily-kkul-card {
-    min-height: 140px !important;
-    padding: 24px 110px 24px 22px !important;
+    min-height: auto !important;
+    padding: 24px 20px 0 !important;
     position: relative !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: center !important;
-    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    text-align: center !important;
   }
 
   .daily-kkul-copy {
     width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
   }
 
   .daily-kkul-image-wrap {
     position: static !important;
+    width: 170px !important;
+    height: auto !important;
+    margin-top: 18px !important;
+    margin-bottom: -10px !important;
+    display: flex !important;
+    justify-content: center !important;
   }
 
   .daily-kkul-card img {
-    position: absolute !important;
-    right: 16px !important;
-    top: 50% !important;
-    bottom: auto !important;
-    transform: translateY(-50%) !important;
-    width: 96px !important;
-    max-width: 96px !important;
+    position: static !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
     height: auto !important;
   }
 }
