@@ -758,5 +758,12 @@
 </section></main></section>
 <script src="assets/xlsx.full.min.js"></script>
 <script src="assets/site.js?v=20260612_76"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('service-worker.js');
+    });
+  }
+</script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 {
   "name": "급식 업무 포털",
   "short_name": "급식 업무 포털",
-  "start_url": "./index.html",
+  "start_url": "/kknutrition/",
   "display": "standalone",
   "background_color": "#fffaf4",
   "theme_color": "#fffaf4",
