@@ -614,7 +614,7 @@ function renderTodayMenuV2(data) {
         </article>`).join("");
       return `
         <section class="date-section-v2" data-date="${menuEsc(section.date)}" data-menu="${menuEsc(names.join(", "))}">
-          <div class="date-head-v2"><div><h2>${menuEsc(section.date)}</h2>${meal}</div><span class="count-v2">${names.length}개 메뉴</span></div>
+          <div class="date-head-v2"><div><h2>${menuEsc(section.date)}</h2>${meal}</div></div>
           <div class="menu-summary-v2">${menuEsc(names.join(", "))}</div>
           <div class="items-v2">${cards}</div>
         </section>`;
@@ -657,7 +657,7 @@ function filterTodayMenuListV2() {
     const h2Title = customTitleLabel || menuEsc(section.date);
     return `
       <section class="date-section-v2">
-        <div class="date-head-v2"><div><h2>${h2Title}</h2>${meal}</div><span class="count-v2">${names.length}개 메뉴</span></div>
+        <div class="date-head-v2"><div><h2>${h2Title}</h2>${meal}</div></div>
         <div class="menu-summary-v2">${menuEsc(names.join(", "))}</div>
         <div class="items-v2">${cards}</div>
       </section>`;
