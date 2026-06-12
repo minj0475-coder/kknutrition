@@ -6,15 +6,15 @@ const DEFAULT_SHEET_LINK = "https://docs.google.com/spreadsheets/d/1qlBNjqRtXsD-
 const SHEET_LINK_KEY = "kkulkkoori_service_sheet_link";
 const DAILY_KKUL_KEY = "kkulkkoori_daily_character";
 const DAILY_KKUL_IMAGES = [
-  "assets/daily-kkul-chart.webp",
-  "assets/daily-kkul-meal.webp",
-  "assets/daily-kkul-heart.webp",
-  "assets/daily-kkul-question.webp",
-  "assets/daily-kkul-loupe.webp",
-  "assets/daily-kkul-cheer.webp",
-  "assets/daily-kkul-worry.webp",
-  "assets/daily-kkul-sparkle.webp",
-  "assets/daily-kkul-think.webp"
+  "assets/daily-kkul-chart.png",
+  "assets/daily-kkul-meal.png",
+  "assets/daily-kkul-heart.png",
+  "assets/daily-kkul-question.png",
+  "assets/daily-kkul-loupe.png",
+  "assets/daily-kkul-cheer.png",
+  "assets/daily-kkul-worry.png",
+  "assets/daily-kkul-sparkle.png",
+  "assets/daily-kkul-think.png"
 ];
 const DAILY_KKUL_MESSAGES = [
   "오늘도 맛있는 급식을 준비해 볼까요?",
