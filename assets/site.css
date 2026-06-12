@@ -3816,15 +3816,7 @@ td:first-child,
   font-weight: 700 !important;
 }
 
-/* 표 hover 효과 원천 차단 */
-tbody tr:hover td,
-.schedule-table tbody tr:hover td,
-.clean-annual-table tbody tr:hover td,
-.simple-table tbody tr:hover td {
-  transform: none !important;
-  background: inherit !important;
-  color: inherit !important;
-}
+/* 표 hover 효과 차단 규칙 삭제됨 */
 
 /* 6. 기타 상호작용 요소 */
 .quick,
