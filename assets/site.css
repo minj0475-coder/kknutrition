@@ -4431,8 +4431,7 @@ button, .btn {
 .summary-box,
 .staff-link-box,
 .sheet-link-card,
-.checklist,
-.materials-detail {
+.checklist {
   background: var(--card-soft) !important;
   border: 1px solid var(--line) !important;
   border-radius: 14px !important;
