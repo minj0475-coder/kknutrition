@@ -4666,7 +4666,7 @@ nav a.active, .mobile-nav-list a.active {
 
 @media (max-width: 640px) {
   .staff-accordion summary {
-    font-size: clamp(15px, 4.4vw, 18px) !important;
+    font-size: 17px !important;
     letter-spacing: -0.5px !important;
     white-space: nowrap !important;
     word-break: keep-all !important;
