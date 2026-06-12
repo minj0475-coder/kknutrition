@@ -3141,12 +3141,11 @@ nav{
   padding:18px;
 }
 .today-menu-results{
-  display:grid;
-  gap:16px;
+  display:block;
   margin-top:16px;
 }
 .date-section-v2{
-  margin:0;
+  margin-bottom:28px;
 }
 .date-head-v2{
   margin-bottom:12px;
@@ -3410,9 +3409,7 @@ nav{
   overflow:hidden;
   margin-top:0;
   padding-top:0;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  display: block;
 }
 .today-menu-no-data{
   margin:0;
