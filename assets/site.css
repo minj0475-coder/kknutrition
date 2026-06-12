@@ -4458,7 +4458,9 @@ button, .btn {
 .summary-box,
 .staff-link-box,
 .sheet-link-card,
-.checklist {
+.checklist,
+.home-today-summary,
+.home-today-empty {
   background: var(--card-soft) !important;
   border: 1px solid var(--line) !important;
   border-radius: 14px !important;
