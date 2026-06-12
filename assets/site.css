@@ -3519,13 +3519,13 @@ nav{
   /* Compact Daily & Monthly Schedule Time/Task on Mobile */
   #daily .schedule-table td:nth-child(2)::before,
   #daily .schedule-table td:nth-child(3)::before,
-  .monthly-table td:nth-child(2)::before,
-  .monthly-table td:nth-child(3)::before {
+  main section#monthly .schedule-table.monthly-table td:nth-child(2)::before,
+  main section#monthly .schedule-table.monthly-table td:nth-child(3)::before {
     display: none !important;
   }
   
   #daily .schedule-table tr,
-  .monthly-table tr {
+  main section#monthly .schedule-table.monthly-table tr {
     display: block !important;
     background: var(--card-soft) !important;
     position: relative !important;
@@ -3533,7 +3533,7 @@ nav{
   }
   
   #daily .schedule-table td:first-child,
-  .monthly-table td:first-child {
+  main section#monthly .schedule-table.monthly-table td:first-child {
     display: block !important;
     float: left !important;
     width: auto !important;
@@ -3544,7 +3544,7 @@ nav{
   }
   
   #daily .schedule-table td:nth-child(2),
-  .monthly-table td:nth-child(2) {
+  main section#monthly .schedule-table.monthly-table td:nth-child(2) {
     position: static !important;
     margin: 10px 0 0 0 !important;
     display: block !important;
@@ -3562,7 +3562,7 @@ nav{
   }
   
   #daily .schedule-table td:nth-child(3),
-  .monthly-table td:nth-child(3) {
+  main section#monthly .schedule-table.monthly-table td:nth-child(3) {
     display: block !important;
     clear: both !important;
     width: 100% !important;
