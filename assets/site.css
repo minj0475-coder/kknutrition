@@ -2864,10 +2864,6 @@ tbody tr:nth-child(even) td{
 .home-today-summary{
   margin:0 0 12px;
   padding:12px 14px;
-  border:1px solid #e8ddb3;
-  border-radius:14px;
-  background:#fffdf2;
-  color: var(--heading) !important;
   font-weight:900;
   line-height:1.55;
 }
