@@ -683,17 +683,16 @@ function filterTodayMenuListV2() {
           return `${p.year}-${p.month}-${p.day}`;
         })();
 
-        let startIndex = data.findIndex(s => s.key >= todayKey);
-        if (startIndex === -1) startIndex = Math.max(0, data.length - 2);
+        let startIndex = data.findIndex(s => s.key > todayKey);
+        if (startIndex === -1) startIndex = Math.max(0, data.length - 1);
 
-        const initialData = data.slice(startIndex, startIndex + 2);
+        const initialData = data.slice(startIndex, startIndex + 1);
         const remainingData = data.filter(s => !initialData.includes(s));
 
         let initialHtml = "";
         initialData.forEach((section, idx) => {
           let label = null;
-          if (section.key === todayKey) label = `오늘 식단`;
-          else if (idx === 1 && initialData[0].key === todayKey) label = `내일 식단`;
+          if (section.key > todayKey) label = `다음 식단`;
           initialHtml += renderSectionHTML(section, label);
         });
         todaySection.innerHTML = initialHtml;
