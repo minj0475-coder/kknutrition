@@ -587,7 +587,7 @@ function renderHomeTodayMenu(data) {
   if (!target) return;
   const section = getTodayMenuSection(data);
   if (!section) {
-    target.innerHTML = `<p class="home-today-empty">오늘 날짜의 식단이 아직 없습니다. 식단 탭에서 조리방법 조회 엑셀을 업로드하면 당일 식단만 홈에 표시됩니다.</p>`;
+    target.innerHTML = `<p class="home-today-empty">오늘 식단이 아직 준비되지 않았어요. 식단 탭에서 조리방법 조회 파일을 업로드하면 꿀꿀이가 오늘 식단을 홈에 보여드릴게요.</p>`;
     return;
   }
   const names = section.items.map(item => item.name);
