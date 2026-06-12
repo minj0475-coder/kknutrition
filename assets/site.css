@@ -3068,13 +3068,21 @@ tbody tr:nth-child(even) td{
   .schedule-wrap{
     border-radius:14px;
   }
+  .schedule-table,
+  main .schedule-table.monthly-table,
+  body:has(.weekly-check-card) main .schedule-table:not(.annual-table) {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
   .schedule-table tr,
   main .schedule-table.monthly-table tr,
   body:has(.weekly-check-card) main .schedule-table:not(.annual-table) tr{
-    border:1px solid #dfdbd2!important;
-    border-radius:14px!important;
-    background:#fff!important;
+    border: 1px solid var(--line) !important;
+    border-radius: 14px !important;
+    background: #fff !important;
     box-shadow: var(--shadow-flat);
+    margin-bottom: 16px !important;
   }
   .schedule-table td,
   main .schedule-table.monthly-table td,
@@ -4191,6 +4199,7 @@ th {
   box-shadow: 0 2px 8px var(--shadow-color, rgba(0,0,0,0.04)) !important;
   border-radius: 14px !important;
   overflow: hidden !important;
+  margin-bottom: 16px !important;
 }
 
 .annual-month-card h3 {
