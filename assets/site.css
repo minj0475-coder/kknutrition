@@ -4648,7 +4648,7 @@ table-group 보조 박스 통일 추가 (Gravity 5차 수정)
 }
 
 .table-group .table-subtitle {
-  border-bottom: 0 !important;
+  border-bottom: 1px solid var(--line) !important;
 }
 
 /* Tab optimization */
