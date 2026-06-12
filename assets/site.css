@@ -2683,7 +2683,7 @@ tbody tr:nth-child(even) td{
   text-overflow:ellipsis;
   white-space:nowrap;
 }
-.ok{color:#4f6748;font-weight:900}
+.ok{color:var(--primary-dark);font-weight:900}
 .error{color:#9f3a38;font-weight:900}
 .date-section-v2{
   margin-bottom:16px;
