@@ -3091,6 +3091,8 @@ tbody tr:nth-child(even) td{
   .schedule-wrap{
     border-radius:14px;
   }
+}
+@media(max-width:640px){
   .schedule-table,
   main .schedule-table.monthly-table,
   body:has(.weekly-check-card) main .schedule-table:not(.annual-table) {
