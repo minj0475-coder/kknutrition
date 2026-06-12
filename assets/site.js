@@ -620,7 +620,9 @@ function renderTodayMenuV2(data) {
       return `
         <section class="date-section-v2" data-date="${menuEsc(section.date)}" data-menu="${menuEsc(names.join(", "))}">
           <div class="date-head-v2"><div><h2>${menuEsc(section.date)}</h2>${meal}</div></div>
-          <div class="menu-summary-v2">${menuEsc(names.join(", "))}</div>
+          <div class="menu-summary-v2">
+            ${names.map(n => `<span class="menu-tag">${menuEsc(n)}</span>`).join("")}
+          </div>
           <div class="items-v2">${cards}</div>
         </section>`;
     }).join("");
@@ -664,7 +666,9 @@ function filterTodayMenuListV2() {
     return `
       <section class="date-section-v2">
         <div class="date-head-v2"><div><h2>${h2Title}</h2>${meal}</div></div>
-        <div class="menu-summary-v2">${menuEsc(names.join(", "))}</div>
+        <div class="menu-summary-v2">
+          ${names.map(n => `<span class="menu-tag">${menuEsc(n)}</span>`).join("")}
+        </div>
         <div class="items-v2">${cards}</div>
       </section>`;
   };
