@@ -967,3 +967,28 @@ document.addEventListener("DOMContentLoaded", () => {
   renderRecipeList();
   if (selectedIndex >= 0) selectRecipe(selectedIndex);
 });
+
+// Tab Switching Logic
+function updateTabs() {
+  let hash = window.location.hash;
+  if (!hash || !document.querySelector(hash)) {
+    hash = '#home';
+  }
+  document.querySelectorAll('.page-section').forEach(section => {
+    if ('#' + section.id === hash) {
+      section.classList.add('active');
+    } else {
+      section.classList.remove('active');
+    }
+  });
+  document.querySelectorAll('nav a, .mobile-nav-list a').forEach(link => {
+    if (link.getAttribute('href') === hash) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+window.addEventListener('hashchange', updateTabs);
+document.addEventListener('DOMContentLoaded', updateTabs);

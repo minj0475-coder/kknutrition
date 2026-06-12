@@ -4641,3 +4641,25 @@ table-group 보조 박스 통일 추가 (Gravity 5차 수정)
 .table-group .table-subtitle {
   border-bottom: 1px solid var(--line) !important;
 }
+
+/* Tab optimization */
+.page-section {
+  display: none !important;
+  opacity: 0;
+  animation: tabFadeIn 0.2s ease forwards;
+}
+.page-section.active {
+  display: block !important;
+}
+@keyframes tabFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.page-section + .page-section {
+  border-top: none !important;
+}
+nav a.active, .mobile-nav-list a.active {
+  color: var(--primary) !important;
+  font-weight: 700;
+  border-bottom: 2px solid var(--primary);
+}
