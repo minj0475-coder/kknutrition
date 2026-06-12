@@ -394,7 +394,7 @@ td:first-child{
   font-size:14px;
   border:1px solid var(--text);
 }
-.btn:before{content:""}
+
 .btn.light{
   background:#fff;
   color:var(--text);
