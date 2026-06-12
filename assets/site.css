@@ -2696,9 +2696,8 @@ tbody tr:nth-child(even) td{
 .date-head-v2{
   display:flex;
   justify-content:space-between;
-  gap:12px;
   align-items:flex-start;
-  border-bottom: 1px solid var(--line) !important;
+  border-bottom: 0 !important;
   padding-bottom:12px;
   margin-bottom:12px;
 }
@@ -2745,7 +2744,7 @@ tbody tr:nth-child(even) td{
   padding:12px 14px;
   border-radius:14px;
   background: var(--card-soft) !important;
-  border: 1px solid var(--line) !important;
+  border: 0 !important;
   color: var(--text) !important;
   font-weight:900;
   overflow-wrap:anywhere;
