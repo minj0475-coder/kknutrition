@@ -4634,13 +4634,13 @@ table-group 보조 박스 통일 추가 (Gravity 5차 수정)
 ============================================================== */
 .table-group {
   background: var(--card-soft) !important;
-  border: 1px solid var(--line) !important;
+  border: 0 !important;
   border-radius: 14px !important;
   color: var(--text) !important;
 }
 
 .table-group .table-subtitle {
-  border-bottom: 1px solid var(--line) !important;
+  border-bottom: 0 !important;
 }
 
 /* Tab optimization */
