@@ -3686,8 +3686,7 @@ nav a.active {
 .recipe-list-item,
 .menu-upload-panel,
 .staff-accordion-card,
-.annual-month-card,
-.today-menu-all-section-wrap {
+.annual-month-card {
   background: var(--card) !important;
   border: 1px solid var(--line) !important;
   box-shadow: var(--shadow) !important;
