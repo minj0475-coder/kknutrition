@@ -789,17 +789,21 @@ td:first-child{
   gap:14px;
   margin-bottom:12px;
 }
+.sheet-link-title-group{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
 .sheet-link-head strong{
-  display:block;
   color:var(--text);
   font-size:15px;
   font-weight:900;
-  margin-bottom:2px;
 }
 .sheet-link-head span{
-  display:block;
   color:var(--muted);
-  font-weight:750;
+  font-size:12px;
+  font-weight:700;
 }
 .sheet-link-label{
   display:block;
@@ -884,12 +888,13 @@ td:first-child{
 }
 .staff-block-head{
   display:flex;
-  justify-content:space-between;
+  flex-direction:row;
   align-items:center;
-  gap:12px;
+  gap:8px;
   padding:13px 16px;
   background:var(--card-soft);
   border-bottom:1px solid var(--line);
+  flex-wrap:wrap;
 }
 .staff-block-head strong{
   color:var(--text);
@@ -899,8 +904,7 @@ td:first-child{
 .staff-block-head span{
   color:var(--muted);
   font-size:13px;
-  font-weight:800;
-  white-space:nowrap;
+  font-weight:700;
 }
 .staff-text{
   border:0;
