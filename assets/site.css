@@ -1,20 +1,20 @@
 :root {
-  /* ?帹 ?鸽牗???�� ?旍澊??& 旖旊瀯 ?旊爤??*/
-  --bg: #F8F6F1;           /* 毵戧碃 攵€?滊煬???�� ?旍澊??(?勳泊 氚瓣步) */
-  --card: #FFFFFF;         /* ?滊氨??(旮半掣 旃措摐 氚瓣步 - ?€牍勱皭 ?曥劚) */
-  --card-soft: #FFFDF8;    /* ?勳＜ ?绊暅 ?��??(氤挫“ ?侅棴 氚曥姢) */
+  /* 🎨 세련된 크림 화이트 & 코랄 팔레트 */
+  --bg: #F8F6F1;           /* 맑고 부드러운 크림 화이트 (전체 배경) */
+  --card: #FFFFFF;         /* 순백색 (기본 카드 배경 - 대비감 형성) */
+  --card-soft: #FFFDF8;    /* 아주 연한 크림톤 (보조 영역 박스) */
   
-  --primary: #EFA6A6;      /* 旖旊瀯 ?戫伂 (?犿儩???? 欤检殧 氩勴娂, 氅旍澑 ?�澑?? */
-  --primary-dark: #C97878; /* ??旖旊瀯 (欤检殧 氩勴娂 Hover ?來儨) */
-  --accent: #F5D7C6;       /* ?搓惮 ?戫伂 (昙??勳殧??臧曥“ 氡冹? 氚??�澑?? */
+  --primary: #EFA6A6;      /* 코랄 핑크 (선택된 탭, 주요 버튼, 메인 포인트) */
+  --primary-dark: #C97878; /* 딥 코랄 (주요 버튼 Hover 상태) */
+  --accent: #F5D7C6;       /* 살구 핑크 (꼭 필요한 강조 뱃지 및 포인트) */
   
-  --line: #E8E1D8;         /* ?勳＜ ?绊暅 氩犾澊歆€ 攴鸽爤??(?岆憪毽? 甑�秳?? */
+  --line: #E8E1D8;         /* 아주 연한 베이지 그레이 (테두리, 구분선) */
   
-  /* ?掞笍 臧€?呾劚瓿?臧愳劚??氇�憪 ?§? ?嶌姢??旎�煬 */
-  --text: #3F3A35;         /* ?半溁???ろ伂 敫岆澕??彀�綔 (氤鸽� 旮€?愳儔) */
-  --muted: #8A8178;        /* ?绊暅 敫岆澕??攴鸽爤??(氤挫“ ?る獏 旮€?愳儔) */
+  /* ✒️ 가독성과 감성을 모두 잡은 텍스트 컬러 */
+  --text: #3F3A35;         /* 따뜻한 다크 브라운/차콜 (본문 글자색) */
+  --muted: #8A8178;        /* 연한 브라운 그레이 (보조 설명 글자색) */
   
-  /* ?侊笍 ??攵€?滊熃瓿?彀�秳?挫� 攴鸽�??*/
+  /* ☁️ 더 부드럽고 차분해진 그림자 */
   --shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.02);
   --shadow-flat: 0 2px 8px rgba(63, 58, 53, 0.04);
   
@@ -80,7 +80,7 @@ a{color:inherit;text-decoration:none}
   overflow:hidden!important;
 }
 .logo:before{
-  content:"旮?;
+  content:"급";
   color:var(--text);
   font-size:15px;
   font-weight:900;
@@ -400,7 +400,7 @@ td:first-child{
   color:var(--text);
   border:1px solid var(--line);
 }
-.download-btn:before{content:"??;font-weight:900}
+.download-btn:before{content:"↓";font-weight:900}
 .download-card{
   margin-top:14px;
   display:flex;
@@ -582,7 +582,7 @@ td:first-child{
   }
 }
 
-/* ?瓣皠 ?检爼?? ?�毄???曥澑???曤張 ?ろ???*/
+/* 연간 일정표: 사용자 확인용 정돈 스타일 */
 .clean-annual-table{
   min-width:980px;
   table-layout:fixed;
@@ -1088,7 +1088,7 @@ button,
   line-height:1.55;
 }
 
-/* ???橂（ ?检爼??氇�皵??旃措摐??氤搓赴 */
+/* 홈 하루 일정표 모바일 카드형 보기 */
 @media(max-width:640px){
   .home-daily-card .schedule-wrap{
     overflow-x:visible;
@@ -1150,7 +1150,7 @@ button,
   }
 }
 
-/* ?勳泊 ?橃澊歆€ 氇�皵??臧€?呾劚 氤挫檮 */
+/* 전체 페이지 모바일 가독성 보완 */
 .mobile-scroll-note{
   display:none;
   margin:-6px 0 12px;
@@ -1217,7 +1217,7 @@ button,
     display:block;
   }
 
-  /* ?橂（ ?检爼, ?????检爼: 氇�皵??旃措摐????*/
+  /* 하루 일정, 한 달 일정: 모바일 카드형 표 */
   .home-daily-card .schedule-wrap,
   main .schedule-wrap{
     overflow-x:visible;
@@ -1291,7 +1291,7 @@ button,
     font-weight:900;
   }
 
-  /* ?瓣皠 ?检爼?€ ?挫毄??毵庫晞 膦岇毎 ?ろ伂搿ろ槙?茧� ?犾? */
+  /* 연간 일정은 내용이 많아 좌우 스크롤형으로 유지 */
   .clean-annual-table{
     min-width:900px;
   }
@@ -1303,7 +1303,7 @@ button,
     padding-left:16px;
   }
 
-  /* 臁半Μ膦呾偓???侅劯 ?堧偞氍?氇�皵??*/
+  /* 조리종사원 상세 안내문 모바일 */
   .staff-block-head{
     gap:4px;
   }
@@ -1325,7 +1325,7 @@ button,
   }
 }
 
-/* :has 氙胳???敫岆澕?办? ?€牍? daily ?橃澊歆€??class臧€ ?嗢柎???滊? ?堨爼?侅溂搿??滌嫓 */
+/* :has 미지원 브라우저 대비: daily 페이지용 class가 없어도 표를 안정적으로 표시 */
 @media(max-width:640px){
   .weekly-check-card .simple-table,
   .weekly-check-card .simple-table tbody,
@@ -1342,7 +1342,7 @@ button,
   }
 }
 
-/* ?瓣皠 ?检爼 氇�皵???勳毄 旃措摐??*/
+/* 연간 일정 모바일 전용 카드형 */
 .annual-mobile-card{
   display:none;
 }
@@ -1405,7 +1405,7 @@ button,
   }
 }
 
-/* ?堨嫓????*/
+/* 레시피 탭 */
 .recipe-tool{
   display:grid;
   grid-template-columns:300px minmax(0,1fr);
@@ -1540,7 +1540,7 @@ button,
   line-height:1.5;
 }
 
-/* ?る姌??氅旊壌 */
+/* 오늘의 메뉴 */
 .today-menu-tool{
   display:grid;
   gap:16px;
@@ -1762,7 +1762,7 @@ button,
   }
 }
 
-/* ??昕€昕€???岅皽 */
+/* 홈 꿀꿀이 소개 */
 .home-guide-card{
   position:relative;
   overflow:hidden;
@@ -1823,7 +1823,7 @@ button,
   line-height:1.45;
 }
 
-/* 氇�皵???堨爼?? ???橃澊歆€ ?ろ伂搿?甑�“ */
+/* 모바일 안정형: 한 페이지 스크롤 구조 */
 .page-section{
   display:block;
   scroll-margin-top:74px;
@@ -1845,7 +1845,7 @@ nav a{
 
 
 
-/* ?犼窚?€觳?臁半Μ膦呾偓???堧偞氍?inline */
+/* 신규대체 조리종사원 안내문 inline */
 .substitute-guide-card{
   scroll-margin-top:88px;
 }
@@ -1907,7 +1907,7 @@ nav a{
 }
 
 
-/* ?犼窚?€觳?臁半Μ膦呾偓???愲掣 ?堧偞氍?氤搓赴 */
+/* 신규대체 조리종사원 원본 안내문 보기 */
 .notice-iframe{
   width:100%;
   height:1100px;
@@ -1921,7 +1921,7 @@ nav a{
   }
 }
 
-/* ?勳泊 ?堨澊?勳泝 ?曤張 */
+/* 전체 레이아웃 정돈 */
 .page-section .wrap{
   display:grid;
   gap:18px;
@@ -2067,7 +2067,7 @@ table{
   }
 }
 
-/* 旌愲Ν???措?歆€ ?旍瀽??氤搓皶 */
+/* 캐릭터 이미지 디자인 보강 */
 .logo{
   background:#fff2f5!important;
   border:1px solid #ffd5df!important;
@@ -2173,24 +2173,24 @@ table{
   }
 }
 
-/* ?�暣???�啢 ?岇姢???旊爤???侅毄 */
+/* 올해의 팬톤 파스텔 팔레트 적용 */
 :root {
-  /* ?帹 ?鸽牗???�� ?旍澊??& 旖旊瀯 ?旊爤??*/
-  --bg: #F8F6F1;           /* 毵戧碃 攵€?滊煬???�� ?旍澊??(?勳泊 氚瓣步) */
-  --card: #FFFFFF;         /* ?滊氨??(旮半掣 旃措摐 氚瓣步 - ?€牍勱皭 ?曥劚) */
-  --card-soft: #FFFDF8;    /* ?勳＜ ?绊暅 ?��??(氤挫“ ?侅棴 氚曥姢) */
+  /* 🎨 세련된 크림 화이트 & 코랄 팔레트 */
+  --bg: #F8F6F1;           /* 맑고 부드러운 크림 화이트 (전체 배경) */
+  --card: #FFFFFF;         /* 순백색 (기본 카드 배경 - 대비감 형성) */
+  --card-soft: #FFFDF8;    /* 아주 연한 크림톤 (보조 영역 박스) */
   
-  --primary: #EFA6A6;      /* 旖旊瀯 ?戫伂 (?犿儩???? 欤检殧 氩勴娂, 氅旍澑 ?�澑?? */
-  --primary-dark: #C97878; /* ??旖旊瀯 (欤检殧 氩勴娂 Hover ?來儨) */
-  --accent: #F5D7C6;       /* ?搓惮 ?戫伂 (昙??勳殧??臧曥“ 氡冹? 氚??�澑?? */
+  --primary: #EFA6A6;      /* 코랄 핑크 (선택된 탭, 주요 버튼, 메인 포인트) */
+  --primary-dark: #C97878; /* 딥 코랄 (주요 버튼 Hover 상태) */
+  --accent: #F5D7C6;       /* 살구 핑크 (꼭 필요한 강조 뱃지 및 포인트) */
   
-  --line: #E8E1D8;         /* ?勳＜ ?绊暅 氩犾澊歆€ 攴鸽爤??(?岆憪毽? 甑�秳?? */
+  --line: #E8E1D8;         /* 아주 연한 베이지 그레이 (테두리, 구분선) */
   
-  /* ?掞笍 臧€?呾劚瓿?臧愳劚??氇�憪 ?§? ?嶌姢??旎�煬 */
-  --text: #3F3A35;         /* ?半溁???ろ伂 敫岆澕??彀�綔 (氤鸽� 旮€?愳儔) */
-  --muted: #8A8178;        /* ?绊暅 敫岆澕??攴鸽爤??(氤挫“ ?る獏 旮€?愳儔) */
+  /* ✒️ 가독성과 감성을 모두 잡은 텍스트 컬러 */
+  --text: #3F3A35;         /* 따뜻한 다크 브라운/차콜 (본문 글자색) */
+  --muted: #8A8178;        /* 연한 브라운 그레이 (보조 설명 글자색) */
   
-  /* ?侊笍 ??攵€?滊熃瓿?彀�秳?挫� 攴鸽�??*/
+  /* ☁️ 더 부드럽고 차분해진 그림자 */
   --shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.02);
   --shadow-flat: 0 2px 8px rgba(63, 58, 53, 0.04);
   
@@ -2370,7 +2370,7 @@ td:first-child,
   border-top:10px solid rgba(214,214,217,.5);
 }
 
-/* ?れ偓??臧€?呾劚 氤挫爼 */
+/* 실사용 가독성 보정 */
 .top{
   box-shadow: var(--shadow-flat);
 }
@@ -2604,7 +2604,7 @@ tbody tr:nth-child(even) td{
 
 
 
-/* ?る姌??氅旊壌 ?? 旮夓嫕?茧硠 臁半Μ氚╇矔 臁绊殞 */
+/* 오늘의 메뉴 탭: 급식일별 조리방법 조회 */
 .menu-upload-panel-v2{
   grid-template-columns:1fr;
   align-items:stretch;
@@ -3339,14 +3339,14 @@ nav{
   font-weight: 500;
   line-height:0;
   font-family: system-ui, -apple-system, sans-serif;
-  padding-bottom: 2px; /* ?绊姼 ?轨劚??+臧€ ?挫� 斐愳????勳儊 氤挫爼 */
+  padding-bottom: 2px; /* 폰트 특성상 +가 살짝 쳐지는 현상 보정 */
 }
 .staff-accordion[open] summary{
   border-bottom:1px solid #ece7df;
 }
 .staff-accordion[open] summary:after{
-  content:"??;
-  padding-bottom: 0; /* - 氍胳瀽??氤挫爼 ?滉卑 */
+  content:"−";
+  padding-bottom: 0; /* - 문자는 보정 제거 */
 }
 .staff-accordion-body{
   padding:20px 22px 22px;
@@ -3407,7 +3407,7 @@ nav{
   }
 }
 
-/* ?濍嫧 ??斓滌爜?? ?る姌 ?濍嫧 ?轨厴 & ?勳泊 氤搓赴 氩勴娂 */
+/* 식단 탭 최적화: 오늘 식단 섹션 & 전체 보기 버튼 */
 .today-menu-today-section{
   margin-top:4px;
 }
@@ -3450,7 +3450,7 @@ nav{
   font-weight:800;
   text-align:center;
 }
-/* 氤奠偓?橁赴 氩勴娂 ?ろ???(?橂嫧 氩勴娂瓿??奠澕臧? */
+/* 복사하기 버튼 스타일 (하단 버튼과 통일감) */
 .copy-btn-inline{
   display:inline-flex;
   align-items:center;
@@ -3670,7 +3670,7 @@ nav{
 
 
 /* ==============================================================
-?淀暕 ?旍瀽???滌姢??V2 (?橂姌???半吀???勲步 ?滉卑, ?れ槰???曤張)
+통합 디자인 시스템 V2 (하늘색/연노랑 완벽 제거, 톤온톤 정돈)
 ============================================================== */
 
 :root {
@@ -3708,7 +3708,7 @@ body {
   color: var(--text) !important;
 }
 
-/* 1. ?侂嫧 Header & ??*/
+/* 1. 상단 Header & 탭 */
 .top {
   background: rgba(255, 255, 255, 0.95) !important;
   border-bottom: 1px solid var(--line) !important;
@@ -3731,7 +3731,7 @@ nav a.active {
   border-color: var(--primary) !important;
 }
 
-/* 2. 旃措摐 氚?氚瓣步 ?奠澕 */
+/* 2. 카드 및 배경 통일 */
 .card,
 .menu-card-v2,
 .recipe-list-item,
@@ -3746,7 +3746,7 @@ nav a.active {
   border-left: 5px solid var(--primary) !important;
 }
 
-/* 氤挫“ 氚曥姢 (?半吀???橂姌???勲步 ?滉卑) */
+/* 보조 박스 (연노랑/하늘색 완벽 제거) */
 .checklist,
 .info-box,
 .summary-box,
@@ -3755,8 +3755,8 @@ nav a.active {
   border: 1px solid var(--line) !important;
 }
 
-/* 3. 氩勴娂 ?滌姢???奠澕 */
-/* 欤检殧 氩勴娂 */
+/* 3. 버튼 시스템 통일 */
+/* 주요 버튼 */
 .btn,
 .file-label-v2 {
   background: var(--primary) !important;
@@ -3773,7 +3773,7 @@ nav a.active {
   box-shadow: 0 4px 10px rgba(134, 84, 79, 0.15) !important;
 }
 
-/* 氤挫“ 氩勴娂 (?勳泊氤搓赴, ?��氤搓赴, 氤奠偓 ???橂姌???滉卑) */
+/* 보조 버튼 (전체보기, 재료보기, 복사 등 하늘색 제거) */
 .btn.light,
 .download-btn,
 .copy-btn,
@@ -3803,7 +3803,7 @@ nav a.active {
   transform: translateY(-1px) !important;
 }
 
-/* 4. 氚办? / ?茧波 ?奠澕 */
+/* 4. 배지 / 라벨 통일 */
 .kicker,
 .count-v2,
 .num,
@@ -3812,7 +3812,7 @@ nav a.active {
   color: var(--text) !important;
   border: 1px solid var(--line) !important;
 }
-/* 臧曥“ 氚办? */
+/* 강조 배지 */
 #home .kicker,
 #today-menu .kicker,
 .home-today-head .kicker {
@@ -3821,7 +3821,7 @@ nav a.active {
   border: 1px solid var(--primary) !important;
 }
 
-/* 5. ???夓儊 ?滌姢??*/
+/* 5. 표 색상 시스템 */
 th,
 .schedule-table th,
 .clean-annual-table th {
@@ -3836,7 +3836,7 @@ td,
   color: var(--text) !important;
 }
 
-/* ?办姢?�儜 毵堨?毵????岆憪毽??滉卑 */
+/* 데스크탑 마지막 행 테두리 제거 */
 tbody tr:last-child td,
 tbody tr:last-child th,
 .schedule-table tbody tr:last-child td,
@@ -3850,7 +3850,7 @@ tbody tr:last-child th,
   border-bottom: 0 !important;
 }
 
-/* 氇�皵??氇�摐 毵堨?毵??旍唽 ?岆憪毽??滉卑 (?挫�??氚╈?) */
+/* 모바일 모드 마지막 요소 테두리 제거 (이중선 방지) */
 @media(max-width: 900px) {
   .schedule-table td:last-child,
   .schedule-table th:last-child,
@@ -3861,7 +3861,7 @@ tbody tr:last-child th,
     border-bottom: 0 !important;
   }
 }
-/* ??觳?氩堨Ц 旃?甑�秳 */
+/* 표 첫 번째 칸 구분 */
 td:first-child,
 .schedule-table td:first-child,
 .clean-annual-table td.month-cell,
@@ -3871,9 +3871,9 @@ td:first-child,
   font-weight: 700 !important;
 }
 
-/* ??hover ?�臣 彀�嫧 攴滌箼 ??牅??*/
+/* 표 hover 효과 차단 규칙 삭제됨 */
 
-/* 6. 旮绊? ?來樃?戩毄 ?旍唽 */
+/* 6. 기타 상호작용 요소 */
 .quick,
 .recipe-list-item {
   transition: all 0.18s ease-in-out !important;
@@ -3886,7 +3886,7 @@ td:first-child,
   transform: translateY(-1px) !important;
 }
 
-/* 7. ?????堨柎搿??侅棴 ?堨澊?勳泝 */
+/* 7. 홈 탭 히어로 영역 레이아웃 */
 #home .hero,
 .page-section:not(#home) .hero {
   background: var(--card) !important;
@@ -3928,7 +3928,7 @@ td:first-child,
   }
 }
 
-/* ?る姌??昕€昕€??旃措摐 ?堨澊?勳泝 ?曤Μ */
+/* 오늘의 꿀꿀이 카드 레이아웃 정리 */
 .daily-kkul-card {
   display: flex !important;
   align-items: center !important;
@@ -3959,7 +3959,7 @@ td:first-child,
 
 
 /* ==============================================================
-臁半Μ膦呾偓?? ?る姌?濍嫧 ???橃渼 ?旍唽 ?橂姌???勲步 ?滉卑
+조리종사원, 오늘식단 등 하위 요소 하늘색 완벽 제거
 ============================================================== */
 .info-box,
 .notice-box,
@@ -4006,7 +4006,7 @@ td:first-child,
 }
 
 /* ==============================================================
-?瓣皠 ?检爼???夓儊 ?奠澕 (?半吀???勲步 ?滉卑)
+연간 일정표 색상 통일 (연노랑 완벽 제거)
 ============================================================== */
 .clean-annual-table th,
 .annual-desktop-card .clean-annual-table th {
@@ -4031,7 +4031,7 @@ td:first-child,
   border-color: var(--line) !important;
 }
 
-/* 氇�皵???瓣皠 ?检爼??旃措摐 ?奠澕 */
+/* 모바일 연간 일정표 카드 통일 */
 .annual-month-card .month-header {
   background: var(--table-head) !important;
   color: var(--text) !important;
@@ -4045,7 +4045,7 @@ td:first-child,
 }
 
 /* ==============================================================
-?????堨柎搿?氚??る姌??昕€昕€???堨澊?勳泝 氤挫爼 (?犾嫟氤?氤店惮)
+홈 탭 히어로 및 오늘의 꿀꿀이 레이아웃 보정 (유실본 복구)
 ============================================================== */
 @media(min-width: 641px) {
   #home .hero {
@@ -4083,7 +4083,7 @@ td:first-child,
   }
 }
 
-/* ?る姌??昕€昕€??旃措摐 ?堨澊?勳泝 ?曤Μ */
+/* 오늘의 꿀꿀이 카드 레이아웃 정리 */
 .daily-kkul-card {
   display: flex !important;
   align-items: center !important;
@@ -4113,7 +4113,7 @@ td:first-child,
 }
 
 /* ==============================================================
-旮€?愳儔 氚?臧€?呾劚 臧曥牅 氤挫爼 (Gravity 旮搓笁 ?橃爼)
+글자색 및 가독성 강제 보정 (Gravity 긴급 수정)
 ============================================================== */
 h1, h2, h3, h4, h5, h6,
 .section-title,
@@ -4146,7 +4146,7 @@ th {
   color: var(--muted) !important;
 }
 
-/* 氡冹?/?茧波 旮€?愳儔 臧曥牅 氤挫爼 */
+/* 뱃지/라벨 글자색 강제 보정 */
 .badge,
 .kicker,
 .num,
@@ -4154,7 +4154,7 @@ th {
   color: var(--heading) !important;
 }
 
-/* 氩勴娂 旮€?愳儔 臧曥牅 (?办儔?€ 欤检殧氩勴娂毵? */
+/* 버튼 글자색 강제 (흰색은 주요버튼만) */
 .btn, .file-label-v2 {
   color: #FFFFFF !important;
 }
@@ -4163,7 +4163,7 @@ th {
 }
 
 /* ==============================================================
-臁半Μ膦呾偓?????旍棳 ?橂姌??敫旊（攴鸽爤?? 氚??呺牓彀?氩勴娂 ?勲步 ?曧檾
+조리종사원 탭 잔여 하늘색(블루그레이) 및 입력창/버튼 완벽 정화
 ============================================================== */
 .sheet-link-card,
 .attendance-box,
@@ -4212,7 +4212,7 @@ th {
 }
 
 /* ==============================================================
-?岆爤毳搓赴 ?堧偞 觳错伂毽�姢??氚曥姢 ?ろ??茧�
+알레르기 안내 체크리스트 박스 스타일링
 ============================================================== */
 .checklist-box {
   background: var(--card-soft) !important;
@@ -4237,7 +4237,7 @@ th {
 }
 
 /* ==============================================================
-?瓣皠 ?检爼??氇�皵??旃措摐 ?夓儊 ?勲步 ?奠澕 (Gravity 旮搓笁 ?橃爼)
+연간 일정표 모바일 카드 색상 완벽 통일 (Gravity 긴급 수정)
 ============================================================== */
 .annual-month-card {
   background: #FFFFFF !important;
@@ -4284,7 +4284,7 @@ th {
 }
 
 /* ==============================================================
-氇�皵????旃措摐 氚??る姌??昕€昕€??旃措摐 ?堨澊?勳泝 ?曤Μ (Gravity ?橃爼)
+모바일 홈 카드 및 오늘의 꿀꿀이 카드 레이아웃 정리 (Gravity 수정)
 ============================================================== */
 @media(max-width: 640px) {
   #home .hero {
@@ -4356,9 +4356,9 @@ th {
 }
 
 /* ==============================================================
-?勳泊 ???堨柎搿?Hero) ?侅棴 ?勲步 ?奠澕 (Gravity 3彀?旮搓笁 ?橃爼)
+전체 탭 히어로(Hero) 영역 완벽 통일 (Gravity 3차 긴급 수정)
 ============================================================== */
-/* 1. ?茧波(Kicker) ?奠澕 */
+/* 1. 라벨(Kicker) 통일 */
 .kicker,
 .hero .kicker,
 #home .kicker,
@@ -4377,7 +4377,7 @@ th {
   margin-bottom: 14px !important;
 }
 
-/* 2. ???滊�(h1) ?奠澕 */
+/* 2. 큰 제목(h1) 통일 */
 .hero h1,
 .page-section h1,
 #home .hero h1,
@@ -4393,7 +4393,7 @@ th {
   margin: 0 0 16px 0 !important;
 }
 
-/* 3. ?る獏 氍戈惮(p) ?奠澕 */
+/* 3. 설명 문구(p) 통일 */
 .hero p,
 .hero .subtitle,
 #home .hero p,
@@ -4409,7 +4409,7 @@ th {
   margin: 0 !important;
 }
 
-/* 4. ?堨柎搿?旃措摐(Hero Card) 氚瓣步/?岆憪毽??奠澕 */
+/* 4. 히어로 카드(Hero Card) 배경/테두리 통일 */
 .hero,
 .page-section .hero,
 #home .hero,
@@ -4425,9 +4425,9 @@ th {
 }
 
 /* ==============================================================
-旮€?愳儔 ?勲┐ ?奠澕 (毵來伂 ?岆????滉卑 氚??ろ伂 敫岆澕?错啢 瓿犾爼)
+글자색 전면 통일 (링크 파란색 제거 및 다크 브라운톤 고정)
 ============================================================== */
-/* ???滊�: ?ろ伂 彀�綔 */
+/* 큰 제목: 다크 차콜 */
 h1, h2, h3, h4, h5, h6,
 .section-title,
 .hero h1,
@@ -4441,12 +4441,12 @@ th {
   color: var(--heading) !important;
 }
 
-/* 氤鸽�/?茧皹 旮€?? ?ろ伂 敫岆澕??*/
+/* 본문/일반 글자: 다크 브라운 */
 body, p, span, div, li, td, label, input, textarea, select {
   color: var(--text);
 }
 
-/* 氤挫“ ?る獏/攵€臧€ ?曤炒: ?绊暅 敫岆澕??*/
+/* 보조 설명/부가 정보: 연한 브라운 */
 .subtitle,
 .muted-text,
 .summary-box p,
@@ -4457,7 +4457,7 @@ body, p, span, div, li, td, label, input, textarea, select {
   color: var(--muted) !important;
 }
 
-/* 毵來伂 氚?臧曥“ ?茧波: 搿滌�敫岆澕???ろ伂 */
+/* 링크 및 강조 라벨: 로즈브라운 다크 */
 a,
 a:visited,
 a:hover,
@@ -4471,7 +4471,7 @@ a:active,
   text-decoration: none !important;
 }
 
-/* 氩勴娂: 旮半掣?侅溂搿??嶌姢???夓儊, 欤检殧 氩勴娂毵??办儔 */
+/* 버튼: 기본적으로 텍스트 색상, 주요 버튼만 흰색 */
 button, .btn {
   color: var(--text) !important;
 }
@@ -4480,10 +4480,10 @@ button, .btn {
 }
 
 /* ==============================================================
-?勳泊 氚曥姢/氩勴娂/?呺牓彀??旍瀽???奠澕 (Gravity 4彀?旮搓笁 ?橃爼)
+전체 박스/버튼/입력창 디자인 통일 (Gravity 4차 긴급 수정)
 ============================================================== */
 
-/* 1. ??旃措摐 / ?轨厴 氚曥姢 ?奠澕 */
+/* 1. 큰 카드 / 섹션 박스 통일 */
 .card,
 .page-section .card,
 .daily-kkul-card,
@@ -4503,7 +4503,7 @@ button, .btn {
   color: var(--text) !important;
 }
 
-/* 2. 氤挫“ ?堧偞 氚曥姢 ?奠澕 */
+/* 2. 보조 안내 박스 통일 */
 .info-box,
 .notice-box,
 .sync-box,
@@ -4521,7 +4521,7 @@ button, .btn {
   color: var(--text) !important;
 }
 
-/* 氚曥姢 ?措? 甑�秳???奠澕 */
+/* 박스 내부 구분선 통일 */
 .sheet-link-head,
 .summary-box hr,
 .info-box hr,
@@ -4530,7 +4530,7 @@ button, .btn {
   border-color: var(--line) !important;
 }
 
-/* 3. 氤挫“ 氩勴娂 瓿淀喌 ?ろ???*/
+/* 3. 보조 버튼 공통 스타일 */
 .btn.light,
 .copy-btn,
 .copy-btn-inline,
@@ -4568,7 +4568,7 @@ button.secondary:hover {
   transform: translateY(-1px) !important;
 }
 
-/* 4. 欤检殧 氩勴娂 ?奠澕 */
+/* 4. 주요 버튼 통일 */
 .btn.primary,
 .upload-btn,
 #excelUploadBtn {
@@ -4589,7 +4589,7 @@ button.secondary:hover {
   transform: translateY(-1px) !important;
 }
 
-/* 5. ?呺牓彀?/ 瓴€?夓敖 ?奠澕 */
+/* 5. 입력창 / 검색창 통일 */
 input[type="text"],
 input[type="url"],
 input[type="search"],
@@ -4619,7 +4619,7 @@ input::placeholder {
   color: var(--muted) !important;
 }
 
-/* 8. ?濍嫧 氅旊壌 旃措摐 ?奠澕 */
+/* 8. 식단 메뉴 카드 통일 */
 .menu-card-v2 {
   background: var(--card) !important;
   border: 1px solid var(--line) !important;
@@ -4629,7 +4629,7 @@ input::placeholder {
 }
 
 /* ==============================================================
-table-group 氤挫“ 氚曥姢 ?奠澕 於旉? (Gravity 5彀??橃爼)
+table-group 보조 박스 통일 추가 (Gravity 5차 수정)
 ============================================================== */
 .table-group {
   background: var(--card-soft) !important;
