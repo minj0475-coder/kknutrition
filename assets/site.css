@@ -3328,20 +3328,25 @@ nav{
   margin-left:auto;
   width:30px;
   height:30px;
-  display:grid;
-  place-items:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   border:1px solid var(--card-soft);
   border-radius:999px;
   background:var(--card-soft);
   color: var(--heading) !important;
-  font-size:18px;
-  line-height:1;
+  font-size:22px;
+  font-weight: 500;
+  line-height:0;
+  font-family: system-ui, -apple-system, sans-serif;
+  padding-bottom: 2px; /* 폰트 특성상 +가 살짝 쳐지는 현상 보정 */
 }
 .staff-accordion[open] summary{
   border-bottom:1px solid #ece7df;
 }
 .staff-accordion[open] summary:after{
   content:"−";
+  padding-bottom: 0; /* - 문자는 보정 제거 */
 }
 .staff-accordion-body{
   padding:20px 22px 22px;
