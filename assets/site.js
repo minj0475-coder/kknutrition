@@ -794,7 +794,6 @@ async function handleTodayMenuUpload(event) {
 async function setupTodayMenu() {
   const fileInput = document.getElementById("menuExcelInput");
   const search = document.getElementById("menuSearchInput");
-  const clearBtn = document.getElementById("menuClearBtn");
   const tokenSaveBtn = document.getElementById("menuGithubTokenSaveBtn");
   const tokenClearBtn = document.getElementById("menuGithubTokenClearBtn");
   const showAllBtn = document.getElementById("todayMenuShowAllBtn");
@@ -802,7 +801,6 @@ async function setupTodayMenu() {
 
   if (fileInput) fileInput.addEventListener("change", handleTodayMenuUpload);
   if (search) search.addEventListener("input", filterTodayMenuListV2);
-  if (clearBtn) clearBtn.addEventListener("click", () => { if (search) { search.value = ""; filterTodayMenuListV2(); search.focus(); } });
   if (tokenSaveBtn) tokenSaveBtn.addEventListener("click", saveMenuGithubToken);
   if (tokenClearBtn) tokenClearBtn.addEventListener("click", clearMenuGithubToken);
   

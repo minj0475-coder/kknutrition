@@ -2633,17 +2633,17 @@ tbody tr:nth-child(even) td{
   outline:3px solid rgba(126,166,189,.22);
 }
 
-#menuClearBtn{
+.excel-upload-btn{
   flex:0 0 auto;
   min-width:76px;
   padding-left:16px;
   padding-right:16px;
   white-space:nowrap;
   word-break:keep-all;
+  cursor: pointer;
 }
 .menu-upload-row{
-  grid-template-columns:auto minmax(0,1fr);
-  align-items:center;
+  display:block;
 }
 .file-label-v2{
   display:inline-flex;
