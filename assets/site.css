@@ -4686,3 +4686,16 @@ nav a.active, .mobile-nav-list a.active {
     justify-content: center !important;
   }
 }
+
+/* Tablet Responsive Table Fixes: Prevent horizontal scroll by overriding fixed min-width */
+@media (max-width: 1024px) {
+  .schedule-table,
+  .home-daily-card .schedule-table,
+  .annual-table,
+  .clean-annual-table,
+  .today-menu-table,
+  .calendar-grid {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+}
