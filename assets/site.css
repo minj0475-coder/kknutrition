@@ -4663,3 +4663,13 @@ nav a.active, .mobile-nav-list a.active {
   font-weight: 700;
   border-bottom: 2px solid var(--primary);
 }
+
+@media (max-width: 640px) {
+  #new-substitute .staff-accordion summary {
+    white-space: nowrap;
+    font-size: clamp(14px, 4.2vw, 19px);
+    letter-spacing: -0.5px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
