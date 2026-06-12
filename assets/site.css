@@ -3802,8 +3802,6 @@ th,
 .clean-annual-table th {
   background: var(--table-head) !important;
   color: var(--text) !important;
-  border: none !important;
-  border-bottom: 1px solid var(--line) !important;
 }
 td,
 .schedule-table td,
@@ -3811,8 +3809,6 @@ td,
 .simple-table td {
   background: #FFFFFF !important;
   color: var(--text) !important;
-  border: none !important;
-  border-bottom: 1px solid var(--line) !important;
 }
 
 /* 데스크탑 마지막 행 테두리 제거 */
