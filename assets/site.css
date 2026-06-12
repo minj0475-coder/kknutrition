@@ -3410,6 +3410,9 @@ nav{
   overflow:hidden;
   margin-top:0;
   padding-top:0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 .today-menu-no-data{
   margin:0;
