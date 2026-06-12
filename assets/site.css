@@ -4699,3 +4699,8 @@ nav a.active, .mobile-nav-list a.active {
     width: 100% !important;
   }
 }
+
+/* Hide arrow in sheet link card button */
+.sheet-link-card .download-btn::before {
+  display: none !important;
+}
