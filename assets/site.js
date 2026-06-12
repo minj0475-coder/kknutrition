@@ -62,7 +62,7 @@ async function copySubstituteMessage() {
   const textBox = document.getElementById("substituteCopyText");
   const status = document.getElementById("substituteCopyStatus");
   if (!textBox) return;
-  const text = textBox.innerText.trim();
+  const text = textBox.textContent.trim();
   try {
     await navigator.clipboard.writeText(text);
     if (status) status.textContent = "문구를 복사했습니다.";
