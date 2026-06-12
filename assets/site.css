@@ -3515,7 +3515,7 @@ nav{
   }
 }
 
-@media(max-width:900px) {
+@media(max-width:640px) {
   /* Compact Daily & Monthly Schedule Time/Task on Mobile */
   #daily .schedule-table td:nth-child(2)::before,
   #daily .schedule-table td:nth-child(3)::before,
@@ -3851,7 +3851,7 @@ tbody tr:last-child th,
 }
 
 /* 모바일 모드 마지막 요소 테두리 제거 (이중선 방지) */
-@media(max-width: 900px) {
+@media(max-width: 640px) {
   .schedule-table td:last-child,
   .schedule-table th:last-child,
   main .schedule-table.monthly-table td:last-child,
