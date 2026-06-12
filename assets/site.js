@@ -700,7 +700,7 @@ function filterTodayMenuListV2() {
           if (showAllBtn) {
             const wrap = document.getElementById("todayMenuAllSectionWrap");
             if (wrap && wrap.classList.contains("open")) showAllBtn.textContent = "전체 식단 접기";
-            else showAllBtn.textContent = `나머지 식단 전체 보기`;
+            else showAllBtn.textContent = `식단 전체 보기`;
           }
         } else {
           allSection.innerHTML = "";
@@ -815,7 +815,7 @@ async function setupTodayMenu() {
       allSectionWrap.classList.remove("open");
       if (showAllWrapBottom) showAllWrapBottom.style.display = "none";
       const count = allSection.querySelectorAll(".date-section-v2").length;
-      if (showAllBtn) showAllBtn.textContent = `나머지 식단 전체 보기`;
+      if (showAllBtn) showAllBtn.textContent = `식단 전체 보기`;
     } else {
       allSectionWrap.classList.add("open");
       if (showAllWrapBottom) showAllWrapBottom.style.display = "";
