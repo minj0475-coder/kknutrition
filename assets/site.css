@@ -4665,12 +4665,12 @@ nav a.active, .mobile-nav-list a.active {
 }
 
 @media (max-width: 640px) {
-  #new-substitute.staff-accordion-card details.staff-accordion summary {
-    font-size: 14.5px !important;
+  .staff-accordion summary {
+    font-size: clamp(15px, 4.4vw, 18px) !important;
     letter-spacing: -0.5px !important;
     white-space: nowrap !important;
     word-break: keep-all !important;
-    padding: 16px 8px !important;
-    gap: 6px !important;
+    padding: 16px 15px !important;
+    gap: 10px !important;
   }
 }
