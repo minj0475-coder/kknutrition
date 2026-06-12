@@ -2645,6 +2645,10 @@ tbody tr:nth-child(even) td{
   white-space:nowrap;
   word-break:keep-all;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 .menu-upload-row{
   display:block;
@@ -3398,7 +3402,7 @@ nav{
   margin-top: 16px;
   margin-bottom: 16px;
 }
-.today-menu-show-all-btn{min-height:46px;padding:12px 28px;border-radius:999px;background:var(--primary); color: var(--heading) !important;color:var(--text)!important;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:15px;font-weight:700;text-decoration:none;border:none;cursor:pointer;transition:all 0.2s ease;box-shadow:var(--shadow-flat);}
+.today-menu-show-all-btn{min-height:46px;padding:12px 28px;border-radius:999px;background:var(--primary); color: var(--heading) !important;color:var(--text)!important;display:inline-flex;align-items:center;justify-content:center;text-align:center;gap:8px;font-size:15px;font-weight:700;text-decoration:none;border:none;cursor:pointer;transition:all 0.2s ease;box-shadow:var(--shadow-flat);}
 .today-menu-show-all-btn.bottom-btn{margin:0 auto;background:var(--muted);color:var(--text)!important;box-shadow:var(--shadow-flat);}
 .today-menu-all-section-wrap{
   display:grid;
