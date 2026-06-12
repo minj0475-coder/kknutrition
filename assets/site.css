@@ -95,7 +95,7 @@ nav{
 nav a{
   padding:8px 12px;
   border-radius:8px;
-  color:#475467;
+  color:var(--muted);
   font-size:14px;
   font-weight:800;
   border:1px solid transparent;
@@ -146,7 +146,7 @@ h1{
 }
 .subtitle{
   margin:12px 0 0;
-  color:#475467;
+  color:var(--muted);
   font-size:16px;
   max-width:900px;
   font-weight:650;
@@ -220,7 +220,7 @@ h1{
   margin-bottom:4px;
 }
 .quick span{
-  color:#667085;
+  color:var(--muted);
   font-size:13px;
   font-weight:700;
 }
@@ -276,7 +276,7 @@ th,td{
 th:last-child,td:last-child{border-right:none}
 tr:last-child td{border-bottom:none}
 th{
-  background:#f1f5f9;
+  background:var(--card-soft);
   color:var(--text);
   font-weight:900;
   text-align:left;
@@ -421,7 +421,7 @@ td:first-child{
 }
 .download-card span{
   display:block;
-  color:#475467;
+  color:var(--muted);
   font-weight:750;
   word-break:break-all;
 }
@@ -456,7 +456,7 @@ td:first-child{
   overflow:hidden;
 }
 .cal-head{
-  background:#f1f5f9;
+  background:var(--card-soft);
   color:var(--text);
   font-weight:900;
   text-align:center;
@@ -494,7 +494,7 @@ td:first-child{
   margin-top:12px;
 }
 .recipe-head{
-  background:#f1f5f9;
+  background:var(--card-soft);
   padding:14px 16px;
   color:var(--text);
   font-weight:900;
@@ -540,7 +540,7 @@ td:first-child{
 .sub{
   display:block;
   margin-top:4px;
-  color:#667085;
+  color:var(--muted);
   font-weight:650;
 }
 .footer{display:none}
@@ -659,7 +659,7 @@ td:first-child{
 .clean-annual-table .sub{
   display:block;
   margin-top:3px;
-  color:#667085;
+  color:var(--muted);
   font-size:13px;
   font-weight:650;
   line-height:1.45;
@@ -798,7 +798,7 @@ td:first-child{
 }
 .sheet-link-head span{
   display:block;
-  color:#475467;
+  color:var(--muted);
   font-weight:750;
 }
 .sheet-link-label{
@@ -858,7 +858,7 @@ td:first-child{
   border:1px solid var(--line);
   border-bottom:0;
   border-radius:12px 12px 0 0;
-  background:#f1f5f9;
+  background:var(--card-soft);
   color:var(--text);
   font-size:16px;
   font-weight:900;
@@ -888,7 +888,7 @@ td:first-child{
   align-items:center;
   gap:12px;
   padding:13px 16px;
-  background:#f1f5f9;
+  background:var(--card-soft);
   border-bottom:1px solid var(--line);
 }
 .staff-block-head strong{
@@ -897,7 +897,7 @@ td:first-child{
   font-weight:900;
 }
 .staff-block-head span{
-  color:#667085;
+  color:var(--muted);
   font-size:13px;
   font-weight:800;
   white-space:nowrap;
@@ -1150,7 +1150,7 @@ button,
 .mobile-scroll-note{
   display:none;
   margin:-6px 0 12px;
-  color:#667085;
+  color:var(--muted);
   font-size:13px;
   font-weight:750;
 }
@@ -1395,7 +1395,7 @@ button,
     line-height:1.55;
   }
   .annual-task .sub{
-    color:#667085;
+    color:var(--muted);
     font-size:13px;
     font-weight:650;
   }
@@ -1418,7 +1418,7 @@ button,
 }
 .recipe-count{
   margin:8px 0 10px;
-  color:#667085;
+  color:var(--muted);
   font-size:13px;
   font-weight:800;
 }
@@ -1454,7 +1454,7 @@ button,
   justify-content:space-between;
   gap:12px;
   padding:16px;
-  background:#f1f5f9;
+  background:var(--card-soft);
   border-bottom:1px solid var(--line);
 }
 .recipe-editor-head h3{
@@ -1531,7 +1531,7 @@ button,
   border:1px dashed var(--line);
   border-radius:10px;
   background:#fff;
-  color:#667085;
+  color:var(--muted);
   font-weight:750;
   line-height:1.5;
 }
@@ -1595,7 +1595,7 @@ button,
 }
 .today-menu-summary span{
   display:block;
-  color:#475467;
+  color:var(--muted);
   font-weight:750;
 }
 .today-menu-results{
@@ -1665,7 +1665,7 @@ button,
   font-weight:950;
 }
 .today-menu-item-head span{
-  color:#667085;
+  color:var(--muted);
   font-size:13px;
   font-weight:850;
 }
@@ -1729,7 +1729,7 @@ button,
   border:1px dashed var(--card-soft);
   border-radius:12px;
   background:#fff;
-  color:#475467;
+  color:var(--muted);
   font-weight:800;
 }
 @media(max-width:900px){
