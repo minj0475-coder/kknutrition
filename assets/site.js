@@ -654,7 +654,8 @@ function filterTodayMenuListV2() {
         <details class="materials-detail"><summary>사용재료 보기</summary><pre>${menuEsc(item.materials || "등록된 사용재료 없음")}</pre></details>
         <pre class="plain-method${item.muted ? " muted" : ""}">${menuEsc(item.method || "등록된 조리방법 없음")}</pre>
       </article>`).join("");
-    const h2Title = customTitleLabel || menuEsc(section.date);
+    const badgeHtml = customTitleLabel ? `<span class="date-badge">${menuEsc(customTitleLabel)}</span>` : "";
+    const h2Title = `${badgeHtml}${menuEsc(section.date)}`;
     return `
       <section class="date-section-v2">
         <div class="date-head-v2"><div><h2>${h2Title}</h2>${meal}</div></div>
@@ -686,8 +687,8 @@ function filterTodayMenuListV2() {
         let initialHtml = "";
         initialData.forEach((section, idx) => {
           let label = null;
-          if (section.key === todayKey) label = `오늘 식단 (${section.date})`;
-          else if (idx === 1 && initialData[0].key === todayKey) label = `내일 식단 (${section.date})`;
+          if (section.key === todayKey) label = `오늘 식단`;
+          else if (idx === 1 && initialData[0].key === todayKey) label = `내일 식단`;
           initialHtml += renderSectionHTML(section, label);
         });
         todaySection.innerHTML = initialHtml;
