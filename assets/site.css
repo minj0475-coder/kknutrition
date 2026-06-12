@@ -4666,11 +4666,21 @@ nav a.active, .mobile-nav-list a.active {
 
 @media (max-width: 640px) {
   .staff-accordion summary {
-    font-size: 17px !important;
+    font-size: 16px !important;
     letter-spacing: -0.5px !important;
     white-space: nowrap !important;
     word-break: keep-all !important;
-    padding: 16px 15px !important;
-    gap: 10px !important;
+    padding: 16px 12px !important;
+    gap: 8px !important;
+  }
+  .staff-accordion summary .num {
+    flex-shrink: 0 !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+    height: 30px !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 }
