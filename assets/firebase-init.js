@@ -135,7 +135,18 @@ function renderMemoList(containerId, isHome) {
     };
 
     textarea.onkeydown = (e) => {
-      if (e.key === "Enter" && !e.shiftKey && isHome) {
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        textarea.value = textarea.value.substring(0, start) + "\n" + textarea.value.substring(end);
+        textarea.selectionStart = textarea.selectionEnd = start + 1;
+        
+        memos[index].text = textarea.value;
+        resizeTextarea();
+        clearTimeout(textarea._saveTimeout);
+        textarea._saveTimeout = setTimeout(saveMemos, 500);
+      } else if (e.key === "Enter" && !e.shiftKey && isHome) {
         e.preventDefault();
         textarea.blur();
       } else if (e.key === "Enter" && e.shiftKey) {
