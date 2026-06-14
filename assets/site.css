@@ -4909,9 +4909,12 @@ nav a.active, .mobile-nav-list a.active {
   }
   .home-grid-left .daily-kkul-image-wrap img,
   .daily-kkul-image-wrap img {
-    width: 80px !important;
+    width: 65% !important;
+    max-width: 260px !important;
+    min-width: 180px !important;
     height: auto !important;
-    margin-top: 12px;
+    margin-top: 24px !important;
+    filter: drop-shadow(0 12px 24px rgba(242, 139, 156, 0.25));
   }
 }
 
@@ -5179,3 +5182,5 @@ nav a.active {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }
+
+
