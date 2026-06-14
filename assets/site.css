@@ -4816,7 +4816,9 @@ nav a.active, .mobile-nav-list a.active {
 .memo-hint {
   font-size: 13px;
   color: var(--primary);
-  margin-top: 32px;
+  margin-top: 16px;
+  word-break: keep-all;
+  white-space: nowrap;
   font-weight: 600;
   opacity: 0.8;
   text-align: left;
