@@ -4833,22 +4833,30 @@ nav a.active, .mobile-nav-list a.active {
 }
 
 .memo-add-btn {
-  background: transparent;
-  border: 1px dashed var(--primary-light);
-  color: var(--primary);
+  display: none; /* Hide on PC */
+  background: var(--bg);
+  border: 1px solid var(--line);
+  color: var(--text);
   width: 100%;
-  padding: 10px;
-  border-radius: 6px;
+  padding: 12px;
+  border-radius: 12px;
   margin-top: 16px;
   cursor: pointer;
   font-family: inherit;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   transition: all 0.2s;
 }
 .memo-add-btn:hover {
-  background: rgba(255,182,193,0.1);
+  background: #fff;
   border-color: var(--primary);
+  color: var(--primary);
+}
+
+@media(max-width: 1024px) {
+  .memo-add-btn {
+    display: block; /* Show on Tablet & Mobile */
+  }
 }
 
 .home-grid-left .daily-kkul-card {
@@ -4871,16 +4879,19 @@ nav a.active, .mobile-nav-list a.active {
 /* === Mobile Header Single Line Override === */
 @media(max-width: 640px) {
   .top-inner {
+    display: flex !important;
     flex-direction: row !important;
+    flex-wrap: nowrap !important;
     align-items: center !important;
     justify-content: space-between !important;
-    padding: 8px 6px !important;
-    gap: 4px !important;
+    padding: 8px 12px !important;
+    gap: 12px !important;
   }
   .brand {
     margin: 0 !important;
     padding: 0 !important;
     flex: 0 0 auto !important;
+    justify-content: flex-start !important;
   }
   nav {
     display: flex !important;
@@ -4888,9 +4899,10 @@ nav a.active, .mobile-nav-list a.active {
     flex-wrap: nowrap !important;
     justify-content: space-between !important;
     gap: 2px !important;
-    overflow: hidden !important; /* No horizontal scroll */
-    width: 100% !important;
-    flex: 1 1 auto !important;
+    overflow-x: auto !important; /* Allow scroll if needed, but we try to fit */
+    overflow-y: hidden !important;
+    width: auto !important;
+    flex: 1 1 0% !important;
   }
   nav a {
     font-size: 11px !important;
