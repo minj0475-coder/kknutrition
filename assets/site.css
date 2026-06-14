@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   /* 🎨 세련된 크림 화이트 & 코랄 팔레트 */
   --bg: #F8F6F1;           /* 맑고 부드러운 크림 화이트 (전체 배경) */
   --card: #FFFFFF;         /* 순백색 (기본 카드 배경 - 대비감 형성) */
@@ -5055,7 +5055,7 @@ nav a.active, .mobile-nav-list a.active {
   justify-content: center;
 }
 
-@media(max-width: 1024px) {
+@media(max-width: 1024px), (display-mode: standalone) {
   .desktop-nav {
     display: none !important;
   }
@@ -5063,3 +5063,4 @@ nav a.active, .mobile-nav-list a.active {
     display: flex !important;
   }
 }
+
