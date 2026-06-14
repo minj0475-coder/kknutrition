@@ -4867,3 +4867,37 @@ nav a.active, .mobile-nav-list a.active {
   display: flex !important;
   justify-content: center !important;
 }
+
+/* === Mobile Header Single Line Override === */
+@media(max-width: 640px) {
+  .top-inner {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 8px 6px !important;
+    gap: 4px !important;
+  }
+  .brand {
+    margin: 0 !important;
+    padding: 0 !important;
+    flex: 0 0 auto !important;
+  }
+  nav {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    gap: 2px !important;
+    overflow: hidden !important; /* No horizontal scroll */
+    width: 100% !important;
+    flex: 1 1 auto !important;
+  }
+  nav a {
+    font-size: 11px !important;
+    padding: 6px 4px !important;
+    white-space: nowrap !important;
+    letter-spacing: -0.5px !important;
+    flex: 1 1 auto !important;
+    text-align: center !important;
+  }
+}
