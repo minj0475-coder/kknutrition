@@ -4904,6 +4904,12 @@ nav a.active, .mobile-nav-list a.active {
   .home-grid-left .daily-kkul-copy .daily-kkul-message {
     font-size: 15px !important;
   }
+  .home-grid-left .daily-kkul-image-wrap img,
+  .daily-kkul-image-wrap img {
+    width: 80px !important;
+    height: auto !important;
+    margin-top: 12px;
+  }
 }
 
 /* === Mobile Header Single Line Override === */
