@@ -5072,3 +5072,11 @@ nav a.active, .mobile-nav-list a.active {
 }
 
 
+
+
+/* === Align Desktop Nav to Right === */
+nav.desktop-nav {
+  position: static !important;
+  transform: none !important;
+  margin-left: auto; /* pushes it to the right */
+}
