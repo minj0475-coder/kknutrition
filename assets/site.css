@@ -5055,7 +5055,7 @@ nav a.active, .mobile-nav-list a.active {
   justify-content: center;
 }
 
-@media(max-width: 1024px), (display-mode: standalone) {
+@media(max-width: 1024px) {
   .desktop-nav {
     display: none !important;
   }
@@ -5080,4 +5080,5 @@ nav.desktop-nav {
   transform: none !important;
   margin-left: auto; /* pushes it to the right */
 }
+
 
