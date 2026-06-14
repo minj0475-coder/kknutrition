@@ -179,15 +179,38 @@ function init() {
       if (snapshot.exists()) {
         const data = snapshot.data();
         if (data.items) {
-          // 동일한 데이터면 무시 (로컬에서 방금 저장한 데이터가 돌아온 경우)
           if (JSON.stringify(memos) === JSON.stringify(data.items)) return;
           
-          // 사용자가 현재 입력 중(포커스 상태)이면 업데이트를 미룸 (포커스 잃음 방지)
-          if (document.activeElement && document.activeElement.classList.contains('memo-input')) return;
+          let focusedIndex = -1;
+          let selectionStart = 0;
+          let localFocusedText = "";
+
+          // 현재 커서가 있는 텍스트박스 상태 기억하기
+          if (document.activeElement && document.activeElement.classList.contains('memo-input')) {
+            const textareas = Array.from(document.querySelectorAll('.memo-input'));
+            focusedIndex = textareas.indexOf(document.activeElement);
+            selectionStart = document.activeElement.selectionStart;
+            localFocusedText = document.activeElement.value;
+          }
 
           memos = data.items;
+
+          // 타이핑 중이던 텍스트는 서버 데이터 대신 방금 친 로컬 텍스트로 유지 (글씨 날아감 방지)
+          if (focusedIndex !== -1 && memos[focusedIndex]) {
+            memos[focusedIndex].text = localFocusedText;
+          }
+
           saveLocalMemos();
           renderMemos();
+
+          // 커서 깜빡임 복원하기
+          if (focusedIndex !== -1) {
+            const newTextareas = document.querySelectorAll('.memo-input');
+            if (newTextareas[focusedIndex]) {
+              newTextareas[focusedIndex].focus();
+              newTextareas[focusedIndex].selectionStart = selectionStart;
+            }
+          }
         }
       } else {
         // Init firestore with default if not exists
