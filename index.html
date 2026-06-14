@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
@@ -10,7 +10,7 @@
 <meta property="og:image" content="https://minj0475-coder.github.io/kknutrition/assets/og-image.png?v=2">
 <meta property="og:url" content="https://minj0475-coder.github.io/kknutrition/">
 <title>급식 업무 포털</title>
-<link rel="stylesheet" href="assets/site.css?v=20260614_141">
+<link rel="stylesheet" href="assets/site.css?v=20260614_200">
 <link rel="manifest" href="manifest.json?v=2">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/app-icon-192.png?v=2">
 <link rel="apple-touch-icon" href="assets/app-icon-180.png?v=2">
@@ -60,8 +60,11 @@
 <div class="home-grid">
   <div class="home-grid-left">
     <section class="card memo-card">
-      <div class="memo-head">
-        <h2 class="section-title"><span class="num">오늘의</span>메모장</h2>
+      <div class="memo-head" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+        <h2 class="section-title" style="margin-bottom: 0;">메모장</h2>
+        <button type="button" id="openMemoModalBtn" class="memo-full-btn" aria-label="메모장 전체보기">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+        </button>
       </div>
       <div class="memo-list" id="memoList">
         <!-- JS renders checkboxes here -->
@@ -793,8 +796,25 @@
   </details>
 </section></main></section>
 <!-- Firebase SDK -->
-<script type="module" src="assets/firebase-init.js?v=20260614_111"></script>
-<script type="module" src="assets/firebase-init.js"></script>
+<script type="module" src="assets/firebase-init.js?v=20260614_200"></script>
+<!-- Memo Full View Modal -->
+<div id="memoModalOverlay" class="memo-modal-overlay" style="display: none;">
+  <div class="memo-modal">
+    <div class="memo-modal-header">
+      <h2>전체 메모장</h2>
+      <button type="button" id="closeMemoModalBtn" aria-label="닫기">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="memo-modal-body">
+      <div class="memo-list" id="memoModalList">
+        <!-- JS renders full memos here -->
+      </div>
+      <p class="memo-hint" style="margin-top:16px;">엔터로 줄바꿈 / Shift + Enter로 새 항목</p>
+    </div>
+  </div>
+</div>
+
 <script src="assets/xlsx.full.min.js"></script>
 <script src="assets/site.js?v=20260614_139"></script>
 <script>

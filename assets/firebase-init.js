@@ -60,172 +60,231 @@ async function saveMemos() {
   }
 }
 
-function renderMemos() {
-  const memoList = document.getElementById("memoList");
-  if (!memoList) return;
-  memoList.innerHTML = "";
+function renderMemoList(containerId, isHome) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
 
-  memos.forEach((memo, index) => {
-    const itemDiv = document.createElement("div");
-    itemDiv.className = "memo-item";
+  const displayMemos = isHome ? memos.slice(0, 3) : memos;
 
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.className = "memo-checkbox";
-    checkbox.checked = memo.checked;
-    checkbox.addEventListener("change", () => {
-      memos[index].checked = checkbox.checked;
-      saveMemos();
-    });
+  // 1. Remove extra items
+  while (container.children.length > displayMemos.length) {
+    const last = container.lastElementChild;
+    if (last) last.remove();
+  }
 
-    const textarea = document.createElement("textarea");
-    textarea.className = "memo-input";
-    textarea.value = memo.text;
-    textarea.rows = 1;
-    
+  // 2. Update or Create items
+  displayMemos.forEach((memo, index) => {
+    let itemDiv = container.children[index];
+    let isNew = false;
+    if (!itemDiv || itemDiv.classList.contains('memo-add-btn')) {
+      if (itemDiv && itemDiv.classList.contains('memo-add-btn')) {
+        itemDiv.remove();
+      }
+      isNew = true;
+      itemDiv = document.createElement("div");
+      itemDiv.className = "memo-item";
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.className = "memo-checkbox";
+
+      const textarea = document.createElement("textarea");
+      textarea.className = "memo-input";
+      textarea.rows = 1;
+
+      itemDiv.appendChild(checkbox);
+      itemDiv.appendChild(textarea);
+      container.insertBefore(itemDiv, container.children[index] || null);
+    }
+
+    const checkbox = itemDiv.querySelector(".memo-checkbox");
+    const textarea = itemDiv.querySelector(".memo-input");
+
+    if (checkbox.checked !== memo.checked) checkbox.checked = memo.checked;
+
+    // Only update textarea value if it's NOT currently focused, to avoid cursor jumping
+    // Or if this is a newly created textarea
+    if (isNew || (textarea.value !== memo.text && document.activeElement !== textarea)) {
+      textarea.value = memo.text;
+    }
+
     // Auto-resize
     const resizeTextarea = () => {
-      textarea.style.height = 'auto';
-      textarea.style.height = textarea.scrollHeight + 'px';
-    };
-    
-    let saveTimeout = null;
-    textarea.addEventListener("input", () => {
-      if (textarea.value === "" && memos.length > 1) {
-        // Remove item if empty
-        memos.splice(index, 1);
-        saveMemos();
-        renderMemos();
-        // focus previous item if exists
-        if (index > 0) {
-          setTimeout(() => {
-            const prevTextarea = memoList.children[index - 1]?.querySelector("textarea");
-            if (prevTextarea) {
-              prevTextarea.focus();
-              prevTextarea.selectionStart = prevTextarea.value.length;
-            }
-          }, 10);
-        }
+      if (!isHome) {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
       } else {
-        memos[index].text = textarea.value;
-        resizeTextarea();
-        
-        // Debounce save to prevent rate limits and race conditions
-        clearTimeout(saveTimeout);
-        saveTimeout = setTimeout(() => {
-          saveMemos();
-        }, 500);
+        textarea.style.height = ''; // Let css handle max-height
       }
-    });
+    };
 
-    textarea.addEventListener("keydown", (e) => {
+    // Events
+    checkbox.onchange = () => {
+      memos[index].checked = checkbox.checked;
+      saveMemos();
+    };
+
+    textarea.oninput = () => {
+      memos[index].text = textarea.value;
+      resizeTextarea();
+      
+      clearTimeout(textarea._saveTimeout);
+      textarea._saveTimeout = setTimeout(() => {
+        saveMemos();
+      }, 500);
+    };
+
+    textarea.onkeydown = (e) => {
       if (e.key === "Enter" && e.shiftKey) {
         e.preventDefault();
-        // Add new item below
+        if (isHome && memos.length >= 3) {
+            openMemoModal();
+            return;
+        }
         memos.splice(index + 1, 0, { text: "", checked: false });
         saveMemos();
-        renderMemos();
-        // focus new item
+        updateAllMemosDOM();
         setTimeout(() => {
-          const nextTextarea = memoList.children[index + 1].querySelector("textarea");
-          if (nextTextarea) nextTextarea.focus();
+          const nextTextarea = container.children[index + 1]?.querySelector("textarea");
+          if (nextTextarea) nextTextarea.focus({ preventScroll: true });
         }, 10);
       } else if (e.key === "Backspace" && textarea.value === "" && memos.length > 1) {
         e.preventDefault();
-        // Remove item if empty and backspace pressed
         memos.splice(index, 1);
         saveMemos();
-        renderMemos();
-        // focus previous item
+        updateAllMemosDOM();
         if (index > 0) {
           setTimeout(() => {
-            const prevTextarea = memoList.children[index - 1].querySelector("textarea");
+            const prevTextarea = container.children[index - 1]?.querySelector("textarea");
             if (prevTextarea) {
-              prevTextarea.focus();
+              prevTextarea.focus({ preventScroll: true });
               prevTextarea.selectionStart = prevTextarea.value.length;
             }
           }, 10);
         }
       }
-    });
+    };
 
-    itemDiv.appendChild(checkbox);
-    itemDiv.appendChild(textarea);
-    memoList.appendChild(itemDiv);
-
-    // Initial resize
     setTimeout(resizeTextarea, 0);
   });
 
-  const addBtn = document.createElement("button");
-  addBtn.className = "memo-add-btn";
-  addBtn.textContent = "+ 항목 추가";
-  addBtn.type = "button";
-  addBtn.addEventListener("click", () => {
-    memos.push({ text: "", checked: false });
-    saveMemos();
-    renderMemos();
+  // 3. Add button
+  let addBtn = container.querySelector('.memo-add-btn');
+  if (addBtn) addBtn.remove();
+  
+  if (isHome) {
+    if (memos.length < 3) {
+      const newAddBtn = document.createElement("button");
+      newAddBtn.className = "memo-add-btn";
+      newAddBtn.textContent = "+ 항목 추가";
+      newAddBtn.type = "button";
+      newAddBtn.onclick = () => {
+        memos.push({ text: "", checked: false });
+        saveMemos();
+        updateAllMemosDOM();
+        setTimeout(() => {
+          const textareas = container.querySelectorAll("textarea");
+          if (textareas.length > 0) textareas[textareas.length - 1].focus({ preventScroll: true });
+        }, 10);
+      };
+      container.appendChild(newAddBtn);
+    } else {
+      const moreBtn = document.createElement("button");
+      moreBtn.className = "memo-add-btn";
+      moreBtn.textContent = "전체보기에서 추가하기";
+      moreBtn.type = "button";
+      moreBtn.onclick = openMemoModal;
+      container.appendChild(moreBtn);
+    }
+  } else {
+    const newAddBtn = document.createElement("button");
+    newAddBtn.className = "memo-add-btn";
+    newAddBtn.textContent = "+ 항목 추가";
+    newAddBtn.type = "button";
+    newAddBtn.onclick = () => {
+      memos.push({ text: "", checked: false });
+      saveMemos();
+      updateAllMemosDOM();
+      setTimeout(() => {
+        const textareas = container.querySelectorAll("textarea");
+        if (textareas.length > 0) textareas[textareas.length - 1].focus({ preventScroll: true });
+      }, 10);
+    };
+    container.appendChild(newAddBtn);
+  }
+}
+
+function updateAllMemosDOM() {
+  renderMemoList("memoList", true);
+  const overlay = document.getElementById("memoModalOverlay");
+  if (overlay && overlay.classList.contains("active")) {
+    renderMemoList("memoModalList", false);
+  }
+}
+
+function openMemoModal() {
+  const overlay = document.getElementById("memoModalOverlay");
+  if (overlay) {
+    overlay.style.display = "flex";
+    // For transition to work, wait a frame
+    requestAnimationFrame(() => {
+      overlay.classList.add("active");
+    });
+    renderMemoList("memoModalList", false);
+  }
+}
+
+function closeMemoModal() {
+  const overlay = document.getElementById("memoModalOverlay");
+  if (overlay) {
+    overlay.classList.remove("active");
     setTimeout(() => {
-      const textareas = memoList.querySelectorAll("textarea");
-      if (textareas.length > 0) textareas[textareas.length - 1].focus();
-    }, 10);
-  });
-  memoList.appendChild(addBtn);
+      overlay.style.display = "none";
+    }, 200); // match css transition
+  }
+  updateAllMemosDOM();
 }
 
 function init() {
+  // Setup modal buttons
+  const openBtn = document.getElementById("openMemoModalBtn");
+  if (openBtn) openBtn.addEventListener("click", openMemoModal);
+  
+  const closeBtn = document.getElementById("closeMemoModalBtn");
+  if (closeBtn) closeBtn.addEventListener("click", closeMemoModal);
+  
+  const overlay = document.getElementById("memoModalOverlay");
+  if (overlay) {
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) closeMemoModal();
+    });
+  }
+
   if (db) {
     onSnapshot(doc(db, "memos", MEMO_DOC_ID), (snapshot) => {
       if (snapshot.exists()) {
         const data = snapshot.data();
         if (data.items) {
+          // If totally equal, skip
           if (JSON.stringify(memos) === JSON.stringify(data.items)) return;
           
-          let focusedIndex = -1;
-          let selectionStart = 0;
-          let localFocusedText = "";
-
-          // 현재 커서가 있는 텍스트박스 상태 기억하기
-          if (document.activeElement && document.activeElement.classList.contains('memo-input')) {
-            const textareas = Array.from(document.querySelectorAll('.memo-input'));
-            focusedIndex = textareas.indexOf(document.activeElement);
-            selectionStart = document.activeElement.selectionStart;
-            localFocusedText = document.activeElement.value;
-          }
-
           memos = data.items;
-
-          // 타이핑 중이던 텍스트는 서버 데이터 대신 방금 친 로컬 텍스트로 유지 (글씨 날아감 방지)
-          if (focusedIndex !== -1 && memos[focusedIndex]) {
-            memos[focusedIndex].text = localFocusedText;
-          }
-
           saveLocalMemos();
-          renderMemos();
-
-          // 커서 깜빡임 복원하기
-          if (focusedIndex !== -1) {
-            const newTextareas = document.querySelectorAll('.memo-input');
-            if (newTextareas[focusedIndex]) {
-              newTextareas[focusedIndex].focus();
-              newTextareas[focusedIndex].selectionStart = selectionStart;
-            }
-          }
+          updateAllMemosDOM();
         }
       } else {
-        // Init firestore with default if not exists
         loadLocalMemos();
         saveMemos();
-        renderMemos();
+        updateAllMemosDOM();
       }
     }, (error) => {
       console.error("Firestore 동기화 오류:", error);
       loadLocalMemos();
-      renderMemos();
+      updateAllMemosDOM();
     });
   } else {
     loadLocalMemos();
-    renderMemos();
+    updateAllMemosDOM();
   }
 }
 

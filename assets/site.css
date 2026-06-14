@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   /* 🎨 세련된 크림 화이트 & 코랄 팔레트 */
   --bg: #F8F6F1;           /* 맑고 부드러운 크림 화이트 (전체 배경) */
   --card: #FFFFFF;         /* 순백색 (기본 카드 배경 - 대비감 형성) */
@@ -5320,3 +5320,17 @@ nav a.active {
     height: 38px !important;
   }
 }
+
+/* Memo Modal & Home Limits */
+.memo-full-btn { background: transparent; border: none; padding: 10px; margin: -10px; cursor: pointer; color: var(--primary-dark); display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s; }
+.memo-full-btn:hover { background: rgba(0,0,0,0.05); }
+#memoList .memo-input { max-height: 28px !important; overflow: hidden !important; white-space: nowrap; text-overflow: ellipsis; line-height: 1.5; padding-right: 2px !important; resize: none !important; }
+.memo-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
+.memo-modal-overlay.active { opacity: 1; pointer-events: auto; }
+.memo-modal { background: #fff; width: 90%; max-width: 500px; max-height: 85vh; border-radius: 20px; display: flex; flex-direction: column; box-shadow: 0 10px 40px rgba(0,0,0,0.2); overflow: hidden; transform: scale(0.95); transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.memo-modal-overlay.active .memo-modal { transform: scale(1); }
+.memo-modal-header { padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); background: var(--card-soft); }
+.memo-modal-header h2 { margin: 0; font-size: 20px; color: var(--heading); font-weight: 800; }
+.memo-modal-header button { background: transparent; border: none; padding: 8px; margin: -8px; cursor: pointer; color: var(--text); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+.memo-modal-header button:hover { background: rgba(0,0,0,0.05); }
+.memo-modal-body { padding: 20px 24px; overflow-y: auto; flex: 1; }
