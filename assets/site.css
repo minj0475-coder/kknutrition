@@ -4850,3 +4850,20 @@ nav a.active, .mobile-nav-list a.active {
   background: rgba(255,182,193,0.1);
   border-color: var(--primary);
 }
+
+.home-grid-left .daily-kkul-card {
+  flex-direction: column !important;
+  align-items: center !important;
+  text-align: center !important;
+  padding: 32px 24px !important;
+  gap: 16px !important;
+}
+.home-grid-left .daily-kkul-copy {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+.home-grid-left .daily-kkul-image-wrap {
+  display: flex !important;
+  justify-content: center !important;
+}
