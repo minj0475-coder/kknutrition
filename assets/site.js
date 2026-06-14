@@ -5,17 +5,7 @@
 const DEFAULT_SHEET_LINK = "https://docs.google.com/spreadsheets/d/1qlBNjqRtXsD-R8zTbEGudD4LLcNjL1VmM_J0MIOVVEE/edit?usp=sharing";
 const SHEET_LINK_KEY = "kkulkkoori_service_sheet_link";
 const DAILY_KKUL_KEY = "kkulkkoori_daily_character";
-const DAILY_KKUL_IMAGES = [
-  "assets/daily-kkul-chart.png",
-  "assets/daily-kkul-meal.png",
-  "assets/daily-kkul-heart.png",
-  "assets/daily-kkul-question.png",
-  "assets/daily-kkul-loupe.png",
-  "assets/daily-kkul-cheer.png",
-  "assets/daily-kkul-worry.png",
-  "assets/daily-kkul-sparkle.png",
-  "assets/daily-kkul-think.png"
-];
+const DAILY_KKUL_IMAGES = Array.from({ length: 59 }, (_, i) => `assets/images/kkul/kkul_${i + 1}.png`);
 const DAILY_KKUL_MESSAGES = [
   "오늘도 맛있는 급식을 준비해 볼까요?",
   "오늘 일정도 미리 확인해 볼까요?",
@@ -1029,4 +1019,5 @@ document.addEventListener('DOMContentLoaded', () => {
     link.addEventListener('click', closeDrawer);
   });
 });
+
 
