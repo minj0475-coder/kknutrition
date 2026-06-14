@@ -135,7 +135,10 @@ function renderMemoList(containerId, isHome) {
     };
 
     textarea.onkeydown = (e) => {
-      if (e.key === "Enter" && e.shiftKey) {
+      if (e.key === "Enter" && !e.shiftKey && isHome) {
+        e.preventDefault();
+        textarea.blur();
+      } else if (e.key === "Enter" && e.shiftKey) {
         e.preventDefault();
         if (isHome && memos.length >= 3) {
             openMemoModal();
