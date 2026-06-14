@@ -5062,5 +5062,13 @@ nav a.active, .mobile-nav-list a.active {
   .mobile-menu-btn {
     display: flex !important;
   }
+  .top-inner {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
 }
+
 
