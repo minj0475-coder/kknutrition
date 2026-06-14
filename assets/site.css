@@ -4718,7 +4718,7 @@ nav a.active, .mobile-nav-list a.active {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-top: 12px;
+  margin-top: 0;
 }
 .home-grid-left, .home-grid-right {
   display: flex;
@@ -5082,4 +5082,10 @@ nav.desktop-nav {
 }
 
 
+
+
+/* === Override massive wrap gap for home === */
+#home .wrap {
+  gap: 12px !important;
+}
 
