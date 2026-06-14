@@ -1001,3 +1001,31 @@ function updateTabs() {
 }
 window.addEventListener('hashchange', updateTabs);
 document.addEventListener('DOMContentLoaded', updateTabs);
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const mobileDrawer = document.getElementById('mobileDrawer');
+  const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+  const drawerLinks = mobileDrawer ? mobileDrawer.querySelectorAll('.drawer-nav a') : [];
+
+  function openDrawer() {
+    if(mobileDrawer) mobileDrawer.classList.add('active');
+  }
+
+  function closeDrawer() {
+    if(mobileDrawer) mobileDrawer.classList.remove('active');
+  }
+
+  if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', openDrawer);
+  }
+
+  if (closeDrawerBtn) {
+    closeDrawerBtn.addEventListener('click', closeDrawer);
+  }
+
+  drawerLinks.forEach(link => {
+    link.addEventListener('click', closeDrawer);
+  });
+});
