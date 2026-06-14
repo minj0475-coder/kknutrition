@@ -135,46 +135,62 @@ function renderMemoList(containerId, isHome) {
     };
 
     textarea.onkeydown = (e) => {
-      if (e.key === "ArrowDown") {
-        e.preventDefault();
-        const start = textarea.selectionStart;
-        const end = textarea.selectionEnd;
-        textarea.value = textarea.value.substring(0, start) + "\n" + textarea.value.substring(end);
-        textarea.selectionStart = textarea.selectionEnd = start + 1;
-        
-        memos[index].text = textarea.value;
-        resizeTextarea();
-        clearTimeout(textarea._saveTimeout);
-        textarea._saveTimeout = setTimeout(saveMemos, 500);
-      } else if (e.key === "Enter" && !e.shiftKey && isHome) {
-        e.preventDefault();
-        textarea.blur();
-      } else if (e.key === "Enter" && e.shiftKey) {
-        e.preventDefault();
-        if (isHome && memos.length >= 3) {
-            openMemoModal();
-            return;
-        }
-        memos.splice(index + 1, 0, { text: "", checked: false });
-        saveMemos();
-        updateAllMemosDOM();
-        setTimeout(() => {
-          const nextTextarea = container.children[index + 1]?.querySelector("textarea");
-          if (nextTextarea) nextTextarea.focus({ preventScroll: true });
-        }, 10);
-      } else if (e.key === "Backspace" && textarea.value === "" && memos.length > 1) {
-        e.preventDefault();
-        memos.splice(index, 1);
-        saveMemos();
-        updateAllMemosDOM();
-        if (index > 0) {
+      if (isHome) {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          textarea.blur();
+        } else if (e.key === "Enter" && e.shiftKey) {
+          e.preventDefault();
+          if (memos.length >= 3) {
+              openMemoModal();
+              return;
+          }
+          memos.splice(index + 1, 0, { text: "", checked: false });
+          saveMemos();
+          updateAllMemosDOM();
           setTimeout(() => {
-            const prevTextarea = container.children[index - 1]?.querySelector("textarea");
-            if (prevTextarea) {
-              prevTextarea.focus({ preventScroll: true });
-              prevTextarea.selectionStart = prevTextarea.value.length;
-            }
+            const nextTextarea = container.children[index + 1]?.querySelector("textarea");
+            if (nextTextarea) nextTextarea.focus({ preventScroll: true });
           }, 10);
+        } else if (e.key === "Backspace" && textarea.value === "" && memos.length > 1) {
+          e.preventDefault();
+          memos.splice(index, 1);
+          saveMemos();
+          updateAllMemosDOM();
+          if (index > 0) {
+            setTimeout(() => {
+              const prevTextarea = container.children[index - 1]?.querySelector("textarea");
+              if (prevTextarea) {
+                prevTextarea.focus({ preventScroll: true });
+                prevTextarea.selectionStart = prevTextarea.value.length;
+              }
+            }, 10);
+          }
+        }
+      } else {
+        if (e.key === "ArrowDown" || (e.key === "Enter" && e.shiftKey)) {
+          e.preventDefault();
+          memos.splice(index + 1, 0, { text: "", checked: false });
+          saveMemos();
+          updateAllMemosDOM();
+          setTimeout(() => {
+            const nextTextarea = container.children[index + 1]?.querySelector("textarea");
+            if (nextTextarea) nextTextarea.focus({ preventScroll: true });
+          }, 10);
+        } else if (e.key === "Backspace" && textarea.value === "" && memos.length > 1) {
+          e.preventDefault();
+          memos.splice(index, 1);
+          saveMemos();
+          updateAllMemosDOM();
+          if (index > 0) {
+            setTimeout(() => {
+              const prevTextarea = container.children[index - 1]?.querySelector("textarea");
+              if (prevTextarea) {
+                prevTextarea.focus({ preventScroll: true });
+                prevTextarea.selectionStart = prevTextarea.value.length;
+              }
+            }, 10);
+          }
         }
       }
     };
