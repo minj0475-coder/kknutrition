@@ -5089,3 +5089,41 @@ nav.desktop-nav {
   gap: 12px !important;
 }
 
+
+
+/* === Premium Button Redesign === */
+nav a {
+  padding: 10px 20px !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: var(--text) !important;
+  background: var(--card) !important;
+  border: 1.5px solid var(--line) !important;
+  border-radius: 999px !important;
+  text-decoration: none !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.02) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+nav a:hover {
+  background: var(--primary-soft) !important;
+  color: var(--primary-dark) !important;
+  border-color: var(--primary-soft) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(242, 139, 156, 0.15) !important;
+}
+
+nav a.active {
+  background: var(--primary) !important;
+  color: #ffffff !important;
+  border-color: var(--primary) !important;
+  box-shadow: 0 4px 12px rgba(242, 139, 156, 0.3) !important;
+  transform: translateY(-1px) !important;
+}
+
+.desktop-nav {
+  gap: 12px !important; /* Elegant spacing */
+}
