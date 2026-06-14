@@ -4831,3 +4831,22 @@ nav a.active, .mobile-nav-list a.active {
   .memo-hint { display: none !important; }
   .memo-card { padding: 24px 20px; }
 }
+
+.memo-add-btn {
+  background: transparent;
+  border: 1px dashed var(--primary-light);
+  color: var(--primary);
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  margin-top: 16px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.memo-add-btn:hover {
+  background: rgba(255,182,193,0.1);
+  border-color: var(--primary);
+}

@@ -133,6 +133,21 @@ function renderMemos() {
     // Initial resize
     setTimeout(resizeTextarea, 0);
   });
+
+  const addBtn = document.createElement("button");
+  addBtn.className = "memo-add-btn";
+  addBtn.textContent = "+ 항목 추가";
+  addBtn.type = "button";
+  addBtn.addEventListener("click", () => {
+    memos.push({ text: "", checked: false });
+    saveMemos();
+    renderMemos();
+    setTimeout(() => {
+      const textareas = memoList.querySelectorAll("textarea");
+      if (textareas.length > 0) textareas[textareas.length - 1].focus();
+    }, 10);
+  });
+  memoList.appendChild(addBtn);
 }
 
 function init() {
