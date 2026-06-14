@@ -5084,10 +5084,7 @@ nav.desktop-nav {
 
 
 
-/* === Override massive wrap gap for home === */
-#home .wrap {
-  gap: 12px !important;
-}
+
 
 
 
@@ -5127,3 +5124,18 @@ nav a.active {
 .desktop-nav {
   gap: 12px !important; /* Elegant spacing */
 }
+
+/* === Global Uniform 12px Gap Fix === */
+.page-section .wrap {
+  gap: 12px !important;
+}
+.home-grid, .home-grid-left, .home-grid-right {
+  gap: 12px !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+.hero, .card {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
