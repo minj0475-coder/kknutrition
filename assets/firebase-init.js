@@ -151,6 +151,16 @@ function renderMemoList(containerId, isHome) {
           const nextTextarea = container.children[index + 1]?.querySelector("textarea");
           if (nextTextarea) nextTextarea.focus({ preventScroll: true });
         }, 10);
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        if (index > 0) {
+          const prevTextarea = container.children[index - 1]?.querySelector("textarea");
+          if (prevTextarea) {
+            prevTextarea.focus({ preventScroll: true });
+            const len = prevTextarea.value.length;
+            prevTextarea.setSelectionRange(len, len);
+          }
+        }
       } else if (e.key === "Backspace" && textarea.value === "" && memos.length > 1) {
         e.preventDefault();
         memos.splice(index, 1);
