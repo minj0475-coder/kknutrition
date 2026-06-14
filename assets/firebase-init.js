@@ -135,62 +135,35 @@ function renderMemoList(containerId, isHome) {
     };
 
     textarea.onkeydown = (e) => {
-      if (isHome) {
-        if (e.key === "Enter" && !e.shiftKey) {
-          e.preventDefault();
-          textarea.blur();
-        } else if (e.key === "Enter" && e.shiftKey) {
-          e.preventDefault();
-          if (memos.length >= 3) {
-              openMemoModal();
-              return;
-          }
-          memos.splice(index + 1, 0, { text: "", checked: false });
-          saveMemos();
-          updateAllMemosDOM();
-          setTimeout(() => {
-            const nextTextarea = container.children[index + 1]?.querySelector("textarea");
-            if (nextTextarea) nextTextarea.focus({ preventScroll: true });
-          }, 10);
-        } else if (e.key === "Backspace" && textarea.value === "" && memos.length > 1) {
-          e.preventDefault();
-          memos.splice(index, 1);
-          saveMemos();
-          updateAllMemosDOM();
-          if (index > 0) {
-            setTimeout(() => {
-              const prevTextarea = container.children[index - 1]?.querySelector("textarea");
-              if (prevTextarea) {
-                prevTextarea.focus({ preventScroll: true });
-                prevTextarea.selectionStart = prevTextarea.value.length;
-              }
-            }, 10);
-          }
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        textarea.blur();
+      } else if (e.key === "ArrowDown" || (e.key === "Enter" && e.shiftKey)) {
+        e.preventDefault();
+        if (isHome && memos.length >= 3) {
+            openMemoModal();
+            return;
         }
-      } else {
-        if (e.key === "ArrowDown" || (e.key === "Enter" && e.shiftKey)) {
-          e.preventDefault();
-          memos.splice(index + 1, 0, { text: "", checked: false });
-          saveMemos();
-          updateAllMemosDOM();
+        memos.splice(index + 1, 0, { text: "", checked: false });
+        saveMemos();
+        updateAllMemosDOM();
+        setTimeout(() => {
+          const nextTextarea = container.children[index + 1]?.querySelector("textarea");
+          if (nextTextarea) nextTextarea.focus({ preventScroll: true });
+        }, 10);
+      } else if (e.key === "Backspace" && textarea.value === "" && memos.length > 1) {
+        e.preventDefault();
+        memos.splice(index, 1);
+        saveMemos();
+        updateAllMemosDOM();
+        if (index > 0) {
           setTimeout(() => {
-            const nextTextarea = container.children[index + 1]?.querySelector("textarea");
-            if (nextTextarea) nextTextarea.focus({ preventScroll: true });
+            const prevTextarea = container.children[index - 1]?.querySelector("textarea");
+            if (prevTextarea) {
+              prevTextarea.focus({ preventScroll: true });
+              prevTextarea.selectionStart = prevTextarea.value.length;
+            }
           }, 10);
-        } else if (e.key === "Backspace" && textarea.value === "" && memos.length > 1) {
-          e.preventDefault();
-          memos.splice(index, 1);
-          saveMemos();
-          updateAllMemosDOM();
-          if (index > 0) {
-            setTimeout(() => {
-              const prevTextarea = container.children[index - 1]?.querySelector("textarea");
-              if (prevTextarea) {
-                prevTextarea.focus({ preventScroll: true });
-                prevTextarea.selectionStart = prevTextarea.value.length;
-              }
-            }, 10);
-          }
         }
       }
     };
