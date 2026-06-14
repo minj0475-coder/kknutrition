@@ -5128,6 +5128,7 @@ nav a.active {
 /* === Global Uniform 12px Gap Fix === */
 .page-section .wrap {
   gap: 12px !important;
+  padding-top: 12px !important;
 }
 .home-grid, .home-grid-left, .home-grid-right {
   gap: 12px !important;
@@ -5159,3 +5160,4 @@ nav a.active {
   flex-direction: column !important;
   gap: 12px !important;
 }
+
