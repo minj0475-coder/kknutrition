@@ -4909,11 +4909,9 @@ nav a.active, .mobile-nav-list a.active {
   }
   .home-grid-left .daily-kkul-image-wrap img,
   .daily-kkul-image-wrap img {
-    width: 65% !important;
-    max-width: 260px !important;
-    min-width: 180px !important;
+    width: 130px !important;
     height: auto !important;
-    margin-top: 24px !important;
+    margin-top: 16px !important;
     filter: drop-shadow(0 12px 24px rgba(242, 139, 156, 0.25));
   }
 }
@@ -5194,5 +5192,20 @@ nav a.active {
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
+  }
+}
+
+
+
+/* FINAL OVERRIDE FOR MOBILE KKUL-KKULI SIZE */
+@media(max-width: 640px) {
+  .home-grid-left .daily-kkul-image-wrap img,
+  .daily-kkul-image-wrap img {
+    width: 130px !important;
+    max-width: 130px !important;
+    min-width: 130px !important;
+    height: auto !important;
+    margin-top: 16px !important;
+    filter: drop-shadow(0 8px 16px rgba(242, 139, 156, 0.2)) !important;
   }
 }
