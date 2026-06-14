@@ -5139,3 +5139,23 @@ nav a.active {
   margin-bottom: 0 !important;
 }
 
+
+/* === Today Menu Internal Gaps Fix === */
+#today-menu .wrap > section:not(.hero) {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+.date-section-v2 {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+.today-menu-show-all-wrap {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+#todayMenuAllSection, #todayMenuList, #todayMenuSearchResult, #todayMenuTodaySection {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
