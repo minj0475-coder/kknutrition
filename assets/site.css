@@ -4870,10 +4870,30 @@ nav a.active, .mobile-nav-list a.active {
   display: flex !important;
   flex-direction: column !important;
   align-items: flex-start !important;
+  text-align: left !important;
+  width: 100% !important;
+}
+.home-grid-left .daily-kkul-copy .section-title {
+  align-self: flex-start !important;
+  text-align: left !important;
+  justify-content: flex-start !important;
+}
+.home-grid-left .daily-kkul-copy .daily-kkul-message {
+  text-align: left !important;
+  align-self: flex-start !important;
 }
 .home-grid-left .daily-kkul-image-wrap {
   display: flex !important;
   justify-content: center !important;
+  width: 100% !important;
+}
+
+@media(max-width: 640px) {
+  .home-grid-left .daily-kkul-card,
+  .daily-kkul-card {
+    align-items: flex-start !important;
+    text-align: left !important;
+  }
 }
 
 /* === Mobile Header Single Line Override === */
