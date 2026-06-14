@@ -188,13 +188,6 @@ function renderMemoList(containerId, isHome) {
         }, 10);
       };
       container.appendChild(newAddBtn);
-    } else {
-      const moreBtn = document.createElement("button");
-      moreBtn.className = "memo-add-btn";
-      moreBtn.textContent = "전체보기에서 추가하기";
-      moreBtn.type = "button";
-      moreBtn.onclick = openMemoModal;
-      container.appendChild(moreBtn);
     }
   } else {
     const newAddBtn = document.createElement("button");
