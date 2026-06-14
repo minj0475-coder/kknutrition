@@ -4717,13 +4717,13 @@ nav a.active, .mobile-nav-list a.active {
 .home-grid {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  margin-top: 24px;
+  gap: 16px;
+  margin-top: 16px;
 }
 .home-grid-left, .home-grid-right {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px;
 }
 
 @media(min-width: 1024px) {
@@ -5080,3 +5080,4 @@ nav.desktop-nav {
   transform: none !important;
   margin-left: auto; /* pushes it to the right */
 }
+
