@@ -89,6 +89,7 @@ function renderMemos() {
       textarea.style.height = textarea.scrollHeight + 'px';
     };
     
+    let saveTimeout = null;
     textarea.addEventListener("input", () => {
       if (textarea.value === "" && memos.length > 1) {
         // Remove item if empty
@@ -108,7 +109,12 @@ function renderMemos() {
       } else {
         memos[index].text = textarea.value;
         resizeTextarea();
-        saveMemos();
+        
+        // Debounce save to prevent rate limits and race conditions
+        clearTimeout(saveTimeout);
+        saveTimeout = setTimeout(() => {
+          saveMemos();
+        }, 500);
       }
     });
 
@@ -173,6 +179,12 @@ function init() {
       if (snapshot.exists()) {
         const data = snapshot.data();
         if (data.items) {
+          // 동일한 데이터면 무시 (로컬에서 방금 저장한 데이터가 돌아온 경우)
+          if (JSON.stringify(memos) === JSON.stringify(data.items)) return;
+          
+          // 사용자가 현재 입력 중(포커스 상태)이면 업데이트를 미룸 (포커스 잃음 방지)
+          if (document.activeElement && document.activeElement.classList.contains('memo-input')) return;
+
           memos = data.items;
           saveLocalMemos();
           renderMemos();
