@@ -5162,3 +5162,20 @@ nav a.active {
 }
 
 
+
+/* FORCE NO MARGINS ON ALL WRAPPERS */
+.today-menu-results, 
+.today-menu-today-section, 
+.today-menu-show-all-wrap,
+#todayMenuAllSectionWrap,
+#todayMenuAllSection,
+#todayMenuList,
+#todayMenuSearchResult,
+#todayMenuTodaySection,
+#todayMenuShowAllWrap,
+#todayMenuShowAllWrapBottom {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
