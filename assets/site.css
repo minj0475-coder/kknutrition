@@ -5184,3 +5184,15 @@ nav a.active {
 }
 
 
+
+@media(max-width: 640px) {
+  .home-grid-left .daily-kkul-image-wrap,
+  .daily-kkul-image-wrap {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 180px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+}
