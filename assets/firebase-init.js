@@ -1,14 +1,14 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getFirestore, doc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-// TODO: 여기에 실제 Firebase 프로젝트 설정을 입력하세요.
+// 사용자의 실제 Firebase 설정
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyAbn8Lyayv8rIBo-5LD_GNctRduvM_lrvw",
+  authDomain: "kknutrition-memo.firebaseapp.com",
+  projectId: "kknutrition-memo",
+  storageBucket: "kknutrition-memo.firebasestorage.app",
+  messagingSenderId: "1094497868885",
+  appId: "1:1094497868885:web:8673ea8aabec7bcee5c8dc"
 };
 
 let db = null;
