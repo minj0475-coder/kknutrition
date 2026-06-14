@@ -4906,10 +4906,11 @@ nav a.active, .mobile-nav-list a.active {
   }
   nav a {
     font-size: 11px !important;
-    padding: 6px 4px !important;
+    padding: 6px 2px !important;
     white-space: nowrap !important;
     letter-spacing: -0.5px !important;
     flex: 1 1 auto !important;
     text-align: center !important;
+    justify-content: center !important;
   }
 }
