@@ -4711,3 +4711,123 @@ nav a.active, .mobile-nav-list a.active {
 .sheet-link-card .download-btn::before {
   display: none !important;
 }
+
+
+/* === New Home Grid & Memo Styles === */
+.home-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 24px;
+}
+.home-grid-left, .home-grid-right {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media(min-width: 1024px) {
+  .home-grid {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .home-grid-left {
+    flex: 0 0 320px;
+    width: 320px;
+  }
+  .home-grid-right {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+@media(min-width: 641px) and (max-width: 1023px) {
+  .home-grid {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .home-grid-left {
+    flex: 0 0 280px;
+    width: 280px;
+  }
+  .home-grid-right {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+/* Memo Card */
+.memo-card {
+  padding: 32px;
+}
+.memo-head {
+  margin-bottom: 24px;
+}
+.memo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.memo-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.memo-checkbox {
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--primary);
+  border-radius: 4px;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+  background: #fff;
+  margin-top: 1px;
+}
+.memo-checkbox:checked {
+  background: var(--primary);
+}
+.memo-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.memo-input {
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  color: var(--text);
+  font-family: inherit;
+  width: 100%;
+  resize: none;
+  outline: none;
+  line-height: 1.5;
+  padding: 0;
+  overflow: hidden;
+}
+.memo-hint {
+  font-size: 13px;
+  color: var(--primary);
+  margin-top: 32px;
+  font-weight: 600;
+  opacity: 0.8;
+  text-align: left;
+}
+
+#home .hero-asset {
+  mix-blend-mode: multiply;
+}
+
+@media(max-width: 640px) {
+  .brand-text { display: none; }
+  .memo-hint { display: none !important; }
+  .memo-card { padding: 24px 20px; }
+}

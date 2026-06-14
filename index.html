@@ -19,7 +19,7 @@
 
 <header class="top">
   <div class="top-inner">
-    <a class="brand" href="#home"><span class="logo"></span>급식 업무 포털</a>
+    <a class="brand" href="#home"><span class="logo"></span><span class="brand-text">급식 업무 포털</span></a>
     <nav>
       <a href="#daily">하루 일정</a>
       <a href="#monthly">한 달 일정</a>
@@ -41,26 +41,42 @@
 
 <section id="home" class="page-section"><main class="wrap"><section class="hero"><div class="hero-content"><div class="kicker">영양교사 꿀꿀이의</div><h1>급식 업무 포털</h1><p class="subtitle">급식 업무를 깔끔하게 정리해서 보기 위해 만든 꿀꿀이의 급식 업무 포털입니다.</p></div><img loading="lazy" class="hero-asset" src="assets/pig-home.webp" alt=""></section>
 
-<section class="card daily-kkul-card">
-  <div class="daily-kkul-copy">
-    <h2 class="section-title"><span class="num">오늘의</span>꿀꿀이</h2>
-    <p id="dailyKkulMessage" class="daily-kkul-message">오늘도 꿀꿀이가 응원해요!</p>
-  </div>
-  <div class="daily-kkul-image-wrap">
-    <img id="dailyKkulImage" class="daily-kkul-image" alt="오늘의 꿀꿀이" loading="lazy" decoding="async">
-  </div>
-</section>
+<div class="home-grid">
+  <div class="home-grid-left">
+    <section class="card memo-card">
+      <div class="memo-head">
+        <h2 class="section-title"><span class="num">오늘의</span>메모장</h2>
+      </div>
+      <div class="memo-list" id="memoList">
+        <!-- JS renders checkboxes here -->
+      </div>
+      <p class="memo-hint">엔터로 줄바꿈 / Shift + Enter로 새 항목</p>
+    </section>
 
-<section class="card home-today-card">
-  <div class="home-today-head">
-    <div>
-      <h2 class="section-title"><span class="num">두근두근</span>오늘의 식단</h2>
-      <p id="homeTodayDate" class="home-today-date"></p>
-    </div>
-    <a class="home-today-link" href="#today-menu">전체 식단 보기</a>
+    <section class="card daily-kkul-card">
+      <div class="daily-kkul-copy">
+        <h2 class="section-title"><span class="num">오늘의</span>꿀꿀이</h2>
+        <p id="dailyKkulMessage" class="daily-kkul-message">작은 개선이 더 좋은 급식을 만듭니다.</p>
+      </div>
+      <div class="daily-kkul-image-wrap">
+        <img id="dailyKkulImage" class="daily-kkul-image" alt="오늘의 꿀꿀이" loading="lazy" decoding="async">
+      </div>
+    </section>
   </div>
-  <div id="homeTodayMenu"></div>
-</section>
+
+  <div class="home-grid-right">
+    <section class="card home-today-card">
+      <div class="home-today-head">
+        <div>
+          <h2 class="section-title"><span class="num">두근두근</span>오늘의 식단</h2>
+          <p id="homeTodayDate" class="home-today-date"></p>
+        </div>
+        <a class="home-today-link" href="#today-menu">전체 식단 보기</a>
+      </div>
+      <div id="homeTodayMenu"></div>
+    </section>
+  </div>
+</div>
 
 </main></section>
 <section id="daily" class="page-section"><main class="wrap"><section class="hero"><div class="kicker">일일 업무</div><h1>하루 일정</h1><p class="subtitle">검수부터 퇴근 전 마무리까지 하루 업무 흐름을 시간대별로 정리했습니다.</p><img loading="lazy" class="hero-asset" src="assets/pig-daily.png" alt=""></section>
@@ -760,6 +776,8 @@
   </div>
   </details>
 </section></main></section>
+<!-- Firebase SDK -->
+<script type="module" src="assets/firebase-init.js"></script>
 <script src="assets/xlsx.full.min.js"></script>
 <script src="assets/site.js?v=20260612_102"></script>
 <script>
