@@ -5271,3 +5271,25 @@ nav a.active {
     filter: drop-shadow(0 6px 12px rgba(242, 139, 156, 0.2)) !important;
   }
 }
+
+/* =========================================================
+   ALL SUB-PAGE HERO ASSETS VERTICAL CENTERING
+   ========================================================= */
+.page-section:not(#home) .hero-asset {
+  top: 50% !important;
+  bottom: auto !important;
+  translate: 0 -50% !important;
+  transform: none !important;
+  object-position: center center !important;
+}
+
+@media(max-width: 640px) {
+  .page-section:not(#home) .hero-asset {
+    top: 50% !important;
+    bottom: auto !important;
+    max-height: 90% !important;
+    translate: 0 -50% !important;
+    transform: none !important;
+    object-position: center center !important;
+  }
+}
