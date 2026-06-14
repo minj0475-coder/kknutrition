@@ -4884,6 +4884,8 @@ nav a.active, .mobile-nav-list a.active {
   align-self: center !important;
   width: 100% !important;
   margin-top: 8px;
+  word-break: keep-all !important;
+  line-height: 1.4 !important;
 }
 .home-grid-left .daily-kkul-image-wrap {
   display: flex !important;
@@ -4896,6 +4898,9 @@ nav a.active, .mobile-nav-list a.active {
   .daily-kkul-card {
     align-items: center !important;
     text-align: center !important;
+  }
+  .home-grid-left .daily-kkul-copy .daily-kkul-message {
+    font-size: 15px !important;
   }
 }
 
