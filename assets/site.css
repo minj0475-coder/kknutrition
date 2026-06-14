@@ -5293,3 +5293,30 @@ nav a.active {
     object-position: center center !important;
   }
 }
+
+/* =========================================================
+   NEW BRAND LOGO IMAGE ONLY
+   ========================================================= */
+.brand {
+  display: flex !important;
+  align-items: center !important;
+  text-decoration: none !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.brand-logo-img {
+  height: 44px !important;
+  width: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+  filter: drop-shadow(0 4px 6px rgba(242, 139, 156, 0.15)) !important;
+}
+
+@media(max-width: 640px) {
+  .brand-logo-img {
+    height: 38px !important;
+  }
+}
