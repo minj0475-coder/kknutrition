@@ -90,9 +90,26 @@ function renderMemos() {
     };
     
     textarea.addEventListener("input", () => {
-      memos[index].text = textarea.value;
-      resizeTextarea();
-      saveMemos();
+      if (textarea.value === "" && memos.length > 1) {
+        // Remove item if empty
+        memos.splice(index, 1);
+        saveMemos();
+        renderMemos();
+        // focus previous item if exists
+        if (index > 0) {
+          setTimeout(() => {
+            const prevTextarea = memoList.children[index - 1]?.querySelector("textarea");
+            if (prevTextarea) {
+              prevTextarea.focus();
+              prevTextarea.selectionStart = prevTextarea.value.length;
+            }
+          }, 10);
+        }
+      } else {
+        memos[index].text = textarea.value;
+        resizeTextarea();
+        saveMemos();
+      }
     });
 
     textarea.addEventListener("keydown", (e) => {
