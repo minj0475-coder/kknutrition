@@ -3908,7 +3908,7 @@ td:first-child,
     align-items: center !important;
     justify-content: space-between !important;
     gap: 48px !important;
-    padding: 56px 64px !important;
+    padding: 36px 48px !important;
   }
   #home .hero-content {
     flex: 1 !important;
@@ -4062,7 +4062,7 @@ td:first-child,
     align-items: center !important;
     justify-content: space-between !important;
     gap: 48px !important;
-    padding: 56px 64px !important;
+    padding: 36px 48px !important;
     position: relative !important;
   }
   #home .hero-content {
@@ -4717,13 +4717,13 @@ nav a.active, .mobile-nav-list a.active {
 .home-grid {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-top: 16px;
+  gap: 12px;
+  margin-top: 12px;
 }
 .home-grid-left, .home-grid-right {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 @media(min-width: 1024px) {
@@ -5080,5 +5080,6 @@ nav.desktop-nav {
   transform: none !important;
   margin-left: auto; /* pushes it to the right */
 }
+
 
 
