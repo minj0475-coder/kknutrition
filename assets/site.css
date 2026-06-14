@@ -5027,3 +5027,39 @@ nav a.active, .mobile-nav-list a.active {
   color: var(--primary);
 }
 
+
+
+/* === Responsive Header Styles === */
+.desktop-nav {
+  display: flex;
+  gap: 24px;
+}
+.desktop-nav a {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 600;
+  transition: color 0.2s;
+}
+.desktop-nav a:hover, .desktop-nav a.active {
+  color: var(--primary);
+}
+
+.mobile-menu-btn {
+  display: none; /* Hide on Desktop by default */
+  background: none;
+  border: none;
+  color: var(--text);
+  padding: 8px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+@media(max-width: 1024px) {
+  .desktop-nav {
+    display: none !important;
+  }
+  .mobile-menu-btn {
+    display: flex !important;
+  }
+}

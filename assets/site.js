@@ -1,4 +1,4 @@
-window.addEventListener("load",function(){if(typeof XLSX==="undefined"){var s=document.createElement("script");s.src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js";document.head.appendChild(s);}});
+﻿window.addEventListener("load",function(){if(typeof XLSX==="undefined"){var s=document.createElement("script");s.src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js";document.head.appendChild(s);}});
 
 ;
 
@@ -990,7 +990,7 @@ function updateTabs() {
       section.classList.remove('active');
     }
   });
-  document.querySelectorAll('nav a, .mobile-nav-list a').forEach(link => {
+  document.querySelectorAll('nav a, .drawer-nav a').forEach(link => {
     if (link.getAttribute('href') === hash) {
       link.classList.add('active');
     } else {
@@ -1029,3 +1029,4 @@ document.addEventListener('DOMContentLoaded', () => {
     link.addEventListener('click', closeDrawer);
   });
 });
+
