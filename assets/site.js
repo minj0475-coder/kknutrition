@@ -5,7 +5,7 @@ window.addEventListener("load",function(){if(typeof XLSX==="undefined"){var s=do
 const DEFAULT_SHEET_LINK = "https://docs.google.com/spreadsheets/d/1qlBNjqRtXsD-R8zTbEGudD4LLcNjL1VmM_J0MIOVVEE/edit?usp=sharing";
 const SHEET_LINK_KEY = "kkulkkoori_service_sheet_link";
 const DAILY_KKUL_KEY = "kkulkkoori_daily_character";
-const DAILY_KKUL_IMAGES = Array.from({ length: 59 }, (_, i) => `assets/images/kkul/kkul_${i + 1}.png`);
+const DAILY_KKUL_IMAGES = [];
 const DAILY_KKUL_MESSAGES = [
   "오늘도 맛있는 급식을 준비해 볼까요?",
   "오늘 일정도 미리 확인해 볼까요?",
@@ -22,13 +22,13 @@ function readDailyKkul() {
   const today = getKoreanTodayKey();
   try {
     const saved = JSON.parse(localStorage.getItem(DAILY_KKUL_KEY) || "null");
-    if (saved && saved.date === today && Number.isInteger(saved.imageIndex) && Number.isInteger(saved.messageIndex)) {
+    if (saved && saved.date === today && Number.isInteger(saved.messageIndex)) {
       return saved;
     }
   } catch(e) {}
   const picked = {
     date: today,
-    imageIndex: Math.floor(Math.random() * DAILY_KKUL_IMAGES.length),
+    imageIndex: DAILY_KKUL_IMAGES.length ? Math.floor(Math.random() * DAILY_KKUL_IMAGES.length) : 0,
     messageIndex: Math.floor(Math.random() * DAILY_KKUL_MESSAGES.length)
   };
   try {
@@ -43,8 +43,14 @@ function setupDailyKkul() {
   if (!image || !message) return;
   const picked = readDailyKkul();
   image.classList.remove("is-ready");
-  image.addEventListener("load", () => image.classList.add("is-ready"), { once: true });
-  image.src = DAILY_KKUL_IMAGES[picked.imageIndex % DAILY_KKUL_IMAGES.length];
+  if (DAILY_KKUL_IMAGES.length) {
+    image.hidden = false;
+    image.addEventListener("load", () => image.classList.add("is-ready"), { once: true });
+    image.src = DAILY_KKUL_IMAGES[picked.imageIndex % DAILY_KKUL_IMAGES.length];
+  } else {
+    image.hidden = true;
+    image.removeAttribute("src");
+  }
   message.textContent = DAILY_KKUL_MESSAGES[picked.messageIndex % DAILY_KKUL_MESSAGES.length];
 }
 
