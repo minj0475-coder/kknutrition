@@ -4825,6 +4825,7 @@ nav a.active, .mobile-nav-list a.active {
   outline: none;
   line-height: 1.5;
   padding: 0;
+  margin-right: 8px;
   overflow: hidden;
 }
 .memo-hint {
