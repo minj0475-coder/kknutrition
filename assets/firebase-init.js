@@ -541,25 +541,25 @@ document.addEventListener('click', (e) => {
       modal.className = 'memo-modal-overlay';
       modal.style.cssText = 'display: none; z-index: 10000; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; backdrop-filter: blur(4px); transition: opacity 0.2s;';
       modal.innerHTML = `
-        <div class="memo-modal" style="max-width: 360px; width: 90%; background: #ffffff; border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.15); margin: auto;">
-          <button id="unsavedModalCloseBtn" type="button" aria-label="닫기" style="position: absolute; top: 16px; right: 16px; background: transparent; border: none; padding: 8px; cursor: pointer; color: #adb5bd; border-radius: 50%; transition: background 0.2s;" onmouseover="this.style.background='rgba(0,0,0,0.05)'" onmouseout="this.style.background='transparent'">
+        <div class="memo-modal" style="max-width: 360px; width: 90%; background: var(--card); border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.15); margin: auto;">
+          <button id="unsavedModalCloseBtn" type="button" aria-label="닫기" style="position: absolute; top: 16px; right: 16px; background: transparent; border: none; padding: 8px; cursor: pointer; color: var(--text); border-radius: 50%; transition: background 0.2s;" onmouseover="this.style.background='var(--line)'" onmouseout="this.style.background='transparent'">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
           </button>
           <div style="padding: 32px 24px 24px; text-align: center;">
-            <div style="width: 54px; height: 54px; border-radius: 50%; background: rgba(231, 76, 60, 0.1); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e74c3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <div style="width: 54px; height: 54px; border-radius: 50%; background: rgba(255, 107, 107, 0.1); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
                 <line x1="12" y1="9" x2="12" y2="13"></line>
                 <line x1="12" y1="17" x2="12.01" y2="17"></line>
               </svg>
             </div>
-            <h3 style="margin: 0 0 12px; font-size: 1.25rem; font-weight: 800; color: #2c3e50;">저장하지 않은 내용</h3>
-            <p style="margin: 0 0 28px; line-height: 1.6; font-size: 15px; color: #7f8c8d;">
+            <h3 style="margin: 0 0 12px; font-size: 1.25rem; font-weight: 800; color: var(--heading);">저장하지 않은 내용</h3>
+            <p style="margin: 0 0 28px; line-height: 1.6; font-size: 15px; color: var(--text);">
               이 화면을 나가면 수정한 내용이<br>사라질 수 있습니다.
             </p>
             <div style="display: flex; flex-direction: column; gap: 10px;">
-              <button id="unsavedModalConfirmBtn" type="button" style="width: 100%; padding: 14px 0; font-size: 16px; font-weight: 700; background: #e74c3c; color: #ffffff !important; border: none; border-radius: 12px; cursor: pointer; box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);">저장하지 않고 나가기</button>
-              <button id="unsavedModalCancelBtn" type="button" style="width: 100%; padding: 14px 0; font-size: 16px; font-weight: 700; background: #f1f3f5; color: #495057; border: none; border-radius: 12px; cursor: pointer;">계속 작성하기</button>
+              <button id="unsavedModalConfirmBtn" type="button" style="width: 100%; padding: 14px 0; font-size: 16px; font-weight: 700; background: var(--primary); color: #ffffff !important; border: none; border-radius: 12px; cursor: pointer; box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);">저장하지 않고 나가기</button>
+              <button id="unsavedModalCancelBtn" type="button" style="width: 100%; padding: 14px 0; font-size: 16px; font-weight: 700; background: var(--card-soft); color: var(--heading); border: 1px solid var(--line); border-radius: 12px; cursor: pointer;">계속 작성하기</button>
             </div>
           </div>
         </div>
