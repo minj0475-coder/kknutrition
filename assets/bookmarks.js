@@ -239,13 +239,38 @@ function favicon(url) {
   }
 }
 
+const LOCAL_ICONS = {
+  "goe.eduptl.kr": "assets/images/bookmarks/goe.eduptl.kr.png",
+  "mail.korea.kr": "assets/images/bookmarks/mail.korea.kr.ico",
+  "gimpo.haccpcook.or.kr": "assets/images/bookmarks/gimpo.haccpcook.or.kr.png",
+  "dairy.schoolmilk.or.kr": "assets/images/bookmarks/dairy.schoolmilk.or.kr.ico",
+  "school.iamservice.net": "assets/images/bookmarks/school.iamservice.net.ico",
+  "www.gwp.or.kr": "assets/images/bookmarks/www.gwp.or.kr.ico",
+  "www.ekape.or.kr": "assets/images/bookmarks/www.ekape.or.kr.ico",
+  "www.s2b.kr": "assets/images/bookmarks/www.s2b.kr.ico",
+  "ercedu.hunet.co.kr": "assets/images/bookmarks/ercedu.hunet.co.kr.ico",
+  "www.foodsafetykorea.go.kr": "assets/images/bookmarks/www.foodsafetykorea.go.kr.png"
+};
+
+function extractDomain(url) {
+  try {
+    return new URL(url).hostname;
+  } catch(e) {
+    return '';
+  }
+}
+
 function faviconImg(url) {
   try {
-    var domain = new URL(url).hostname;
-    // 가장 빠르고 안정적인 구글 faviconV2 (fallback_opts 포함)
+    var domain = extractDomain(url);
+    if (LOCAL_ICONS[domain]) {
+      return '<img src="' + LOCAL_ICONS[domain] + '" class="bm-favicon" alt="" loading="lazy"'
+        + ' onerror="this.onerror=null;this.src=\'assets/app-icon-192.png\';">';
+    }
+
     var g = 'https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://' + domain + '&size=64';
     
-    // 심플하고 빠른 로딩
+    // 로딩 시 지연 방지
     return '<img src="' + g + '" class="bm-favicon" alt="" loading="lazy"'
       + ' onerror="this.onerror=null;this.src=\'assets/app-icon-192.png\';">';
   } catch(e) {
