@@ -179,85 +179,90 @@ function renderMemoList(containerId, isHome) {
           }, 10);
         }
       } else if (e.key === "ArrowUp") {
-        e.preventDefault();
-        if (textarea.value === "" && memos.length > 1) {
-          memos.splice(index, 1);
-          textarea.blur();
-          saveMemos();
-          updateAllMemosDOM();
-          const targetIndex = index > 0 ? index - 1 : 0;
-          setTimeout(() => {
-            const targetTextarea = container.children[targetIndex]?.querySelector("textarea");
-            if (targetTextarea) {
-              targetTextarea.focus({ preventScroll: true });
-              const len = targetTextarea.value.length;
-              targetTextarea.setSelectionRange(len, len);
+        if (textarea.selectionStart === 0 && textarea.selectionEnd === 0) {
+          e.preventDefault();
+          if (textarea.value === "" && memos.length > 1) {
+            memos.splice(index, 1);
+            textarea.blur();
+            saveMemos();
+            updateAllMemosDOM();
+            const targetIndex = index > 0 ? index - 1 : 0;
+            setTimeout(() => {
+              const targetTextarea = container.children[targetIndex]?.querySelector("textarea");
+              if (targetTextarea) {
+                targetTextarea.focus({ preventScroll: true });
+                const len = targetTextarea.value.length;
+                targetTextarea.setSelectionRange(len, len);
+              }
+            }, 10);
+          } else if (index > 0) {
+            const prevTextarea = container.children[index - 1]?.querySelector("textarea");
+            if (prevTextarea) {
+              prevTextarea.focus({ preventScroll: true });
+              const len = prevTextarea.value.length;
+              prevTextarea.setSelectionRange(len, len);
             }
-          }, 10);
-        } else if (index > 0) {
-          const prevTextarea = container.children[index - 1]?.querySelector("textarea");
-          if (prevTextarea) {
-            prevTextarea.focus({ preventScroll: true });
-            const len = prevTextarea.value.length;
-            prevTextarea.setSelectionRange(len, len);
           }
         }
       } else if (e.key === "ArrowDown") {
-        e.preventDefault();
-        if (textarea.value === "" && memos.length > 1) {
-          memos.splice(index, 1);
-          textarea.blur();
-          saveMemos();
-          updateAllMemosDOM();
-          const targetIndex = index < memos.length ? index : memos.length - 1;
-          setTimeout(() => {
-            const targetTextarea = container.children[targetIndex]?.querySelector("textarea");
-            if (targetTextarea) {
-              targetTextarea.focus({ preventScroll: true });
-              const len = targetTextarea.value.length;
-              targetTextarea.setSelectionRange(len, len);
-            }
-          }, 10);
-        } else if (index < memos.length - 1) {
-          if (isHome && index + 1 >= 3) {
+        const len = textarea.value.length;
+        if (textarea.selectionStart === len && textarea.selectionEnd === len) {
+          e.preventDefault();
+          if (textarea.value === "" && memos.length > 1) {
+            memos.splice(index, 1);
             textarea.blur();
-            openMemoModal();
+            saveMemos();
+            updateAllMemosDOM();
+            const targetIndex = index < memos.length ? index : memos.length - 1;
             setTimeout(() => {
-                const modalList = document.getElementById("memoModalList");
-                const nextTextarea = modalList.children[index + 1]?.querySelector("textarea");
-                if (nextTextarea) {
-                    nextTextarea.focus({ preventScroll: true });
-                    const len = nextTextarea.value.length;
-                    nextTextarea.setSelectionRange(len, len);
-                }
-            }, 100);
-            return;
-          }
-          const nextTextarea = container.children[index + 1]?.querySelector("textarea");
-          if (nextTextarea) {
-            nextTextarea.focus({ preventScroll: true });
-            const len = nextTextarea.value.length;
-            nextTextarea.setSelectionRange(len, len);
-          }
-        } else {
-          textarea.blur();
-          memos.splice(index + 1, 0, { text: "", checked: false });
-          saveMemos();
-          if (isHome && index + 1 >= 3) {
-              updateAllMemosDOM();
+              const targetTextarea = container.children[targetIndex]?.querySelector("textarea");
+              if (targetTextarea) {
+                targetTextarea.focus({ preventScroll: true });
+                const length = targetTextarea.value.length;
+                targetTextarea.setSelectionRange(length, length);
+              }
+            }, 10);
+          } else if (index < memos.length - 1) {
+            if (isHome && index + 1 >= 3) {
+              textarea.blur();
               openMemoModal();
               setTimeout(() => {
                   const modalList = document.getElementById("memoModalList");
                   const nextTextarea = modalList.children[index + 1]?.querySelector("textarea");
-                  if (nextTextarea) nextTextarea.focus({ preventScroll: true });
+                  if (nextTextarea) {
+                      nextTextarea.focus({ preventScroll: true });
+                      const length = nextTextarea.value.length;
+                      nextTextarea.setSelectionRange(length, length);
+                  }
               }, 100);
               return;
-          }
-          updateAllMemosDOM();
-          setTimeout(() => {
+            }
             const nextTextarea = container.children[index + 1]?.querySelector("textarea");
-            if (nextTextarea) nextTextarea.focus({ preventScroll: true });
-          }, 10);
+            if (nextTextarea) {
+              nextTextarea.focus({ preventScroll: true });
+              const length = nextTextarea.value.length;
+              nextTextarea.setSelectionRange(length, length);
+            }
+          } else {
+            textarea.blur();
+            memos.splice(index + 1, 0, { text: "", checked: false });
+            saveMemos();
+            if (isHome && index + 1 >= 3) {
+                updateAllMemosDOM();
+                openMemoModal();
+                setTimeout(() => {
+                    const modalList = document.getElementById("memoModalList");
+                    const nextTextarea = modalList.children[index + 1]?.querySelector("textarea");
+                    if (nextTextarea) nextTextarea.focus({ preventScroll: true });
+                }, 100);
+                return;
+            }
+            updateAllMemosDOM();
+            setTimeout(() => {
+              const nextTextarea = container.children[index + 1]?.querySelector("textarea");
+              if (nextTextarea) nextTextarea.focus({ preventScroll: true });
+            }, 10);
+          }
         }
       } else if (e.key === "Backspace" && textarea.value === "" && memos.length > 1) {
         e.preventDefault();
