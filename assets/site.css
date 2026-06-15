@@ -1020,7 +1020,11 @@ button,
 .download-btn,
 .quick,
 input[type="button"],
-input[type="submit"] {
+input[type="submit"],
+.excel-upload-btn,
+summary,
+.fab-edit-btn,
+.action-btn {
   cursor: pointer;
   -webkit-appearance: none !important;
   appearance: none !important;
