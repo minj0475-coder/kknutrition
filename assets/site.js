@@ -10,13 +10,62 @@ const DAILY_KKUL_IMAGES = Array.from(
   (_, index) => `assets/images/kkul/kkul_${index + 1}.png`
 );
 const DAILY_KKUL_MESSAGES = [
-  "오늘도 맛있는 급식을 준비해 볼까요?",
-  "오늘 일정도 미리 확인해 볼까요?",
-  "오늘도 즐겁고 안전하게 급식 운영해요!",
-  "필요한 자료도 꼼꼼히 확인해 볼까요?",
-  "오늘도 하나씩 확인하면 문제없어요!",
-  "작은 개선이 더 좋은 급식을 만듭니다.",
-  "오늘도 꿀꿀이가 응원해요!"
+  "마음을 담은 한 끼는 오래 기억돼요.",
+  "오늘도 반갑게 시작해요. 좋은 흐름은 작은 인사에서 와요.",
+  "잘하고 있어요. 오늘의 한 가지도 충분히 멋져요.",
+  "간절히 준비한 일은 분명 좋은 결과로 이어져요.",
+  "사랑받는 급식은 세심한 마음에서 시작돼요.",
+  "시간을 챙기는 사람이 하루의 리듬을 가져가요.",
+  "일정은 차분히, 마음은 가볍게. 오늘도 해낼 수 있어요.",
+  "한 줄의 기록이 내일의 실수를 줄여줘요.",
+  "체크한 만큼 마음이 놓여요. 오늘도 꼼꼼히 가볼까요?",
+  "중요한 날은 달력보다 마음에 먼저 표시돼요.",
+  "작은 메모 하나가 큰 일을 살려요.",
+  "오늘의 첫 줄을 또박또박 써 내려가요.",
+  "준비한 자료는 당신의 든든한 무기가 돼요.",
+  "큰 국자로 따뜻함을 넉넉히 나눠요.",
+  "든든한 한 판에 오늘의 에너지를 담아요.",
+  "균형 잡힌 식판처럼 오늘도 차분히 채워가요.",
+  "모르는 건 실패가 아니라 더 맛있어질 기회예요.",
+  "정성은 가장 오래 남는 레시피예요.",
+  "확인한 만큼 완성도는 올라가요.",
+  "좋은 답은 자세히 들여다보는 사람에게 와요.",
+  "작은 단서도 놓치지 않는 눈이 오늘의 실력을 만들어요.",
+  "자료를 품에 안고, 오늘도 한 걸음 앞으로.",
+  "숫자는 차갑지만, 확인하는 마음은 따뜻해요.",
+  "오늘도 노트북을 열고 나만의 속도로 시작해요.",
+  "계산은 정확하게, 마음은 여유롭게.",
+  "영양교사 꿀꿀이가 말해요. 오늘도 아주 잘하고 있어요.",
+  "두 팔 벌려 오늘의 가능성을 환영해요.",
+  "수줍어도 괜찮아요. 꾸준함은 조용히 빛나요.",
+  "몸을 움직이면 마음도 함께 가벼워져요.",
+  "풍선처럼 마음을 조금 더 높이 띄워봐요.",
+  "오늘의 작은 축하를 스스로에게 건네요.",
+  "우유 한 모금처럼 부드럽게, 오늘도 천천히.",
+  "잠깐 쉬어가도 괜찮아요. 회복도 중요한 일입니다.",
+  "졸린 날엔 속도를 낮춰도 괜찮아요.",
+  "피곤한 하루에도 할 수 있는 만큼이면 충분해요.",
+  "비가 와도 괜찮아요. 우산 아래서도 웃을 수 있어요.",
+  "햇살은 준비된 마음을 더 환하게 비춰줘요.",
+  "무지개는 지나간 비가 만든 선물이에요.",
+  "차가운 날에도 따뜻한 마음은 전해져요.",
+  "행운은 성실한 사람을 자주 찾아와요.",
+  "별처럼 반짝이는 아이디어가 떠오를 거예요.",
+  "네잎클로버보다 든든한 건 매일의 노력입니다.",
+  "복은 준비하는 사람의 손에 먼저 내려앉아요.",
+  "오늘도 알록달록한 마음으로 균형을 맞춰요.",
+  "축하할 일은 직접 만들어도 좋아요.",
+  "따뜻한 계절의 마음으로 오늘을 감싸요.",
+  "복주머니처럼 좋은 기운을 가득 담아가요.",
+  "꽃다발 같은 하루가 당신에게 도착하길.",
+  "잠깐 떠나는 마음으로, 일상에도 여유를 챙겨요.",
+  "배움은 가방 속 작은 설렘처럼 계속 따라와요.",
+  "가끔은 거꾸로 봐야 새로운 길이 보여요.",
+  "구름 위에 누운 마음으로 잠깐 숨을 골라요.",
+  "표정 하나만으로도 오늘의 분위기를 바꿀 수 있어요.",
+  "무서운 일도 웃으며 보면 작은 에피소드가 돼요.",
+  "납작해진 마음도 다시 폭신하게 살아나요.",
+  "멍해지는 순간도 필요해요. 쉬어야 다시 선명해져요."
 ];
 let uploadedMenuItems = [];
 let uploadedMenuFileName = "";
@@ -25,14 +74,13 @@ function readDailyKkul() {
   const today = getKoreanTodayKey();
   try {
     const saved = JSON.parse(localStorage.getItem(DAILY_KKUL_KEY) || "null");
-    if (saved && saved.date === today && Number.isInteger(saved.messageIndex)) {
+    if (saved && saved.date === today && Number.isInteger(saved.imageIndex)) {
       return saved;
     }
   } catch(e) {}
   const picked = {
     date: today,
-    imageIndex: DAILY_KKUL_IMAGES.length ? Math.floor(Math.random() * DAILY_KKUL_IMAGES.length) : 0,
-    messageIndex: Math.floor(Math.random() * DAILY_KKUL_MESSAGES.length)
+    imageIndex: DAILY_KKUL_IMAGES.length ? Math.floor(Math.random() * DAILY_KKUL_IMAGES.length) : 0
   };
   try {
     localStorage.setItem(DAILY_KKUL_KEY, JSON.stringify(picked));
@@ -54,7 +102,7 @@ function setupDailyKkul() {
     image.hidden = true;
     image.removeAttribute("src");
   }
-  message.textContent = DAILY_KKUL_MESSAGES[picked.messageIndex % DAILY_KKUL_MESSAGES.length];
+  message.textContent = DAILY_KKUL_MESSAGES[picked.imageIndex % DAILY_KKUL_MESSAGES.length];
 }
 
 async function copySubstituteMessage() {
