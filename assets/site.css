@@ -5018,7 +5018,7 @@ nav a.active, .mobile-nav-list a.active {
 .drawer-nav {
   display: flex;
   flex-direction: column;
-  padding: 24px 0;
+  padding: 8px 0 24px;
 }
 
 .drawer-nav a {
