@@ -1,4 +1,4 @@
-﻿// ============================================================
+// ============================================================
 // bookmarks.js — 북마크 관리 스크립트 (완전 재작성 v2)
 // ============================================================
 
@@ -285,10 +285,17 @@ function renderBookmarks() {
   if (!container) return;
 
   var filtered = bookmarkData.slice();
+  var sortFn = function(a, b) {
+    if (a.isFavorite && !b.isFavorite) return -1;
+    if (!a.isFavorite && b.isFavorite) return 1;
+    return (b.clickCount || 0) - (a.clickCount || 0);
+  };
+  
   if (currentCategory === '\uC804\uCCB4') {
-    filtered.sort(function(a, b) { return (b.clickCount || 0) - (a.clickCount || 0); });
+    filtered.sort(sortFn);
   } else {
     filtered = filtered.filter(function(item) { return item.category === currentCategory; });
+    filtered.sort(sortFn);
   }
   if (currentSearch.trim()) {
     var q = currentSearch.toLowerCase();
@@ -302,10 +309,18 @@ function renderBookmarks() {
     html = filtered.map(function(item) {
       var origIdx = bookmarkData.findIndex(function(b) { return b.title === item.title && b.url === item.url; });
       var validUrl = /^https?:\/\//i.test(item.url) ? item.url : 'https://' + item.url;
+      
+      var starSvg = item.isFavorite 
+        ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="#ffd700" stroke="#ffd700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>'
+        : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>';
+      var favMargin = isEditMode ? 'margin-left:auto; margin-right:32px;' : 'margin-left:auto;';
+      var favBtnHtml = '<button class="bm-favorite-btn" onclick="event.preventDefault(); event.stopPropagation(); window.bmToggleFavorite(' + origIdx + ');" title="\uC990\uACA8\uCC3E\uAE30" style="' + favMargin + ' background:transparent; border:none; color:var(--muted); cursor:pointer; padding:4px; display:flex; align-items:center;">' + starSvg + '</button>';
+
       if (isEditMode) {
         return '<div class="bookmark-card edit-mode-card" onclick="bmOpenModal(' + origIdx + ')" style="cursor:pointer;position:relative;">'
           + faviconImg(validUrl)
           + '<span class="bm-title">' + item.title + '</span>'
+          + favBtnHtml
           + '<button class="bm-delete-btn" title="\uC0AD\uC81C" onclick="event.stopPropagation();bmDelete(' + origIdx + ');">'
           + '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>'
           + '</button></div>';
@@ -313,6 +328,7 @@ function renderBookmarks() {
         return '<a href="' + validUrl + '" target="_blank" rel="noopener" class="bookmark-card" data-url="' + validUrl + '">'
           + faviconImg(validUrl)
           + '<span class="bm-title">' + item.title + '</span>'
+          + favBtnHtml
           + '</a>';
       }
     }).join('');
@@ -352,6 +368,14 @@ window.bmOpenModal = openModal;
 window.bmDelete = function(idx) {
   if (confirm('\uC774 \uBD81\uB9C8\uD06C\uB97C \uC0AD\uC81C\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?')) {
     bookmarkData.splice(idx, 1);
+    saveToStorage();
+    renderBookmarks();
+  }
+};
+
+window.bmToggleFavorite = function(idx) {
+  if (bookmarkData[idx]) {
+    bookmarkData[idx].isFavorite = !bookmarkData[idx].isFavorite;
     saveToStorage();
     renderBookmarks();
   }
