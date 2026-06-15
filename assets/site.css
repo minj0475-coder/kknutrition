@@ -5530,33 +5530,45 @@ nav a.active {
 .memo-modal-header button:hover { background: rgba(0,0,0,0.05); }
 .memo-modal-body { padding: 20px 24px; overflow-y: auto; flex: 1; }
 
-/* Bottom Action Button */
-.bottom-action-wrap {
-  display: flex;
-  justify-content: center;
-  margin-top: 40px;
-  margin-bottom: 20px;
-}
-.bottom-action-btn {
+/* Floating Action Button (FAB) Text Edit */
+.fab-edit-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 9999;
   background: var(--primary);
   color: #fff;
   border: none;
-  border-radius: 8px;
-  padding: 16px 48px;
-  font-size: 18px;
+  border-radius: 30px;
+  padding: 14px 28px;
+  font-size: 16px;
   font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 4px 15px rgba(255,107,107,0.3);
-  transition: all 0.2s;
-  letter-spacing: -0.5px;
-}
-.bottom-action-btn:hover {
-  transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(255,107,107,0.4);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-.bottom-action-btn.saving {
+.fab-edit-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(255,107,107,0.5);
+}
+.fab-edit-btn:active {
+  transform: translateY(1px) scale(0.95);
+}
+.fab-edit-btn.saving {
   background: #333;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+@media(max-width: 640px) {
+  .fab-edit-btn {
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 24px;
+    font-size: 15px;
+  }
+  .page-section .wrap {
+    padding-bottom: 90px !important;
+  }
 }
 .editable-content {
   transition: all 0.2s ease;

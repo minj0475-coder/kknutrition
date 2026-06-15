@@ -452,7 +452,7 @@ syncAnnualMobileCards();
 });
 
 // Setup Edit/Save buttons
-document.querySelectorAll('.bottom-action-btn').forEach(btn => {
+document.querySelectorAll('.fab-edit-btn').forEach(btn => {
   btn.addEventListener('click', (e) => {
     const targetBtn = e.currentTarget;
     const pageId = targetBtn.getAttribute('data-target');
@@ -465,7 +465,7 @@ document.querySelectorAll('.bottom-action-btn').forEach(btn => {
     if (!isEditing) {
       // Enter edit mode
       editingState[pageId] = true;
-      targetBtn.textContent = "변경사항 저장";
+      targetBtn.textContent = "저장하기";
       targetBtn.classList.add('saving');
       
       editables.forEach(el => {
