@@ -1,4 +1,4 @@
-﻿window.addEventListener("load",function(){if(typeof XLSX==="undefined"){var s=document.createElement("script");s.src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js";document.head.appendChild(s);}});
+window.addEventListener("load",function(){if(typeof XLSX==="undefined"){var s=document.createElement("script");s.src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js";document.head.appendChild(s);}});
 
 ;
 
@@ -588,7 +588,9 @@ function renderHomeTodayMenu(data) {
   }
   const names = section.items.map(item => item.name);
   target.innerHTML = `
-    <p class="home-today-summary">${menuEsc(names.join(", "))}</p>
+    <div class="menu-summary-v2">
+      ${names.map(n => `<span class="menu-tag">${menuEsc(n)}</span>`).join("")}
+    </div>
     <div class="home-today-list">
       ${section.items.map(item => `
         <article class="menu-card-v2 home-today-menu-card">
