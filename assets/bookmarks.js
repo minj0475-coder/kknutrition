@@ -57,6 +57,7 @@ if (savedBookmarks) {
 
 let currentCategory = "전체";
 let currentSearch = "";
+let isBookmarkEditMode = false;
 
 document.addEventListener("DOMContentLoaded", () => {
   renderFilterChips();
@@ -70,8 +71,28 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 연결: 모달 로직
-  setupBookmarkEditorModal();
+  // Edit Mode Toggle Button
+  const editBtn = document.getElementById("editBtnBookmarks");
+  if (editBtn) {
+    editBtn.classList.remove("fab-edit-btn");
+    editBtn.classList.add("fab-bookmark-edit-btn");
+    editBtn.innerHTML = "수정";
+    
+    editBtn.addEventListener("click", () => {
+      isBookmarkEditMode = !isBookmarkEditMode;
+      if (isBookmarkEditMode) {
+        editBtn.innerHTML = "저장";
+        editBtn.classList.add("saving"); // use saving style for active state
+      } else {
+        editBtn.innerHTML = "수정";
+        editBtn.classList.remove("saving");
+      }
+      renderBookmarks();
+    });
+  }
+
+  // Single Editor Modal Setup
+  setupBookmarkSingleEditor();
 });
 
 function renderFilterChips() {
@@ -122,121 +143,141 @@ function renderBookmarks() {
     );
   }
   
-  if (filtered.length === 0) {
-    container.innerHTML = `<div class="empty-bookmark">조건에 맞는 북마크가 없습니다.</div>`;
-    return;
-  }
-  
-  container.innerHTML = filtered.map(item => `
-    <a href="${item.url}" target="_blank" rel="noopener" class="bookmark-card">
-      <img src="${getFaviconUrl(item.url)}" class="bm-favicon" alt="" loading="lazy">
-      <span class="bm-title">${item.title}</span>
-    </a>
-  `).join("");
-}
+  let html = '';
 
-// ============================================
-// 북마크 편집 모달 로직
-// ============================================
-function setupBookmarkEditorModal() {
-  const editBtn = document.getElementById("editBtnBookmarks");
-  const modalOverlay = document.getElementById("bookmarkEditorOverlay");
-  const closeBtn = document.getElementById("bookmarkEditorClose");
-  const addBtn = document.getElementById("bookmarkEditorAddRow");
-  const saveBtn = document.getElementById("bookmarkEditorSave");
-  const tbody = document.getElementById("bookmarkEditorTbody");
-
-  if (!editBtn || !modalOverlay || !tbody) return;
-
-  // 기존 텍스트 수정 기능 무력화 (클래스 변경)
-  editBtn.classList.remove("fab-edit-btn");
-  editBtn.classList.add("fab-bookmark-edit-btn");
-  editBtn.innerHTML = "관리";
-
-  editBtn.addEventListener("click", () => {
-    renderEditorRows();
-    modalOverlay.style.display = "flex";
-    setTimeout(() => modalOverlay.classList.add("active"), 10);
-  });
-
-  closeBtn.addEventListener("click", closeModal);
-  modalOverlay.addEventListener("click", (e) => {
-    if(e.target === modalOverlay) closeModal();
-  });
-
-  function closeModal() {
-    modalOverlay.classList.remove("active");
-    setTimeout(() => modalOverlay.style.display = "none", 200);
-  }
-
-  addBtn.addEventListener("click", () => {
-    const tr = createRowHTML({ title: "", url: "", category: "필수 업무" });
-    tbody.insertAdjacentHTML('beforeend', tr);
-  });
-
-  saveBtn.addEventListener("click", () => {
-    const newBookmarks = [];
-    const rows = tbody.querySelectorAll(".editor-row");
-    rows.forEach(row => {
-      const title = row.querySelector(".edit-title").value.trim();
-      const url = row.querySelector(".edit-url").value.trim();
-      const category = row.querySelector(".edit-category").value;
+  if (filtered.length === 0 && !isBookmarkEditMode) {
+    html = `<div class="empty-bookmark">조건에 맞는 북마크가 없습니다.</div>`;
+  } else {
+    html = filtered.map((item) => {
+      // Find original index to allow direct editing
+      const originalIndex = bookmarkData.findIndex(b => b.title === item.title && b.url === item.url);
       
-      if (title && url) {
-        newBookmarks.push({ title, url, category });
+      if (isBookmarkEditMode) {
+        return `
+          <div class="bookmark-card edit-mode-card" data-index="${originalIndex}" style="cursor: pointer; position: relative;">
+            <img src="${getFaviconUrl(item.url)}" class="bm-favicon" alt="" loading="lazy">
+            <span class="bm-title">${item.title}</span>
+            <button class="bm-delete-btn" data-index="${originalIndex}" title="삭제">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+          </div>
+        `;
+      } else {
+        return `
+          <a href="${item.url}" target="_blank" rel="noopener" class="bookmark-card">
+            <img src="${getFaviconUrl(item.url)}" class="bm-favicon" alt="" loading="lazy">
+            <span class="bm-title">${item.title}</span>
+          </a>
+        `;
       }
+    }).join("");
+  }
+
+  if (isBookmarkEditMode) {
+    // Add the "+ 새 북마크 추가" card
+    html += `
+      <div class="bookmark-card add-new-card" style="cursor: pointer; border: 1px dashed var(--muted); background: transparent; justify-content: center;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        <span class="bm-title" style="color: var(--muted);">새 북마크 추가</span>
+      </div>
+    `;
+  }
+
+  container.innerHTML = html;
+
+  // Attach event listeners for Edit Mode
+  if (isBookmarkEditMode) {
+    container.querySelectorAll('.edit-mode-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        // Prevent opening if delete button was clicked
+        if (e.target.closest('.bm-delete-btn')) return;
+        const idx = card.dataset.index;
+        window.openBookmarkEditor(idx);
+      });
     });
 
-    bookmarkData = newBookmarks;
-    localStorage.setItem('kknutrition_bookmarks_v2', JSON.stringify(bookmarkData));
-    
-    // 카테고리 필터가 바뀔 수 있으니 재렌더링
-    renderFilterChips();
-    renderBookmarks();
-    closeModal();
-  });
+    container.querySelectorAll('.bm-delete-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const idx = btn.dataset.index;
+        if (confirm("정말로 이 북마크를 삭제하시겠습니까?")) {
+          bookmarkData.splice(idx, 1);
+          localStorage.setItem('kknutrition_bookmarks_v2', JSON.stringify(bookmarkData));
+          renderBookmarks();
+        }
+      });
+    });
 
-  function renderEditorRows() {
-    tbody.innerHTML = bookmarkData.map(item => createRowHTML(item)).join("");
-  }
-
-  // 삭제 버튼 이벤트 위임
-  tbody.addEventListener("click", (e) => {
-    if (e.target.closest(".edit-delete-btn")) {
-      e.target.closest("tr").remove();
+    const addCard = container.querySelector('.add-new-card');
+    if (addCard) {
+      addCard.addEventListener('click', () => {
+        window.openBookmarkEditor(-1); // -1 means new
+      });
     }
-  });
+  }
 }
 
-function createRowHTML(item) {
-  const categories = ["필수 업무", "급식·위생", "식재료·단가 관련", "소통·학교", "자료·연수", "기타"];
-  const options = categories.map(cat => 
-    `<option value="${cat}" ${cat === item.category ? 'selected' : ''}>${cat}</option>`
-  ).join("");
+// ============================================
+// 북마크 단일 편집 (인라인) 모달 로직
+// ============================================
+let editingIndex = -1;
 
-  return `
-    <div class="editor-row" style="display: flex; flex-direction: column; gap: 8px; background: #fff; padding: 16px; border-radius: 12px; border: 1px solid var(--line); position: relative;">
-      <button type="button" class="edit-delete-btn" style="position: absolute; top: 16px; right: 16px; background: none; border: none; color: var(--muted); cursor: pointer; padding: 4px; border-radius: 4px;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-      </button>
-      
-      <div style="display: flex; gap: 12px; margin-right: 32px;">
-        <div style="flex: 1;">
-          <label style="font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 4px; display: block;">카테고리</label>
-          <select class="edit-category input-field" style="width: 100%; border-radius: 8px; border: 1px solid var(--line); padding: 10px;">
-            ${options}
-          </select>
-        </div>
-        <div style="flex: 2;">
-          <label style="font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 4px; display: block;">사이트명</label>
-          <input type="text" class="edit-title input-field" placeholder="사이트명" value="${item.title.replace(/"/g, '&quot;')}" style="width: 100%; border-radius: 8px; border: 1px solid var(--line); padding: 10px; box-sizing: border-box;">
-        </div>
-      </div>
-      
-      <div>
-        <label style="font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 4px; display: block;">URL 주소</label>
-        <input type="text" class="edit-url input-field" placeholder="https://..." value="${item.url.replace(/"/g, '&quot;')}" style="width: 100%; border-radius: 8px; border: 1px solid var(--line); padding: 10px; box-sizing: border-box; background: var(--bg);">
-      </div>
-    </div>
-  `;
+function setupBookmarkSingleEditor() {
+  const modal = document.getElementById("bookmarkSingleEditorModal");
+  const closeBtn = document.getElementById("bookmarkSingleClose");
+  const saveBtn = document.getElementById("bookmarkSingleSave");
+  
+  if(!modal) return;
+
+  const catInput = document.getElementById("bSingleCat");
+  const nameInput = document.getElementById("bSingleName");
+  const urlInput = document.getElementById("bSingleUrl");
+  const titleEl = document.getElementById("bookmarkSingleTitle");
+
+  closeBtn.addEventListener("click", () => modal.style.display = "none");
+  modal.addEventListener("click", (e) => {
+    if(e.target === modal) modal.style.display = "none";
+  });
+
+  window.openBookmarkEditor = function(index) {
+    editingIndex = parseInt(index);
+    if (editingIndex >= 0) {
+      // Edit existing
+      titleEl.innerText = "북마크 수정";
+      const item = bookmarkData[editingIndex];
+      catInput.value = item.category || "기타";
+      nameInput.value = item.title || "";
+      urlInput.value = item.url || "";
+    } else {
+      // Add new
+      titleEl.innerText = "새 북마크 추가";
+      catInput.value = currentCategory === "전체" ? "필수 업무" : currentCategory;
+      nameInput.value = "";
+      urlInput.value = "";
+    }
+    modal.style.display = "flex";
+  };
+
+  saveBtn.addEventListener("click", () => {
+    const title = nameInput.value.trim();
+    const url = urlInput.value.trim();
+    const category = catInput.value;
+
+    if (!title || !url) {
+      alert("사이트명과 URL 주소를 모두 입력해주세요.");
+      return;
+    }
+
+    const newItem = { title, url, category };
+
+    if (editingIndex >= 0) {
+      bookmarkData[editingIndex] = newItem;
+    } else {
+      bookmarkData.push(newItem);
+    }
+
+    localStorage.setItem('kknutrition_bookmarks_v2', JSON.stringify(bookmarkData));
+    modal.style.display = "none";
+    renderBookmarks();
+  });
 }

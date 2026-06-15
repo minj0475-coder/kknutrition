@@ -5119,6 +5119,45 @@ nav a.active::after {
   background: rgba(255,255,255,0.03);
 }
 
+/* Edit Mode Card Styling */
+.edit-mode-card {
+  padding-right: 40px; /* space for delete btn */
+}
+.edit-mode-card:hover {
+  background: var(--card-soft);
+}
+.bm-delete-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 107, 107, 0.1);
+  color: #ff4757;
+  border: none;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+.edit-mode-card:hover .bm-delete-btn {
+  opacity: 1;
+}
+.bm-delete-btn:hover {
+  background: #ff4757;
+  color: #fff;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.add-new-card:hover {
+  background: var(--card-soft) !important;
+  border-color: var(--primary) !important;
+}
+
 .bm-favicon {
   width: 24px;
   height: 24px;
