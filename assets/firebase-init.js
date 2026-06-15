@@ -537,7 +537,9 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
 
 // ====== Navigation Guard Logic ======
 window.hasUnsavedChanges = () => {
-  return Object.values(editingState).some(state => state === true);
+  const otherUnsaved = Object.values(editingState).some(state => state === true);
+  const bookmarkUnsaved = (typeof window.isBookmarkEditMode === 'function' && window.isBookmarkEditMode());
+  return otherUnsaved || bookmarkUnsaved;
 };
 
 window.addEventListener('beforeunload', (e) => {

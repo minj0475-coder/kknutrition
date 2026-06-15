@@ -108,6 +108,10 @@ var currentSearch = '';
 var isEditMode = false;
 var editingIdx = -1;
 
+window.isBookmarkEditMode = function() {
+  return isEditMode;
+};
+
 // ---- Modal (created once) ----
 var _modal = null;
 
