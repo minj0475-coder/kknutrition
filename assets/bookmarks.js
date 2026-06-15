@@ -304,49 +304,54 @@ function setupBookmarkSingleEditor() {
   });
 
   window.openBookmarkEditor = function(index) {
-    editingIndex = parseInt(index);
-    if (editingIndex >= 0) {
-      // Edit existing
-      titleEl.innerText = "북마크 수정";
-      const item = bookmarkData[editingIndex];
-      catInput.value = item.category || "기타";
-      nameInput.value = item.title || "";
-      urlInput.value = item.url || "";
-    } else {
-      // Add new
-      titleEl.innerText = "새 북마크 추가";
-      catInput.value = currentCategory === "전체" ? "필수 업무" : currentCategory;
-      nameInput.value = "";
-      urlInput.value = "";
+    try {
+      editingIndex = parseInt(index);
+      if (editingIndex >= 0) {
+        titleEl.innerText = "북마크 수정";
+        const item = bookmarkData[editingIndex];
+        catInput.value = item.category || "기타";
+        nameInput.value = item.title || "";
+        urlInput.value = item.url || "";
+      } else {
+        titleEl.innerText = "새 북마크 추가";
+        catInput.value = currentCategory === "전체" ? "필수 업무" : currentCategory;
+        nameInput.value = "";
+        urlInput.value = "";
+      }
+      modal.style.display = "flex";
+    } catch(e) {
+      alert("모달 열기 오류: " + e.message);
     }
-    modal.style.display = "flex";
   };
 
   saveBtn.addEventListener("click", () => {
-    const title = nameInput.value.trim();
-    let url = urlInput.value.trim();
-    const category = catInput.value;
+    try {
+      const title = nameInput.value.trim();
+      let url = urlInput.value.trim();
+      const category = catInput.value;
 
-    if (!title || !url) {
-      alert("사이트명과 URL 주소를 모두 입력해주세요.");
-      return;
+      if (!title || !url) {
+        alert("사이트명과 URL 주소를 모두 입력해주세요.");
+        return;
+      }
+
+      if (!/^https?:\/\//i.test(url)) {
+        url = "https://" + url;
+      }
+
+      const newItem = { title, url, category };
+
+      if (editingIndex >= 0) {
+        bookmarkData[editingIndex] = newItem;
+      } else {
+        bookmarkData.push(newItem);
+      }
+
+      localStorage.setItem('kknutrition_bookmarks_v2', JSON.stringify(bookmarkData));
+      modal.style.display = "none";
+      renderBookmarks();
+    } catch(e) {
+      alert("저장 오류: " + e.message);
     }
-
-    // http:// 또는 https:// 로 시작하지 않으면 자동으로 https:// 붙이기
-    if (!/^https?:\/\//i.test(url)) {
-      url = "https://" + url;
-    }
-
-    const newItem = { title, url, category };
-
-    if (editingIndex >= 0) {
-      bookmarkData[editingIndex] = newItem;
-    } else {
-      bookmarkData.push(newItem);
-    }
-
-    localStorage.setItem('kknutrition_bookmarks_v2', JSON.stringify(bookmarkData));
-    modal.style.display = "none";
-    renderBookmarks();
   });
 }
