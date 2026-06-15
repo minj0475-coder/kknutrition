@@ -1,4 +1,4 @@
-﻿// ============================================================
+// ============================================================
 // bookmarks.js — 북마크 관리 스크립트 (완전 재작성 v2)
 // ============================================================
 
@@ -250,7 +250,19 @@ const LOCAL_ICONS = {
   "www.s2b.kr": "assets/images/bookmarks/www.s2b.kr.ico",
   "www.moaform.com": "assets/images/bookmarks/www.moaform.com.ico",
   "ercedu.hunet.co.kr": "assets/images/bookmarks/ercedu.hunet.co.kr.png",
-  "www.foodsafetykorea.go.kr": "assets/images/bookmarks/www.foodsafetykorea.go.kr.png"
+  "www.foodsafetykorea.go.kr": "assets/images/bookmarks/www.foodsafetykorea.go.kr.png",
+  "ns.eat.co.kr": "assets/images/bookmarks/ns.eat.co.kr.ico",
+  "www.gpoe.kr": "assets/images/bookmarks/www.gpoe.kr.ico",
+  "market.bluesis.com": "assets/images/bookmarks/market.bluesis.com.ico",
+  "www.cjschoolfood.com": "assets/images/bookmarks/www.cjschoolfood.com.ico",
+  "pulstory.pulmuone.com": "assets/images/bookmarks/pulstory.pulmuone.com.ico",
+  "www.sfic.go.kr": "assets/images/bookmarks/www.sfic.go.kr.ico",
+  "www.kdclub.com": "assets/images/bookmarks/www.kdclub.com.ico",
+  "chamssaem.com": "assets/images/bookmarks/chamssaem.com.ico",
+  "read365.edunet.net": "assets/images/bookmarks/read365.edunet.net.ico",
+  "www.jtschoolsms.com": "assets/images/bookmarks/www.jtschoolsms.com.png",
+  "agora-nutrition.com": "assets/images/bookmarks/agora-nutrition.com.png",
+  "more.goe.go.kr": "assets/images/bookmarks/more.goe.go.kr.ico"
 };
 
 function extractDomain(url) {

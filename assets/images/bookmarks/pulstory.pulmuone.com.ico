@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="Generator" content="오감소프트">
+<meta name="Author" content="오감소프트">
+<meta name="Keywords" content="">
+<meta name="Description" content="">
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<title>페이지를 찾을 수 없습니다.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+	html, body {
+		padding: 0;
+		margin: 0;
+        overflow: hidden;
+	} 
+    .hidden-sm, .hidden-xs{display: block !important;}
+    .hidden-lg, .hidden-md{display: none !important;}
+    @media (max-width: 991px) {
+        .hidden-sm, .hidden-xs{display: none !important;}
+        .hidden-lg, .hidden-md{display: block !important;}
+    }
+
+	@font-face {
+	  font-family: 'S-CoreDream-1Thin';
+	  src: url('/font/S-CoreDream-1Thin.eot');
+	  src: url('/font/S-CoreDream-1Thin.eot?#iefix') format('embedded-opentype'),
+		   url('/font/S-CoreDream-1Thin.svg#S-CoreDream-6Bold') format('svg'),
+		   url('/font/S-CoreDream-1Thin.woff') format('woff');
+	  font-weight: normal;
+	  font-style: normal;
+	}
+	@font-face {
+	  font-family: 'S-CoreDream-2ExtraLight';
+	  src: url('/font/S-CoreDream-2ExtraLight.eot');
+	  src: url('/font/S-CoreDream-2ExtraLight.eot?#iefix') format('embedded-opentype'),
+		   url('/font/S-CoreDream-2ExtraLight.svg#S-CoreDream-6Bold') format('svg'),
+		   url('/font/S-CoreDream-2ExtraLight.woff') format('woff');
+	  font-weight: normal;
+	  font-style: normal;
+	}
+	@font-face {
+	  font-family: 'S-CoreDream-3Light';
+	  src: url('/font/S-CoreDream-3Light.eot');
+	  src: url('/font/S-CoreDream-3Light.eot?#iefix') format('embedded-opentype'),
+		   url('/font/S-CoreDream-3Light.svg#S-CoreDream-6Bold') format('svg'),
+		   url('/font/S-CoreDream-3Light.woff') format('woff');
+	  font-weight: normal;
+	  font-style: normal;
+	}
+	@font-face {
+	  font-family: 'S-CoreDream-4Regular';
+	  src: url('/font/S-CoreDream-4Regular.eot');
+	  src: url('/font/S-CoreDream-4Regular.eot?#iefix') format('embedded-opentype'),
+		   url('/font/S-CoreDream-4Regular.svg#S-CoreDream-6Bold') format('svg'),
+		   url('/font/S-CoreDream-4Regular.woff') format('woff');
+	  font-weight: normal;
+	  font-style: normal;
+	}
+	@font-face {
+	  font-family: 'S-CoreDream-5Medium';
+	  src: url('/font/S-CoreDream-5Medium.eot');
+	  src: url('/font/S-CoreDream-5Medium.eot?#iefix') format('embedded-opentype'),
+		   url('/font/S-CoreDream-5Medium.svg#S-CoreDream-6Bold') format('svg'),
+		   url('/font/S-CoreDream-5Medium.woff') format('woff');
+	  font-weight: normal;
+	  font-style: normal;
+	}
+	@font-face {
+	  font-family: 'S-CoreDream-6Bold';
+	  src: url('/font/S-CoreDream-6Bold.eot');
+	  src: url('/font/S-CoreDream-6Bold.eot?#iefix') format('embedded-opentype'),
+		   url('/font/S-CoreDream-6Bold.svg#S-CoreDream-6Bold') format('svg'),
+		   url('/font/S-CoreDream-6Bold.woff') format('woff');
+	  font-weight: normal;
+	  font-style: normal;
+	}
+	@font-face {
+	  font-family: 'S-CoreDream-8Heavy';
+	  src: url('/font/S-CoreDream-8Heavy.eot');
+	  src: url('/font/S-CoreDream-8Heavy.eot?#iefix') format('embedded-opentype'),
+		   url('/font/S-CoreDream-8Heavy.svg#S-CoreDream-6Bold') format('svg'),
+		   url('/font/S-CoreDream-8Heavy.woff') format('woff');
+	  font-weight: normal;
+	  font-style: normal;
+	}
+	@font-face {
+	  font-family: 'S-CoreDream-9Black';
+	  src: url('/font/S-CoreDream-9Black.eot');
+	  src: url('/font/S-CoreDream-9Black.eot?#iefix') format('embedded-opentype'),
+		   url('/font/S-CoreDream-9Black.svg#S-CoreDream-6Bold') format('svg'),
+		   url('/font/S-CoreDream-9Black.woff') format('woff');
+	  font-weight: normal;
+	  font-style: normal;
+	}
+
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
+	
+	
+    /* 기존
+	.page-content { 
+		text-align:center; 
+		padding: 350px 0; 
+	}
+
+	.page-content h1 {
+		font-size: 48px;
+		word-spacing: 4px;
+		font-family: 'S-CoreDream-6Bold';
+		color: #4c4c4c;
+		margin: 0;
+		padding: 0;
+	}
+
+	.page-content h2 {
+		font-size: 40px;
+		word-spacing: 4px;
+		font-family: 'S-CoreDream-6Bold';
+		color: #4794da;
+		margin: 0;
+		padding: 50px 0 0 0;
+	}
+	.page-content h3 {
+		font-size: 28px;
+		word-spacing: 4px;
+		font-family: 'S-CoreDream-6Bold';
+		color: #4c4c4c;
+		margin: 0;
+		padding: 0;
+	}
+	
+	.page-content .go_box {
+		padding-top: 50px;
+	}
+
+	.page-content .go_box a.go_btn {
+		border: solid 1px #4d92d5;
+		color: white;
+		background: #4d92d5;
+		padding: 10px;
+		border-radius: 13px;
+		text-decoration:none;
+	}
+
+	@media screen and (max-width: 768px) {
+		.page-content h1 {
+			font-size: 36px;
+			word-spacing: 4px;
+		}
+
+		.page-content h2 {
+			font-size: 26px;
+			word-spacing: 4px;
+		}
+		.page-content h3 {
+			font-size: 18px;
+			word-spacing: 4px;
+		}
+	}
+    */
+
+    .page-content{
+        background-color: #d6e2ee;
+    }
+    .page-content .container_fix{
+        width: 1330px;
+        padding: 0 15px;
+        max-width: 100%;
+        margin: 0 auto;
+        display: flex;
+        height: 100vh;
+    }
+    .page-content .text_box{
+        /* padding-left: 50.4%; */
+        padding-top: 253px;
+    }
+    .page-content h1{
+        color: #235bf5;
+        font-size: 200px;
+        font-weight: 800;
+        font-family: 'Montserrat', sans-serif;
+        margin: 0;
+        line-height: 147px;
+    }
+    .page-content h2{
+        color: #222222;
+        font-size: 60px;
+        font-weight: 700;
+        font-family: 'Montserrat', sans-serif;
+        margin: 74px 0 28px;
+    }
+    .page-content h3{
+        color: #666666;
+        font-size: 25px;
+        font-weight: 500;
+        margin: 28px 0 70px;
+    }
+    .page-content .go_box a{
+        color: #fff;
+        font-size: 18px;
+        font-weight: 500;
+        background: #222222;
+        border-radius: 30px;
+        line-height: 60px;
+        padding: 0 31px;
+        display: inline-block;
+        text-decoration: none;
+    }
+
+    @media screen and (max-width: 1300px){
+        .page-content .container_fix{
+            width: auto;
+        }
+        .page-content .img_box img{
+            width: 80%;
+        }
+        .page-content .text_box{
+            padding-top: 150px;
+        }
+    }
+    @media screen and (max-width: 991px){
+        .page-content .container_fix{
+            display: block;
+        }
+        .page-content .img_box img{
+            width: 50%;
+            margin: 0 auto;
+        }
+        .page-content .text_box{
+            padding-top: 0;
+            text-align: center;
+        }
+        .page-content h1{
+            font-size: 90px;
+            line-height: 66px;
+        }
+        .page-content h2{
+            font-size: 27px;
+            margin: 30px 0 25px;
+        }
+        .page-content h3{
+            font-size: 12px;
+            margin: 25px 0 30px;
+        }
+        .page-content .go_box a{
+            font-size: 13px;
+            line-height: 42.5px;
+            padding: 0 24.22px;
+        }
+    }
+    @media screen and (max-width: 480px){
+        .page-content .img_box img{width: 100%;}
+    }
+</style>
+</head>
+<body>
+	<div class="page-content">
+                <!-- 231016 수정 -->
+        <div class="404_box container_fix">
+            <div class="img_box">
+                <img src="/img/404_img.png" alt="404" class="hidden-sm hidden-xs">
+                <img src="/img/m404_img.png" alt="404" class="hidden-lg hidden-md">
+            </div>
+            <div class="text_box">
+                <h1>404</h1>
+                <h2>Page not found</h2>
+                <h3>홈페이지에서 해당경로를 찾을 수 없습니다.</h3>
+                <div class="go_box">
+                    <a href="http://fivesense.co.kr" class="go_btn">파이브센스 바로가기</a>
+                </div>
+            </div>
+        </div>
+	</div>
+</body>
+</html>
