@@ -138,7 +138,7 @@ function renderMemoList(containerId, isHome) {
       if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
         textarea.blur();
-      } else if (e.key === "ArrowDown" || (e.key === "Enter" && e.shiftKey)) {
+      } else if (e.key === "Enter" && e.shiftKey) {
         e.preventDefault();
         if (isHome && memos.length >= 3) {
             openMemoModal();
@@ -153,13 +153,61 @@ function renderMemoList(containerId, isHome) {
         }, 10);
       } else if (e.key === "ArrowUp") {
         e.preventDefault();
-        if (index > 0) {
+        if (textarea.value === "" && memos.length > 1) {
+          memos.splice(index, 1);
+          saveMemos();
+          updateAllMemosDOM();
+          const targetIndex = index > 0 ? index - 1 : 0;
+          setTimeout(() => {
+            const targetTextarea = container.children[targetIndex]?.querySelector("textarea");
+            if (targetTextarea) {
+              targetTextarea.focus({ preventScroll: true });
+              const len = targetTextarea.value.length;
+              targetTextarea.setSelectionRange(len, len);
+            }
+          }, 10);
+        } else if (index > 0) {
           const prevTextarea = container.children[index - 1]?.querySelector("textarea");
           if (prevTextarea) {
             prevTextarea.focus({ preventScroll: true });
             const len = prevTextarea.value.length;
             prevTextarea.setSelectionRange(len, len);
           }
+        }
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        if (textarea.value === "" && memos.length > 1) {
+          memos.splice(index, 1);
+          saveMemos();
+          updateAllMemosDOM();
+          const targetIndex = index < memos.length ? index : index - 1;
+          setTimeout(() => {
+            const targetTextarea = container.children[targetIndex]?.querySelector("textarea");
+            if (targetTextarea) {
+              targetTextarea.focus({ preventScroll: true });
+              const len = targetTextarea.value.length;
+              targetTextarea.setSelectionRange(len, len);
+            }
+          }, 10);
+        } else if (index < memos.length - 1) {
+          const nextTextarea = container.children[index + 1]?.querySelector("textarea");
+          if (nextTextarea) {
+            nextTextarea.focus({ preventScroll: true });
+            const len = nextTextarea.value.length;
+            nextTextarea.setSelectionRange(len, len);
+          }
+        } else {
+          if (isHome && memos.length >= 3) {
+              openMemoModal();
+              return;
+          }
+          memos.splice(index + 1, 0, { text: "", checked: false });
+          saveMemos();
+          updateAllMemosDOM();
+          setTimeout(() => {
+            const nextTextarea = container.children[index + 1]?.querySelector("textarea");
+            if (nextTextarea) nextTextarea.focus({ preventScroll: true });
+          }, 10);
         }
       } else if (e.key === "Backspace" && textarea.value === "" && memos.length > 1) {
         e.preventDefault();
