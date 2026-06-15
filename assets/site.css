@@ -5121,7 +5121,7 @@ nav a.active::after {
 
 /* Edit Mode Card Styling */
 .edit-mode-card {
-  padding-right: 40px; /* space for delete btn */
+  outline: 1px dashed var(--muted);
 }
 .edit-mode-card:hover {
   background: var(--card-soft);
@@ -5143,6 +5143,9 @@ nav a.active::after {
   cursor: pointer;
   opacity: 0;
   transition: all 0.2s ease;
+}
+.edit-mode-card .bm-delete-btn {
+  opacity: 0.35;
 }
 .edit-mode-card:hover .bm-delete-btn {
   opacity: 1;
