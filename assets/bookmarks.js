@@ -91,6 +91,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Click Tracker for Sorting
+  const container = document.getElementById("bookmarkGrid");
+  if (container) {
+    container.addEventListener("click", (e) => {
+      if (isBookmarkEditMode) return;
+      const card = e.target.closest("a.bookmark-card");
+      if (card) {
+        const href = card.getAttribute("href");
+        const item = bookmarkData.find(b => {
+          const validUrl = /^https?:\/\//i.test(b.url) ? b.url : 'https://' + b.url;
+          return validUrl === href;
+        });
+        if (item) {
+          item.clickCount = (item.clickCount || 0) + 1;
+          localStorage.setItem('kknutrition_bookmarks_v2', JSON.stringify(bookmarkData));
+          // No need to re-render immediately to prevent UI jumps while opening link
+        }
+      }
+    });
+  }
+
   // Single Editor Modal Setup
   setupBookmarkSingleEditor();
 });
@@ -129,9 +150,12 @@ function renderBookmarks() {
   const container = document.getElementById("bookmarkGrid");
   if(!container) return;
   
-  let filtered = bookmarkData;
+  let filtered = [...bookmarkData];
   
-  if (currentCategory !== "전체") {
+  if (currentCategory === "전체") {
+    // 자주 클릭하는 순서대로 정렬 (내림차순)
+    filtered.sort((a, b) => (b.clickCount || 0) - (a.clickCount || 0));
+  } else {
     filtered = filtered.filter(item => item.category === currentCategory);
   }
   
