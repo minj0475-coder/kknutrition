@@ -245,7 +245,7 @@ const LOCAL_ICONS = {
   "gimpo.haccpcook.or.kr": "assets/images/bookmarks/gimpo.haccpcook.or.kr.png",
   "dairy.schoolmilk.or.kr": "assets/images/bookmarks/dairy.schoolmilk.or.kr.ico",
   "school.iamservice.net": "assets/images/bookmarks/school.iamservice.net.ico",
-  "www.gwp.or.kr": "assets/images/bookmarks/www.gwp.or.kr.ico",
+  "www.gwp.or.kr": "assets/images/bookmarks/www.gwp.or.kr.png",
   "www.ekape.or.kr": "assets/images/bookmarks/www.ekape.or.kr.ico",
   "www.s2b.kr": "assets/images/bookmarks/www.s2b.kr.ico",
   "ercedu.hunet.co.kr": "assets/images/bookmarks/ercedu.hunet.co.kr.png",
