@@ -49,11 +49,15 @@ a{color:inherit;text-decoration:none}
   z-index:50;
   background:#ffffff;
   border-bottom:1px solid var(--line);
+  height: 60px !important;
+  box-sizing: border-box !important;
 }
 .top-inner{
   max-width:1240px;
   margin:0 auto;
-  padding:12px 20px;
+  padding: 0 20px;
+  height: 100% !important;
+  box-sizing: border-box !important;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -4992,7 +4996,10 @@ nav a.active, .mobile-nav-list a.active {
 .drawer-header {
   display: flex;
   justify-content: flex-end;
-  padding: 16px;
+  align-items: center;
+  height: 60px !important;
+  padding: 0 16px;
+  box-sizing: border-box !important;
   border-bottom: 1px solid var(--line);
 }
 
