@@ -145,6 +145,7 @@ function renderMemoList(containerId, isHome) {
             return;
         }
         memos.splice(index + 1, 0, { text: "", checked: false });
+        textarea.blur();
         saveMemos();
         updateAllMemosDOM();
         setTimeout(() => {
@@ -155,6 +156,7 @@ function renderMemoList(containerId, isHome) {
         e.preventDefault();
         if (textarea.value === "" && memos.length > 1) {
           memos.splice(index, 1);
+          textarea.blur();
           saveMemos();
           updateAllMemosDOM();
           const targetIndex = index > 0 ? index - 1 : 0;
@@ -178,9 +180,10 @@ function renderMemoList(containerId, isHome) {
         e.preventDefault();
         if (textarea.value === "" && memos.length > 1) {
           memos.splice(index, 1);
+          textarea.blur();
           saveMemos();
           updateAllMemosDOM();
-          const targetIndex = index < memos.length ? index : index - 1;
+          const targetIndex = index < memos.length ? index : memos.length - 1;
           setTimeout(() => {
             const targetTextarea = container.children[targetIndex]?.querySelector("textarea");
             if (targetTextarea) {
@@ -202,6 +205,7 @@ function renderMemoList(containerId, isHome) {
               return;
           }
           memos.splice(index + 1, 0, { text: "", checked: false });
+          textarea.blur();
           saveMemos();
           updateAllMemosDOM();
           setTimeout(() => {
@@ -212,17 +216,18 @@ function renderMemoList(containerId, isHome) {
       } else if (e.key === "Backspace" && textarea.value === "" && memos.length > 1) {
         e.preventDefault();
         memos.splice(index, 1);
+        textarea.blur();
         saveMemos();
         updateAllMemosDOM();
-        if (index > 0) {
-          setTimeout(() => {
-            const prevTextarea = container.children[index - 1]?.querySelector("textarea");
-            if (prevTextarea) {
-              prevTextarea.focus({ preventScroll: true });
-              prevTextarea.selectionStart = prevTextarea.value.length;
-            }
-          }, 10);
-        }
+        const targetIndex = index > 0 ? index - 1 : 0;
+        setTimeout(() => {
+          const targetTextarea = container.children[targetIndex]?.querySelector("textarea");
+          if (targetTextarea) {
+            targetTextarea.focus({ preventScroll: true });
+            const len = targetTextarea.value.length;
+            targetTextarea.setSelectionRange(len, len);
+          }
+        }, 10);
       }
     };
 
