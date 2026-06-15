@@ -261,7 +261,7 @@ function setupBookmarkSingleEditor() {
 
   saveBtn.addEventListener("click", () => {
     const title = nameInput.value.trim();
-    const url = urlInput.value.trim();
+    let url = urlInput.value.trim();
     const category = catInput.value;
 
     if (!title || !url) {
