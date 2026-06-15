@@ -5561,13 +5561,13 @@ nav a.active {
 
 @media(max-width: 640px) {
   .fab-edit-btn {
-    bottom: 20px;
-    right: 20px;
-    padding: 12px 24px;
-    font-size: 15px;
+    bottom: 16px;
+    right: 16px;
+    padding: 12px 20px;
+    font-size: 14px;
   }
   .page-section .wrap {
-    padding-bottom: 90px !important;
+    padding-bottom: 70px !important;
   }
 }
 .editable-content {

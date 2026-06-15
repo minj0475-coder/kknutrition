@@ -465,7 +465,7 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
     if (!isEditing) {
       // Enter edit mode
       editingState[pageId] = true;
-      targetBtn.textContent = "저장하기";
+      targetBtn.textContent = "저장";
       targetBtn.classList.add('saving');
       
       editables.forEach(el => {
@@ -487,7 +487,7 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
 
       if (!isFirebaseConfigured || !db) {
         editingState[pageId] = false;
-        targetBtn.textContent = "내용 수정";
+        targetBtn.textContent = "수정";
         targetBtn.classList.remove('saving');
         if (pageId === 'annual') syncAnnualMobileCards();
         return;
@@ -495,7 +495,7 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
 
       setDoc(doc(db, "pageContents", pageId), updateData).then(() => {
         editingState[pageId] = false;
-        targetBtn.textContent = "내용 수정";
+        targetBtn.textContent = "수정";
         targetBtn.classList.remove('saving');
         
         if (pageId === 'annual') {
@@ -505,7 +505,7 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
         console.error("Save failed:", err);
         alert("저장에 실패했습니다.");
         editingState[pageId] = false;
-        targetBtn.textContent = "내용 수정";
+        targetBtn.textContent = "수정";
         targetBtn.classList.remove('saving');
       });
     }
