@@ -168,14 +168,20 @@ function renderMemoList(containerId, isHome) {
               setTimeout(() => {
                   const modalList = document.getElementById("memoModalList");
                   const nextTextarea = modalList.children[index + 1]?.querySelector("textarea");
-                  if (nextTextarea) nextTextarea.focus({ preventScroll: true });
+                  if (nextTextarea) {
+                      nextTextarea.focus({ preventScroll: true });
+                      nextTextarea.parentElement.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                  }
               }, 100);
               return;
           }
           updateAllMemosDOM();
           setTimeout(() => {
             const nextTextarea = container.children[index + 1]?.querySelector("textarea");
-            if (nextTextarea) nextTextarea.focus({ preventScroll: true });
+            if (nextTextarea) {
+                nextTextarea.focus({ preventScroll: true });
+                nextTextarea.parentElement.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }
           }, 10);
         }
       } else if (e.key === "ArrowUp") {
@@ -253,14 +259,20 @@ function renderMemoList(containerId, isHome) {
                 setTimeout(() => {
                     const modalList = document.getElementById("memoModalList");
                     const nextTextarea = modalList.children[index + 1]?.querySelector("textarea");
-                    if (nextTextarea) nextTextarea.focus({ preventScroll: true });
+                    if (nextTextarea) {
+                        nextTextarea.focus({ preventScroll: true });
+                        nextTextarea.parentElement.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                    }
                 }, 100);
                 return;
             }
             updateAllMemosDOM();
             setTimeout(() => {
               const nextTextarea = container.children[index + 1]?.querySelector("textarea");
-              if (nextTextarea) nextTextarea.focus({ preventScroll: true });
+              if (nextTextarea) {
+                  nextTextarea.focus({ preventScroll: true });
+                  nextTextarea.parentElement.scrollIntoView({ behavior: "smooth", block: "nearest" });
+              }
             }, 10);
           }
         }
