@@ -112,6 +112,19 @@ window.isBookmarkEditMode = function() {
   return isEditMode;
 };
 
+window.exitBookmarkEditMode = function() {
+  if (!isEditMode) return;
+  isEditMode = false;
+  var editBtn = document.getElementById('editBtnBookmarks');
+  if (editBtn) {
+    editBtn.innerHTML = '\uC218\uC815'; // '수정'
+    editBtn.classList.remove('saving');
+  }
+  if (typeof renderBookmarks === 'function') {
+    renderBookmarks();
+  }
+};
+
 // ---- Modal (created once) ----
 var _modal = null;
 

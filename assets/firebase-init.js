@@ -631,6 +631,11 @@ document.addEventListener('click', (e) => {
           }
         }
       }
+      
+      if (typeof window.exitBookmarkEditMode === 'function') {
+        window.exitBookmarkEditMode();
+      }
+      
       cleanupAndClose();
       window.location.hash = targetHash;
     };
