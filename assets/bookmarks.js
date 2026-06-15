@@ -1,4 +1,4 @@
-// ============================================================
+﻿// ============================================================
 // bookmarks.js — 북마크 관리 스크립트 (완전 재작성 v2)
 // ============================================================
 
@@ -17,10 +17,10 @@ let bookmarkData = [
   { title: "공무원연금공단", url: "https://www.gwp.or.kr/wus/cmmn/lgn/login.jdo", category: "급식" },
   { title: "S2B (학교장터)", url: "https://www.s2b.kr/S2BNCustomer/S2B/", category: "급식" },
 
-  // 식재료·단가
-  { title: "블루시스 마켓", url: "https://market.bluesis.com/web/pc/main.php", category: "식재료·단가" },
-  { title: "틼틼스쿨", url: "https://www.cjschoolfood.com/", category: "식재료·단가" },
-  { title: "풀무원푸드머스 풀스토리", url: "https://pulstory.pulmuone.com/", category: "식재료·단가" },
+  // 공산·단가
+  { title: "블루시스 마켓", url: "https://market.bluesis.com/web/pc/main.php", category: "공산·단가" },
+  { title: "틼틼스쿨", url: "https://www.cjschoolfood.com/", category: "공산·단가" },
+  { title: "풀무원푸드머스 풀스토리", url: "https://pulstory.pulmuone.com/", category: "공산·단가" },
 
   // 자료
   { title: "식품안전나라 교육자료", url: "https://www.foodsafetykorea.go.kr/portal/board/boardDetail.do?menu_no=2880&menu_grp=MENU_NEW05&bbs_no=bbs110&ntctxt_no=1104499", category: "자료" },
@@ -63,7 +63,7 @@ let bookmarkData = [
             '급식·위생': '급식',
             '학교': '급식',
             '소통·학교': '급식',
-            '식재료·단가 관련': '식재료·단가',
+            '공산·단가 관련': '공산·단가',
             '자료·연수': '자료'
           };
           bookmarkData = parsed.map(function(b) {
@@ -212,7 +212,7 @@ function handleSave() {
 
 // ---- Filter Chips ----
 function renderFilterChips() {
-  var cats = ['전체', '급식', '식재료·단가', '자료', '기타'];
+  var cats = ['전체', '급식', '공산·단가', '자료', '기타'];
   var container = document.getElementById('bookmarkFilterChips');
   if (!container) return;
   container.innerHTML = cats.map(function(cat, i) {
@@ -240,7 +240,7 @@ function favicon(url) {
 }
 
 const LOCAL_ICONS = {
-  "goe.eduptl.kr": "assets/images/bookmarks/goe.eduptl.kr.png",
+  "goe.eduptl.kr": "assets/images/bookmarks/goe.eduptl.kr.ico",
   "mail.korea.kr": "assets/images/bookmarks/mail.korea.kr.ico",
   "gimpo.haccpcook.or.kr": "assets/images/bookmarks/gimpo.haccpcook.or.kr.png",
   "dairy.schoolmilk.or.kr": "assets/images/bookmarks/dairy.schoolmilk.or.kr.ico",
