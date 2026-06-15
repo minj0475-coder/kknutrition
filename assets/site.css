@@ -4972,6 +4972,33 @@ nav a.active::after {
   box-shadow: 0 2px 8px rgba(255,107,107,0.3) !important;
 }
 
+/* Secondary Buttons -> Soft Trendy Style (엑셀 업로드, 복사하기 등) */
+.btn.light, .download-btn, .copy-btn, .copy-btn-inline, .today-menu-show-all-btn, .sync-btn, .home-today-link {
+  background: #ffffff !important;
+  color: var(--text) !important;
+  border: 1.5px solid rgba(0,0,0,0.06) !important;
+  border-radius: 14px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.02) !important;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+  cursor: pointer !important;
+}
+.dark-mode .btn.light, .dark-mode .download-btn, .dark-mode .copy-btn, .dark-mode .copy-btn-inline, .dark-mode .today-menu-show-all-btn, .dark-mode .sync-btn, .dark-mode .home-today-link {
+  background: var(--card) !important;
+  border-color: rgba(255,255,255,0.06) !important;
+}
+.btn.light:hover, .download-btn:hover, .copy-btn:hover, .copy-btn-inline:hover, .today-menu-show-all-btn:hover, .sync-btn:hover, .home-today-link:hover {
+  background: var(--primary-soft) !important;
+  color: var(--primary-dark) !important;
+  border-color: var(--primary-soft) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.06) !important;
+}
+.btn.light:active, .download-btn:active, .copy-btn:active, .copy-btn-inline:active, .today-menu-show-all-btn:active, .sync-btn:active, .home-today-link:active {
+  transform: translateY(1px) !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04) !important;
+}
+
 .home-grid-left .daily-kkul-copy .daily-kkul-message {
   text-align: center !important;
   align-self: center !important;
