@@ -4819,11 +4819,12 @@ nav a.active, .mobile-nav-list a.active {
   font-size: 16px;
   color: var(--text);
   font-family: inherit;
-  width: 100%;
+  flex: 1;
+  min-width: 0;
   resize: none;
   outline: none;
   line-height: 1.5;
-  padding: 4px 0;
+  padding: 0;
   overflow: hidden;
 }
 .memo-hint {
@@ -5695,7 +5696,7 @@ nav a.active {
 /* Memo Modal & Home Limits */
 .memo-full-btn { background: transparent; border: none; padding: 10px; margin: -10px; cursor: pointer; color: var(--primary-dark); display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s; }
 .memo-full-btn:hover { background: rgba(0,0,0,0.05); }
-#memoList .memo-input { max-height: 32px !important; overflow: hidden !important; white-space: nowrap; text-overflow: ellipsis; line-height: 1.5; padding-right: 2px !important; resize: none !important; }
+#memoList .memo-input { max-height: 28px !important; overflow: hidden !important; white-space: nowrap; text-overflow: ellipsis; line-height: 1.5; padding-right: 2px !important; resize: none !important; }
 .memo-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
 .memo-modal-overlay.active { opacity: 1; pointer-events: auto; }
   gap: 12px !important;
@@ -5893,7 +5894,7 @@ nav a.active {
 /* Memo Modal & Home Limits */
 .memo-full-btn { background: transparent; border: none; padding: 10px; margin: -10px; cursor: pointer; color: var(--primary-dark); display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s; }
 .memo-full-btn:hover { background: rgba(0,0,0,0.05); }
-#memoList .memo-input { max-height: 32px !important; overflow: hidden !important; white-space: nowrap; text-overflow: ellipsis; line-height: 1.5; padding-right: 2px !important; resize: none !important; }
+#memoList .memo-input { max-height: 28px !important; overflow: hidden !important; white-space: nowrap; text-overflow: ellipsis; line-height: 1.5; padding-right: 2px !important; resize: none !important; }
 .memo-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
 .memo-modal-overlay.active { opacity: 1; pointer-events: auto; }
 .memo-modal { background: #fff; width: 90%; max-width: 500px; max-height: 85vh; border-radius: 20px; display: flex; flex-direction: column; box-shadow: 0 10px 40px rgba(0,0,0,0.2); overflow: hidden; transform: scale(0.95); transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
