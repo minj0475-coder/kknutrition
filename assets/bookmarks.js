@@ -3,26 +3,24 @@
 // ============================================================
 
 let bookmarkData = [
-  // 급식·위생 (기존 필수 업무 포함)
-  { title: "업무포털 메인", url: "https://goe.eduptl.kr/bpm_man_mn00_001.do", category: "급식·위생" },
-  { title: "공직자통합메일", url: "https://mail.korea.kr/", category: "급식·위생" },
-  { title: "SmartHACCP", url: "https://gimpo.haccpcook.or.kr/diet/", category: "급식·위생" },
-  { title: "공공급식통합플랫폼", url: "https://ns.eat.co.kr/NeaT/eats/index.html", category: "급식·위생" },
-  { title: "학교우유급식 정보시스템", url: "http://dairy.schoolmilk.or.kr/smis/smisweb/auth/login.html?v=1756168663985", category: "급식·위생" },
-  { title: "축산물원패스", url: "https://www.ekape.or.kr/kapecp/ui/kapecp/fastLogin.jsp?loginType=02", category: "급식·위생" },
+  // 급식 (기존 급식·위생 + 학교 포함)
+  { title: "업무포털 메인", url: "https://goe.eduptl.kr/bpm_man_mn00_001.do", category: "급식" },
+  { title: "공직자통합메일", url: "https://mail.korea.kr/", category: "급식" },
+  { title: "SmartHACCP", url: "https://gimpo.haccpcook.or.kr/diet/", category: "급식" },
+  { title: "공공급식통합플랫폼", url: "https://ns.eat.co.kr/NeaT/eats/index.html", category: "급식" },
+  { title: "학교우유급식 정보시스템", url: "http://dairy.schoolmilk.or.kr/smis/smisweb/auth/login.html?v=1756168663985", category: "급식" },
+  { title: "축산물원패스", url: "https://www.ekape.or.kr/kapecp/ui/kapecp/fastLogin.jsp?loginType=02", category: "급식" },
+  { title: "School SMS | 교사용", url: "https://www.jtschoolsms.com/alimee/login/loginForm.html", category: "급식" },
+  { title: "아이염스쿨", url: "https://school.iamservice.net/", category: "급식" },
+  { title: "청수초등학교", url: "https://www.gpoe.kr/cheongsu-e/main.do", category: "급식" },
+  { title: "청수초 도서관", url: "https://read365.edunet.net/PureScreen/SchoolSearch?schoolName=%EC%B2%AD%EC%88%98%EC%B4%88%EB%93%B1%ED%95%99%EA%B5%90&provCode=J10&neisCode=J100006046", category: "급식" },
+  { title: "공무원연금공단", url: "https://www.gwp.or.kr/wus/cmmn/lgn/login.jdo", category: "급식" },
+  { title: "S2B (학교장터)", url: "https://www.s2b.kr/S2BNCustomer/S2B/", category: "급식" },
 
   // 식재료·단가
   { title: "블루시스 마켓", url: "https://market.bluesis.com/web/pc/main.php", category: "식재료·단가" },
   { title: "틼틼스쿨", url: "https://www.cjschoolfood.com/", category: "식재료·단가" },
   { title: "풀무원푸드머스 풀스토리", url: "https://pulstory.pulmuone.com/", category: "식재료·단가" },
-
-  // 학교
-  { title: "School SMS | 교사용", url: "https://www.jtschoolsms.com/alimee/login/loginForm.html", category: "학교" },
-  { title: "아이염스쿨", url: "https://school.iamservice.net/", category: "학교" },
-  { title: "청수초등학교", url: "https://www.gpoe.kr/cheongsu-e/main.do", category: "학교" },
-  { title: "청수초 도서관", url: "https://read365.edunet.net/PureScreen/SchoolSearch?schoolName=%EC%B2%AD%EC%88%98%EC%B4%88%EB%93%B1%ED%95%99%EA%B5%90&provCode=J10&neisCode=J100006046", category: "학교" },
-  { title: "공무원연금공단", url: "https://www.gwp.or.kr/wus/cmmn/lgn/login.jdo", category: "학교" },
-  { title: "S2B (학교장터)", url: "https://www.s2b.kr/S2BNCustomer/S2B/", category: "학교" },
 
   // 자료
   { title: "식품안전나라 교육자료", url: "https://www.foodsafetykorea.go.kr/portal/board/boardDetail.do?menu_no=2880&menu_grp=MENU_NEW05&bbs_no=bbs110&ntctxt_no=1104499", category: "자료" },
@@ -44,29 +42,36 @@ let bookmarkData = [
   { title: "NAVER", url: "https://www.naver.com/", category: "기타" }
 ];
 
-// ---- LocalStorage (v3: new category names) ----
+// ---- LocalStorage (v4: new category names) ----
 (function loadFromStorage() {
   try {
-    // v3 키로 먼저 시도
-    var saved = localStorage.getItem('kknutrition_bookmarks_v3');
+    // v4 키로 먼저 시도
+    var saved = localStorage.getItem('kknutrition_bookmarks_v4');
     if (!saved) {
-      // v2 데이터가 있으면 마이그레이션
-      var old = localStorage.getItem('kknutrition_bookmarks_v2');
+      // v3 또는 v2 데이터가 있으면 마이그레이션
+      var old = localStorage.getItem('kknutrition_bookmarks_v3');
+      if (!old) {
+        old = localStorage.getItem('kknutrition_bookmarks_v2');
+      }
+      
       if (old) {
         var parsed = JSON.parse(old);
         if (Array.isArray(parsed) && parsed.length > 0) {
           // 카테고리명 매핑
           var catMap = {
-            '필수 업무': '급식·위생',
+            '필수 업무': '급식',
+            '급식·위생': '급식',
+            '학교': '급식',
+            '소통·학교': '급식',
             '식재료·단가 관련': '식재료·단가',
-            '소통·학교': '학교',
             '자료·연수': '자료'
           };
           bookmarkData = parsed.map(function(b) {
             return { title: b.title, url: b.url, category: catMap[b.category] || b.category, clickCount: b.clickCount || 0 };
           });
-          // v3 키로 저장 후 v2 삭제
-          localStorage.setItem('kknutrition_bookmarks_v3', JSON.stringify(bookmarkData));
+          // v4 키로 저장 후 과거 키 삭제
+          localStorage.setItem('kknutrition_bookmarks_v4', JSON.stringify(bookmarkData));
+          localStorage.removeItem('kknutrition_bookmarks_v3');
           localStorage.removeItem('kknutrition_bookmarks_v2');
         }
       }
@@ -78,7 +83,7 @@ let bookmarkData = [
 })();
 
 function saveToStorage() {
-  localStorage.setItem('kknutrition_bookmarks_v3', JSON.stringify(bookmarkData));
+  localStorage.setItem('kknutrition_bookmarks_v4', JSON.stringify(bookmarkData));
 }
 
 // ---- State ----
@@ -104,9 +109,8 @@ function getModal() {
     + '<h3 id="bmModalTitle" style="margin:0 0 20px;font-size:20px;font-weight:800;color:var(--heading);">\uC0C8 \uBD81\uB9C8\uD06C \uCD94\uAC00</h3>'
     + '<label style="font-size:13px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px;">\uCE74\uD14C\uACE0\uB9AC</label>'
     + '<select id="bmCat" style="width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--heading);font-size:14px;box-sizing:border-box;margin-bottom:14px;">'
-    + '<option value="\uae09\uc2dd\u00b7\uc704\uc0dd">\uae09\uc2dd\u00b7\uc704\uc0dd</option>'
+    + '<option value="\uae09\uc2dd">\uae09\uc2dd</option>'
     + '<option value="\uc2dd\uc7ac\ub8cc\u00b7\ub2e8\uac00">\uc2dd\uc7ac\ub8cc\u00b7\ub2e8\uac00</option>'
-    + '<option value="\ud559\uad50">\ud559\uad50</option>'
     + '<option value="\uc790\ub8cc">\uc790\ub8cc</option>'
     + '<option value="\uae30\ud0c0">\uae30\ud0c0</option>'
     + '</select>'
@@ -175,7 +179,7 @@ function handleSave() {
 
 // ---- Filter Chips ----
 function renderFilterChips() {
-  var cats = ['전체', '급식·위생', '식재료·단가', '학교', '자료', '기타'];
+  var cats = ['전체', '급식', '식재료·단가', '자료', '기타'];
   var container = document.getElementById('bookmarkFilterChips');
   if (!container) return;
   container.innerHTML = cats.map(function(cat, i) {
