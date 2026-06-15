@@ -3,62 +3,82 @@
 // ============================================================
 
 let bookmarkData = [
-  // 필수 업무
-  { title: "\uC5C5\uBB34\uD3EC\uD138 \uBA54\uC778", url: "https://goe.eduptl.kr/bpm_man_mn00_001.do", category: "\uD544\uC218 \uC5C5\uBB34" },
-  { title: "\uACF5\uC9C1\uC790\uD1B5\uD569\uBA54\uC77C", url: "https://mail.korea.kr/", category: "\uD544\uC218 \uC5C5\uBB34" },
+  // 급식·위생 (기존 필수 업무 포함)
+  { title: "업무포털 메인", url: "https://goe.eduptl.kr/bpm_man_mn00_001.do", category: "급식·위생" },
+  { title: "공직자통합메일", url: "https://mail.korea.kr/", category: "급식·위생" },
+  { title: "SmartHACCP", url: "https://gimpo.haccpcook.or.kr/diet/", category: "급식·위생" },
+  { title: "공공급식통합플랫폼", url: "https://ns.eat.co.kr/NeaT/eats/index.html", category: "급식·위생" },
+  { title: "학교우유급식 정보시스템", url: "http://dairy.schoolmilk.or.kr/smis/smisweb/auth/login.html?v=1756168663985", category: "급식·위생" },
+  { title: "축산물원패스", url: "https://www.ekape.or.kr/kapecp/ui/kapecp/fastLogin.jsp?loginType=02", category: "급식·위생" },
 
-  // 급식·위생
-  { title: "SmartHACCP", url: "https://gimpo.haccpcook.or.kr/diet/", category: "\uAE09\uC2DD\u00B7\uC704\uC0DD" },
-  { title: "\uACF5\uACF5\uAE09\uC2DD\uD1B5\uD569\uD50C\uB7AB\uD3FC", url: "https://ns.eat.co.kr/NeaT/eats/index.html", category: "\uAE09\uC2DD\u00B7\uC704\uC0DD" },
-  { title: "\uD559\uAD50\uC6B0\uC720\uAE09\uC2DD \uC815\uBCF4\uC2DC\uC2A4\uD15C", url: "http://dairy.schoolmilk.or.kr/smis/smisweb/auth/login.html?v=1756168663985", category: "\uAE09\uC2DD\u00B7\uC704\uC0DD" },
-  { title: "\uCD95\uC0B0\uBB3C\uC6D0\uD328\uC2A4", url: "https://www.ekape.or.kr/kapecp/ui/kapecp/fastLogin.jsp?loginType=02", category: "\uAE09\uC2DD\u00B7\uC704\uC0DD" },
+  // 식재료·단가
+  { title: "블루시스 마켓", url: "https://market.bluesis.com/web/pc/main.php", category: "식재료·단가" },
+  { title: "틼틼스쿨", url: "https://www.cjschoolfood.com/", category: "식재료·단가" },
+  { title: "풀무원푸드머스 풀스토리", url: "https://pulstory.pulmuone.com/", category: "식재료·단가" },
 
-  // 식재료·단가 관련
-  { title: "\uBE14\uB8E8\uC2DC\uC2A4 \uB9C8\uCF13", url: "https://market.bluesis.com/web/pc/main.php", category: "\uC2DD\uC7AC\uB8CC\u00B7\uB2E8\uAC00 \uAD00\uB828" },
-  { title: "\uD2FC\uD2FC\uC2A4\uCFE8", url: "https://www.cjschoolfood.com/", category: "\uC2DD\uC7AC\uB8CC\u00B7\uB2E8\uAC00 \uAD00\uB828" },
-  { title: "\uD480\uBB34\uC6D0\uD478\uB4DC\uBA38\uC2A4 \uD480\uC2A4\uD1A0\uB9AC", url: "https://pulstory.pulmuone.com/", category: "\uC2DD\uC7AC\uB8CC\u00B7\uB2E8\uAC00 \uAD00\uB828" },
+  // 학교
+  { title: "School SMS | 교사용", url: "https://www.jtschoolsms.com/alimee/login/loginForm.html", category: "학교" },
+  { title: "아이염스쿨", url: "https://school.iamservice.net/", category: "학교" },
+  { title: "청수초등학교", url: "https://www.gpoe.kr/cheongsu-e/main.do", category: "학교" },
+  { title: "청수초 도서관", url: "https://read365.edunet.net/PureScreen/SchoolSearch?schoolName=%EC%B2%AD%EC%88%98%EC%B4%88%EB%93%B1%ED%95%99%EA%B5%90&provCode=J10&neisCode=J100006046", category: "학교" },
+  { title: "공무원연금공단", url: "https://www.gwp.or.kr/wus/cmmn/lgn/login.jdo", category: "학교" },
+  { title: "S2B (학교장터)", url: "https://www.s2b.kr/S2BNCustomer/S2B/", category: "학교" },
 
-  // 소통·학교
-  { title: "School SMS | \uAD50\uC0AC\uC6A9", url: "https://www.jtschoolsms.com/alimee/login/loginForm.html", category: "\uC18C\uD1B5\u00B7\uD559\uAD50" },
-  { title: "\uC544\uC774\uC5FC\uC2A4\uCFE8", url: "https://school.iamservice.net/", category: "\uC18C\uD1B5\u00B7\uD559\uAD50" },
-  { title: "\uCCAD\uC218\uCD08\uB4F1\uD559\uAD50", url: "https://www.gpoe.kr/cheongsu-e/main.do", category: "\uC18C\uD1B5\u00B7\uD559\uAD50" },
-  { title: "\uCCAD\uC218\uCD08 \uB3C4\uC11C\uAD00", url: "https://read365.edunet.net/PureScreen/SchoolSearch?schoolName=%EC%B2%AD%EC%88%98%EC%B4%88%EB%93%B1%ED%95%99%EA%B5%90&provCode=J10&neisCode=J100006046", category: "\uC18C\uD1B5\u00B7\uD559\uAD50" },
-  { title: "\uACF5\uBB34\uC6D0\uC5F0\uAE08\uACF5\uB2E8", url: "https://www.gwp.or.kr/wus/cmmn/lgn/login.jdo", category: "\uC18C\uD1B5\u00B7\uD559\uAD50" },
-  { title: "S2B (\uD559\uAD50\uC7A5\uD130)", url: "https://www.s2b.kr/S2BNCustomer/S2B/", category: "\uC18C\uD1B5\u00B7\uD559\uAD50" },
-
-  // 자료·연수
-  { title: "\uC2DD\uD488\uC548\uC804\uB098\uB77C \uAD50\uC721\uC790\uB8CC", url: "https://www.foodsafetykorea.go.kr/portal/board/boardDetail.do?menu_no=2880&menu_grp=MENU_NEW05&bbs_no=bbs110&ntctxt_no=1104499", category: "\uC790\uB8CC\u00B7\uC5F0\uC218" },
-  { title: "\uAD50\uC721\uAE09\uC2DD\uC815\uBCF4\uB098\uB204\uBC29", url: "https://more.goe.go.kr/schoollunch/index.do", category: "\uC790\uB8CC\u00B7\uC5F0\uC218" },
-  { title: "\uD559\uAD50\uAE09\uC2DD \uC815\uBCF4\uB9C8\uB2F9", url: "https://www.sfic.go.kr/board/view.do?boardId=BBS_0000008&menuCd=DOM_000000105001000000&startPage=1&searchType=DATA_TITLE&keyword=%EC%8B%9D%EC%83%9D%ED%99%9C&dataSid=57497", category: "\uC790\uB8CC\u00B7\uC5F0\uC218" },
-  { title: "\uC601\uC591\uAD11\uC7A5", url: "https://agora-nutrition.com/", category: "\uC790\uB8CC\u00B7\uC5F0\uC218" },
-  { title: "\uC601\uC591\uC0AC\uB3C4\uC6B0\uBBF8", url: "https://www.kdclub.com/", category: "\uC790\uB8CC\u00B7\uC5F0\uC218" },
-  { title: "\uC9C0\uBC29\uACF5\uAE30\uC5C5\uD3C9\uAC00\uC6D0 \uC0AC\uC774\uBC84\uC5F0\uC218\uC6D0", url: "https://ercedu.hunet.co.kr/Home", category: "\uC790\uB8CC\u00B7\uC5F0\uC218" },
-  { title: "\uCC38\uBBF8\uB8CC \uC601\uC591\uC18C\uC2DD\uC9C0", url: "https://chamssaem.com/516573", category: "\uC790\uB8CC\u00B7\uC5F0\uC218" },
-  { title: "\uD559\uAD50\uAE09\uC2DD \uD1B5\uD569\uD50C\uB7AB\uD3FC", url: "https://www.sfic.go.kr/", category: "\uC790\uB8CC\u00B7\uC5F0\uC218" },
-  { title: "\uACBD\uAE30\uAD50\uC721\uBAA8\uC544", url: "https://more.goe.go.kr/edup/cmm/mber/myPage/selectMyPageMain.do", category: "\uC790\uB8CC\u00B7\uC5F0\uC218" },
+  // 자료
+  { title: "식품안전나라 교육자료", url: "https://www.foodsafetykorea.go.kr/portal/board/boardDetail.do?menu_no=2880&menu_grp=MENU_NEW05&bbs_no=bbs110&ntctxt_no=1104499", category: "자료" },
+  { title: "교육급식정보나누방", url: "https://more.goe.go.kr/schoollunch/index.do", category: "자료" },
+  { title: "학교급식 정보마당", url: "https://www.sfic.go.kr/board/view.do?boardId=BBS_0000008&menuCd=DOM_000000105001000000&startPage=1&searchType=DATA_TITLE&keyword=%EC%8B%9D%EC%83%9D%ED%99%9C&dataSid=57497", category: "자료" },
+  { title: "영양광장", url: "https://agora-nutrition.com/", category: "자료" },
+  { title: "영양사도우미", url: "https://www.kdclub.com/", category: "자료" },
+  { title: "지방공기업평가원 사이버연수원", url: "https://ercedu.hunet.co.kr/Home", category: "자료" },
+  { title: "참미료 영양소식지", url: "https://chamssaem.com/516573", category: "자료" },
+  { title: "학교급식 통합플랫폼", url: "https://www.sfic.go.kr/", category: "자료" },
+  { title: "경기교육모아", url: "https://more.goe.go.kr/edup/cmm/mber/myPage/selectMyPageMain.do", category: "자료" },
 
   // 기타
-  { title: "ChatGPT", url: "https://chatgpt.com/?openaicom_referred=true", category: "\uAE30\uD0C0" },
-  { title: "Google Gemini", url: "https://gemini.google.com/app?hl=ko", category: "\uAE30\uD0C0" },
-  { title: "Canva \uD15C\uD50C\uB9BF", url: "https://www.canva.com/templates", category: "\uAE30\uD0C0" },
-  { title: "\uBAA8\uC544\uD3FC", url: "https://www.moaform.com/questionnaires", category: "\uAE30\uD0C0" },
-  { title: "\uC601\uC591\uBBF8\uB0B4\uC758 \uC790\uB8CC\uC2E4", url: "https://padlet.com/minaemi91/at-yamminae-lqfxtvtlwzoti614", category: "\uAE30\uD0C0" },
-  { title: "NAVER", url: "https://www.naver.com/", category: "\uAE30\uD0C0" }
+  { title: "ChatGPT", url: "https://chatgpt.com/?openaicom_referred=true", category: "기타" },
+  { title: "Google Gemini", url: "https://gemini.google.com/app?hl=ko", category: "기타" },
+  { title: "Canva 템플릿", url: "https://www.canva.com/templates", category: "기타" },
+  { title: "모아폼", url: "https://www.moaform.com/questionnaires", category: "기타" },
+  { title: "영양미내의 자료실", url: "https://padlet.com/minaemi91/at-yamminae-lqfxtvtlwzoti614", category: "기타" },
+  { title: "NAVER", url: "https://www.naver.com/", category: "기타" }
 ];
 
-// ---- LocalStorage ----
+// ---- LocalStorage (v3: new category names) ----
 (function loadFromStorage() {
   try {
-    var saved = localStorage.getItem('kknutrition_bookmarks_v2');
-    if (saved) {
-      var parsed = JSON.parse(saved);
-      if (Array.isArray(parsed) && parsed.length > 0) bookmarkData = parsed;
+    // v3 키로 먼저 시도
+    var saved = localStorage.getItem('kknutrition_bookmarks_v3');
+    if (!saved) {
+      // v2 데이터가 있으면 마이그레이션
+      var old = localStorage.getItem('kknutrition_bookmarks_v2');
+      if (old) {
+        var parsed = JSON.parse(old);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          // 카테고리명 매핑
+          var catMap = {
+            '필수 업무': '급식·위생',
+            '식재료·단가 관련': '식재료·단가',
+            '소통·학교': '학교',
+            '자료·연수': '자료'
+          };
+          bookmarkData = parsed.map(function(b) {
+            return { title: b.title, url: b.url, category: catMap[b.category] || b.category, clickCount: b.clickCount || 0 };
+          });
+          // v3 키로 저장 후 v2 삭제
+          localStorage.setItem('kknutrition_bookmarks_v3', JSON.stringify(bookmarkData));
+          localStorage.removeItem('kknutrition_bookmarks_v2');
+        }
+      }
+      return;
     }
+    var parsed = JSON.parse(saved);
+    if (Array.isArray(parsed) && parsed.length > 0) bookmarkData = parsed;
   } catch (e) { /* ignore */ }
 })();
 
 function saveToStorage() {
-  localStorage.setItem('kknutrition_bookmarks_v2', JSON.stringify(bookmarkData));
+  localStorage.setItem('kknutrition_bookmarks_v3', JSON.stringify(bookmarkData));
 }
 
 // ---- State ----
@@ -84,12 +104,11 @@ function getModal() {
     + '<h3 id="bmModalTitle" style="margin:0 0 20px;font-size:20px;font-weight:800;color:var(--heading);">\uC0C8 \uBD81\uB9C8\uD06C \uCD94\uAC00</h3>'
     + '<label style="font-size:13px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px;">\uCE74\uD14C\uACE0\uB9AC</label>'
     + '<select id="bmCat" style="width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--heading);font-size:14px;box-sizing:border-box;margin-bottom:14px;">'
-    + '<option value="\uD544\uC218 \uC5C5\uBB34">\uD544\uC218 \uC5C5\uBB34</option>'
-    + '<option value="\uAE09\uC2DD\u00B7\uC704\uC0DD">\uAE09\uC2DD\u00B7\uC704\uC0DD</option>'
-    + '<option value="\uC2DD\uC7AC\uB8CC\u00B7\uB2E8\uAC00 \uAD00\uB828">\uC2DD\uC7AC\uB8CC\u00B7\uB2E8\uAC00 \uAD00\uB828</option>'
-    + '<option value="\uC18C\uD1B5\u00B7\uD559\uAD50">\uC18C\uD1B5\u00B7\uD559\uAD50</option>'
-    + '<option value="\uC790\uB8CC\u00B7\uC5F0\uC218">\uC790\uB8CC\u00B7\uC5F0\uC218</option>'
-    + '<option value="\uAE30\uD0C0">\uAE30\uD0C0</option>'
+    + '<option value="\uae09\uc2dd\u00b7\uc704\uc0dd">\uae09\uc2dd\u00b7\uc704\uc0dd</option>'
+    + '<option value="\uc2dd\uc7ac\ub8cc\u00b7\ub2e8\uac00">\uc2dd\uc7ac\ub8cc\u00b7\ub2e8\uac00</option>'
+    + '<option value="\ud559\uad50">\ud559\uad50</option>'
+    + '<option value="\uc790\ub8cc">\uc790\ub8cc</option>'
+    + '<option value="\uae30\ud0c0">\uae30\ud0c0</option>'
     + '</select>'
     + '<label style="font-size:13px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px;">\uC0AC\uC774\uD2B8\uBA85</label>'
     + '<input id="bmName" type="text" placeholder="\uC608: \uAD6C\uAE00" autocomplete="off" style="width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--heading);font-size:14px;box-sizing:border-box;margin-bottom:14px;">'
@@ -156,7 +175,7 @@ function handleSave() {
 
 // ---- Filter Chips ----
 function renderFilterChips() {
-  var cats = ['\uC804\uCCB4', '\uD544\uC218 \uC5C5\uBB34', '\uAE09\uC2DD\u00B7\uC704\uC0DD', '\uC2DD\uC7AC\uB8CC\u00B7\uB2E8\uAC00 \uAD00\uB828', '\uC18C\uD1B5\u00B7\uD559\uAD50', '\uC790\uB8CC\u00B7\uC5F0\uC218', '\uAE30\uD0C0'];
+  var cats = ['전체', '급식·위생', '식재료·단가', '학교', '자료', '기타'];
   var container = document.getElementById('bookmarkFilterChips');
   if (!container) return;
   container.innerHTML = cats.map(function(cat, i) {
