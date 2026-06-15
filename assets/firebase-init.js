@@ -452,20 +452,23 @@ syncAnnualMobileCards();
 });
 
 // Setup Edit/Save buttons
-document.querySelectorAll('.edit-page-btn').forEach(btn => {
+document.querySelectorAll('.fab-edit-btn').forEach(btn => {
   btn.addEventListener('click', (e) => {
-    const pageId = e.target.getAttribute('data-target');
+    // btn is the actual button element even if children are clicked
+    const targetBtn = e.currentTarget;
+    const pageId = targetBtn.getAttribute('data-target');
     const isEditing = editingState[pageId];
     const section = document.getElementById(pageId);
     if (!section) return;
 
     const editables = section.querySelectorAll('.editable-content');
+    const textSpan = targetBtn.querySelector('.fab-text');
 
     if (!isEditing) {
       // Enter edit mode
       editingState[pageId] = true;
-      e.target.textContent = "저장";
-      e.target.classList.add('saving');
+      if (textSpan) textSpan.textContent = "저장";
+      targetBtn.classList.add('saving');
       
       editables.forEach(el => {
         el.setAttribute('contenteditable', 'true');
@@ -476,7 +479,7 @@ document.querySelectorAll('.edit-page-btn').forEach(btn => {
       }
     } else {
       // Save mode
-      e.target.textContent = "저장 중...";
+      if (textSpan) textSpan.textContent = "저장 중...";
       
       const updateData = {};
       editables.forEach(el => {
@@ -486,16 +489,16 @@ document.querySelectorAll('.edit-page-btn').forEach(btn => {
 
       if (!isFirebaseConfigured || !db) {
         editingState[pageId] = false;
-        e.target.textContent = "수정";
-        e.target.classList.remove('saving');
+        if (textSpan) textSpan.textContent = "수정";
+        targetBtn.classList.remove('saving');
         if (pageId === 'annual') syncAnnualMobileCards();
         return;
       }
 
       setDoc(doc(db, "pageContents", pageId), updateData).then(() => {
         editingState[pageId] = false;
-        e.target.textContent = "수정";
-        e.target.classList.remove('saving');
+        if (textSpan) textSpan.textContent = "수정";
+        targetBtn.classList.remove('saving');
         
         if (pageId === 'annual') {
           syncAnnualMobileCards();
@@ -504,8 +507,8 @@ document.querySelectorAll('.edit-page-btn').forEach(btn => {
         console.error("Save failed:", err);
         alert("저장에 실패했습니다.");
         editingState[pageId] = false;
-        e.target.textContent = "수정";
-        e.target.classList.remove('saving');
+        if (textSpan) textSpan.textContent = "수정";
+        targetBtn.classList.remove('saving');
       });
     }
   });
