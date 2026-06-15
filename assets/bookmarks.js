@@ -84,7 +84,23 @@ let bookmarkData = [
 
 function saveToStorage() {
   localStorage.setItem('kknutrition_bookmarks_v4', JSON.stringify(bookmarkData));
+  if (typeof window.syncBookmarksToFirebase === 'function') {
+    window.syncBookmarksToFirebase(bookmarkData);
+  }
 }
+
+// Firebase에서 외부 업데이트를 받을 때 호출되는 함수
+window.updateBookmarkData = function(newData) {
+  bookmarkData = newData;
+  localStorage.setItem('kknutrition_bookmarks_v4', JSON.stringify(bookmarkData));
+  if (typeof window.renderBookmarks === 'function') {
+    window.renderBookmarks();
+  }
+};
+
+window.getBookmarkData = function() {
+  return bookmarkData;
+};
 
 // ---- State ----
 var currentCategory = '\uC804\uCCB4';
@@ -209,14 +225,12 @@ function favicon(url) {
 function faviconImg(url) {
   try {
     var domain = new URL(url).hostname;
-    // 1순위: DuckDuckGo (가장 최신/다양한 파비콘 지원)
-    var dd = 'https://icons.duckduckgo.com/ip3/' + domain + '.ico';
-    // 2순위: Google S2 Favicon (안정적인 글로벌 캐시)
-    var g = 'https://www.google.com/s2/favicons?domain=' + domain + '&sz=32';
+    // 가장 빠르고 안정적인 구글 faviconV2 (fallback_opts 포함)
+    var g = 'https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://' + domain + '&size=64';
     
-    // onerror chain: DuckDuckGo → Google → Local Fallback
-    return '<img src="' + dd + '" class="bm-favicon" alt="" loading="lazy"'
-      + ' onerror="this.onerror=function(){this.onerror=null;this.src=\'assets/app-icon-192.png\';};this.src=\'' + g + '\';">';
+    // 심플하고 빠른 로딩
+    return '<img src="' + g + '" class="bm-favicon" alt="" loading="lazy"'
+      + ' onerror="this.onerror=null;this.src=\'assets/app-icon-192.png\';">';
   } catch(e) {
     return '<img src="assets/app-icon-192.png" class="bm-favicon" alt="">';
   }

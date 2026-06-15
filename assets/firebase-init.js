@@ -22,7 +22,18 @@ if (isFirebaseConfigured) {
 }
 
 const MEMO_DOC_ID = "main-memo";
+const BOOKMARK_DOC_ID = "main-bookmarks";
 const LOCAL_STORAGE_KEY = "kknutrition_memo";
+
+window.syncBookmarksToFirebase = async function(data) {
+  if (db) {
+    try {
+      await setDoc(doc(db, "bookmarks", BOOKMARK_DOC_ID), { items: data });
+    } catch (error) {
+      console.error("Firestore 북마크 저장 실패:", error);
+    }
+  }
+};
 
 const defaultMemos = [
   { text: "식단 확인", checked: false },
@@ -645,6 +656,23 @@ function init() {
   }
 
   if (db) {
+
+
+    onSnapshot(doc(db, "bookmarks", BOOKMARK_DOC_ID), (snapshot) => {
+      if (snapshot.exists()) {
+        const remoteData = snapshot.data().items;
+        if (remoteData && Array.isArray(remoteData)) {
+          if (typeof window.updateBookmarkData === 'function') {
+            window.updateBookmarkData(remoteData);
+          }
+        }
+      } else {
+        if (typeof window.getBookmarkData === 'function') {
+          window.syncBookmarksToFirebase(window.getBookmarkData());
+        }
+      }
+    });
+
     onSnapshot(doc(db, "memos", MEMO_DOC_ID), (snapshot) => {
       if (snapshot.exists()) {
         const data = snapshot.data();
