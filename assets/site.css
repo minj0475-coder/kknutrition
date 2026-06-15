@@ -5537,7 +5537,7 @@ nav a.active {
   right: 30px;
   z-index: 9999;
   background: var(--primary);
-  color: #fff;
+  color: #ffffff !important;
   border: none;
   border-radius: 30px;
   padding: 14px 28px;
