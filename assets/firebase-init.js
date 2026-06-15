@@ -43,6 +43,7 @@ const defaultMemos = [
 ];
 
 let memos = [];
+let isFirebaseLoaded = false;
 
 function loadLocalMemos() {
   const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -63,7 +64,7 @@ function saveLocalMemos() {
 
 async function saveMemos() {
   saveLocalMemos();
-  if (db) {
+  if (db && isFirebaseLoaded) {
     try {
       await setDoc(doc(db, "memos", MEMO_DOC_ID), { items: memos });
     } catch (error) {
@@ -682,6 +683,7 @@ function init() {
     });
 
     onSnapshot(doc(db, "memos", MEMO_DOC_ID), (snapshot) => {
+      isFirebaseLoaded = true;
       if (snapshot.exists()) {
         const data = snapshot.data();
         if (data.items) {
