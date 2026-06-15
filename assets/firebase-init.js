@@ -31,6 +31,7 @@ window.syncBookmarksToFirebase = async function(data) {
       await setDoc(doc(db, "bookmarks", BOOKMARK_DOC_ID), { items: data });
     } catch (error) {
       console.error("Firestore 북마크 저장 실패:", error);
+      alert("북마크 연동 실패: " + error.message + "\n(Firebase 보안 규칙 기간이 만료되었을 수 있습니다.)");
     }
   }
 };
