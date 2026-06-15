@@ -1021,9 +1021,10 @@ button,
 .quick,
 input[type="button"],
 input[type="submit"] {
-  cursor:pointer;
-  -webkit-appearance: none;
-  appearance: none;
+  cursor: pointer;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  border-radius: 0;
 }
 
 .home-daily-card{
