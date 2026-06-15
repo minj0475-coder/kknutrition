@@ -6055,3 +6055,44 @@ nav a.active {
   50% { transform: translateX(6px) rotate(1deg); }
   75% { transform: translateX(-6px) rotate(-1deg); }
 }
+
+/* === Update Buttons (사용재료 보기, 북마크 칩) to Premium Style === */
+.materials-detail summary,
+.bookmark-chip {
+  background: linear-gradient(135deg, var(--card) 0%, var(--card-soft) 100%) !important;
+  color: var(--heading) !important;
+  border: 1px solid var(--line) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05) !important;
+  border-radius: 999px !important;
+  padding: 8px 18px !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.materials-detail summary:hover,
+.bookmark-chip:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 14px rgba(255, 107, 107, 0.15) !important;
+  border-color: var(--primary) !important;
+  color: var(--primary) !important;
+}
+
+.materials-detail summary:active,
+.bookmark-chip:active {
+  transform: translateY(1px) !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) !important;
+}
+
+.bookmark-chip.active {
+  background: linear-gradient(135deg, var(--primary) 0%, #ff8a8a 100%) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+  box-shadow: 0 6px 16px rgba(255, 107, 107, 0.3) !important;
+}
