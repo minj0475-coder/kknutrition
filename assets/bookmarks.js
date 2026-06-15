@@ -1,357 +1,294 @@
+// ============================================================
+// bookmarks.js — 북마크 관리 스크립트 (완전 재작성 v2)
+// ============================================================
+
 let bookmarkData = [
   // 필수 업무
-  { title: "업무포털 메인", url: "https://goe.eduptl.kr/bpm_man_mn00_001.do", category: "필수 업무" },
-  { title: "공직자통합메일", url: "https://mail.korea.kr/", category: "필수 업무" },
-  
+  { title: "\uC5C5\uBB34\uD3EC\uD138 \uBA54\uC778", url: "https://goe.eduptl.kr/bpm_man_mn00_001.do", category: "\uD544\uC218 \uC5C5\uBB34" },
+  { title: "\uACF5\uC9C1\uC790\uD1B5\uD569\uBA54\uC77C", url: "https://mail.korea.kr/", category: "\uD544\uC218 \uC5C5\uBB34" },
+
   // 급식·위생
-  { title: "SmartHACCP", url: "https://gimpo.haccpcook.or.kr/diet/", category: "급식·위생" },
-  { title: "공공급식통합플랫폼", url: "https://ns.eat.co.kr/NeaT/eats/index.html", category: "급식·위생" },
-  { title: "학교우유급식 정보시스템", url: "http://dairy.schoolmilk.or.kr/smis/smisweb/auth/login.html?v=1756168663985", category: "급식·위생" },
-  { title: "축산물원패스", url: "https://www.ekape.or.kr/kapecp/ui/kapecp/fastLogin.jsp?loginType=02", category: "급식·위생" },
-  
+  { title: "SmartHACCP", url: "https://gimpo.haccpcook.or.kr/diet/", category: "\uAE09\uC2DD\u00B7\uC704\uC0DD" },
+  { title: "\uACF5\uACF5\uAE09\uC2DD\uD1B5\uD569\uD50C\uB7AB\uD3FC", url: "https://ns.eat.co.kr/NeaT/eats/index.html", category: "\uAE09\uC2DD\u00B7\uC704\uC0DD" },
+  { title: "\uD559\uAD50\uC6B0\uC720\uAE09\uC2DD \uC815\uBCF4\uC2DC\uC2A4\uD15C", url: "http://dairy.schoolmilk.or.kr/smis/smisweb/auth/login.html?v=1756168663985", category: "\uAE09\uC2DD\u00B7\uC704\uC0DD" },
+  { title: "\uCD95\uC0B0\uBB3C\uC6D0\uD328\uC2A4", url: "https://www.ekape.or.kr/kapecp/ui/kapecp/fastLogin.jsp?loginType=02", category: "\uAE09\uC2DD\u00B7\uC704\uC0DD" },
+
   // 식재료·단가 관련
-  { title: "블루시스 마켓", url: "https://market.bluesis.com/web/pc/main.php", category: "식재료·단가 관련" },
-  { title: "튼튼스쿨", url: "https://www.cjschoolfood.com/", category: "식재료·단가 관련" },
-  { title: "풀무원푸드머스 풀스토리", url: "https://pulstory.pulmuone.com/", category: "식재료·단가 관련" },
-  
+  { title: "\uBE14\uB8E8\uC2DC\uC2A4 \uB9C8\uCF13", url: "https://market.bluesis.com/web/pc/main.php", category: "\uC2DD\uC7AC\uB8CC\u00B7\uB2E8\uAC00 \uAD00\uB828" },
+  { title: "\uD2FC\uD2FC\uC2A4\uCFE8", url: "https://www.cjschoolfood.com/", category: "\uC2DD\uC7AC\uB8CC\u00B7\uB2E8\uAC00 \uAD00\uB828" },
+  { title: "\uD480\uBB34\uC6D0\uD478\uB4DC\uBA38\uC2A4 \uD480\uC2A4\uD1A0\uB9AC", url: "https://pulstory.pulmuone.com/", category: "\uC2DD\uC7AC\uB8CC\u00B7\uB2E8\uAC00 \uAD00\uB828" },
+
   // 소통·학교
-  { title: "School SMS | 교사용", url: "https://www.jtschoolsms.com/alimee/login/loginForm.html", category: "소통·학교" },
-  { title: "아이엠스쿨", url: "https://school.iamservice.net/", category: "소통·학교" },
-  { title: "청수초등학교", url: "https://www.gpoe.kr/cheongsu-e/main.do", category: "소통·학교" },
-  { title: "청수초 도서관", url: "https://read365.edunet.net/PureScreen/SchoolSearch?schoolName=%EC%B2%AD%EC%88%98%EC%B4%88%EB%93%B1%ED%95%99%EA%B5%90&provCode=J10&neisCode=J100006046", category: "소통·학교" },
-  { title: "공무원연금공단", url: "https://www.gwp.or.kr/wus/cmmn/lgn/login.jdo", category: "소통·학교" },
-  { title: "S2B (학교장터)", url: "https://www.s2b.kr/S2BNCustomer/S2B/", category: "소통·학교" },
-  
+  { title: "School SMS | \uAD50\uC0AC\uC6A9", url: "https://www.jtschoolsms.com/alimee/login/loginForm.html", category: "\uC18C\uD1B5\u00B7\uD559\uAD50" },
+  { title: "\uC544\uC774\uC5FC\uC2A4\uCFE8", url: "https://school.iamservice.net/", category: "\uC18C\uD1B5\u00B7\uD559\uAD50" },
+  { title: "\uCCAD\uC218\uCD08\uB4F1\uD559\uAD50", url: "https://www.gpoe.kr/cheongsu-e/main.do", category: "\uC18C\uD1B5\u00B7\uD559\uAD50" },
+  { title: "\uCCAD\uC218\uCD08 \uB3C4\uC11C\uAD00", url: "https://read365.edunet.net/PureScreen/SchoolSearch?schoolName=%EC%B2%AD%EC%88%98%EC%B4%88%EB%93%B1%ED%95%99%EA%B5%90&provCode=J10&neisCode=J100006046", category: "\uC18C\uD1B5\u00B7\uD559\uAD50" },
+  { title: "\uACF5\uBB34\uC6D0\uC5F0\uAE08\uACF5\uB2E8", url: "https://www.gwp.or.kr/wus/cmmn/lgn/login.jdo", category: "\uC18C\uD1B5\u00B7\uD559\uAD50" },
+  { title: "S2B (\uD559\uAD50\uC7A5\uD130)", url: "https://www.s2b.kr/S2BNCustomer/S2B/", category: "\uC18C\uD1B5\u00B7\uD559\uAD50" },
+
   // 자료·연수
-  { title: "식품안전나라 교육자료", url: "https://www.foodsafetykorea.go.kr/portal/board/boardDetail.do?menu_no=2880&menu_grp=MENU_NEW05&bbs_no=bbs110&ntctxt_no=1104499", category: "자료·연수" },
-  { title: "교육급식정보나눔방", url: "https://more.goe.go.kr/schoollunch/index.do", category: "자료·연수" },
-  { title: "학교급식 정보마당", url: "https://www.sfic.go.kr/board/view.do?boardId=BBS_0000008&menuCd=DOM_000000105001000000&startPage=1&searchType=DATA_TITLE&keyword=%EC%8B%9D%EC%83%9D%ED%99%9C&dataSid=57497", category: "자료·연수" },
-  { title: "영양광장", url: "https://agora-nutrition.com/", category: "자료·연수" },
-  { title: "영양사도우미", url: "https://www.kdclub.com/", category: "자료·연수" },
-  { title: "지방공기업평가원 사이버연수원", url: "https://ercedu.hunet.co.kr/Home", category: "자료·연수" },
-  { title: "참미료 영양소식지", url: "https://chamssaem.com/516573", category: "자료·연수" },
-  { title: "학교급식 통합플랫폼", url: "https://www.sfic.go.kr/", category: "자료·연수" },
-  { title: "경기교육모아", url: "https://more.goe.go.kr/edup/cmm/mber/myPage/selectMyPageMain.do", category: "자료·연수" },
-  
+  { title: "\uC2DD\uD488\uC548\uC804\uB098\uB77C \uAD50\uC721\uC790\uB8CC", url: "https://www.foodsafetykorea.go.kr/portal/board/boardDetail.do?menu_no=2880&menu_grp=MENU_NEW05&bbs_no=bbs110&ntctxt_no=1104499", category: "\uC790\uB8CC\u00B7\uC5F0\uC218" },
+  { title: "\uAD50\uC721\uAE09\uC2DD\uC815\uBCF4\uB098\uB204\uBC29", url: "https://more.goe.go.kr/schoollunch/index.do", category: "\uC790\uB8CC\u00B7\uC5F0\uC218" },
+  { title: "\uD559\uAD50\uAE09\uC2DD \uC815\uBCF4\uB9C8\uB2F9", url: "https://www.sfic.go.kr/board/view.do?boardId=BBS_0000008&menuCd=DOM_000000105001000000&startPage=1&searchType=DATA_TITLE&keyword=%EC%8B%9D%EC%83%9D%ED%99%9C&dataSid=57497", category: "\uC790\uB8CC\u00B7\uC5F0\uC218" },
+  { title: "\uC601\uC591\uAD11\uC7A5", url: "https://agora-nutrition.com/", category: "\uC790\uB8CC\u00B7\uC5F0\uC218" },
+  { title: "\uC601\uC591\uC0AC\uB3C4\uC6B0\uBBF8", url: "https://www.kdclub.com/", category: "\uC790\uB8CC\u00B7\uC5F0\uC218" },
+  { title: "\uC9C0\uBC29\uACF5\uAE30\uC5C5\uD3C9\uAC00\uC6D0 \uC0AC\uC774\uBC84\uC5F0\uC218\uC6D0", url: "https://ercedu.hunet.co.kr/Home", category: "\uC790\uB8CC\u00B7\uC5F0\uC218" },
+  { title: "\uCC38\uBBF8\uB8CC \uC601\uC591\uC18C\uC2DD\uC9C0", url: "https://chamssaem.com/516573", category: "\uC790\uB8CC\u00B7\uC5F0\uC218" },
+  { title: "\uD559\uAD50\uAE09\uC2DD \uD1B5\uD569\uD50C\uB7AB\uD3FC", url: "https://www.sfic.go.kr/", category: "\uC790\uB8CC\u00B7\uC5F0\uC218" },
+  { title: "\uACBD\uAE30\uAD50\uC721\uBAA8\uC544", url: "https://more.goe.go.kr/edup/cmm/mber/myPage/selectMyPageMain.do", category: "\uC790\uB8CC\u00B7\uC5F0\uC218" },
+
   // 기타
-  { title: "ChatGPT", url: "https://chatgpt.com/?openaicom_referred=true", category: "기타" },
-  { title: "Google Gemini", url: "https://gemini.google.com/app?hl=ko", category: "기타" },
-  { title: "Canva 템플릿", url: "https://www.canva.com/templates", category: "기타" },
-  { title: "모아폼", url: "https://www.moaform.com/questionnaires", category: "기타" },
-  { title: "영양미내의 자료실", url: "https://padlet.com/minaemi91/at-yamminae-lqfxtvtlwzoti614", category: "기타" },
-  { title: "NAVER", url: "https://www.naver.com/", category: "기타" }
+  { title: "ChatGPT", url: "https://chatgpt.com/?openaicom_referred=true", category: "\uAE30\uD0C0" },
+  { title: "Google Gemini", url: "https://gemini.google.com/app?hl=ko", category: "\uAE30\uD0C0" },
+  { title: "Canva \uD15C\uD50C\uB9BF", url: "https://www.canva.com/templates", category: "\uAE30\uD0C0" },
+  { title: "\uBAA8\uC544\uD3FC", url: "https://www.moaform.com/questionnaires", category: "\uAE30\uD0C0" },
+  { title: "\uC601\uC591\uBBF8\uB0B4\uC758 \uC790\uB8CC\uC2E4", url: "https://padlet.com/minaemi91/at-yamminae-lqfxtvtlwzoti614", category: "\uAE30\uD0C0" },
+  { title: "NAVER", url: "https://www.naver.com/", category: "\uAE30\uD0C0" }
 ];
 
-// Load from LocalStorage (v2 to ignore previous corrupted cache)
-const savedBookmarks = localStorage.getItem('kknutrition_bookmarks_v2');
-if (savedBookmarks) {
+// ---- LocalStorage ----
+(function loadFromStorage() {
   try {
-    const parsed = JSON.parse(savedBookmarks);
-    if (Array.isArray(parsed) && parsed.length > 0) {
-      bookmarkData = parsed;
+    var saved = localStorage.getItem('kknutrition_bookmarks_v2');
+    if (saved) {
+      var parsed = JSON.parse(saved);
+      if (Array.isArray(parsed) && parsed.length > 0) bookmarkData = parsed;
     }
-  } catch (e) {
-    console.error("북마크 데이터 로드 실패", e);
-  }
+  } catch (e) { /* ignore */ }
+})();
+
+function saveToStorage() {
+  localStorage.setItem('kknutrition_bookmarks_v2', JSON.stringify(bookmarkData));
 }
 
-let currentCategory = "전체";
-let currentSearch = "";
-let isBookmarkEditMode = false;
+// ---- State ----
+var currentCategory = '\uC804\uCCB4';
+var currentSearch = '';
+var isEditMode = false;
+var editingIdx = -1;
 
-document.addEventListener("DOMContentLoaded", () => {
-  renderFilterChips();
+// ---- Modal (created once) ----
+var _modal = null;
+
+function getModal() {
+  if (_modal) return _modal;
+  _modal = document.getElementById('bookmarkSingleEditorModal');
+  if (!_modal) {
+    var div = document.createElement('div');
+    div.innerHTML = '<div id="bookmarkSingleEditorModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.55);z-index:10001;align-items:center;justify-content:center;backdrop-filter:blur(6px);">'
+      + '<div style="background:var(--card);max-width:400px;width:90%;border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,.2);padding:28px 28px 24px;position:relative;">'
+      + '<h3 id="bmModalTitle" style="margin:0 0 20px;font-size:20px;font-weight:800;color:var(--heading);">\uC0C8 \uBD81\uB9C8\uD06C \uCD94\uAC00</h3>'
+      + '<label style="font-size:13px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px;">\uCE74\uD14C\uACE0\uB9AC</label>'
+      + '<select id="bmCat" style="width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--heading);font-size:14px;box-sizing:border-box;margin-bottom:14px;">'
+      + '<option value="\uD544\uC218 \uC5C5\uBB34">\uD544\uC218 \uC5C5\uBB34</option>'
+      + '<option value="\uAE09\uC2DD\u00B7\uC704\uC0DD">\uAE09\uC2DD\u00B7\uC704\uC0DD</option>'
+      + '<option value="\uC2DD\uC7AC\uB8CC\u00B7\uB2E8\uAC00 \uAD00\uB828">\uC2DD\uC7AC\uB8CC\u00B7\uB2E8\uAC00 \uAD00\uB828</option>'
+      + '<option value="\uC18C\uD1B5\u00B7\uD559\uAD50">\uC18C\uD1B5\u00B7\uD559\uAD50</option>'
+      + '<option value="\uC790\uB8CC\u00B7\uC5F0\uC218">\uC790\uB8CC\u00B7\uC5F0\uC218</option>'
+      + '<option value="\uAE30\uD0C0">\uAE30\uD0C0</option>'
+      + '</select>'
+      + '<label style="font-size:13px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px;">\uC0AC\uC774\uD2B8\uBA85</label>'
+      + '<input id="bmName" type="text" placeholder="\uC608: \uAD6C\uAE00" autocomplete="off" style="width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--heading);font-size:14px;box-sizing:border-box;margin-bottom:14px;">'
+      + '<label style="font-size:13px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px;">URL \uC8FC\uC18C</label>'
+      + '<input id="bmUrl" type="text" placeholder="https://..." autocomplete="off" style="width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--heading);font-size:14px;box-sizing:border-box;margin-bottom:20px;">'
+      + '<button id="bmSave" type="button" style="width:100%;padding:14px;border-radius:12px;border:none;background:var(--primary);color:#fff;font-size:15px;font-weight:700;cursor:pointer;">\uC644\uB8CC</button>'
+      + '<button id="bmClose" type="button" style="position:absolute;top:18px;right:18px;background:var(--card-soft);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;">&times;</button>'
+      + '</div></div>';
+    document.body.appendChild(div.firstChild);
+    _modal = document.getElementById('bookmarkSingleEditorModal');
+    // close button
+    document.getElementById('bmClose').addEventListener('click', function() { closeModal(); });
+    _modal.addEventListener('click', function(e) { if (e.target === _modal) closeModal(); });
+    // save button
+    document.getElementById('bmSave').addEventListener('click', function() { handleSave(); });
+  }
+  return _modal;
+}
+
+function openModal(index) {
+  var modal = getModal();
+  editingIdx = parseInt(index);
+  document.getElementById('bmModalTitle').textContent = (editingIdx >= 0) ? '\uBD81\uB9C8\uD06C \uC218\uC815' : '\uC0C8 \uBD81\uB9C8\uD06C \uCD94\uAC00';
+  if (editingIdx >= 0) {
+    var item = bookmarkData[editingIdx];
+    document.getElementById('bmCat').value = item.category || '\uAE30\uD0C0';
+    document.getElementById('bmName').value = item.title || '';
+    document.getElementById('bmUrl').value = item.url || '';
+  } else {
+    document.getElementById('bmCat').value = (currentCategory === '\uC804\uCCB4') ? '\uD544\uC218 \uC5C5\uBB34' : currentCategory;
+    document.getElementById('bmName').value = '';
+    document.getElementById('bmUrl').value = '';
+  }
+  modal.style.display = 'flex';
+  setTimeout(function() { document.getElementById('bmName').focus(); }, 100);
+}
+
+function closeModal() {
+  var modal = getModal();
+  modal.style.display = 'none';
+}
+
+function handleSave() {
+  var title = document.getElementById('bmName').value.trim();
+  var url = document.getElementById('bmUrl').value.trim();
+  var category = document.getElementById('bmCat').value;
+
+  if (!title || !url) {
+    alert('\uC0AC\uC774\uD2B8\uBA85\uACFC URL \uC8FC\uC18C\uB97C \uBAA8\uB450 \uC785\uB825\uD574\uC8FC\uC138\uC694.');
+    return;
+  }
+  if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+
+  var newItem = { title: title, url: url, category: category };
+  if (editingIdx >= 0) {
+    bookmarkData[editingIdx] = newItem;
+  } else {
+    bookmarkData.push(newItem);
+  }
+  saveToStorage();
+  closeModal();
   renderBookmarks();
-  
-  const searchInput = document.getElementById("bookmarkSearch");
-  if(searchInput) {
-    searchInput.addEventListener("input", (e) => {
-      currentSearch = e.target.value;
-      renderBookmarks();
-    });
-  }
+}
 
-  // Edit Mode Toggle Button
-  const editBtn = document.getElementById("editBtnBookmarks");
-  if (editBtn) {
-    editBtn.classList.remove("fab-edit-btn");
-    editBtn.classList.add("fab-bookmark-edit-btn");
-    editBtn.innerHTML = "수정";
-    
-    editBtn.addEventListener("click", () => {
-      isBookmarkEditMode = !isBookmarkEditMode;
-      if (isBookmarkEditMode) {
-        editBtn.innerHTML = "저장";
-        editBtn.classList.add("saving"); // use saving style for active state
-      } else {
-        editBtn.innerHTML = "수정";
-        editBtn.classList.remove("saving");
-      }
-      renderBookmarks();
-    });
-  }
-
-  // Click Tracker for Sorting
-  const container = document.getElementById("bookmarkGrid");
-  if (container) {
-    container.addEventListener("click", (e) => {
-      if (isBookmarkEditMode) return;
-      const card = e.target.closest("a.bookmark-card");
-      if (card) {
-        const href = card.getAttribute("href");
-        const item = bookmarkData.find(b => {
-          const validUrl = /^https?:\/\//i.test(b.url) ? b.url : 'https://' + b.url;
-          return validUrl === href;
-        });
-        if (item) {
-          item.clickCount = (item.clickCount || 0) + 1;
-          localStorage.setItem('kknutrition_bookmarks_v2', JSON.stringify(bookmarkData));
-          // No need to re-render immediately to prevent UI jumps while opening link
-        }
-      }
-    });
-  }
-
-  // Single Editor Modal Setup
-  setupBookmarkSingleEditor();
-});
-
+// ---- Filter Chips ----
 function renderFilterChips() {
-  const categories = ["전체", "필수 업무", "급식·위생", "식재료·단가 관련", "소통·학교", "자료·연수", "기타"];
-  const container = document.getElementById("bookmarkFilterChips");
-  if(!container) return;
-  
-  container.innerHTML = categories.map((cat, idx) => `
-    <button class="bookmark-chip ${idx === 0 ? 'active' : ''}" data-category="${cat}">
-      ${cat}
-    </button>
-  `).join("");
-  
-  container.querySelectorAll(".bookmark-chip").forEach(chip => {
-    chip.addEventListener("click", (e) => {
-      container.querySelectorAll(".bookmark-chip").forEach(c => c.classList.remove("active"));
-      e.target.classList.add("active");
-      currentCategory = e.target.dataset.category;
+  var cats = ['\uC804\uCCB4', '\uD544\uC218 \uC5C5\uBB34', '\uAE09\uC2DD\u00B7\uC704\uC0DD', '\uC2DD\uC7AC\uB8CC\u00B7\uB2E8\uAC00 \uAD00\uB828', '\uC18C\uD1B5\u00B7\uD559\uAD50', '\uC790\uB8CC\u00B7\uC5F0\uC218', '\uAE30\uD0C0'];
+  var container = document.getElementById('bookmarkFilterChips');
+  if (!container) return;
+  container.innerHTML = cats.map(function(cat, i) {
+    return '<button class="bookmark-chip' + (i === 0 ? ' active' : '') + '" data-cat="' + cat + '">' + cat + '</button>';
+  }).join('');
+  container.querySelectorAll('.bookmark-chip').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      container.querySelectorAll('.bookmark-chip').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentCategory = btn.dataset.cat;
       renderBookmarks();
     });
   });
 }
 
-function getFaviconUrl(url) {
+// ---- Favicon ----
+function favicon(url) {
   try {
-    const domain = new URL(url).hostname;
-    return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+    return 'https://www.google.com/s2/favicons?domain=' + new URL(url).hostname + '&sz=64';
   } catch(e) {
     return 'assets/app-icon-192.png';
   }
 }
 
+// ---- Render ----
 function renderBookmarks() {
-  const container = document.getElementById("bookmarkGrid");
-  if(!container) return;
-  
-  let filtered = [...bookmarkData];
-  
-  if (currentCategory === "전체") {
-    // 자주 클릭하는 순서대로 정렬 (내림차순)
-    filtered.sort((a, b) => (b.clickCount || 0) - (a.clickCount || 0));
+  var container = document.getElementById('bookmarkGrid');
+  if (!container) return;
+
+  var filtered = bookmarkData.slice();
+  if (currentCategory === '\uC804\uCCB4') {
+    filtered.sort(function(a, b) { return (b.clickCount || 0) - (a.clickCount || 0); });
   } else {
-    filtered = filtered.filter(item => item.category === currentCategory);
+    filtered = filtered.filter(function(item) { return item.category === currentCategory; });
   }
-  
   if (currentSearch.trim()) {
-    const lower = currentSearch.toLowerCase();
-    filtered = filtered.filter(item => 
-      item.title.toLowerCase().includes(lower) || 
-      (item.desc && item.desc.toLowerCase().includes(lower))
-    );
+    var q = currentSearch.toLowerCase();
+    filtered = filtered.filter(function(item) { return item.title.toLowerCase().indexOf(q) !== -1; });
   }
-  
-  let html = '';
 
-  if (filtered.length === 0 && !isBookmarkEditMode) {
-    html = `<div class="empty-bookmark">조건에 맞는 북마크가 없습니다.</div>`;
+  var html = '';
+  if (filtered.length === 0 && !isEditMode) {
+    html = '<div class="empty-bookmark">\uC870\uAC74\uC5D0 \uB9DE\uB294 \uBD81\uB9C8\uD06C\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.</div>';
   } else {
-    html = filtered.map((item) => {
-      // Find original index to allow direct editing
-      const originalIndex = bookmarkData.findIndex(b => b.title === item.title && b.url === item.url);
-      
-      if (isBookmarkEditMode) {
-        return `
-          <div class="bookmark-card edit-mode-card" data-index="${originalIndex}" style="cursor: pointer; position: relative;">
-            <img src="${getFaviconUrl(item.url)}" class="bm-favicon" alt="" loading="lazy">
-            <span class="bm-title">${item.title}</span>
-            <button class="bm-delete-btn" data-index="${originalIndex}" title="삭제">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-          </div>
-        `;
+    html = filtered.map(function(item) {
+      var origIdx = bookmarkData.findIndex(function(b) { return b.title === item.title && b.url === item.url; });
+      var validUrl = /^https?:\/\//i.test(item.url) ? item.url : 'https://' + item.url;
+      if (isEditMode) {
+        return '<div class="bookmark-card edit-mode-card" data-index="' + origIdx + '" style="cursor:pointer;position:relative;">'
+          + '<img src="' + favicon(validUrl) + '" class="bm-favicon" alt="" loading="lazy">'
+          + '<span class="bm-title">' + item.title + '</span>'
+          + '<button class="bm-delete-btn" data-index="' + origIdx + '" title="\uC0AD\uC81C" onclick="event.stopPropagation();bmDelete(' + origIdx + ');">'
+          + '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>'
+          + '</button></div>';
       } else {
-        const validUrl = /^https?:\/\//i.test(item.url) ? item.url : 'https://' + item.url;
-        return `
-          <a href="${validUrl}" target="_blank" rel="noopener" class="bookmark-card">
-            <img src="${getFaviconUrl(validUrl)}" class="bm-favicon" alt="" loading="lazy">
-            <span class="bm-title">${item.title}</span>
-          </a>
-        `;
+        return '<a href="' + validUrl + '" target="_blank" rel="noopener" class="bookmark-card" data-url="' + validUrl + '">'
+          + '<img src="' + favicon(validUrl) + '" class="bm-favicon" alt="" loading="lazy">'
+          + '<span class="bm-title">' + item.title + '</span>'
+          + '</a>';
       }
-    }).join("");
+    }).join('');
   }
 
-  if (isBookmarkEditMode) {
-    // Add the "+ 새 북마크 추가" card
-    html += `
-      <div class="bookmark-card add-new-card" style="cursor: pointer; border: 1px dashed var(--muted); background: transparent; justify-content: center;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-        <span class="bm-title" style="color: var(--muted);">새 북마크 추가</span>
-      </div>
-    `;
+  if (isEditMode) {
+    html += '<div class="bookmark-card add-new-card" id="bmAddCard" style="cursor:pointer;border:1.5px dashed var(--muted);background:transparent;justify-content:center;gap:8px;">'
+      + '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>'
+      + '<span class="bm-title" style="color:var(--muted);">\uC0C8 \uBD81\uB9C8\uD06C \uCD94\uAC00</span>'
+      + '</div>';
   }
 
   container.innerHTML = html;
 
-  // Attach event listeners for Edit Mode
-  if (isBookmarkEditMode) {
-    container.querySelectorAll('.edit-mode-card').forEach(card => {
-      card.addEventListener('click', (e) => {
-        // Prevent opening if delete button was clicked
+  if (isEditMode) {
+    // edit-mode-card click to edit
+    container.querySelectorAll('.edit-mode-card').forEach(function(card) {
+      card.addEventListener('click', function(e) {
         if (e.target.closest('.bm-delete-btn')) return;
-        const idx = card.dataset.index;
-        window.openBookmarkEditor(idx);
+        openModal(card.dataset.index);
       });
     });
-
-    container.querySelectorAll('.bm-delete-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const idx = btn.dataset.index;
-        if (confirm("정말로 이 북마크를 삭제하시겠습니까?")) {
-          bookmarkData.splice(idx, 1);
-          localStorage.setItem('kknutrition_bookmarks_v2', JSON.stringify(bookmarkData));
-          renderBookmarks();
+    // add card click
+    var addCard = document.getElementById('bmAddCard');
+    if (addCard) {
+      addCard.addEventListener('click', function() { openModal(-1); });
+    }
+  } else {
+    // click tracking
+    container.querySelectorAll('a.bookmark-card').forEach(function(a) {
+      a.addEventListener('click', function() {
+        var url = a.dataset.url;
+        var item = bookmarkData.find(function(b) {
+          var v = /^https?:\/\//i.test(b.url) ? b.url : 'https://' + b.url;
+          return v === url;
+        });
+        if (item) {
+          item.clickCount = (item.clickCount || 0) + 1;
+          saveToStorage();
         }
       });
     });
-
-    const addCard = container.querySelector('.add-new-card');
-    if (addCard) {
-      addCard.addEventListener('click', () => {
-        window.openBookmarkEditor(-1); // -1 means new
-      });
-    }
   }
 }
 
-// ============================================
-// 북마크 단일 편집 (인라인) 모달 로직
-// ============================================
-let editingIndex = -1;
-
-function setupBookmarkSingleEditor() {
-  let modal = document.getElementById("bookmarkSingleEditorModal");
-  
-  if (!modal) {
-    // 캐시 문제로 index.html이 업데이트되지 않은 사용자를 위해 동적으로 생성
-    const modalHTML = `
-      <div id="bookmarkSingleEditorModal" class="memo-modal-overlay" style="display: none; z-index: 10001; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; backdrop-filter: blur(4px);">
-        <div class="memo-modal" style="max-width: 400px; width: 90%; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.15); background: var(--card);">
-          <div class="memo-modal-header" style="padding: 24px 24px 16px;">
-            <h3 id="bookmarkSingleTitle" style="margin:0; font-size:20px; font-weight: 800; color: var(--heading);">북마크 추가</h3>
-            <button id="bookmarkSingleClose" type="button" style="position: absolute; top: 20px; right: 20px; background: var(--card-soft); border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s;">&times;</button>
-          </div>
-          <div class="memo-modal-body" style="padding: 0 24px 24px;">
-            <div style="margin-bottom: 16px;">
-              <label style="font-size: 13px; font-weight: 700; color: var(--muted); margin-bottom: 6px; display: block;">카테고리</label>
-              <select id="bSingleCat" class="input-field" style="width: 100%; border-radius: 12px; border: 1px solid var(--line); padding: 12px; box-sizing: border-box; background: var(--bg);">
-                <option value="필수 업무">필수 업무</option>
-                <option value="급식·위생">급식·위생</option>
-                <option value="식재료·단가 관련">식재료·단가 관련</option>
-                <option value="소통·학교">소통·학교</option>
-                <option value="자료·연수">자료·연수</option>
-                <option value="기타">기타</option>
-              </select>
-            </div>
-            <div style="margin-bottom: 16px;">
-              <label style="font-size: 13px; font-weight: 700; color: var(--muted); margin-bottom: 6px; display: block;">사이트명</label>
-              <input type="text" id="bSingleName" class="input-field" placeholder="예: 구글" autocomplete="off" style="width: 100%; border-radius: 12px; border: 1px solid var(--line); padding: 12px; box-sizing: border-box; background: var(--bg);">
-            </div>
-            <div style="margin-bottom: 24px;">
-              <label style="font-size: 13px; font-weight: 700; color: var(--muted); margin-bottom: 6px; display: block;">URL 주소</label>
-              <input type="text" id="bSingleUrl" class="input-field" placeholder="https://..." autocomplete="off" style="width: 100%; border-radius: 12px; border: 1px solid var(--line); padding: 12px; box-sizing: border-box; background: var(--bg);">
-            </div>
-            <button id="bookmarkSingleSave" type="button" class="btn primary" style="width: 100%; padding: 14px; border-radius: 12px; font-weight: 700; font-size: 15px;">완료</button>
-          </div>
-        </div>
-      </div>
-    `;
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
-    modal = document.getElementById("bookmarkSingleEditorModal");
+// global delete (called from onclick attribute)
+window.bmDelete = function(idx) {
+  if (confirm('\uC774 \uBD81\uB9C8\uD06C\uB97C \uC0AD\uC81C\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?')) {
+    bookmarkData.splice(idx, 1);
+    saveToStorage();
+    renderBookmarks();
   }
+};
 
-  const closeBtn = document.getElementById("bookmarkSingleClose");
-  const saveBtn = document.getElementById("bookmarkSingleSave");
-  
-  if(!modal) return;
+// ---- Init ----
+document.addEventListener('DOMContentLoaded', function() {
+  renderFilterChips();
+  renderBookmarks();
 
-  const catInput = document.getElementById("bSingleCat");
-  const nameInput = document.getElementById("bSingleName");
-  const urlInput = document.getElementById("bSingleUrl");
-  const titleEl = document.getElementById("bookmarkSingleTitle");
-
-  closeBtn.addEventListener("click", () => modal.style.display = "none");
-  modal.addEventListener("click", (e) => {
-    if(e.target === modal) modal.style.display = "none";
-  });
-
-  window.openBookmarkEditor = function(index) {
-    try {
-      editingIndex = parseInt(index);
-      if (editingIndex >= 0) {
-        titleEl.innerText = "북마크 수정";
-        const item = bookmarkData[editingIndex];
-        catInput.value = item.category || "기타";
-        nameInput.value = item.title || "";
-        urlInput.value = item.url || "";
-      } else {
-        titleEl.innerText = "새 북마크 추가";
-        catInput.value = currentCategory === "전체" ? "필수 업무" : currentCategory;
-        nameInput.value = "";
-        urlInput.value = "";
-      }
-      modal.style.display = "flex";
-    } catch(e) {
-      alert("모달 열기 오류: " + e.message);
-    }
-  };
-
-  saveBtn.addEventListener("click", () => {
-    try {
-      const title = nameInput.value.trim();
-      let url = urlInput.value.trim();
-      const category = catInput.value;
-
-      if (!title || !url) {
-        alert("사이트명과 URL 주소를 모두 입력해주세요.");
-        return;
-      }
-
-      if (!/^https?:\/\//i.test(url)) {
-        url = "https://" + url;
-      }
-
-      const newItem = { title, url, category };
-
-      if (editingIndex >= 0) {
-        bookmarkData[editingIndex] = newItem;
-      } else {
-        bookmarkData.push(newItem);
-      }
-
-      localStorage.setItem('kknutrition_bookmarks_v2', JSON.stringify(bookmarkData));
-      modal.style.display = "none";
+  var searchInput = document.getElementById('bookmarkSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', function(e) {
+      currentSearch = e.target.value;
       renderBookmarks();
-    } catch(e) {
-      alert("저장 오류: " + e.message);
-    }
-  });
-}
+    });
+  }
+
+  var editBtn = document.getElementById('editBtnBookmarks');
+  if (editBtn) {
+    editBtn.innerHTML = '\uC218\uC815';
+    editBtn.addEventListener('click', function() {
+      isEditMode = !isEditMode;
+      editBtn.innerHTML = isEditMode ? '\uC800\uC7A5' : '\uC218\uC815';
+      editBtn.classList.toggle('saving', isEditMode);
+      renderBookmarks();
+    });
+  }
+
+  // ensure modal exists at startup (warm up)
+  getModal();
+});
