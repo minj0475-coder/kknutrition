@@ -5060,6 +5060,7 @@ nav a.active::after {
   display: flex;
   gap: 8px;
   overflow-x: auto;
+  padding-top: 4px; /* prevent hover clipping */
   padding-bottom: 4px; /* for scrollbar */
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
