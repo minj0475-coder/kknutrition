@@ -72,36 +72,37 @@ var _modal = null;
 
 function getModal() {
   if (_modal) return _modal;
-  _modal = document.getElementById('bookmarkSingleEditorModal');
-  if (!_modal) {
-    var div = document.createElement('div');
-    div.innerHTML = '<div id="bookmarkSingleEditorModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.55);z-index:10001;align-items:center;justify-content:center;backdrop-filter:blur(6px);">'
-      + '<div style="background:var(--card);max-width:400px;width:90%;border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,.2);padding:28px 28px 24px;position:relative;">'
-      + '<h3 id="bmModalTitle" style="margin:0 0 20px;font-size:20px;font-weight:800;color:var(--heading);">\uC0C8 \uBD81\uB9C8\uD06C \uCD94\uAC00</h3>'
-      + '<label style="font-size:13px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px;">\uCE74\uD14C\uACE0\uB9AC</label>'
-      + '<select id="bmCat" style="width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--heading);font-size:14px;box-sizing:border-box;margin-bottom:14px;">'
-      + '<option value="\uD544\uC218 \uC5C5\uBB34">\uD544\uC218 \uC5C5\uBB34</option>'
-      + '<option value="\uAE09\uC2DD\u00B7\uC704\uC0DD">\uAE09\uC2DD\u00B7\uC704\uC0DD</option>'
-      + '<option value="\uC2DD\uC7AC\uB8CC\u00B7\uB2E8\uAC00 \uAD00\uB828">\uC2DD\uC7AC\uB8CC\u00B7\uB2E8\uAC00 \uAD00\uB828</option>'
-      + '<option value="\uC18C\uD1B5\u00B7\uD559\uAD50">\uC18C\uD1B5\u00B7\uD559\uAD50</option>'
-      + '<option value="\uC790\uB8CC\u00B7\uC5F0\uC218">\uC790\uB8CC\u00B7\uC5F0\uC218</option>'
-      + '<option value="\uAE30\uD0C0">\uAE30\uD0C0</option>'
-      + '</select>'
-      + '<label style="font-size:13px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px;">\uC0AC\uC774\uD2B8\uBA85</label>'
-      + '<input id="bmName" type="text" placeholder="\uC608: \uAD6C\uAE00" autocomplete="off" style="width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--heading);font-size:14px;box-sizing:border-box;margin-bottom:14px;">'
-      + '<label style="font-size:13px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px;">URL \uC8FC\uC18C</label>'
-      + '<input id="bmUrl" type="text" placeholder="https://..." autocomplete="off" style="width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--heading);font-size:14px;box-sizing:border-box;margin-bottom:20px;">'
-      + '<button id="bmSave" type="button" style="width:100%;padding:14px;border-radius:12px;border:none;background:var(--primary);color:#fff;font-size:15px;font-weight:700;cursor:pointer;">\uC644\uB8CC</button>'
-      + '<button id="bmClose" type="button" style="position:absolute;top:18px;right:18px;background:var(--card-soft);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;">&times;</button>'
-      + '</div></div>';
-    document.body.appendChild(div.firstChild);
-    _modal = document.getElementById('bookmarkSingleEditorModal');
-    // close button
-    document.getElementById('bmClose').addEventListener('click', function() { closeModal(); });
-    _modal.addEventListener('click', function(e) { if (e.target === _modal) closeModal(); });
-    // save button
-    document.getElementById('bmSave').addEventListener('click', function() { handleSave(); });
-  }
+
+  // Always create modal via JS (no HTML dependency)
+  var el = document.createElement('div');
+  el.id = 'bookmarkSingleEditorModal';
+  el.style.cssText = 'display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.55);z-index:10001;align-items:center;justify-content:center;backdrop-filter:blur(6px);';
+  el.innerHTML = '<div style="background:var(--card);max-width:400px;width:90%;border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,.2);padding:28px 28px 24px;position:relative;">'
+    + '<h3 id="bmModalTitle" style="margin:0 0 20px;font-size:20px;font-weight:800;color:var(--heading);">\uC0C8 \uBD81\uB9C8\uD06C \uCD94\uAC00</h3>'
+    + '<label style="font-size:13px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px;">\uCE74\uD14C\uACE0\uB9AC</label>'
+    + '<select id="bmCat" style="width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--heading);font-size:14px;box-sizing:border-box;margin-bottom:14px;">'
+    + '<option value="\uD544\uC218 \uC5C5\uBB34">\uD544\uC218 \uC5C5\uBB34</option>'
+    + '<option value="\uAE09\uC2DD\u00B7\uC704\uC0DD">\uAE09\uC2DD\u00B7\uC704\uC0DD</option>'
+    + '<option value="\uC2DD\uC7AC\uB8CC\u00B7\uB2E8\uAC00 \uAD00\uB828">\uC2DD\uC7AC\uB8CC\u00B7\uB2E8\uAC00 \uAD00\uB828</option>'
+    + '<option value="\uC18C\uD1B5\u00B7\uD559\uAD50">\uC18C\uD1B5\u00B7\uD559\uAD50</option>'
+    + '<option value="\uC790\uB8CC\u00B7\uC5F0\uC218">\uC790\uB8CC\u00B7\uC5F0\uC218</option>'
+    + '<option value="\uAE30\uD0C0">\uAE30\uD0C0</option>'
+    + '</select>'
+    + '<label style="font-size:13px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px;">\uC0AC\uC774\uD2B8\uBA85</label>'
+    + '<input id="bmName" type="text" placeholder="\uC608: \uAD6C\uAE00" autocomplete="off" style="width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--heading);font-size:14px;box-sizing:border-box;margin-bottom:14px;">'
+    + '<label style="font-size:13px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px;">URL \uC8FC\uC18C</label>'
+    + '<input id="bmUrl" type="text" placeholder="https://..." autocomplete="off" style="width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--heading);font-size:14px;box-sizing:border-box;margin-bottom:20px;">'
+    + '<button id="bmSave" type="button" style="width:100%;padding:14px;border-radius:12px;border:none;background:var(--primary);color:#fff;font-size:15px;font-weight:700;cursor:pointer;">\uC644\uB8CC</button>'
+    + '<button id="bmClose" type="button" style="position:absolute;top:18px;right:18px;background:var(--card-soft);border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;">&times;</button>'
+    + '</div>';
+
+  document.body.appendChild(el);
+  _modal = el;
+
+  document.getElementById('bmClose').addEventListener('click', function() { closeModal(); });
+  _modal.addEventListener('click', function(e) { if (e.target === _modal) closeModal(); });
+  document.getElementById('bmSave').addEventListener('click', function() { handleSave(); });
+
   return _modal;
 }
 
