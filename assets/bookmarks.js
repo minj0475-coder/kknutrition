@@ -288,6 +288,9 @@ function renderBookmarks() {
   var sortFn = function(a, b) {
     if (a.isFavorite && !b.isFavorite) return -1;
     if (!a.isFavorite && b.isFavorite) return 1;
+    if (a.isFavorite && b.isFavorite) {
+      return (a.favoriteTime || 0) - (b.favoriteTime || 0);
+    }
     return (b.clickCount || 0) - (a.clickCount || 0);
   };
   
@@ -376,6 +379,9 @@ window.bmDelete = function(idx) {
 window.bmToggleFavorite = function(idx) {
   if (bookmarkData[idx]) {
     bookmarkData[idx].isFavorite = !bookmarkData[idx].isFavorite;
+    if (bookmarkData[idx].isFavorite) {
+      bookmarkData[idx].favoriteTime = Date.now();
+    }
     saveToStorage();
     renderBookmarks();
   }
