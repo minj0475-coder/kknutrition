@@ -205,11 +205,14 @@ function favicon(url) {
 function faviconImg(url) {
   try {
     var domain = new URL(url).hostname;
-    var g = 'https://www.google.com/s2/favicons?domain=' + domain + '&sz=32';
+    // 1순위: DuckDuckGo (가장 최신/다양한 파비콘 지원)
     var dd = 'https://icons.duckduckgo.com/ip3/' + domain + '.ico';
-    // onerror chain: google → duckduckgo → fallback
-    return '<img src="' + g + '" class="bm-favicon" alt="" loading="lazy"'
-      + ' onerror="this.onerror=function(){this.onerror=null;this.src=\'assets/app-icon-192.png\';};this.src=\'' + dd + '\';">';
+    // 2순위: 사이트 직접 조회
+    var direct = 'https://' + domain + '/favicon.ico';
+    
+    // onerror chain: DuckDuckGo → Direct → Local Fallback
+    return '<img src="' + dd + '" class="bm-favicon" alt="" loading="lazy"'
+      + ' onerror="this.onerror=function(){this.onerror=null;this.src=\'assets/app-icon-192.png\';};this.src=\'' + direct + '\';">';
   } catch(e) {
     return '<img src="assets/app-icon-192.png" class="bm-favicon" alt="">';
   }
