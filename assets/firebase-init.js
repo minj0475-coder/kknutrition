@@ -534,17 +534,53 @@ document.addEventListener('click', (e) => {
   if (targetHash !== currentHash && window.hasUnsavedChanges()) {
     e.preventDefault();
     
-    const modal = document.getElementById('unsavedModalOverlay');
-    if (!modal) return;
+    let modal = document.getElementById('unsavedModalOverlay');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'unsavedModalOverlay';
+      modal.className = 'memo-modal-overlay';
+      modal.style.cssText = 'display: none; z-index: 10000; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; transition: opacity 0.2s;';
+      modal.innerHTML = `
+        <div class="memo-modal" style="max-width: 400px; width: 90%; background: white; border-radius: 12px; overflow: hidden; position: relative;">
+          <div class="memo-modal-header" style="padding: 16px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+            <h2 style="margin: 0; font-size: 1.2rem; color: #333;">확인</h2>
+            <button id="unsavedModalCloseBtn" type="button" aria-label="닫기" style="background:transparent;border:none;padding:8px;margin:-8px;cursor:pointer;color:#333;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+          </div>
+          <div class="memo-modal-body" style="text-align: center; padding: 30px 20px;">
+            <p style="margin-bottom: 24px; line-height: 1.6; font-size: 16px; color: #333;">
+              저장하지 않은 내용이 있습니다.<br>
+              이 화면을 나가면 수정한 내용이 사라질 수 있습니다.
+            </p>
+            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+              <button id="unsavedModalCancelBtn" class="btn light" type="button" style="padding: 12px 20px; font-size: 15px;">계속 작성하기</button>
+              <button id="unsavedModalConfirmBtn" class="btn" type="button" style="background: #e74c3c; color: white; border: none; padding: 12px 20px; font-size: 15px;">저장하지 않고 나가기</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
     
+    // Force visibility regardless of CSS issues
     modal.style.display = 'flex';
+    void modal.offsetWidth; // force reflow
+    modal.style.opacity = '1';
+    modal.style.pointerEvents = 'auto';
+    modal.classList.add('active');
     
     const closeBtn = document.getElementById('unsavedModalCloseBtn');
     const cancelBtn = document.getElementById('unsavedModalCancelBtn');
     const confirmBtn = document.getElementById('unsavedModalConfirmBtn');
     
     const cleanupAndClose = () => {
-      modal.style.display = 'none';
+      modal.style.opacity = '0';
+      modal.style.pointerEvents = 'none';
+      modal.classList.remove('active');
+      setTimeout(() => {
+        modal.style.display = 'none';
+      }, 200);
       closeBtn.removeEventListener('click', cleanupAndClose);
       cancelBtn.removeEventListener('click', cleanupAndClose);
       confirmBtn.removeEventListener('click', confirmNav);
