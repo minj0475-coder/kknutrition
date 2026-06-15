@@ -2791,8 +2791,7 @@ tbody tr:nth-child(even) td{
   cursor:pointer;
   display:inline-flex;
   align-items:center;
-  padding:5px 12px;
-  border-radius:999px;
+  padding: 10px 14px !important;
   background:var(--card-soft);
   border:1px solid var(--line);
   color: var(--heading) !important;
@@ -4976,7 +4975,7 @@ nav a.active::after {
 .btn.light, .download-btn, .copy-btn, .copy-btn-inline, .today-menu-show-all-btn, .sync-btn, .home-today-link,
 #staff .download-btn, #staff .sync-btn, #staff .copy-btn, #staff .copy-btn-inline,
 .sheet-link-card .download-btn, .sheet-link-card .sync-btn, .staff-accordion-body .btn.light,
-.excel-upload-btn {
+.excel-upload-btn, .materials-detail summary, .bookmark-chip {
   background: #ffffff !important;
   color: var(--text) !important;
   border: 1.5px solid rgba(0,0,0,0.06) !important;
@@ -4989,14 +4988,14 @@ nav a.active::after {
 .dark-mode .btn.light, .dark-mode .download-btn, .dark-mode .copy-btn, .dark-mode .copy-btn-inline, .dark-mode .today-menu-show-all-btn, .dark-mode .sync-btn, .dark-mode .home-today-link,
 .dark-mode #staff .download-btn, .dark-mode #staff .sync-btn, .dark-mode #staff .copy-btn,
 .dark-mode .sheet-link-card .download-btn, .dark-mode .sheet-link-card .sync-btn, .dark-mode .staff-accordion-body .btn.light,
-.dark-mode .excel-upload-btn {
+.dark-mode .excel-upload-btn, .dark-mode .materials-detail summary, .dark-mode .bookmark-chip {
   background: var(--card) !important;
   border-color: rgba(255,255,255,0.06) !important;
 }
 .btn.light:hover, .download-btn:hover, .copy-btn:hover, .copy-btn-inline:hover, .today-menu-show-all-btn:hover, .sync-btn:hover, .home-today-link:hover,
 #staff .download-btn:hover, #staff .sync-btn:hover, #staff .copy-btn:hover, #staff .copy-btn-inline:hover,
 .sheet-link-card .download-btn:hover, .sheet-link-card .sync-btn:hover, .staff-accordion-body .btn.light:hover,
-.excel-upload-btn:hover {
+.excel-upload-btn:hover, .materials-detail summary:hover, .bookmark-chip:hover {
   background: var(--primary-soft) !important;
   color: var(--primary-dark) !important;
   border-color: var(--primary-soft) !important;
@@ -5006,7 +5005,7 @@ nav a.active::after {
 .btn.light:active, .download-btn:active, .copy-btn:active, .copy-btn-inline:active, .today-menu-show-all-btn:active, .sync-btn:active, .home-today-link:active,
 #staff .download-btn:active, #staff .sync-btn:active, #staff .copy-btn:active, #staff .copy-btn-inline:active,
 .sheet-link-card .download-btn:active, .sheet-link-card .sync-btn:active, .staff-accordion-body .btn.light:active,
-.excel-upload-btn:active {
+.excel-upload-btn:active, .materials-detail summary:active, .bookmark-chip:active {
   transform: translateY(1px) !important;
   box-shadow: 0 2px 6px rgba(0,0,0,0.04) !important;
 }
@@ -5072,8 +5071,7 @@ nav a.active::after {
   background: var(--card);
   border: 1px solid var(--line);
   color: var(--text);
-  padding: 8px 16px;
-  border-radius: 999px;
+  padding: 10px 18px !important;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
@@ -5085,10 +5083,10 @@ nav a.active::after {
   border-color: rgba(255,107,107,0.3);
 }
 .bookmark-chip.active {
-  background: var(--primary);
-  color: #fff;
-  border-color: var(--primary);
-  box-shadow: 0 4px 10px rgba(255,107,107,0.3);
+  background: var(--primary) !important;
+  color: #fff !important;
+  border-color: var(--primary) !important;
+  box-shadow: 0 4px 10px rgba(255,107,107,0.3) !important;
 }
 
 .bookmark-grid {
@@ -6054,45 +6052,4 @@ nav a.active {
   25% { transform: translateX(-6px) rotate(-1deg); }
   50% { transform: translateX(6px) rotate(1deg); }
   75% { transform: translateX(-6px) rotate(-1deg); }
-}
-
-/* === Update Buttons (사용재료 보기, 북마크 칩) to Premium Style === */
-.materials-detail summary,
-.bookmark-chip {
-  background: linear-gradient(135deg, var(--card) 0%, var(--card-soft) 100%) !important;
-  color: var(--heading) !important;
-  border: 1px solid var(--line) !important;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05) !important;
-  border-radius: 999px !important;
-  padding: 8px 18px !important;
-  font-weight: 700 !important;
-  font-size: 14px !important;
-  cursor: pointer !important;
-  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
-  position: relative;
-  overflow: hidden;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-.materials-detail summary:hover,
-.bookmark-chip:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 6px 14px rgba(255, 107, 107, 0.15) !important;
-  border-color: var(--primary) !important;
-  color: var(--primary) !important;
-}
-
-.materials-detail summary:active,
-.bookmark-chip:active {
-  transform: translateY(1px) !important;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) !important;
-}
-
-.bookmark-chip.active {
-  background: linear-gradient(135deg, var(--primary) 0%, #ff8a8a 100%) !important;
-  color: #fff !important;
-  border-color: transparent !important;
-  box-shadow: 0 6px 16px rgba(255, 107, 107, 0.3) !important;
 }
