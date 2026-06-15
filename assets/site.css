@@ -4893,61 +4893,23 @@ nav a.active, .mobile-nav-list a.active {
 
 /* 27. Affordance & Trendy UI Overrides (2026-06-15) */
 
-/* Kicker Tags -> Typography with dot accent */
-.kicker,
-.hero .kicker,
-#home .kicker,
-#daily .kicker,
-#monthly .kicker,
-#annual .kicker,
-#menu .kicker,
-#staff .kicker {
-  background: transparent !important;
-  color: var(--primary) !important;
-  padding: 0 !important;
-  border-radius: 0 !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.5px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 8px !important;
-  box-shadow: none !important;
-}
-.kicker::before,
-.hero .kicker::before,
-#home .kicker::before,
-#daily .kicker::before,
-#monthly .kicker::before,
-#annual .kicker::before,
-#menu .kicker::before,
-#staff .kicker::before {
-  content: "" !important;
-  display: inline-block !important;
-  width: 8px !important;
-  height: 8px !important;
-  background: linear-gradient(135deg, var(--primary) 0%, #ff5252 100%) !important;
-  border-radius: 50% !important;
-  box-shadow: 0 2px 4px rgba(255,107,107,0.3) !important;
-  margin-right: 2px !important;
-}
-
 /* Accordion Rows -> Lift effect & interactive + */
-.collapsible-header {
+.staff-accordion summary {
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
   cursor: pointer !important;
   border-radius: 12px;
   position: relative;
 }
-.collapsible-header:hover {
+.staff-accordion summary:hover {
   background-color: #fafafa !important;
   transform: translateY(-2px) !important;
   box-shadow: 0 6px 16px rgba(0,0,0,0.05) !important;
   z-index: 2;
 }
-.dark-mode .collapsible-header:hover {
+.dark-mode .staff-accordion summary:hover {
   background-color: #2a2a2a !important;
 }
-.collapsible-header:hover span:last-child {
+.staff-accordion summary:hover::after {
   color: var(--primary) !important;
   transform: rotate(90deg) scale(1.15) !important;
   transition: all 0.3s ease !important;
