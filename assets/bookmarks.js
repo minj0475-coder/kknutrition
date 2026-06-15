@@ -211,12 +211,12 @@ function faviconImg(url) {
     var domain = new URL(url).hostname;
     // 1순위: DuckDuckGo (가장 최신/다양한 파비콘 지원)
     var dd = 'https://icons.duckduckgo.com/ip3/' + domain + '.ico';
-    // 2순위: 사이트 직접 조회
-    var direct = 'https://' + domain + '/favicon.ico';
+    // 2순위: Google S2 Favicon (안정적인 글로벌 캐시)
+    var g = 'https://www.google.com/s2/favicons?domain=' + domain + '&sz=32';
     
-    // onerror chain: DuckDuckGo → Direct → Local Fallback
+    // onerror chain: DuckDuckGo → Google → Local Fallback
     return '<img src="' + dd + '" class="bm-favicon" alt="" loading="lazy"'
-      + ' onerror="this.onerror=function(){this.onerror=null;this.src=\'assets/app-icon-192.png\';};this.src=\'' + direct + '\';">';
+      + ' onerror="this.onerror=function(){this.onerror=null;this.src=\'assets/app-icon-192.png\';};this.src=\'' + g + '\';">';
   } catch(e) {
     return '<img src="assets/app-icon-192.png" class="bm-favicon" alt="">';
   }
