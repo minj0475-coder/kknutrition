@@ -70,6 +70,9 @@ var editingIdx = -1;
 // ---- Modal (created once) ----
 var _modal = null;
 
+// ---- Global Functions (must be on window for onclick= attributes) ----
+// These are set after function definitions below - see bottom of file
+
 function getModal() {
   if (_modal) return _modal;
 
@@ -202,10 +205,10 @@ function renderBookmarks() {
       var origIdx = bookmarkData.findIndex(function(b) { return b.title === item.title && b.url === item.url; });
       var validUrl = /^https?:\/\//i.test(item.url) ? item.url : 'https://' + item.url;
       if (isEditMode) {
-        return '<div class="bookmark-card edit-mode-card" data-index="' + origIdx + '" style="cursor:pointer;position:relative;">'
+        return '<div class="bookmark-card edit-mode-card" onclick="bmOpenModal(' + origIdx + ')" style="cursor:pointer;position:relative;">'
           + '<img src="' + favicon(validUrl) + '" class="bm-favicon" alt="" loading="lazy">'
           + '<span class="bm-title">' + item.title + '</span>'
-          + '<button class="bm-delete-btn" data-index="' + origIdx + '" title="\uC0AD\uC81C" onclick="event.stopPropagation();bmDelete(' + origIdx + ');">'
+          + '<button class="bm-delete-btn" title="\uC0AD\uC81C" onclick="event.stopPropagation();bmDelete(' + origIdx + ');">'
           + '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>'
           + '</button></div>';
       } else {
@@ -218,7 +221,7 @@ function renderBookmarks() {
   }
 
   if (isEditMode) {
-    html += '<div class="bookmark-card add-new-card" id="bmAddCard" style="cursor:pointer;border:1.5px dashed var(--muted);background:transparent;justify-content:center;gap:8px;">'
+    html += '<div class="bookmark-card add-new-card" onclick="bmOpenModal(-1)" style="cursor:pointer;border:1.5px dashed var(--muted);background:transparent;justify-content:center;gap:8px;">'
       + '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>'
       + '<span class="bm-title" style="color:var(--muted);">\uC0C8 \uBD81\uB9C8\uD06C \uCD94\uAC00</span>'
       + '</div>';
@@ -226,21 +229,8 @@ function renderBookmarks() {
 
   container.innerHTML = html;
 
-  if (isEditMode) {
-    // edit-mode-card click to edit
-    container.querySelectorAll('.edit-mode-card').forEach(function(card) {
-      card.addEventListener('click', function(e) {
-        if (e.target.closest('.bm-delete-btn')) return;
-        openModal(card.dataset.index);
-      });
-    });
-    // add card click
-    var addCard = document.getElementById('bmAddCard');
-    if (addCard) {
-      addCard.addEventListener('click', function() { openModal(-1); });
-    }
-  } else {
-    // click tracking
+  if (!isEditMode) {
+    // click tracking for sort
     container.querySelectorAll('a.bookmark-card').forEach(function(a) {
       a.addEventListener('click', function() {
         var url = a.dataset.url;
@@ -257,7 +247,10 @@ function renderBookmarks() {
   }
 }
 
-// global delete (called from onclick attribute)
+// (bmDelete and bmOpenModal are defined above near getModal)
+
+// Register globals after all functions defined
+window.bmOpenModal = openModal;
 window.bmDelete = function(idx) {
   if (confirm('\uC774 \uBD81\uB9C8\uD06C\uB97C \uC0AD\uC81C\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?')) {
     bookmarkData.splice(idx, 1);
