@@ -452,9 +452,8 @@ syncAnnualMobileCards();
 });
 
 // Setup Edit/Save buttons
-document.querySelectorAll('.fab-edit-btn').forEach(btn => {
+document.querySelectorAll('.bottom-action-btn').forEach(btn => {
   btn.addEventListener('click', (e) => {
-    // btn is the actual button element even if children are clicked
     const targetBtn = e.currentTarget;
     const pageId = targetBtn.getAttribute('data-target');
     const isEditing = editingState[pageId];
@@ -462,12 +461,11 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
     if (!section) return;
 
     const editables = section.querySelectorAll('.editable-content');
-    const textSpan = targetBtn.querySelector('.fab-text');
 
     if (!isEditing) {
       // Enter edit mode
       editingState[pageId] = true;
-      if (textSpan) textSpan.textContent = "저장";
+      targetBtn.textContent = "변경사항 저장";
       targetBtn.classList.add('saving');
       
       editables.forEach(el => {
@@ -479,7 +477,7 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
       }
     } else {
       // Save mode
-      if (textSpan) textSpan.textContent = "저장 중...";
+      targetBtn.textContent = "저장 중...";
       
       const updateData = {};
       editables.forEach(el => {
@@ -489,7 +487,7 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
 
       if (!isFirebaseConfigured || !db) {
         editingState[pageId] = false;
-        if (textSpan) textSpan.textContent = "수정";
+        targetBtn.textContent = "내용 수정";
         targetBtn.classList.remove('saving');
         if (pageId === 'annual') syncAnnualMobileCards();
         return;
@@ -497,7 +495,7 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
 
       setDoc(doc(db, "pageContents", pageId), updateData).then(() => {
         editingState[pageId] = false;
-        if (textSpan) textSpan.textContent = "수정";
+        targetBtn.textContent = "내용 수정";
         targetBtn.classList.remove('saving');
         
         if (pageId === 'annual') {
@@ -507,7 +505,7 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
         console.error("Save failed:", err);
         alert("저장에 실패했습니다.");
         editingState[pageId] = false;
-        if (textSpan) textSpan.textContent = "수정";
+        targetBtn.textContent = "내용 수정";
         targetBtn.classList.remove('saving');
       });
     }
