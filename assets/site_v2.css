@@ -5941,7 +5941,8 @@ nav a.active {
 .memo-modal-header button { background: transparent; border: none; padding: 8px; margin: -8px; cursor: pointer; color: var(--text); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
 .memo-modal-header button:hover { background: rgba(0,0,0,0.05); }
 .memo-modal-body { padding: 20px 24px; overflow-y: hidden; flex: 1; display: flex; flex-direction: column; min-height: 0; }
-.memo-modal-body .memo-list { flex: 1; overflow-y: auto; min-height: 0; padding-bottom: 60px; }
+.memo-modal-body .memo-list { flex: 1; overflow-y: auto; min-height: 0; padding-bottom: 16px; }
+.memo-modal-body .memo-add-btn { margin-top: auto; margin-bottom: 0; }
 .memo-modal-body .memo-hint { flex-shrink: 0; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
 
 /* Floating Action Button (FAB) Text Edit */
