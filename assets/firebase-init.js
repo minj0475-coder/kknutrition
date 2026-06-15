@@ -350,10 +350,166 @@ function closeMemoModal() {
     overlay.classList.remove("active");
     setTimeout(() => {
       overlay.style.display = "none";
-    }, 200); // match css transition
+    }, 200);
   }
   updateAllMemosDOM();
 }
+
+/* =========================================================
+   PAGE CONTENT EDIT & SYNC LOGIC
+   ========================================================= */
+
+// Store editing state per page
+const editingState = {
+  daily: false,
+  monthly: false,
+  annual: false,
+  staff: false
+};
+
+function syncAnnualMobileCards() {
+  const table = document.querySelector('.annual-table tbody');
+  if (!table) return;
+  const listContainer = document.getElementById('annual-mobile-auto-list');
+  if (!listContainer) return;
+
+  listContainer.innerHTML = '';
+  let currentMonthCard = null;
+
+  const rows = table.querySelectorAll('tr');
+  rows.forEach(row => {
+    const cells = row.querySelectorAll('td, th');
+    if (cells.length === 0) return;
+
+    let titleText, contentHtml;
+
+    if (cells.length >= 3) {
+      // New month
+      const monthText = cells[0].innerText.trim();
+      currentMonthCard = document.createElement('div');
+      currentMonthCard.className = 'annual-month-card';
+      const h3 = document.createElement('h3');
+      h3.textContent = monthText;
+      currentMonthCard.appendChild(h3);
+      listContainer.appendChild(currentMonthCard);
+
+      titleText = cells[1].innerText.trim();
+      contentHtml = cells[2].innerHTML;
+    } else if (cells.length === 2 && currentMonthCard) {
+      // Continue same month
+      titleText = cells[0].innerText.trim();
+      contentHtml = cells[1].innerHTML;
+    } else {
+      return;
+    }
+
+    if (currentMonthCard && (titleText || contentHtml)) {
+      const taskDiv = document.createElement('div');
+      taskDiv.className = 'annual-task';
+      
+      const strong = document.createElement('strong');
+      strong.textContent = titleText;
+      taskDiv.appendChild(strong);
+
+      const contentWrapper = document.createElement('div');
+      contentWrapper.innerHTML = contentHtml;
+      
+      while(contentWrapper.firstChild) {
+        taskDiv.appendChild(contentWrapper.firstChild);
+      }
+
+      currentMonthCard.appendChild(taskDiv);
+    }
+  });
+}
+
+// Initial sync for annual mobile cards on page load
+syncAnnualMobileCards();
+
+// Setup real-time listeners for each page
+['daily', 'monthly', 'annual', 'staff'].forEach(pageId => {
+  // We need to setup the listener inside init() after db is ready, or just check db here.
+  // Wait, db is initialized synchronously at the top of the file!
+  if (!isFirebaseConfigured || !db) return;
+  
+  onSnapshot(doc(db, "pageContents", pageId), (snapshot) => {
+    if (snapshot.exists()) {
+      const data = snapshot.data();
+      // Only update DOM if NOT currently editing this page
+      if (!editingState[pageId]) {
+        Object.keys(data).forEach(elementId => {
+          const el = document.getElementById(elementId);
+          if (el) {
+            el.innerHTML = data[elementId];
+          }
+        });
+        if (pageId === 'annual') {
+          syncAnnualMobileCards();
+        }
+      }
+    }
+  });
+});
+
+// Setup Edit/Save buttons
+document.querySelectorAll('.edit-page-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    const pageId = e.target.getAttribute('data-target');
+    const isEditing = editingState[pageId];
+    const section = document.getElementById(pageId);
+    if (!section) return;
+
+    const editables = section.querySelectorAll('.editable-content');
+
+    if (!isEditing) {
+      // Enter edit mode
+      editingState[pageId] = true;
+      e.target.textContent = "저장";
+      e.target.classList.add('saving');
+      
+      editables.forEach(el => {
+        el.setAttribute('contenteditable', 'true');
+      });
+      
+      if (editables.length > 0) {
+        editables[0].focus();
+      }
+    } else {
+      // Save mode
+      e.target.textContent = "저장 중...";
+      
+      const updateData = {};
+      editables.forEach(el => {
+        el.removeAttribute('contenteditable');
+        updateData[el.id] = el.innerHTML;
+      });
+
+      if (!isFirebaseConfigured || !db) {
+        editingState[pageId] = false;
+        e.target.textContent = "수정";
+        e.target.classList.remove('saving');
+        if (pageId === 'annual') syncAnnualMobileCards();
+        return;
+      }
+
+      setDoc(doc(db, "pageContents", pageId), updateData).then(() => {
+        editingState[pageId] = false;
+        e.target.textContent = "수정";
+        e.target.classList.remove('saving');
+        
+        if (pageId === 'annual') {
+          syncAnnualMobileCards();
+        }
+      }).catch(err => {
+        console.error("Save failed:", err);
+        alert("저장에 실패했습니다.");
+        editingState[pageId] = false;
+        e.target.textContent = "수정";
+        e.target.classList.remove('saving');
+      });
+    }
+  });
+});
 
 function init() {
   // Setup modal buttons

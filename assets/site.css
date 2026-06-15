@@ -5327,6 +5327,201 @@ nav a.active {
 #memoList .memo-input { max-height: 28px !important; overflow: hidden !important; white-space: nowrap; text-overflow: ellipsis; line-height: 1.5; padding-right: 2px !important; resize: none !important; }
 .memo-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
 .memo-modal-overlay.active { opacity: 1; pointer-events: auto; }
+  gap: 12px !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+.hero, .card {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+
+/* === Today Menu Internal Gaps Fix === */
+#today-menu .wrap > section:not(.hero) {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+.date-section-v2 {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+.today-menu-show-all-wrap {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+#todayMenuAllSection, #todayMenuList, #todayMenuSearchResult, #todayMenuTodaySection {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+
+
+
+/* FORCE NO MARGINS ON ALL WRAPPERS */
+.today-menu-results, 
+.today-menu-today-section, 
+.today-menu-show-all-wrap,
+#todayMenuAllSectionWrap,
+#todayMenuAllSection,
+#todayMenuList,
+#todayMenuSearchResult,
+#todayMenuTodaySection,
+#todayMenuShowAllWrap,
+#todayMenuShowAllWrapBottom {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+
+
+@media(max-width: 640px) {
+  .home-grid-left .daily-kkul-image-wrap,
+  .daily-kkul-image-wrap {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 180px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+}
+
+
+
+/* FINAL OVERRIDE FOR MOBILE KKUL-KKULI SIZE */
+@media(max-width: 640px) {
+  .home-grid-left .daily-kkul-image-wrap img,
+  .daily-kkul-image-wrap img {
+    width: 130px !important;
+    max-width: 130px !important;
+    min-width: 130px !important;
+    height: auto !important;
+    margin-top: 16px !important;
+    filter: drop-shadow(0 8px 16px rgba(242, 139, 156, 0.2)) !important;
+  }
+}
+
+/* =========================================================
+   MOBILE KKUL-KKULI HORIZONTAL LAYOUT (Sophisticated)
+   ========================================================= */
+@media(max-width: 640px) {
+  .home-grid-left .daily-kkul-card,
+  .daily-kkul-card {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    text-align: left !important;
+    padding: 24px 20px !important;
+    gap: 16px !important;
+  }
+
+  .home-grid-left .daily-kkul-copy,
+  .daily-kkul-copy {
+    flex: 1 1 auto !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+    width: auto !important;
+  }
+  
+  .home-grid-left .daily-kkul-copy .section-title,
+  .daily-kkul-copy .section-title {
+    align-self: flex-start !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    margin-bottom: 0 !important;
+  }
+
+  .home-grid-left .daily-kkul-copy .daily-kkul-message,
+  .daily-kkul-copy .daily-kkul-message {
+    text-align: left !important;
+    align-self: flex-start !important;
+    margin-top: 8px !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    word-break: keep-all !important;
+  }
+
+  .home-grid-left .daily-kkul-image-wrap,
+  .daily-kkul-image-wrap {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-height: auto !important;
+    margin: 0 !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: center !important;
+  }
+
+  .home-grid-left .daily-kkul-image-wrap img,
+  .daily-kkul-image-wrap img {
+    width: 90px !important;
+    min-width: 90px !important;
+    max-width: 90px !important;
+    height: auto !important;
+    margin-top: 0 !important;
+    filter: drop-shadow(0 6px 12px rgba(242, 139, 156, 0.2)) !important;
+  }
+}
+
+/* =========================================================
+   ALL SUB-PAGE HERO ASSETS VERTICAL CENTERING
+   ========================================================= */
+.page-section:not(#home) .hero-asset {
+  top: 50% !important;
+  bottom: auto !important;
+  translate: 0 -50% !important;
+  transform: none !important;
+  object-position: center center !important;
+}
+
+@media(max-width: 640px) {
+  .page-section:not(#home) .hero-asset {
+    top: 50% !important;
+    bottom: auto !important;
+    max-height: 90% !important;
+    translate: 0 -50% !important;
+    transform: none !important;
+    object-position: center center !important;
+  }
+}
+
+/* =========================================================
+   NEW BRAND LOGO IMAGE ONLY
+   ========================================================= */
+.brand {
+  display: flex !important;
+  align-items: center !important;
+  text-decoration: none !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.brand-logo-img {
+  height: 44px !important;
+  width: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+  filter: drop-shadow(0 4px 6px rgba(242, 139, 156, 0.15)) !important;
+}
+
+@media(max-width: 640px) {
+  .brand-logo-img {
+    height: 38px !important;
+  }
+}
+
+/* Memo Modal & Home Limits */
+.memo-full-btn { background: transparent; border: none; padding: 10px; margin: -10px; cursor: pointer; color: var(--primary-dark); display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s; }
+.memo-full-btn:hover { background: rgba(0,0,0,0.05); }
+#memoList .memo-input { max-height: 28px !important; overflow: hidden !important; white-space: nowrap; text-overflow: ellipsis; line-height: 1.5; padding-right: 2px !important; resize: none !important; }
+.memo-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
+.memo-modal-overlay.active { opacity: 1; pointer-events: auto; }
 .memo-modal { background: #fff; width: 90%; max-width: 500px; max-height: 85vh; border-radius: 20px; display: flex; flex-direction: column; box-shadow: 0 10px 40px rgba(0,0,0,0.2); overflow: hidden; transform: scale(0.95); transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 .memo-modal-overlay.active .memo-modal { transform: scale(1); }
 .memo-modal-header { padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); background: var(--card-soft); }
@@ -5334,3 +5529,43 @@ nav a.active {
 .memo-modal-header button { background: transparent; border: none; padding: 8px; margin: -8px; cursor: pointer; color: var(--text); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
 .memo-modal-header button:hover { background: rgba(0,0,0,0.05); }
 .memo-modal-body { padding: 20px 24px; overflow-y: auto; flex: 1; }
+
+/* Page Edit Mode */
+.page-edit-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 10;
+}
+.edit-page-btn {
+  background: var(--card);
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  border-radius: 20px;
+  padding: 8px 24px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: all 0.2s;
+  font-size: 14px;
+}
+.edit-page-btn.saving {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 6px 15px rgba(255,107,107,0.3);
+}
+.editable-content {
+  transition: all 0.2s ease;
+  border-radius: 8px;
+}
+.editable-content[contenteditable="true"] {
+  outline: 2px dashed var(--primary);
+  outline-offset: 4px;
+  background: rgba(255,107,107,0.02);
+  cursor: text;
+}
+.editable-content[contenteditable="true"]:focus {
+  outline: 2px solid var(--primary);
+  background: #fff;
+}
