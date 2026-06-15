@@ -970,6 +970,11 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Tab Switching Logic
+// Prevent browser's native scroll restoration on refresh
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+
 function updateTabs() {
   let hash = window.location.hash;
   if (!hash || !document.querySelector(hash)) {
@@ -989,7 +994,12 @@ function updateTabs() {
       link.classList.remove('active');
     }
   });
+  
+  // Force scroll to top immediately, and again after a tick to override native anchor jump
   window.scrollTo({ top: 0, behavior: 'instant' });
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, 10);
 }
 window.addEventListener('hashchange', updateTabs);
 document.addEventListener('DOMContentLoaded', updateTabs);
