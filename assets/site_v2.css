@@ -4854,23 +4854,23 @@ nav a.active, .mobile-nav-list a.active {
 
 .memo-add-btn {
   display: none; /* Hide on PC */
-  background: var(--bg);
-  border: 1px solid var(--line);
+  background: transparent;
+  border: none;
   color: var(--text);
   width: 100%;
-  padding: 12px;
-  border-radius: 12px;
+  padding: 10px 4px;
   margin-top: 16px;
   cursor: pointer;
   font-family: inherit;
   font-size: 14px;
   font-weight: 700;
+  text-align: left;
   transition: all 0.2s;
+  border-radius: 8px;
 }
 .memo-add-btn:hover {
-  background: #fff;
-  border-color: var(--primary);
-  color: var(--primary);
+  background: var(--bg);
+  color: var(--heading);
 }
 
 @media(max-width: 1024px) {
@@ -5943,7 +5943,27 @@ nav a.active {
 .memo-modal-body { padding: 20px 24px; overflow-y: hidden; flex: 1; display: flex; flex-direction: column; min-height: 0; }
 .memo-modal-body .memo-list { flex: 1; overflow-y: auto; min-height: 0; padding-bottom: 16px; }
 .memo-modal-body .memo-add-btn { margin-top: auto; margin-bottom: 0; }
-.memo-modal-body .memo-hint { flex-shrink: 0; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+.memo-modal-body .memo-hint { flex-shrink: 0; margin-top: 12px; padding-top: 12px; }
+.memo-hint kbd {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 11px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  color: var(--heading);
+  font-weight: 600;
+  margin: 0 2px;
+}
+.memo-hint span {
+  color: var(--text);
+  font-size: 12px;
+}
+.memo-hint .dot {
+  margin: 0 6px;
+  color: var(--line);
+}
 
 /* Floating Action Button (FAB) Text Edit */
 .fab-edit-btn, .fab-bookmark-edit-btn {
