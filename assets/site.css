@@ -5093,8 +5093,13 @@ nav a.active::after {
 
 .bookmark-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 12px;
+}
+@media(max-width: 768px) {
+  .bookmark-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .bookmark-card {
@@ -5903,7 +5908,7 @@ nav a.active {
 .fab-edit-btn:active, .fab-bookmark-edit-btn:active {
   transform: translateY(1px) scale(0.95);
 }
-.fab-edit-btn.saving {
+.fab-edit-btn.saving, .fab-bookmark-edit-btn.saving {
   background: #333;
   box-shadow: 0 6px 20px rgba(0,0,0,0.3);
 }
