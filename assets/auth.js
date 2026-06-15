@@ -6,7 +6,7 @@
 // --- 설정 (Settings) ---
 const PORTAL_PASSWORD = "kknutrition"; // 임시 초기 비밀번호 (원하시는 비밀번호로 변경하세요)
 const AUTH_KEY = "kknutrition_portal_auth";
-const WEBHOOK_URL = ""; // Google Apps Script 배포 후 생성된 웹앱 URL을 여기에 입력하세요.
+const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycby3sgo-M0JiwyMBnlw6zjHY9p8n5vJdUk0NSTF1dd-chEMtDGnrknvKW51ZKQygynkD/exec"; // Google Apps Script 배포 후 생성된 웹앱 URL을 여기에 입력하세요.
 
 // --- 인증 상태 확인 (Check Auth) ---
 function checkAuth() {
