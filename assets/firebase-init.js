@@ -170,7 +170,7 @@ function renderMemoList(containerId, isHome) {
                   const nextTextarea = modalList.children[index + 1]?.querySelector("textarea");
                   if (nextTextarea) {
                       nextTextarea.focus({ preventScroll: true });
-                      nextTextarea.parentElement.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                      nextTextarea.parentElement.scrollIntoView({ behavior: "smooth", block: "center" });
                   }
               }, 100);
               return;
@@ -180,7 +180,7 @@ function renderMemoList(containerId, isHome) {
             const nextTextarea = container.children[index + 1]?.querySelector("textarea");
             if (nextTextarea) {
                 nextTextarea.focus({ preventScroll: true });
-                nextTextarea.parentElement.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                nextTextarea.parentElement.scrollIntoView({ behavior: "smooth", block: "center" });
             }
           }, 10);
         }
@@ -261,7 +261,7 @@ function renderMemoList(containerId, isHome) {
                     const nextTextarea = modalList.children[index + 1]?.querySelector("textarea");
                     if (nextTextarea) {
                         nextTextarea.focus({ preventScroll: true });
-                        nextTextarea.parentElement.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                        nextTextarea.parentElement.scrollIntoView({ behavior: "smooth", block: "center" });
                     }
                 }, 100);
                 return;
@@ -271,7 +271,7 @@ function renderMemoList(containerId, isHome) {
               const nextTextarea = container.children[index + 1]?.querySelector("textarea");
               if (nextTextarea) {
                   nextTextarea.focus({ preventScroll: true });
-                  nextTextarea.parentElement.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                  nextTextarea.parentElement.scrollIntoView({ behavior: "smooth", block: "center" });
               }
             }, 10);
           }
