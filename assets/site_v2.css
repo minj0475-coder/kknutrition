@@ -5002,16 +5002,16 @@ nav a.active::after {
 .excel-upload-btn, .materials-detail summary, .bookmark-chip {
   -webkit-appearance: none !important;
   appearance: none !important;
-  background: rgba(255, 255, 255, 0.85) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
+  background: rgba(245, 247, 250, 0.7) !important;
+  backdrop-filter: blur(12px) saturate(150%) !important;
+  -webkit-backdrop-filter: blur(12px) saturate(150%) !important;
   color: #1d1d1f !important;
-  border: 1px solid rgba(0, 0, 0, 0.08) !important;
-  border-bottom: 1.5px solid rgba(0, 0, 0, 0.12) !important;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1) !important;
   border-radius: 12px !important;
   font-weight: 600 !important;
   letter-spacing: -0.3px !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 1), 0 2px 5px rgba(0, 0, 0, 0.04) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 1), 0 3px 8px rgba(0, 0, 0, 0.05) !important;
   transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
   cursor: pointer !important;
   padding: 12px 20px !important;
