@@ -163,9 +163,10 @@ function renderBookmarks() {
           </div>
         `;
       } else {
+        const validUrl = /^https?:\/\//i.test(item.url) ? item.url : 'https://' + item.url;
         return `
-          <a href="${item.url}" target="_blank" rel="noopener" class="bookmark-card">
-            <img src="${getFaviconUrl(item.url)}" class="bm-favicon" alt="" loading="lazy">
+          <a href="${validUrl}" target="_blank" rel="noopener" class="bookmark-card">
+            <img src="${getFaviconUrl(validUrl)}" class="bm-favicon" alt="" loading="lazy">
             <span class="bm-title">${item.title}</span>
           </a>
         `;
@@ -266,6 +267,11 @@ function setupBookmarkSingleEditor() {
     if (!title || !url) {
       alert("사이트명과 URL 주소를 모두 입력해주세요.");
       return;
+    }
+
+    // http:// 또는 https:// 로 시작하지 않으면 자동으로 https:// 붙이기
+    if (!/^https?:\/\//i.test(url)) {
+      url = "https://" + url;
     }
 
     const newItem = { title, url, category };
