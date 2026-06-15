@@ -248,7 +248,46 @@ function renderBookmarks() {
 let editingIndex = -1;
 
 function setupBookmarkSingleEditor() {
-  const modal = document.getElementById("bookmarkSingleEditorModal");
+  let modal = document.getElementById("bookmarkSingleEditorModal");
+  
+  if (!modal) {
+    // 캐시 문제로 index.html이 업데이트되지 않은 사용자를 위해 동적으로 생성
+    const modalHTML = `
+      <div id="bookmarkSingleEditorModal" class="memo-modal-overlay" style="display: none; z-index: 10001; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; backdrop-filter: blur(4px);">
+        <div class="memo-modal" style="max-width: 400px; width: 90%; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.15); background: var(--card);">
+          <div class="memo-modal-header" style="padding: 24px 24px 16px;">
+            <h3 id="bookmarkSingleTitle" style="margin:0; font-size:20px; font-weight: 800; color: var(--heading);">북마크 추가</h3>
+            <button id="bookmarkSingleClose" type="button" style="position: absolute; top: 20px; right: 20px; background: var(--card-soft); border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s;">&times;</button>
+          </div>
+          <div class="memo-modal-body" style="padding: 0 24px 24px;">
+            <div style="margin-bottom: 16px;">
+              <label style="font-size: 13px; font-weight: 700; color: var(--muted); margin-bottom: 6px; display: block;">카테고리</label>
+              <select id="bSingleCat" class="input-field" style="width: 100%; border-radius: 12px; border: 1px solid var(--line); padding: 12px; box-sizing: border-box; background: var(--bg);">
+                <option value="필수 업무">필수 업무</option>
+                <option value="급식·위생">급식·위생</option>
+                <option value="식재료·단가 관련">식재료·단가 관련</option>
+                <option value="소통·학교">소통·학교</option>
+                <option value="자료·연수">자료·연수</option>
+                <option value="기타">기타</option>
+              </select>
+            </div>
+            <div style="margin-bottom: 16px;">
+              <label style="font-size: 13px; font-weight: 700; color: var(--muted); margin-bottom: 6px; display: block;">사이트명</label>
+              <input type="text" id="bSingleName" class="input-field" placeholder="예: 구글" autocomplete="off" style="width: 100%; border-radius: 12px; border: 1px solid var(--line); padding: 12px; box-sizing: border-box; background: var(--bg);">
+            </div>
+            <div style="margin-bottom: 24px;">
+              <label style="font-size: 13px; font-weight: 700; color: var(--muted); margin-bottom: 6px; display: block;">URL 주소</label>
+              <input type="text" id="bSingleUrl" class="input-field" placeholder="https://..." autocomplete="off" style="width: 100%; border-radius: 12px; border: 1px solid var(--line); padding: 12px; box-sizing: border-box; background: var(--bg);">
+            </div>
+            <button id="bookmarkSingleSave" type="button" class="btn primary" style="width: 100%; padding: 14px; border-radius: 12px; font-weight: 700; font-size: 15px;">완료</button>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    modal = document.getElementById("bookmarkSingleEditorModal");
+  }
+
   const closeBtn = document.getElementById("bookmarkSingleClose");
   const saveBtn = document.getElementById("bookmarkSingleSave");
   
