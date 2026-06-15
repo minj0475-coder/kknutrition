@@ -4995,18 +4995,22 @@ nav a.active::after {
   box-shadow: 0 2px 8px rgba(255,107,107,0.3) !important;
 }
 
-/* Secondary Buttons -> Soft Trendy Style (엑셀 업로드, 복사하기 등) */
+/* Secondary Buttons -> Sophisticated Apple-like Style (엑셀 업로드, 복사하기 등) */
 .btn.light, .download-btn, .copy-btn, .copy-btn-inline, .today-menu-show-all-btn, .sync-btn, .home-today-link,
 #staff .download-btn, #staff .sync-btn, #staff .copy-btn, #staff .copy-btn-inline,
 .sheet-link-card .download-btn, .sheet-link-card .sync-btn, .staff-accordion-body .btn.light,
 .excel-upload-btn, .materials-detail summary, .bookmark-chip {
-  background: var(--primary-soft) !important;
-  color: var(--primary-dark) !important;
-  border: 1px solid var(--primary-soft) !important;
-  border-radius: 14px !important;
-  font-weight: 700 !important;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.02) !important;
-  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  color: #1d1d1f !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-bottom: 1.5px solid rgba(0, 0, 0, 0.12) !important;
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.3px !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 1), 0 2px 5px rgba(0, 0, 0, 0.04) !important;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
   cursor: pointer !important;
   padding: 12px 20px !important;
   display: inline-flex !important;
@@ -5014,36 +5018,58 @@ nav a.active::after {
   justify-content: center !important;
   gap: 8px !important;
 }
+
 .dark-mode .btn.light, .dark-mode .download-btn, .dark-mode .copy-btn, .dark-mode .copy-btn-inline, .dark-mode .today-menu-show-all-btn, .dark-mode .sync-btn, .dark-mode .home-today-link,
 .dark-mode #staff .download-btn, .dark-mode #staff .sync-btn, .dark-mode #staff .copy-btn,
 .dark-mode .sheet-link-card .download-btn, .dark-mode .sheet-link-card .sync-btn, .dark-mode .staff-accordion-body .btn.light,
 .dark-mode .excel-upload-btn, .dark-mode .materials-detail summary, .dark-mode .bookmark-chip {
-  background: var(--card) !important;
-  border-color: rgba(255,255,255,0.06) !important;
+  background: rgba(45, 45, 45, 0.7) !important;
+  color: #f5f5f7 !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-bottom: 1.5px solid rgba(0, 0, 0, 0.5) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 2px 6px rgba(0, 0, 0, 0.3) !important;
 }
+
 .dark-mode .materials-detail[open] summary {
-  background: var(--primary-soft) !important;
-  border-color: var(--primary-soft) !important;
-  color: var(--primary-dark) !important;
+  background: rgba(255, 255, 255, 0.15) !important;
 }
+
 @media (hover: hover) and (pointer: fine) {
   .btn.light:hover, .download-btn:hover, .copy-btn:hover, .copy-btn-inline:hover, .today-menu-show-all-btn:hover, .sync-btn:hover, .home-today-link:hover,
   #staff .download-btn:hover, #staff .sync-btn:hover, #staff .copy-btn:hover, #staff .copy-btn-inline:hover,
   .sheet-link-card .download-btn:hover, .sheet-link-card .sync-btn:hover, .staff-accordion-body .btn.light:hover,
   .excel-upload-btn:hover, .materials-detail summary:hover, .bookmark-chip:hover {
-    background: var(--primary-soft) !important;
-    color: var(--primary-dark) !important;
-    border-color: var(--primary-soft) !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.06) !important;
+    background: rgba(255, 255, 255, 1) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 1), 0 4px 10px rgba(0, 0, 0, 0.06) !important;
+  }
+  
+  .dark-mode .btn.light:hover, .dark-mode .download-btn:hover, .dark-mode .copy-btn:hover, .dark-mode .copy-btn-inline:hover, .dark-mode .today-menu-show-all-btn:hover, .dark-mode .sync-btn:hover, .dark-mode .home-today-link:hover,
+  .dark-mode #staff .download-btn:hover, .dark-mode #staff .sync-btn:hover, .dark-mode #staff .copy-btn:hover,
+  .dark-mode .sheet-link-card .download-btn:hover, .dark-mode .sheet-link-card .sync-btn:hover, .dark-mode .staff-accordion-body .btn.light:hover,
+  .dark-mode .excel-upload-btn:hover, .dark-mode .materials-detail summary:hover, .dark-mode .bookmark-chip:hover {
+    background: rgba(65, 65, 65, 0.8) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 4px 12px rgba(0, 0, 0, 0.4) !important;
   }
 }
+
 .btn.light:active, .download-btn:active, .copy-btn:active, .copy-btn-inline:active, .today-menu-show-all-btn:active, .sync-btn:active, .home-today-link:active,
 #staff .download-btn:active, #staff .sync-btn:active, #staff .copy-btn:active, #staff .copy-btn-inline:active,
 .sheet-link-card .download-btn:active, .sheet-link-card .sync-btn:active, .staff-accordion-body .btn.light:active,
 .excel-upload-btn:active, .materials-detail summary:active, .bookmark-chip:active {
   transform: translateY(1px) !important;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.04) !important;
+  background: rgba(245, 245, 247, 0.9) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02) !important;
+}
+
+.dark-mode .btn.light:active, .dark-mode .download-btn:active, .dark-mode .copy-btn:active, .dark-mode .copy-btn-inline:active, .dark-mode .today-menu-show-all-btn:active, .dark-mode .sync-btn:active, .dark-mode .home-today-link:active,
+.dark-mode #staff .download-btn:active, .dark-mode #staff .sync-btn:active, .dark-mode #staff .copy-btn:active,
+.dark-mode .sheet-link-card .download-btn:active, .dark-mode .sheet-link-card .sync-btn:active, .dark-mode .staff-accordion-body .btn.light:active,
+.dark-mode .excel-upload-btn:active, .dark-mode .materials-detail summary:active, .dark-mode .bookmark-chip:active {
+  background: rgba(35, 35, 35, 0.8) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4) !important;
 }
 
 .home-grid-left .daily-kkul-copy .daily-kkul-message {
