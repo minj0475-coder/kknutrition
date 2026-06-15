@@ -1018,8 +1018,12 @@ td:first-child{
 button,
 .btn,
 .download-btn,
-.quick{
+.quick,
+input[type="button"],
+input[type="submit"] {
   cursor:pointer;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .home-daily-card{
