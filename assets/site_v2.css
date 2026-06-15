@@ -6134,3 +6134,30 @@ nav a.active {
   50% { transform: translateX(6px) rotate(1deg); }
   75% { transform: translateX(-6px) rotate(-1deg); }
 }
+
+/* === Premium UI Upgrades (Search Bar & Filter Chips) === */
+.search-wrap input {
+  border-radius: 30px !important;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.02) !important;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+}
+.search-wrap input:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 15px rgba(255,107,107,0.3), inset 0 2px 4px rgba(0,0,0,0.02) !important;
+}
+
+.bookmark-chip {
+  padding: 10px 20px !important;
+  border-radius: 24px !important;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+}
+.bookmark-chip:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05) !important;
+}
+.bookmark-chip.active {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%) !important;
+  border-color: transparent !important;
+  box-shadow: 0 6px 16px rgba(255, 107, 107, 0.4) !important;
+  transform: translateY(-2px) !important;
+}
