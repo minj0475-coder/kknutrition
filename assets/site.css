@@ -5040,6 +5040,7 @@ nav a.active::after {
 }
 .search-wrap input {
   width: 100%;
+  box-sizing: border-box;
   padding: 14px 16px 14px 44px;
   border: 1px solid var(--line);
   border-radius: 12px;
@@ -5091,27 +5092,23 @@ nav a.active::after {
 
 .bookmark-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-}
-@media(min-width: 640px) {
-  .bookmark-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media(min-width: 1024px) {
-  .bookmark-grid { grid-template-columns: repeat(3, 1fr); }
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
 }
 
 .bookmark-card {
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 20px;
+  border-radius: 14px;
+  padding: 16px 14px;
   text-decoration: none;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.01);
 }
 .bookmark-card:hover {
   transform: translateY(-4px);
@@ -5124,43 +5121,36 @@ nav a.active::after {
 
 .bm-header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+.bm-favicon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--card-soft);
+  padding: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
 }
 .bm-category {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   color: var(--primary);
   background: var(--primary-soft);
-  padding: 4px 10px;
-  border-radius: 8px;
-}
-.bm-icon {
-  color: var(--muted);
-  opacity: 0.5;
-  transition: opacity 0.2s;
-}
-.bookmark-card:hover .bm-icon {
-  opacity: 1;
-  color: var(--primary);
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin-bottom: 4px;
 }
 
 .bm-title {
   margin: 0;
-  font-size: 17px;
+  font-size: 14px;
   font-weight: 800;
   color: var(--heading);
-  line-height: 1.4;
-}
-.bm-desc {
-  margin: 0;
-  font-size: 14px;
-  color: var(--muted);
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  line-height: 1.3;
+  word-break: keep-all;
 }
 
 .empty-bookmark {
@@ -5858,7 +5848,7 @@ nav a.active {
 .memo-modal-body { padding: 20px 24px; overflow-y: auto; flex: 1; }
 
 /* Floating Action Button (FAB) Text Edit */
-.fab-edit-btn {
+.fab-edit-btn, .fab-bookmark-edit-btn {
   position: fixed;
   bottom: 30px;
   right: 30px;
@@ -5874,11 +5864,11 @@ nav a.active {
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-.fab-edit-btn:hover {
+.fab-edit-btn:hover, .fab-bookmark-edit-btn:hover {
   transform: translateY(-4px) scale(1.05);
   box-shadow: 0 10px 25px rgba(255,107,107,0.5);
 }
-.fab-edit-btn:active {
+.fab-edit-btn:active, .fab-bookmark-edit-btn:active {
   transform: translateY(1px) scale(0.95);
 }
 .fab-edit-btn.saving {
@@ -5887,7 +5877,7 @@ nav a.active {
 }
 
 @media(max-width: 768px) {
-  .fab-edit-btn {
+  .fab-edit-btn, .fab-bookmark-edit-btn {
     position: static;
     display: flex;
     margin: 12px auto 20px;
