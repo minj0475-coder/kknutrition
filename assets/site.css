@@ -5000,6 +5000,8 @@ nav a.active::after {
 #staff .download-btn, #staff .sync-btn, #staff .copy-btn, #staff .copy-btn-inline,
 .sheet-link-card .download-btn, .sheet-link-card .sync-btn, .staff-accordion-body .btn.light,
 .excel-upload-btn, .materials-detail summary, .bookmark-chip {
+  -webkit-appearance: none !important;
+  appearance: none !important;
   background: rgba(255, 255, 255, 0.85) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
