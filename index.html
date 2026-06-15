@@ -703,16 +703,10 @@
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <input type="text" id="bookmarkSearch" placeholder="북마크 검색하기" autocomplete="off">
+        <input type="text" id="bookmarkSearch" placeholder="북마크 검색하기" autocomplete="off" style="padding-left: 44px !important; box-sizing: border-box;">
       </div>
-      <div class="filter-chips">
-        <button class="bookmark-chip active" data-category="전체">전체</button>
-        <button class="bookmark-chip" data-category="필수 업무">필수 업무</button>
-        <button class="bookmark-chip" data-category="급식·위생">급식·위생</button>
-        <button class="bookmark-chip" data-category="식재료·단가 관련">식재료·단가 관련</button>
-        <button class="bookmark-chip" data-category="소통·학교">소통·학교</button>
-        <button class="bookmark-chip" data-category="자료·연수">자료·연수</button>
-        <button class="bookmark-chip" data-category="기타">기타</button>
+      <div class="filter-chips" id="bookmarkFilterChips">
+        <!-- JS가 여기에 필터 칩을 렌더링합니다 -->
       </div>
     </div>
 
