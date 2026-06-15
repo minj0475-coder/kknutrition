@@ -2,43 +2,48 @@ let bookmarkData = [
   // 필수 업무
   { title: "업무포털 메인", url: "https://goe.eduptl.kr/bpm_man_mn00_001.do", category: "필수 업무" },
   { title: "공직자통합메일", url: "https://mail.korea.kr/", category: "필수 업무" },
-  { title: "K-에듀파인", url: "https://klef.goe.go.kr/", category: "필수 업무" },
-  { title: "나이스(NEIS)", url: "https://ken.goe.go.kr/sts_a/sso/login.do", category: "필수 업무" },
-  { title: "경기도교육청", url: "https://www.goe.go.kr/", category: "필수 업무" },
-  { title: "전자민원센터", url: "https://eduro.goe.go.kr/edms/min/home.do", category: "필수 업무" },
-
+  
   // 급식·위생
-  { title: "한국농수산식품유통공사", url: "https://www.at.or.kr/home/apko000000/index.action", category: "급식·위생" },
-  { title: "SmartHACCP", url: "https://smarthaccp.korea.kr/", category: "급식·위생" },
-  { title: "축산물원패스", url: "https://www.ekape.or.kr/ekapepia/", category: "급식·위생" },
-
+  { title: "SmartHACCP", url: "https://gimpo.haccpcook.or.kr/diet/", category: "급식·위생" },
+  { title: "공공급식통합플랫폼", url: "https://ns.eat.co.kr/NeaT/eats/index.html", category: "급식·위생" },
+  { title: "학교우유급식 정보시스템", url: "http://dairy.schoolmilk.or.kr/smis/smisweb/auth/login.html?v=1756168663985", category: "급식·위생" },
+  { title: "축산물원패스", url: "https://www.ekape.or.kr/kapecp/ui/kapecp/fastLogin.jsp?loginType=02", category: "급식·위생" },
+  
   // 식재료·단가 관련
-  { title: "급식정보나눔방", url: "https://ggmeal.goe.go.kr/", category: "식재료·단가 관련" },
-  { title: "학교급식 정보마당", url: "https://www.schoolmeal.kr/", category: "식재료·단가 관련" },
-
+  { title: "블루시스 마켓", url: "https://market.bluesis.com/web/pc/main.php", category: "식재료·단가 관련" },
+  { title: "튼튼스쿨", url: "https://www.cjschoolfood.com/", category: "식재료·단가 관련" },
+  { title: "풀무원푸드머스 풀스토리", url: "https://pulstory.pulmuone.com/", category: "식재료·단가 관련" },
+  
   // 소통·학교
-  { title: "청수초 홈페이지", url: "https://cheongsu-e.goesw.kr/cheongsu-e/main.do", category: "소통·학교" },
-  { title: "청수초 도서관", url: "https://cheongsu-e.goesw.kr/cheongsu-e/na/ntt/selectNttList.do?mi=10557&bbsId=4378", category: "소통·학교" },
-  { title: "아이엠스쿨", url: "https://www.iamschool.net/", category: "소통·학교" },
   { title: "School SMS | 교사용", url: "https://www.jtschoolsms.com/alimee/login/loginForm.html", category: "소통·학교" },
-
+  { title: "아이엠스쿨", url: "https://school.iamservice.net/", category: "소통·학교" },
+  { title: "청수초등학교", url: "https://www.gpoe.kr/cheongsu-e/main.do", category: "소통·학교" },
+  { title: "청수초 도서관", url: "https://read365.edunet.net/PureScreen/SchoolSearch?schoolName=%EC%B2%AD%EC%88%98%EC%B4%88%EB%93%B1%ED%95%99%EA%B5%90&provCode=J10&neisCode=J100006046", category: "소통·학교" },
+  { title: "공무원연금공단", url: "https://www.gwp.or.kr/wus/cmmn/lgn/login.jdo", category: "소통·학교" },
+  { title: "S2B (학교장터)", url: "https://www.s2b.kr/S2BNCustomer/S2B/", category: "소통·학교" },
+  
   // 자료·연수
-  { title: "경기교육모아", url: "https://moa.goe.go.kr/", category: "자료·연수" },
-  { title: "경기도교육연수원", url: "https://www.gtie.go.kr/", category: "자료·연수" },
-  { title: "영양사도우미", url: "https://www.dietitian.or.kr/", category: "자료·연수" },
-  { title: "ChatGPT", url: "https://chatgpt.com/", category: "자료·연수" },
-  { title: "Gemini", url: "https://gemini.google.com/app", category: "자료·연수" },
-  { title: "영양교사 게시판", url: "https://cafe.daum.net/nutritions", category: "자료·연수" },
-  { title: "영양교사 자료실", url: "https://cafe.naver.com/nutritions", category: "자료·연수" },
-
+  { title: "식품안전나라 교육자료", url: "https://www.foodsafetykorea.go.kr/portal/board/boardDetail.do?menu_no=2880&menu_grp=MENU_NEW05&bbs_no=bbs110&ntctxt_no=1104499", category: "자료·연수" },
+  { title: "교육급식정보나눔방", url: "https://more.goe.go.kr/schoollunch/index.do", category: "자료·연수" },
+  { title: "학교급식 정보마당", url: "https://www.sfic.go.kr/board/view.do?boardId=BBS_0000008&menuCd=DOM_000000105001000000&startPage=1&searchType=DATA_TITLE&keyword=%EC%8B%9D%EC%83%9D%ED%99%9C&dataSid=57497", category: "자료·연수" },
+  { title: "영양광장", url: "https://agora-nutrition.com/", category: "자료·연수" },
+  { title: "영양사도우미", url: "https://www.kdclub.com/", category: "자료·연수" },
+  { title: "지방공기업평가원 사이버연수원", url: "https://ercedu.hunet.co.kr/Home", category: "자료·연수" },
+  { title: "참미료 영양소식지", url: "https://chamssaem.com/516573", category: "자료·연수" },
+  { title: "학교급식 통합플랫폼", url: "https://www.sfic.go.kr/", category: "자료·연수" },
+  { title: "경기교육모아", url: "https://more.goe.go.kr/edup/cmm/mber/myPage/selectMyPageMain.do", category: "자료·연수" },
+  
   // 기타
-  { title: "모아폼", url: "https://www.moaform.com/", category: "기타" },
-  { title: "Padlet", url: "https://padlet.com/", category: "기타" },
-  { title: "[영양소식지] 참미료", url: "https://www.jtschoolsms.com/alimee/notice/commonFormDL.html", category: "기타" }
+  { title: "ChatGPT", url: "https://chatgpt.com/?openaicom_referred=true", category: "기타" },
+  { title: "Google Gemini", url: "https://gemini.google.com/app?hl=ko", category: "기타" },
+  { title: "Canva 템플릿", url: "https://www.canva.com/templates", category: "기타" },
+  { title: "모아폼", url: "https://www.moaform.com/questionnaires", category: "기타" },
+  { title: "영양미내의 자료실", url: "https://padlet.com/minaemi91/at-yamminae-lqfxtvtlwzoti614", category: "기타" },
+  { title: "NAVER", url: "https://www.naver.com/", category: "기타" }
 ];
 
-// Load from LocalStorage
-const savedBookmarks = localStorage.getItem('kknutrition_bookmarks');
+// Load from LocalStorage (v2 to ignore previous corrupted cache)
+const savedBookmarks = localStorage.getItem('kknutrition_bookmarks_v2');
 if (savedBookmarks) {
   try {
     const parsed = JSON.parse(savedBookmarks);
@@ -183,7 +188,7 @@ function setupBookmarkEditorModal() {
     });
 
     bookmarkData = newBookmarks;
-    localStorage.setItem('kknutrition_bookmarks', JSON.stringify(bookmarkData));
+    localStorage.setItem('kknutrition_bookmarks_v2', JSON.stringify(bookmarkData));
     
     // 카테고리 필터가 바뀔 수 있으니 재렌더링
     renderFilterChips();
