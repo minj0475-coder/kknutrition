@@ -175,9 +175,24 @@ function renderFilterChips() {
 // ---- Favicon ----
 function favicon(url) {
   try {
-    return 'https://www.google.com/s2/favicons?domain=' + new URL(url).hostname + '&sz=64';
+    var domain = new URL(url).hostname;
+    // Google의 안정적인 favicon API 사용 (sz=32로 더 호환성 높음)
+    return 'https://www.google.com/s2/favicons?domain=' + domain + '&sz=32';
   } catch(e) {
     return 'assets/app-icon-192.png';
+  }
+}
+
+function faviconImg(url) {
+  try {
+    var domain = new URL(url).hostname;
+    var g = 'https://www.google.com/s2/favicons?domain=' + domain + '&sz=32';
+    var dd = 'https://icons.duckduckgo.com/ip3/' + domain + '.ico';
+    // onerror chain: google → duckduckgo → fallback
+    return '<img src="' + g + '" class="bm-favicon" alt="" loading="lazy"'
+      + ' onerror="this.onerror=function(){this.onerror=null;this.src=\'assets/app-icon-192.png\';};this.src=\'' + dd + '\';">';
+  } catch(e) {
+    return '<img src="assets/app-icon-192.png" class="bm-favicon" alt="">';
   }
 }
 
@@ -206,14 +221,14 @@ function renderBookmarks() {
       var validUrl = /^https?:\/\//i.test(item.url) ? item.url : 'https://' + item.url;
       if (isEditMode) {
         return '<div class="bookmark-card edit-mode-card" onclick="bmOpenModal(' + origIdx + ')" style="cursor:pointer;position:relative;">'
-          + '<img src="' + favicon(validUrl) + '" class="bm-favicon" alt="" loading="lazy">'
+          + faviconImg(validUrl)
           + '<span class="bm-title">' + item.title + '</span>'
           + '<button class="bm-delete-btn" title="\uC0AD\uC81C" onclick="event.stopPropagation();bmDelete(' + origIdx + ');">'
           + '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>'
           + '</button></div>';
       } else {
         return '<a href="' + validUrl + '" target="_blank" rel="noopener" class="bookmark-card" data-url="' + validUrl + '">'
-          + '<img src="' + favicon(validUrl) + '" class="bm-favicon" alt="" loading="lazy">'
+          + faviconImg(validUrl)
           + '<span class="bm-title">' + item.title + '</span>'
           + '</a>';
       }
