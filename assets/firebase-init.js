@@ -137,18 +137,6 @@ function renderMemoList(containerId, isHome) {
     textarea.onkeydown = (e) => {
       if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
-        if (index < memos.length - 1) {
-          const nextTextarea = container.children[index + 1]?.querySelector("textarea");
-          if (nextTextarea) {
-            nextTextarea.focus({ preventScroll: true });
-            const len = nextTextarea.value.length;
-            nextTextarea.setSelectionRange(len, len);
-          }
-        } else {
-          textarea.blur();
-        }
-      } else if (e.key === "Enter" && e.shiftKey) {
-        e.preventDefault();
         if (isHome && memos.length >= 3) {
             openMemoModal();
             return;
