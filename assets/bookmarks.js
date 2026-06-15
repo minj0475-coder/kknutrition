@@ -124,11 +124,8 @@ function renderBookmarks() {
   
   container.innerHTML = filtered.map(item => `
     <a href="${item.url}" target="_blank" rel="noopener" class="bookmark-card">
-      <div class="bm-header">
-        <img src="${getFaviconUrl(item.url)}" class="bm-favicon" alt="${item.title} 로고" loading="lazy">
-        <span class="bm-category">${item.category}</span>
-        <h3 class="bm-title">${item.title}</h3>
-      </div>
+      <img src="${getFaviconUrl(item.url)}" class="bm-favicon" alt="" loading="lazy">
+      <span class="bm-title">${item.title}</span>
     </a>
   `).join("");
 }
@@ -174,7 +171,7 @@ function setupBookmarkEditorModal() {
 
   saveBtn.addEventListener("click", () => {
     const newBookmarks = [];
-    const rows = tbody.querySelectorAll("tr");
+    const rows = tbody.querySelectorAll(".editor-row");
     rows.forEach(row => {
       const title = row.querySelector(".edit-title").value.trim();
       const url = row.querySelector(".edit-url").value.trim();
@@ -213,21 +210,28 @@ function createRowHTML(item) {
   ).join("");
 
   return `
-    <tr>
-      <td>
-        <select class="edit-category input-field">
-          ${options}
-        </select>
-      </td>
-      <td>
-        <input type="text" class="edit-title input-field" placeholder="사이트명" value="${item.title.replace(/"/g, '&quot;')}">
-      </td>
-      <td>
-        <input type="text" class="edit-url input-field" placeholder="URL (https://...)" value="${item.url.replace(/"/g, '&quot;')}">
-      </td>
-      <td style="text-align: center; width: 60px;">
-        <button type="button" class="edit-delete-btn btn light small-btn" style="padding: 6px 10px;">삭제</button>
-      </td>
-    </tr>
+    <div class="editor-row" style="display: flex; flex-direction: column; gap: 8px; background: #fff; padding: 16px; border-radius: 12px; border: 1px solid var(--line); position: relative;">
+      <button type="button" class="edit-delete-btn" style="position: absolute; top: 16px; right: 16px; background: none; border: none; color: var(--muted); cursor: pointer; padding: 4px; border-radius: 4px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+      </button>
+      
+      <div style="display: flex; gap: 12px; margin-right: 32px;">
+        <div style="flex: 1;">
+          <label style="font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 4px; display: block;">카테고리</label>
+          <select class="edit-category input-field" style="width: 100%; border-radius: 8px; border: 1px solid var(--line); padding: 10px;">
+            ${options}
+          </select>
+        </div>
+        <div style="flex: 2;">
+          <label style="font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 4px; display: block;">사이트명</label>
+          <input type="text" class="edit-title input-field" placeholder="사이트명" value="${item.title.replace(/"/g, '&quot;')}" style="width: 100%; border-radius: 8px; border: 1px solid var(--line); padding: 10px; box-sizing: border-box;">
+        </div>
+      </div>
+      
+      <div>
+        <label style="font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 4px; display: block;">URL 주소</label>
+        <input type="text" class="edit-url input-field" placeholder="https://..." value="${item.url.replace(/"/g, '&quot;')}" style="width: 100%; border-radius: 8px; border: 1px solid var(--line); padding: 10px; box-sizing: border-box; background: var(--bg);">
+      </div>
+    </div>
   `;
 }
