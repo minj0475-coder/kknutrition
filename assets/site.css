@@ -3382,7 +3382,6 @@ nav{
     translate:0 -50%!important;
     transform:none!important;
   }
-}
 @media(max-width:640px){
   .brand .logo{
     width:36px!important;
@@ -3516,7 +3515,6 @@ nav{
   animation: floatBreathing 3.5s ease-in-out infinite;
   scale: 1;
   transition: scale 0.3s ease;
-}
 }
 
 .daily-kkul-card {
@@ -4904,7 +4902,6 @@ nav a.active, .mobile-nav-list a.active {
 .home-grid-left .daily-kkul-copy  .daily-kkul-copy p {
     text-align: center;
   }
-}
 
 /* 27. Affordance & Trendy UI Overrides (2026-06-15) */
 
@@ -5705,10 +5702,6 @@ nav a.active {
 #memoList .memo-input { max-height: 28px !important; overflow: hidden !important; white-space: nowrap; text-overflow: ellipsis; line-height: 1.5; padding-right: 2px !important; resize: none !important; }
 .memo-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
 .memo-modal-overlay.active { opacity: 1; pointer-events: auto; }
-  gap: 12px !important;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-}
 .hero, .card {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
