@@ -4564,21 +4564,23 @@ button.secondary {
   box-shadow: none !important;
 }
 
-.btn.light:hover,
-.copy-btn:hover,
-.copy-btn-inline:hover,
-.download-btn:hover,
-.sync-btn:hover,
-.add-btn:hover,
-.plus-btn:hover,
-.materials-btn:hover,
-.today-menu-show-all-btn:hover,
-.small-btn:hover,
-button.secondary:hover {
-  background: var(--hover-soft) !important;
-  color: var(--primary-dark) !important;
-  border-color: var(--primary) !important;
-  transform: translateY(-1px) !important;
+@media (hover: hover) {
+  .btn.light:hover,
+  .copy-btn:hover,
+  .copy-btn-inline:hover,
+  .download-btn:hover,
+  .sync-btn:hover,
+  .add-btn:hover,
+  .plus-btn:hover,
+  .materials-btn:hover,
+  .today-menu-show-all-btn:hover,
+  .small-btn:hover,
+  button.secondary:hover {
+    background: var(--hover-soft) !important;
+    color: var(--primary-dark) !important;
+    border-color: var(--primary) !important;
+    transform: translateY(-1px) !important;
+  }
 }
 
 /* 4. 주요 버튼 통일 */
@@ -4593,13 +4595,15 @@ button.secondary:hover {
   transition: all 0.18s ease-in-out !important;
 }
 
-.btn.primary:hover,
-.upload-btn:hover,
-#excelUploadBtn:hover {
-  background: var(--primary-dark) !important;
-  border-color: var(--primary-dark) !important;
-  color: #FFFFFF !important;
-  transform: translateY(-1px) !important;
+@media (hover: hover) {
+  .btn.primary:hover,
+  .upload-btn:hover,
+  #excelUploadBtn:hover {
+    background: var(--primary-dark) !important;
+    border-color: var(--primary-dark) !important;
+    color: #FFFFFF !important;
+    transform: translateY(-1px) !important;
+  }
 }
 
 /* 5. 입력창 / 검색창 통일 */
@@ -4992,15 +4996,17 @@ nav a.active::after {
   background: var(--card) !important;
   border-color: rgba(255,255,255,0.06) !important;
 }
-.btn.light:hover, .download-btn:hover, .copy-btn:hover, .copy-btn-inline:hover, .today-menu-show-all-btn:hover, .sync-btn:hover, .home-today-link:hover,
-#staff .download-btn:hover, #staff .sync-btn:hover, #staff .copy-btn:hover, #staff .copy-btn-inline:hover,
-.sheet-link-card .download-btn:hover, .sheet-link-card .sync-btn:hover, .staff-accordion-body .btn.light:hover,
-.excel-upload-btn:hover, .materials-detail summary:hover, .bookmark-chip:hover {
-  background: var(--primary-soft) !important;
-  color: var(--primary-dark) !important;
-  border-color: var(--primary-soft) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.06) !important;
+@media (hover: hover) {
+  .btn.light:hover, .download-btn:hover, .copy-btn:hover, .copy-btn-inline:hover, .today-menu-show-all-btn:hover, .sync-btn:hover, .home-today-link:hover,
+  #staff .download-btn:hover, #staff .sync-btn:hover, #staff .copy-btn:hover, #staff .copy-btn-inline:hover,
+  .sheet-link-card .download-btn:hover, .sheet-link-card .sync-btn:hover, .staff-accordion-body .btn.light:hover,
+  .excel-upload-btn:hover, .materials-detail summary:hover, .bookmark-chip:hover {
+    background: var(--primary-soft) !important;
+    color: var(--primary-dark) !important;
+    border-color: var(--primary-soft) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.06) !important;
+  }
 }
 .btn.light:active, .download-btn:active, .copy-btn:active, .copy-btn-inline:active, .today-menu-show-all-btn:active, .sync-btn:active, .home-today-link:active,
 #staff .download-btn:active, #staff .sync-btn:active, #staff .copy-btn:active, #staff .copy-btn-inline:active,
