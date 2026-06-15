@@ -143,7 +143,7 @@ function getModal() {
     + '<label style="font-size:13px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px;">\uCE74\uD14C\uACE0\uB9AC</label>'
     + '<select id="bmCat" style="width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--heading);font-size:14px;box-sizing:border-box;margin-bottom:14px;">'
     + '<option value="\uae09\uc2dd">\uae09\uc2dd</option>'
-    + '<option value="\uc2dd\uc7ac\ub8cc\u00b7\ub2e8\uac00">\uc2dd\uc7ac\ub8cc\u00b7\ub2e8\uac00</option>'
+    + '<option value="공산·단가">공산·단가</option>'
     + '<option value="\uc790\ub8cc">\uc790\ub8cc</option>'
     + '<option value="\uae30\ud0c0">\uae30\ud0c0</option>'
     + '</select>'
@@ -240,7 +240,7 @@ function favicon(url) {
 }
 
 const LOCAL_ICONS = {
-  "goe.eduptl.kr": "assets/images/bookmarks/goe.eduptl.kr.ico",
+  "goe.eduptl.kr": "assets/images/bookmarks/goe.eduptl.kr.png",
   "mail.korea.kr": "assets/images/bookmarks/mail.korea.kr.ico",
   "gimpo.haccpcook.or.kr": "assets/images/bookmarks/gimpo.haccpcook.or.kr.png",
   "dairy.schoolmilk.or.kr": "assets/images/bookmarks/dairy.schoolmilk.or.kr.ico",
@@ -384,3 +384,4 @@ document.addEventListener('DOMContentLoaded', function() {
   // ensure modal exists at startup (warm up)
   getModal();
 });
+
