@@ -248,6 +248,7 @@ const LOCAL_ICONS = {
   "www.gwp.or.kr": "assets/images/bookmarks/www.gwp.or.kr.png",
   "www.ekape.or.kr": "assets/images/bookmarks/www.ekape.or.kr.ico",
   "www.s2b.kr": "assets/images/bookmarks/www.s2b.kr.ico",
+  "www.moaform.com": "assets/images/bookmarks/www.moaform.com.ico",
   "ercedu.hunet.co.kr": "assets/images/bookmarks/ercedu.hunet.co.kr.png",
   "www.foodsafetykorea.go.kr": "assets/images/bookmarks/www.foodsafetykorea.go.kr.png"
 };
