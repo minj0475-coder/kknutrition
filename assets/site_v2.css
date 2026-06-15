@@ -6558,3 +6558,113 @@ body .page-section#staff .hero-asset {
     transform: translateY(10px) !important;
   }
 }
+
+/* Page character refresh: new transparent Kkulkkul assets */
+body #daily .hero,
+body #monthly .hero,
+body #annual .hero,
+body #today-menu .hero,
+body #bookmarks .hero,
+body #staff .hero {
+  position: relative !important;
+  isolation: isolate !important;
+}
+
+body #daily .hero::after,
+body #monthly .hero::after,
+body #annual .hero::after,
+body #today-menu .hero::after,
+body #bookmarks .hero::after,
+body #staff .hero::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: auto 26px 18px auto !important;
+  width: min(330px, 38%) !important;
+  height: 64px !important;
+  z-index: -1 !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.74) !important;
+  box-shadow: 0 18px 32px rgba(158, 132, 120, 0.12) !important;
+}
+
+body #daily .hero {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(255,247,250,0.92) 52%, rgba(241,250,246,0.96) 100%) !important;
+}
+
+body #monthly .hero {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(247,255,251,0.94) 50%, rgba(255,244,248,0.96) 100%) !important;
+}
+
+body #annual .hero {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(249,246,255,0.93) 48%, rgba(255,249,238,0.96) 100%) !important;
+}
+
+body #today-menu .hero {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(255,251,237,0.94) 48%, rgba(240,252,250,0.96) 100%) !important;
+}
+
+body #bookmarks .hero {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(240,249,255,0.94) 50%, rgba(255,246,249,0.96) 100%) !important;
+}
+
+body #staff .hero {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(255,245,247,0.94) 48%, rgba(242,250,255,0.96) 100%) !important;
+}
+
+body #daily .hero-asset,
+body #monthly .hero-asset,
+body #annual .hero-asset,
+body #today-menu .hero-asset,
+body #bookmarks .hero-asset,
+body #staff .hero-asset {
+  filter:
+    drop-shadow(0 18px 20px rgba(223, 130, 150, 0.16))
+    drop-shadow(0 5px 8px rgba(106, 88, 73, 0.08)) !important;
+}
+
+body #bookmarks .hero-asset {
+  max-width: 360px !important;
+}
+
+body #today-menu .hero-asset,
+body #staff .hero-asset {
+  transform: translateY(12px) !important;
+}
+
+@media(max-width: 860px) {
+  body #daily .hero::after,
+  body #monthly .hero::after,
+  body #annual .hero::after,
+  body #today-menu .hero::after,
+  body #bookmarks .hero::after,
+  body #staff .hero::after {
+    inset: auto 18px 14px auto !important;
+    width: min(210px, 35%) !important;
+    height: 46px !important;
+  }
+}
+
+@media(max-width: 560px) {
+  body #daily .hero::after,
+  body #monthly .hero::after,
+  body #annual .hero::after,
+  body #today-menu .hero::after,
+  body #bookmarks .hero::after,
+  body #staff .hero::after {
+    inset: auto 50% 8px auto !important;
+    width: min(220px, 70vw) !important;
+    height: 42px !important;
+    transform: translateX(50%) !important;
+  }
+
+  body #today-menu .hero-asset,
+  body #staff .hero-asset {
+    transform: translateY(10px) !important;
+  }
+}
