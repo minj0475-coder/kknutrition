@@ -4975,6 +4975,13 @@ nav a.active::after {
   background: linear-gradient(135deg, var(--primary) 0%, #ff5252 100%) !important;
   color: #ffffff !important;
   border: none !important;
+  border-radius: 14px !important;
+  padding: 12px 24px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  font-weight: 800 !important;
   box-shadow: 0 4px 12px rgba(255,107,107,0.3) !important;
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
 }
@@ -5001,6 +5008,11 @@ nav a.active::after {
   box-shadow: 0 4px 10px rgba(0,0,0,0.02) !important;
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
   cursor: pointer !important;
+  padding: 12px 20px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
 }
 .dark-mode .btn.light, .dark-mode .download-btn, .dark-mode .copy-btn, .dark-mode .copy-btn-inline, .dark-mode .today-menu-show-all-btn, .dark-mode .sync-btn, .dark-mode .home-today-link,
 .dark-mode #staff .download-btn, .dark-mode #staff .sync-btn, .dark-mode #staff .copy-btn,
