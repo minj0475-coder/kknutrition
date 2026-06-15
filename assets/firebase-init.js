@@ -512,6 +512,71 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
   });
 });
 
+// ====== Navigation Guard Logic ======
+window.hasUnsavedChanges = () => {
+  return Object.values(editingState).some(state => state === true);
+};
+
+window.addEventListener('beforeunload', (e) => {
+  if (window.hasUnsavedChanges()) {
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
+
+document.addEventListener('click', (e) => {
+  const link = e.target.closest('a[href^="#"]');
+  if (!link) return;
+  
+  const targetHash = link.getAttribute('href');
+  const currentHash = window.location.hash || '#home';
+  
+  if (targetHash !== currentHash && window.hasUnsavedChanges()) {
+    e.preventDefault();
+    
+    const modal = document.getElementById('unsavedModalOverlay');
+    if (!modal) return;
+    
+    modal.style.display = 'flex';
+    
+    const closeBtn = document.getElementById('unsavedModalCloseBtn');
+    const cancelBtn = document.getElementById('unsavedModalCancelBtn');
+    const confirmBtn = document.getElementById('unsavedModalConfirmBtn');
+    
+    const cleanupAndClose = () => {
+      modal.style.display = 'none';
+      closeBtn.removeEventListener('click', cleanupAndClose);
+      cancelBtn.removeEventListener('click', cleanupAndClose);
+      confirmBtn.removeEventListener('click', confirmNav);
+    };
+    
+    const confirmNav = () => {
+      for (let key in editingState) {
+        if (editingState[key]) {
+          editingState[key] = false;
+          const section = document.getElementById(key);
+          if (section) {
+            const btn = section.querySelector('.fab-edit-btn');
+            if (btn) {
+              btn.textContent = "수정";
+              btn.classList.remove('saving');
+            }
+            const editables = section.querySelectorAll('.editable-content');
+            editables.forEach(el => el.removeAttribute('contenteditable'));
+          }
+        }
+      }
+      cleanupAndClose();
+      window.location.hash = targetHash;
+    };
+    
+    closeBtn.addEventListener('click', cleanupAndClose);
+    cancelBtn.addEventListener('click', cleanupAndClose);
+    confirmBtn.addEventListener('click', confirmNav);
+  }
+});
+// ===================================
+
 function init() {
   // Setup modal buttons
   const openBtn = document.getElementById("openMemoModalBtn");
