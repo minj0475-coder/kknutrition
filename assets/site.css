@@ -5603,7 +5603,7 @@ nav a.active {
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--background);
+  background: linear-gradient(135deg, var(--background) 0%, #f0ede6 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -5613,91 +5613,124 @@ nav a.active {
 
 .auth-box {
   background: var(--card);
-  border-radius: 20px;
-  padding: 40px 32px;
+  border-radius: 28px;
+  padding: 48px 32px;
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
   text-align: center;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-  border: 1px solid var(--line);
+  box-shadow: 0 24px 48px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.03);
+  border: 1px solid rgba(255,255,255,0.6);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle background accent inside the box */
+.auth-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 6px;
+  background: linear-gradient(90deg, var(--primary), #ffa8a8);
 }
 
 .auth-icon {
-  width: 64px;
-  height: 64px;
-  margin: 0 auto 20px;
-  background: rgba(255,107,107,0.1);
-  border-radius: 50%;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 24px;
+  background: linear-gradient(135deg, rgba(255,107,107,0.15) 0%, rgba(255,107,107,0.05) 100%);
+  border-radius: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.8);
+  transform: rotate(-3deg);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.auth-box:hover .auth-icon {
+  transform: rotate(3deg) scale(1.05);
 }
 
 .auth-title {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 800;
   color: var(--heading);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+  letter-spacing: -0.5px;
 }
 
 .auth-desc {
   font-size: 15px;
   color: var(--text);
-  margin-bottom: 32px;
+  margin-bottom: 36px;
   line-height: 1.6;
+  opacity: 0.8;
 }
 
 .auth-input {
   width: 100%;
-  padding: 16px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
+  padding: 18px 20px;
+  border: 2px solid transparent;
+  border-radius: 16px;
   background: var(--background);
   font-size: 16px;
   text-align: center;
   margin-bottom: 16px;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
   color: var(--heading);
+  font-weight: 600;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.auth-input::placeholder {
+  color: #a09d98;
+  font-weight: 500;
 }
 
 .auth-input:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(255,107,107,0.15);
   background: var(--card);
+  box-shadow: 0 0 0 4px rgba(255,107,107,0.15), inset 0 2px 4px rgba(0,0,0,0.01);
+  transform: translateY(-2px);
 }
 
 .auth-btn {
   width: 100%;
-  padding: 16px;
-  background: var(--primary);
-  color: #fff;
+  padding: 18px 20px;
+  background: linear-gradient(135deg, var(--primary) 0%, #ff5252 100%);
+  color: #ffffff !important;
   border: none;
-  border-radius: 12px;
-  font-size: 16px;
+  border-radius: 16px;
+  font-size: 17px;
   font-weight: 800;
   cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0 4px 12px rgba(255,107,107,0.3);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 6px 16px rgba(255,107,107,0.3);
+  letter-spacing: 0.5px;
 }
 
 .auth-btn:hover {
-  background: var(--primary-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(255,107,107,0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(255,107,107,0.4);
+}
+
+.auth-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 8px rgba(255,107,107,0.3);
 }
 
 .auth-error {
   color: var(--danger);
   font-size: 14px;
-  font-weight: 600;
-  margin-top: 12px;
+  font-weight: 700;
+  margin-top: 16px;
   display: none;
+  animation: modal-fade-in 0.3s ease-out;
 }
 
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
-  75% { transform: translateX(-5px); }
+  25% { transform: translateX(-6px) rotate(-1deg); }
+  50% { transform: translateX(6px) rotate(1deg); }
+  75% { transform: translateX(-6px) rotate(-1deg); }
 }
