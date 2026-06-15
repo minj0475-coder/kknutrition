@@ -5,7 +5,10 @@ window.addEventListener("load",function(){if(typeof XLSX==="undefined"){var s=do
 const DEFAULT_SHEET_LINK = "https://docs.google.com/spreadsheets/d/1qlBNjqRtXsD-R8zTbEGudD4LLcNjL1VmM_J0MIOVVEE/edit?usp=sharing";
 const SHEET_LINK_KEY = "kkulkkoori_service_sheet_link";
 const DAILY_KKUL_KEY = "kkulkkoori_daily_character";
-const DAILY_KKUL_IMAGES = [];
+const DAILY_KKUL_IMAGES = Array.from(
+  { length: 56 },
+  (_, index) => `assets/images/kkul/kkul_${index + 1}.png`
+);
 const DAILY_KKUL_MESSAGES = [
   "오늘도 맛있는 급식을 준비해 볼까요?",
   "오늘 일정도 미리 확인해 볼까요?",
