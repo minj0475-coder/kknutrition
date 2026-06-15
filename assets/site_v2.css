@@ -6395,3 +6395,166 @@ body .daily-kkul-image-wrap img {
     max-width: 184px !important;
   }
 }
+
+/* FINAL PAGE KKUL-KKULI HERO ASSETS */
+body #daily .hero,
+body #monthly .hero,
+body #annual .hero,
+body #today-menu .hero,
+body #bookmarks .hero,
+body #staff .hero {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 34%) !important;
+  align-items: center !important;
+  gap: 22px !important;
+  overflow: hidden !important;
+  min-height: 260px !important;
+  padding: 30px 34px !important;
+  background: linear-gradient(135deg, #ffffff 0%, #fff9f6 58%, #f3fbfa 100%) !important;
+  border: 1px solid rgba(232, 225, 216, 0.95) !important;
+  box-shadow: 0 16px 36px rgba(63, 58, 53, 0.08) !important;
+}
+
+body #daily .hero-asset,
+body #monthly .hero-asset,
+body #annual .hero-asset,
+body #today-menu .hero-asset,
+body #bookmarks .hero-asset,
+body #staff .hero-asset {
+  position: static !important;
+  justify-self: end !important;
+  align-self: end !important;
+  display: block !important;
+  width: min(340px, 100%) !important;
+  max-width: 340px !important;
+  min-width: 250px !important;
+  height: auto !important;
+  max-height: 250px !important;
+  object-fit: contain !important;
+  object-position: center bottom !important;
+  opacity: 1 !important;
+  filter: drop-shadow(0 18px 24px rgba(201, 120, 120, 0.16)) !important;
+  transform: translateY(8px) !important;
+}
+
+body #today-menu .hero-asset,
+body #bookmarks .hero-asset,
+body #staff .hero-asset {
+  max-height: 270px !important;
+}
+
+body #daily .hero .kicker,
+body #monthly .hero .kicker,
+body #annual .hero .kicker,
+body #today-menu .hero .kicker,
+body #bookmarks .hero .kicker,
+body #staff .hero .kicker {
+  letter-spacing: 0 !important;
+}
+
+body #daily .hero h1,
+body #monthly .hero h1,
+body #annual .hero h1,
+body #today-menu .hero h1,
+body #bookmarks .hero h1,
+body #staff .hero h1 {
+  letter-spacing: 0 !important;
+}
+
+body #daily .hero .subtitle,
+body #monthly .hero .subtitle,
+body #annual .hero .subtitle,
+body #today-menu .hero .subtitle,
+body #bookmarks .hero .subtitle,
+body #staff .hero .subtitle {
+  max-width: 720px !important;
+  letter-spacing: 0 !important;
+}
+
+@media(max-width: 860px) {
+  body #daily .hero,
+  body #monthly .hero,
+  body #annual .hero,
+  body #today-menu .hero,
+  body #bookmarks .hero,
+  body #staff .hero {
+    grid-template-columns: minmax(0, 1fr) minmax(170px, 32%) !important;
+    min-height: 220px !important;
+    padding: 24px 22px !important;
+  }
+
+  body #daily .hero-asset,
+  body #monthly .hero-asset,
+  body #annual .hero-asset,
+  body #today-menu .hero-asset,
+  body #bookmarks .hero-asset,
+  body #staff .hero-asset {
+    min-width: 170px !important;
+    max-width: 220px !important;
+    max-height: 200px !important;
+  }
+}
+
+@media(max-width: 560px) {
+  body #daily .hero,
+  body #monthly .hero,
+  body #annual .hero,
+  body #today-menu .hero,
+  body #bookmarks .hero,
+  body #staff .hero {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    min-height: 0 !important;
+    padding: 22px 18px 0 !important;
+  }
+
+  body #daily .hero-asset,
+  body #monthly .hero-asset,
+  body #annual .hero-asset,
+  body #today-menu .hero-asset,
+  body #bookmarks .hero-asset,
+  body #staff .hero-asset {
+    justify-self: center !important;
+    width: min(230px, 76vw) !important;
+    min-width: 0 !important;
+    max-width: 230px !important;
+    max-height: 210px !important;
+    transform: translateY(10px) !important;
+  }
+}
+
+body .page-section#daily .hero-asset,
+body .page-section#monthly .hero-asset,
+body .page-section#annual .hero-asset,
+body .page-section#today-menu .hero-asset,
+body .page-section#bookmarks .hero-asset,
+body .page-section#staff .hero-asset {
+  position: static !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  translate: none !important;
+  transform: translateY(8px) !important;
+  width: min(340px, 100%) !important;
+  max-width: 340px !important;
+  min-width: 250px !important;
+  height: auto !important;
+  max-height: 270px !important;
+}
+
+@media(max-width: 560px) {
+  body .page-section#daily .hero-asset,
+  body .page-section#monthly .hero-asset,
+  body .page-section#annual .hero-asset,
+  body .page-section#today-menu .hero-asset,
+  body .page-section#bookmarks .hero-asset,
+  body .page-section#staff .hero-asset {
+    width: min(230px, 76vw) !important;
+    max-width: 230px !important;
+    min-width: 0 !important;
+    max-height: 210px !important;
+    justify-self: center !important;
+    align-self: end !important;
+    transform: translateY(10px) !important;
+  }
+}
