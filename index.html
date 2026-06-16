@@ -10,7 +10,7 @@
 <meta property="og:image" content="https://minj0475-coder.github.io/kknutrition/assets/og-image.png?v=2">
 <meta property="og:url" content="https://minj0475-coder.github.io/kknutrition/">
 <title>급식 업무 포털</title>
-<link rel="stylesheet" href="assets/site_v2.css?v=20260616_005">
+<link rel="stylesheet" href="assets/site_v2.css?v=20260616_006">
 <link rel="manifest" href="manifest.json?v=3">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/app-icon-192.png?v=3">
 <link rel="apple-touch-icon" href="assets/app-icon-180.png?v=3">
@@ -46,6 +46,7 @@
       <a href="#annual">연간 일정</a>
       <a href="#today-menu">급식노트</a>
       <a href="#bookmarks">북마크</a>
+      <a href="#promo-contacts">홍보연락처</a>
       <a href="#staff">조리종사원</a>
     </nav>
     <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="메뉴 열기">
@@ -73,6 +74,7 @@
       <a href="#annual">연간 일정</a>
       <a href="#today-menu">급식노트</a>
       <a href="#bookmarks">북마크</a>
+      <a href="#promo-contacts">홍보연락처</a>
       <a href="#staff">조리종사원</a>
     </div>
   </div>
@@ -718,6 +720,54 @@
   </main>
 </section>
 
+<section id="promo-contacts" class="page-section">
+  <main class="wrap">
+    <section class="hero">
+      <div class="kicker">업체 홍보 관리</div>
+      <h1>홍보연락처</h1>
+      <p class="subtitle">홍보 영양사님 연락처와 전자단가 링크를 한 곳에서 검색하고 복사할 수 있도록 정리했습니다.</p>
+      <img loading="eager" decoding="async" class="hero-asset" src="assets/images/page-kkul/page-kkul-daily-megaphone.png" alt="">
+    </section>
+
+    <section class="card promo-contact-card" id="promoContactPanel">
+      <div class="promo-contact-toolbar">
+        <div class="promo-contact-title">
+          <span class="num">✓</span>
+          <div>
+            <h2 class="section-title">홍보 업체별 연락처 및 전자단가 링크</h2>
+            <p class="mini">입력 내용은 이 브라우저에 자동 저장됩니다.</p>
+          </div>
+        </div>
+        <div class="promo-contact-actions">
+          <label class="promo-search">
+            <span aria-hidden="true">⌕</span>
+            <input id="promoContactSearch" type="search" placeholder="업체명, 연락처, 링크, 메모 검색" autocomplete="off">
+          </label>
+          <button id="promoAddRowBtn" class="promo-btn primary" type="button">추가</button>
+          <button id="promoFullscreenBtn" class="promo-btn" type="button">전체화면</button>
+        </div>
+      </div>
+
+      <div class="promo-table-wrap">
+        <table class="promo-contact-table" aria-label="홍보 업체 연락처 및 전자단가 링크">
+          <thead>
+            <tr>
+              <th>업체명</th>
+              <th>홍보영양사님연락처</th>
+              <th>전자단가링크</th>
+              <th>메모</th>
+              <th class="promo-row-tools">관리</th>
+            </tr>
+          </thead>
+          <tbody id="promoContactTableBody"></tbody>
+        </table>
+      </div>
+      <div id="promoEmptyState" class="promo-empty-state" hidden>검색 결과가 없습니다.</div>
+      <p id="promoContactStatus" class="mini promo-contact-status" aria-live="polite"></p>
+    </section>
+  </main>
+</section>
+
 <section id="staff" class="page-section">
   <main class="wrap">
   <section class="hero"><div class="kicker">조리종사원 관리</div><h1>조리종사원</h1><p class="subtitle">조리종사원, 대체조리종사원이 숙지해야 할 사항을 정리했습니다.</p><img loading="lazy" class="hero-asset" src="assets/images/page-kkul/page-kkul-staff-chef.png" alt=""></section>
@@ -889,7 +939,7 @@
 <script src="assets/xlsx.full.min.js" defer></script>
 <script src="assets/auth.js?v=20260615_455" defer></script>
 <script src="assets/bookmarks.js?v=20260615_483" defer></script>
-<script src="assets/site.js?v=20260615_493" defer></script>
+<script src="assets/site.js?v=20260616_006" defer></script>
 <script src="assets/excel-parser.js?v=20260615_455" defer></script>
 <script type="module" src="assets/firebase-init.js?v=20260615_486" defer></script>
 <script>
@@ -926,7 +976,6 @@
 </div>
 
 </div><!-- /#app-content -->
-<script src="assets/auth.js?v=20260615_3"></script>
 </body>
 </html>
 

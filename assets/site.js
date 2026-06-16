@@ -1089,4 +1089,200 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// Promo contacts table
+const PROMO_CONTACTS_KEY = "kkulkkoori_promo_contacts_v1";
+const PROMO_CONTACTS_DEFAULT = [
+  { company: "아미", phone: "123-456-789", link: "", memo: "큐알코드(9-11월단가표)" },
+  { company: "오뚜기", phone: "010-1234-5678", link: "", memo: "" },
+  { company: "이우스", phone: "010-4568-5125", link: "", memo: "" },
+  { company: "자담선", phone: "123-456-7990", link: "", memo: "" },
+  { company: "청정원", phone: "", link: "gongyou.jungone.com/home.sf", memo: "" },
+  { company: "풀무원", phone: "", link: "pulstory.pulmuone.com/", memo: "" },
+  { company: "하이포크", phone: "010-1000-2000", link: "", memo: "" },
+  { company: "한결", phone: "", link: "", memo: "" },
+  { company: "cj 제당", phone: "010-40000-10000", link: "", memo: "" }
+];
+
+function normalizePromoContact(row) {
+  return {
+    company: String(row && row.company || ""),
+    phone: String(row && row.phone || ""),
+    link: String(row && row.link || ""),
+    memo: String(row && row.memo || "")
+  };
+}
+
+function readPromoContacts() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(PROMO_CONTACTS_KEY) || "null");
+    if (Array.isArray(parsed)) return parsed.map(normalizePromoContact);
+  } catch(e) {}
+  return PROMO_CONTACTS_DEFAULT.map(normalizePromoContact);
+}
+
+function savePromoContacts(rows) {
+  try {
+    localStorage.setItem(PROMO_CONTACTS_KEY, JSON.stringify(rows.map(normalizePromoContact)));
+  } catch(e) {}
+}
+
+function copyTextValue(text, statusEl) {
+  const value = String(text || "").trim();
+  if (!value) {
+    if (statusEl) statusEl.textContent = "복사할 내용이 없습니다.";
+    return;
+  }
+  const done = () => {
+    if (statusEl) {
+      statusEl.textContent = "복사했습니다: " + value;
+      window.clearTimeout(statusEl._timer);
+      statusEl._timer = window.setTimeout(() => { statusEl.textContent = ""; }, 1800);
+    }
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(value).then(done).catch(() => fallbackCopyText(value, done));
+  } else {
+    fallbackCopyText(value, done);
+  }
+}
+
+function fallbackCopyText(value, done) {
+  const area = document.createElement("textarea");
+  area.value = value;
+  area.setAttribute("readonly", "");
+  area.style.position = "fixed";
+  area.style.left = "-9999px";
+  document.body.appendChild(area);
+  area.select();
+  try { document.execCommand("copy"); } catch(e) {}
+  document.body.removeChild(area);
+  done();
+}
+
+function withUrlProtocol(url) {
+  const value = String(url || "").trim();
+  if (!value) return "";
+  return /^https?:\/\//i.test(value) ? value : "https://" + value;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const tableBody = document.getElementById("promoContactTableBody");
+  if (!tableBody) return;
+
+  const searchInput = document.getElementById("promoContactSearch");
+  const addBtn = document.getElementById("promoAddRowBtn");
+  const fullscreenBtn = document.getElementById("promoFullscreenBtn");
+  const panel = document.getElementById("promoContactPanel");
+  const emptyState = document.getElementById("promoEmptyState");
+  const statusEl = document.getElementById("promoContactStatus");
+  let rows = readPromoContacts();
+
+  function persistAndRender() {
+    savePromoContacts(rows);
+    renderPromoContacts();
+  }
+
+  function renderPromoContacts() {
+    const query = (searchInput ? searchInput.value : "").trim().toLowerCase();
+    const filtered = rows
+      .map((row, index) => ({ row, index }))
+      .filter(({ row }) => {
+        if (!query) return true;
+        return [row.company, row.phone, row.link, row.memo].join(" ").toLowerCase().includes(query);
+      });
+
+    tableBody.innerHTML = "";
+    if (emptyState) emptyState.hidden = filtered.length > 0;
+
+    filtered.forEach(({ row, index }) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td><input class="promo-cell-input" data-field="company" aria-label="업체명" value=""></td>
+        <td>
+          <div class="promo-copy-field">
+            <input class="promo-cell-input" data-field="phone" aria-label="홍보영양사님연락처" value="">
+            <button class="promo-copy-btn" type="button" data-copy-field="phone">복사</button>
+          </div>
+        </td>
+        <td>
+          <div class="promo-copy-field">
+            <input class="promo-cell-input" data-field="link" aria-label="전자단가링크" value="">
+            <button class="promo-copy-btn" type="button" data-copy-field="link">복사</button>
+          </div>
+          <a class="promo-open-link" href="#" target="_blank" rel="noopener">열기</a>
+        </td>
+        <td><textarea class="promo-cell-input" data-field="memo" aria-label="메모"></textarea></td>
+        <td class="promo-row-tools"><button class="promo-delete-btn" type="button">삭제</button></td>
+      `;
+
+      tr.querySelectorAll("[data-field]").forEach(input => {
+        const field = input.getAttribute("data-field");
+        input.value = row[field] || "";
+        input.addEventListener("input", () => {
+          rows[index][field] = input.value;
+          savePromoContacts(rows);
+          if (field === "link") updateOpenLink(tr, rows[index].link);
+        });
+      });
+
+      tr.querySelectorAll("[data-copy-field]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const field = btn.getAttribute("data-copy-field");
+          copyTextValue(rows[index][field], statusEl);
+        });
+      });
+
+      tr.querySelector(".promo-delete-btn").addEventListener("click", () => {
+        rows.splice(index, 1);
+        persistAndRender();
+      });
+
+      updateOpenLink(tr, row.link);
+      tableBody.appendChild(tr);
+    });
+  }
+
+  function updateOpenLink(tr, link) {
+    const anchor = tr.querySelector(".promo-open-link");
+    const href = withUrlProtocol(link);
+    if (href) {
+      anchor.href = href;
+      anchor.style.display = "inline-flex";
+    } else {
+      anchor.removeAttribute("href");
+      anchor.style.display = "none";
+    }
+  }
+
+  if (searchInput) searchInput.addEventListener("input", renderPromoContacts);
+  if (addBtn) {
+    addBtn.addEventListener("click", () => {
+      rows.unshift({ company: "", phone: "", link: "", memo: "" });
+      persistAndRender();
+      const firstInput = tableBody.querySelector("[data-field='company']");
+      if (firstInput) firstInput.focus();
+    });
+  }
+  if (fullscreenBtn && panel) {
+    fullscreenBtn.addEventListener("click", async () => {
+      try {
+        if (document.fullscreenElement) {
+          await document.exitFullscreen();
+        } else if (panel.requestFullscreen) {
+          await panel.requestFullscreen();
+        } else {
+          panel.classList.toggle("is-expanded");
+        }
+      } catch(e) {
+        panel.classList.toggle("is-expanded");
+      }
+    });
+    document.addEventListener("fullscreenchange", () => {
+      fullscreenBtn.textContent = document.fullscreenElement ? "기본화면" : "전체화면";
+    });
+  }
+
+  renderPromoContacts();
+});
+
 
