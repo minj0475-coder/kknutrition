@@ -2089,7 +2089,7 @@ table{
   content:"";
   width:30px;
   height:30px;
-  background:url("pig-home.webp") center / 170% no-repeat;
+  background:url("images/kkul-face-logo.png") center / 170% no-repeat;
 }
 .hero{
   background: linear-gradient(135deg, var(--card-soft) 0%, var(--accent) 100%);
@@ -2252,7 +2252,7 @@ body{
   content:"";
   width:100%;
   height:100%;
-  background:url("pig-home.webp") center / 170% no-repeat;
+  background:url("images/kkul-face-logo.png") center / 170% no-repeat;
 }
 nav{
   gap:6px;
@@ -6759,8 +6759,135 @@ body .top .brand-logo-img {
     padding-inline: 4px !important;
   }
 
-  body .top .brand-logo-img {
+body .top .brand-logo-img {
     height: 50px !important;
     max-height: 50px !important;
+  }
+}
+
+/* Home hero refresh */
+body #home .hero {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  min-height: 304px !important;
+  padding: 46px min(48vw, 560px) 46px 48px !important;
+  border: 1px solid rgba(243, 210, 210, 0.9) !important;
+  background:
+    radial-gradient(circle at 79% 48%, rgba(255, 218, 224, 0.74) 0 15%, transparent 36%),
+    radial-gradient(circle at 96% 14%, rgba(232, 252, 249, 0.82), transparent 30%),
+    linear-gradient(135deg, #ffffff 0%, #fff8f8 55%, #f8fffd 100%) !important;
+  box-shadow:
+    0 20px 48px rgba(95, 66, 72, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96) !important;
+}
+
+body #home .hero::before {
+  content: "" !important;
+  position: absolute !important;
+  right: min(4vw, 42px) !important;
+  bottom: 18px !important;
+  width: min(520px, 44vw) !important;
+  height: 172px !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.62) !important;
+  box-shadow: 0 22px 34px rgba(194, 139, 145, 0.13) !important;
+  z-index: -1 !important;
+}
+
+body #home .hero .kicker {
+  color: #944151 !important;
+  background: rgba(255, 244, 246, 0.86) !important;
+  border-color: rgba(244, 193, 202, 0.86) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.8) !important;
+}
+
+body #home .hero h1 {
+  color: #351815 !important;
+  letter-spacing: 0 !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.76) !important;
+}
+
+body #home .hero .subtitle {
+  max-width: 620px !important;
+  color: #493b3d !important;
+}
+
+body #home .hero-asset {
+  position: absolute !important;
+  right: clamp(12px, 4.2vw, 56px) !important;
+  bottom: -18px !important;
+  width: min(560px, 46vw) !important;
+  max-width: 560px !important;
+  min-width: 360px !important;
+  max-height: none !important;
+  height: auto !important;
+  object-fit: contain !important;
+  object-position: center bottom !important;
+  opacity: 1 !important;
+  filter:
+    drop-shadow(0 22px 28px rgba(117, 71, 78, 0.16))
+    drop-shadow(0 7px 10px rgba(245, 144, 163, 0.14)) !important;
+  transform: none !important;
+  z-index: 0 !important;
+}
+
+body #home .hero-content {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+@media(max-width: 900px) {
+  body #home .hero {
+    min-height: 276px !important;
+    padding: 34px min(44vw, 340px) 34px 28px !important;
+  }
+
+  body #home .hero::before {
+    width: min(340px, 42vw) !important;
+    height: 120px !important;
+    right: 14px !important;
+  }
+
+  body #home .hero-asset {
+    display: block !important;
+    top: auto !important;
+    right: -8px !important;
+    bottom: -10px !important;
+    width: min(360px, 45vw) !important;
+    min-width: 260px !important;
+    max-width: 360px !important;
+  }
+}
+
+@media(max-width: 640px) {
+  body #home .hero {
+    min-height: 0 !important;
+    padding: 24px 18px 0 !important;
+    text-align: left !important;
+  }
+
+  body #home .hero::before {
+    right: 50% !important;
+    bottom: 12px !important;
+    width: min(310px, 82vw) !important;
+    height: 96px !important;
+    transform: translateX(50%) !important;
+  }
+
+  body #home .hero .subtitle {
+    max-width: none !important;
+    padding-right: 0 !important;
+  }
+
+  body #home .hero-asset {
+    position: relative !important;
+    display: block !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: min(330px, 94vw) !important;
+    min-width: 0 !important;
+    max-width: 330px !important;
+    margin: 8px auto -6px !important;
   }
 }
