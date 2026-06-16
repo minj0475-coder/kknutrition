@@ -10,7 +10,7 @@
 <meta property="og:image" content="https://minj0475-coder.github.io/kknutrition/assets/og-image.png?v=2">
 <meta property="og:url" content="https://minj0475-coder.github.io/kknutrition/">
 <title>급식 업무 포털</title>
-<link rel="stylesheet" href="assets/site_v2.css?v=20260616_006">
+<link rel="stylesheet" href="assets/site_v2.css?v=20260616_007">
 <link rel="manifest" href="manifest.json?v=3">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/app-icon-192.png?v=3">
 <link rel="apple-touch-icon" href="assets/app-icon-180.png?v=3">
@@ -239,6 +239,81 @@
         </tr>
       </tbody>
     </table>
+  </div>
+</section>
+<section class="card academic-calendar-card">
+  <div class="academic-head">
+    <div>
+      <h2 class="section-title"><span class="num">2</span>학사일정</h2>
+      <p class="mini">공휴일과 기념일, 학교 일정을 한 달 달력과 주차별 표로 함께 정리합니다.</p>
+    </div>
+    <div class="academic-actions" aria-label="학사일정 월 이동">
+      <button id="academicPrevMonthBtn" class="academic-nav-btn" type="button" aria-label="이전 달">‹</button>
+      <button id="academicTodayBtn" class="academic-today-btn" type="button">오늘</button>
+      <button id="academicNextMonthBtn" class="academic-nav-btn" type="button" aria-label="다음 달">›</button>
+    </div>
+  </div>
+
+  <div class="academic-toolbar">
+    <div>
+      <div id="academicMonthLabel" class="academic-month-label">2026년 6월</div>
+      <p class="mini">날짜를 누르면 일정, 메모, 관련 URL을 바로 저장할 수 있어요.</p>
+    </div>
+    <label class="academic-search" for="academicSearch">
+      <span>검색</span>
+      <input id="academicSearch" type="search" placeholder="일정, 메모, URL 검색">
+    </label>
+  </div>
+
+  <div class="academic-layout">
+    <div class="academic-calendar-panel">
+      <div class="academic-weekdays" aria-hidden="true">
+        <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+      </div>
+      <div id="academicCalendarGrid" class="academic-calendar-grid" aria-label="학사일정 월간 달력"></div>
+    </div>
+
+    <aside class="academic-editor-panel" aria-label="선택 날짜 일정 편집">
+      <div class="academic-editor-date" id="academicSelectedDate">날짜 선택</div>
+      <label class="academic-field">
+        <span>일정</span>
+        <input id="academicEventTitle" type="text" placeholder="예: 현장체험학습, 방학식">
+      </label>
+      <label class="academic-field">
+        <span>메모</span>
+        <textarea id="academicEventMemo" rows="5" placeholder="급식 인원 변동, 배식 메모 등을 적어두세요."></textarea>
+      </label>
+      <label class="academic-field">
+        <span>관련 URL</span>
+        <input id="academicEventUrl" type="url" placeholder="https://">
+      </label>
+      <div class="academic-editor-actions">
+        <button id="academicSaveBtn" class="academic-save-btn" type="button">저장</button>
+        <button id="academicClearBtn" class="academic-clear-btn" type="button">비우기</button>
+      </div>
+      <p id="academicStatus" class="mini academic-status" aria-live="polite"></p>
+    </aside>
+  </div>
+
+  <div class="academic-weekly-card">
+    <div class="academic-weekly-head">
+      <h3>주차별 일정</h3>
+      <p class="mini">월간 달력에 표시된 내용을 주차별 표로 다시 모아 보여줍니다.</p>
+    </div>
+    <div class="academic-week-table-wrap">
+      <table class="academic-week-table">
+        <thead>
+          <tr>
+            <th>주차</th>
+            <th>기간</th>
+            <th>일정</th>
+            <th>메모</th>
+            <th>URL</th>
+          </tr>
+        </thead>
+        <tbody id="academicWeekTableBody"></tbody>
+      </table>
+    </div>
   </div>
 </section>
 <button id="editBtnMonthly" class="fab-edit-btn" type="button" data-target="monthly">수정</button>
@@ -939,7 +1014,7 @@
 <script src="assets/xlsx.full.min.js" defer></script>
 <script src="assets/auth.js?v=20260615_455" defer></script>
 <script src="assets/bookmarks.js?v=20260615_483" defer></script>
-<script src="assets/site.js?v=20260616_006" defer></script>
+<script src="assets/site.js?v=20260616_007" defer></script>
 <script src="assets/excel-parser.js?v=20260615_455" defer></script>
 <script type="module" src="assets/firebase-init.js?v=20260615_486" defer></script>
 <script>

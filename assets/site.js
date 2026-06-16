@@ -1285,4 +1285,368 @@ document.addEventListener("DOMContentLoaded", () => {
   renderPromoContacts();
 });
 
+// Monthly academic calendar
+const ACADEMIC_EVENTS_KEY = "kkulkkoori_academic_events_v1";
+const ACADEMIC_FIXED_DAYS = {
+  "01-01": [{ title: "신정", type: "holiday" }],
+  "03-01": [{ title: "삼일절", type: "holiday" }],
+  "04-05": [{ title: "식목일", type: "anniversary" }],
+  "05-05": [{ title: "어린이날", type: "holiday" }],
+  "05-08": [{ title: "어버이날", type: "anniversary" }],
+  "05-15": [{ title: "스승의 날", type: "anniversary" }],
+  "06-06": [{ title: "현충일", type: "holiday" }],
+  "06-25": [{ title: "6.25 전쟁일", type: "anniversary" }],
+  "07-17": [{ title: "제헌절", type: "anniversary" }],
+  "08-15": [{ title: "광복절", type: "holiday" }],
+  "10-03": [{ title: "개천절", type: "holiday" }],
+  "10-09": [{ title: "한글날", type: "holiday" }],
+  "12-25": [{ title: "성탄절", type: "holiday" }]
+};
+
+const ACADEMIC_YEAR_DAYS = {
+  "2025-01-28": [{ title: "설날 연휴", type: "holiday" }],
+  "2025-01-29": [{ title: "설날", type: "holiday" }],
+  "2025-01-30": [{ title: "설날 연휴", type: "holiday" }],
+  "2025-03-03": [{ title: "삼일절 대체공휴일", type: "holiday" }],
+  "2025-05-01": [{ title: "근로자의 날", type: "anniversary" }],
+  "2025-05-05": [{ title: "어린이날·부처님오신날", type: "holiday" }],
+  "2025-05-06": [{ title: "대체공휴일", type: "holiday" }],
+  "2025-05-31": [{ title: "단오", type: "anniversary" }],
+  "2025-10-05": [{ title: "추석 연휴", type: "holiday" }],
+  "2025-10-06": [{ title: "추석", type: "holiday" }],
+  "2025-10-07": [{ title: "추석 연휴", type: "holiday" }],
+  "2025-10-08": [{ title: "추석 대체공휴일", type: "holiday" }],
+  "2026-02-16": [{ title: "설날 연휴", type: "holiday" }],
+  "2026-02-17": [{ title: "설날", type: "holiday" }],
+  "2026-02-18": [{ title: "설날 연휴", type: "holiday" }],
+  "2026-03-02": [{ title: "삼일절 대체공휴일", type: "holiday" }],
+  "2026-05-01": [{ title: "근로자의 날", type: "anniversary" }],
+  "2026-05-24": [{ title: "부처님오신날", type: "holiday" }],
+  "2026-05-25": [{ title: "대체공휴일", type: "holiday" }],
+  "2026-06-19": [{ title: "단오", type: "anniversary" }],
+  "2026-08-17": [{ title: "광복절 대체공휴일", type: "holiday" }],
+  "2026-09-24": [{ title: "추석 연휴", type: "holiday" }],
+  "2026-09-25": [{ title: "추석", type: "holiday" }],
+  "2026-09-26": [{ title: "추석 연휴", type: "holiday" }],
+  "2026-10-05": [{ title: "개천절 대체공휴일", type: "holiday" }],
+  "2027-02-06": [{ title: "설날 연휴", type: "holiday" }],
+  "2027-02-07": [{ title: "설날", type: "holiday" }],
+  "2027-02-08": [{ title: "설날 연휴", type: "holiday" }],
+  "2027-02-09": [{ title: "설날 대체공휴일", type: "holiday" }],
+  "2027-05-13": [{ title: "부처님오신날", type: "holiday" }],
+  "2027-06-09": [{ title: "단오", type: "anniversary" }],
+  "2027-09-14": [{ title: "추석 연휴", type: "holiday" }],
+  "2027-09-15": [{ title: "추석", type: "holiday" }],
+  "2027-09-16": [{ title: "추석 연휴", type: "holiday" }]
+};
+
+function padAcademicDate(value) {
+  return String(value).padStart(2, "0");
+}
+
+function makeAcademicKey(date) {
+  return `${date.getFullYear()}-${padAcademicDate(date.getMonth() + 1)}-${padAcademicDate(date.getDate())}`;
+}
+
+function parseAcademicKey(key) {
+  const parts = String(key || "").split("-").map(Number);
+  return new Date(parts[0], parts[1] - 1, parts[2]);
+}
+
+function formatAcademicDate(key, includeWeekday = true) {
+  const date = parseAcademicKey(key);
+  const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
+  const base = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
+  return includeWeekday ? `${base} (${weekdays[date.getDay()]})` : base;
+}
+
+function readAcademicEvents() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(ACADEMIC_EVENTS_KEY) || "{}");
+    if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) return parsed;
+  } catch(e) {}
+  return {};
+}
+
+function saveAcademicEvents(events) {
+  try {
+    localStorage.setItem(ACADEMIC_EVENTS_KEY, JSON.stringify(events));
+  } catch(e) {}
+}
+
+function getBuiltInAcademicEvents(key) {
+  const fixedKey = key.slice(5);
+  return [
+    ...(ACADEMIC_FIXED_DAYS[fixedKey] || []),
+    ...(ACADEMIC_YEAR_DAYS[key] || [])
+  ];
+}
+
+function getAcademicEventsForKey(key, userEvents) {
+  const events = getBuiltInAcademicEvents(key).map(event => ({ ...event, source: "built-in" }));
+  const user = userEvents[key];
+  if (user && (user.title || user.memo || user.url)) {
+    events.push({
+      title: user.title || "사용자 일정",
+      memo: user.memo || "",
+      url: user.url || "",
+      type: "user",
+      source: "user"
+    });
+  }
+  return events;
+}
+
+function academicMatchesQuery(key, events, query) {
+  if (!query) return true;
+  const dateText = formatAcademicDate(key);
+  const body = events.map(event => [event.title, event.memo, event.url, event.type].join(" ")).join(" ");
+  return `${dateText} ${body}`.toLowerCase().includes(query);
+}
+
+function normalizeAcademicUrl(url) {
+  const value = String(url || "").trim();
+  if (!value) return "";
+  return /^https?:\/\//i.test(value) ? value : `https://${value}`;
+}
+
+function escapeAcademicHtml(value) {
+  return String(value || "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  }[char]));
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const grid = document.getElementById("academicCalendarGrid");
+  if (!grid) return;
+
+  const monthLabel = document.getElementById("academicMonthLabel");
+  const prevBtn = document.getElementById("academicPrevMonthBtn");
+  const nextBtn = document.getElementById("academicNextMonthBtn");
+  const todayBtn = document.getElementById("academicTodayBtn");
+  const searchInput = document.getElementById("academicSearch");
+  const selectedDateEl = document.getElementById("academicSelectedDate");
+  const titleInput = document.getElementById("academicEventTitle");
+  const memoInput = document.getElementById("academicEventMemo");
+  const urlInput = document.getElementById("academicEventUrl");
+  const saveBtn = document.getElementById("academicSaveBtn");
+  const clearBtn = document.getElementById("academicClearBtn");
+  const statusEl = document.getElementById("academicStatus");
+  const weekTableBody = document.getElementById("academicWeekTableBody");
+  const today = new Date();
+  let state = {
+    year: today.getFullYear(),
+    month: today.getMonth(),
+    selectedKey: makeAcademicKey(today)
+  };
+  let userEvents = readAcademicEvents();
+
+  function setStatus(message) {
+    if (!statusEl) return;
+    statusEl.textContent = message || "";
+    window.clearTimeout(statusEl._timer);
+    if (message) statusEl._timer = window.setTimeout(() => { statusEl.textContent = ""; }, 1800);
+  }
+
+  function getMonthGridDates() {
+    const first = new Date(state.year, state.month, 1);
+    const start = new Date(state.year, state.month, 1 - first.getDay());
+    return Array.from({ length: 42 }, (_, index) => new Date(start.getFullYear(), start.getMonth(), start.getDate() + index));
+  }
+
+  function selectDate(key) {
+    state.selectedKey = key;
+    const current = userEvents[key] || {};
+    if (selectedDateEl) selectedDateEl.textContent = formatAcademicDate(key);
+    if (titleInput) titleInput.value = current.title || "";
+    if (memoInput) memoInput.value = current.memo || "";
+    if (urlInput) urlInput.value = current.url || "";
+    renderCalendar();
+  }
+
+  function renderCalendar() {
+    const dates = getMonthGridDates();
+    const query = (searchInput ? searchInput.value : "").trim().toLowerCase();
+    if (monthLabel) monthLabel.textContent = `${state.year}년 ${state.month + 1}월`;
+    grid.innerHTML = "";
+
+    dates.forEach(date => {
+      const key = makeAcademicKey(date);
+      const events = getAcademicEventsForKey(key, userEvents);
+      const isCurrentMonth = date.getMonth() === state.month;
+      const isToday = key === makeAcademicKey(today);
+      const isSelected = key === state.selectedKey;
+      const hasHoliday = events.some(event => event.type === "holiday");
+      const day = date.getDay();
+      const matches = academicMatchesQuery(key, events, query);
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = [
+        "academic-day",
+        isCurrentMonth ? "" : "is-other-month",
+        isToday ? "is-today" : "",
+        isSelected ? "is-selected" : "",
+        hasHoliday ? "is-holiday" : "",
+        day === 0 ? "is-sunday" : "",
+        day === 6 ? "is-saturday" : "",
+        !matches ? "is-filter-dim" : ""
+      ].filter(Boolean).join(" ");
+      button.setAttribute("aria-label", formatAcademicDate(key));
+      button.innerHTML = `
+        <div class="academic-date-line">
+          <span class="academic-date-num">${date.getDate()}</span>
+          ${events.length ? `<span class="academic-pill-count">${events.length}</span>` : ""}
+        </div>
+      `;
+      events.slice(0, 3).forEach(event => {
+        const pill = document.createElement("span");
+        pill.className = `academic-pill ${event.type}`;
+        pill.textContent = event.title;
+        button.appendChild(pill);
+      });
+      if (events.length > 3) {
+        const more = document.createElement("span");
+        more.className = "academic-pill anniversary";
+        more.textContent = `+${events.length - 3}개 더`;
+        button.appendChild(more);
+      }
+      button.addEventListener("click", () => {
+        if (!isCurrentMonth) {
+          state.year = date.getFullYear();
+          state.month = date.getMonth();
+        }
+        selectDate(key);
+        renderWeeklyTable();
+      });
+      grid.appendChild(button);
+    });
+  }
+
+  function getWeeks() {
+    const dates = getMonthGridDates();
+    return [0, 7, 14, 21, 28, 35].map((startIndex, index) => {
+      const weekDates = dates.slice(startIndex, startIndex + 7);
+      return {
+        label: `${index + 1}주차`,
+        dates: weekDates,
+        range: `${weekDates[0].getMonth() + 1}/${weekDates[0].getDate()} ~ ${weekDates[6].getMonth() + 1}/${weekDates[6].getDate()}`
+      };
+    });
+  }
+
+  function renderWeeklyTable() {
+    if (!weekTableBody) return;
+    const query = (searchInput ? searchInput.value : "").trim().toLowerCase();
+    weekTableBody.innerHTML = "";
+
+    getWeeks().forEach(week => {
+      const weekEvents = [];
+      week.dates.forEach(date => {
+        if (date.getMonth() !== state.month) return;
+        const key = makeAcademicKey(date);
+        const events = getAcademicEventsForKey(key, userEvents).filter(event => academicMatchesQuery(key, [event], query));
+        events.forEach(event => weekEvents.push({ key, event }));
+      });
+
+      const tr = document.createElement("tr");
+      const scheduleHtml = weekEvents.length
+        ? weekEvents.map(({ key, event }) => `<div class="academic-week-event"><small>${formatAcademicDate(key, false)}</small><strong>${escapeAcademicHtml(event.title)}</strong></div>`).join("")
+        : `<span class="academic-empty">등록된 일정 없음</span>`;
+      const memoHtml = weekEvents.filter(({ event }) => event.memo).length
+        ? weekEvents.filter(({ event }) => event.memo).map(({ key, event }) => `<div class="academic-week-event"><small>${formatAcademicDate(key, false)}</small><span>${escapeAcademicHtml(event.memo)}</span></div>`).join("")
+        : `<span class="academic-empty">-</span>`;
+      const urlHtml = weekEvents.filter(({ event }) => event.url).length
+        ? weekEvents.filter(({ event }) => event.url).map(({ event }) => {
+            const href = normalizeAcademicUrl(event.url);
+            return `<a class="academic-week-url" href="${escapeAcademicHtml(href)}" target="_blank" rel="noopener">${escapeAcademicHtml(event.url)}</a>`;
+          }).join("<br>")
+        : `<span class="academic-empty">-</span>`;
+
+      tr.innerHTML = `
+        <td class="week-label">${week.label}</td>
+        <td>${week.range}</td>
+        <td>${scheduleHtml}</td>
+        <td>${memoHtml}</td>
+        <td>${urlHtml}</td>
+      `;
+      weekTableBody.appendChild(tr);
+    });
+  }
+
+  function renderAll() {
+    renderCalendar();
+    renderWeeklyTable();
+  }
+
+  function saveSelectedDate() {
+    const key = state.selectedKey;
+    const entry = {
+      title: titleInput ? titleInput.value.trim() : "",
+      memo: memoInput ? memoInput.value.trim() : "",
+      url: urlInput ? urlInput.value.trim() : ""
+    };
+    if (entry.title || entry.memo || entry.url) {
+      userEvents[key] = entry;
+    } else {
+      delete userEvents[key];
+    }
+    saveAcademicEvents(userEvents);
+    renderAll();
+    setStatus("저장되었습니다.");
+  }
+
+  if (prevBtn) prevBtn.addEventListener("click", () => {
+    state.month -= 1;
+    if (state.month < 0) {
+      state.month = 11;
+      state.year -= 1;
+    }
+    state.selectedKey = makeAcademicKey(new Date(state.year, state.month, 1));
+    selectDate(state.selectedKey);
+    renderWeeklyTable();
+  });
+
+  if (nextBtn) nextBtn.addEventListener("click", () => {
+    state.month += 1;
+    if (state.month > 11) {
+      state.month = 0;
+      state.year += 1;
+    }
+    state.selectedKey = makeAcademicKey(new Date(state.year, state.month, 1));
+    selectDate(state.selectedKey);
+    renderWeeklyTable();
+  });
+
+  if (todayBtn) todayBtn.addEventListener("click", () => {
+    state.year = today.getFullYear();
+    state.month = today.getMonth();
+    selectDate(makeAcademicKey(today));
+    renderWeeklyTable();
+  });
+
+  if (saveBtn) saveBtn.addEventListener("click", saveSelectedDate);
+  if (clearBtn) clearBtn.addEventListener("click", () => {
+    if (titleInput) titleInput.value = "";
+    if (memoInput) memoInput.value = "";
+    if (urlInput) urlInput.value = "";
+    delete userEvents[state.selectedKey];
+    saveAcademicEvents(userEvents);
+    renderAll();
+    setStatus("비웠습니다.");
+  });
+  if (searchInput) searchInput.addEventListener("input", renderAll);
+  [titleInput, memoInput, urlInput].forEach(input => {
+    if (input) input.addEventListener("keydown", event => {
+      if ((event.ctrlKey || event.metaKey) && event.key === "Enter") saveSelectedDate();
+    });
+  });
+
+  selectDate(state.selectedKey);
+  renderWeeklyTable();
+});
+
 
