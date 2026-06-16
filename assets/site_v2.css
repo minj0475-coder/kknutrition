@@ -3279,7 +3279,7 @@ nav{
   width:100%!important;
   height:100%!important;
   display:block!important;
-  background:url("pig-logo.webp") center / 92% no-repeat!important;
+  background:url("images/kkul-face-logo.png") center / 92% no-repeat!important;
 }
 .brand .logo:after{
   display:none!important;
@@ -6729,4 +6729,38 @@ body .daily-kkul-copy .daily-kkul-message {
   font-size: clamp(14px, 3.9vw, 16px) !important;
   line-height: 1.45 !important;
   text-align: center !important;
+}
+
+/* Top brand logo refresh */
+body .top .brand {
+  min-width: 72px !important;
+  height: 56px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 8px !important;
+}
+
+body .top .brand-logo-img {
+  width: auto !important;
+  height: 56px !important;
+  max-height: 56px !important;
+  object-fit: contain !important;
+  transform: translateY(1px) !important;
+  filter:
+    drop-shadow(0 7px 10px rgba(120, 83, 93, 0.12))
+    drop-shadow(0 2px 4px rgba(255, 154, 176, 0.18)) !important;
+}
+
+@media(max-width: 640px) {
+  body .top .brand {
+    min-width: 62px !important;
+    height: 50px !important;
+    padding-inline: 4px !important;
+  }
+
+  body .top .brand-logo-img {
+    height: 50px !important;
+    max-height: 50px !important;
+  }
 }
