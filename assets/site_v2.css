@@ -6668,3 +6668,65 @@ body #staff .hero-asset {
     transform: translateY(10px) !important;
   }
 }
+
+/* The home column is intentionally narrow, so keep this card composed vertically. */
+body .home-grid-left .daily-kkul-card,
+body .daily-kkul-card {
+  grid-template-columns: 1fr !important;
+  grid-template-areas:
+    "daily-title"
+    "daily-image"
+    "daily-message" !important;
+  justify-items: center !important;
+  gap: 10px !important;
+  min-height: 0 !important;
+  padding: 24px 20px 20px !important;
+}
+
+body .home-grid-left .daily-kkul-copy,
+body .daily-kkul-copy {
+  display: contents !important;
+}
+
+body .home-grid-left .daily-kkul-copy .section-title,
+body .daily-kkul-copy .section-title {
+  grid-area: daily-title !important;
+  justify-self: center !important;
+  justify-content: center !important;
+  width: auto !important;
+  margin: 0 !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+}
+
+body .home-grid-left .daily-kkul-image-wrap,
+body .daily-kkul-image-wrap {
+  grid-area: daily-image !important;
+  width: 100% !important;
+  min-height: 188px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: -2px 0 -4px !important;
+}
+
+body .home-grid-left .daily-kkul-image,
+body .daily-kkul-image,
+body .home-grid-left .daily-kkul-image-wrap img,
+body .daily-kkul-image-wrap img {
+  width: clamp(210px, 76%, 238px) !important;
+  min-width: 0 !important;
+  max-width: 238px !important;
+}
+
+body .home-grid-left .daily-kkul-copy .daily-kkul-message,
+body .daily-kkul-copy .daily-kkul-message {
+  grid-area: daily-message !important;
+  justify-self: stretch !important;
+  width: 100% !important;
+  max-width: 292px !important;
+  margin: 0 auto !important;
+  padding: 14px 16px !important;
+  font-size: clamp(14px, 3.9vw, 16px) !important;
+  line-height: 1.45 !important;
+  text-align: center !important;
+}
