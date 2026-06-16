@@ -1033,7 +1033,13 @@ if ('scrollRestoration' in history) {
 }
 
 function updateTabs() {
-  let hash = window.location.hash;
+  const rawHash = window.location.hash;
+  let hash = rawHash;
+  const targetEl = rawHash ? document.querySelector(rawHash) : null;
+  if (targetEl && !targetEl.classList.contains("page-section")) {
+    const parentSection = targetEl.closest(".page-section");
+    if (parentSection) hash = `#${parentSection.id}`;
+  }
   if (!hash || !document.querySelector(hash)) {
     hash = '#home';
   }
@@ -1044,19 +1050,23 @@ function updateTabs() {
       section.classList.remove('active');
     }
   });
-  document.querySelectorAll('nav a, .drawer-nav a').forEach(link => {
+  document.querySelectorAll('nav a, .drawer-nav a, .sidebar-nav a, .sidebar-subnav a').forEach(link => {
     if (link.getAttribute('href') === hash) {
       link.classList.add('active');
     } else {
       link.classList.remove('active');
     }
   });
+  recordRecentPage(rawHash && targetEl ? rawHash : hash);
   
-  // Force scroll to top immediately, and again after a tick to override native anchor jump
-  window.scrollTo({ top: 0, behavior: 'instant' });
-  setTimeout(() => {
+  if (targetEl && !targetEl.classList.contains("page-section")) {
+    setTimeout(() => targetEl.scrollIntoView({ behavior: "smooth", block: "start" }), 20);
+  } else {
     window.scrollTo({ top: 0, behavior: 'instant' });
-  }, 10);
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }, 10);
+  }
 }
 window.addEventListener('hashchange', updateTabs);
 document.addEventListener('DOMContentLoaded', updateTabs);
@@ -1067,12 +1077,26 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileDrawer = document.getElementById('mobileDrawer');
   const closeDrawerBtn = document.getElementById('closeDrawerBtn');
   const drawerLinks = mobileDrawer ? mobileDrawer.querySelectorAll('.drawer-nav a') : [];
+  const sidebar = document.getElementById("appSidebar");
+  const sidebarCloseBtn = document.getElementById("sidebarCloseBtn");
+  const sidebarOverlay = document.getElementById("sidebarOverlay");
+  const sidebarSearch = document.getElementById("sidebarSearch");
+  const sidebarLinks = sidebar ? sidebar.querySelectorAll("a") : [];
 
   function openDrawer() {
+    document.body.classList.remove("sidebar-collapsed");
+    if (sidebar) sidebar.classList.add("is-open");
+    if (sidebarOverlay) sidebarOverlay.hidden = false;
     if(mobileDrawer) mobileDrawer.classList.add('active');
   }
 
   function closeDrawer() {
+    if (window.matchMedia("(max-width: 900px)").matches) {
+      if (sidebar) sidebar.classList.remove("is-open");
+      if (sidebarOverlay) sidebarOverlay.hidden = true;
+    } else {
+      document.body.classList.add("sidebar-collapsed");
+    }
     if(mobileDrawer) mobileDrawer.classList.remove('active');
   }
 
@@ -1083,13 +1107,125 @@ document.addEventListener('DOMContentLoaded', () => {
   if (closeDrawerBtn) {
     closeDrawerBtn.addEventListener('click', closeDrawer);
   }
+  if (sidebarCloseBtn) sidebarCloseBtn.addEventListener("click", closeDrawer);
+  if (sidebarOverlay) sidebarOverlay.addEventListener("click", closeDrawer);
 
   drawerLinks.forEach(link => {
     link.addEventListener('click', closeDrawer);
   });
+  sidebarLinks.forEach(link => {
+    link.addEventListener("click", () => {
+      if (window.matchMedia("(max-width: 900px)").matches) closeDrawer();
+    });
+  });
+  if (sidebarSearch) {
+    sidebarSearch.addEventListener("input", () => {
+      const query = sidebarSearch.value.trim().toLowerCase();
+      document.querySelectorAll(".sidebar-nav-group").forEach(group => {
+        const text = group.textContent.toLowerCase();
+        group.hidden = query && !text.includes(query);
+      });
+    });
+  }
+  buildSidebarToc();
+  renderRecentPages();
 });
 
+const RECENT_PAGE_KEY = "kkulkkoori_recent_pages_v1";
+
+function getPageLabel(hash) {
+  const link = document.querySelector(`.sidebar-nav a[href="${hash}"], .desktop-nav a[href="${hash}"]`);
+  if (link) return link.textContent.trim();
+  const target = document.querySelector(hash);
+  if (target && !target.classList.contains("page-section")) {
+    const title = target.querySelector("h2, summary, h3");
+    if (title) {
+      const clone = title.cloneNode(true);
+      clone.querySelectorAll(".num").forEach(num => num.remove());
+      return clone.textContent.trim().replace(/\s+/g, " ");
+    }
+  }
+  const title = document.querySelector(`${hash} .hero h1`);
+  return title ? title.textContent.trim() : hash.replace("#", "");
+}
+
+function recordRecentPage(hash) {
+  if (!hash || hash === "#home" || !document.querySelector(hash)) return;
+  const item = { hash, label: getPageLabel(hash), time: Date.now() };
+  let list = [];
+  try { list = JSON.parse(localStorage.getItem(RECENT_PAGE_KEY) || "[]"); } catch(e) {}
+  list = [item, ...list.filter(saved => saved.hash !== hash)].slice(0, 18);
+  try { localStorage.setItem(RECENT_PAGE_KEY, JSON.stringify(list)); } catch(e) {}
+  renderRecentPages();
+}
+
+function renderRecentPages(showAll = false) {
+  const wrap = document.getElementById("sidebarRecentList");
+  if (!wrap) return;
+  let list = [];
+  try { list = JSON.parse(localStorage.getItem(RECENT_PAGE_KEY) || "[]"); } catch(e) {}
+  const moreBtn = document.getElementById("sidebarRecentMoreBtn");
+  const visible = showAll ? list : list.slice(0, 6);
+  wrap.innerHTML = visible.length ? "" : `<span class="sidebar-empty">최근 항목이 없습니다.</span>`;
+  visible.forEach(item => {
+    const a = document.createElement("a");
+    a.href = item.hash;
+    a.textContent = item.label;
+    wrap.appendChild(a);
+  });
+  if (moreBtn) {
+    moreBtn.hidden = list.length <= 6;
+    moreBtn.textContent = showAll ? "접기" : "더보기";
+    moreBtn.onclick = () => renderRecentPages(!showAll);
+  }
+}
+
+function buildSidebarToc() {
+  const nav = document.getElementById("sidebarNav");
+  if (!nav || nav.dataset.ready) return;
+  const links = [...nav.querySelectorAll(":scope > a")];
+  links.forEach(link => {
+    const pageId = link.dataset.page;
+    const section = document.getElementById(pageId);
+    const group = document.createElement("div");
+    group.className = "sidebar-nav-group";
+    group.appendChild(link);
+    const headings = section ? [...section.querySelectorAll(":scope main > section.card h2, :scope main > section.card summary")]
+      .map((heading, index) => {
+        const card = heading.closest("section.card");
+        if (!card) return null;
+        if (!card.id) card.id = `${pageId}-item-${index + 1}`;
+        const clone = heading.cloneNode(true);
+        clone.querySelectorAll(".num").forEach(num => num.remove());
+        return { id: card.id, text: clone.textContent.trim().replace(/\s+/g, " ") };
+      })
+      .filter(item => item && item.text) : [];
+    if (headings.length) {
+      const sub = document.createElement("div");
+      sub.className = "sidebar-subnav";
+      headings.slice(0, 7).forEach(item => {
+        const a = document.createElement("a");
+        a.href = `#${item.id}`;
+        a.textContent = item.text;
+        sub.appendChild(a);
+      });
+      group.appendChild(sub);
+    }
+    nav.appendChild(group);
+  });
+  nav.dataset.ready = "true";
+}
+
 // Promo contacts table
+const VENDOR_NETWORK_KEY = "kkulkkoori_vendor_network_v1";
+const VENDOR_NETWORK_DEFAULT = [
+  { group: "공산", company: "", phone: "", email: "" },
+  { group: "농산", company: "", phone: "", email: "" },
+  { group: "수산", company: "", phone: "", email: "" },
+  { group: "축산", company: "", phone: "", email: "" },
+  { group: "김치", company: "", phone: "", email: "" },
+  { group: "쌀", company: "", phone: "", email: "" }
+];
 const PROMO_CONTACTS_KEY = "kkulkkoori_promo_contacts_v1";
 const PROMO_CONTACTS_DEFAULT = [
   { company: "아미", phone: "123-456-789", link: "", memo: "큐알코드(9-11월단가표)" },
@@ -1110,6 +1246,29 @@ function normalizePromoContact(row) {
     link: String(row && row.link || ""),
     memo: String(row && row.memo || "")
   };
+}
+
+function normalizeVendorNetwork(row) {
+  return {
+    group: String(row && row.group || ""),
+    company: String(row && row.company || ""),
+    phone: String(row && row.phone || ""),
+    email: String(row && row.email || "")
+  };
+}
+
+function readVendorNetwork() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(VENDOR_NETWORK_KEY) || "null");
+    if (Array.isArray(parsed)) return parsed.map(normalizeVendorNetwork);
+  } catch(e) {}
+  return VENDOR_NETWORK_DEFAULT.map(normalizeVendorNetwork);
+}
+
+function saveVendorNetwork(rows) {
+  try {
+    localStorage.setItem(VENDOR_NETWORK_KEY, JSON.stringify(rows.map(normalizeVendorNetwork)));
+  } catch(e) {}
 }
 
 function readPromoContacts() {
@@ -1167,15 +1326,47 @@ function withUrlProtocol(url) {
 
 document.addEventListener("DOMContentLoaded", () => {
   const tableBody = document.getElementById("promoContactTableBody");
-  if (!tableBody) return;
+  const vendorBody = document.getElementById("vendorNetworkTableBody");
+  if (!tableBody && !vendorBody) return;
 
   const searchInput = document.getElementById("promoContactSearch");
   const addBtn = document.getElementById("promoAddRowBtn");
+  const vendorAddBtn = document.getElementById("vendorNetworkAddRowBtn");
   const fullscreenBtn = document.getElementById("promoFullscreenBtn");
   const panel = document.getElementById("promoContactPanel");
   const emptyState = document.getElementById("promoEmptyState");
   const statusEl = document.getElementById("promoContactStatus");
   let rows = readPromoContacts();
+  let vendorRows = readVendorNetwork();
+
+  function renderVendorNetwork() {
+    if (!vendorBody) return;
+    vendorBody.innerHTML = "";
+    vendorRows.forEach((row, index) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td><input class="promo-cell-input" data-vendor-field="group" list="vendorGroupOptions" aria-label="업체군" value=""></td>
+        <td><input class="promo-cell-input" data-vendor-field="company" aria-label="업체명" value=""></td>
+        <td><input class="promo-cell-input" data-vendor-field="phone" aria-label="전화번호" value=""></td>
+        <td><input class="promo-cell-input" data-vendor-field="email" aria-label="이메일" value=""></td>
+        <td class="promo-row-tools"><button class="promo-delete-btn" type="button">삭제</button></td>
+      `;
+      tr.querySelectorAll("[data-vendor-field]").forEach(input => {
+        const field = input.getAttribute("data-vendor-field");
+        input.value = row[field] || "";
+        input.addEventListener("input", () => {
+          vendorRows[index][field] = input.value;
+          saveVendorNetwork(vendorRows);
+        });
+      });
+      tr.querySelector(".promo-delete-btn").addEventListener("click", () => {
+        vendorRows.splice(index, 1);
+        saveVendorNetwork(vendorRows);
+        renderVendorNetwork();
+      });
+      vendorBody.appendChild(tr);
+    });
+  }
 
   function persistAndRender() {
     savePromoContacts(rows);
@@ -1263,6 +1454,15 @@ document.addEventListener("DOMContentLoaded", () => {
       if (firstInput) firstInput.focus();
     });
   }
+  if (vendorAddBtn) {
+    vendorAddBtn.addEventListener("click", () => {
+      vendorRows.push({ group: "", company: "", phone: "", email: "" });
+      saveVendorNetwork(vendorRows);
+      renderVendorNetwork();
+      const last = vendorBody ? vendorBody.querySelector("tr:last-child [data-vendor-field='group']") : null;
+      if (last) last.focus();
+    });
+  }
   if (fullscreenBtn && panel) {
     fullscreenBtn.addEventListener("click", async () => {
       try {
@@ -1278,10 +1478,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
     document.addEventListener("fullscreenchange", () => {
-      fullscreenBtn.textContent = document.fullscreenElement ? "기본화면" : "전체화면";
+      fullscreenBtn.setAttribute("aria-label", document.fullscreenElement ? "기본화면" : "전체화면 보기");
     });
   }
 
+  renderVendorNetwork();
   renderPromoContacts();
 });
 
@@ -1390,6 +1591,9 @@ function getAcademicEventsForKey(key, userEvents) {
       title: user.title || "사용자 일정",
       memo: user.memo || "",
       url: user.url || "",
+      done: Boolean(user.done),
+      color: user.color || "rose",
+      weight: user.weight || "normal",
       type: "user",
       source: "user"
     });
@@ -1429,14 +1633,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextBtn = document.getElementById("academicNextMonthBtn");
   const todayBtn = document.getElementById("academicTodayBtn");
   const searchInput = document.getElementById("academicSearch");
-  const selectedDateEl = document.getElementById("academicSelectedDate");
+  const modal = document.getElementById("academicModal");
+  const modalCloseBtn = document.getElementById("academicModalCloseBtn");
+  const fullscreenBtn = document.getElementById("academicFullscreenBtn");
   const titleInput = document.getElementById("academicEventTitle");
+  const dateInput = document.getElementById("academicEventDate");
+  const doneInput = document.getElementById("academicEventDone");
+  const weightInput = document.getElementById("academicEventWeight");
+  const colorInput = document.getElementById("academicEventColor");
   const memoInput = document.getElementById("academicEventMemo");
   const urlInput = document.getElementById("academicEventUrl");
   const saveBtn = document.getElementById("academicSaveBtn");
   const clearBtn = document.getElementById("academicClearBtn");
   const statusEl = document.getElementById("academicStatus");
-  const weekTableBody = document.getElementById("academicWeekTableBody");
+  const weekList = document.getElementById("academicWeekList");
   const today = new Date();
   let state = {
     year: today.getFullYear(),
@@ -1461,11 +1671,31 @@ document.addEventListener("DOMContentLoaded", () => {
   function selectDate(key) {
     state.selectedKey = key;
     const current = userEvents[key] || {};
-    if (selectedDateEl) selectedDateEl.textContent = formatAcademicDate(key);
     if (titleInput) titleInput.value = current.title || "";
+    if (dateInput) dateInput.value = key;
+    if (doneInput) doneInput.checked = Boolean(current.done);
+    if (weightInput) weightInput.value = current.weight || "normal";
+    if (colorInput) colorInput.value = current.color || "rose";
     if (memoInput) memoInput.value = current.memo || "";
     if (urlInput) urlInput.value = current.url || "";
     renderCalendar();
+  }
+
+  function openAcademicModal(key) {
+    selectDate(key);
+    if (modal) {
+      modal.hidden = false;
+      document.body.classList.add("modal-open");
+    }
+    if (titleInput) {
+      window.setTimeout(() => titleInput.focus(), 30);
+    }
+  }
+
+  function closeAcademicModal() {
+    if (modal) modal.hidden = true;
+    document.body.classList.remove("modal-open");
+    if (modal) modal.classList.remove("is-expanded");
   }
 
   function renderCalendar() {
@@ -1504,7 +1734,7 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
       events.slice(0, 3).forEach(event => {
         const pill = document.createElement("span");
-        pill.className = `academic-pill ${event.type}`;
+        pill.className = `academic-pill ${event.type} ${event.color ? `color-${event.color}` : ""} ${event.done ? "is-done" : ""} ${event.weight === "bold" ? "is-bold" : ""}`;
         pill.textContent = event.title;
         button.appendChild(pill);
       });
@@ -1519,7 +1749,7 @@ document.addEventListener("DOMContentLoaded", () => {
           state.year = date.getFullYear();
           state.month = date.getMonth();
         }
-        selectDate(key);
+        openAcademicModal(key);
         renderWeeklyTable();
       });
       grid.appendChild(button);
@@ -1539,9 +1769,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderWeeklyTable() {
-    if (!weekTableBody) return;
+    if (!weekList) return;
     const query = (searchInput ? searchInput.value : "").trim().toLowerCase();
-    weekTableBody.innerHTML = "";
+    weekList.innerHTML = "";
 
     getWeeks().forEach(week => {
       const weekEvents = [];
@@ -1552,28 +1782,23 @@ document.addEventListener("DOMContentLoaded", () => {
         events.forEach(event => weekEvents.push({ key, event }));
       });
 
-      const tr = document.createElement("tr");
-      const scheduleHtml = weekEvents.length
-        ? weekEvents.map(({ key, event }) => `<div class="academic-week-event"><small>${formatAcademicDate(key, false)}</small><strong>${escapeAcademicHtml(event.title)}</strong></div>`).join("")
-        : `<span class="academic-empty">등록된 일정 없음</span>`;
-      const memoHtml = weekEvents.filter(({ event }) => event.memo).length
-        ? weekEvents.filter(({ event }) => event.memo).map(({ key, event }) => `<div class="academic-week-event"><small>${formatAcademicDate(key, false)}</small><span>${escapeAcademicHtml(event.memo)}</span></div>`).join("")
-        : `<span class="academic-empty">-</span>`;
-      const urlHtml = weekEvents.filter(({ event }) => event.url).length
-        ? weekEvents.filter(({ event }) => event.url).map(({ event }) => {
-            const href = normalizeAcademicUrl(event.url);
-            return `<a class="academic-week-url" href="${escapeAcademicHtml(href)}" target="_blank" rel="noopener">${escapeAcademicHtml(event.url)}</a>`;
-          }).join("<br>")
-        : `<span class="academic-empty">-</span>`;
-
-      tr.innerHTML = `
-        <td class="week-label">${week.label}</td>
-        <td>${week.range}</td>
-        <td>${scheduleHtml}</td>
-        <td>${memoHtml}</td>
-        <td>${urlHtml}</td>
-      `;
-      weekTableBody.appendChild(tr);
+      const group = document.createElement("section");
+      group.className = "academic-week-group";
+      group.innerHTML = `<button class="academic-week-range" type="button">${week.range}</button><div class="academic-week-items"></div>`;
+      const items = group.querySelector(".academic-week-items");
+      if (weekEvents.length) {
+        weekEvents.forEach(({ key, event }) => {
+          const row = document.createElement("button");
+          row.type = "button";
+          row.className = `academic-week-row ${event.done ? "is-done" : ""}`;
+          row.innerHTML = `<span>${formatAcademicDate(key, false)}</span><strong>${escapeAcademicHtml(event.title)}</strong>`;
+          row.addEventListener("click", () => openAcademicModal(key));
+          items.appendChild(row);
+        });
+      } else {
+        items.innerHTML = `<span class="academic-empty">등록된 일정 없음</span>`;
+      }
+      weekList.appendChild(group);
     });
   }
 
@@ -1583,20 +1808,29 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function saveSelectedDate() {
-    const key = state.selectedKey;
+    const key = dateInput && dateInput.value ? dateInput.value : state.selectedKey;
     const entry = {
       title: titleInput ? titleInput.value.trim() : "",
       memo: memoInput ? memoInput.value.trim() : "",
-      url: urlInput ? urlInput.value.trim() : ""
+      url: urlInput ? urlInput.value.trim() : "",
+      done: doneInput ? doneInput.checked : false,
+      weight: weightInput ? weightInput.value : "normal",
+      color: colorInput ? colorInput.value : "rose"
     };
+    if (key !== state.selectedKey) delete userEvents[state.selectedKey];
     if (entry.title || entry.memo || entry.url) {
       userEvents[key] = entry;
     } else {
       delete userEvents[key];
     }
+    state.selectedKey = key;
+    const nextDate = parseAcademicKey(key);
+    state.year = nextDate.getFullYear();
+    state.month = nextDate.getMonth();
     saveAcademicEvents(userEvents);
     renderAll();
     setStatus("저장되었습니다.");
+    closeAcademicModal();
   }
 
   if (prevBtn) prevBtn.addEventListener("click", () => {
@@ -1633,13 +1867,26 @@ document.addEventListener("DOMContentLoaded", () => {
     if (titleInput) titleInput.value = "";
     if (memoInput) memoInput.value = "";
     if (urlInput) urlInput.value = "";
+    if (doneInput) doneInput.checked = false;
     delete userEvents[state.selectedKey];
     saveAcademicEvents(userEvents);
     renderAll();
     setStatus("비웠습니다.");
+    closeAcademicModal();
   });
+  if (modalCloseBtn) modalCloseBtn.addEventListener("click", closeAcademicModal);
+  if (modal) {
+    modal.addEventListener("click", event => {
+      if (event.target === modal) closeAcademicModal();
+    });
+  }
+  if (fullscreenBtn && modal) {
+    fullscreenBtn.addEventListener("click", () => {
+      modal.classList.toggle("is-expanded");
+    });
+  }
   if (searchInput) searchInput.addEventListener("input", renderAll);
-  [titleInput, memoInput, urlInput].forEach(input => {
+  [titleInput, memoInput, urlInput, dateInput].forEach(input => {
     if (input) input.addEventListener("keydown", event => {
       if ((event.ctrlKey || event.metaKey) && event.key === "Enter") saveSelectedDate();
     });
