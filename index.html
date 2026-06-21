@@ -331,34 +331,28 @@
         <span>날짜</span>
         <input id="academicEventDate" type="date">
       </label>
-      <label class="academic-property">
+      <label class="academic-property academic-done-property">
         <span>완료</span>
         <input id="academicEventDone" type="checkbox">
       </label>
-      <label class="academic-property">
-        <span>글씨</span>
-        <select id="academicEventWeight">
-          <option value="normal">보통</option>
-          <option value="bold">볼드</option>
-        </select>
-      </label>
-      <label class="academic-property">
+      <div class="academic-property academic-color-property">
         <span>색상</span>
-        <select id="academicEventColor">
-          <option value="rose">로즈</option>
-          <option value="mint">민트</option>
-          <option value="blue">블루</option>
-          <option value="gold">골드</option>
-          <option value="gray">그레이</option>
-        </select>
-      </label>
+        <input id="academicEventColor" type="hidden" value="rose">
+        <div class="academic-color-options" role="radiogroup" aria-label="일정 색상">
+          <button type="button" role="radio" class="academic-color-swatch color-rose is-selected" data-academic-color="rose" aria-label="로즈" aria-checked="true"></button>
+          <button type="button" role="radio" class="academic-color-swatch color-mint" data-academic-color="mint" aria-label="민트" aria-checked="false"></button>
+          <button type="button" role="radio" class="academic-color-swatch color-blue" data-academic-color="blue" aria-label="블루" aria-checked="false"></button>
+          <button type="button" role="radio" class="academic-color-swatch color-gold" data-academic-color="gold" aria-label="골드" aria-checked="false"></button>
+          <button type="button" role="radio" class="academic-color-swatch color-gray" data-academic-color="gray" aria-label="그레이" aria-checked="false"></button>
+        </div>
+      </div>
       <label class="academic-property wide">
         <span>URL</span>
         <input id="academicEventUrl" type="url" placeholder="https://">
       </label>
       <label class="academic-property wide">
         <span>메모</span>
-        <textarea id="academicEventMemo" rows="5" placeholder="급식 인원 변동, 준비물, 전달 사항 등을 적어두세요."></textarea>
+        <textarea id="academicEventMemo" rows="5"></textarea>
       </label>
     </div>
     <div class="academic-editor-actions">

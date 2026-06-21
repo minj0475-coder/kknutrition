@@ -8384,13 +8384,15 @@ body #home .hero-asset {
 
 .academic-modal-title {
   width: 100%;
-  border: 0;
-  margin: 8px 0 20px;
+  border: 1px solid #eaded9;
+  border-radius: 12px;
+  margin: 6px 0 20px;
+  padding: 15px 18px;
   color: #2f2928;
-  background: transparent;
-  font-size: clamp(32px, 5vw, 54px);
-  line-height: 1.08;
-  font-weight: 950;
+  background: #fff;
+  font-size: clamp(24px, 3.2vw, 34px);
+  line-height: 1.18;
+  font-weight: 850;
   outline: none;
 }
 
@@ -8429,6 +8431,69 @@ body #home .hero-asset {
 
 .academic-property textarea {
   resize: vertical;
+}
+
+.academic-done-property input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  justify-self: start;
+  margin: 0;
+  accent-color: #df7e8b;
+}
+
+.academic-color-property {
+  align-items: center;
+}
+
+.academic-color-options {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 42px;
+}
+
+.academic-color-swatch {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  padding: 0;
+  background: #f7eded;
+  box-shadow: inset 0 0 0 2px #fff, 0 4px 12px rgba(75, 55, 48, 0.1);
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.academic-color-swatch:hover,
+.academic-color-swatch:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: inset 0 0 0 2px #fff, 0 7px 16px rgba(75, 55, 48, 0.14);
+  outline: none;
+}
+
+.academic-color-swatch.is-selected {
+  border-color: #2f2928;
+}
+
+.academic-color-swatch.color-rose {
+  background: #f59cab;
+}
+
+.academic-color-swatch.color-mint {
+  background: #8eddd1;
+}
+
+.academic-color-swatch.color-blue {
+  background: #8db8f1;
+}
+
+.academic-color-swatch.color-gold {
+  background: #f3c76e;
+}
+
+.academic-color-swatch.color-gray {
+  background: #b9b2ae;
 }
 
 .academic-editor-actions {
@@ -8497,6 +8562,15 @@ body #home .hero-asset {
   .academic-property {
     grid-template-columns: 1fr;
     gap: 6px;
+  }
+
+  .academic-modal-title {
+    font-size: 26px;
+    padding: 13px 14px;
+  }
+
+  .academic-color-options {
+    gap: 9px;
   }
 }
 

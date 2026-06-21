@@ -1660,8 +1660,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const titleInput = document.getElementById("academicEventTitle");
   const dateInput = document.getElementById("academicEventDate");
   const doneInput = document.getElementById("academicEventDone");
-  const weightInput = document.getElementById("academicEventWeight");
   const colorInput = document.getElementById("academicEventColor");
+  const colorButtons = modal ? modal.querySelectorAll("[data-academic-color]") : [];
   const memoInput = document.getElementById("academicEventMemo");
   const urlInput = document.getElementById("academicEventUrl");
   const saveBtn = document.getElementById("academicSaveBtn");
@@ -1683,6 +1683,16 @@ document.addEventListener("DOMContentLoaded", () => {
     if (message) statusEl._timer = window.setTimeout(() => { statusEl.textContent = ""; }, 1800);
   }
 
+  function setAcademicColor(value) {
+    const nextColor = value || "rose";
+    if (colorInput) colorInput.value = nextColor;
+    colorButtons.forEach(button => {
+      const isSelected = button.getAttribute("data-academic-color") === nextColor;
+      button.classList.toggle("is-selected", isSelected);
+      button.setAttribute("aria-checked", isSelected ? "true" : "false");
+    });
+  }
+
   function getMonthGridDates() {
     const first = new Date(state.year, state.month, 1);
     const start = new Date(state.year, state.month, 1 - first.getDay());
@@ -1695,8 +1705,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (titleInput) titleInput.value = current.title || "";
     if (dateInput) dateInput.value = key;
     if (doneInput) doneInput.checked = Boolean(current.done);
-    if (weightInput) weightInput.value = current.weight || "normal";
-    if (colorInput) colorInput.value = current.color || "rose";
+    setAcademicColor(current.color || "rose");
     if (memoInput) memoInput.value = current.memo || "";
     if (urlInput) urlInput.value = current.url || "";
     renderCalendar();
@@ -1835,7 +1844,7 @@ document.addEventListener("DOMContentLoaded", () => {
       memo: memoInput ? memoInput.value.trim() : "",
       url: urlInput ? urlInput.value.trim() : "",
       done: doneInput ? doneInput.checked : false,
-      weight: weightInput ? weightInput.value : "normal",
+      weight: "normal",
       color: colorInput ? colorInput.value : "rose"
     };
     if (key !== state.selectedKey) delete userEvents[state.selectedKey];
@@ -1883,12 +1892,19 @@ document.addEventListener("DOMContentLoaded", () => {
     renderWeeklyTable();
   });
 
+  colorButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      setAcademicColor(button.getAttribute("data-academic-color") || "rose");
+    });
+  });
+
   if (saveBtn) saveBtn.addEventListener("click", saveSelectedDate);
   if (clearBtn) clearBtn.addEventListener("click", () => {
     if (titleInput) titleInput.value = "";
     if (memoInput) memoInput.value = "";
     if (urlInput) urlInput.value = "";
     if (doneInput) doneInput.checked = false;
+    setAcademicColor("rose");
     delete userEvents[state.selectedKey];
     saveAcademicEvents(userEvents);
     renderAll();
