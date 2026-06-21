@@ -9240,3 +9240,90 @@ body #home .hero-asset {
     transform: translateX(50%) !important;
   }
 }
+
+/* Copy actions: ChatGPT-like icon controls in the top-right or inline row. */
+.copy-panel {
+  position: relative !important;
+}
+
+.copy-panel .message-box {
+  padding-right: 58px !important;
+}
+
+.copy-icon-btn,
+.open-icon-btn {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  min-height: 34px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 1px solid transparent !important;
+  border-radius: 10px !important;
+  padding: 0 !important;
+  color: #25211f !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  font-size: 0 !important;
+  line-height: 1 !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+}
+
+.copy-icon-btn:hover,
+.open-icon-btn:hover {
+  border-color: #e6dfda !important;
+  background: #f7f7f7 !important;
+  transform: none !important;
+}
+
+.copy-icon-btn::before,
+.open-icon-btn::before {
+  content: "" !important;
+  width: 19px !important;
+  height: 19px !important;
+  display: block !important;
+  background: currentColor !important;
+}
+
+.copy-icon-btn::before {
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='9' y='9' width='11' height='11' rx='2'/%3E%3Cpath d='M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'/%3E%3C/svg%3E") center / contain no-repeat !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='9' y='9' width='11' height='11' rx='2'/%3E%3Cpath d='M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'/%3E%3C/svg%3E") center / contain no-repeat !important;
+}
+
+.open-icon-btn::before {
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17 17 7'/%3E%3Cpath d='M8 7h9v9'/%3E%3Cpath d='M19 19H5V5'/%3E%3C/svg%3E") center / contain no-repeat !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17 17 7'/%3E%3Cpath d='M8 7h9v9'/%3E%3Cpath d='M19 19H5V5'/%3E%3C/svg%3E") center / contain no-repeat !important;
+}
+
+.copy-panel-btn {
+  position: absolute !important;
+  top: 12px !important;
+  right: 12px !important;
+  z-index: 2 !important;
+}
+
+.promo-copy-field {
+  grid-template-columns: minmax(0, 1fr) auto auto !important;
+  gap: 6px !important;
+}
+
+.promo-copy-btn,
+.promo-open-link {
+  margin-top: 0 !important;
+}
+
+.promo-open-link {
+  vertical-align: middle !important;
+}
+
+@media(max-width: 640px) {
+  .copy-panel .message-box {
+    padding-right: 52px !important;
+  }
+
+  .promo-copy-field {
+    grid-template-columns: minmax(0, 1fr) 34px 34px !important;
+  }
+}

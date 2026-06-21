@@ -1426,15 +1426,15 @@ document.addEventListener("DOMContentLoaded", () => {
         <td>
           <div class="promo-copy-field">
             <input class="promo-cell-input" data-field="phone" aria-label="홍보영양사님연락처" value="">
-            <button class="promo-copy-btn" type="button" data-copy-field="phone">복사</button>
+            <button class="promo-copy-btn copy-icon-btn" type="button" data-copy-field="phone" aria-label="연락처 복사" title="복사"></button>
           </div>
         </td>
         <td>
           <div class="promo-copy-field">
             <input class="promo-cell-input" data-field="link" aria-label="전자단가링크" value="">
-            <button class="promo-copy-btn" type="button" data-copy-field="link">복사</button>
+            <button class="promo-copy-btn copy-icon-btn" type="button" data-copy-field="link" aria-label="전자단가 링크 복사" title="복사"></button>
+            <a class="promo-open-link open-icon-btn" href="#" target="_blank" rel="noopener" aria-label="전자단가 링크 열기" title="열기"></a>
           </div>
-          <a class="promo-open-link" href="#" target="_blank" rel="noopener">열기</a>
         </td>
         <td><textarea class="promo-cell-input" data-field="memo" aria-label="메모"></textarea></td>
         <td class="promo-row-tools"><button class="promo-delete-btn" type="button">삭제</button></td>
