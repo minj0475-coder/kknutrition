@@ -9070,3 +9070,67 @@ button,
     max-height: none !important;
   }
 }
+
+/* Academic calendar: keep the month view as a clear square grid. */
+.academic-calendar-panel {
+  overflow: hidden !important;
+  border-radius: 16px !important;
+}
+
+.academic-weekdays,
+.academic-calendar-grid {
+  gap: 0 !important;
+}
+
+.academic-day,
+button.academic-day {
+  min-height: 116px !important;
+  border-radius: 0 !important;
+  border-right: 1px solid #efe6e2 !important;
+  border-bottom: 1px solid #efe6e2 !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.academic-day:nth-child(7n),
+button.academic-day:nth-child(7n) {
+  border-right: 0 !important;
+}
+
+.academic-day:hover,
+button.academic-day:hover {
+  background: #fff8f8 !important;
+  transform: none !important;
+}
+
+.academic-day.is-selected,
+button.academic-day.is-selected {
+  background: #fff6f7 !important;
+  box-shadow: inset 0 0 0 2px rgba(239, 127, 150, 0.58) !important;
+}
+
+.academic-day.is-other-month,
+button.academic-day.is-other-month {
+  background: #fcfbfa !important;
+}
+
+.academic-date-num {
+  border-radius: 8px !important;
+}
+
+@media(max-width: 640px) {
+  .academic-calendar-panel {
+    border-radius: 12px !important;
+  }
+
+  .academic-day,
+  button.academic-day {
+    min-height: 76px !important;
+    padding: 7px 5px !important;
+  }
+
+  .academic-date-num {
+    border-radius: 7px !important;
+  }
+}
