@@ -1090,7 +1090,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const sidebarOverlay = document.getElementById("sidebarOverlay");
   const sidebarSearch = document.getElementById("sidebarSearch");
   const sidebarLinks = sidebar ? sidebar.querySelectorAll("a") : [];
-  const brandLink = document.querySelector(".top .brand");
+  const logoLinks = document.querySelectorAll(".top .brand, .sidebar-logo-link");
   const mobileSidebarQuery = window.matchMedia("(max-width: 900px)");
   let sidebarTouchStartX = 0;
   let sidebarTouchStartY = 0;
@@ -1126,16 +1126,18 @@ document.addEventListener('DOMContentLoaded', () => {
     mobileMenuBtn.addEventListener('click', openDrawer);
   }
 
-  if (brandLink) {
-    brandLink.addEventListener("click", event => {
+  logoLinks.forEach(logoLink => {
+    logoLink.addEventListener("click", event => {
+      event.preventDefault();
+      event.stopPropagation();
       if (!isSidebarOpen()) {
-        event.preventDefault();
         openDrawer();
         return;
       }
+      window.location.hash = "#home";
       if (mobileSidebarQuery.matches) closeDrawer();
-    });
-  }
+    }, true);
+  });
 
   if (closeDrawerBtn) {
     closeDrawerBtn.addEventListener('click', closeDrawer);

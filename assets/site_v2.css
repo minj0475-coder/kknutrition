@@ -9695,3 +9695,146 @@ body .top .brand-logo-img,
     height: clamp(150px, 48vw, 190px) !important;
   }
 }
+
+/* 2026-06 final correction: logo hit target, pure white page canvas, polished responsive Kkul art. */
+html,
+body,
+body::before,
+#app-content,
+.page-section,
+.wrap,
+main.wrap,
+.home-grid,
+.home-grid-left,
+.home-grid-right {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+}
+
+body {
+  background-image: none !important;
+}
+
+body::before,
+body::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+}
+
+body,
+.app-shell,
+.content,
+.main,
+.main-content,
+.section,
+.section-body,
+.tab-content,
+.tab-pane,
+.content-panel,
+.page-panel,
+.home-wrap,
+.layout,
+.layout-main {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+}
+
+body .top {
+  display: block !important;
+}
+
+body .top-inner {
+  align-items: center !important;
+  justify-content: flex-start !important;
+}
+
+body .top .brand {
+  align-self: center !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  cursor: pointer !important;
+  transform: translateY(-1px) !important;
+}
+
+body .top .brand-logo-img {
+  display: block !important;
+  object-position: center center !important;
+  transform: translateY(-2px) !important;
+}
+
+.sidebar-logo {
+  object-position: center center !important;
+}
+
+body #app-content .hero,
+body #app-content .card,
+body #app-content .note,
+body #app-content .panel,
+body #app-content .table-wrap,
+body #app-content .memo-card,
+body #app-content .home-today-card,
+body #app-content .sheet-link-card {
+  background-color: #ffffff !important;
+}
+
+body .page-section:not(#home) .hero-asset {
+  width: clamp(292px, 34vw, 420px) !important;
+  max-width: 44% !important;
+  max-height: 360px !important;
+  object-fit: contain !important;
+}
+
+@media(max-width: 900px) {
+  body .page-section:not(#home) .hero {
+    grid-template-columns: minmax(0, 1fr) !important;
+    justify-items: center !important;
+    text-align: center !important;
+    row-gap: 14px !important;
+  }
+
+  body .page-section:not(#home) .hero-content {
+    max-width: 680px !important;
+  }
+
+  body .page-section:not(#home) .hero-asset {
+    width: clamp(260px, 58vw, 370px) !important;
+    max-width: min(78vw, 370px) !important;
+    max-height: 330px !important;
+    justify-self: center !important;
+    transform: none !important;
+  }
+}
+
+@media(max-width: 640px) {
+  body .top-inner {
+    min-height: 70px !important;
+    padding-top: 7px !important;
+    padding-bottom: 7px !important;
+  }
+
+  body .top .brand {
+    min-width: 58px !important;
+    height: 58px !important;
+  }
+
+  body .top .brand-logo-img {
+    width: 52px !important;
+    height: 52px !important;
+    max-width: 52px !important;
+    max-height: 52px !important;
+    transform: translateY(-2px) !important;
+  }
+
+  body .page-section:not(#home) .hero {
+    padding: 26px 20px 22px !important;
+    min-height: auto !important;
+  }
+
+  body .page-section:not(#home) .hero-asset {
+    width: min(88vw, 330px) !important;
+    max-width: min(88vw, 330px) !important;
+    max-height: 310px !important;
+    margin-top: 2px !important;
+  }
+}
