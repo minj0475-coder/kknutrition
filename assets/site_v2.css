@@ -9486,6 +9486,272 @@ body #home .hero-asset {
   padding: 10px 12px !important;
 }
 
+/* 2026-06 responsive quality pass: compact heroes, readable calendars, no sideways tables. */
+@media(max-width: 900px) {
+  body #app-content {
+    width: 100% !important;
+    overflow-x: clip !important;
+  }
+
+  body .wrap,
+  body main.wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-inline: clamp(10px, 3.5vw, 20px) !important;
+  }
+
+  body .page-section .hero,
+  body #home .hero,
+  body .page-section:not(#home) .hero {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: clamp(12px, 3vw, 22px) !important;
+    min-height: 0 !important;
+    padding: clamp(18px, 4.5vw, 30px) !important;
+    text-align: left !important;
+  }
+
+  body .hero-content {
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+
+  body .hero h1,
+  body #home .hero h1 {
+    font-size: clamp(30px, 6vw, 46px) !important;
+    line-height: 1.08 !important;
+    margin-bottom: 8px !important;
+    word-break: keep-all !important;
+  }
+
+  body .hero .subtitle,
+  body #home .hero .subtitle {
+    max-width: 34em !important;
+    font-size: clamp(14px, 2.2vw, 16px) !important;
+    line-height: 1.55 !important;
+    word-break: keep-all !important;
+  }
+
+  body .hero .kicker {
+    margin-bottom: 8px !important;
+    font-size: 13px !important;
+  }
+
+  body .page-section:not(#home) .hero-asset,
+  body #home .hero-asset {
+    width: clamp(160px, 30vw, 240px) !important;
+    height: auto !important;
+    max-width: 34vw !important;
+    max-height: 230px !important;
+    justify-self: end !important;
+    align-self: center !important;
+  }
+
+  body .card,
+  body .note,
+  body .panel,
+  body .memo-card,
+  body .home-today-card,
+  body .daily-kkul-card,
+  body .vendor-network-card,
+  body .promo-contact-card,
+  body .staff-accordion-card,
+  body .academic-calendar-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-inline: 0 !important;
+    border-radius: 16px !important;
+  }
+
+  .promo-table-wrap {
+    overflow: visible !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+
+  .promo-contact-table,
+  .promo-contact-table tbody,
+  .promo-contact-table tr,
+  .promo-contact-table td {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .promo-contact-table {
+    border: 0 !important;
+    background: transparent !important;
+  }
+
+  .promo-contact-table thead {
+    display: none !important;
+  }
+
+  .promo-contact-table tr {
+    display: grid !important;
+    gap: 0 !important;
+    margin-bottom: 12px !important;
+    overflow: hidden !important;
+    border: 1px solid #eee8e4 !important;
+    border-radius: 14px !important;
+    background: #ffffff !important;
+    box-shadow: 0 10px 24px rgba(49, 42, 39, 0.05) !important;
+  }
+
+  .promo-contact-table td {
+    display: grid !important;
+    grid-template-columns: minmax(82px, 25%) minmax(0, 1fr) !important;
+    align-items: center !important;
+    gap: 10px !important;
+    min-height: 46px !important;
+    border: 0 !important;
+    border-bottom: 1px solid #f0ebe7 !important;
+    padding: 10px 12px !important;
+    text-align: left !important;
+    white-space: normal !important;
+  }
+
+  .promo-contact-table td:last-child {
+    border-bottom: 0 !important;
+  }
+
+  .promo-contact-table td::before {
+    color: #8b7773 !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+    line-height: 1.25 !important;
+  }
+
+  .promo-contact-table:not(.vendor-network-table) td:nth-child(1)::before { content: "업체명"; }
+  .promo-contact-table:not(.vendor-network-table) td:nth-child(2)::before { content: "연락처"; }
+  .promo-contact-table:not(.vendor-network-table) td:nth-child(3)::before { content: "전자단가"; }
+  .promo-contact-table:not(.vendor-network-table) td:nth-child(4)::before { content: "메모"; }
+  .promo-contact-table:not(.vendor-network-table) td:nth-child(5)::before { content: "관리"; }
+  .vendor-network-table td:nth-child(1)::before { content: "업체군"; }
+  .vendor-network-table td:nth-child(2)::before { content: "업체명"; }
+  .vendor-network-table td:nth-child(3)::before { content: "전화번호"; }
+  .vendor-network-table td:nth-child(4)::before { content: "이메일"; }
+  .vendor-network-table td:nth-child(5)::before { content: "관리"; }
+
+  .promo-contact-table input,
+  .promo-contact-table textarea {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .promo-row-tools {
+    justify-content: end !important;
+  }
+
+  .promo-copy-field {
+    grid-template-columns: minmax(0, 1fr) 38px 38px !important;
+    align-items: center !important;
+  }
+
+  .academic-calendar-card {
+    padding-inline: clamp(12px, 3vw, 18px) !important;
+  }
+
+  .academic-calendar-panel {
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+
+  .academic-weekdays,
+  .academic-calendar-grid {
+    width: 100% !important;
+    min-width: 0 !important;
+    grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+  }
+
+  .academic-day,
+  button.academic-day {
+    width: 100% !important;
+    min-width: 0 !important;
+    aspect-ratio: auto !important;
+  }
+}
+
+@media(max-width: 640px) {
+  body .page-section .hero,
+  body #home .hero,
+  body .page-section:not(#home) .hero {
+    grid-template-columns: minmax(0, 1fr) !important;
+    justify-items: center !important;
+    gap: 10px !important;
+    padding: 18px 18px 16px !important;
+    text-align: center !important;
+  }
+
+  body .hero h1,
+  body #home .hero h1 {
+    font-size: clamp(28px, 8.3vw, 36px) !important;
+  }
+
+  body .hero .subtitle,
+  body #home .hero .subtitle {
+    margin-inline: auto !important;
+    font-size: 14px !important;
+    line-height: 1.48 !important;
+  }
+
+  body .page-section:not(#home) .hero-asset,
+  body #home .hero-asset {
+    width: min(58vw, 218px) !important;
+    max-width: min(58vw, 218px) !important;
+    max-height: 210px !important;
+    justify-self: center !important;
+  }
+
+  body .page-section:not(#home) .hero {
+    min-height: 0 !important;
+  }
+
+  .card,
+  .academic-calendar-card,
+  .vendor-network-card,
+  .promo-contact-card {
+    padding: 16px !important;
+  }
+
+  .academic-weekdays span {
+    min-height: 34px !important;
+    padding: 8px 0 !important;
+    font-size: 11px !important;
+  }
+
+  .academic-day,
+  button.academic-day {
+    min-height: 58px !important;
+    padding: 5px 3px !important;
+    border-radius: 10px !important;
+  }
+
+  .academic-date-line {
+    margin-bottom: 2px !important;
+  }
+
+  .academic-date-num {
+    width: 21px !important;
+    height: 21px !important;
+    font-size: 11px !important;
+  }
+
+  .academic-pill {
+    max-width: 100% !important;
+    padding: 2px 4px !important;
+    font-size: 9px !important;
+    line-height: 1.15 !important;
+  }
+
+  .promo-contact-table td {
+    grid-template-columns: 76px minmax(0, 1fr) !important;
+    padding: 9px 10px !important;
+  }
+}
+
 .promo-search {
   color: #7c6f6b !important;
 }
@@ -9886,5 +10152,67 @@ body .page-section:not(#home) .hero-asset {
     max-width: min(88vw, 330px) !important;
     max-height: 310px !important;
     margin-top: 2px !important;
+  }
+}
+
+/* 2026-06 final responsive composition override. Keep narrow screens polished and scannable. */
+@media(max-width: 900px) {
+  body .page-section:not(#home) .hero {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    justify-items: stretch !important;
+    gap: clamp(12px, 3vw, 20px) !important;
+    min-height: 0 !important;
+    padding: clamp(18px, 4vw, 28px) !important;
+    text-align: left !important;
+  }
+
+  body .page-section:not(#home) .hero-asset {
+    width: clamp(168px, 30vw, 238px) !important;
+    max-width: 32vw !important;
+    max-height: 238px !important;
+    justify-self: end !important;
+    margin: 0 !important;
+  }
+}
+
+@media(max-width: 640px) {
+  body .page-section:not(#home) .hero {
+    grid-template-columns: minmax(0, 1fr) !important;
+    justify-items: center !important;
+    gap: 10px !important;
+    padding: 18px 18px 16px !important;
+    text-align: center !important;
+  }
+
+  body .page-section:not(#home) .hero h1 {
+    font-size: clamp(28px, 8.3vw, 36px) !important;
+    line-height: 1.08 !important;
+    margin-bottom: 8px !important;
+  }
+
+  body .page-section:not(#home) .hero .subtitle {
+    max-width: 31em !important;
+    margin-inline: auto !important;
+    font-size: 14px !important;
+    line-height: 1.48 !important;
+  }
+
+  body .page-section:not(#home) .hero-asset {
+    width: min(62vw, 238px) !important;
+    max-width: min(62vw, 238px) !important;
+    max-height: 226px !important;
+    justify-self: center !important;
+  }
+
+  body #monthly .hero-asset,
+  body #annual .hero-asset,
+  body #today-menu .hero-asset,
+  body #bookmarks .hero-asset,
+  body #promo-contacts .hero-asset,
+  body #staff .hero-asset {
+    width: min(60vw, 230px) !important;
+    max-width: min(60vw, 230px) !important;
   }
 }
