@@ -10216,3 +10216,148 @@ body .page-section:not(#home) .hero-asset {
     max-width: min(60vw, 230px) !important;
   }
 }
+
+/* 2026-06 desktop drawer correction: no collapsed rail, one top-left logo, pure white canvas. */
+html,
+body,
+#app-content,
+.page-section,
+.wrap,
+main.wrap {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+}
+
+body {
+  background-image: none !important;
+}
+
+body::before,
+body::after {
+  content: none !important;
+  display: none !important;
+}
+
+body .top {
+  display: block !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 70 !important;
+  height: auto !important;
+  min-height: 72px !important;
+  background: #ffffff !important;
+  border-bottom: 1px solid #eee9e5 !important;
+  box-shadow: none !important;
+}
+
+body .top-inner {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 72px !important;
+  margin: 0 !important;
+  padding: 7px 14px !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+}
+
+body .top .brand {
+  width: 58px !important;
+  min-width: 58px !important;
+  height: 58px !important;
+  margin: 0 !important;
+  padding: 3px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transform: none !important;
+  cursor: pointer !important;
+}
+
+body .top .brand-logo-img {
+  width: 52px !important;
+  height: 52px !important;
+  max-width: 52px !important;
+  max-height: 52px !important;
+  transform: translateY(-1px) !important;
+}
+
+@media(min-width: 901px) {
+  body #app-content,
+  body.sidebar-collapsed #app-content {
+    padding-left: 0 !important;
+  }
+
+  body .app-sidebar,
+  body.sidebar-collapsed .app-sidebar {
+    width: 306px !important;
+    padding: 8px 14px 18px !important;
+    transform: translateX(-104%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    transition: transform 0.22s ease, opacity 0.18s ease !important;
+  }
+
+  body .app-sidebar.is-open {
+    transform: translateX(0) !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    box-shadow: 16px 0 38px rgba(32, 33, 35, 0.08) !important;
+  }
+
+  body .app-sidebar .sidebar-head,
+  body.sidebar-collapsed .app-sidebar .sidebar-head {
+    min-height: 74px !important;
+    justify-content: space-between !important;
+    margin-bottom: 12px !important;
+  }
+
+  body .app-sidebar .sidebar-logo-link,
+  body.sidebar-collapsed .app-sidebar .sidebar-logo-link {
+    width: auto !important;
+    min-width: 58px !important;
+    height: 58px !important;
+    gap: 12px !important;
+    justify-content: flex-start !important;
+  }
+
+  body.sidebar-collapsed .app-sidebar .sidebar-logo-link span,
+  body.sidebar-collapsed .app-sidebar .sidebar-search-wrap,
+  body.sidebar-collapsed .app-sidebar .sidebar-nav,
+  body.sidebar-collapsed .app-sidebar nav.sidebar-nav,
+  body.sidebar-collapsed .app-sidebar .sidebar-nav-group,
+  body.sidebar-collapsed .app-sidebar .sidebar-subnav,
+  body.sidebar-collapsed .app-sidebar .sidebar-section,
+  body.sidebar-collapsed .app-sidebar .sidebar-recent-list,
+  body.sidebar-collapsed .app-sidebar .sidebar-more-btn {
+    display: initial !important;
+  }
+
+  body.sidebar-collapsed .app-sidebar .sidebar-nav,
+  body.sidebar-collapsed .app-sidebar nav.sidebar-nav,
+  body.sidebar-collapsed .app-sidebar .sidebar-subnav,
+  body.sidebar-collapsed .app-sidebar .sidebar-recent-list {
+    display: grid !important;
+  }
+
+  body.sidebar-collapsed .app-sidebar .sidebar-search-wrap,
+  body.sidebar-collapsed .app-sidebar .sidebar-section {
+    display: block !important;
+  }
+
+  body .app-sidebar .sidebar-icon-btn,
+  body.sidebar-collapsed .app-sidebar .sidebar-icon-btn {
+    display: inline-flex !important;
+    position: static !important;
+  }
+
+  body .sidebar-overlay:not([hidden]) {
+    display: block !important;
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 80 !important;
+    background: rgba(255, 255, 255, 0.58) !important;
+    backdrop-filter: blur(1px) !important;
+  }
+}

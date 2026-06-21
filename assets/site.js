@@ -1096,9 +1096,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let sidebarTouchStartY = 0;
 
   function isSidebarOpen() {
-    return mobileSidebarQuery.matches
-      ? Boolean(sidebar && sidebar.classList.contains("is-open"))
-      : !document.body.classList.contains("sidebar-collapsed");
+    return Boolean(sidebar && sidebar.classList.contains("is-open"));
   }
 
   function openDrawer() {
@@ -1109,10 +1107,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function closeDrawer() {
-    if (window.matchMedia("(max-width: 900px)").matches) {
-      if (sidebar) sidebar.classList.remove("is-open");
-      if (sidebarOverlay) sidebarOverlay.hidden = true;
-    } else {
+    if (sidebar) sidebar.classList.remove("is-open");
+    if (sidebarOverlay) sidebarOverlay.hidden = true;
+    if (window.matchMedia("(min-width: 901px)").matches) {
       document.body.classList.add("sidebar-collapsed");
     }
     if(mobileDrawer) mobileDrawer.classList.remove('active');
