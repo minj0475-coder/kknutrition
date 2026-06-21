@@ -1084,8 +1084,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileMenuBtn = document.getElementById('mobileMenuBtn');
   const mobileDrawer = document.getElementById('mobileDrawer');
   const closeDrawerBtn = document.getElementById('closeDrawerBtn');
-  const brandLogo = document.querySelector('.top .brand');
-  const sidebarLogo = document.querySelector('.sidebar-logo-link');
   const drawerLinks = mobileDrawer ? mobileDrawer.querySelectorAll('.drawer-nav a') : [];
   const sidebar = document.getElementById("appSidebar");
   const sidebarCloseBtn = document.getElementById("sidebarCloseBtn");
@@ -1110,16 +1108,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if(mobileDrawer) mobileDrawer.classList.remove('active');
   }
 
-  function toggleDrawer(event) {
-    if (event) event.preventDefault();
-    const isMobile = window.matchMedia("(max-width: 900px)").matches;
-    const isOpen = isMobile
-      ? Boolean(sidebar && sidebar.classList.contains("is-open"))
-      : !document.body.classList.contains("sidebar-collapsed");
-    if (isOpen) closeDrawer();
-    else openDrawer();
-  }
-
   if (window.matchMedia("(min-width: 901px)").matches) {
     document.body.classList.add("sidebar-collapsed");
   }
@@ -1127,8 +1115,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (mobileMenuBtn) {
     mobileMenuBtn.addEventListener('click', openDrawer);
   }
-  if (brandLogo) brandLogo.addEventListener("click", toggleDrawer);
-  if (sidebarLogo) sidebarLogo.addEventListener("click", toggleDrawer);
 
   if (closeDrawerBtn) {
     closeDrawerBtn.addEventListener('click', closeDrawer);
