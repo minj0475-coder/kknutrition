@@ -8534,10 +8534,6 @@ body #home .hero-asset {
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='8' y='8' width='13' height='13' rx='2'/%3E%3Cpath d='M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
-.vendor-network-card {
-  background: linear-gradient(180deg, #fff, #fffaf8) !important;
-}
-
 .vendor-network-table th:nth-child(1) { width: 17%; }
 .vendor-network-table th:nth-child(2) { width: 28%; }
 .vendor-network-table th:nth-child(3) { width: 25%; }
@@ -9477,5 +9473,225 @@ body #home .hero-asset {
 @media(max-width: 640px) {
   .promo-search input {
     min-width: 0 !important;
+  }
+}
+
+/* 2026-06 final polish: white canvas, readable sidebar, matched Kkul logos. */
+html,
+body,
+#app-content,
+.page-section,
+.wrap,
+main.wrap {
+  background: #ffffff !important;
+}
+
+body .top {
+  background: #ffffff !important;
+  border-bottom: 1px solid #f0ece8 !important;
+}
+
+body .top-inner {
+  min-height: 74px !important;
+  padding: 8px 14px !important;
+}
+
+body .top .brand,
+.sidebar-logo-link {
+  min-width: 58px !important;
+  height: 58px !important;
+  padding: 4px !important;
+  border-radius: 16px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  flex: 0 0 auto !important;
+}
+
+body .top .brand {
+  justify-content: center !important;
+}
+
+body .top .brand-logo-img,
+.sidebar-logo {
+  width: 50px !important;
+  height: 50px !important;
+  max-width: 50px !important;
+  max-height: 50px !important;
+  object-fit: contain !important;
+  transform: none !important;
+  filter:
+    drop-shadow(0 8px 12px rgba(120, 83, 93, 0.12))
+    drop-shadow(0 2px 5px rgba(255, 154, 176, 0.16)) !important;
+}
+
+.app-sidebar {
+  width: 306px !important;
+  padding: 8px 14px 18px !important;
+  background: #ffffff !important;
+  border-right: 1px solid #eee9e5 !important;
+  box-shadow: 14px 0 34px rgba(41, 34, 31, 0.06) !important;
+}
+
+.sidebar-head {
+  min-height: 74px !important;
+  margin-bottom: 12px !important;
+  align-items: center !important;
+}
+
+.sidebar-logo-link {
+  gap: 12px !important;
+  color: #202123 !important;
+}
+
+.sidebar-logo-link span {
+  font-size: 17px !important;
+  font-weight: 850 !important;
+  line-height: 1.22 !important;
+  color: #202123 !important;
+}
+
+.sidebar-icon-btn {
+  display: inline-flex !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 10px !important;
+  border-color: transparent !important;
+  background: #ffffff !important;
+  color: #34302f !important;
+}
+
+.sidebar-icon-btn:hover {
+  border-color: #e8e2dd !important;
+  background: #f7f7f7 !important;
+}
+
+.app-sidebar .sidebar-nav > .sidebar-nav-group > a,
+.app-sidebar .sidebar-nav a {
+  min-height: 44px !important;
+  padding: 10px 12px !important;
+  border-radius: 12px !important;
+  font-size: 16.5px !important;
+  font-weight: 820 !important;
+  line-height: 1.28 !important;
+  color: #2f2b2a !important;
+}
+
+.app-sidebar .sidebar-subnav a,
+.app-sidebar .sidebar-recent-list a {
+  min-height: 34px !important;
+  font-size: 15px !important;
+  font-weight: 760 !important;
+  color: #5f5652 !important;
+}
+
+.app-sidebar .sidebar-nav a:hover,
+.app-sidebar .sidebar-subnav a:hover,
+.app-sidebar .sidebar-recent-list a:hover,
+.app-sidebar .sidebar-nav a.active,
+.app-sidebar .sidebar-subnav a.active {
+  background: #f4f4f4 !important;
+  color: #202123 !important;
+  box-shadow: none !important;
+}
+
+.promo-contact-card,
+.vendor-network-card {
+  background: #ffffff !important;
+  box-shadow: 0 10px 28px rgba(35, 31, 28, 0.05) !important;
+}
+
+.promo-contact-toolbar {
+  background: #ffffff !important;
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+}
+
+.promo-table-wrap {
+  border-top: 0 !important;
+  background: #ffffff !important;
+}
+
+.promo-contact-title .num {
+  color: #202123 !important;
+  background: #ffffff !important;
+  border: 1px solid #eee8e4 !important;
+  box-shadow: 0 6px 14px rgba(35, 31, 28, 0.04) !important;
+}
+
+.vendor-network-card {
+  background: #ffffff !important;
+}
+
+@media(min-width: 901px) {
+  #app-content {
+    padding-left: 306px !important;
+  }
+
+  body.sidebar-collapsed #app-content {
+    padding-left: 76px !important;
+  }
+
+  body.sidebar-collapsed .app-sidebar {
+    width: 76px !important;
+    padding: 8px 9px !important;
+    box-shadow: none !important;
+  }
+
+  body.sidebar-collapsed .app-sidebar .sidebar-head {
+    min-height: 74px !important;
+    justify-content: center !important;
+    margin-bottom: 0 !important;
+  }
+
+  body.sidebar-collapsed .app-sidebar .sidebar-logo-link {
+    width: 58px !important;
+    height: 58px !important;
+    justify-content: center !important;
+    gap: 0 !important;
+  }
+
+  body.sidebar-collapsed .app-sidebar .sidebar-icon-btn {
+    display: none !important;
+  }
+}
+
+@media(max-width: 900px) {
+  body .top-inner {
+    padding: 8px 14px !important;
+  }
+
+  .app-sidebar {
+    width: min(330px, 88vw) !important;
+    transform: translateX(-104%) !important;
+  }
+
+  .app-sidebar.is-open {
+    transform: translateX(0) !important;
+  }
+
+  .sidebar-icon-btn {
+    display: none !important;
+  }
+}
+
+@media(max-width: 640px) {
+  body .top .brand,
+  .sidebar-logo-link {
+    min-width: 56px !important;
+    height: 56px !important;
+  }
+
+  body .top .brand-logo-img,
+  .sidebar-logo {
+    width: 48px !important;
+    height: 48px !important;
+    max-width: 48px !important;
+    max-height: 48px !important;
+  }
+
+  body .home-grid-left .daily-kkul-image-wrap,
+  body .daily-kkul-image-wrap {
+    width: clamp(150px, 48vw, 190px) !important;
+    height: clamp(150px, 48vw, 190px) !important;
   }
 }

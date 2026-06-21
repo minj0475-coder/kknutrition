@@ -1090,6 +1090,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const sidebarOverlay = document.getElementById("sidebarOverlay");
   const sidebarSearch = document.getElementById("sidebarSearch");
   const sidebarLinks = sidebar ? sidebar.querySelectorAll("a") : [];
+  const brandLink = document.querySelector(".top .brand");
+  const mobileSidebarQuery = window.matchMedia("(max-width: 900px)");
+  let sidebarTouchStartX = 0;
+  let sidebarTouchStartY = 0;
+
+  function isSidebarOpen() {
+    return mobileSidebarQuery.matches
+      ? Boolean(sidebar && sidebar.classList.contains("is-open"))
+      : !document.body.classList.contains("sidebar-collapsed");
+  }
 
   function openDrawer() {
     document.body.classList.remove("sidebar-collapsed");
@@ -1116,11 +1126,40 @@ document.addEventListener('DOMContentLoaded', () => {
     mobileMenuBtn.addEventListener('click', openDrawer);
   }
 
+  if (brandLink) {
+    brandLink.addEventListener("click", event => {
+      if (!isSidebarOpen()) {
+        event.preventDefault();
+        openDrawer();
+        return;
+      }
+      if (mobileSidebarQuery.matches) closeDrawer();
+    });
+  }
+
   if (closeDrawerBtn) {
     closeDrawerBtn.addEventListener('click', closeDrawer);
   }
   if (sidebarCloseBtn) sidebarCloseBtn.addEventListener("click", closeDrawer);
   if (sidebarOverlay) sidebarOverlay.addEventListener("click", closeDrawer);
+
+  document.addEventListener("touchstart", event => {
+    if (!mobileSidebarQuery.matches || event.touches.length !== 1) return;
+    sidebarTouchStartX = event.touches[0].clientX;
+    sidebarTouchStartY = event.touches[0].clientY;
+  }, { passive: true });
+
+  document.addEventListener("touchend", event => {
+    if (!mobileSidebarQuery.matches || !sidebarTouchStartX || event.changedTouches.length !== 1) return;
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - sidebarTouchStartX;
+    const deltaY = touch.clientY - sidebarTouchStartY;
+    sidebarTouchStartX = 0;
+    sidebarTouchStartY = 0;
+    if (Math.abs(deltaX) < 70 || Math.abs(deltaX) < Math.abs(deltaY) * 1.35) return;
+    if (deltaX > 0 && touch.clientX < window.innerWidth * 0.92) openDrawer();
+    if (deltaX < 0 && isSidebarOpen()) closeDrawer();
+  }, { passive: true });
 
   drawerLinks.forEach(link => {
     link.addEventListener('click', closeDrawer);

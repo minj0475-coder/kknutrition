@@ -17,11 +17,6 @@ let bookmarkData = [
   { title: "공무원연금공단", url: "https://www.gwp.or.kr/wus/cmmn/lgn/login.jdo", category: "급식" },
   { title: "S2B (학교장터)", url: "https://www.s2b.kr/S2BNCustomer/S2B/", category: "급식" },
 
-  // 공산·단가
-  { title: "블루시스 마켓", url: "https://market.bluesis.com/web/pc/main.php", category: "공산·단가" },
-  { title: "틼틼스쿨", url: "https://www.cjschoolfood.com/", category: "공산·단가" },
-  { title: "풀무원푸드머스 풀스토리", url: "https://pulstory.pulmuone.com/", category: "공산·단가" },
-
   // 자료
   { title: "식품안전나라 교육자료", url: "https://www.foodsafetykorea.go.kr/portal/board/boardDetail.do?menu_no=2880&menu_grp=MENU_NEW05&bbs_no=bbs110&ntctxt_no=1104499", category: "자료" },
   { title: "교육급식정보나누방", url: "https://more.goe.go.kr/schoollunch/index.do", category: "자료" },
@@ -45,6 +40,20 @@ let bookmarkData = [
 const BOOKMARK_STORAGE_KEY = 'kknutrition_bookmarks_v4';
 const BOOKMARK_LOCAL_META_KEY = 'kknutrition_bookmarks_v4_meta';
 let bookmarkUpdatedAt = 0;
+
+function normalizeBookmarkCategory(category) {
+  if (category === '공산·단가' || category === '공산, 단가' || category === '공산 단가' || category === '공산·단가 관련') {
+    return '자료';
+  }
+  return category || '기타';
+}
+
+function normalizeBookmarkItem(item) {
+  return {
+    ...item,
+    category: normalizeBookmarkCategory(item && item.category)
+  };
+}
 
 function normalizeBookmarkStoragePayload(value) {
   if (Array.isArray(value)) {
@@ -70,7 +79,7 @@ function readBookmarkLocalMeta() {
 function writeBookmarkStorage(items, updatedAt) {
   bookmarkUpdatedAt = Number(updatedAt) || Date.now();
   localStorage.setItem(BOOKMARK_STORAGE_KEY, JSON.stringify({
-    items: items,
+    items: items.map(normalizeBookmarkItem),
     updatedAt: bookmarkUpdatedAt
   }));
   localStorage.setItem(BOOKMARK_LOCAL_META_KEY, JSON.stringify({
@@ -99,11 +108,11 @@ function writeBookmarkStorage(items, updatedAt) {
             '급식·위생': '급식',
             '학교': '급식',
             '소통·학교': '급식',
-            '공산·단가 관련': '공산·단가',
+            '공산·단가 관련': '자료',
             '자료·연수': '자료'
           };
           bookmarkData = parsed.map(function(b) {
-            return { title: b.title, url: b.url, category: catMap[b.category] || b.category, clickCount: b.clickCount || 0 };
+            return { title: b.title, url: b.url, category: normalizeBookmarkCategory(catMap[b.category] || b.category), clickCount: b.clickCount || 0 };
           });
           // v4 키로 저장 후 과거 키 삭제
           writeBookmarkStorage(bookmarkData, Date.now());
@@ -115,7 +124,7 @@ function writeBookmarkStorage(items, updatedAt) {
     }
     var parsed = normalizeBookmarkStoragePayload(JSON.parse(saved));
     if (parsed) {
-      bookmarkData = parsed.items;
+      bookmarkData = parsed.items.map(normalizeBookmarkItem);
       bookmarkUpdatedAt = parsed.updatedAt || Number(readBookmarkLocalMeta().updatedAt) || 0;
     }
   } catch (e) { /* ignore */ }
@@ -145,7 +154,7 @@ window.updateBookmarkData = function(newData, remoteMeta) {
     }
     return;
   }
-  bookmarkData = newData;
+  bookmarkData = newData.map(normalizeBookmarkItem);
   writeBookmarkStorage(bookmarkData, remoteUpdatedAt || Date.now());
   if (typeof window.renderBookmarks === 'function') {
     window.renderBookmarks();
@@ -201,7 +210,6 @@ function getModal() {
     + '<label style="font-size:13px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px;">\uCE74\uD14C\uACE0\uB9AC</label>'
     + '<select id="bmCat" style="width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--heading);font-size:14px;box-sizing:border-box;margin-bottom:14px;">'
     + '<option value="\uae09\uc2dd">\uae09\uc2dd</option>'
-    + '<option value="공산·단가">공산·단가</option>'
     + '<option value="\uc790\ub8cc">\uc790\ub8cc</option>'
     + '<option value="\uae30\ud0c0">\uae30\ud0c0</option>'
     + '</select>'
@@ -229,11 +237,11 @@ function openModal(index) {
   document.getElementById('bmModalTitle').textContent = (editingIdx >= 0) ? '\uBD81\uB9C8\uD06C \uC218\uC815' : '\uC0C8 \uBD81\uB9C8\uD06C \uCD94\uAC00';
   if (editingIdx >= 0) {
     var item = bookmarkData[editingIdx];
-    document.getElementById('bmCat').value = item.category || '\uAE30\uD0C0';
+    document.getElementById('bmCat').value = normalizeBookmarkCategory(item.category || '\uAE30\uD0C0');
     document.getElementById('bmName').value = item.title || '';
     document.getElementById('bmUrl').value = item.url || '';
   } else {
-    document.getElementById('bmCat').value = (currentCategory === '\uC804\uCCB4') ? '\uD544\uC218 \uC5C5\uBB34' : currentCategory;
+    document.getElementById('bmCat').value = (currentCategory === '\uC804\uCCB4') ? '\uae09\uc2dd' : normalizeBookmarkCategory(currentCategory);
     document.getElementById('bmName').value = '';
     document.getElementById('bmUrl').value = '';
   }
@@ -249,7 +257,7 @@ function closeModal() {
 function handleSave() {
   var title = document.getElementById('bmName').value.trim();
   var url = document.getElementById('bmUrl').value.trim();
-  var category = document.getElementById('bmCat').value;
+  var category = normalizeBookmarkCategory(document.getElementById('bmCat').value);
 
   if (!title || !url) {
     alert('\uC0AC\uC774\uD2B8\uBA85\uACFC URL \uC8FC\uC18C\uB97C \uBAA8\uB450 \uC785\uB825\uD574\uC8FC\uC138\uC694.');
@@ -270,7 +278,7 @@ function handleSave() {
 
 // ---- Filter Chips ----
 function renderFilterChips() {
-  var cats = ['전체', '급식', '공산·단가', '자료', '기타'];
+  var cats = ['전체', '급식', '자료', '기타'];
   var container = document.getElementById('bookmarkFilterChips');
   if (!container) return;
   container.innerHTML = cats.map(function(cat, i) {
