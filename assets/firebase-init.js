@@ -25,10 +25,13 @@ const MEMO_DOC_ID = "main-memo";
 const BOOKMARK_DOC_ID = "main-bookmarks";
 const LOCAL_STORAGE_KEY = "kknutrition_memo";
 
-window.syncBookmarksToFirebase = async function(data) {
+window.syncBookmarksToFirebase = async function(data, meta = {}) {
   if (db) {
     try {
-      await setDoc(doc(db, "bookmarks", BOOKMARK_DOC_ID), { items: data });
+      await setDoc(doc(db, "bookmarks", BOOKMARK_DOC_ID), {
+        items: data,
+        updatedAt: Number(meta.updatedAt) || Date.now()
+      });
     } catch (error) {
       console.error("Firestore 북마크 저장 실패:", error);
       alert("북마크 연동 실패: " + error.message + "\n(Firebase 보안 규칙 기간이 만료되었을 수 있습니다.)");
@@ -669,15 +672,17 @@ function init() {
 
     onSnapshot(doc(db, "bookmarks", BOOKMARK_DOC_ID), (snapshot) => {
       if (snapshot.exists()) {
-        const remoteData = snapshot.data().items;
+        const snapshotData = snapshot.data();
+        const remoteData = snapshotData.items;
         if (remoteData && Array.isArray(remoteData)) {
           if (typeof window.updateBookmarkData === 'function') {
-            window.updateBookmarkData(remoteData);
+            window.updateBookmarkData(remoteData, { updatedAt: snapshotData.updatedAt });
           }
         }
       } else {
         if (typeof window.getBookmarkData === 'function') {
-          window.syncBookmarksToFirebase(window.getBookmarkData());
+          const meta = typeof window.getBookmarkSyncMeta === 'function' ? window.getBookmarkSyncMeta() : {};
+          window.syncBookmarksToFirebase(window.getBookmarkData(), meta);
         }
       }
     });

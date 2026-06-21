@@ -42,11 +42,47 @@ let bookmarkData = [
   { title: "NAVER", url: "https://www.naver.com/", category: "기타" }
 ];
 
+const BOOKMARK_STORAGE_KEY = 'kknutrition_bookmarks_v4';
+const BOOKMARK_LOCAL_META_KEY = 'kknutrition_bookmarks_v4_meta';
+let bookmarkUpdatedAt = 0;
+
+function normalizeBookmarkStoragePayload(value) {
+  if (Array.isArray(value)) {
+    return { items: value, updatedAt: 0 };
+  }
+  if (value && Array.isArray(value.items)) {
+    return {
+      items: value.items,
+      updatedAt: Number(value.updatedAt) || 0
+    };
+  }
+  return null;
+}
+
+function readBookmarkLocalMeta() {
+  try {
+    return JSON.parse(localStorage.getItem(BOOKMARK_LOCAL_META_KEY) || '{}');
+  } catch (e) {
+    return {};
+  }
+}
+
+function writeBookmarkStorage(items, updatedAt) {
+  bookmarkUpdatedAt = Number(updatedAt) || Date.now();
+  localStorage.setItem(BOOKMARK_STORAGE_KEY, JSON.stringify({
+    items: items,
+    updatedAt: bookmarkUpdatedAt
+  }));
+  localStorage.setItem(BOOKMARK_LOCAL_META_KEY, JSON.stringify({
+    updatedAt: bookmarkUpdatedAt
+  }));
+}
+
 // ---- LocalStorage (v4: new category names) ----
 (function loadFromStorage() {
   try {
     // v4 키로 먼저 시도
-    var saved = localStorage.getItem('kknutrition_bookmarks_v4');
+    var saved = localStorage.getItem(BOOKMARK_STORAGE_KEY);
     if (!saved) {
       // v3 또는 v2 데이터가 있으면 마이그레이션
       var old = localStorage.getItem('kknutrition_bookmarks_v3');
@@ -70,29 +106,47 @@ let bookmarkData = [
             return { title: b.title, url: b.url, category: catMap[b.category] || b.category, clickCount: b.clickCount || 0 };
           });
           // v4 키로 저장 후 과거 키 삭제
-          localStorage.setItem('kknutrition_bookmarks_v4', JSON.stringify(bookmarkData));
+          writeBookmarkStorage(bookmarkData, Date.now());
           localStorage.removeItem('kknutrition_bookmarks_v3');
           localStorage.removeItem('kknutrition_bookmarks_v2');
         }
       }
       return;
     }
-    var parsed = JSON.parse(saved);
-    if (Array.isArray(parsed) && parsed.length > 0) bookmarkData = parsed;
+    var parsed = normalizeBookmarkStoragePayload(JSON.parse(saved));
+    if (parsed) {
+      bookmarkData = parsed.items;
+      bookmarkUpdatedAt = parsed.updatedAt || Number(readBookmarkLocalMeta().updatedAt) || 0;
+    }
   } catch (e) { /* ignore */ }
 })();
 
 function saveToStorage() {
-  localStorage.setItem('kknutrition_bookmarks_v4', JSON.stringify(bookmarkData));
+  writeBookmarkStorage(bookmarkData, Date.now());
   if (typeof window.syncBookmarksToFirebase === 'function') {
-    window.syncBookmarksToFirebase(bookmarkData);
+    window.syncBookmarksToFirebase(bookmarkData, { updatedAt: bookmarkUpdatedAt });
   }
 }
 
 // Firebase에서 외부 업데이트를 받을 때 호출되는 함수
-window.updateBookmarkData = function(newData) {
+window.updateBookmarkData = function(newData, remoteMeta) {
+  if (!Array.isArray(newData)) return;
+  var remoteUpdatedAt = Number(remoteMeta && remoteMeta.updatedAt) || 0;
+  var localUpdatedAt = bookmarkUpdatedAt || Number(readBookmarkLocalMeta().updatedAt) || 0;
+  if (localUpdatedAt && remoteUpdatedAt && remoteUpdatedAt < localUpdatedAt) {
+    if (typeof window.syncBookmarksToFirebase === 'function') {
+      window.syncBookmarksToFirebase(bookmarkData, { updatedAt: localUpdatedAt });
+    }
+    return;
+  }
+  if (localUpdatedAt && !remoteUpdatedAt) {
+    if (typeof window.syncBookmarksToFirebase === 'function') {
+      window.syncBookmarksToFirebase(bookmarkData, { updatedAt: localUpdatedAt });
+    }
+    return;
+  }
   bookmarkData = newData;
-  localStorage.setItem('kknutrition_bookmarks_v4', JSON.stringify(bookmarkData));
+  writeBookmarkStorage(bookmarkData, remoteUpdatedAt || Date.now());
   if (typeof window.renderBookmarks === 'function') {
     window.renderBookmarks();
   }
@@ -100,6 +154,10 @@ window.updateBookmarkData = function(newData) {
 
 window.getBookmarkData = function() {
   return bookmarkData;
+};
+
+window.getBookmarkSyncMeta = function() {
+  return { updatedAt: bookmarkUpdatedAt || Number(readBookmarkLocalMeta().updatedAt) || 0 };
 };
 
 // ---- State ----
