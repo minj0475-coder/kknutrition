@@ -9186,3 +9186,57 @@ button.academic-day.is-other-month {
     visibility: hidden !important;
   }
 }
+
+/* Home hero: keep the pink glow behind Kkul, never on the image itself. */
+body #home .hero {
+  isolation: isolate !important;
+  background:
+    linear-gradient(135deg, #ffffff 0%, #fffafb 58%, #ffffff 100%) !important;
+}
+
+body #home .hero::before {
+  content: "" !important;
+  position: absolute !important;
+  right: clamp(6px, 3.8vw, 48px) !important;
+  bottom: clamp(4px, 2vw, 22px) !important;
+  width: min(540px, 45vw) !important;
+  height: min(300px, 28vw) !important;
+  border-radius: 999px !important;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 184, 204, 0.58) 0 24%, rgba(255, 226, 234, 0.34) 46%, transparent 72%) !important;
+  box-shadow: none !important;
+  transform: none !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+
+body #home .hero-content {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+body #home .hero-asset {
+  z-index: 3 !important;
+  mix-blend-mode: normal !important;
+  opacity: 1 !important;
+  filter: drop-shadow(0 24px 30px rgba(92, 76, 72, 0.14)) !important;
+}
+
+@media(max-width: 900px) {
+  body #home .hero::before {
+    right: 0 !important;
+    bottom: 0 !important;
+    width: min(360px, 46vw) !important;
+    height: min(210px, 34vw) !important;
+  }
+}
+
+@media(max-width: 640px) {
+  body #home .hero::before {
+    right: 50% !important;
+    bottom: 0 !important;
+    width: min(330px, 86vw) !important;
+    height: 150px !important;
+    transform: translateX(50%) !important;
+  }
+}
