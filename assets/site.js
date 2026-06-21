@@ -782,10 +782,12 @@ function filterTodayMenuListV2() {
     return;
   }
 
-  if (todaySection) todaySection.style.display = "none";
   if (showAllWrap) showAllWrap.style.display = "none";
-  if (allSectionWrap) allSectionWrap.classList.add("open", "is-searching");
-  if (allSection) allSection.style.display = "";
+  if (allSectionWrap) allSectionWrap.classList.remove("open", "is-searching");
+  if (allSection) {
+    allSection.innerHTML = "";
+    allSection.style.display = "none";
+  }
   const botWrap = document.getElementById("todayMenuShowAllWrapBottom");
   if (botWrap) botWrap.style.display = "none";
 
@@ -814,7 +816,10 @@ function filterTodayMenuListV2() {
     searchResult.innerHTML = "";
     searchResult.style.display = "none";
   }
-  if (allSection) allSection.innerHTML = html;
+  if (todaySection) {
+    todaySection.innerHTML = html;
+    todaySection.style.display = shownSections ? "" : "none";
+  }
   if (noResult) {
     noResult.style.display = shownSections ? "none" : "block";
   }
