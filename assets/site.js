@@ -1369,7 +1369,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <td><input class="promo-cell-input" data-vendor-field="company" aria-label="업체명" value=""></td>
         <td><input class="promo-cell-input" data-vendor-field="phone" aria-label="전화번호" value=""></td>
         <td><input class="promo-cell-input" data-vendor-field="email" aria-label="이메일" value=""></td>
-        <td class="promo-row-tools"><button class="promo-delete-btn" type="button">삭제</button></td>
+        <td class="promo-row-tools"><button class="promo-delete-btn delete-icon-btn" type="button" aria-label="업체 연락망 행 삭제" title="삭제"></button></td>
       `;
       tr.querySelectorAll("[data-vendor-field]").forEach(input => {
         const field = input.getAttribute("data-vendor-field");
@@ -1423,7 +1423,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </td>
         <td><textarea class="promo-cell-input" data-field="memo" aria-label="메모"></textarea></td>
-        <td class="promo-row-tools"><button class="promo-delete-btn" type="button">삭제</button></td>
+        <td class="promo-row-tools"><button class="promo-delete-btn delete-icon-btn" type="button" aria-label="홍보 업체 연락처 행 삭제" title="삭제"></button></td>
       `;
 
       tr.querySelectorAll("[data-field]").forEach(input => {
