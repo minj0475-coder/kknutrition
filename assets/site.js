@@ -1171,17 +1171,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (window.matchMedia("(max-width: 900px)").matches) closeDrawer();
     });
   });
-  if (sidebarSearch) {
-    sidebarSearch.placeholder = "";
-    sidebarSearch.addEventListener("input", () => {
-      const query = sidebarSearch.value.trim().toLowerCase();
-      document.querySelectorAll(".sidebar-nav-group").forEach(group => {
-        const text = group.textContent.toLowerCase();
-        group.hidden = query && !text.includes(query);
-      });
-    });
-  }
   buildSidebarToc();
+  setupSidebarSearch(sidebarSearch, closeDrawer);
   renderRecentPages();
 });
 
@@ -1275,6 +1266,137 @@ function buildSidebarToc() {
     nav.appendChild(group);
   });
   nav.dataset.ready = "true";
+}
+
+function normalizeSiteSearchText(value) {
+  return String(value || "").toLowerCase().replace(/\s+/g, " ").trim();
+}
+
+function getCleanHeadingText(element) {
+  if (!element) return "";
+  const clone = element.cloneNode(true);
+  clone.querySelectorAll(".num, button, svg, input, select, textarea").forEach(node => node.remove());
+  return clone.textContent.trim().replace(/\s+/g, " ");
+}
+
+function buildSiteSearchIndex() {
+  const entries = [];
+  const seen = new Set();
+  const pushEntry = (entry) => {
+    const href = entry.href || "";
+    const title = entry.title || "";
+    if (!href || !title || seen.has(`${href}|${title}`)) return;
+    seen.add(`${href}|${title}`);
+    entries.push({
+      href,
+      title,
+      context: entry.context || "",
+      group: entry.group || "포털",
+      haystack: normalizeSiteSearchText(`${title} ${entry.context || ""} ${entry.group || ""}`)
+    });
+  };
+
+  document.querySelectorAll(".sidebar-nav a, .sidebar-subnav a").forEach(link => {
+    pushEntry({
+      href: link.getAttribute("href"),
+      title: link.textContent.trim(),
+      group: "메뉴"
+    });
+  });
+
+  document.querySelectorAll(".page-section").forEach(section => {
+    const pageTitle = getCleanHeadingText(section.querySelector(".hero h1")) || section.id;
+    const pageSubtitle = getCleanHeadingText(section.querySelector(".hero .subtitle"));
+    pushEntry({
+      href: `#${section.id}`,
+      title: pageTitle,
+      context: pageSubtitle,
+      group: "페이지"
+    });
+
+    section.querySelectorAll("section.card, details.card, article.card").forEach((card, index) => {
+      const heading = card.querySelector("h2, summary, h3");
+      const title = getCleanHeadingText(heading);
+      if (!title) return;
+      if (!card.id) card.id = `${section.id}-search-${index + 1}`;
+      const bodyText = card.textContent.trim().replace(/\s+/g, " ").slice(0, 220);
+      pushEntry({
+        href: `#${card.id}`,
+        title,
+        context: bodyText,
+        group: pageTitle
+      });
+    });
+  });
+
+  return entries;
+}
+
+function setupSidebarSearch(sidebarSearch, closeDrawer) {
+  if (!sidebarSearch) return;
+  sidebarSearch.placeholder = "사이트 검색";
+
+  const wrap = sidebarSearch.closest(".sidebar-search-wrap");
+  const results = document.createElement("div");
+  results.className = "sidebar-search-results";
+  results.hidden = true;
+  results.setAttribute("aria-live", "polite");
+  if (wrap) wrap.insertAdjacentElement("afterend", results);
+
+  const navGroups = () => document.querySelectorAll(".sidebar-nav-group");
+
+  const renderResults = () => {
+    const query = normalizeSiteSearchText(sidebarSearch.value);
+    results.innerHTML = "";
+    results.hidden = !query;
+    navGroups().forEach(group => {
+      const text = normalizeSiteSearchText(group.textContent);
+      group.hidden = Boolean(query) && !text.includes(query);
+    });
+    if (!query) return [];
+
+    const matches = buildSiteSearchIndex()
+      .filter(entry => entry.haystack.includes(query))
+      .sort((a, b) => {
+        const aTitle = normalizeSiteSearchText(a.title).includes(query) ? 0 : 1;
+        const bTitle = normalizeSiteSearchText(b.title).includes(query) ? 0 : 1;
+        return aTitle - bTitle || a.title.length - b.title.length;
+      })
+      .slice(0, 8);
+
+    if (!matches.length) {
+      results.innerHTML = `<div class="sidebar-search-empty">검색 결과가 없습니다.</div>`;
+      return [];
+    }
+
+    matches.forEach(item => {
+      const link = document.createElement("a");
+      link.href = item.href;
+      link.className = "sidebar-search-result";
+      link.innerHTML = `<span class="sidebar-search-result-title"></span><span class="sidebar-search-result-meta"></span>`;
+      link.querySelector(".sidebar-search-result-title").textContent = item.title;
+      link.querySelector(".sidebar-search-result-meta").textContent = item.group;
+      link.addEventListener("click", () => {
+        sidebarSearch.value = "";
+        renderResults();
+        if (window.matchMedia("(max-width: 900px)").matches) closeDrawer();
+      });
+      results.appendChild(link);
+    });
+    return matches;
+  };
+
+  sidebarSearch.addEventListener("input", renderResults);
+  sidebarSearch.addEventListener("keydown", event => {
+    if (event.key !== "Enter") return;
+    const [first] = renderResults();
+    if (!first) return;
+    event.preventDefault();
+    window.location.hash = first.href;
+    sidebarSearch.value = "";
+    renderResults();
+    if (window.matchMedia("(max-width: 900px)").matches) closeDrawer();
+  });
 }
 
 // Promo contacts table
