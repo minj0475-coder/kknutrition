@@ -1219,9 +1219,16 @@ function buildSidebarToc() {
         if (!card.id) card.id = `${pageId}-item-${index + 1}`;
         const clone = heading.cloneNode(true);
         clone.querySelectorAll(".num").forEach(num => num.remove());
-        return { id: card.id, text: clone.textContent.trim().replace(/\s+/g, " ") };
+        return { id: card.id, text: clone.textContent.trim().replace(/\s+/g, " "), card };
       })
-      .filter(item => item && item.text) : [];
+      .filter(item => item && item.text)
+      .filter((item, index, items) => {
+        const duplicateItems = items.filter(candidate => candidate.text === item.text);
+        const preferredIndex = duplicateItems.some(candidate => candidate.card.classList.contains("annual-desktop-card"))
+          ? items.findIndex(candidate => candidate.text === item.text && candidate.card.classList.contains("annual-desktop-card"))
+          : items.findIndex(candidate => candidate.text === item.text);
+        return index === preferredIndex;
+      }) : [];
     if (headings.length) {
       const sub = document.createElement("div");
       sub.className = "sidebar-subnav";
