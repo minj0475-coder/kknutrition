@@ -9134,3 +9134,55 @@ button.academic-day.is-other-month {
     border-radius: 7px !important;
   }
 }
+
+/* Collapsed sidebar: keep a clean ChatGPT-like rail. */
+@media(min-width: 901px) {
+  body.sidebar-collapsed #app-content {
+    padding-left: 76px !important;
+  }
+
+  body.sidebar-collapsed .app-sidebar {
+    width: 76px !important;
+    padding: 14px 9px !important;
+    overflow: hidden !important;
+    background: #ffffff !important;
+    border-right: 1px solid #ece8e4 !important;
+    box-shadow: none !important;
+  }
+
+  body.sidebar-collapsed .app-sidebar .sidebar-head {
+    min-height: auto !important;
+    justify-content: center !important;
+    margin: 0 !important;
+  }
+
+  body.sidebar-collapsed .app-sidebar .sidebar-logo-link {
+    width: 56px !important;
+    height: 56px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 5px !important;
+    gap: 0 !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+  }
+
+  body.sidebar-collapsed .app-sidebar .sidebar-logo {
+    width: 46px !important;
+    height: 46px !important;
+  }
+
+  body.sidebar-collapsed .app-sidebar .sidebar-logo-link span,
+  body.sidebar-collapsed .app-sidebar .sidebar-search-wrap,
+  body.sidebar-collapsed .app-sidebar .sidebar-nav,
+  body.sidebar-collapsed .app-sidebar nav.sidebar-nav,
+  body.sidebar-collapsed .app-sidebar .sidebar-nav-group,
+  body.sidebar-collapsed .app-sidebar .sidebar-subnav,
+  body.sidebar-collapsed .app-sidebar .sidebar-section,
+  body.sidebar-collapsed .app-sidebar .sidebar-recent-list,
+  body.sidebar-collapsed .app-sidebar .sidebar-more-btn {
+    display: none !important;
+    visibility: hidden !important;
+  }
+}
