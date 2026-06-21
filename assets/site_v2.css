@@ -8566,3 +8566,507 @@ body #home .hero-asset {
   background: #f1ebe7 !important;
   color: #2f2928 !important;
 }
+
+/* 2026-06 user polish: logo drawer, white canvas, mobile tables */
+:root {
+  --bg: #ffffff !important;
+  --bg-main: #ffffff !important;
+  --card-soft: #ffffff !important;
+  --blue-soft: #ffffff !important;
+  --gray-soft: #ffffff !important;
+  --green-soft: #ffffff !important;
+  --warning-soft: #fff7f7 !important;
+  --line: #ebe7e3 !important;
+  --shadow-flat: 0 12px 30px rgba(49, 42, 39, 0.06) !important;
+}
+
+html,
+body,
+#app-content,
+.page-section,
+.wrap {
+  background: #ffffff !important;
+}
+
+.page-section + .page-section {
+  border-top-color: #ffffff !important;
+}
+
+body .top {
+  background: rgba(255, 255, 255, 0.94) !important;
+  border-bottom-color: rgba(235, 231, 227, 0.9) !important;
+  backdrop-filter: blur(16px) !important;
+}
+
+body .top .brand {
+  min-width: 58px !important;
+  height: 60px !important;
+  padding: 6px 8px !important;
+  border-radius: 16px !important;
+}
+
+body .top .brand-logo-img {
+  height: 50px !important;
+  max-height: 50px !important;
+  transform: none !important;
+}
+
+.desktop-nav,
+.mobile-menu-btn,
+.mobile-drawer {
+  display: none !important;
+}
+
+.app-sidebar {
+  width: 306px !important;
+  padding: 16px 14px 18px !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+  border-right: 1px solid rgba(233, 228, 224, 0.96) !important;
+  box-shadow: 18px 0 44px rgba(53, 42, 39, 0.08) !important;
+}
+
+.sidebar-head {
+  min-height: 64px !important;
+  margin-bottom: 16px !important;
+}
+
+.sidebar-logo-link {
+  gap: 12px !important;
+  padding: 5px 7px !important;
+  border-radius: 18px !important;
+}
+
+.sidebar-logo {
+  width: 50px !important;
+  height: 50px !important;
+  filter:
+    drop-shadow(0 8px 12px rgba(120, 83, 93, 0.12))
+    drop-shadow(0 2px 5px rgba(255, 154, 176, 0.16)) !important;
+}
+
+.sidebar-logo-link span {
+  font-size: 17px !important;
+  line-height: 1.25 !important;
+  color: #2d2726 !important;
+}
+
+.sidebar-icon-btn {
+  display: none !important;
+}
+
+.sidebar-search-wrap input::placeholder,
+.academic-search input::placeholder,
+.promo-search input::placeholder,
+.search-wrap input::placeholder,
+.menu-search-input::placeholder {
+  color: transparent !important;
+}
+
+.sidebar-search-wrap {
+  margin-bottom: 16px !important;
+}
+
+.sidebar-search-wrap input {
+  height: 44px !important;
+  border-radius: 15px !important;
+  border-color: #eee8e4 !important;
+  background: #ffffff !important;
+}
+
+.app-sidebar .sidebar-nav,
+.app-sidebar nav.sidebar-nav {
+  gap: 7px !important;
+}
+
+.app-sidebar .sidebar-nav-group {
+  gap: 3px !important;
+}
+
+.app-sidebar .sidebar-nav > .sidebar-nav-group > a,
+.app-sidebar .sidebar-nav a {
+  min-height: 42px !important;
+  border-radius: 14px !important;
+  padding: 10px 12px !important;
+  font-size: 16px !important;
+  font-weight: 920 !important;
+}
+
+.app-sidebar .sidebar-subnav {
+  margin: 2px 0 8px 13px !important;
+  padding-left: 13px !important;
+  border-left-color: #f0e9e5 !important;
+}
+
+.app-sidebar .sidebar-subnav a,
+.app-sidebar .sidebar-recent-list a {
+  min-height: 32px !important;
+  font-size: 14px !important;
+  border-radius: 11px !important;
+}
+
+.app-sidebar .sidebar-nav a:hover,
+.app-sidebar .sidebar-subnav a:hover,
+.app-sidebar .sidebar-recent-list a:hover,
+.app-sidebar .sidebar-nav a.active,
+.app-sidebar .sidebar-subnav a.active {
+  background: linear-gradient(135deg, #fff3f5, #ffffff) !important;
+  color: #2d2726 !important;
+  box-shadow: inset 0 0 0 1px rgba(239, 166, 166, 0.28) !important;
+}
+
+@media(min-width: 901px) {
+  #app-content {
+    padding-left: 306px !important;
+  }
+
+  body.sidebar-collapsed #app-content {
+    padding-left: 74px !important;
+  }
+
+  body.sidebar-collapsed .app-sidebar {
+    width: 74px !important;
+    padding-inline: 10px !important;
+  }
+
+  body.sidebar-collapsed .sidebar-head {
+    min-height: 64px !important;
+    justify-content: center !important;
+  }
+
+  body.sidebar-collapsed .sidebar-logo-link {
+    padding: 6px 0 !important;
+  }
+
+  body.sidebar-collapsed .sidebar-logo {
+    width: 50px !important;
+    height: 50px !important;
+  }
+}
+
+@media(max-width: 900px) {
+  .desktop-nav,
+  .mobile-menu-btn {
+    display: none !important;
+  }
+
+  .top .brand {
+    display: inline-flex !important;
+  }
+
+  .top-inner {
+    justify-content: flex-start !important;
+    padding: 0 12px !important;
+  }
+
+  .app-sidebar {
+    width: min(330px, 88vw) !important;
+    transform: translateX(-104%) !important;
+  }
+
+  .app-sidebar.is-open {
+    transform: translateX(0) !important;
+  }
+}
+
+@media(max-width: 640px) {
+  body .top .brand {
+    height: 58px !important;
+    min-width: 58px !important;
+    padding: 6px 7px !important;
+  }
+
+  body .top .brand-logo-img {
+    height: 48px !important;
+    max-height: 48px !important;
+  }
+
+  .sidebar-logo {
+    width: 48px !important;
+    height: 48px !important;
+  }
+}
+
+body #home .hero {
+  border-color: rgba(246, 216, 224, 0.9) !important;
+  background:
+    radial-gradient(circle at 78% 48%, rgba(255, 183, 204, 0.72) 0 13%, rgba(255, 221, 229, 0.46) 30%, transparent 47%),
+    radial-gradient(circle at 88% 78%, rgba(198, 241, 234, 0.28), transparent 28%),
+    linear-gradient(135deg, #ffffff 0%, #fff9fa 58%, #ffffff 100%) !important;
+}
+
+body #home .hero::before {
+  background: rgba(255, 245, 248, 0.72) !important;
+  box-shadow: 0 24px 44px rgba(222, 139, 158, 0.15) !important;
+}
+
+body #home .hero-asset {
+  filter:
+    drop-shadow(0 24px 30px rgba(118, 78, 85, 0.16))
+    drop-shadow(0 8px 12px rgba(255, 154, 176, 0.13)) !important;
+}
+
+.daily-kkul-card::before,
+.academic-calendar-card::after,
+body #today-menu .hero::after,
+body #promo-contacts .hero::after,
+.home-guide-card::before {
+  display: none !important;
+  content: none !important;
+}
+
+body .home-grid-left .daily-kkul-card,
+body .daily-kkul-card {
+  background: linear-gradient(135deg, #ffffff 0%, #fff8f9 100%) !important;
+  border-color: rgba(238, 226, 222, 0.96) !important;
+}
+
+body .home-grid-left .daily-kkul-image-wrap,
+body .daily-kkul-image-wrap {
+  width: clamp(118px, 26vw, 172px) !important;
+  height: clamp(118px, 26vw, 172px) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body .home-grid-left .daily-kkul-image,
+body .daily-kkul-image,
+body .home-grid-left .daily-kkul-image-wrap img,
+body .daily-kkul-image-wrap img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
+
+.card,
+.note,
+.inline-guide-box,
+.weekly-check-card,
+.academic-calendar-card,
+.academic-calendar-panel,
+.academic-weekly-card,
+.promo-contact-card,
+.vendor-network-card,
+.today-menu-item,
+.menu-card-v2,
+.date-section-v2 {
+  background: #ffffff !important;
+}
+
+.note.success,
+.academic-head .num,
+.num {
+  background: #ffffff !important;
+  border-color: #eee8e4 !important;
+  color: var(--text) !important;
+}
+
+.academic-calendar-card {
+  background: #ffffff !important;
+}
+
+.academic-search span {
+  width: 18px !important;
+  height: 18px !important;
+  overflow: hidden !important;
+  color: transparent !important;
+}
+
+.academic-search span::before {
+  content: "" !important;
+  display: block !important;
+  width: 16px !important;
+  height: 16px !important;
+  border: 2px solid #9b8582 !important;
+  border-radius: 50% !important;
+  box-shadow: 6px 6px 0 -4px #9b8582 !important;
+  transform: rotate(45deg) !important;
+}
+
+.academic-search input {
+  padding-left: 44px !important;
+}
+
+.academic-week-range {
+  color: #6d4846 !important;
+  background: #fff1f3 !important;
+  white-space: normal !important;
+  line-height: 1.35 !important;
+}
+
+.academic-week-row {
+  grid-template-columns: minmax(58px, auto) minmax(0, 1fr) !important;
+  align-items: start !important;
+}
+
+.academic-week-row span {
+  white-space: normal !important;
+  line-height: 1.35 !important;
+}
+
+button,
+.btn,
+.download-btn,
+.copy-btn,
+.copy-btn-inline,
+.today-menu-show-all-btn,
+.sync-btn,
+.home-today-link,
+.promo-btn,
+.academic-nav-btn,
+.academic-today-btn,
+.academic-save-btn,
+.academic-clear-btn,
+.excel-upload-btn {
+  border-radius: 999px !important;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease !important;
+}
+
+@media(hover: hover) and (pointer: fine) {
+  button:hover,
+  .btn:hover,
+  .download-btn:hover,
+  .copy-btn:hover,
+  .copy-btn-inline:hover,
+  .today-menu-show-all-btn:hover,
+  .sync-btn:hover,
+  .home-today-link:hover,
+  .promo-btn:hover,
+  .academic-nav-btn:hover,
+  .academic-today-btn:hover,
+  .academic-save-btn:hover,
+  .academic-clear-btn:hover,
+  .excel-upload-btn:hover {
+    transform: translateY(-1px) !important;
+  }
+}
+
+@media(max-width: 640px) {
+  .academic-toolbar,
+  .academic-head {
+    align-items: stretch !important;
+  }
+
+  .academic-toolbar {
+    display: grid !important;
+    gap: 12px !important;
+    padding: 12px !important;
+  }
+
+  .academic-search,
+  .academic-search input {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .academic-weekdays span {
+    padding: 9px 2px !important;
+    font-size: 12px !important;
+  }
+
+  .academic-day {
+    min-height: 72px !important;
+    padding: 7px 4px !important;
+  }
+
+  .academic-date-line {
+    margin-bottom: 3px !important;
+  }
+
+  .academic-date-num {
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 12px !important;
+  }
+
+  .academic-pill {
+    padding: 3px 5px !important;
+    font-size: 10px !important;
+    border-radius: 7px !important;
+    white-space: normal !important;
+    line-height: 1.2 !important;
+  }
+
+  .academic-week-list {
+    padding: 0 12px 14px !important;
+  }
+
+  .academic-week-row {
+    grid-template-columns: 1fr !important;
+    gap: 2px !important;
+    padding: 9px 10px !important;
+    border: 1px solid #f0e7e4 !important;
+    border-radius: 12px !important;
+    background: #fff !important;
+  }
+
+  .promo-table-wrap {
+    overflow: visible !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+
+  .promo-contact-table,
+  .promo-contact-table tbody,
+  .promo-contact-table tr,
+  .promo-contact-table td {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .promo-contact-table thead {
+    display: none !important;
+  }
+
+  .promo-contact-table tr {
+    margin-bottom: 12px !important;
+    overflow: hidden !important;
+    border: 1px solid #eee8e4 !important;
+    border-radius: 14px !important;
+    background: #ffffff !important;
+    box-shadow: 0 10px 24px rgba(49, 42, 39, 0.05) !important;
+  }
+
+  .promo-contact-table td {
+    display: grid !important;
+    grid-template-columns: 88px minmax(0, 1fr) !important;
+    align-items: center !important;
+    gap: 10px !important;
+    border: 0 !important;
+    border-bottom: 1px solid #f0ebe7 !important;
+    padding: 10px 12px !important;
+  }
+
+  .promo-contact-table td:last-child {
+    border-bottom: 0 !important;
+  }
+
+  .promo-contact-table td::before {
+    color: #8b7773 !important;
+    font-size: 12px !important;
+    font-weight: 900 !important;
+  }
+
+  .promo-contact-table:not(.vendor-network-table) td:nth-child(1)::before { content: "업체명"; }
+  .promo-contact-table:not(.vendor-network-table) td:nth-child(2)::before { content: "연락처"; }
+  .promo-contact-table:not(.vendor-network-table) td:nth-child(3)::before { content: "전자단가"; }
+  .promo-contact-table:not(.vendor-network-table) td:nth-child(4)::before { content: "메모"; }
+  .promo-contact-table:not(.vendor-network-table) td:nth-child(5)::before { content: "작업"; }
+
+  .vendor-network-table td:nth-child(1)::before { content: "업체군"; }
+  .vendor-network-table td:nth-child(2)::before { content: "업체명"; }
+  .vendor-network-table td:nth-child(3)::before { content: "연락처"; }
+  .vendor-network-table td:nth-child(4)::before { content: "메일"; }
+  .vendor-network-table td:nth-child(5)::before { content: "작업"; }
+
+  .promo-cell-input,
+  .promo-link-input {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .today-menu-all-section-wrap.is-searching {
+    max-height: none !important;
+  }
+}

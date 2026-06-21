@@ -701,6 +701,7 @@ function filterTodayMenuListV2() {
   const todaySection = document.getElementById("todayMenuTodaySection");
   const showAllWrap = document.getElementById("todayMenuShowAllWrap");
   const allSection = document.getElementById("todayMenuAllSection");
+  const allSectionWrap = document.getElementById("todayMenuAllSectionWrap");
   const noResult = document.getElementById("todayMenuNoResult");
   const searchResult = document.getElementById("todayMenuSearchResult");
 
@@ -731,6 +732,7 @@ function filterTodayMenuListV2() {
   if (!query) {
     if (searchResult) { searchResult.innerHTML = ""; searchResult.style.display = "none"; }
     if (noResult) noResult.style.display = "none";
+    if (allSectionWrap) allSectionWrap.classList.remove("is-searching", "open");
     if (allSection) allSection.style.display = "";
     
     if (todaySection && allSection) {
@@ -782,9 +784,8 @@ function filterTodayMenuListV2() {
 
   if (todaySection) todaySection.style.display = "none";
   if (showAllWrap) showAllWrap.style.display = "none";
-  const allWrap = document.getElementById("todayMenuAllSectionWrap");
-  if (allWrap) allWrap.classList.remove("open");
-  if (allSection) allSection.style.display = "none";
+  if (allSectionWrap) allSectionWrap.classList.add("open", "is-searching");
+  if (allSection) allSection.style.display = "";
   const botWrap = document.getElementById("todayMenuShowAllWrapBottom");
   if (botWrap) botWrap.style.display = "none";
 
@@ -810,9 +811,10 @@ function filterTodayMenuListV2() {
   });
 
   if (searchResult) {
-    searchResult.innerHTML = html;
-    searchResult.style.display = shownSections ? "" : "none";
+    searchResult.innerHTML = "";
+    searchResult.style.display = "none";
   }
+  if (allSection) allSection.innerHTML = html;
   if (noResult) {
     noResult.style.display = shownSections ? "none" : "block";
   }
@@ -864,6 +866,7 @@ async function setupTodayMenu() {
   const allSection = document.getElementById("todayMenuAllSection");
 
   if (fileInput) fileInput.addEventListener("change", handleTodayMenuUpload);
+  if (search) search.placeholder = "";
   if (search) search.addEventListener("input", filterTodayMenuListV2);
   if (tokenSaveBtn) tokenSaveBtn.addEventListener("click", saveMenuGithubToken);
   if (tokenClearBtn) tokenClearBtn.addEventListener("click", clearMenuGithubToken);
@@ -1076,6 +1079,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileMenuBtn = document.getElementById('mobileMenuBtn');
   const mobileDrawer = document.getElementById('mobileDrawer');
   const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+  const brandLogo = document.querySelector('.top .brand');
+  const sidebarLogo = document.querySelector('.sidebar-logo-link');
   const drawerLinks = mobileDrawer ? mobileDrawer.querySelectorAll('.drawer-nav a') : [];
   const sidebar = document.getElementById("appSidebar");
   const sidebarCloseBtn = document.getElementById("sidebarCloseBtn");
@@ -1100,9 +1105,25 @@ document.addEventListener('DOMContentLoaded', () => {
     if(mobileDrawer) mobileDrawer.classList.remove('active');
   }
 
+  function toggleDrawer(event) {
+    if (event) event.preventDefault();
+    const isMobile = window.matchMedia("(max-width: 900px)").matches;
+    const isOpen = isMobile
+      ? Boolean(sidebar && sidebar.classList.contains("is-open"))
+      : !document.body.classList.contains("sidebar-collapsed");
+    if (isOpen) closeDrawer();
+    else openDrawer();
+  }
+
+  if (window.matchMedia("(min-width: 901px)").matches) {
+    document.body.classList.add("sidebar-collapsed");
+  }
+
   if (mobileMenuBtn) {
     mobileMenuBtn.addEventListener('click', openDrawer);
   }
+  if (brandLogo) brandLogo.addEventListener("click", toggleDrawer);
+  if (sidebarLogo) sidebarLogo.addEventListener("click", toggleDrawer);
 
   if (closeDrawerBtn) {
     closeDrawerBtn.addEventListener('click', closeDrawer);
@@ -1119,6 +1140,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
   if (sidebarSearch) {
+    sidebarSearch.placeholder = "";
     sidebarSearch.addEventListener("input", () => {
       const query = sidebarSearch.value.trim().toLowerCase();
       document.querySelectorAll(".sidebar-nav-group").forEach(group => {
@@ -1633,6 +1655,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextBtn = document.getElementById("academicNextMonthBtn");
   const todayBtn = document.getElementById("academicTodayBtn");
   const searchInput = document.getElementById("academicSearch");
+  if (searchInput) searchInput.placeholder = "";
   const modal = document.getElementById("academicModal");
   const modalCloseBtn = document.getElementById("academicModalCloseBtn");
   const fullscreenBtn = document.getElementById("academicFullscreenBtn");
