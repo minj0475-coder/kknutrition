@@ -2053,27 +2053,23 @@ document.addEventListener("DOMContentLoaded", () => {
   let userEvents = readAcademicEvents();
   let modalScrollY = 0;
   let modalScrollLocked = false;
+  let modalHtmlOverflow = "";
+  let modalBodyOverflow = "";
 
   function lockAcademicModalScroll() {
     if (modalScrollLocked) return;
     modalScrollY = window.scrollY;
     modalScrollLocked = true;
-    document.body.style.position = "fixed";
-    document.body.style.top = `-${modalScrollY}px`;
-    document.body.style.left = "0";
-    document.body.style.right = "0";
-    document.body.style.width = "100%";
+    modalHtmlOverflow = document.documentElement.style.overflow;
+    modalBodyOverflow = document.body.style.overflow;
+    document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
   }
 
   function unlockAcademicModalScroll() {
     if (!modalScrollLocked) return;
-    document.body.style.position = "";
-    document.body.style.top = "";
-    document.body.style.left = "";
-    document.body.style.right = "";
-    document.body.style.width = "";
-    document.body.style.overflow = "";
+    document.documentElement.style.overflow = modalHtmlOverflow;
+    document.body.style.overflow = modalBodyOverflow;
     modalScrollLocked = false;
     window.scrollTo({ top: modalScrollY, left: 0, behavior: "instant" });
   }
