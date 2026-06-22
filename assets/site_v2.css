@@ -13521,3 +13521,47 @@ html body .app-sidebar .sidebar-section {
 html body .app-sidebar .sidebar-section-title {
   margin-bottom: 4px !important;
 }
+
+/* Keep the Friday checklist table inside its card on narrow screens. */
+@media (max-width: 640px) {
+  html body #app-content #daily .weekly-check-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  html body #app-content #daily #edit-daily-2 {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    border-radius: 12px !important;
+  }
+
+  html body #app-content #daily #edit-daily-2 .simple-table,
+  html body #app-content #daily #edit-daily-2 .simple-table tbody,
+  html body #app-content #daily #edit-daily-2 .simple-table tr,
+  html body #app-content #daily #edit-daily-2 .simple-table th,
+  html body #app-content #daily #edit-daily-2 .simple-table td {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  html body #app-content #daily #edit-daily-2 .simple-table {
+    margin: 0 !important;
+    table-layout: fixed !important;
+    overflow: hidden !important;
+  }
+
+  html body #app-content #daily #edit-daily-2 .simple-table th,
+  html body #app-content #daily #edit-daily-2 .simple-table td {
+    overflow-wrap: anywhere !important;
+    word-break: keep-all !important;
+  }
+}
