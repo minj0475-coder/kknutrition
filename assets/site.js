@@ -1146,7 +1146,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (shouldRestoreSidebar) {
     openDrawer();
   } else if (window.matchMedia("(min-width: 901px)").matches) {
-    document.body.classList.add("sidebar-collapsed");
+    openDrawer();
   }
 
   if (mobileMenuBtn) {
