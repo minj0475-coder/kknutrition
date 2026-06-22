@@ -12103,3 +12103,95 @@ html body #app-content .daily-kkul-image {
     max-height: 300px !important;
   }
 }
+
+/* 2026-06-22 mobile daily kkul repair: keep the card readable and balanced. */
+@media (max-width: 760px) {
+  html body #app-content .home-grid-left .daily-kkul-card,
+  html body #app-content .daily-kkul-card {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 16px !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    padding: 24px 22px 26px !important;
+    text-align: center !important;
+  }
+
+  html body #app-content .daily-kkul-copy {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+
+  html body #app-content .daily-kkul-card .section-title {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    margin: 0 !important;
+    text-align: center !important;
+    font-size: 30px !important;
+    line-height: 1.12 !important;
+  }
+
+  html body #app-content .daily-kkul-card .section-title .num {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 6px 12px !important;
+    writing-mode: horizontal-tb !important;
+    white-space: nowrap !important;
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+  }
+
+  html body #app-content .daily-kkul-message {
+    width: min(100%, 290px) !important;
+    max-width: 290px !important;
+    min-width: 0 !important;
+    margin: 0 auto !important;
+    padding: 13px 16px !important;
+    border: 1px solid #f0d9dc !important;
+    border-radius: 16px !important;
+    background: #fffafb !important;
+    color: #4f4642 !important;
+    text-align: center !important;
+    font-size: 15px !important;
+    font-weight: 650 !important;
+    line-height: 1.65 !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+    writing-mode: horizontal-tb !important;
+  }
+
+  html body #app-content .daily-kkul-image-wrap {
+    width: 100% !important;
+    min-height: 220px !important;
+    margin-top: 2px !important;
+    align-self: center !important;
+    background: radial-gradient(circle at 50% 68%, #e9f7f3 0 22%, transparent 23%) !important;
+  }
+
+  html body #app-content .daily-kkul-image-wrap::before {
+    right: 50% !important;
+    bottom: 12% !important;
+    translate: 50% 0 !important;
+    width: 110px !important;
+    height: 110px !important;
+  }
+
+  html body #app-content .daily-kkul-image {
+    width: min(260px, 78vw) !important;
+    max-width: 260px !important;
+    height: auto !important;
+  }
+}
