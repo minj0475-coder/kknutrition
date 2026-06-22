@@ -2031,6 +2031,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("academicSearch");
   if (searchInput) searchInput.placeholder = "";
   const modal = document.getElementById("academicModal");
+  const appContent = document.getElementById("app-content");
+  if (modal && appContent && modal.parentElement !== appContent) appContent.appendChild(modal);
   const modalCloseBtn = document.getElementById("academicModalCloseBtn");
   const fullscreenBtn = document.getElementById("academicFullscreenBtn");
   const titleInput = document.getElementById("academicEventTitle");
