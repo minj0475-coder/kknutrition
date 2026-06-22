@@ -1447,7 +1447,7 @@ function buildSidebarToc() {
     if (headings.length) {
       const sub = document.createElement("div");
       sub.className = "sidebar-subnav";
-      headings.slice(0, 7).forEach(item => {
+      headings.forEach(item => {
         const a = document.createElement("a");
         a.href = `#${item.id}`;
         a.textContent = item.text;
