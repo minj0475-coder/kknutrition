@@ -1295,6 +1295,10 @@ document.addEventListener('DOMContentLoaded', () => {
     logoLink.addEventListener("click", event => {
       event.preventDefault();
       event.stopPropagation();
+      if (mobileSidebarQuery.matches && logoLink.classList.contains("sidebar-logo-link")) {
+        closeDrawer();
+        return;
+      }
       if (!isSidebarOpen()) {
         openDrawer();
         return;
