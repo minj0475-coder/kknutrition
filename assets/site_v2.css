@@ -13565,3 +13565,26 @@ html body .app-sidebar .sidebar-section-title {
     word-break: keep-all !important;
   }
 }
+
+/* Mobile contact cards use the delete icon itself, without a redundant label. */
+@media (max-width: 760px) {
+  html body #app-content #promo-contacts .promo-contact-table td.promo-row-tools::before {
+    content: none !important;
+    display: none !important;
+  }
+
+  html body #app-content #promo-contacts .promo-contact-table td.promo-row-tools {
+    display: flex !important;
+    width: 100% !important;
+    min-height: 42px !important;
+    padding: 0 !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    border: 0 !important;
+  }
+
+  html body #app-content #promo-contacts .promo-contact-table td.promo-row-tools .promo-delete-btn {
+    margin: 0 !important;
+    flex: 0 0 42px !important;
+  }
+}
