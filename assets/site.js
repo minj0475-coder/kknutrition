@@ -1045,7 +1045,7 @@ const SIDEBAR_OPEN_KEY = "kkulkkoori_sidebar_open_v1";
 const MOBILE_PAGE_TITLES = {
   home: "홈",
   daily: "하루 일정",
-  monthly: "한 달 일정 · 학사일정",
+  monthly: "한 달 일정",
   annual: "연간 일정",
   "today-menu": "급식노트",
   bookmarks: "북마크",
