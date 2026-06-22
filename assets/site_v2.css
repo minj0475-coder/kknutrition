@@ -12983,6 +12983,27 @@ html body #app-content #academicModal button.academic-color-swatch.is-selected {
   scale: 1.08 !important;
 }
 
+html body #app-content #academicModal .academic-modal-top .icon-only-btn {
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  min-height: 48px !important;
+  padding: 9px !important;
+}
+
+html body #app-content #academicModal .academic-modal-top .icon-only-btn svg {
+  width: 28px !important;
+  height: 28px !important;
+  stroke-width: 2.1 !important;
+}
+
+html body #app-content .academic-pill.user.color-gray,
+html body #app-content .academic-pill.color-gray {
+  color: #4b4b4b !important;
+  background: #eeeeee !important;
+  border-color: #d7d7d7 !important;
+}
+
 html body #app-content .academic-toolbar {
   border: 1px solid #e5e5e5 !important;
   border-radius: 16px !important;
