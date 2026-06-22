@@ -10879,7 +10879,7 @@ body #app-content .today-menu-no-data {
   color: var(--ui-muted) !important;
 }
 
-body #app-content :where(button, .btn, .download-btn, .excel-upload-btn, .memo-full-btn, .home-today-link, .today-menu-show-all-btn, .promo-btn, .icon-only-btn, .promo-copy-btn, .promo-open-link, .promo-delete-btn, .academic-nav-btn, .academic-today-btn, .academic-save-btn, .academic-clear-btn, .fab-edit-btn, .fab-bookmark-edit-btn, .close-drawer-btn):not(.academic-day):not(.brand):not(.mobile-menu-btn):not(.sidebar-icon-btn) {
+body #app-content :where(button, .btn, .download-btn, .excel-upload-btn, .memo-full-btn, .home-today-link, .today-menu-show-all-btn, .promo-btn, .icon-only-btn, .promo-copy-btn, .promo-open-link, .promo-delete-btn, .academic-nav-btn, .academic-today-btn, .academic-save-btn, .academic-clear-btn, .fab-edit-btn, .fab-bookmark-edit-btn, .close-drawer-btn):not(.academic-day):not(.brand):not(.mobile-menu-btn):not(.sidebar-icon-btn):not(.annual-sheet-save-btn):not(.annual-sheet-open-btn) {
   min-height: 38px !important;
   padding: 8px 13px !important;
   border: 1px solid var(--ui-line-strong) !important;
@@ -10900,7 +10900,7 @@ body #app-content :where(button[type="submit"]):not(.auth-btn) {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  body #app-content :where(button, .btn, .download-btn, .excel-upload-btn, .memo-full-btn, .home-today-link, .today-menu-show-all-btn, .promo-btn, .icon-only-btn, .promo-copy-btn, .promo-open-link, .promo-delete-btn, .academic-nav-btn, .academic-today-btn, .academic-save-btn, .academic-clear-btn, .fab-edit-btn, .fab-bookmark-edit-btn, .close-drawer-btn):not(.academic-day):not(.brand):not(.mobile-menu-btn):not(.sidebar-icon-btn):hover {
+  body #app-content :where(button, .btn, .download-btn, .excel-upload-btn, .memo-full-btn, .home-today-link, .today-menu-show-all-btn, .promo-btn, .icon-only-btn, .promo-copy-btn, .promo-open-link, .promo-delete-btn, .academic-nav-btn, .academic-today-btn, .academic-save-btn, .academic-clear-btn, .fab-edit-btn, .fab-bookmark-edit-btn, .close-drawer-btn):not(.academic-day):not(.brand):not(.mobile-menu-btn):not(.sidebar-icon-btn):not(.annual-sheet-save-btn):not(.annual-sheet-open-btn):hover {
     background: var(--ui-hover) !important;
     border-color: #cfcfcf !important;
     color: var(--ui-text) !important;
@@ -11149,7 +11149,7 @@ body #promo-contacts .promo-delete-btn {
   color: #b42318;
 }
 
-body #app-content :where(button, .btn, .download-btn, .excel-upload-btn, .memo-full-btn, .home-today-link, .today-menu-show-all-btn, .promo-btn, .academic-nav-btn, .academic-today-btn, .academic-save-btn, .academic-clear-btn, .fab-edit-btn, .fab-bookmark-edit-btn):not(.academic-day):not(.brand):not(.mobile-menu-btn):not(.sidebar-icon-btn) {
+body #app-content :where(button, .btn, .download-btn, .excel-upload-btn, .memo-full-btn, .home-today-link, .today-menu-show-all-btn, .promo-btn, .academic-nav-btn, .academic-today-btn, .academic-save-btn, .academic-clear-btn, .fab-edit-btn, .fab-bookmark-edit-btn):not(.academic-day):not(.brand):not(.mobile-menu-btn):not(.sidebar-icon-btn):not(.annual-sheet-save-btn):not(.annual-sheet-open-btn) {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
