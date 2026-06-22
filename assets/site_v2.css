@@ -12322,3 +12322,28 @@ html body #app-content .daily-kkul-image {
     padding: 26px 24px 28px !important;
   }
 }
+
+/* 2026-06-22 home hero final scale: make the main Kkul character feel intentional. */
+html body #app-content #home.page-section .hero {
+  min-height: clamp(300px, 27vw, 390px) !important;
+}
+
+html body #app-content #home.page-section .hero img.hero-asset {
+  width: min(56vw, 720px) !important;
+  max-height: 430px !important;
+  scale: 1.08 !important;
+  translate: 0 10px !important;
+}
+
+@media (max-width: 900px) {
+  html body #app-content #home.page-section .hero {
+    min-height: auto !important;
+  }
+
+  html body #app-content #home.page-section .hero img.hero-asset {
+    width: min(92vw, 460px) !important;
+    max-height: 330px !important;
+    scale: 1.02 !important;
+    translate: 0 2px !important;
+  }
+}
