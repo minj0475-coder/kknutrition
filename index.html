@@ -10,7 +10,7 @@
 <meta property="og:image" content="https://minj0475-coder.github.io/kknutrition/assets/og-image.png?v=2">
 <meta property="og:url" content="https://minj0475-coder.github.io/kknutrition/">
 <title>급식 업무 포털</title>
-<link rel="stylesheet" href="assets/site_v2.css?v=20260622_035">
+<link rel="stylesheet" href="assets/site_v2.css?v=20260622_036">
 <link rel="manifest" href="manifest.json?v=4">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/app-icon-192.png?v=4">
 <link rel="apple-touch-icon" href="assets/app-icon-180.png?v=4">
@@ -359,14 +359,14 @@
   <main class="wrap">
   <section class="hero"><div class="kicker">연간 업무</div><h1>연간 일정</h1><p class="subtitle">1년 동안 반복되는 급식 업무를 월별로 확인할 수 있도록 정리했습니다.</p><img loading="lazy" class="hero-asset" src="assets/images/page-kkul/page-kkul-annual-chart.png" alt=""></section>
 
-<section class="card annual-sheet-links-card" id="annualSheetLinks">
-  <div class="annual-sheet-links-head">
-    <div>
-      <h2 class="section-title"><span class="num">바로가기</span>조사 스프레드시트</h2>
-      <p class="mini">링크를 수정한 뒤 저장하면 이 기기에 유지됩니다.</p>
-    </div>
-  </div>
-  <div class="annual-sheet-link-list">
+<details class="annual-sheet-links-card" id="annualSheetLinks">
+  <summary class="annual-sheet-links-summary">
+    <span>스프레드시트 링크 관리</span>
+    <span class="mini">링크 수정</span>
+  </summary>
+  <div class="annual-sheet-links-body">
+    <p class="mini annual-sheet-links-help">연간일정표의 스프레드시트 버튼에 연결할 링크를 수정할 수 있습니다.</p>
+    <div class="annual-sheet-link-list">
     <div class="annual-sheet-link-row" data-annual-sheet="allergy">
       <label for="annualSheetAllergy">알레르기 학생 조사</label>
       <div class="annual-sheet-link-controls">
@@ -391,9 +391,10 @@
         <a class="annual-sheet-open-btn" href="#" target="_blank" rel="noopener" aria-label="학부모 봉사 모니터링 스프레드시트 열기" title="열기"><svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
     </div>
+    </div>
+    <p id="annualSheetLinkStatus" class="mini annual-sheet-link-status" aria-live="polite"></p>
   </div>
-  <p id="annualSheetLinkStatus" class="mini annual-sheet-link-status" aria-live="polite"></p>
-</section>
+</details>
 
 <section class="card annual-mobile-card">
   <h2 class="section-title"><span class="num">1</span>연간 일정표</h2>
@@ -1126,7 +1127,7 @@
 <script src="assets/xlsx.full.min.js" defer></script>
 <script src="assets/auth.js?v=20260622_001" defer></script>
 <script src="assets/bookmarks.js?v=20260622_003" defer></script>
-<script src="assets/site.js?v=20260622_017" defer></script>
+<script src="assets/site.js?v=20260622_018" defer></script>
 <script src="assets/excel-parser.js?v=20260615_455" defer></script>
 <script type="module" src="assets/firebase-init.js?v=20260621_002" defer></script>
 <script>

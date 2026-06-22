@@ -13588,3 +13588,51 @@ html body .app-sidebar .sidebar-section-title {
     flex: 0 0 42px !important;
   }
 }
+
+/* Keep spreadsheet link editing available without a separate full-size card. */
+html body #app-content details.annual-sheet-links-card {
+  padding: 0 !important;
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 14px !important;
+  background: #fff !important;
+  overflow: hidden !important;
+  box-shadow: none !important;
+}
+
+html body #app-content .annual-sheet-links-summary {
+  display: flex !important;
+  min-height: 52px !important;
+  padding: 0 16px !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  color: #202123 !important;
+  background: #fff !important;
+  font-size: 15.5px !important;
+  font-weight: 750 !important;
+  cursor: pointer !important;
+  list-style: none !important;
+}
+
+html body #app-content .annual-sheet-links-summary::-webkit-details-marker {
+  display: none !important;
+}
+
+html body #app-content .annual-sheet-links-summary:hover {
+  background: #f7f7f8 !important;
+}
+
+html body #app-content .annual-sheet-links-summary .mini {
+  color: #6b7280 !important;
+  font-size: 13px !important;
+  font-weight: 650 !important;
+}
+
+html body #app-content .annual-sheet-links-body {
+  padding: 14px 16px 16px !important;
+  border-top: 1px solid #ececec !important;
+}
+
+html body #app-content .annual-sheet-links-help {
+  margin: 0 0 10px !important;
+}

@@ -1145,12 +1145,17 @@ function setupAnnualSheetLinks() {
   const inlineTargets = {
     allergy: "알레르기 학생 조사",
     milk: "우유 수요 조사",
-    parents: "학부모 봉사·모니터링 명단 취합 및 일정 편성"
+    parents: "학부모 봉사 모니터링 명단 취합 및 일정 편성"
   };
+
+  const normalizeInlineTargetText = value => String(value || "")
+    .replace(/[·,]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 
   const ensureInlineLinks = () => {
     document.querySelectorAll("#annual li").forEach(item => {
-      const itemText = item.textContent.replace(/\s+/g, " ").trim();
+      const itemText = normalizeInlineTargetText(item.textContent);
       const key = Object.keys(inlineTargets).find(name => itemText.startsWith(inlineTargets[name]));
       if (!key || item.querySelector(`[data-annual-sheet-open="${key}"]`)) return;
       const link = document.createElement("a");
@@ -1235,6 +1240,14 @@ function setupAnnualSheetLinks() {
     ensureInlineLinks();
     rows.forEach(updateRow);
   }, 120);
+
+  const annualSection = document.getElementById("annual");
+  if (annualSection) {
+    new MutationObserver(() => {
+      ensureInlineLinks();
+      rows.forEach(updateRow);
+    }).observe(annualSection, { childList: true, subtree: true });
+  }
 }
 
 document.addEventListener("DOMContentLoaded", setupAnnualSheetLinks);
