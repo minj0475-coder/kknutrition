@@ -1141,12 +1141,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   let shouldRestoreSidebar = false;
-  try { shouldRestoreSidebar = sessionStorage.getItem(SIDEBAR_OPEN_KEY) === "1"; } catch(e) {}
 
   if (shouldRestoreSidebar) {
     openDrawer();
   } else if (window.matchMedia("(min-width: 901px)").matches) {
-    openDrawer();
+    document.body.classList.add("sidebar-collapsed");
   }
 
   if (mobileMenuBtn) {

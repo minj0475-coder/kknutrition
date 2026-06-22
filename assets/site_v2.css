@@ -11916,3 +11916,128 @@ html body #app-content #home.page-section .hero img.hero-asset {
     filter: drop-shadow(0 8px 16px rgba(32, 33, 35, .12)) !important;
   }
 }
+
+/* 2026-06-22 daily kkul reset: quieter ChatGPT-like home card. */
+html body #app-content .home-grid-left .daily-kkul-card,
+html body #app-content .daily-kkul-card {
+  display: grid !important;
+  grid-template-columns: minmax(0, .9fr) minmax(150px, 1.1fr) !important;
+  align-items: center !important;
+  gap: 10px !important;
+  min-height: 250px !important;
+  padding: 24px 24px 20px !important;
+  overflow: hidden !important;
+  background: #fff !important;
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 18px !important;
+  box-shadow: none !important;
+}
+
+html body #app-content .daily-kkul-card::before,
+html body #app-content .daily-kkul-card::after {
+  content: none !important;
+  display: none !important;
+}
+
+html body #app-content .daily-kkul-copy {
+  position: relative !important;
+  z-index: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  min-width: 0 !important;
+}
+
+html body #app-content .daily-kkul-card .section-title {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: baseline !important;
+  gap: 8px !important;
+  margin: 0 !important;
+  color: #202123 !important;
+  font-size: clamp(24px, 2vw, 30px) !important;
+  line-height: 1.12 !important;
+  letter-spacing: 0 !important;
+}
+
+html body #app-content .daily-kkul-card .section-title .num {
+  min-height: 32px !important;
+  padding: 5px 11px !important;
+  border: 1px solid #ead9d7 !important;
+  border-radius: 999px !important;
+  background: #fff8f8 !important;
+  color: #8f4a51 !important;
+  font-size: 14px !important;
+  font-weight: 750 !important;
+}
+
+html body #app-content .daily-kkul-message {
+  max-width: 18rem !important;
+  margin: 0 !important;
+  color: #5f5652 !important;
+  font-size: 15px !important;
+  line-height: 1.65 !important;
+  word-break: keep-all !important;
+}
+
+html body #app-content .daily-kkul-image-wrap {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  align-self: stretch !important;
+  min-height: 185px !important;
+  margin: 0 !important;
+  background: radial-gradient(circle at 50% 58%, #fff5f6 0 42%, transparent 43%) !important;
+}
+
+html body #app-content .daily-kkul-image-wrap::before {
+  content: "" !important;
+  position: absolute !important;
+  right: 6% !important;
+  bottom: 8% !important;
+  width: 96px !important;
+  height: 96px !important;
+  border-radius: 999px !important;
+  background: #e9f7f3 !important;
+  z-index: 0 !important;
+}
+
+html body #app-content .daily-kkul-image {
+  position: relative !important;
+  z-index: 1 !important;
+  width: min(210px, 100%) !important;
+  max-width: 210px !important;
+  height: auto !important;
+  object-fit: contain !important;
+  filter: drop-shadow(0 16px 22px rgba(32, 33, 35, .10)) !important;
+}
+
+@media (max-width: 760px) {
+  html body #app-content .home-grid-left .daily-kkul-card,
+  html body #app-content .daily-kkul-card {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    min-height: 0 !important;
+    padding: 22px 20px 18px !important;
+  }
+
+  html body #app-content .daily-kkul-card .section-title {
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  html body #app-content .daily-kkul-message {
+    max-width: none !important;
+    text-align: center !important;
+  }
+
+  html body #app-content .daily-kkul-image-wrap {
+    min-height: 190px !important;
+  }
+
+  html body #app-content .daily-kkul-image {
+    width: min(235px, 72vw) !important;
+    max-width: 235px !important;
+  }
+}
