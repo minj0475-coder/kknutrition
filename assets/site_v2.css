@@ -13303,6 +13303,10 @@ html body #app-content #sheetLinkSaveBtn {
   transition: background-color .16s ease, color .16s ease, transform .16s ease !important;
 }
 
+html body #app-content #sheetLinkOpenBtn {
+  background: transparent !important;
+}
+
 html body #app-content #sheetLinkOpenBtn::before {
   display: none !important;
   content: none !important;
