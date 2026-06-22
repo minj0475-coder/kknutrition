@@ -10794,3 +10794,310 @@ body.sidebar-open .top .brand {
     font-size: 16px !important;
   }
 }
+
+/* 2026-06-22 ChatGPT-like UI polish: keep kkul hero panels, neutralize working controls. */
+:root {
+  --ui-bg: #ffffff;
+  --ui-soft: #f7f7f8;
+  --ui-soft-2: #f3f4f6;
+  --ui-line: #e5e5e5;
+  --ui-line-strong: #d9d9d9;
+  --ui-text: #202123;
+  --ui-muted: #6b7280;
+  --ui-faint: #9ca3af;
+  --ui-hover: #f1f1f1;
+  --ui-pressed: #ececec;
+  --ui-dark: #202123;
+}
+
+body #app-content {
+  color: var(--ui-text) !important;
+}
+
+body #app-content .card,
+body #app-content .note,
+body #app-content .panel,
+body #app-content .table-wrap,
+body #app-content .memo-card,
+body #app-content .home-today-card,
+body #app-content .weekly-check-card,
+body #app-content .academic-calendar-card,
+body #app-content .academic-weekly-card,
+body #app-content .academic-modal,
+body #app-content .vendor-network-card,
+body #app-content .promo-contact-card,
+body #app-content .staff-accordion-card,
+body #app-content .bookmark-folder-section,
+body #app-content .bookmark-card,
+body #app-content .date-section-v2,
+body #app-content .menu-card-v2 {
+  background: var(--ui-bg) !important;
+  border: 1px solid var(--ui-line) !important;
+  border-radius: 16px !important;
+  box-shadow: none !important;
+  color: var(--ui-text) !important;
+}
+
+body #app-content .card:not(.memo-card):not(.home-today-card),
+body #app-content .note,
+body #app-content .panel,
+body #app-content .weekly-check-card,
+body #app-content .academic-calendar-card,
+body #app-content .academic-weekly-card,
+body #app-content .vendor-network-card,
+body #app-content .promo-contact-card,
+body #app-content .staff-accordion-card {
+  padding: clamp(16px, 2.2vw, 24px) !important;
+}
+
+body #app-content .section-title,
+body #app-content h2,
+body #app-content h3,
+body #app-content summary {
+  color: var(--ui-text) !important;
+  letter-spacing: 0 !important;
+}
+
+body #app-content p,
+body #app-content li,
+body #app-content td,
+body #app-content input,
+body #app-content textarea,
+body #app-content select {
+  color: var(--ui-text) !important;
+}
+
+body #app-content .muted,
+body #app-content .subtitle,
+body #app-content small,
+body #app-content .home-today-date,
+body #app-content .meal-line-v2,
+body #app-content .promo-contact-status,
+body #app-content .today-menu-empty,
+body #app-content .today-menu-no-data {
+  color: var(--ui-muted) !important;
+}
+
+body #app-content :where(button, .btn, .download-btn, .excel-upload-btn, .memo-full-btn, .home-today-link, .today-menu-show-all-btn, .promo-btn, .icon-only-btn, .promo-copy-btn, .promo-open-link, .promo-delete-btn, .academic-nav-btn, .academic-today-btn, .academic-save-btn, .academic-clear-btn, .fab-edit-btn, .fab-bookmark-edit-btn, .close-drawer-btn):not(.academic-day):not(.brand):not(.mobile-menu-btn):not(.sidebar-icon-btn) {
+  min-height: 38px !important;
+  padding: 8px 13px !important;
+  border: 1px solid var(--ui-line-strong) !important;
+  border-radius: 12px !important;
+  background: var(--ui-bg) !important;
+  color: var(--ui-text) !important;
+  box-shadow: none !important;
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+  text-decoration: none !important;
+}
+
+body #app-content :where(.primary, .save, .academic-save-btn, .promo-btn.primary, .excel-upload-btn.primary):not(.academic-day),
+body #app-content :where(button[type="submit"]):not(.auth-btn) {
+  background: var(--ui-dark) !important;
+  border-color: var(--ui-dark) !important;
+  color: #ffffff !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  body #app-content :where(button, .btn, .download-btn, .excel-upload-btn, .memo-full-btn, .home-today-link, .today-menu-show-all-btn, .promo-btn, .icon-only-btn, .promo-copy-btn, .promo-open-link, .promo-delete-btn, .academic-nav-btn, .academic-today-btn, .academic-save-btn, .academic-clear-btn, .fab-edit-btn, .fab-bookmark-edit-btn, .close-drawer-btn):not(.academic-day):not(.brand):not(.mobile-menu-btn):not(.sidebar-icon-btn):hover {
+    background: var(--ui-hover) !important;
+    border-color: #cfcfcf !important;
+    color: var(--ui-text) !important;
+    transform: none !important;
+  }
+
+  body #app-content :where(.primary, .save, .academic-save-btn, .promo-btn.primary, .excel-upload-btn.primary):not(.academic-day):hover,
+  body #app-content :where(button[type="submit"]):not(.auth-btn):hover {
+    background: #343541 !important;
+    border-color: #343541 !important;
+    color: #ffffff !important;
+  }
+}
+
+body #app-content :where(input, textarea, select):not([type="checkbox"]):not([type="radio"]) {
+  border: 1px solid var(--ui-line-strong) !important;
+  border-radius: 12px !important;
+  background: var(--ui-bg) !important;
+  color: var(--ui-text) !important;
+  box-shadow: none !important;
+}
+
+body #app-content :where(input, textarea, select):not([type="checkbox"]):not([type="radio"]):focus {
+  border-color: #9ca3af !important;
+  outline: 2px solid rgba(32, 33, 35, 0.08) !important;
+  outline-offset: 1px !important;
+}
+
+body #app-content ::placeholder {
+  color: var(--ui-faint) !important;
+}
+
+body #app-content table,
+body #app-content .schedule-table,
+body #app-content .annual-table,
+body #app-content .promo-contact-table {
+  border: 1px solid var(--ui-line) !important;
+  border-radius: 14px !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  overflow: hidden !important;
+  background: var(--ui-bg) !important;
+  box-shadow: none !important;
+}
+
+body #app-content th,
+body #app-content .schedule-table th,
+body #app-content .annual-table th,
+body #app-content .promo-contact-table th {
+  background: var(--ui-soft) !important;
+  color: #4b5563 !important;
+  border-color: var(--ui-line) !important;
+  font-weight: 700 !important;
+}
+
+body #app-content td,
+body #app-content .schedule-table td,
+body #app-content .annual-table td,
+body #app-content .promo-contact-table td {
+  background: var(--ui-bg) !important;
+  border-color: var(--ui-line) !important;
+}
+
+body #app-content tr:hover td,
+body #app-content .schedule-table tr:hover td,
+body #app-content .annual-table tr:hover td {
+  background: #fafafa !important;
+}
+
+body #app-content .academic-calendar-panel {
+  border: 1px solid var(--ui-line) !important;
+  border-radius: 14px !important;
+  background: var(--ui-bg) !important;
+  box-shadow: none !important;
+}
+
+body #app-content .academic-weekdays span {
+  background: var(--ui-soft) !important;
+  color: #4b5563 !important;
+  border-color: var(--ui-line) !important;
+}
+
+body #app-content .academic-day,
+body #app-content button.academic-day {
+  background: var(--ui-bg) !important;
+  border-color: var(--ui-line) !important;
+  color: var(--ui-text) !important;
+  box-shadow: none !important;
+}
+
+body #app-content .academic-day:hover,
+body #app-content button.academic-day:hover,
+body #app-content .academic-day.is-selected,
+body #app-content button.academic-day.is-selected {
+  background: var(--ui-soft) !important;
+}
+
+body #app-content .academic-date-num,
+body #app-content .num,
+body #app-content .menu-tag,
+body #app-content .chip,
+body #app-content .badge,
+body #app-content .date-badge,
+body #app-content .academic-pill {
+  background: var(--ui-soft) !important;
+  border: 1px solid var(--ui-line) !important;
+  color: #374151 !important;
+  box-shadow: none !important;
+}
+
+body #app-content svg {
+  stroke-width: 1.8 !important;
+}
+
+body #app-content :where(button, a, summary) svg {
+  color: currentColor !important;
+  stroke: currentColor !important;
+}
+
+body #app-content input[type="checkbox"] {
+  accent-color: var(--ui-dark) !important;
+}
+
+body #app-content details,
+body #app-content .materials-detail {
+  border-color: var(--ui-line) !important;
+}
+
+body #app-content .materials-detail summary {
+  background: var(--ui-bg) !important;
+  border: 1px solid var(--ui-line) !important;
+  color: var(--ui-text) !important;
+}
+
+body #app-content pre {
+  background: var(--ui-soft) !important;
+  border: 1px solid var(--ui-line) !important;
+  color: var(--ui-text) !important;
+}
+
+@media (max-width: 760px) {
+  body #app-content .card,
+  body #app-content .note,
+  body #app-content .panel,
+  body #app-content .memo-card,
+  body #app-content .home-today-card,
+  body #app-content .academic-calendar-card,
+  body #app-content .academic-weekly-card,
+  body #app-content .vendor-network-card,
+  body #app-content .promo-contact-card,
+  body #app-content .staff-accordion-card {
+    border-radius: 16px !important;
+  }
+
+  body #app-content .promo-contact-table tr {
+    border-color: var(--ui-line) !important;
+    background: var(--ui-bg) !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Keep the illustrated kkul hero panels visually intact after the neutral UI pass. */
+body #app-content .hero h1 {
+  color: #351916 !important;
+}
+
+body #app-content .hero .subtitle {
+  color: #4f4642 !important;
+}
+
+body #app-content .hero .kicker {
+  color: #9a4d5c !important;
+}
+
+body #promo-contacts .card.vendor-network-card,
+body #promo-contacts .card.promo-contact-card,
+body #app-content .card.vendor-network-card,
+body #app-content .card.promo-contact-card {
+  background: var(--ui-bg) !important;
+  border: 1px solid var(--ui-line) !important;
+  border-radius: 16px !important;
+  box-shadow: none !important;
+}
+
+body #promo-contacts .promo-contact-toolbar {
+  background: var(--ui-bg) !important;
+  border-bottom: 1px solid var(--ui-line) !important;
+}
+
+body #promo-contacts .promo-contact-title .num,
+body #promo-contacts .promo-search,
+body #promo-contacts .promo-btn,
+body #promo-contacts .icon-only-btn,
+body #promo-contacts .promo-copy-btn,
+body #promo-contacts .promo-open-link,
+body #promo-contacts .promo-delete-btn {
+  border-color: var(--ui-line-strong) !important;
+  background: var(--ui-bg) !important;
+  color: var(--ui-text) !important;
+  box-shadow: none !important;
+}
