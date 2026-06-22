@@ -1519,13 +1519,32 @@ document.addEventListener("DOMContentLoaded", () => {
   let rows = readPromoContacts();
   let vendorRows = readVendorNetwork();
 
+  function focusNextPromoCell(current) {
+    const cells = Array.from(document.querySelectorAll(".promo-contact-table .promo-cell-input"));
+    const index = cells.indexOf(current);
+    if (index >= 0 && cells[index + 1]) {
+      cells[index + 1].focus();
+      if (typeof cells[index + 1].select === "function") cells[index + 1].select();
+    }
+  }
+
+  function bindPromoCellKeyboard(root) {
+    root.querySelectorAll(".promo-cell-input").forEach(input => {
+      input.addEventListener("keydown", event => {
+        if (event.key !== "Enter" || event.shiftKey || event.isComposing) return;
+        event.preventDefault();
+        focusNextPromoCell(input);
+      });
+    });
+  }
+
   function renderVendorNetwork() {
     if (!vendorBody) return;
     vendorBody.innerHTML = "";
     vendorRows.forEach((row, index) => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
-        <td><input class="promo-cell-input" data-vendor-field="group" list="vendorGroupOptions" aria-label="업체군" value=""></td>
+        <td><input class="promo-cell-input" data-vendor-field="group" aria-label="업체군" value=""></td>
         <td><input class="promo-cell-input" data-vendor-field="company" aria-label="업체명" value=""></td>
         <td><input class="promo-cell-input" data-vendor-field="phone" aria-label="전화번호" value=""></td>
         <td><input class="promo-cell-input" data-vendor-field="email" aria-label="이메일" value=""></td>
@@ -1539,6 +1558,7 @@ document.addEventListener("DOMContentLoaded", () => {
           saveVendorNetwork(vendorRows);
         });
       });
+      bindPromoCellKeyboard(tr);
       tr.querySelector(".promo-delete-btn").addEventListener("click", () => {
         vendorRows.splice(index, 1);
         saveVendorNetwork(vendorRows);
@@ -1595,6 +1615,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (field === "link") updateOpenLink(tr, rows[index].link);
         });
       });
+      bindPromoCellKeyboard(tr);
 
       tr.querySelectorAll("[data-copy-field]").forEach(btn => {
         btn.addEventListener("click", () => {

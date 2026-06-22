@@ -10361,3 +10361,340 @@ body .top .brand-logo-img {
     backdrop-filter: blur(1px) !important;
   }
 }
+
+/* 2026-06-22 final polish: white canvas, compact logo bar, readable sidebar, unified vendor tables. */
+:root {
+  --bg: #ffffff !important;
+  --bg-main: #ffffff !important;
+  --bg-card: #ffffff !important;
+  --card: #ffffff !important;
+  --card-soft: #ffffff !important;
+}
+
+html,
+body,
+#app-content,
+.page-section,
+.wrap,
+main.wrap {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+}
+
+body {
+  background-image: none !important;
+  padding-top: 0 !important;
+}
+
+body .top {
+  min-height: 56px !important;
+  height: 56px !important;
+  background: #ffffff !important;
+  border-bottom: 1px solid #ece7e3 !important;
+}
+
+body .top-inner {
+  min-height: 56px !important;
+  height: 56px !important;
+  padding: 4px 12px !important;
+  gap: 10px !important;
+  align-items: center !important;
+}
+
+body .top .brand,
+body .app-sidebar .sidebar-logo-link {
+  width: 48px !important;
+  min-width: 48px !important;
+  height: 48px !important;
+  padding: 2px !important;
+  border-radius: 14px !important;
+}
+
+body .top .brand-logo-img,
+body .app-sidebar .sidebar-logo {
+  width: 44px !important;
+  height: 44px !important;
+  max-width: 44px !important;
+  max-height: 44px !important;
+  transform: none !important;
+}
+
+body .app-sidebar .sidebar-head {
+  min-height: 56px !important;
+  margin-bottom: 8px !important;
+  align-items: center !important;
+}
+
+body .app-sidebar {
+  background: #ffffff !important;
+}
+
+body .sidebar-overlay:not([hidden]) {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  pointer-events: none !important;
+}
+
+@media (min-width: 901px) {
+  body .app-sidebar.is-open + .sidebar-overlay + #app-content,
+  body:has(.app-sidebar.is-open) #app-content {
+    padding-left: 306px !important;
+  }
+
+  body .app-sidebar.is-open {
+    box-shadow: 10px 0 28px rgba(35, 31, 29, 0.07) !important;
+    border-right: 1px solid #eee9e5 !important;
+  }
+
+  body #home .hero-asset {
+    width: 330px !important;
+    min-width: 330px !important;
+    max-width: 330px !important;
+    max-height: 268px !important;
+    mix-blend-mode: normal !important;
+    opacity: 1 !important;
+  }
+}
+
+@media (max-width: 900px) {
+  body .top {
+    min-height: 54px !important;
+    height: 54px !important;
+  }
+
+  body .top-inner {
+    min-height: 54px !important;
+    height: 54px !important;
+    padding: 4px 10px !important;
+  }
+
+  body .top .brand,
+  body .app-sidebar .sidebar-logo-link {
+    width: 46px !important;
+    min-width: 46px !important;
+    height: 46px !important;
+  }
+
+  body .top .brand-logo-img,
+  body .app-sidebar .sidebar-logo {
+    width: 42px !important;
+    height: 42px !important;
+    max-width: 42px !important;
+    max-height: 42px !important;
+  }
+
+  body .app-sidebar {
+    width: min(84vw, 306px) !important;
+    box-shadow: 10px 0 28px rgba(35, 31, 29, 0.08) !important;
+  }
+}
+
+body #promo-contacts .card.vendor-network-card,
+body #promo-contacts .card.promo-contact-card {
+  width: 100% !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: 1px solid #ece7e3 !important;
+  border-radius: 18px !important;
+  background: #ffffff !important;
+  box-shadow: 0 10px 24px rgba(35, 31, 29, 0.045) !important;
+}
+
+body #promo-contacts .vendor-network-card + .promo-contact-card {
+  margin-top: 18px !important;
+}
+
+body #promo-contacts .promo-contact-toolbar {
+  min-height: 72px !important;
+  padding: 16px 18px !important;
+  gap: 14px !important;
+  align-items: center !important;
+  border-bottom: 1px solid #f0ece8 !important;
+  background: #ffffff !important;
+}
+
+body #promo-contacts .promo-contact-title {
+  min-width: 220px !important;
+}
+
+body #promo-contacts .promo-contact-title .num {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 10px !important;
+  background: #f7f7f7 !important;
+  color: #3b302d !important;
+  border: 1px solid #e5e0dc !important;
+}
+
+body #promo-contacts .promo-contact-actions {
+  gap: 8px !important;
+}
+
+body #promo-contacts .promo-search {
+  height: 40px !important;
+  min-width: min(100%, 300px) !important;
+  border-radius: 12px !important;
+  border: 1px solid #ded8d3 !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+}
+
+body #promo-contacts .promo-search input {
+  height: 38px !important;
+  font-size: 14px !important;
+}
+
+body #promo-contacts .promo-btn,
+body #promo-contacts .icon-only-btn,
+body #promo-contacts .promo-copy-btn,
+body #promo-contacts .promo-open-link,
+body #promo-contacts .promo-delete-btn {
+  min-height: 38px !important;
+  border-radius: 12px !important;
+  border: 1px solid #ded8d3 !important;
+  background: #ffffff !important;
+  color: #332926 !important;
+  box-shadow: none !important;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease !important;
+}
+
+body #promo-contacts .promo-btn.primary {
+  background: #23201f !important;
+  border-color: #23201f !important;
+  color: #ffffff !important;
+}
+
+body #promo-contacts .promo-btn:hover,
+body #promo-contacts .icon-only-btn:hover,
+body #promo-contacts .promo-copy-btn:hover,
+body #promo-contacts .promo-open-link:hover,
+body #promo-contacts .promo-delete-btn:hover {
+  background: #f7f7f7 !important;
+  border-color: #d2ccc7 !important;
+  transform: translateY(-1px) !important;
+}
+
+body #promo-contacts .promo-btn.primary:hover {
+  background: #3b3431 !important;
+  border-color: #3b3431 !important;
+}
+
+body #promo-contacts .promo-table-wrap {
+  padding: 0 18px 18px !important;
+  overflow: auto !important;
+  background: #ffffff !important;
+}
+
+body #promo-contacts .promo-contact-table {
+  width: 100% !important;
+  min-width: 780px !important;
+  table-layout: fixed !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+body #promo-contacts .promo-contact-table th,
+body #promo-contacts .promo-contact-table td {
+  height: 54px !important;
+  padding: 9px 10px !important;
+  vertical-align: middle !important;
+  border-bottom: 1px solid #f0ece8 !important;
+  background: #ffffff !important;
+}
+
+body #promo-contacts .promo-contact-table th {
+  color: #675d58 !important;
+  font-size: 13px !important;
+  font-weight: 760 !important;
+}
+
+body #promo-contacts .promo-cell-input {
+  width: 100% !important;
+  min-height: 38px !important;
+  border-radius: 10px !important;
+  border: 1px solid transparent !important;
+  background: #ffffff !important;
+  padding: 8px 9px !important;
+  color: #2f2825 !important;
+  box-shadow: none !important;
+}
+
+body #promo-contacts textarea.promo-cell-input {
+  min-height: 42px !important;
+  resize: vertical !important;
+}
+
+body #promo-contacts .promo-cell-input:hover,
+body #promo-contacts .promo-cell-input:focus {
+  border-color: #ded8d3 !important;
+  background: #fbfbfb !important;
+  outline: none !important;
+}
+
+body #promo-contacts .promo-copy-field {
+  gap: 6px !important;
+  align-items: center !important;
+}
+
+body #promo-contacts .promo-row-tools {
+  width: 72px !important;
+  text-align: center !important;
+}
+
+@media (max-width: 760px) {
+  body #promo-contacts .promo-contact-toolbar {
+    align-items: stretch !important;
+    flex-direction: column !important;
+    padding: 14px !important;
+  }
+
+  body #promo-contacts .promo-contact-title {
+    min-width: 0 !important;
+  }
+
+  body #promo-contacts .promo-contact-actions {
+    display: grid !important;
+    grid-template-columns: 1fr auto auto !important;
+    width: 100% !important;
+  }
+
+  body #promo-contacts .vendor-network-card .promo-contact-actions {
+    grid-template-columns: 1fr !important;
+  }
+
+  body #promo-contacts .promo-search {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  body #promo-contacts .promo-table-wrap {
+    padding: 0 12px 14px !important;
+  }
+
+  body #promo-contacts .promo-contact-table {
+    min-width: 0 !important;
+  }
+
+  body #promo-contacts .promo-contact-table,
+  body #promo-contacts .promo-contact-table tbody,
+  body #promo-contacts .promo-contact-table tr,
+  body #promo-contacts .promo-contact-table td {
+    display: block !important;
+  }
+
+  body #promo-contacts .promo-contact-table thead {
+    display: none !important;
+  }
+
+  body #promo-contacts .promo-contact-table tr {
+    border: 1px solid #ece7e3 !important;
+    border-radius: 14px !important;
+    margin: 12px 0 !important;
+    overflow: hidden !important;
+  }
+
+  body #promo-contacts .promo-contact-table td {
+    height: auto !important;
+    min-height: 54px !important;
+  }
+}
