@@ -1040,10 +1040,30 @@ if ('scrollRestoration' in history) {
   history.scrollRestoration = 'manual';
 }
 
+const ACTIVE_HASH_KEY = "kkulkkoori_active_hash_v1";
+const SIDEBAR_OPEN_KEY = "kkulkkoori_sidebar_open_v1";
+
+function getStoredActiveHash() {
+  try {
+    const hash = sessionStorage.getItem(ACTIVE_HASH_KEY);
+    return hash && document.querySelector(hash) ? hash : "";
+  } catch(e) {
+    return "";
+  }
+}
+
+function storeActiveHash(hash) {
+  if (!hash || !document.querySelector(hash)) return;
+  try {
+    sessionStorage.setItem(ACTIVE_HASH_KEY, hash);
+  } catch(e) {}
+}
+
 function updateTabs() {
   const rawHash = window.location.hash;
-  let hash = rawHash;
-  const targetEl = rawHash ? document.querySelector(rawHash) : null;
+  const requestedHash = rawHash || getStoredActiveHash();
+  let hash = requestedHash;
+  const targetEl = requestedHash ? document.querySelector(requestedHash) : null;
   if (targetEl && !targetEl.classList.contains("page-section")) {
     const parentSection = targetEl.closest(".page-section");
     if (parentSection) hash = `#${parentSection.id}`;
@@ -1051,6 +1071,7 @@ function updateTabs() {
   if (!hash || !document.querySelector(hash)) {
     hash = '#home';
   }
+  storeActiveHash(requestedHash && document.querySelector(requestedHash) ? requestedHash : hash);
   document.querySelectorAll('.page-section').forEach(section => {
     if ('#' + section.id === hash) {
       section.classList.add('active');
@@ -1105,6 +1126,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sidebar) sidebar.classList.add("is-open");
     if (sidebarOverlay) sidebarOverlay.hidden = false;
     if(mobileDrawer) mobileDrawer.classList.add('active');
+    try { sessionStorage.setItem(SIDEBAR_OPEN_KEY, "1"); } catch(e) {}
   }
 
   function closeDrawer() {
@@ -1115,9 +1137,15 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.classList.add("sidebar-collapsed");
     }
     if(mobileDrawer) mobileDrawer.classList.remove('active');
+    try { sessionStorage.setItem(SIDEBAR_OPEN_KEY, "0"); } catch(e) {}
   }
 
-  if (window.matchMedia("(min-width: 901px)").matches) {
+  let shouldRestoreSidebar = false;
+  try { shouldRestoreSidebar = sessionStorage.getItem(SIDEBAR_OPEN_KEY) === "1"; } catch(e) {}
+
+  if (shouldRestoreSidebar) {
+    openDrawer();
+  } else if (window.matchMedia("(min-width: 901px)").matches) {
     document.body.classList.add("sidebar-collapsed");
   }
 
