@@ -1101,12 +1101,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function openDrawer() {
     document.body.classList.remove("sidebar-collapsed");
+    document.body.classList.add("sidebar-open");
     if (sidebar) sidebar.classList.add("is-open");
     if (sidebarOverlay) sidebarOverlay.hidden = false;
     if(mobileDrawer) mobileDrawer.classList.add('active');
   }
 
   function closeDrawer() {
+    document.body.classList.remove("sidebar-open");
     if (sidebar) sidebar.classList.remove("is-open");
     if (sidebarOverlay) sidebarOverlay.hidden = true;
     if (window.matchMedia("(min-width: 901px)").matches) {
@@ -1207,7 +1209,7 @@ function renderRecentPages(showAll = false) {
   let list = [];
   try { list = JSON.parse(localStorage.getItem(RECENT_PAGE_KEY) || "[]"); } catch(e) {}
   const moreBtn = document.getElementById("sidebarRecentMoreBtn");
-  const visible = showAll ? list : list.slice(0, 6);
+  const visible = showAll ? list : list.slice(0, 3);
   wrap.innerHTML = visible.length ? "" : `<span class="sidebar-empty">최근 항목이 없습니다.</span>`;
   visible.forEach(item => {
     const a = document.createElement("a");
@@ -1216,7 +1218,7 @@ function renderRecentPages(showAll = false) {
     wrap.appendChild(a);
   });
   if (moreBtn) {
-    moreBtn.hidden = list.length <= 6;
+    moreBtn.hidden = list.length <= 3;
     moreBtn.textContent = showAll ? "접기" : "더보기";
     moreBtn.onclick = () => renderRecentPages(!showAll);
   }
@@ -1232,7 +1234,7 @@ function buildSidebarToc() {
     const group = document.createElement("div");
     group.className = "sidebar-nav-group";
     group.appendChild(link);
-    const headings = section ? [...section.querySelectorAll(":scope main > section.card h2, :scope main > section.card summary")]
+    const headings = section ? [...section.querySelectorAll(":scope main section.card h2, :scope main section.card summary")]
       .map((heading, index) => {
         const card = heading.closest("section.card");
         if (!card) return null;
