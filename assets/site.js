@@ -1252,6 +1252,10 @@ function renderRecentPages(showAll = false) {
   }
 }
 
+function shouldHideSidebarTocItem(pageId, text) {
+  return pageId === "home" && text === "오늘의 꿀꿀이";
+}
+
 function buildSidebarToc() {
   const nav = document.getElementById("sidebarNav");
   if (!nav || nav.dataset.ready) return;
@@ -1271,7 +1275,7 @@ function buildSidebarToc() {
         clone.querySelectorAll(".num").forEach(num => num.remove());
         return { id: card.id, text: clone.textContent.trim().replace(/\s+/g, " "), card };
       })
-      .filter(item => item && item.text)
+      .filter(item => item && item.text && !shouldHideSidebarTocItem(pageId, item.text))
       .filter((item, index, items) => {
         const duplicateItems = items.filter(candidate => candidate.text === item.text);
         const preferredIndex = duplicateItems.some(candidate => candidate.card.classList.contains("annual-desktop-card"))
