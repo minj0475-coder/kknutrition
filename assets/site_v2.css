@@ -13011,6 +13011,163 @@ html body #app-content .academic-toolbar {
   box-shadow: none !important;
 }
 
+/* Unified page-intro system: one typographic rhythm across every primary tab. */
+html body #app-content .page-section > main.wrap > .hero {
+  min-height: 292px !important;
+  max-height: 292px !important;
+  padding: 32px 40px !important;
+  column-gap: clamp(24px, 4vw, 52px) !important;
+  row-gap: 10px !important;
+  align-items: center !important;
+  border-radius: 20px !important;
+  text-align: left !important;
+}
+
+html body #app-content .page-section > main.wrap > .hero .hero-content {
+  align-self: center !important;
+  display: flex !important;
+  min-width: 0 !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  text-align: left !important;
+}
+
+html body #app-content .page-section > main.wrap > .hero .kicker {
+  justify-self: start !important;
+  align-self: auto !important;
+  min-height: 30px !important;
+  margin: 0 !important;
+  padding: 6px 12px !important;
+  color: #6b4f4d !important;
+  font-size: 13px !important;
+  font-weight: 750 !important;
+  line-height: 1.3 !important;
+  letter-spacing: 0 !important;
+  text-align: left !important;
+}
+
+html body #app-content .page-section > main.wrap > .hero h1 {
+  justify-self: start !important;
+  align-self: auto !important;
+  margin: 0 !important;
+  color: #202123 !important;
+  font-size: 44px !important;
+  font-weight: 800 !important;
+  line-height: 1.12 !important;
+  letter-spacing: 0 !important;
+  text-align: left !important;
+}
+
+html body #app-content .page-section > main.wrap > .hero .subtitle {
+  justify-self: start !important;
+  align-self: auto !important;
+  max-width: 640px !important;
+  margin: 0 !important;
+  color: #5f6368 !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  line-height: 1.6 !important;
+  letter-spacing: 0 !important;
+  text-align: left !important;
+}
+
+html body #app-content #home.page-section > main.wrap > .hero {
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 42%) !important;
+  min-height: 292px !important;
+  max-height: 292px !important;
+  padding: 32px 40px !important;
+}
+
+html body #app-content #home.page-section > main.wrap > .hero img.hero-asset {
+  width: min(46vw, 560px) !important;
+  max-height: 330px !important;
+  scale: 1.04 !important;
+  translate: 0 0 !important;
+}
+
+html body #app-content .page-section:not(#home) > main.wrap > .hero img.hero-asset {
+  width: min(300px, 100%) !important;
+  min-width: 210px !important;
+  max-width: 300px !important;
+  max-height: 250px !important;
+  transform: none !important;
+}
+
+@media (max-width: 900px) {
+  html body #app-content .page-section > main.wrap > .hero {
+    min-height: 248px !important;
+    max-height: none !important;
+    padding: 26px 24px !important;
+    column-gap: 20px !important;
+    border-radius: 18px !important;
+  }
+
+  html body #app-content .page-section > main.wrap > .hero h1 {
+    font-size: 36px !important;
+  }
+
+  html body #app-content .page-section > main.wrap > .hero .subtitle {
+    font-size: 15px !important;
+    line-height: 1.55 !important;
+  }
+
+  html body #app-content #home.page-section > main.wrap > .hero {
+    grid-template-columns: minmax(0, 1fr) minmax(190px, 36%) !important;
+    min-height: 248px !important;
+    max-height: none !important;
+    padding: 26px 24px !important;
+  }
+
+  html body #app-content #home.page-section > main.wrap > .hero img.hero-asset,
+  html body #app-content .page-section:not(#home) > main.wrap > .hero img.hero-asset {
+    width: min(230px, 100%) !important;
+    min-width: 170px !important;
+    max-width: 230px !important;
+    max-height: 210px !important;
+    scale: 1 !important;
+    translate: 0 0 !important;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 620px) {
+  html body #app-content .page-section > main.wrap > .hero,
+  html body #app-content #home.page-section > main.wrap > .hero {
+    grid-template-columns: 1fr !important;
+    min-height: 410px !important;
+    max-height: none !important;
+    padding: 22px 18px 14px !important;
+    row-gap: 9px !important;
+  }
+
+  html body #app-content .page-section > main.wrap > .hero h1 {
+    font-size: 34px !important;
+  }
+
+  html body #app-content .page-section > main.wrap > .hero .kicker {
+    min-height: 28px !important;
+    padding: 5px 10px !important;
+    font-size: 12px !important;
+  }
+
+  html body #app-content .page-section > main.wrap > .hero .subtitle {
+    min-height: 72px !important;
+    font-size: 14px !important;
+  }
+
+  html body #app-content #home.page-section > main.wrap > .hero img.hero-asset,
+  html body #app-content .page-section:not(#home) > main.wrap > .hero img.hero-asset {
+    justify-self: center !important;
+    align-self: end !important;
+    width: min(230px, 72vw) !important;
+    min-width: 0 !important;
+    max-width: 230px !important;
+    max-height: 190px !important;
+  }
+}
+
 html body #app-content .academic-search span::before {
   content: "" !important;
   display: block !important;
