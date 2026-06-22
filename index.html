@@ -10,7 +10,7 @@
 <meta property="og:image" content="https://minj0475-coder.github.io/kknutrition/assets/og-image.png?v=2">
 <meta property="og:url" content="https://minj0475-coder.github.io/kknutrition/">
 <title>급식 업무 포털</title>
-<link rel="stylesheet" href="assets/site_v2.css?v=20260622_021">
+<link rel="stylesheet" href="assets/site_v2.css?v=20260622_024">
 <link rel="manifest" href="manifest.json?v=4">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/app-icon-192.png?v=4">
 <link rel="apple-touch-icon" href="assets/app-icon-180.png?v=4">
@@ -70,6 +70,10 @@
 <div id="sidebarOverlay" class="sidebar-overlay" hidden></div>
 <header class="top">
   <div class="top-inner" style="justify-content: space-between;">
+    <button id="mobileMenuBtn" class="mobile-menu-btn" type="button" aria-label="메뉴 열기">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18.5zM9 4v16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+    <span id="mobilePageTitle" class="mobile-page-title">급식 업무 포털</span>
     <a class="brand" href="#home" aria-label="홈으로 가기"><img src="assets/images/kkul-face-logo.png?v=4" class="brand-logo-img" alt="홈"></a>
     <nav class="desktop-nav">
       <a href="#daily">하루 일정</a>
@@ -80,13 +84,6 @@
       <a href="#promo-contacts">업체 연락처</a>
       <a href="#staff">조리종사원</a>
     </nav>
-    <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="메뉴 열기">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="3" y1="12" x2="21" y2="12"></line>
-        <line x1="3" y1="6" x2="21" y2="6"></line>
-        <line x1="3" y1="18" x2="21" y2="18"></line>
-      </svg>
-    </button>
   </div>
   
 </header>
@@ -366,6 +363,42 @@
   <main class="wrap">
   <section class="hero"><div class="kicker">연간 업무</div><h1>연간 일정</h1><p class="subtitle">1년 동안 반복되는 급식 업무를 월별로 확인할 수 있도록 정리했습니다.</p><img loading="lazy" class="hero-asset" src="assets/images/page-kkul/page-kkul-annual-chart.png" alt=""></section>
 
+<section class="card annual-sheet-links-card" id="annualSheetLinks">
+  <div class="annual-sheet-links-head">
+    <div>
+      <h2 class="section-title"><span class="num">바로가기</span>조사 스프레드시트</h2>
+      <p class="mini">링크를 수정한 뒤 저장하면 이 기기에 유지됩니다.</p>
+    </div>
+  </div>
+  <div class="annual-sheet-link-list">
+    <div class="annual-sheet-link-row" data-annual-sheet="allergy">
+      <label for="annualSheetAllergy">알레르기 학생 조사</label>
+      <div class="annual-sheet-link-controls">
+        <input id="annualSheetAllergy" type="url" inputmode="url" placeholder="스프레드시트 링크를 입력하세요">
+        <button class="annual-sheet-save-btn" type="button" aria-label="알레르기 학생 조사 링크 저장" title="저장"><svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path d="M5 4h12l2 2v14H5zM8 4v6h8V4M8 20v-6h8v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></button>
+        <a class="annual-sheet-open-btn" href="#" target="_blank" rel="noopener" aria-label="알레르기 학생 조사 스프레드시트 열기" title="열기"><svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+    <div class="annual-sheet-link-row" data-annual-sheet="milk">
+      <label for="annualSheetMilk">우유 수요 조사</label>
+      <div class="annual-sheet-link-controls">
+        <input id="annualSheetMilk" type="url" inputmode="url">
+        <button class="annual-sheet-save-btn" type="button" aria-label="우유 수요 조사 링크 저장" title="저장"><svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path d="M5 4h12l2 2v14H5zM8 4v6h8V4M8 20v-6h8v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></button>
+        <a class="annual-sheet-open-btn" href="#" target="_blank" rel="noopener" aria-label="우유 수요 조사 스프레드시트 열기" title="열기"><svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+    <div class="annual-sheet-link-row" data-annual-sheet="parents">
+      <label for="annualSheetParents">학부모 봉사·모니터링 명단 및 일정</label>
+      <div class="annual-sheet-link-controls">
+        <input id="annualSheetParents" type="url" inputmode="url">
+        <button class="annual-sheet-save-btn" type="button" aria-label="학부모 봉사 모니터링 링크 저장" title="저장"><svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path d="M5 4h12l2 2v14H5zM8 4v6h8V4M8 20v-6h8v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></button>
+        <a class="annual-sheet-open-btn" href="#" target="_blank" rel="noopener" aria-label="학부모 봉사 모니터링 스프레드시트 열기" title="열기"><svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <p id="annualSheetLinkStatus" class="mini annual-sheet-link-status" aria-live="polite"></p>
+</section>
+
 <section class="card annual-mobile-card">
   <h2 class="section-title"><span class="num">1</span>연간 일정표</h2>
   <div class="annual-mobile-list" id="annual-mobile-auto-list">
@@ -377,10 +410,10 @@
 
     <div class="annual-month-card">
       <h3>3월</h3>
-      <div class="annual-task"><strong>학기 초 조사</strong><ul><li>알레르기 학생 조사</li><li>우유 수요 조사</li></ul></div>
+      <div class="annual-task"><strong>학기 초 조사</strong><ul><li>알레르기 학생 조사 <a class="annual-inline-sheet-link" data-annual-sheet-open="allergy" href="#" target="_blank" rel="noopener">스프레드시트</a></li><li>우유 수요 조사 <a class="annual-inline-sheet-link" data-annual-sheet-open="milk" href="#" target="_blank" rel="noopener">스프레드시트</a></li></ul></div>
       <div class="annual-task"><strong>교육·연수</strong><ul><li>위생·안전 교육</li><li>영양사 보수교육·위생교육 이수</li><li>조리사 위생교육 이수 안내</li><li>1분기 교직원·학부모 영양교육 홈페이지 게시</li></ul></div>
       <div class="annual-task"><strong>영양사 실태신고</strong><ul><li>영양사 실태신고: 3년 주기, 2027년 신고 대상자</li></ul></div>
-      <div class="annual-task"><strong>학부모 모니터링</strong><ul><li>학부모 모니터링 명단 취합 및 일정 편성</li><li>학부모 급식대표 선정 준비</li></ul></div>
+      <div class="annual-task"><strong>학부모 모니터링</strong><ul><li>학부모 봉사·모니터링 명단 취합 및 일정 편성 <a class="annual-inline-sheet-link" data-annual-sheet-open="parents" href="#" target="_blank" rel="noopener">스프레드시트</a></li><li>학부모 급식대표 선정 준비</li></ul></div>
       <div class="annual-task"><strong>영양교육</strong><ul><li>영양수업 준비 시작(3~5월 준비)</li></ul></div>
     </div>
 
@@ -475,8 +508,8 @@
           <td class="task-cell">학기 초 조사</td>
           <td>
             <ul class="table-list">
-              <li>알레르기 학생 조사</li>
-              <li>우유 수요 조사</li>
+              <li>알레르기 학생 조사 <a class="annual-inline-sheet-link" data-annual-sheet-open="allergy" href="#" target="_blank" rel="noopener">스프레드시트</a></li>
+              <li>우유 수요 조사 <a class="annual-inline-sheet-link" data-annual-sheet-open="milk" href="#" target="_blank" rel="noopener">스프레드시트</a></li>
             </ul>
           </td>
         </tr>
@@ -503,7 +536,7 @@
           <td class="task-cell">학부모 모니터링</td>
           <td>
             <ul class="table-list">
-              <li>학부모 모니터링 명단 취합 및 일정 편성</li>
+              <li>학부모 봉사·모니터링 명단 취합 및 일정 편성 <a class="annual-inline-sheet-link" data-annual-sheet-open="parents" href="#" target="_blank" rel="noopener">스프레드시트</a></li>
               <li>학부모 급식대표 선정 준비</li>
             </ul>
           </td>
@@ -1097,7 +1130,7 @@
 <script src="assets/xlsx.full.min.js" defer></script>
 <script src="assets/auth.js?v=20260622_001" defer></script>
 <script src="assets/bookmarks.js?v=20260621_002" defer></script>
-<script src="assets/site.js?v=20260622_009" defer></script>
+<script src="assets/site.js?v=20260622_012" defer></script>
 <script src="assets/excel-parser.js?v=20260615_455" defer></script>
 <script type="module" src="assets/firebase-init.js?v=20260621_002" defer></script>
 <script>

@@ -1042,6 +1042,16 @@ if ('scrollRestoration' in history) {
 
 const ACTIVE_HASH_KEY = "kkulkkoori_active_hash_v1";
 const SIDEBAR_OPEN_KEY = "kkulkkoori_sidebar_open_v1";
+const MOBILE_PAGE_TITLES = {
+  home: "급식 업무 포털",
+  daily: "하루 일정",
+  monthly: "한 달 일정 · 학사일정",
+  annual: "연간 일정",
+  "today-menu": "급식노트",
+  bookmarks: "북마크",
+  "promo-contacts": "업체 연락처",
+  staff: "조리종사원"
+};
 
 function getStoredActiveHash() {
   try {
@@ -1079,6 +1089,10 @@ function updateTabs() {
       section.classList.remove('active');
     }
   });
+  const mobilePageTitle = document.getElementById("mobilePageTitle");
+  if (mobilePageTitle) {
+    mobilePageTitle.textContent = MOBILE_PAGE_TITLES[hash.slice(1)] || "급식 업무 포털";
+  }
   document.querySelectorAll('nav a, .drawer-nav a, .sidebar-nav a, .sidebar-subnav a').forEach(link => {
     if (link.getAttribute('href') === hash) {
       link.classList.add('active');
@@ -1099,6 +1113,131 @@ function updateTabs() {
 }
 window.addEventListener('hashchange', updateTabs);
 document.addEventListener('DOMContentLoaded', updateTabs);
+
+const ANNUAL_SHEET_LINKS_KEY = "kkulkkoori_annual_sheet_links_v1";
+const ANNUAL_SHEET_LINK_DEFAULTS = {
+  allergy: "",
+  milk: "https://docs.google.com/spreadsheets/d/1bRM1PMEMF8Ao87W8NnqHJ96TveR4VnFe4n28PSoqbuk/edit?ouid=114695235848074072880&usp=sheets_home&ths=true",
+  parents: "https://docs.google.com/spreadsheets/d/1fuBRpc45q2dKf5oAsRzENVBFlpfDesOk0EegxtRsEY0/edit?gid=0#gid=0"
+};
+
+function readAnnualSheetLinks() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(ANNUAL_SHEET_LINKS_KEY) || "{}");
+    return { ...ANNUAL_SHEET_LINK_DEFAULTS, ...(saved && typeof saved === "object" ? saved : {}) };
+  } catch (e) {
+    return { ...ANNUAL_SHEET_LINK_DEFAULTS };
+  }
+}
+
+function normalizeAnnualSheetUrl(value) {
+  const url = String(value || "").trim();
+  if (!url) return "";
+  return /^https?:\/\//i.test(url) ? url : `https://${url}`;
+}
+
+function setupAnnualSheetLinks() {
+  const card = document.getElementById("annualSheetLinks");
+  if (!card) return;
+  const status = document.getElementById("annualSheetLinkStatus");
+  let links = readAnnualSheetLinks();
+
+  const inlineTargets = {
+    allergy: "알레르기 학생 조사",
+    milk: "우유 수요 조사",
+    parents: "학부모 봉사·모니터링 명단 취합 및 일정 편성"
+  };
+
+  const ensureInlineLinks = () => {
+    document.querySelectorAll("#annual li").forEach(item => {
+      const itemText = item.textContent.replace(/\s+/g, " ").trim();
+      const key = Object.keys(inlineTargets).find(name => itemText.startsWith(inlineTargets[name]));
+      if (!key || item.querySelector(`[data-annual-sheet-open="${key}"]`)) return;
+      const link = document.createElement("a");
+      link.className = "annual-inline-sheet-link";
+      link.dataset.annualSheetOpen = key;
+      link.target = "_blank";
+      link.rel = "noopener";
+      link.textContent = "스프레드시트";
+      item.append(" ", link);
+    });
+  };
+
+  const setStatus = message => {
+    if (!status) return;
+    status.textContent = message;
+    window.clearTimeout(status._timer);
+    status._timer = window.setTimeout(() => { status.textContent = ""; }, 1800);
+  };
+
+  const updateRow = row => {
+    const key = row.dataset.annualSheet;
+    const input = row.querySelector("input");
+    const openLink = row.querySelector(".annual-sheet-open-btn");
+    const value = normalizeAnnualSheetUrl(input ? input.value : links[key]);
+    if (openLink) {
+      openLink.href = value || "#";
+      openLink.classList.toggle("is-disabled", !value);
+      openLink.setAttribute("aria-disabled", value ? "false" : "true");
+      openLink.tabIndex = value ? 0 : -1;
+    }
+    document.querySelectorAll(`[data-annual-sheet-open="${key}"]`).forEach(link => {
+      link.href = value || "#";
+      link.classList.toggle("is-disabled", !value);
+      link.setAttribute("aria-disabled", value ? "false" : "true");
+      link.tabIndex = value ? 0 : -1;
+    });
+  };
+
+  const saveRow = row => {
+    const key = row.dataset.annualSheet;
+    const input = row.querySelector("input");
+    const value = normalizeAnnualSheetUrl(input ? input.value : "");
+    links[key] = value;
+    if (input) input.value = value;
+    try { localStorage.setItem(ANNUAL_SHEET_LINKS_KEY, JSON.stringify(links)); } catch (e) {}
+    updateRow(row);
+    row.classList.add("is-saved");
+    window.setTimeout(() => row.classList.remove("is-saved"), 700);
+    setStatus("스프레드시트 링크를 저장했습니다.");
+  };
+
+  ensureInlineLinks();
+  const rows = [...card.querySelectorAll(".annual-sheet-link-row")];
+  rows.forEach(row => {
+    const key = row.dataset.annualSheet;
+    const input = row.querySelector("input");
+    const saveButton = row.querySelector(".annual-sheet-save-btn");
+    const openLink = row.querySelector(".annual-sheet-open-btn");
+    if (input) {
+      input.value = links[key] || "";
+      input.addEventListener("input", () => updateRow(row));
+      input.addEventListener("keydown", event => {
+        if (event.key !== "Enter") return;
+        event.preventDefault();
+        saveRow(row);
+      });
+    }
+    if (saveButton) saveButton.addEventListener("click", () => saveRow(row));
+    if (openLink) {
+      openLink.addEventListener("click", event => {
+        if (openLink.classList.contains("is-disabled")) event.preventDefault();
+      });
+    }
+    updateRow(row);
+  });
+  card.ownerDocument.querySelectorAll(".annual-inline-sheet-link").forEach(link => {
+    link.addEventListener("click", event => {
+      if (link.classList.contains("is-disabled")) event.preventDefault();
+    });
+  });
+  window.setTimeout(() => {
+    ensureInlineLinks();
+    rows.forEach(updateRow);
+  }, 120);
+}
+
+document.addEventListener("DOMContentLoaded", setupAnnualSheetLinks);
 
 
 document.addEventListener('DOMContentLoaded', () => {

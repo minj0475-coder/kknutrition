@@ -32,6 +32,7 @@
   --pink-soft: var(--primary);
   --peach-soft: var(--accent);
 }
+
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
@@ -12798,5 +12799,406 @@ html body #app-content .academic-week-list .academic-week-group .academic-week-r
 
   html body #app-content .academic-weekly-card {
     padding: 14px !important;
+  }
+}
+
+/* 2026-06-22 final requested priority layer. */
+html body #app-content .annual-sheet-links-card {
+  padding: 22px !important;
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 18px !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+html body #app-content .annual-sheet-links-head {
+  margin-bottom: 16px !important;
+}
+
+html body #app-content .annual-sheet-links-head .section-title {
+  margin: 0 0 5px !important;
+  font-size: 24px !important;
+}
+
+html body #app-content .annual-sheet-link-list {
+  display: grid !important;
+  gap: 8px !important;
+}
+
+html body #app-content .annual-sheet-link-row {
+  display: grid !important;
+  grid-template-columns: minmax(190px, 260px) minmax(0, 1fr) !important;
+  align-items: center !important;
+  gap: 16px !important;
+  min-height: 58px !important;
+  padding: 8px 10px 8px 14px !important;
+  border: 1px solid #ececec !important;
+  border-radius: 14px !important;
+  background: #fff !important;
+}
+
+html body #app-content .annual-sheet-link-row:focus-within {
+  border-color: #cfcfcf !important;
+  background: #fcfcfc !important;
+}
+
+html body #app-content .annual-sheet-link-row.is-saved {
+  border-color: #9ccfc2 !important;
+  background: #f7fcfa !important;
+}
+
+html body #app-content .annual-sheet-link-row > label {
+  color: #202123 !important;
+  font-size: 15px !important;
+  font-weight: 750 !important;
+  line-height: 1.4 !important;
+  word-break: keep-all !important;
+}
+
+html body #app-content .annual-sheet-link-controls {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 40px 40px !important;
+  align-items: center !important;
+  gap: 6px !important;
+  min-width: 0 !important;
+}
+
+html body #app-content .annual-sheet-link-controls input {
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 40px !important;
+  padding: 0 12px !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  background: #f7f7f8 !important;
+  color: #202123 !important;
+  box-shadow: none !important;
+  font-size: 14px !important;
+  outline: none !important;
+}
+
+html body #app-content .annual-sheet-link-controls input:focus {
+  background: #f1f1f1 !important;
+  box-shadow: inset 0 0 0 1px #d5d5d5 !important;
+}
+
+html body #app-content .annual-sheet-save-btn,
+html body #app-content .annual-sheet-open-btn {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  background: transparent !important;
+  color: #4b4b4b !important;
+  box-shadow: none !important;
+}
+
+html body #app-content .annual-sheet-save-btn:hover,
+html body #app-content .annual-sheet-open-btn:hover {
+  background: #f1f1f1 !important;
+}
+
+html body #app-content .annual-sheet-open-btn.is-disabled {
+  opacity: .32 !important;
+  pointer-events: none !important;
+}
+
+html body #app-content .annual-sheet-link-status {
+  min-height: 18px !important;
+  margin: 8px 2px 0 !important;
+  color: #397366 !important;
+  font-weight: 700 !important;
+}
+
+html body #app-content .annual-inline-sheet-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  min-height: 28px !important;
+  margin-left: 6px !important;
+  padding: 4px 8px !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: #f1f1f1 !important;
+  color: #3f3f3f !important;
+  font-size: 12px !important;
+  font-weight: 750 !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+}
+
+html body #app-content .annual-inline-sheet-link:hover {
+  background: #e7e7e7 !important;
+  color: #202123 !important;
+}
+
+html body #app-content .annual-inline-sheet-link.is-disabled {
+  opacity: .38 !important;
+  pointer-events: none !important;
+}
+
+html body #app-content #bookmarks button.bm-favorite-btn.bm-favorite-btn {
+  min-width: 32px !important;
+  min-height: 32px !important;
+  padding: 5px !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+html body #app-content #bookmarks button.bm-favorite-btn.bm-favorite-btn:hover,
+html body #app-content #bookmarks button.bm-favorite-btn.bm-favorite-btn:focus-visible {
+  border: 0 !important;
+  background: #f7f7f8 !important;
+  box-shadow: none !important;
+}
+
+html body #app-content #academicModal button.academic-color-swatch.academic-color-swatch {
+  width: 30px !important;
+  height: 30px !important;
+  min-width: 30px !important;
+  min-height: 30px !important;
+  padding: 0 !important;
+  border: 2px solid transparent !important;
+  border-radius: 999px !important;
+  box-shadow: inset 0 0 0 2px #fff, 0 2px 7px rgba(32, 33, 35, .12) !important;
+}
+
+html body #app-content #academicModal button.academic-color-swatch.color-rose { background: #ef8799 !important; }
+html body #app-content #academicModal button.academic-color-swatch.color-mint { background: #61c9b8 !important; }
+html body #app-content #academicModal button.academic-color-swatch.color-blue { background: #72aee8 !important; }
+html body #app-content #academicModal button.academic-color-swatch.color-gold { background: #eabb52 !important; }
+html body #app-content #academicModal button.academic-color-swatch.color-gray { background: #9b9693 !important; }
+
+html body #app-content #academicModal button.academic-color-swatch.is-selected {
+  border-color: #202123 !important;
+  outline: 0 !important;
+  scale: 1.08 !important;
+}
+
+html body #app-content .academic-toolbar {
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 16px !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+html body #app-content .academic-search span::before {
+  content: "" !important;
+  display: block !important;
+  width: 18px !important;
+  height: 18px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #6b6b6b !important;
+  box-shadow: none !important;
+  transform: none !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='m20.5 19.1-4.2-4.2a7.2 7.2 0 1 0-1.4 1.4l4.2 4.2a1 1 0 0 0 1.4-1.4ZM5 10.5a5.5 5.5 0 1 1 11 0 5.5 5.5 0 0 1-11 0Z'/%3E%3C/svg%3E") center / contain no-repeat !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='m20.5 19.1-4.2-4.2a7.2 7.2 0 1 0-1.4 1.4l4.2 4.2a1 1 0 0 0 1.4-1.4ZM5 10.5a5.5 5.5 0 1 1 11 0 5.5 5.5 0 0 1-11 0Z'/%3E%3C/svg%3E") center / contain no-repeat !important;
+}
+
+@media (min-width: 901px) {
+  html body #app-content .home-grid-left .daily-kkul-card.daily-kkul-card,
+  html body #app-content .daily-kkul-card.daily-kkul-card {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    justify-items: center !important;
+    gap: 12px !important;
+    min-height: 410px !important;
+    padding: 26px 22px 22px !important;
+    text-align: center !important;
+  }
+
+  html body #app-content .daily-kkul-card .daily-kkul-copy {
+    align-items: center !important;
+  }
+
+  html body #app-content .daily-kkul-card .section-title {
+    justify-content: center !important;
+    font-size: 27px !important;
+  }
+
+  html body #app-content .daily-kkul-card .daily-kkul-message {
+    max-width: 16rem !important;
+    text-align: center !important;
+  }
+
+  html body #app-content .daily-kkul-card .daily-kkul-image-wrap {
+    width: 100% !important;
+    min-height: 235px !important;
+    border-radius: 16px !important;
+    background: #fffafa !important;
+  }
+
+  html body #app-content .daily-kkul-card .daily-kkul-image-wrap::before {
+    content: none !important;
+    display: none !important;
+  }
+
+  html body #app-content .daily-kkul-card .daily-kkul-image {
+    width: min(245px, 92%) !important;
+    max-width: 245px !important;
+  }
+
+  html body #app-content #home.page-section .hero {
+    min-height: 285px !important;
+    max-height: 330px !important;
+    padding: 28px 42px !important;
+    grid-template-columns: minmax(0, 1fr) minmax(390px, 48%) !important;
+    align-items: center !important;
+  }
+
+  html body #app-content #home.page-section .hero img.hero-asset {
+    width: min(52vw, 690px) !important;
+    max-height: 405px !important;
+    align-self: center !important;
+    justify-self: center !important;
+    scale: 1.1 !important;
+    translate: 0 -8px !important;
+  }
+}
+
+@media (max-width: 900px) {
+  html body #app-content {
+    padding-top: 64px !important;
+  }
+
+  html body #app-content > header.top {
+    position: fixed !important;
+    inset: 0 0 auto 0 !important;
+    width: 100% !important;
+    height: 64px !important;
+    min-height: 64px !important;
+    display: block !important;
+    border: 0 !important;
+    border-bottom: 1px solid #ececec !important;
+    background: rgba(255, 255, 255, .96) !important;
+    backdrop-filter: blur(16px) !important;
+    box-shadow: none !important;
+    pointer-events: auto !important;
+    z-index: 1200 !important;
+  }
+
+  html body #app-content > header.top .top-inner {
+    width: 100% !important;
+    height: 64px !important;
+    min-height: 64px !important;
+    padding: 0 14px !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+  }
+
+  html body #app-content > header.top .mobile-menu-btn {
+    position: static !important;
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    min-height: 42px !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 0 !important;
+    border-radius: 10px !important;
+    background: transparent !important;
+    color: #343434 !important;
+    box-shadow: none !important;
+  }
+
+  html body #app-content > header.top .mobile-page-title {
+    display: block !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    color: #202123 !important;
+    font-size: 15px !important;
+    font-weight: 750 !important;
+    line-height: 1.3 !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+  }
+
+  html body #app-content > header.top .brand,
+  html body #app-content > header.top .desktop-nav {
+    display: none !important;
+  }
+
+  html body #app-content .annual-sheet-link-row {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    padding: 12px !important;
+  }
+
+  html body #app-content #annual #edit-annual-2 .simple-table,
+  html body #app-content #annual #edit-annual-2 .simple-table tbody,
+  html body #app-content #annual #edit-annual-2 .simple-table tr,
+  html body #app-content #annual #edit-annual-2 .simple-table th,
+  html body #app-content #annual #edit-annual-2 .simple-table td {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  html body #app-content #annual #edit-annual-2 .simple-table {
+    border: 0 !important;
+    background: transparent !important;
+  }
+
+  html body #app-content #annual #edit-annual-2 .simple-table tr {
+    overflow: hidden !important;
+    border: 1px solid #e5e5e5 !important;
+    border-radius: 14px !important;
+    background: #fff !important;
+  }
+
+  html body #app-content #annual #edit-annual-2 .simple-table th {
+    padding: 11px 14px !important;
+    border: 0 !important;
+    border-bottom: 1px solid #ececec !important;
+    background: #f7f7f8 !important;
+    text-align: left !important;
+  }
+
+  html body #app-content #annual #edit-annual-2 .simple-table td {
+    padding: 12px 14px !important;
+    border: 0 !important;
+    background: #fff !important;
+  }
+
+  html body #app-content #annual #edit-annual-2 .simple-table td > div {
+    padding: 9px 0 !important;
+    border-bottom: 1px solid #f0f0f0 !important;
+    line-height: 1.5 !important;
+  }
+
+  html body #app-content #annual #edit-annual-2 .simple-table td > div:last-child {
+    border-bottom: 0 !important;
+  }
+}
+
+@media (max-width: 560px) {
+  html body #app-content .annual-sheet-links-card {
+    padding: 16px !important;
+  }
+
+  html body #app-content .annual-sheet-link-controls input {
+    grid-column: 1 / -1 !important;
+  }
+
+  html body #app-content .annual-sheet-save-btn {
+    grid-column: 2 !important;
+  }
+
+  html body #app-content .annual-sheet-open-btn {
+    grid-column: 3 !important;
   }
 }
