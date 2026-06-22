@@ -13440,3 +13440,25 @@ html body #app-content .academic-search span::before {
     z-index: 1300 !important;
   }
 }
+
+/* Compact mobile app bar; home intentionally shows only the menu icon. */
+@media (max-width: 900px) {
+  html body #app-content {
+    padding-top: 56px !important;
+  }
+
+  html body #app-content > header.top,
+  html body #app-content > header.top .top-inner {
+    height: 56px !important;
+    min-height: 56px !important;
+  }
+
+  html body #app-content > header.top .top-inner {
+    padding: 0 12px !important;
+    gap: 8px !important;
+  }
+
+  html body #app-content > header.top .mobile-page-title:empty {
+    display: none !important;
+  }
+}

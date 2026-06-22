@@ -1043,7 +1043,7 @@ if ('scrollRestoration' in history) {
 const ACTIVE_HASH_KEY = "kkulkkoori_active_hash_v1";
 const SIDEBAR_OPEN_KEY = "kkulkkoori_sidebar_open_v1";
 const MOBILE_PAGE_TITLES = {
-  home: "홈",
+  home: "",
   daily: "하루 일정",
   monthly: "한 달 일정",
   annual: "연간 일정",
@@ -1091,7 +1091,7 @@ function updateTabs() {
   });
   const mobilePageTitle = document.getElementById("mobilePageTitle");
   if (mobilePageTitle) {
-    mobilePageTitle.textContent = MOBILE_PAGE_TITLES[hash.slice(1)] || "홈";
+    mobilePageTitle.textContent = MOBILE_PAGE_TITLES[hash.slice(1)] || "";
   }
   document.querySelectorAll('nav a, .drawer-nav a, .sidebar-nav a, .sidebar-subnav a').forEach(link => {
     if (link.getAttribute('href') === hash) {
