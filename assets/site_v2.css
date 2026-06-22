@@ -12041,3 +12041,65 @@ html body #app-content .daily-kkul-image {
     max-width: 235px !important;
   }
 }
+
+/* 2026-06-22 collapsed sidebar rail and larger home hero pig. */
+@media (min-width: 901px) {
+  html body.sidebar-collapsed #app-content {
+    margin-left: 66px !important;
+    padding-top: 0 !important;
+  }
+
+  html body.sidebar-collapsed .app-sidebar {
+    width: 66px !important;
+    transform: translateX(0) !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    overflow: hidden !important;
+    border-right: 1px solid #e5e5e5 !important;
+    background: #fff !important;
+  }
+
+  html body.sidebar-collapsed .app-sidebar .sidebar-head {
+    height: 72px !important;
+    padding: 12px 8px !important;
+    justify-content: center !important;
+    border-bottom: 0 !important;
+  }
+
+  html body.sidebar-collapsed .app-sidebar .sidebar-logo-link {
+    width: 50px !important;
+    height: 50px !important;
+    min-height: 50px !important;
+    padding: 0 !important;
+    justify-content: center !important;
+    border-radius: 14px !important;
+  }
+
+  html body.sidebar-collapsed .app-sidebar .sidebar-logo {
+    width: 44px !important;
+    height: 44px !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0 8px 16px rgba(32, 33, 35, .10)) !important;
+  }
+
+  html body.sidebar-collapsed .app-sidebar .sidebar-logo-link span,
+  html body.sidebar-collapsed .app-sidebar .sidebar-icon-btn,
+  html body.sidebar-collapsed .app-sidebar .sidebar-search-wrap,
+  html body.sidebar-collapsed .app-sidebar .sidebar-nav,
+  html body.sidebar-collapsed .app-sidebar .sidebar-section {
+    display: none !important;
+  }
+
+  html body #app-content #home.page-section .hero img.hero-asset {
+    width: min(51vw, 660px) !important;
+    max-height: 390px !important;
+    scale: 1.05 !important;
+  }
+}
+
+@media (max-width: 900px) {
+  html body #app-content #home.page-section .hero img.hero-asset {
+    width: min(88vw, 430px) !important;
+    max-height: 300px !important;
+  }
+}
