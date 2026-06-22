@@ -12561,3 +12561,242 @@ html body #app-content .academic-week-list .academic-week-group .academic-week-r
   background: transparent !important;
   font-size: 13px !important;
 }
+
+/* 2026-06-22 compact responsive pass: less whitespace, no table side-scroll on phones. */
+@media (max-width: 760px) {
+  html body #app-content .wrap {
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 14px 28px !important;
+  }
+
+  html body #app-content .page-section main.wrap {
+    margin-top: 0 !important;
+  }
+
+  html body #app-content .hero {
+    min-height: 0 !important;
+    padding: 22px 18px 18px !important;
+    gap: 14px !important;
+    border-radius: 18px !important;
+  }
+
+  html body #app-content .hero h1 {
+    font-size: clamp(34px, 11vw, 48px) !important;
+    line-height: 1.06 !important;
+  }
+
+  html body #app-content .hero .subtitle {
+    font-size: 15px !important;
+    line-height: 1.55 !important;
+  }
+
+  html body #app-content .card,
+  html body #app-content .note,
+  html body #app-content .panel,
+  html body #app-content .memo-card,
+  html body #app-content .home-today-card,
+  html body #app-content .weekly-check-card,
+  html body #app-content .academic-calendar-card,
+  html body #app-content .academic-weekly-card,
+  html body #app-content .vendor-network-card,
+  html body #app-content .promo-contact-card,
+  html body #app-content .staff-accordion-card,
+  html body #app-content .bookmark-folder-section {
+    padding: 16px !important;
+    border-radius: 16px !important;
+  }
+
+  html body #app-content .home-grid,
+  html body #app-content .home-grid-left,
+  html body #app-content .home-grid-right {
+    gap: 12px !important;
+  }
+
+  html body #app-content .section-title {
+    font-size: 24px !important;
+    line-height: 1.18 !important;
+  }
+
+  html body #app-content .table-wrap,
+  html body #app-content .promo-table-wrap,
+  html body #app-content .today-menu-table-wrap,
+  html body #app-content .annual-mobile-card {
+    overflow: visible !important;
+  }
+
+  html body #app-content table.schedule-table,
+  html body #app-content table.annual-table {
+    display: block !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    border: 0 !important;
+    background: transparent !important;
+  }
+
+  html body #app-content table.schedule-table thead,
+  html body #app-content table.annual-table thead {
+    display: none !important;
+  }
+
+  html body #app-content table.schedule-table tbody,
+  html body #app-content table.schedule-table tr,
+  html body #app-content table.annual-table tbody,
+  html body #app-content table.annual-table tr {
+    display: grid !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+
+  html body #app-content table.schedule-table tr,
+  html body #app-content table.annual-table tr {
+    margin: 0 0 10px !important;
+    padding: 13px !important;
+    border: 1px solid #e5e5e5 !important;
+    border-radius: 14px !important;
+    background: #fff !important;
+  }
+
+  html body #app-content table.schedule-table td,
+  html body #app-content table.annual-table td {
+    display: grid !important;
+    grid-template-columns: 78px minmax(0, 1fr) !important;
+    gap: 10px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    font-size: 14px !important;
+    line-height: 1.55 !important;
+  }
+
+  html body #app-content table.schedule-table td::before,
+  html body #app-content table.annual-table td::before {
+    content: attr(data-label) !important;
+    color: #6b7280 !important;
+    font-size: 12px !important;
+    font-weight: 750 !important;
+  }
+
+  html body #app-content table.schedule-table ul,
+  html body #app-content table.annual-table ul {
+    margin: 0 !important;
+    padding-left: 16px !important;
+  }
+
+  html body #app-content #promo-contacts .promo-contact-table {
+    display: block !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    border: 0 !important;
+    background: transparent !important;
+  }
+
+  html body #app-content #promo-contacts .promo-contact-table thead {
+    display: none !important;
+  }
+
+  html body #app-content #promo-contacts .promo-contact-table tbody,
+  html body #app-content #promo-contacts .promo-contact-table tr {
+    display: grid !important;
+    width: 100% !important;
+  }
+
+  html body #app-content #promo-contacts .promo-contact-table tr {
+    gap: 8px !important;
+    margin: 0 0 12px !important;
+    padding: 12px !important;
+    border: 1px solid #e5e5e5 !important;
+    border-radius: 14px !important;
+    background: #fff !important;
+  }
+
+  html body #app-content #promo-contacts .promo-contact-table td {
+    display: block !important;
+    width: 100% !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+  }
+
+  html body #app-content #promo-contacts .promo-cell-input,
+  html body #app-content #promo-contacts .promo-contact-table textarea,
+  html body #app-content #promo-contacts .promo-contact-table input {
+    min-height: 40px !important;
+    padding: 9px 10px !important;
+    border: 1px solid #e5e5e5 !important;
+    border-radius: 11px !important;
+    background: #fafafa !important;
+    font-size: 14px !important;
+  }
+
+  html body #app-content #promo-contacts .promo-row-tools {
+    display: flex !important;
+    justify-content: flex-end !important;
+    width: 100% !important;
+  }
+
+  html body #app-content .academic-toolbar {
+    padding: 12px !important;
+    border-radius: 16px !important;
+  }
+
+  html body #app-content .academic-month-label {
+    font-size: 24px !important;
+  }
+
+  html body #app-content .academic-calendar-panel {
+    overflow: visible !important;
+    padding: 0 !important;
+    border-radius: 16px !important;
+  }
+
+  html body #app-content .academic-weekdays,
+  html body #app-content .academic-calendar-grid {
+    min-width: 0 !important;
+    width: 100% !important;
+    grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+  }
+
+  html body #app-content .academic-weekdays span {
+    min-width: 0 !important;
+    padding: 8px 0 !important;
+    font-size: 12px !important;
+  }
+
+  html body #app-content .academic-day,
+  html body #app-content button.academic-day {
+    min-width: 0 !important;
+    min-height: 78px !important;
+    padding: 5px !important;
+    border-radius: 0 !important;
+  }
+
+  html body #app-content .academic-date-line {
+    min-height: 20px !important;
+  }
+
+  html body #app-content .academic-date-num {
+    min-width: 22px !important;
+    height: 22px !important;
+    font-size: 12px !important;
+  }
+
+  html body #app-content .academic-pill {
+    min-height: 19px !important;
+    padding: 2px 4px !important;
+    border-radius: 6px !important;
+    font-size: 10px !important;
+    line-height: 1.25 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  html body #app-content .academic-layout {
+    gap: 12px !important;
+  }
+
+  html body #app-content .academic-weekly-card {
+    padding: 14px !important;
+  }
+}
