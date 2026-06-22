@@ -13636,3 +13636,28 @@ html body #app-content .annual-sheet-links-body {
 html body #app-content .annual-sheet-links-help {
   margin: 0 0 10px !important;
 }
+
+/* Give the promo-contact mascot a dedicated mobile row so it cannot be clipped. */
+@media (max-width: 620px) {
+  html body #app-content #promo-contacts.page-section > main.wrap > .hero {
+    grid-template-rows: auto auto auto minmax(210px, auto) !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding-bottom: 18px !important;
+  }
+
+  html body #app-content #promo-contacts.page-section > main.wrap > .hero img.hero-asset {
+    position: relative !important;
+    inset: auto !important;
+    justify-self: center !important;
+    align-self: center !important;
+    width: min(230px, 72vw) !important;
+    height: auto !important;
+    max-height: 210px !important;
+    margin: 4px auto 0 !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    transform: none !important;
+    translate: 0 0 !important;
+  }
+}
