@@ -13202,3 +13202,15 @@ html body #app-content .academic-search span::before {
     grid-column: 3 !important;
   }
 }
+
+@media (max-width: 900px) {
+  html body.sidebar-open #app-content > header.top {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  html body.sidebar-open .app-sidebar {
+    z-index: 1300 !important;
+  }
+}

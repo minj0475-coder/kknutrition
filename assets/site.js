@@ -1042,16 +1042,6 @@ if ('scrollRestoration' in history) {
 
 const ACTIVE_HASH_KEY = "kkulkkoori_active_hash_v1";
 const SIDEBAR_OPEN_KEY = "kkulkkoori_sidebar_open_v1";
-const MOBILE_PAGE_TITLES = {
-  home: "급식 업무 포털",
-  daily: "하루 일정",
-  monthly: "한 달 일정 · 학사일정",
-  annual: "연간 일정",
-  "today-menu": "급식노트",
-  bookmarks: "북마크",
-  "promo-contacts": "업체 연락처",
-  staff: "조리종사원"
-};
 
 function getStoredActiveHash() {
   try {
@@ -1089,10 +1079,6 @@ function updateTabs() {
       section.classList.remove('active');
     }
   });
-  const mobilePageTitle = document.getElementById("mobilePageTitle");
-  if (mobilePageTitle) {
-    mobilePageTitle.textContent = MOBILE_PAGE_TITLES[hash.slice(1)] || "급식 업무 포털";
-  }
   document.querySelectorAll('nav a, .drawer-nav a, .sidebar-nav a, .sidebar-subnav a').forEach(link => {
     if (link.getAttribute('href') === hash) {
       link.classList.add('active');
