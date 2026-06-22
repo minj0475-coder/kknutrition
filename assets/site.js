@@ -2051,6 +2051,32 @@ document.addEventListener("DOMContentLoaded", () => {
     selectedKey: makeAcademicKey(today)
   };
   let userEvents = readAcademicEvents();
+  let modalScrollY = 0;
+  let modalScrollLocked = false;
+
+  function lockAcademicModalScroll() {
+    if (modalScrollLocked) return;
+    modalScrollY = window.scrollY;
+    modalScrollLocked = true;
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${modalScrollY}px`;
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
+    document.body.style.overflow = "hidden";
+  }
+
+  function unlockAcademicModalScroll() {
+    if (!modalScrollLocked) return;
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.left = "";
+    document.body.style.right = "";
+    document.body.style.width = "";
+    document.body.style.overflow = "";
+    modalScrollLocked = false;
+    window.scrollTo({ top: modalScrollY, left: 0, behavior: "instant" });
+  }
 
   function setStatus(message) {
     if (!statusEl) return;
@@ -2090,11 +2116,12 @@ document.addEventListener("DOMContentLoaded", () => {
   function openAcademicModal(key) {
     selectDate(key);
     if (modal) {
+      lockAcademicModalScroll();
       modal.hidden = false;
       document.body.classList.add("modal-open");
     }
     if (titleInput) {
-      window.setTimeout(() => titleInput.focus(), 30);
+      window.setTimeout(() => titleInput.focus({ preventScroll: true }), 30);
     }
   }
 
@@ -2102,6 +2129,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (modal) modal.hidden = true;
     document.body.classList.remove("modal-open");
     if (modal) modal.classList.remove("is-expanded");
+    unlockAcademicModalScroll();
   }
 
   function renderCalendar() {

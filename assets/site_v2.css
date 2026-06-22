@@ -13277,6 +13277,21 @@ html body .app-sidebar .sidebar-section {
   }
 }
 
+/* Keep the academic editor over the calendar without moving the page. */
+body.modal-open #academicModal.academic-modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  align-items: center !important;
+  overflow: hidden !important;
+  overscroll-behavior: contain !important;
+}
+
+body.modal-open #academicModal .academic-modal {
+  max-height: calc(100dvh - 24px) !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain !important;
+}
+
 /* Make the substitute-message copy action easy to spot and tap. */
 html body #app-content #new-substitute .copy-panel .message-box {
   padding-right: 72px !important;
