@@ -1199,6 +1199,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
   buildSidebarToc();
+  if (sidebar) {
+    sidebar.addEventListener("click", event => {
+      const link = event.target.closest("a[href]");
+      if (link && window.matchMedia("(max-width: 900px)").matches) closeDrawer();
+    });
+  }
   setupSidebarSearch(sidebarSearch, closeDrawer);
   renderRecentPages();
 });

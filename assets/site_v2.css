@@ -11275,3 +11275,562 @@ body #app-content #promo-contacts .icon-only-btn svg {
     box-shadow: none !important;
   }
 }
+
+/* 2026-06-22 responsive polish: cleaner memo, icons, calendar and recipe cards. */
+body #app-content .memo-card {
+  padding: clamp(22px, 3vw, 30px) !important;
+}
+
+body #app-content .memo-head {
+  margin-bottom: 20px !important;
+}
+
+body #app-content .memo-full-btn,
+body #app-content #closeMemoModalBtn,
+body #app-content #unsavedModalCloseBtn,
+body #app-content .icon-only-btn,
+body #app-content .copy-icon-btn,
+body #app-content .delete-icon-btn,
+body #app-content .bm-delete-btn {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #202123 !important;
+}
+
+body #app-content .memo-full-btn {
+  width: 44px !important;
+  height: 44px !important;
+  min-height: 44px !important;
+  padding: 9px !important;
+  border-radius: 12px !important;
+}
+
+body #app-content .memo-full-btn svg,
+body #app-content #closeMemoModalBtn svg,
+body #app-content #unsavedModalCloseBtn svg,
+body #app-content .icon-only-btn svg {
+  width: 25px !important;
+  height: 25px !important;
+  stroke-width: 2 !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  body #app-content .memo-full-btn:hover,
+  body #app-content #closeMemoModalBtn:hover,
+  body #app-content #unsavedModalCloseBtn:hover,
+  body #app-content .icon-only-btn:hover,
+  body #app-content .copy-icon-btn:hover,
+  body #app-content .delete-icon-btn:hover,
+  body #app-content .bm-delete-btn:hover {
+    background: #f1f1f1 !important;
+    transform: none !important;
+  }
+}
+
+body #app-content .memo-list {
+  gap: 13px !important;
+}
+
+body #app-content .memo-item {
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+body #app-content .memo-checkbox {
+  width: 22px !important;
+  height: 22px !important;
+  border: 1.5px solid #b58a82 !important;
+  border-radius: 6px !important;
+  margin: 0 !important;
+  background: #fff !important;
+}
+
+body #app-content .memo-checkbox:checked {
+  background: #202123 !important;
+  border-color: #202123 !important;
+}
+
+body #app-content .memo-input {
+  min-height: 30px !important;
+  padding: 5px 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid #d9d9d9 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: #202123 !important;
+  font-size: 15px !important;
+  line-height: 1.45 !important;
+}
+
+body #app-content .memo-input:focus {
+  border-bottom-color: #202123 !important;
+  outline: 0 !important;
+}
+
+body #app-content .daily-kkul-card {
+  background:
+    radial-gradient(circle at 78% 84%, rgba(196, 232, 224, .65) 0 24%, transparent 25%),
+    linear-gradient(145deg, #fff 0%, #fff9fa 100%) !important;
+  min-height: 240px !important;
+  overflow: hidden !important;
+}
+
+body #app-content .daily-kkul-card .section-title {
+  font-size: clamp(24px, 2.2vw, 32px) !important;
+  line-height: 1.08 !important;
+}
+
+body #app-content .daily-kkul-message {
+  color: #4f4642 !important;
+  font-size: 15px !important;
+  line-height: 1.65 !important;
+}
+
+body #app-content .daily-kkul-image-wrap {
+  align-self: stretch !important;
+  min-height: 150px !important;
+}
+
+body #app-content .daily-kkul-image {
+  max-width: min(230px, 58vw) !important;
+  width: 100% !important;
+  filter: drop-shadow(0 18px 26px rgba(43, 24, 20, .12)) !important;
+}
+
+body #home .hero .hero-asset {
+  width: min(42vw, 520px) !important;
+  max-height: 330px !important;
+  transform: translateY(4px) scale(1.08) !important;
+}
+
+body #app-content .plain-method {
+  margin-top: 12px !important;
+  padding: 16px 18px !important;
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 14px !important;
+  background: #f7f7f8 !important;
+  color: #202123 !important;
+  font-size: 15px !important;
+  line-height: 1.75 !important;
+  white-space: pre-wrap !important;
+  word-break: keep-all !important;
+}
+
+body #app-content .materials-detail pre {
+  margin: 10px 0 0 !important;
+  padding: 15px 16px !important;
+  border-radius: 14px !important;
+  line-height: 1.7 !important;
+}
+
+body #new-substitute .copy-panel-btn,
+body #app-content .copy-icon-btn {
+  width: 44px !important;
+  height: 44px !important;
+  min-height: 44px !important;
+  padding: 10px !important;
+  border-radius: 12px !important;
+}
+
+body #new-substitute .copy-panel-btn::before,
+body #app-content .copy-icon-btn::before {
+  width: 25px !important;
+  height: 25px !important;
+  background: currentColor !important;
+}
+
+body #new-substitute summary {
+  min-height: 52px !important;
+  padding: 14px 16px !important;
+  border-radius: 14px !important;
+  background: #f7f7f8 !important;
+}
+
+body #new-substitute details[open] summary {
+  background: #f1f1f1 !important;
+}
+
+body #app-content .bookmark-card {
+  position: relative !important;
+}
+
+body #app-content .bookmark-card .favorite-btn,
+body #app-content .bookmark-card button[aria-label*="즐겨찾기"] {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body #app-content .bm-delete-btn {
+  width: 34px !important;
+  height: 34px !important;
+  opacity: .78 !important;
+  color: #b42318 !important;
+  right: 10px !important;
+}
+
+body #app-content .bm-delete-btn svg,
+body #app-content .bm-delete-btn::before {
+  width: 22px !important;
+  height: 22px !important;
+}
+
+body #app-content .edit-mode-card:hover .bm-delete-btn,
+body #app-content .bm-delete-btn:hover {
+  opacity: 1 !important;
+  color: #8a1f15 !important;
+}
+
+body #app-content .academic-weekdays span:first-child,
+body #app-content .academic-day.is-sunday .academic-date-num,
+body #app-content .academic-day.is-holiday .academic-date-num {
+  color: #d92d20 !important;
+}
+
+body #app-content .academic-weekdays span:last-child,
+body #app-content .academic-day.is-saturday .academic-date-num {
+  color: #2563eb !important;
+}
+
+body #app-content .academic-day,
+body #app-content button.academic-day {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  gap: 5px !important;
+  padding: 8px !important;
+}
+
+body #app-content .academic-date-line {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  min-height: 24px !important;
+  width: 100% !important;
+}
+
+body #app-content .academic-date-num {
+  align-self: flex-start !important;
+  min-width: 26px !important;
+  height: 26px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  border-radius: 999px !important;
+}
+
+body #app-content .academic-pill {
+  width: 100% !important;
+  min-height: 24px !important;
+  padding: 4px 7px !important;
+  border-radius: 7px !important;
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+  text-align: left !important;
+}
+
+body #app-content .academic-pill.color-rose,
+body #app-content .academic-pill.user {
+  color: #9f1239 !important;
+  background: #fff1f3 !important;
+  border-color: #ffd6de !important;
+}
+
+body #app-content .academic-pill.color-mint {
+  color: #166454 !important;
+  background: #ecfdf5 !important;
+  border-color: #ccefe0 !important;
+}
+
+body #app-content .academic-pill.color-blue {
+  color: #1d4ed8 !important;
+  background: #eff6ff !important;
+  border-color: #cfe1ff !important;
+}
+
+body #app-content .academic-pill.color-gold {
+  color: #92400e !important;
+  background: #fffbeb !important;
+  border-color: #fde68a !important;
+}
+
+body #app-content .academic-pill.holiday {
+  color: #b42318 !important;
+  background: #fff1f0 !important;
+  border-color: #ffd5d2 !important;
+}
+
+body #app-content .academic-week-list {
+  gap: 14px !important;
+}
+
+body #app-content .academic-week-group {
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 14px !important;
+  padding: 10px !important;
+  background: #fff !important;
+}
+
+body #app-content .academic-week-range {
+  width: 100% !important;
+  justify-content: flex-start !important;
+  border: 0 !important;
+  background: #f7f7f8 !important;
+  color: #202123 !important;
+  min-height: 36px !important;
+}
+
+body #app-content .academic-week-row {
+  grid-template-columns: 74px minmax(0, 1fr) !important;
+  padding: 8px 6px !important;
+  border-radius: 10px !important;
+}
+
+body #app-content .academic-week-row span {
+  color: #6b7280 !important;
+  font-size: 12px !important;
+}
+
+body #app-content .academic-week-row strong {
+  color: #202123 !important;
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+}
+
+body #app-content .academic-modal {
+  border-radius: 18px !important;
+  padding: clamp(18px, 3vw, 28px) !important;
+}
+
+body #app-content .academic-modal-top {
+  justify-content: space-between !important;
+  margin-bottom: 14px !important;
+}
+
+body #app-content .academic-modal-top .icon-only-btn {
+  width: 42px !important;
+  height: 42px !important;
+  min-height: 42px !important;
+  padding: 8px !important;
+}
+
+body #app-content .academic-modal-title {
+  min-height: 58px !important;
+  font-size: clamp(28px, 5vw, 38px) !important;
+  font-weight: 800 !important;
+}
+
+body #app-content .academic-color-swatch {
+  border: 1px solid #d9d9d9 !important;
+  box-shadow: none !important;
+}
+
+body #app-content .academic-color-swatch.is-selected {
+  outline: 2px solid #202123 !important;
+  outline-offset: 2px !important;
+}
+
+body #unsavedModalOverlay .memo-modal {
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 20px !important;
+}
+
+body #unsavedModalConfirmBtn {
+  background: #202123 !important;
+  border: 1px solid #202123 !important;
+  color: #fff !important;
+}
+
+body #unsavedModalCancelBtn {
+  background: #fff !important;
+  border: 1px solid #d9d9d9 !important;
+  color: #202123 !important;
+}
+
+body #unsavedModalCloseBtn {
+  top: 14px !important;
+  right: 14px !important;
+  width: 42px !important;
+  height: 42px !important;
+}
+
+@media (max-width: 900px) {
+  body #home .hero .hero-asset {
+    width: min(82vw, 390px) !important;
+    max-height: 260px !important;
+    transform: translateY(2px) scale(1.03) !important;
+  }
+
+  body #app-content .hero {
+    gap: 18px !important;
+  }
+
+  body #app-content .memo-card,
+  body #app-content .daily-kkul-card,
+  body #app-content .home-today-card,
+  body #app-content .academic-calendar-card,
+  body #app-content .staff-accordion-card,
+  body #app-content .bookmark-folder-section {
+    padding: 20px !important;
+  }
+
+  body #app-content .daily-kkul-card {
+    min-height: 0 !important;
+  }
+
+  body #app-content .academic-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  body #app-content .academic-weekly-card {
+    margin-top: 16px !important;
+  }
+}
+
+@media (max-width: 760px) {
+  body #app-content .memo-card .section-title,
+  body #app-content .home-today-card .section-title {
+    font-size: 24px !important;
+  }
+
+  body #app-content .memo-modal {
+    width: calc(100vw - 28px) !important;
+    max-width: none !important;
+    border-radius: 20px !important;
+  }
+
+  body #app-content .memo-modal-header {
+    padding: 18px 20px !important;
+  }
+
+  body #app-content .memo-modal-body {
+    padding: 18px 20px 22px !important;
+  }
+
+  body #app-content table,
+  body #app-content .schedule-table,
+  body #app-content .annual-table,
+  body #app-content .promo-contact-table {
+    min-width: 640px !important;
+  }
+
+  body #app-content .table-wrap,
+  body #app-content .promo-table-wrap,
+  body #app-content .annual-mobile-card,
+  body #app-content .today-menu-table-wrap {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  body #app-content .academic-calendar-panel {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  body #app-content .academic-weekdays,
+  body #app-content .academic-calendar-grid {
+    min-width: 650px !important;
+  }
+
+  body #app-content .academic-day,
+  body #app-content button.academic-day {
+    min-height: 104px !important;
+  }
+
+  body #app-content .academic-modal-overlay {
+    align-items: flex-start !important;
+    padding: 12px !important;
+    overflow-y: auto !important;
+  }
+
+  body #app-content .academic-modal {
+    width: 100% !important;
+    max-width: none !important;
+    min-height: auto !important;
+  }
+
+  body #app-content .academic-modal-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  body #app-content .academic-property {
+    grid-template-columns: 82px minmax(0, 1fr) !important;
+  }
+
+  body #app-content .academic-editor-actions {
+    justify-content: stretch !important;
+  }
+
+  body #app-content .academic-editor-actions button {
+    flex: 1 1 0 !important;
+  }
+
+  body #app-content .plain-method,
+  body #app-content .materials-detail pre {
+    font-size: 14px !important;
+    padding: 14px !important;
+    line-height: 1.7 !important;
+  }
+}
+
+body #app-content button.memo-full-btn,
+body #app-content button#closeMemoModalBtn,
+body #app-content button#unsavedModalCloseBtn,
+body #app-content button.icon-only-btn,
+body #app-content button.copy-icon-btn,
+body #app-content button.delete-icon-btn,
+body #app-content button.bm-delete-btn {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body #app-content textarea.memo-input {
+  border-top: 0 !important;
+  border-right: 0 !important;
+  border-left: 0 !important;
+  border-bottom: 1px solid #d9d9d9 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+html body #app-content button.memo-full-btn.memo-full-btn:not(.academic-day):not(.brand):not(.mobile-menu-btn):not(.sidebar-icon-btn),
+html body #app-content button#closeMemoModalBtn:not(.academic-day):not(.brand):not(.mobile-menu-btn):not(.sidebar-icon-btn),
+html body #app-content button#unsavedModalCloseBtn:not(.academic-day):not(.brand):not(.mobile-menu-btn):not(.sidebar-icon-btn),
+html body #app-content button.icon-only-btn.icon-only-btn:not(.academic-day):not(.brand):not(.mobile-menu-btn):not(.sidebar-icon-btn),
+html body #app-content button.copy-icon-btn.copy-icon-btn:not(.academic-day):not(.brand):not(.mobile-menu-btn):not(.sidebar-icon-btn),
+html body #app-content button.delete-icon-btn.delete-icon-btn:not(.academic-day):not(.brand):not(.mobile-menu-btn):not(.sidebar-icon-btn),
+html body #app-content button.bm-delete-btn.bm-delete-btn:not(.academic-day):not(.brand):not(.mobile-menu-btn):not(.sidebar-icon-btn) {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html body #app-content textarea.memo-input.memo-input:not([type="checkbox"]):not([type="radio"]) {
+  border-top: 0 !important;
+  border-right: 0 !important;
+  border-left: 0 !important;
+  border-bottom: 1px solid #d9d9d9 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  outline: 0 !important;
+}
+
+html body #app-content #home.page-section .hero img.hero-asset {
+  width: min(46vw, 580px) !important;
+  max-height: 360px !important;
+  translate: 0 4px !important;
+  scale: 1.03 !important;
+}
+
+@media (max-width: 900px) {
+  html body #app-content #home.page-section .hero img.hero-asset {
+    width: min(82vw, 390px) !important;
+    max-height: 270px !important;
+    translate: 0 2px !important;
+    scale: 1 !important;
+  }
+}
