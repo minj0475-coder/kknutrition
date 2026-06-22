@@ -13189,6 +13189,33 @@ html body #app-content #new-substitute button#substituteCopyBtn.copy-panel-btn::
   height: 30px !important;
 }
 
+/* Keep bookmark delete actions unmistakable in management mode. */
+html body #app-content #bookmarks .edit-mode-card button.bm-delete-btn {
+  right: 8px !important;
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px !important;
+  min-height: 42px !important;
+  padding: 7px !important;
+  border-radius: 10px !important;
+  opacity: 1 !important;
+  color: #b42318 !important;
+  background: #fff1f0 !important;
+}
+
+html body #app-content #bookmarks .edit-mode-card button.bm-delete-btn svg {
+  width: 27px !important;
+  height: 27px !important;
+  stroke-width: 2 !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html body #app-content #bookmarks .edit-mode-card button.bm-delete-btn:hover {
+    color: #8f1d14 !important;
+    background: #ffe3e0 !important;
+  }
+}
+
 html body #app-content .academic-search span::before {
   content: "" !important;
   display: block !important;
