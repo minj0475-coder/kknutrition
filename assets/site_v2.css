@@ -12347,3 +12347,217 @@ html body #app-content #home.page-section .hero img.hero-asset {
     translate: 0 2px !important;
   }
 }
+
+/* 2026-06-22 academic calendar toolbar and weekly list cleanup. */
+html body #app-content .academic-head {
+  align-items: flex-start !important;
+}
+
+html body #app-content .academic-toolbar {
+  display: grid !important;
+  grid-template-columns: minmax(170px, auto) auto minmax(260px, 1fr) !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 18px !important;
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 18px !important;
+  background: #fff !important;
+}
+
+html body #app-content .academic-month-label {
+  margin: 0 !important;
+  font-size: clamp(22px, 2vw, 28px) !important;
+  line-height: 1.15 !important;
+  color: #202123 !important;
+}
+
+html body #app-content .academic-toolbar .academic-actions {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  margin: 0 !important;
+}
+
+html body #app-content .academic-toolbar .academic-actions button {
+  height: 42px !important;
+  min-height: 42px !important;
+  border-radius: 12px !important;
+  border: 1px solid #d9d9d9 !important;
+  background: #fff !important;
+}
+
+html body #app-content .academic-search {
+  position: relative !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 42px !important;
+  margin: 0 !important;
+  border: 1px solid #d9d9d9 !important;
+  border-radius: 14px !important;
+  background: #fff !important;
+  overflow: hidden !important;
+}
+
+html body #app-content .academic-search span {
+  position: absolute !important;
+  left: 14px !important;
+  top: 50% !important;
+  width: 18px !important;
+  height: 18px !important;
+  translate: 0 -50% !important;
+  color: #8a817d !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  pointer-events: none !important;
+}
+
+html body #app-content .academic-search span::before {
+  width: 18px !important;
+  height: 18px !important;
+  opacity: .8 !important;
+}
+
+html body #app-content .academic-search input {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  padding: 0 14px 0 44px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html body #app-content .academic-weekly-card {
+  padding: 18px !important;
+}
+
+html body #app-content .academic-weekly-head {
+  margin-bottom: 12px !important;
+}
+
+html body #app-content .academic-weekly-head h3 {
+  margin: 0 !important;
+  font-size: 20px !important;
+  line-height: 1.25 !important;
+}
+
+html body #app-content .academic-week-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+}
+
+html body #app-content .academic-week-group {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+html body #app-content .academic-week-range {
+  width: 100% !important;
+  min-height: 34px !important;
+  padding: 7px 10px !important;
+  justify-content: flex-start !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  background: #f7f7f8 !important;
+  color: #202123 !important;
+  font-size: 13px !important;
+  font-weight: 750 !important;
+}
+
+html body #app-content .academic-week-items {
+  display: grid !important;
+  gap: 4px !important;
+  padding: 6px 2px 10px !important;
+}
+
+html body #app-content .academic-week-row {
+  display: grid !important;
+  grid-template-columns: 72px minmax(0, 1fr) !important;
+  align-items: center !important;
+  gap: 8px !important;
+  min-height: 32px !important;
+  padding: 6px 8px !important;
+  border: 0 !important;
+  border-radius: 9px !important;
+  background: transparent !important;
+}
+
+html body #app-content .academic-week-row:hover {
+  background: #f7f7f8 !important;
+}
+
+html body #app-content .academic-week-row span {
+  color: #6b7280 !important;
+  font-size: 12px !important;
+  font-weight: 650 !important;
+  line-height: 1.25 !important;
+  word-break: keep-all !important;
+}
+
+html body #app-content .academic-week-row strong {
+  overflow: hidden !important;
+  color: #202123 !important;
+  font-size: 13px !important;
+  font-weight: 750 !important;
+  line-height: 1.35 !important;
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+}
+
+html body #app-content .academic-empty {
+  padding: 8px 10px !important;
+  color: #8a817d !important;
+  font-size: 13px !important;
+  font-weight: 650 !important;
+}
+
+@media (max-width: 900px) {
+  html body #app-content .academic-toolbar {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  html body #app-content .academic-toolbar .academic-actions {
+    justify-content: flex-start !important;
+  }
+
+  html body #app-content .academic-search {
+    max-width: none !important;
+  }
+}
+
+/* Strong final overrides for academic controls after global button/input rules. */
+html body #app-content .academic-toolbar label.academic-search.academic-search input#academicSearch {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+}
+
+html body #app-content .academic-toolbar label.academic-search.academic-search span {
+  overflow: visible !important;
+}
+
+html body #app-content .academic-week-list .academic-week-group .academic-week-range.academic-week-range,
+html body #app-content .academic-week-list .academic-week-group .academic-week-row.academic-week-row {
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+html body #app-content .academic-week-list .academic-week-group .academic-week-range.academic-week-range {
+  padding: 7px 10px !important;
+  background: #f7f7f8 !important;
+  font-size: 13px !important;
+}
+
+html body #app-content .academic-week-list .academic-week-group .academic-week-row.academic-week-row {
+  display: grid !important;
+  padding: 6px 8px !important;
+  background: transparent !important;
+  font-size: 13px !important;
+}
