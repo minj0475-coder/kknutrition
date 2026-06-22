@@ -11441,17 +11441,6 @@ body #app-content .copy-icon-btn::before {
   background: currentColor !important;
 }
 
-body #new-substitute summary {
-  min-height: 52px !important;
-  padding: 14px 16px !important;
-  border-radius: 14px !important;
-  background: #f7f7f8 !important;
-}
-
-body #new-substitute details[open] summary {
-  background: #f1f1f1 !important;
-}
-
 body #app-content .bookmark-card {
   position: relative !important;
 }
