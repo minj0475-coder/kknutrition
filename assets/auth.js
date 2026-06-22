@@ -8,6 +8,7 @@ const PORTAL_PASSWORD = "Zxcv2041520!"; // ?꾩떆 珥덇린 鍮꾨?踰덊샇 (?
 const AUTH_KEY = "kknutrition_portal_auth";
 const PASSKEY_KEY = "kknutrition_portal_passkey";
 const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycby3sgo-M0JiwyMBnlw6zjHY9p8n5vJdUk0NSTF1dd-chEMtDGnrknvKW51ZKQygynkD/exec"; // Google Apps Script 諛고룷 ???앹꽦???뱀빋 URL???ш린???낅젰?섏꽭??
+let passkeySupportState = null;
 
 function isPublicPage() {
   const path = decodeURIComponent(window.location.pathname || "");
@@ -60,6 +61,23 @@ async function passkeyAvailable() {
   }
 }
 
+function getPasskeyErrorMessage(error, action) {
+  const name = error && error.name ? error.name : "";
+  if (name === "NotAllowedError") {
+    return `${action} 요청이 취소되었거나 시간 초과되었습니다. 브라우저의 Face ID/지문 창을 확인한 뒤 다시 시도해 주세요.`;
+  }
+  if (name === "InvalidStateError") {
+    return "이미 이 기기에 등록된 인증 정보가 있습니다. Face ID/지문으로 접속을 시도해 주세요.";
+  }
+  if (name === "SecurityError") {
+    return "브라우저 보안 설정 때문에 간편 인증을 시작하지 못했습니다. Safari 또는 Chrome에서 GitHub Pages 주소로 직접 접속해 주세요.";
+  }
+  if (name === "NotSupportedError" || name === "ConstraintError") {
+    return "이 브라우저 또는 기기의 간편 인증 방식과 호환되지 않습니다. 브라우저와 운영체제를 최신 버전으로 업데이트해 주세요.";
+  }
+  return `${action}에 실패했습니다. 브라우저에서 Face ID/지문 사용이 허용되어 있는지 확인해 주세요.`;
+}
+
 async function registerPasskey() {
   const input = document.getElementById("authPasswordInput");
   const errorMsg = document.getElementById("authErrorMsg");
@@ -69,7 +87,7 @@ async function registerPasskey() {
     setAuthStatus("비밀번호를 먼저 입력한 뒤 간편 인증을 등록해 주세요.", "error");
     return;
   }
-  if (!(await passkeyAvailable())) {
+  if (passkeySupportState === false) {
     setAuthStatus("이 브라우저에서는 Face ID/지문 간편 인증을 사용할 수 없습니다.", "error");
     return;
   }
@@ -78,7 +96,7 @@ async function registerPasskey() {
     const credential = await navigator.credentials.create({
       publicKey: {
         challenge: randomBuffer(32),
-        rp: { name: "급식 업무 포털", id: window.location.hostname },
+        rp: { name: "급식 업무 포털" },
         user: {
           id: randomBuffer(16),
           name: "kknutrition",
@@ -90,7 +108,6 @@ async function registerPasskey() {
         ],
         authenticatorSelection: {
           authenticatorAttachment: "platform",
-          residentKey: "preferred",
           userVerification: "required"
         },
         timeout: 60000,
@@ -106,7 +123,8 @@ async function registerPasskey() {
     setAuthStatus("간편 인증이 등록되었습니다.", "ok");
     grantAccess(true);
   } catch(e) {
-    setAuthStatus("간편 인증 등록이 취소되었거나 실패했습니다.", "error");
+    console.error("Passkey registration failed:", e);
+    setAuthStatus(getPasskeyErrorMessage(e, "간편 인증 등록"), "error");
   }
 }
 
@@ -116,7 +134,7 @@ async function loginWithPasskey() {
     setAuthStatus("이 기기에 등록된 간편 인증이 없습니다. 먼저 비밀번호로 등록해 주세요.", "error");
     return;
   }
-  if (!(await passkeyAvailable())) {
+  if (passkeySupportState === false) {
     setAuthStatus("이 브라우저에서는 Face ID/지문 간편 인증을 사용할 수 없습니다.", "error");
     return;
   }
@@ -134,7 +152,8 @@ async function loginWithPasskey() {
     setAuthStatus("간편 인증이 완료되었습니다.", "ok");
     grantAccess(false);
   } catch(e) {
-    setAuthStatus("간편 인증이 취소되었거나 실패했습니다.", "error");
+    console.error("Passkey login failed:", e);
+    setAuthStatus(getPasskeyErrorMessage(e, "간편 인증"), "error");
   }
 }
 
@@ -153,6 +172,7 @@ function setupPasskeyControls() {
   document.getElementById("authPasskeyLoginBtn").addEventListener("click", loginWithPasskey);
   document.getElementById("authPasskeyRegisterBtn").addEventListener("click", registerPasskey);
   passkeyAvailable().then(available => {
+    passkeySupportState = available;
     if (!available) {
       actions.querySelectorAll("button").forEach(button => { button.disabled = true; });
       setAuthStatus("이 브라우저에서는 기기 간편 인증을 지원하지 않습니다.", "error");
