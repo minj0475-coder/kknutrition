@@ -14279,3 +14279,16 @@ html body #app-content > header.top .brand-logo-img {
   clip-path: none !important;
   overflow: visible !important;
 }
+
+/* Final-end collapsed logo unclipped: keep position, allow pig face to show fully. */
+@media (min-width: 901px) {
+  html body.sidebar-collapsed .app-sidebar {
+    overflow: visible !important;
+  }
+
+  html body.sidebar-collapsed .app-sidebar .sidebar-head,
+  html body.sidebar-collapsed .app-sidebar .sidebar-logo-link,
+  html body.sidebar-collapsed .app-sidebar .sidebar-logo {
+    overflow: visible !important;
+  }
+}
