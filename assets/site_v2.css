@@ -1858,7 +1858,6 @@ nav a{
 }
 
 
-
 /* 신규대체 조리종사원 안내문 inline */
 .substitute-guide-card{
   scroll-margin-top:88px;
@@ -2615,7 +2614,6 @@ tbody tr:nth-child(even) td{
     line-height:1.68;
   }
 }
-
 
 
 /* 오늘의 메뉴 탭: 급식일별 조리방법 조회 */
@@ -3684,10 +3682,6 @@ nav{
     pointer-events: none !important;
   }
 }
-
-
-
-
 
 
 /* ==============================================================
@@ -5030,7 +5024,6 @@ nav a.active::after {
 }
 
 
-
 @media (hover: hover) and (pointer: fine) {
   .btn.light:hover, .download-btn:hover, .copy-btn:hover, .copy-btn-inline:hover, .today-menu-show-all-btn:hover, .sync-btn:hover, .home-today-link:hover,
   #staff .download-btn:hover, #staff .sync-btn:hover, #staff .copy-btn:hover, #staff .copy-btn-inline:hover,
@@ -5440,7 +5433,6 @@ nav a.active::after {
 }
 
 
-
 /* === Responsive Header Styles === */
 .desktop-nav {
   display: flex;
@@ -5484,20 +5476,12 @@ nav a.active::after {
 }
 
 
-
-
 /* === Align Desktop Nav to Right === */
 nav.desktop-nav {
   position: static !important;
   transform: none !important;
   margin-left: auto; /* pushes it to the right */
 }
-
-
-
-
-
-
 
 
 /* === Premium Button Redesign === */
@@ -5574,7 +5558,6 @@ nav a.active {
 }
 
 
-
 /* FORCE NO MARGINS ON ALL WRAPPERS */
 .today-menu-results, 
 .today-menu-today-section, 
@@ -5593,7 +5576,6 @@ nav a.active {
 }
 
 
-
 @media(max-width: 640px) {
   .home-grid-left .daily-kkul-image-wrap,
   .daily-kkul-image-wrap {
@@ -5605,7 +5587,6 @@ nav a.active {
     align-items: center !important;
   }
 }
-
 
 
 /* FINAL OVERRIDE FOR MOBILE KKUL-KKULI SIZE */
@@ -5944,7 +5925,6 @@ nav a.active {
 }
 
 
-
 /* FORCE NO MARGINS ON ALL WRAPPERS */
 .today-menu-results, 
 .today-menu-today-section, 
@@ -5963,7 +5943,6 @@ nav a.active {
 }
 
 
-
 @media(max-width: 640px) {
   .home-grid-left .daily-kkul-image-wrap,
   .daily-kkul-image-wrap {
@@ -5975,7 +5954,6 @@ nav a.active {
     align-items: center !important;
   }
 }
-
 
 
 /* FINAL OVERRIDE FOR MOBILE KKUL-KKULI SIZE */
@@ -13957,5 +13935,235 @@ html body .app-sidebar .sidebar-subnav a.active {
 @media (max-width: 560px) {
   html body #app-content .annual-sheet-link-controls {
     grid-template-columns: minmax(0, 1fr) 46px 46px !important;
+  }
+}
+
+/* Final-end 2026-06-23 UI tuning: intentionally last. */
+html body #app-content .memo-full-btn svg {
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  min-height: 28px !important;
+  stroke-width: 2.2 !important;
+  transform: scale(1.18) !important;
+  transform-origin: center !important;
+}
+
+html body #app-content .memo-checkbox {
+  border-color: #b8b8b8 !important;
+  background: #fff !important;
+}
+
+html body #app-content .memo-checkbox:checked {
+  background: #f7f7f8 !important;
+  border-color: #8e8e8e !important;
+}
+
+html body #app-content .memo-checkbox:checked::after {
+  border-color: #343541 !important;
+}
+
+html body #app-content .staff-accordion summary::after {
+  content: "" !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  margin-left: auto !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  background-color: transparent !important;
+  background-image:
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(currentColor, currentColor) !important;
+  background-size: 14px 1.8px, 1.8px 14px !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  color: #343541 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: background-color .16s ease, color .16s ease !important;
+}
+
+html body #app-content .staff-accordion[open] summary::after {
+  content: "" !important;
+  background-image: linear-gradient(currentColor, currentColor) !important;
+  background-size: 14px 1.8px !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html body #app-content .staff-accordion summary:hover::after {
+    background-color: #f2f2f2 !important;
+  }
+}
+
+html body #app-content #bookmarks .edit-mode-card button.bm-delete-btn,
+html body #app-content #bookmarks .edit-mode-card:hover button.bm-delete-btn {
+  color: #5f6368 !important;
+  background: transparent !important;
+  transform: translateY(-50%) !important;
+  transition: color .16s ease, background-color .16s ease, opacity .16s ease !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html body #app-content #bookmarks .edit-mode-card button.bm-delete-btn:hover {
+    color: #343541 !important;
+    background: #f7f7f8 !important;
+    transform: translateY(-50%) !important;
+  }
+}
+
+@keyframes kkulHeroFloatFinal {
+  0%, 100% { transform: translate3d(0, -22px, 0) scale(1.2); }
+  50% { transform: translate3d(0, -32px, 0) scale(1.2); }
+}
+
+html body #app-content #home.page-section .hero {
+  min-height: 285px !important;
+  max-height: 330px !important;
+}
+
+html body #app-content #home.page-section .hero img.hero-asset {
+  width: min(52vw, 690px) !important;
+  max-height: 405px !important;
+  scale: 1 !important;
+  translate: 0 0 !important;
+  transform-origin: center center !important;
+  animation: kkulHeroFloatFinal 4.8s ease-in-out infinite !important;
+  will-change: transform !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body #app-content #home.page-section .hero img.hero-asset {
+    animation: none !important;
+    transform: translate3d(0, -22px, 0) scale(1.2) !important;
+  }
+}
+
+@media (min-width: 901px) {
+  html body.sidebar-collapsed #app-content {
+    margin-left: 66px !important;
+    padding-left: 0 !important;
+  }
+
+  html body:not(.sidebar-collapsed) #app-content,
+  html body.sidebar-open #app-content {
+    margin-left: 96px !important;
+    padding-left: 0 !important;
+  }
+
+  html body .app-sidebar .sidebar-head,
+  html body.sidebar-collapsed .app-sidebar .sidebar-head {
+    padding-left: 8px !important;
+    justify-content: flex-start !important;
+  }
+
+  html body .app-sidebar .sidebar-logo-link,
+  html body.sidebar-collapsed .app-sidebar .sidebar-logo-link {
+    width: 50px !important;
+    height: 50px !important;
+    min-width: 50px !important;
+    min-height: 50px !important;
+    padding: 0 !important;
+    justify-content: center !important;
+  }
+
+  html body .app-sidebar .sidebar-logo,
+  html body.sidebar-collapsed .app-sidebar .sidebar-logo {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  html body .app-sidebar .sidebar-logo-link span {
+    position: absolute !important;
+    left: 64px !important;
+    white-space: nowrap !important;
+  }
+}
+
+html body #app-content .daily-kkul-card .section-title .num {
+  border-color: rgba(180, 150, 145, .22) !important;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.96), rgba(247,247,248,.86)),
+    radial-gradient(circle at 20% 10%, rgba(255, 232, 236, .78), transparent 58%) !important;
+  color: #6f5654 !important;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.7) !important;
+}
+
+html body #app-content .daily-kkul-card .daily-kkul-image-wrap {
+  background:
+    radial-gradient(circle at 50% 68%, rgba(232, 246, 242, .72) 0 18%, transparent 19%),
+    radial-gradient(circle at 50% 46%, rgba(255, 245, 247, .9) 0 32%, rgba(255,255,255,0) 55%),
+    linear-gradient(180deg, #fff 0%, #fafafa 100%) !important;
+}
+
+@media (max-width: 900px) {
+  html body #app-content #home.page-section .hero img.hero-asset {
+    animation: none !important;
+    transform: translate3d(0, -4px, 0) scale(1.08) !important;
+  }
+}
+
+/* Final-end hero correction: override old transform/scale rules. */
+@keyframes kkulHeroFloatPosition {
+  0%, 100% { top: -22px; }
+  50% { top: -32px; }
+}
+
+html body #app-content #home.page-section > main.wrap > .hero img.hero-asset,
+html body #app-content #home.page-section .hero img.hero-asset {
+  position: relative !important;
+  top: -22px;
+  width: min(46vw, 560px) !important;
+  max-height: 330px !important;
+  transform: none !important;
+  scale: 1.2 !important;
+  translate: 0 0 !important;
+  animation: kkulHeroFloatPosition 4.8s ease-in-out infinite !important;
+  transform-origin: center center !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body #app-content #home.page-section > main.wrap > .hero img.hero-asset,
+  html body #app-content #home.page-section .hero img.hero-asset {
+    animation: none !important;
+    top: -22px !important;
+  }
+}
+
+@media (max-width: 900px) {
+  html body #app-content #home.page-section > main.wrap > .hero img.hero-asset,
+  html body #app-content #home.page-section .hero img.hero-asset {
+    top: -4px !important;
+    transform: none !important;
+    scale: 1.08 !important;
+    animation: none !important;
+  }
+}
+
+/* Final-end sidebar logo alignment correction. */
+@media (min-width: 901px) {
+  html body .app-sidebar .sidebar-logo-link,
+  html body.sidebar-collapsed .app-sidebar .sidebar-logo-link {
+    flex: 0 0 50px !important;
+    width: 50px !important;
+    max-width: 50px !important;
+    min-width: 50px !important;
+    height: 50px !important;
+    min-height: 50px !important;
+    padding: 0 !important;
+    justify-content: center !important;
+    position: relative !important;
+  }
+
+  html body .app-sidebar .sidebar-logo-link span {
+    position: absolute !important;
+    left: 64px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    white-space: nowrap !important;
   }
 }
