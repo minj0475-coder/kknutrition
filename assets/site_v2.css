@@ -14352,3 +14352,33 @@ html body #app-content #home.page-section .hero img.hero-asset {
     animation: none !important;
   }
 }
+
+/* Final-end collapsed sidebar logo repair: keep pig position, move the rail edge away. */
+@media (min-width: 901px) {
+  html body.sidebar-collapsed #app-content {
+    margin-left: 78px !important;
+  }
+
+  html body.sidebar-collapsed .app-sidebar {
+    width: 78px !important;
+    min-width: 78px !important;
+    overflow: visible !important;
+    z-index: 1200 !important;
+  }
+
+  html body.sidebar-collapsed .app-sidebar .sidebar-head {
+    padding-left: 8px !important;
+    overflow: visible !important;
+  }
+
+  html body.sidebar-collapsed .app-sidebar .sidebar-logo-link {
+    overflow: visible !important;
+    z-index: 2 !important;
+  }
+
+  html body.sidebar-collapsed .app-sidebar .sidebar-logo {
+    overflow: visible !important;
+    transform: translateZ(0) !important;
+    z-index: 2 !important;
+  }
+}
