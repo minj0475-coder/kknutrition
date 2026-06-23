@@ -14353,15 +14353,15 @@ html body #app-content #home.page-section .hero img.hero-asset {
   }
 }
 
-/* Final-end collapsed sidebar logo repair: keep pig position, move the rail edge away. */
+/* Final-end collapsed sidebar logo repair: keep pig position, balance the rail spacing. */
 @media (min-width: 901px) {
   html body.sidebar-collapsed #app-content {
-    margin-left: 78px !important;
+    margin-left: 70px !important;
   }
 
   html body.sidebar-collapsed .app-sidebar {
-    width: 78px !important;
-    min-width: 78px !important;
+    width: 70px !important;
+    min-width: 70px !important;
     overflow: visible !important;
     z-index: 1200 !important;
   }
