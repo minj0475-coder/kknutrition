@@ -13266,6 +13266,33 @@ html body .app-sidebar .sidebar-section {
   }
 }
 
+@media (max-width: 900px) {
+  html body .app-sidebar .sidebar-logo-link,
+  html body.sidebar-collapsed .app-sidebar .sidebar-logo-link {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+
+  html body .app-sidebar .sidebar-logo-link::before,
+  html body .app-sidebar .sidebar-logo-link::after {
+    display: none !important;
+    content: none !important;
+  }
+
+  html body .app-sidebar .sidebar-logo-link span,
+  html body.sidebar-collapsed .app-sidebar .sidebar-logo-link span {
+    display: none !important;
+  }
+}
+
 /* Keep the academic editor over the calendar without moving the page. */
 body.modal-open #academicModal.academic-modal-overlay {
   position: fixed !important;
