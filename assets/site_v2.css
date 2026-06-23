@@ -14353,15 +14353,15 @@ html body #app-content #home.page-section .hero img.hero-asset {
   }
 }
 
-/* Final-end collapsed sidebar logo repair: keep pig position, add a little right breathing room. */
+/* Final-end collapsed sidebar logo repair: keep pig position, extend the right rail space. */
 @media (min-width: 901px) {
   html body.sidebar-collapsed #app-content {
-    margin-left: 72px !important;
+    margin-left: 92px !important;
   }
 
   html body.sidebar-collapsed .app-sidebar {
-    width: 72px !important;
-    min-width: 72px !important;
+    width: 92px !important;
+    min-width: 92px !important;
     overflow: visible !important;
     z-index: 1200 !important;
   }
