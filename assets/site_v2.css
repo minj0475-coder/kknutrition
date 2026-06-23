@@ -14167,3 +14167,115 @@ html body #app-content #home.page-section .hero img.hero-asset {
     white-space: nowrap !important;
   }
 }
+
+/* Final-end sidebar header repair: keep close icon right, align pig face only. */
+@media (min-width: 901px) {
+  html body .app-sidebar .sidebar-head,
+  html body.sidebar-open .app-sidebar .sidebar-head,
+  html body.sidebar-collapsed .app-sidebar .sidebar-head {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    min-height: 72px !important;
+    height: 72px !important;
+    padding: 12px 14px 12px 8px !important;
+    overflow: visible !important;
+  }
+
+  html body .app-sidebar .sidebar-logo-link,
+  html body.sidebar-open .app-sidebar .sidebar-logo-link,
+  html body.sidebar-collapsed .app-sidebar .sidebar-logo-link {
+    position: relative !important;
+    flex: 0 0 50px !important;
+    width: 50px !important;
+    max-width: 50px !important;
+    min-width: 50px !important;
+    height: 50px !important;
+    min-height: 50px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: visible !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  html body .app-sidebar .sidebar-logo,
+  html body.sidebar-open .app-sidebar .sidebar-logo,
+  html body.sidebar-collapsed .app-sidebar .sidebar-logo {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    display: block !important;
+    overflow: visible !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    clip-path: none !important;
+  }
+
+  html body .app-sidebar .sidebar-logo-link span,
+  html body.sidebar-collapsed .app-sidebar .sidebar-logo-link span {
+    display: none !important;
+  }
+
+  html body .app-sidebar .sidebar-icon-btn,
+  html body.sidebar-open .app-sidebar .sidebar-icon-btn {
+    position: absolute !important;
+    top: 50% !important;
+    right: 14px !important;
+    transform: translateY(-50%) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  html body.sidebar-collapsed .app-sidebar .sidebar-icon-btn {
+    display: none !important;
+  }
+}
+
+html body #app-content > header.top .brand,
+html body #app-content > header.top .brand:where(:link, :visited) {
+  width: 46px !important;
+  height: 46px !important;
+  min-width: 46px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+html body #app-content > header.top .brand-logo-img {
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px !important;
+  min-height: 42px !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  clip-path: none !important;
+  overflow: visible !important;
+}
