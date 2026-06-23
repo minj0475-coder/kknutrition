@@ -14315,3 +14315,40 @@ html body #app-content .daily-kkul-image,
 html body #app-content .daily-kkul-image-wrap img {
   filter: drop-shadow(0 16px 22px rgba(32, 33, 35, .12)) !important;
 }
+
+/* Final-end lightweight home hero motion: GPU-friendly and lower placement. */
+@keyframes kkulHeroFloatLight {
+  0%, 100% { transform: translate3d(0, -6px, 0) scale(1.15); }
+  50% { transform: translate3d(0, -12px, 0) scale(1.15); }
+}
+
+html body #app-content #home.page-section > main.wrap > .hero img.hero-asset,
+html body #app-content #home.page-section .hero img.hero-asset {
+  position: relative !important;
+  top: 0 !important;
+  width: min(48vw, 590px) !important;
+  max-height: 350px !important;
+  scale: 1 !important;
+  translate: 0 0 !important;
+  transform: translate3d(0, -6px, 0) scale(1.15) !important;
+  animation: kkulHeroFloatLight 5.8s ease-in-out infinite !important;
+  will-change: transform !important;
+  transform-origin: center center !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body #app-content #home.page-section > main.wrap > .hero img.hero-asset,
+  html body #app-content #home.page-section .hero img.hero-asset {
+    animation: none !important;
+    transform: translate3d(0, -6px, 0) scale(1.15) !important;
+  }
+}
+
+@media (max-width: 900px) {
+  html body #app-content #home.page-section > main.wrap > .hero img.hero-asset,
+  html body #app-content #home.page-section .hero img.hero-asset {
+    top: 0 !important;
+    transform: translate3d(0, 0, 0) scale(1.08) !important;
+    animation: none !important;
+  }
+}
