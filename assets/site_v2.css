@@ -14292,3 +14292,26 @@ html body #app-content > header.top .brand-logo-img {
     overflow: visible !important;
   }
 }
+
+/* Final-end daily kkul character focus: remove boxed background behind the character. */
+html body #app-content .daily-kkul-card .daily-kkul-image-wrap,
+html body #app-content .home-grid-left .daily-kkul-image-wrap,
+html body #app-content .daily-kkul-card.daily-kkul-card .daily-kkul-image-wrap {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+
+html body #app-content .daily-kkul-card .daily-kkul-image-wrap::before,
+html body #app-content .daily-kkul-card .daily-kkul-image-wrap::after,
+html body #app-content .home-grid-left .daily-kkul-image-wrap::before,
+html body #app-content .home-grid-left .daily-kkul-image-wrap::after {
+  content: none !important;
+  display: none !important;
+}
+
+html body #app-content .daily-kkul-image,
+html body #app-content .daily-kkul-image-wrap img {
+  filter: drop-shadow(0 16px 22px rgba(32, 33, 35, .12)) !important;
+}
