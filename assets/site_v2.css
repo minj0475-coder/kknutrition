@@ -14382,3 +14382,11 @@ html body #app-content #home.page-section .hero img.hero-asset {
     z-index: 2 !important;
   }
 }
+
+/* Final-end sidebar open push distance: reduce content shift to about two-thirds. */
+@media (min-width: 901px) {
+  html body:not(.sidebar-collapsed) #app-content,
+  html body.sidebar-open #app-content {
+    margin-left: 64px !important;
+  }
+}
