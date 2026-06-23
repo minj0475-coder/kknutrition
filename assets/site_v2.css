@@ -14356,12 +14356,12 @@ html body #app-content #home.page-section .hero img.hero-asset {
 /* Final-end collapsed sidebar logo repair: keep pig position, add a little right breathing room. */
 @media (min-width: 901px) {
   html body.sidebar-collapsed #app-content {
-    margin-left: 74px !important;
+    margin-left: 76px !important;
   }
 
   html body.sidebar-collapsed .app-sidebar {
-    width: 74px !important;
-    min-width: 74px !important;
+    width: 76px !important;
+    min-width: 76px !important;
     overflow: visible !important;
     z-index: 1200 !important;
   }
