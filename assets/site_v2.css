@@ -14318,8 +14318,8 @@ html body #app-content .daily-kkul-image-wrap img {
 
 /* Final-end lightweight home hero motion: GPU-friendly and lower placement. */
 @keyframes kkulHeroFloatLight {
-  0%, 100% { transform: translate3d(0, -6px, 0) scale(1.15); }
-  50% { transform: translate3d(0, -12px, 0) scale(1.15); }
+  0%, 100% { transform: translate3d(0, -5px, 0) scale(var(--kkul-hero-scale, 1.265)); }
+  50% { transform: translate3d(0, -10px, 0) scale(var(--kkul-hero-scale, 1.265)); }
 }
 
 html body #app-content #home.page-section > main.wrap > .hero img.hero-asset,
@@ -14330,8 +14330,9 @@ html body #app-content #home.page-section .hero img.hero-asset {
   max-height: 350px !important;
   scale: 1 !important;
   translate: 0 0 !important;
-  transform: translate3d(0, -6px, 0) scale(1.15) !important;
-  animation: kkulHeroFloatLight 5.8s ease-in-out infinite !important;
+  --kkul-hero-scale: 1.265;
+  transform: translate3d(0, -5px, 0) scale(var(--kkul-hero-scale)) !important;
+  animation: kkulHeroFloatLight 7.2s ease-in-out infinite !important;
   will-change: transform !important;
   transform-origin: center center !important;
 }
@@ -14340,7 +14341,7 @@ html body #app-content #home.page-section .hero img.hero-asset {
   html body #app-content #home.page-section > main.wrap > .hero img.hero-asset,
   html body #app-content #home.page-section .hero img.hero-asset {
     animation: none !important;
-    transform: translate3d(0, -6px, 0) scale(1.15) !important;
+    transform: translate3d(0, -5px, 0) scale(var(--kkul-hero-scale)) !important;
   }
 }
 
@@ -14348,8 +14349,9 @@ html body #app-content #home.page-section .hero img.hero-asset {
   html body #app-content #home.page-section > main.wrap > .hero img.hero-asset,
   html body #app-content #home.page-section .hero img.hero-asset {
     top: 0 !important;
-    transform: translate3d(0, 0, 0) scale(1.08) !important;
-    animation: none !important;
+    --kkul-hero-scale: 1.188;
+    transform: translate3d(0, 0, 0) scale(var(--kkul-hero-scale)) !important;
+    animation: kkulHeroFloatLight 7.2s ease-in-out infinite !important;
   }
 }
 
