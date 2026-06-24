@@ -128,9 +128,142 @@ function setupStaffAccordion() {
   if (copyBtn) copyBtn.addEventListener("click", copySubstituteMessage);
 }
 
+const MESSAGE_TEMPLATES_KEY = "kkulkkoori_message_templates_v1";
+const DEFAULT_MESSAGE_TEMPLATES = [
+  {
+    title: "영양 상담 문자",
+    body: "안녕하세요, 청수초 급식실입니다.\n\n0-0 000 학생 식품알레르기(0000 관련) 확인드릴 사항이 있어 연락드립니다.\n번거로우시겠지만 잠시 통화 가능하실 때 급식실로 전화 주시면 감사하겠습니다.\n\n급식실 직통번호(031-997-2567)입니다.\n\n감사합니다."
+  },
+  {
+    title: "무상 우유 조사 문자",
+    body: "안녕하세요. 청수초 급식실입니다.\n\n2026학년도 무상우유 급식 신청 가능 대상자이십니다. 안내문을 확인하신 후 아래 신청서 링크를 통해 2026. 5. 26.(화)까지 신청해주시기 바랍니다.\n\n안내문 링크:\nhttps://drive.google.com/file/d/1FCDcdH8AtCyBQAgkITNMoWVmOtEAXKeo/view?usp=drive_link\n\n신청서 링크:\nhttps://moaform.com/q/E8mukb"
+  },
+  {
+    title: "급식공개의 날 문자",
+    body: "안녕하세요. 청수초 급식실입니다.\n학부모 급식 공개의 날은 학부모님께서 학교급식을 직접 드셔보시고, 급식 운영에 대한 의견을 나누기 위해 마련한 자리입니다.\n아래와 같이 운영하오니 참석을 원하시는 학부모님께서는 구글스프레드시트에 신청해주시기 바랍니다.\n\n■ 일시: 7월 8일 수요일 11시 20분\n■ 장소: 2층 학생식당\n■ 신청 인원: 선착순 15명\n\n신청 링크\nhttps://docs.google.com/spreadsheets/d/1s-lyMuH3Bm5DcmwqXnm0EiYZiALjxTQXz_yJRd1OTzs/edit?usp=sharing\n\n※ 작성해주신 정보는 참석 확인 목적으로만 사용되며, 급식 공개의 날 종료 후 삭제 예정입니다.\n감사합니다."
+  },
+  {
+    title: "학부모 모니터링 공지 문자",
+    body: "안녕하세요. 청수초 급식실입니다.\n급식 모니터링 일정, 운영 계획 및 연수자료를 안내드립니다.\n아래 링크를 통해 내용을 확인해 주시기 바랍니다.\n\n■ 모니터링 시작: 4월부터\n■ 모니터링 시간: 오전 7시 30분 ~ 8시 사이\n\nhttps://docs.google.com/spreadsheets/d/133u4ROvJqZ3zQ8eu7rUnmVEzNVlnJirUisCq4yzBylw/edit?usp=sharing\n\n감사합니다. 좋은 하루 보내세요."
+  }
+];
+
+function readMessageTemplates() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(MESSAGE_TEMPLATES_KEY) || "null");
+    if (Array.isArray(parsed) && parsed.length) {
+      return parsed
+        .filter(item => item && typeof item === "object")
+        .map(item => ({
+          title: String(item.title || "").trim() || "새 문자",
+          body: String(item.body || "")
+        }));
+    }
+  } catch(e) {}
+  return DEFAULT_MESSAGE_TEMPLATES.map(item => ({ ...item }));
+}
+
+function saveMessageTemplates(items) {
+  try {
+    localStorage.setItem(MESSAGE_TEMPLATES_KEY, JSON.stringify(items));
+  } catch(e) {}
+}
+
+function escapeTemplateHtml(value) {
+  return String(value || "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  }[char]));
+}
+
+function setupMessageTemplates() {
+  const list = document.getElementById("messageTemplateList");
+  const addBtn = document.getElementById("messageTemplateAddBtn");
+  const status = document.getElementById("messageTemplateStatus");
+  if (!list) return;
+  let items = readMessageTemplates();
+  const setStatus = message => {
+    if (!status) return;
+    status.textContent = message || "";
+    window.clearTimeout(status._timer);
+    if (message) status._timer = window.setTimeout(() => { status.textContent = ""; }, 1600);
+  };
+  const persist = () => saveMessageTemplates(items);
+  const copyTemplate = async index => {
+    const text = items[index] && items[index].body ? items[index].body.trim() : "";
+    if (!text) return setStatus("복사할 문자 내용이 없습니다.");
+    try {
+      await navigator.clipboard.writeText(text.replace(/\r?\n/g, "\r\n"));
+      setStatus("문자 내용을 복사했습니다.");
+    } catch(e) {
+      setStatus("복사하지 못했습니다. 내용을 직접 선택해 주세요.");
+    }
+  };
+  const render = () => {
+    list.innerHTML = "";
+    items.forEach((item, index) => {
+      const details = document.createElement("details");
+      details.className = "message-template-item";
+      details.innerHTML = `
+        <summary>
+          <span class="message-template-title">${escapeTemplateHtml(item.title || "새 문자")}</span>
+          <button class="copy-icon-btn message-template-copy" type="button" aria-label="문자 내용 복사" title="복사"></button>
+        </summary>
+        <div class="message-template-body">
+          <label>
+            <span>제목</span>
+            <input type="text" value="${escapeTemplateHtml(item.title || "")}" data-template-title="${index}">
+          </label>
+          <label>
+            <span>내용</span>
+            <textarea rows="10" data-template-body="${index}">${escapeTemplateHtml(item.body || "")}</textarea>
+          </label>
+          <button class="message-template-delete" type="button" data-template-delete="${index}">삭제</button>
+        </div>
+      `;
+      details.querySelector(".message-template-copy").addEventListener("click", event => {
+        event.preventDefault();
+        event.stopPropagation();
+        copyTemplate(index);
+      });
+      details.querySelector("[data-template-title]").addEventListener("input", event => {
+        items[index].title = event.target.value;
+        persist();
+        details.querySelector(".message-template-title").textContent = event.target.value.trim() || "새 문자";
+      });
+      details.querySelector("[data-template-body]").addEventListener("input", event => {
+        items[index].body = event.target.value;
+        persist();
+      });
+      details.querySelector("[data-template-delete]").addEventListener("click", () => {
+        items.splice(index, 1);
+        persist();
+        render();
+        setStatus("삭제했습니다.");
+      });
+      list.appendChild(details);
+    });
+  };
+  if (addBtn) {
+    addBtn.addEventListener("click", () => {
+      items.push({ title: "새 문자", body: "" });
+      persist();
+      render();
+      const added = list.querySelector(".message-template-item:last-child");
+      if (added) added.open = true;
+      setStatus("새 문자 양식을 추가했습니다.");
+    });
+  }
+  render();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   setupDailyKkul();
   setupStaffAccordion();
+  setupMessageTemplates();
 });
 
 function getSheetInput() {
@@ -1992,13 +2125,13 @@ function isAcademicNonWorkingDay(key) {
 }
 
 function getUserAcademicEventOccurrencesForKey(userEvents, key) {
-  if (isAcademicNonWorkingDay(key)) return [];
   const occurrences = [];
   Object.keys(userEvents || {}).sort().forEach(startKey => {
     getUserAcademicEventsForKey(userEvents, startKey).forEach((event, userIndex) => {
       if (!(event.title || event.memo || event.url)) return;
       const endKey = getAcademicEventEndKey(startKey, event);
-      if (startKey <= key && key <= endKey) {
+      const skipDates = Array.isArray(event.skipDates) ? event.skipDates : [];
+      if (startKey <= key && key <= endKey && !skipDates.includes(key)) {
         occurrences.push({ event, userIndex, startKey, endKey });
       }
     });
@@ -2096,7 +2229,9 @@ document.addEventListener("DOMContentLoaded", () => {
     month: today.getMonth(),
     selectedKey: makeAcademicKey(today),
     selectedSourceKey: makeAcademicKey(today),
-    selectedUserEventIndex: null
+    selectedUserEventIndex: null,
+    selectedOccurrenceKey: makeAcademicKey(today),
+    prefillEvent: null
   };
   let userEvents = readAcademicEvents();
   let modalScrollY = 0;
@@ -2184,15 +2319,17 @@ document.addEventListener("DOMContentLoaded", () => {
     return Array.from({ length: 42 }, (_, index) => new Date(start.getFullYear(), start.getMonth(), start.getDate() + index));
   }
 
-  function selectDate(key, userEventIndex = null, sourceKey = key) {
+  function selectDate(key, userEventIndex = null, sourceKey = key, prefillEvent = null) {
     state.selectedKey = key;
     state.selectedSourceKey = sourceKey || key;
     state.selectedUserEventIndex = Number.isInteger(userEventIndex) ? userEventIndex : null;
+    state.selectedOccurrenceKey = key;
+    state.prefillEvent = prefillEvent || null;
     const userEventList = getUserAcademicEventsForKey(userEvents, state.selectedSourceKey);
-    const current = state.selectedUserEventIndex !== null ? (userEventList[state.selectedUserEventIndex] || {}) : {};
+    const current = prefillEvent || (state.selectedUserEventIndex !== null ? (userEventList[state.selectedUserEventIndex] || {}) : {});
     if (titleInput) titleInput.value = current.title || "";
-    if (dateInput) dateInput.value = state.selectedSourceKey;
-    if (endDateInput) endDateInput.value = current.endDate || state.selectedSourceKey;
+    if (dateInput) dateInput.value = key;
+    if (endDateInput) endDateInput.value = prefillEvent ? key : (current.endDate || state.selectedSourceKey);
     if (doneInput) doneInput.checked = Boolean(current.done);
     setAcademicColor(current.color || "rose");
     if (memoInput) memoInput.value = current.memo || "";
@@ -2200,9 +2337,9 @@ document.addEventListener("DOMContentLoaded", () => {
     renderCalendar();
   }
 
-  function openAcademicModal(key, userEventIndex = null, sourceKey = key) {
+  function openAcademicModal(key, userEventIndex = null, sourceKey = key, prefillEvent = null) {
     hideAcademicMemoTooltip();
-    selectDate(key, userEventIndex, sourceKey);
+    selectDate(key, userEventIndex, sourceKey, prefillEvent);
     if (modal) {
       lockAcademicModalScroll();
       modal.hidden = false;
@@ -2270,7 +2407,8 @@ document.addEventListener("DOMContentLoaded", () => {
             state.year = date.getFullYear();
             state.month = date.getMonth();
           }
-          openAcademicModal(key, event.userIndex, event.startKey);
+          const isRangeOccurrence = event.startKey && event.startKey !== key;
+          openAcademicModal(key, isRangeOccurrence ? null : event.userIndex, isRangeOccurrence ? event.startKey : event.startKey, isRangeOccurrence ? event : null);
           renderWeeklyTable();
         });
         button.appendChild(pill);
@@ -2360,7 +2498,15 @@ document.addEventListener("DOMContentLoaded", () => {
             row.setAttribute("data-academic-memo", event.memo);
             row.setAttribute("title", event.memo);
           }
-          row.addEventListener("click", () => openAcademicModal(key, event.source === "user" ? event.userIndex : null, event.source === "user" ? event.startKey : key));
+          row.addEventListener("click", () => {
+            const isRangeOccurrence = event.source === "user" && event.startKey && event.startKey !== key;
+            openAcademicModal(
+              key,
+              event.source === "user" && !isRangeOccurrence ? event.userIndex : null,
+              event.source === "user" ? event.startKey : key,
+              isRangeOccurrence ? event : null
+            );
+          });
           items.appendChild(row);
         });
       } else {
@@ -2392,6 +2538,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const originalEvents = getUserAcademicEventsForKey(userEvents, state.selectedSourceKey);
       originalEvents.splice(state.selectedUserEventIndex, 1);
       setUserAcademicEventsForKey(userEvents, state.selectedSourceKey, originalEvents);
+    } else if (state.prefillEvent && state.selectedSourceKey !== state.selectedOccurrenceKey) {
+      const originalEvents = getUserAcademicEventsForKey(userEvents, state.selectedSourceKey);
+      const originalIndex = Number.isInteger(state.prefillEvent.userIndex) ? state.prefillEvent.userIndex : -1;
+      if (originalEvents[originalIndex]) {
+        const skipDates = Array.isArray(originalEvents[originalIndex].skipDates) ? originalEvents[originalIndex].skipDates : [];
+        if (!skipDates.includes(state.selectedOccurrenceKey)) originalEvents[originalIndex].skipDates = [...skipDates, state.selectedOccurrenceKey].sort();
+        setUserAcademicEventsForKey(userEvents, state.selectedSourceKey, originalEvents);
+      }
     }
     if (entry.title || entry.memo || entry.url) {
       const nextEvents = getUserAcademicEventsForKey(userEvents, key);
@@ -2401,6 +2555,7 @@ document.addEventListener("DOMContentLoaded", () => {
     state.selectedKey = key;
     state.selectedSourceKey = key;
     state.selectedUserEventIndex = null;
+    state.prefillEvent = null;
     const nextDate = parseAcademicKey(key);
     state.year = nextDate.getFullYear();
     state.month = nextDate.getMonth();
@@ -2458,6 +2613,16 @@ document.addEventListener("DOMContentLoaded", () => {
       nextEvents.splice(state.selectedUserEventIndex, 1);
       setUserAcademicEventsForKey(userEvents, state.selectedSourceKey, nextEvents);
       state.selectedUserEventIndex = null;
+    } else if (state.prefillEvent && state.selectedSourceKey !== state.selectedOccurrenceKey) {
+      const occurrenceKey = state.selectedOccurrenceKey;
+      const nextEvents = getUserAcademicEventsForKey(userEvents, state.selectedSourceKey);
+      const originalIndex = Number.isInteger(state.prefillEvent.userIndex) ? state.prefillEvent.userIndex : -1;
+      if (nextEvents[originalIndex]) {
+        const skipDates = Array.isArray(nextEvents[originalIndex].skipDates) ? nextEvents[originalIndex].skipDates : [];
+        if (!skipDates.includes(occurrenceKey)) nextEvents[originalIndex].skipDates = [...skipDates, occurrenceKey].sort();
+        setUserAcademicEventsForKey(userEvents, state.selectedSourceKey, nextEvents);
+      }
+      state.prefillEvent = null;
     }
     saveAcademicEvents(userEvents);
     renderAll();
