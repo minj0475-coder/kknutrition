@@ -1985,7 +1985,14 @@ function getAcademicEventEndKey(startKey, event) {
   return /^\d{4}-\d{2}-\d{2}$/.test(endKey) && endKey >= startKey ? endKey : startKey;
 }
 
+function isAcademicNonWorkingDay(key) {
+  const day = parseAcademicKey(key).getDay();
+  if (day === 0 || day === 6) return true;
+  return getBuiltInAcademicEvents(key).some(event => event.type === "holiday");
+}
+
 function getUserAcademicEventOccurrencesForKey(userEvents, key) {
+  if (isAcademicNonWorkingDay(key)) return [];
   const occurrences = [];
   Object.keys(userEvents || {}).sort().forEach(startKey => {
     getUserAcademicEventsForKey(userEvents, startKey).forEach((event, userIndex) => {
