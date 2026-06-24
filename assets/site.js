@@ -1965,6 +1965,21 @@ function readAcademicEvents() {
   return {};
 }
 
+function getUserAcademicEventsForKey(userEvents, key) {
+  const value = userEvents[key];
+  const events = Array.isArray(value) ? value : (value ? [value] : []);
+  return events.filter(event => event && typeof event === "object");
+}
+
+function setUserAcademicEventsForKey(userEvents, key, events) {
+  const nextEvents = events.filter(event => event && (event.title || event.memo || event.url));
+  if (nextEvents.length) {
+    userEvents[key] = nextEvents;
+  } else {
+    delete userEvents[key];
+  }
+}
+
 function saveAcademicEvents(events) {
   try {
     localStorage.setItem(ACADEMIC_EVENTS_KEY, JSON.stringify(events));
@@ -1981,8 +1996,8 @@ function getBuiltInAcademicEvents(key) {
 
 function getAcademicEventsForKey(key, userEvents) {
   const events = getBuiltInAcademicEvents(key).map(event => ({ ...event, source: "built-in" }));
-  const user = userEvents[key];
-  if (user && (user.title || user.memo || user.url)) {
+  getUserAcademicEventsForKey(userEvents, key).forEach((user, userIndex) => {
+    if (!(user.title || user.memo || user.url)) return;
     events.push({
       title: user.title || "사용자 일정",
       memo: user.memo || "",
@@ -1991,9 +2006,10 @@ function getAcademicEventsForKey(key, userEvents) {
       color: user.color || "rose",
       weight: user.weight || "normal",
       type: "user",
-      source: "user"
+      source: "user",
+      userIndex
     });
-  }
+  });
   return events;
 }
 
@@ -2050,7 +2066,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let state = {
     year: today.getFullYear(),
     month: today.getMonth(),
-    selectedKey: makeAcademicKey(today)
+    selectedKey: makeAcademicKey(today),
+    selectedUserEventIndex: null
   };
   let userEvents = readAcademicEvents();
   let modalScrollY = 0;
@@ -2099,9 +2116,11 @@ document.addEventListener("DOMContentLoaded", () => {
     return Array.from({ length: 42 }, (_, index) => new Date(start.getFullYear(), start.getMonth(), start.getDate() + index));
   }
 
-  function selectDate(key) {
+  function selectDate(key, userEventIndex = null) {
     state.selectedKey = key;
-    const current = userEvents[key] || {};
+    state.selectedUserEventIndex = Number.isInteger(userEventIndex) ? userEventIndex : null;
+    const userEventList = getUserAcademicEventsForKey(userEvents, key);
+    const current = state.selectedUserEventIndex !== null ? (userEventList[state.selectedUserEventIndex] || {}) : {};
     if (titleInput) titleInput.value = current.title || "";
     if (dateInput) dateInput.value = key;
     if (doneInput) doneInput.checked = Boolean(current.done);
@@ -2111,8 +2130,8 @@ document.addEventListener("DOMContentLoaded", () => {
     renderCalendar();
   }
 
-  function openAcademicModal(key) {
-    selectDate(key);
+  function openAcademicModal(key, userEventIndex = null) {
+    selectDate(key, userEventIndex);
     if (modal) {
       lockAcademicModalScroll();
       modal.hidden = false;
@@ -2224,7 +2243,7 @@ document.addEventListener("DOMContentLoaded", () => {
           row.type = "button";
           row.className = `academic-week-row ${event.done ? "is-done" : ""}`;
           row.innerHTML = `<span>${formatAcademicDate(key, false)}</span><strong>${escapeAcademicHtml(event.title)}</strong>`;
-          row.addEventListener("click", () => openAcademicModal(key));
+          row.addEventListener("click", () => openAcademicModal(key, event.source === "user" ? event.userIndex : null));
           items.appendChild(row);
         });
       } else {
@@ -2249,13 +2268,19 @@ document.addEventListener("DOMContentLoaded", () => {
       weight: "normal",
       color: colorInput ? colorInput.value : "rose"
     };
-    if (key !== state.selectedKey) delete userEvents[state.selectedKey];
+    const isEditingExisting = state.selectedUserEventIndex !== null;
+    if (isEditingExisting) {
+      const originalEvents = getUserAcademicEventsForKey(userEvents, state.selectedKey);
+      originalEvents.splice(state.selectedUserEventIndex, 1);
+      setUserAcademicEventsForKey(userEvents, state.selectedKey, originalEvents);
+    }
     if (entry.title || entry.memo || entry.url) {
-      userEvents[key] = entry;
-    } else {
-      delete userEvents[key];
+      const nextEvents = getUserAcademicEventsForKey(userEvents, key);
+      nextEvents.push(entry);
+      setUserAcademicEventsForKey(userEvents, key, nextEvents);
     }
     state.selectedKey = key;
+    state.selectedUserEventIndex = null;
     const nextDate = parseAcademicKey(key);
     state.year = nextDate.getFullYear();
     state.month = nextDate.getMonth();
@@ -2307,7 +2332,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (urlInput) urlInput.value = "";
     if (doneInput) doneInput.checked = false;
     setAcademicColor("rose");
-    delete userEvents[state.selectedKey];
+    if (state.selectedUserEventIndex !== null) {
+      const nextEvents = getUserAcademicEventsForKey(userEvents, state.selectedKey);
+      nextEvents.splice(state.selectedUserEventIndex, 1);
+      setUserAcademicEventsForKey(userEvents, state.selectedKey, nextEvents);
+      state.selectedUserEventIndex = null;
+    }
     saveAcademicEvents(userEvents);
     renderAll();
     setStatus("비웠습니다.");
