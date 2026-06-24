@@ -2096,6 +2096,44 @@ document.addEventListener("DOMContentLoaded", () => {
   let modalScrollLocked = false;
   let modalHtmlOverflow = "";
   let modalBodyOverflow = "";
+  let memoTooltip = null;
+
+  function ensureAcademicMemoTooltip() {
+    if (memoTooltip) return memoTooltip;
+    memoTooltip = document.createElement("div");
+    memoTooltip.className = "academic-memo-tooltip";
+    memoTooltip.setAttribute("role", "tooltip");
+    memoTooltip.hidden = true;
+    document.body.appendChild(memoTooltip);
+    return memoTooltip;
+  }
+
+  function showAcademicMemoTooltip(target) {
+    const memo = target && target.getAttribute("data-academic-memo");
+    if (!memo) return;
+    const tooltip = ensureAcademicMemoTooltip();
+    tooltip.textContent = memo;
+    tooltip.hidden = false;
+    tooltip.classList.add("is-visible");
+    const rect = target.getBoundingClientRect();
+    const tooltipRect = tooltip.getBoundingClientRect();
+    const left = Math.min(Math.max(14, rect.left), window.innerWidth - tooltipRect.width - 14);
+    const top = rect.bottom + tooltipRect.height + 12 > window.innerHeight
+      ? Math.max(14, rect.top - tooltipRect.height - 8)
+      : rect.bottom + 8;
+    tooltip.style.left = `${left}px`;
+    tooltip.style.top = `${top}px`;
+  }
+
+  function hideAcademicMemoTooltip() {
+    if (!memoTooltip) return;
+    memoTooltip.classList.remove("is-visible");
+    memoTooltip.hidden = true;
+  }
+
+  function getAcademicMemoTarget(event) {
+    return event.target.closest("[data-academic-memo]");
+  }
 
   function lockAcademicModalScroll() {
     if (modalScrollLocked) return;
@@ -2155,6 +2193,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function openAcademicModal(key, userEventIndex = null, sourceKey = key) {
+    hideAcademicMemoTooltip();
     selectDate(key, userEventIndex, sourceKey);
     if (modal) {
       lockAcademicModalScroll();
@@ -2211,6 +2250,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const pill = document.createElement("span");
         pill.className = `academic-pill ${event.type} ${event.color ? `color-${event.color}` : ""} ${event.done ? "is-done" : ""} ${event.weight === "bold" ? "is-bold" : ""}`;
         pill.textContent = event.title;
+        if (event.memo) {
+          pill.setAttribute("data-academic-memo", event.memo);
+          pill.setAttribute("title", event.memo);
+        }
         button.appendChild(pill);
       });
       if (events.length > 3) {
@@ -2267,6 +2310,10 @@ document.addEventListener("DOMContentLoaded", () => {
           row.type = "button";
           row.className = `academic-week-row ${event.done ? "is-done" : ""}`;
           row.innerHTML = `<span>${formatAcademicDate(key, false)}</span><strong>${escapeAcademicHtml(event.title)}</strong>`;
+          if (event.memo) {
+            row.setAttribute("data-academic-memo", event.memo);
+            row.setAttribute("title", event.memo);
+          }
           row.addEventListener("click", () => openAcademicModal(key, event.source === "user" ? event.userIndex : null, event.source === "user" ? event.startKey : key));
           items.appendChild(row);
         });
@@ -2383,6 +2430,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
   if (searchInput) searchInput.addEventListener("input", renderAll);
+  [grid, weekList].forEach(container => {
+    if (!container) return;
+    container.addEventListener("mouseover", event => {
+      const target = getAcademicMemoTarget(event);
+      if (target) showAcademicMemoTooltip(target);
+    });
+    container.addEventListener("mouseout", event => {
+      const target = getAcademicMemoTarget(event);
+      if (target && (!event.relatedTarget || !target.contains(event.relatedTarget))) hideAcademicMemoTooltip();
+    });
+    container.addEventListener("focusin", event => {
+      const target = getAcademicMemoTarget(event);
+      if (target) showAcademicMemoTooltip(target);
+    });
+    container.addEventListener("focusout", event => {
+      const target = getAcademicMemoTarget(event);
+      if (target) hideAcademicMemoTooltip();
+    });
+  });
+  window.addEventListener("scroll", hideAcademicMemoTooltip, { passive: true });
   if (dateInput && endDateInput) {
     dateInput.addEventListener("change", () => {
       if (!endDateInput.value || endDateInput.value < dateInput.value) endDateInput.value = dateInput.value;
