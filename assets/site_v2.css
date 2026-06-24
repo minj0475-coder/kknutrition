@@ -16012,3 +16012,15 @@ html body #app-content #today-menu .message-template-textbox .message-template-c
     margin: 0 !important;
   }
 }
+
+/* 2026-06-24 match mobile daily kkul message box to desktop tone. */
+@media (max-width: 760px) {
+  html body #app-content .daily-kkul-message,
+  html body #app-content .daily-kkul-card.daily-kkul-card .daily-kkul-message {
+    border: 1px solid rgba(255, 214, 222, 0.95) !important;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(255, 247, 249, 0.98), rgba(255, 255, 255, 0.94) 58%),
+      linear-gradient(180deg, #ffffff 0%, #fffafa 100%) !important;
+    box-shadow: 0 12px 28px rgba(211, 137, 145, 0.08) !important;
+  }
+}
