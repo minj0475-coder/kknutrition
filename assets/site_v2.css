@@ -14426,60 +14426,72 @@ html body #app-content #home.page-section .hero img.hero-asset {
   }
 }
 
-/* Final-end sidebar open header polish: make logo and collapse control read as one balanced unit. */
+/* Final-end sidebar compact open state: keep pig logo anchored, remove header box. */
 @media (min-width: 901px) {
+  html body:not(.sidebar-collapsed) .app-sidebar,
+  html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar {
+    width: 276px !important;
+    min-width: 276px !important;
+    max-width: 276px !important;
+  }
+
   html body:not(.sidebar-collapsed) .app-sidebar .sidebar-head,
   html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-head {
-    width: calc(100% - 28px) !important;
-    min-height: 58px !important;
-    height: 58px !important;
-    margin: 14px 14px 10px !important;
-    padding: 6px 8px !important;
+    position: relative !important;
+    width: auto !important;
+    min-height: 72px !important;
+    height: 72px !important;
+    margin: 8px 14px 10px !important;
+    padding: 12px 14px 12px 8px !important;
     display: flex !important;
     align-items: center !important;
-    justify-content: space-between !important;
-    border: 1px solid rgba(232, 225, 216, .72) !important;
-    border-radius: 16px !important;
-    background: rgba(255, 255, 255, .72) !important;
-    box-shadow: 0 10px 26px rgba(63, 58, 53, .06) !important;
+    justify-content: flex-start !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
     overflow: visible !important;
   }
 
   html body:not(.sidebar-collapsed) .app-sidebar .sidebar-logo-link,
   html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-logo-link {
-    flex: 0 0 46px !important;
-    width: 46px !important;
-    max-width: 46px !important;
-    min-width: 46px !important;
-    height: 46px !important;
-    min-height: 46px !important;
+    flex: 0 0 50px !important;
+    width: 50px !important;
+    max-width: 50px !important;
+    min-width: 50px !important;
+    height: 50px !important;
+    min-height: 50px !important;
   }
 
   html body:not(.sidebar-collapsed) .app-sidebar .sidebar-logo,
   html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-logo {
-    width: 40px !important;
-    height: 40px !important;
-    min-width: 40px !important;
-    min-height: 40px !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
   }
 
   html body:not(.sidebar-collapsed) .app-sidebar .sidebar-icon-btn,
   html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-icon-btn {
-    position: static !important;
+    position: absolute !important;
+    top: 50% !important;
+    right: 4px !important;
     flex: 0 0 38px !important;
-    width: 38px !important;
-    height: 38px !important;
-    min-width: 38px !important;
-    min-height: 38px !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
     margin: 0 !important;
-    transform: none !important;
-    border-radius: 12px !important;
-    background: rgba(247, 247, 248, .88) !important;
+    transform: translateY(-50%) !important;
+    border: 0 !important;
+    border-radius: 10px !important;
+    background: transparent !important;
+    color: #202123 !important;
   }
 
   html body:not(.sidebar-collapsed) .app-sidebar .sidebar-icon-btn:hover,
   html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-icon-btn:hover {
-    background: #eeeeef !important;
+    background: #f7f7f8 !important;
   }
 }
 
