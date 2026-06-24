@@ -15920,3 +15920,38 @@ html body #app-content .staff-accordion[open] > summary::after {
     translate: 0 0 !important;
   }
 }
+
+/* 2026-06-24 final message template copy button inside text box. */
+html body #app-content #today-menu .message-template-content-label {
+  position: relative !important;
+  display: block !important;
+}
+
+html body #app-content #today-menu .message-template-content-label > span {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+}
+
+html body #app-content #today-menu .message-template-content-label textarea {
+  min-height: 244px !important;
+  padding: 18px 64px 18px 18px !important;
+}
+
+html body #app-content #today-menu .message-template-copy-inline {
+  position: absolute !important;
+  top: 10px !important;
+  right: 12px !important;
+  z-index: 5 !important;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: #202123 !important;
+  box-shadow: none !important;
+}
