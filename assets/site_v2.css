@@ -15182,3 +15182,37 @@ html body #app-content #today-menu .message-template-copy-inline:focus-visible {
 html body #app-content #today-menu .message-template-content-label textarea {
   padding-right: 54px !important;
 }
+
+/* 2026-06-24 message textarea copy placement refinement. */
+html body #app-content #today-menu .message-template-body {
+  gap: 10px !important;
+  padding-bottom: 14px !important;
+}
+
+html body #app-content #today-menu .message-template-content-label {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 7px !important;
+  padding-right: 0 !important;
+}
+
+html body #app-content #today-menu .message-template-copy-inline {
+  top: 34px !important;
+  right: 10px !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  border-radius: 9px !important;
+  background: #ffffff !important;
+}
+
+html body #app-content #today-menu .message-template-content-label textarea {
+  min-height: 244px !important;
+  padding-right: 56px !important;
+}
+
+html body #app-content #today-menu .message-template-delete {
+  margin-top: 2px !important;
+  align-self: end !important;
+}
