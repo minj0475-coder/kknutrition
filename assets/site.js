@@ -1980,6 +1980,25 @@ function setUserAcademicEventsForKey(userEvents, key, events) {
   }
 }
 
+function getAcademicEventEndKey(startKey, event) {
+  const endKey = String(event && event.endDate || "").trim();
+  return /^\d{4}-\d{2}-\d{2}$/.test(endKey) && endKey >= startKey ? endKey : startKey;
+}
+
+function getUserAcademicEventOccurrencesForKey(userEvents, key) {
+  const occurrences = [];
+  Object.keys(userEvents || {}).sort().forEach(startKey => {
+    getUserAcademicEventsForKey(userEvents, startKey).forEach((event, userIndex) => {
+      if (!(event.title || event.memo || event.url)) return;
+      const endKey = getAcademicEventEndKey(startKey, event);
+      if (startKey <= key && key <= endKey) {
+        occurrences.push({ event, userIndex, startKey, endKey });
+      }
+    });
+  });
+  return occurrences;
+}
+
 function saveAcademicEvents(events) {
   try {
     localStorage.setItem(ACADEMIC_EVENTS_KEY, JSON.stringify(events));
@@ -1996,18 +2015,19 @@ function getBuiltInAcademicEvents(key) {
 
 function getAcademicEventsForKey(key, userEvents) {
   const events = getBuiltInAcademicEvents(key).map(event => ({ ...event, source: "built-in" }));
-  getUserAcademicEventsForKey(userEvents, key).forEach((user, userIndex) => {
-    if (!(user.title || user.memo || user.url)) return;
+  getUserAcademicEventOccurrencesForKey(userEvents, key).forEach(({ event: user, userIndex, startKey, endKey }) => {
     events.push({
       title: user.title || "사용자 일정",
       memo: user.memo || "",
       url: user.url || "",
+      endDate: endKey,
       done: Boolean(user.done),
       color: user.color || "rose",
       weight: user.weight || "normal",
       type: "user",
       source: "user",
-      userIndex
+      userIndex,
+      startKey
     });
   });
   return events;
@@ -2053,6 +2073,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const fullscreenBtn = document.getElementById("academicFullscreenBtn");
   const titleInput = document.getElementById("academicEventTitle");
   const dateInput = document.getElementById("academicEventDate");
+  const endDateInput = document.getElementById("academicEventEndDate");
   const doneInput = document.getElementById("academicEventDone");
   const colorInput = document.getElementById("academicEventColor");
   const colorButtons = modal ? modal.querySelectorAll("[data-academic-color]") : [];
@@ -2067,6 +2088,7 @@ document.addEventListener("DOMContentLoaded", () => {
     year: today.getFullYear(),
     month: today.getMonth(),
     selectedKey: makeAcademicKey(today),
+    selectedSourceKey: makeAcademicKey(today),
     selectedUserEventIndex: null
   };
   let userEvents = readAcademicEvents();
@@ -2116,13 +2138,15 @@ document.addEventListener("DOMContentLoaded", () => {
     return Array.from({ length: 42 }, (_, index) => new Date(start.getFullYear(), start.getMonth(), start.getDate() + index));
   }
 
-  function selectDate(key, userEventIndex = null) {
+  function selectDate(key, userEventIndex = null, sourceKey = key) {
     state.selectedKey = key;
+    state.selectedSourceKey = sourceKey || key;
     state.selectedUserEventIndex = Number.isInteger(userEventIndex) ? userEventIndex : null;
-    const userEventList = getUserAcademicEventsForKey(userEvents, key);
+    const userEventList = getUserAcademicEventsForKey(userEvents, state.selectedSourceKey);
     const current = state.selectedUserEventIndex !== null ? (userEventList[state.selectedUserEventIndex] || {}) : {};
     if (titleInput) titleInput.value = current.title || "";
-    if (dateInput) dateInput.value = key;
+    if (dateInput) dateInput.value = state.selectedSourceKey;
+    if (endDateInput) endDateInput.value = current.endDate || state.selectedSourceKey;
     if (doneInput) doneInput.checked = Boolean(current.done);
     setAcademicColor(current.color || "rose");
     if (memoInput) memoInput.value = current.memo || "";
@@ -2130,8 +2154,8 @@ document.addEventListener("DOMContentLoaded", () => {
     renderCalendar();
   }
 
-  function openAcademicModal(key, userEventIndex = null) {
-    selectDate(key, userEventIndex);
+  function openAcademicModal(key, userEventIndex = null, sourceKey = key) {
+    selectDate(key, userEventIndex, sourceKey);
     if (modal) {
       lockAcademicModalScroll();
       modal.hidden = false;
@@ -2243,7 +2267,7 @@ document.addEventListener("DOMContentLoaded", () => {
           row.type = "button";
           row.className = `academic-week-row ${event.done ? "is-done" : ""}`;
           row.innerHTML = `<span>${formatAcademicDate(key, false)}</span><strong>${escapeAcademicHtml(event.title)}</strong>`;
-          row.addEventListener("click", () => openAcademicModal(key, event.source === "user" ? event.userIndex : null));
+          row.addEventListener("click", () => openAcademicModal(key, event.source === "user" ? event.userIndex : null, event.source === "user" ? event.startKey : key));
           items.appendChild(row);
         });
       } else {
@@ -2260,19 +2284,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function saveSelectedDate() {
     const key = dateInput && dateInput.value ? dateInput.value : state.selectedKey;
+    const endKey = endDateInput && endDateInput.value && endDateInput.value >= key ? endDateInput.value : key;
     const entry = {
       title: titleInput ? titleInput.value.trim() : "",
       memo: memoInput ? memoInput.value.trim() : "",
       url: urlInput ? urlInput.value.trim() : "",
+      endDate: endKey,
       done: doneInput ? doneInput.checked : false,
       weight: "normal",
       color: colorInput ? colorInput.value : "rose"
     };
     const isEditingExisting = state.selectedUserEventIndex !== null;
     if (isEditingExisting) {
-      const originalEvents = getUserAcademicEventsForKey(userEvents, state.selectedKey);
+      const originalEvents = getUserAcademicEventsForKey(userEvents, state.selectedSourceKey);
       originalEvents.splice(state.selectedUserEventIndex, 1);
-      setUserAcademicEventsForKey(userEvents, state.selectedKey, originalEvents);
+      setUserAcademicEventsForKey(userEvents, state.selectedSourceKey, originalEvents);
     }
     if (entry.title || entry.memo || entry.url) {
       const nextEvents = getUserAcademicEventsForKey(userEvents, key);
@@ -2280,6 +2306,7 @@ document.addEventListener("DOMContentLoaded", () => {
       setUserAcademicEventsForKey(userEvents, key, nextEvents);
     }
     state.selectedKey = key;
+    state.selectedSourceKey = key;
     state.selectedUserEventIndex = null;
     const nextDate = parseAcademicKey(key);
     state.year = nextDate.getFullYear();
@@ -2330,12 +2357,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (titleInput) titleInput.value = "";
     if (memoInput) memoInput.value = "";
     if (urlInput) urlInput.value = "";
+    if (endDateInput) endDateInput.value = dateInput && dateInput.value ? dateInput.value : state.selectedKey;
     if (doneInput) doneInput.checked = false;
     setAcademicColor("rose");
     if (state.selectedUserEventIndex !== null) {
-      const nextEvents = getUserAcademicEventsForKey(userEvents, state.selectedKey);
+      const nextEvents = getUserAcademicEventsForKey(userEvents, state.selectedSourceKey);
       nextEvents.splice(state.selectedUserEventIndex, 1);
-      setUserAcademicEventsForKey(userEvents, state.selectedKey, nextEvents);
+      setUserAcademicEventsForKey(userEvents, state.selectedSourceKey, nextEvents);
       state.selectedUserEventIndex = null;
     }
     saveAcademicEvents(userEvents);
@@ -2355,7 +2383,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
   if (searchInput) searchInput.addEventListener("input", renderAll);
-  [titleInput, memoInput, urlInput, dateInput].forEach(input => {
+  if (dateInput && endDateInput) {
+    dateInput.addEventListener("change", () => {
+      if (!endDateInput.value || endDateInput.value < dateInput.value) endDateInput.value = dateInput.value;
+    });
+  }
+  [titleInput, memoInput, urlInput, dateInput, endDateInput].forEach(input => {
     if (input) input.addEventListener("keydown", event => {
       if ((event.ctrlKey || event.metaKey) && event.key === "Enter") saveSelectedDate();
     });
