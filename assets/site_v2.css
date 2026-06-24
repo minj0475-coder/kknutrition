@@ -16022,5 +16022,7 @@ html body #app-content #today-menu .message-template-textbox .message-template-c
       radial-gradient(circle at 50% 0%, rgba(255, 247, 249, 0.98), rgba(255, 255, 255, 0.94) 58%),
       linear-gradient(180deg, #ffffff 0%, #fffafa 100%) !important;
     box-shadow: 0 12px 28px rgba(211, 137, 145, 0.08) !important;
+    justify-content: center !important;
+    text-align: center !important;
   }
 }
