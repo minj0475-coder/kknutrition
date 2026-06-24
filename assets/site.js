@@ -2097,6 +2097,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let modalHtmlOverflow = "";
   let modalBodyOverflow = "";
   let memoTooltip = null;
+  const academicWeekCollapsed = {};
 
   function ensureAcademicMemoTooltip() {
     if (memoTooltip) return memoTooltip;
@@ -2317,8 +2318,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const group = document.createElement("section");
       group.className = "academic-week-group";
-      group.innerHTML = `<button class="academic-week-range" type="button">${week.range}</button><div class="academic-week-items"></div>`;
+      const weekId = `${state.year}-${padAcademicDate(state.month + 1)}-${week.label}`;
+      const isCollapsed = Boolean(academicWeekCollapsed[weekId]);
+      group.classList.toggle("is-collapsed", isCollapsed);
+      group.innerHTML = `
+        <button class="academic-week-range" type="button" aria-expanded="${isCollapsed ? "false" : "true"}">
+          <span class="academic-week-range-text">${week.range}</span>
+          <span class="academic-week-toggle" aria-hidden="true"></span>
+        </button>
+        <div class="academic-week-items" ${isCollapsed ? "hidden" : ""}></div>
+      `;
+      const rangeButton = group.querySelector(".academic-week-range");
       const items = group.querySelector(".academic-week-items");
+      rangeButton.addEventListener("click", () => {
+        academicWeekCollapsed[weekId] = !academicWeekCollapsed[weekId];
+        renderWeeklyTable();
+      });
       if (weekEvents.length) {
         weekEvents.forEach(({ key, event }) => {
           const row = document.createElement("button");

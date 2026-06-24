@@ -14525,16 +14525,40 @@ html body #app-content .academic-week-group {
 
 html body #app-content .academic-week-range {
   display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
   width: fit-content !important;
   max-width: 100% !important;
-  padding: 4px 8px !important;
-  border: 1px solid #ececec !important;
-  border-radius: 7px !important;
-  background: #f7f7f8 !important;
-  color: #5f6368 !important;
-  font-size: 12px !important;
-  font-weight: 650 !important;
-  line-height: 1.35 !important;
+  padding: 8px 12px !important;
+  border: 1px solid #dedee3 !important;
+  border-radius: 12px !important;
+  background: #ffffff !important;
+  color: #202123 !important;
+  box-shadow: 0 2px 8px rgba(32, 33, 35, .04) !important;
+  font-size: 13px !important;
+  font-weight: 760 !important;
+  line-height: 1.3 !important;
+  cursor: pointer !important;
+}
+
+html body #app-content .academic-week-range:hover,
+html body #app-content .academic-week-range:focus-visible {
+  border-color: #cfcfd5 !important;
+  background: #fafafa !important;
+}
+
+html body #app-content .academic-week-toggle {
+  width: 8px !important;
+  height: 8px !important;
+  border-right: 1.8px solid currentColor !important;
+  border-bottom: 1.8px solid currentColor !important;
+  transform: rotate(45deg) translateY(-2px) !important;
+  opacity: .72 !important;
+  transition: transform .16s ease !important;
+}
+
+html body #app-content .academic-week-group.is-collapsed .academic-week-toggle {
+  transform: rotate(-45deg) translateY(1px) !important;
 }
 
 html body #app-content .academic-week-items {
@@ -14549,9 +14573,11 @@ html body #app-content .academic-week-row {
   gap: 10px !important;
   width: 100% !important;
   padding: 10px 11px !important;
-  border: 1px solid #ececec !important;
+  border: 1px solid #e4e4e7 !important;
+  border-left: 3px solid #d1d5db !important;
   border-radius: 10px !important;
-  background: #ffffff !important;
+  background-color: #f6f6f7 !important;
+  background-image: none !important;
   color: #202123 !important;
   box-shadow: none !important;
   transition: border-color .16s ease, background-color .16s ease, transform .16s ease !important;
@@ -14560,7 +14586,9 @@ html body #app-content .academic-week-row {
 html body #app-content .academic-week-row:hover,
 html body #app-content .academic-week-row:focus-visible {
   border-color: #d8d8dc !important;
-  background: #fafafa !important;
+  border-left-color: #a8adb7 !important;
+  background-color: #f0f0f2 !important;
+  background-image: none !important;
   transform: translateY(-1px) !important;
 }
 
@@ -14571,7 +14599,7 @@ html body #app-content .academic-week-date {
   min-height: 26px !important;
   padding: 4px 7px !important;
   border-radius: 7px !important;
-  background: #f7f7f8 !important;
+  background: #ffffff !important;
   color: #5f6368 !important;
   font-size: 12px !important;
   font-weight: 650 !important;
