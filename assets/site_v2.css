@@ -16227,3 +16227,11 @@ html body #app-content #today-menu .message-template-textbox .message-template-c
     padding-top: 10px !important;
   }
 }
+
+/* 2026-06-25 mobile open sidebar logo breathing room. */
+@media (max-width: 900px) {
+  html body .app-sidebar.is-open .sidebar-logo-link,
+  html body.sidebar-open .app-sidebar.is-open .sidebar-logo-link {
+    left: 18px !important;
+  }
+}
