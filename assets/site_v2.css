@@ -15320,3 +15320,130 @@ html body #app-content #promo-contacts .promo-contact-title .num {
   color: var(--text) !important;
   box-shadow: none !important;
 }
+
+/* 2026-06-24 mobile hero and daily kkul refinement. */
+@media (max-width: 620px) {
+  html body #app-content .page-section > main.wrap > .hero,
+  html body #app-content .page-section:not(#home) > main.wrap > .hero {
+    position: relative !important;
+    grid-template-columns: 1fr !important;
+    min-height: 300px !important;
+    max-height: none !important;
+    padding: 20px 18px 18px !important;
+    overflow: hidden !important;
+    align-items: start !important;
+  }
+
+  html body #app-content .page-section > main.wrap > .hero .hero-content,
+  html body #app-content .page-section > main.wrap > .hero .kicker,
+  html body #app-content .page-section > main.wrap > .hero h1,
+  html body #app-content .page-section > main.wrap > .hero .subtitle {
+    position: relative !important;
+    z-index: 2 !important;
+  }
+
+  html body #app-content .page-section > main.wrap > .hero .subtitle {
+    min-height: 0 !important;
+    max-width: 78% !important;
+  }
+
+  html body #app-content .page-section:not(#home) > main.wrap > .hero img.hero-asset {
+    position: absolute !important;
+    right: 8px !important;
+    bottom: 6px !important;
+    width: min(188px, 48vw) !important;
+    min-width: 0 !important;
+    max-width: 188px !important;
+    max-height: 170px !important;
+    object-fit: contain !important;
+    align-self: auto !important;
+    justify-self: auto !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  html body #app-content #home.page-section > main.wrap > .hero {
+    position: relative !important;
+    min-height: 382px !important;
+    padding: 22px 18px 18px !important;
+    overflow: hidden !important;
+  }
+
+  html body #app-content #home.page-section > main.wrap > .hero .hero-content,
+  html body #app-content #home.page-section > main.wrap > .hero .kicker,
+  html body #app-content #home.page-section > main.wrap > .hero h1,
+  html body #app-content #home.page-section > main.wrap > .hero .subtitle {
+    position: relative !important;
+    z-index: 2 !important;
+  }
+
+  html body #app-content #home.page-section > main.wrap > .hero .subtitle {
+    max-width: 76% !important;
+  }
+
+  html body #app-content #home.page-section > main.wrap > .hero img.hero-asset,
+  html body #app-content #home.page-section .hero img.hero-asset {
+    position: absolute !important;
+    right: -48px !important;
+    bottom: -8px !important;
+    width: min(430px, 105vw) !important;
+    min-width: 330px !important;
+    max-width: 430px !important;
+    max-height: 330px !important;
+    object-fit: contain !important;
+    --kkul-hero-scale: 1 !important;
+    transform: translate3d(0, 0, 0) scale(1) !important;
+    animation: none !important;
+    z-index: 1 !important;
+  }
+
+  html body #app-content .daily-kkul-card.daily-kkul-card,
+  html body #app-content .home-grid-left .daily-kkul-card.daily-kkul-card {
+    grid-template-columns: minmax(0, 1fr) minmax(118px, 38%) !important;
+    min-height: 158px !important;
+    padding: 18px 18px 16px !important;
+    gap: 8px !important;
+    align-items: center !important;
+  }
+
+  html body #app-content .daily-kkul-card .section-title,
+  html body #app-content .daily-kkul-card.daily-kkul-card .section-title {
+    display: none !important;
+  }
+
+  html body #app-content .daily-kkul-copy {
+    justify-content: center !important;
+  }
+
+  html body #app-content .daily-kkul-message,
+  html body #app-content .daily-kkul-card.daily-kkul-card .daily-kkul-message {
+    display: inline-flex !important;
+    align-items: center !important;
+    min-height: 74px !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 14px 16px !important;
+    border: 1px solid #ececec !important;
+    border-radius: 18px !important;
+    background: #ffffff !important;
+    color: #343541 !important;
+    font-size: 15px !important;
+    line-height: 1.55 !important;
+    text-align: left !important;
+    box-shadow: 0 8px 24px rgba(32, 33, 35, .05) !important;
+  }
+
+  html body #app-content .daily-kkul-image-wrap,
+  html body #app-content .daily-kkul-card.daily-kkul-card .daily-kkul-image-wrap {
+    min-height: 132px !important;
+    align-self: center !important;
+  }
+
+  html body #app-content .daily-kkul-image,
+  html body #app-content .daily-kkul-image-wrap img,
+  html body #app-content .daily-kkul-card.daily-kkul-card .daily-kkul-image {
+    width: min(138px, 34vw) !important;
+    max-width: 138px !important;
+    filter: drop-shadow(0 14px 18px rgba(32, 33, 35, .12)) !important;
+  }
+}
