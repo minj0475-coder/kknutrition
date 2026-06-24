@@ -15563,3 +15563,42 @@ html body #app-content #promo-contacts .promo-contact-title .num {
     max-height: 210px !important;
   }
 }
+
+/* 2026-06-24 message template copy icon inside text boxes. */
+html body #app-content #today-menu .message-template-content-label {
+  position: relative !important;
+}
+
+html body #app-content #today-menu .message-template-content-label textarea {
+  padding: 16px 62px 16px 16px !important;
+}
+
+html body #app-content #today-menu .message-template-copy-inline {
+  position: absolute !important;
+  top: 38px !important;
+  right: 13px !important;
+  z-index: 4 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  min-height: 38px !important;
+  padding: 7px !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+  color: #202123 !important;
+  box-shadow: none !important;
+}
+
+html body #app-content #today-menu .message-template-copy-inline::before {
+  width: 23px !important;
+  height: 23px !important;
+}
+
+html body #app-content #today-menu .message-template-copy-inline:hover,
+html body #app-content #today-menu .message-template-copy-inline:focus-visible {
+  background: #f1f1f1 !important;
+}
