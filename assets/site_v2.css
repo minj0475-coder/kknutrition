@@ -15852,3 +15852,24 @@ html body #app-content #staff .staff-accordion[open] > summary::after,
 html body #app-content .staff-accordion[open] > summary::after {
   transform: rotate(-135deg) translate(-1px, -1px) !important;
 }
+
+/* 2026-06-24 final home mobile hero text alignment. */
+@media (max-width: 620px) {
+  html body #app-content #home.page-section > main.wrap > .hero {
+    padding-top: 22px !important;
+    justify-content: flex-start !important;
+  }
+
+  html body #app-content #home.page-section > main.wrap > .hero .hero-content {
+    align-self: stretch !important;
+    justify-content: flex-start !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: none !important;
+    translate: 0 0 !important;
+  }
+
+  html body #app-content #home.page-section > main.wrap > .hero .kicker {
+    margin-top: 0 !important;
+  }
+}
