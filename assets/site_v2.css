@@ -15109,7 +15109,7 @@ html body #app-content #today-menu .message-template-body {
 }
 
 html body #app-content #today-menu .message-template-body label:first-of-type {
-  padding-right: 62px !important;
+  padding-right: 0 !important;
 }
 
 /* 2026-06-24 annual sheet link editor placement and edit buttons. */
