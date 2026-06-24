@@ -15796,3 +15796,53 @@ html body #app-content #today-menu .message-template-copy-inline:hover,
 html body #app-content #today-menu .message-template-copy-inline:focus-visible {
   background: #f1f1f1 !important;
 }
+
+/* 2026-06-24 absolute final mobile hero repair. Keep text and art separated. */
+@media (max-width: 620px) {
+  html body #app-content .page-section > main.wrap > .hero,
+  html body #app-content #home.page-section > main.wrap > .hero,
+  html body #app-content .page-section:not(#home) > main.wrap > .hero,
+  html body #app-content #promo-contacts.page-section > main.wrap > .hero {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: 340px !important;
+    max-height: none !important;
+    padding: 22px 20px 16px !important;
+    gap: 8px !important;
+  }
+
+  html body #app-content .page-section > main.wrap > .hero .hero-content {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  html body #app-content .page-section > main.wrap > .hero .subtitle,
+  html body #app-content .page-section > main.wrap > .hero > .subtitle {
+    max-width: 100% !important;
+  }
+
+  html body #app-content .page-section:not(#home) > main.wrap > .hero img.hero-asset,
+  html body #app-content #promo-contacts.page-section > main.wrap > .hero img.hero-asset,
+  html body #app-content #home.page-section > main.wrap > .hero img.hero-asset,
+  html body #app-content #home.page-section .hero img.hero-asset {
+    position: relative !important;
+    inset: auto !important;
+    display: block !important;
+    align-self: flex-end !important;
+    width: min(176px, 46vw) !important;
+    max-width: 176px !important;
+    max-height: 150px !important;
+    height: auto !important;
+    margin: 4px 0 0 auto !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  html body #app-content #home.page-section > main.wrap > .hero img.hero-asset,
+  html body #app-content #home.page-section .hero img.hero-asset {
+    width: min(214px, 56vw) !important;
+    max-width: 214px !important;
+    max-height: 176px !important;
+  }
+}
