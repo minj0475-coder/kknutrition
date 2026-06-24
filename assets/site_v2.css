@@ -14953,3 +14953,32 @@ html body #app-content section#monthly.page-section .academic-weekly-card .acade
   color: #202123 !important;
   box-shadow: none !important;
 }
+
+/* 2026-06-24 calendar day color correction. */
+html body #app-content section#monthly.page-section .academic-day.is-other-month,
+html body #app-content section#monthly.page-section button.academic-day.is-other-month {
+  background: #f3f4f6 !important;
+  box-shadow: inset 0 0 0 1px #e5e7eb !important;
+  opacity: 1 !important;
+}
+
+html body #app-content section#monthly.page-section .academic-day.is-other-month .academic-date-num {
+  color: #9ca3af !important;
+}
+
+html body #app-content section#monthly.page-section .academic-day.is-sunday:not(.is-other-month) .academic-date-num,
+html body #app-content section#monthly.page-section .academic-day.is-holiday:not(.is-other-month) .academic-date-num {
+  color: #e03131 !important;
+}
+
+html body #app-content section#monthly.page-section .academic-day.is-saturday:not(.is-other-month) .academic-date-num {
+  color: #1f78c8 !important;
+}
+
+html body #app-content section#monthly.page-section .academic-weekdays span:first-child {
+  color: #e03131 !important;
+}
+
+html body #app-content section#monthly.page-section .academic-weekdays span:last-child {
+  color: #1f78c8 !important;
+}
