@@ -14982,3 +14982,66 @@ html body #app-content section#monthly.page-section .academic-weekdays span:firs
 html body #app-content section#monthly.page-section .academic-weekdays span:last-child {
   color: #1f78c8 !important;
 }
+
+/* 2026-06-24 final sidebar logo alignment: same spot opened and collapsed. */
+html body .app-sidebar .sidebar-head,
+html body.sidebar-open .app-sidebar .sidebar-head,
+html body.sidebar-collapsed .app-sidebar .sidebar-head,
+html body:not(.sidebar-collapsed) .app-sidebar .sidebar-head {
+  min-height: 58px !important;
+  height: 58px !important;
+  padding: 0 !important;
+}
+
+html body .app-sidebar .sidebar-logo-link,
+html body.sidebar-open .app-sidebar .sidebar-logo-link,
+html body.sidebar-collapsed .app-sidebar .sidebar-logo-link,
+html body:not(.sidebar-collapsed) .app-sidebar .sidebar-logo-link {
+  position: absolute !important;
+  left: 10px !important;
+  top: 8px !important;
+  width: 46px !important;
+  height: 46px !important;
+  min-width: 46px !important;
+  min-height: 46px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transform: none !important;
+}
+
+html body .app-sidebar .sidebar-logo,
+html body.sidebar-open .app-sidebar .sidebar-logo,
+html body.sidebar-collapsed .app-sidebar .sidebar-logo,
+html body:not(.sidebar-collapsed) .app-sidebar .sidebar-logo {
+  width: 46px !important;
+  height: 46px !important;
+  min-width: 46px !important;
+  min-height: 46px !important;
+  margin: 0 !important;
+  object-fit: contain !important;
+  transform: none !important;
+}
+
+@media (min-width: 901px) {
+  html body:not(.sidebar-collapsed) .app-sidebar .sidebar-nav,
+  html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-nav {
+    margin-top: 4px !important;
+  }
+
+  html body:not(.sidebar-collapsed) .app-sidebar .sidebar-icon-btn,
+  html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-icon-btn {
+    top: 29px !important;
+  }
+}
+
+@media (max-width: 900px) {
+  html body.sidebar-open .app-sidebar .sidebar-head {
+    min-height: 58px !important;
+    height: 58px !important;
+  }
+
+  html body.sidebar-open .app-sidebar .sidebar-logo-link {
+    left: 10px !important;
+    top: 8px !important;
+  }
+}
