@@ -16200,3 +16200,15 @@ html body #app-content #today-menu .message-template-textbox .message-template-c
     transform: translateX(-50%) !important;
   }
 }
+
+/* 2026-06-25 mobile top bar separated by space, not a line. */
+@media (max-width: 760px) {
+  html body .top {
+    border-bottom: 0 !important;
+    box-shadow: none !important;
+  }
+
+  html body #app-content .page-section > main.wrap {
+    padding-top: 10px !important;
+  }
+}
