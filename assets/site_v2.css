@@ -15111,3 +15111,13 @@ html body #app-content #today-menu .message-template-body {
 html body #app-content #today-menu .message-template-body label:first-of-type {
   padding-right: 62px !important;
 }
+
+/* 2026-06-24 annual sheet link editor placement and edit buttons. */
+html body #app-content #annual .annual-desktop-card + .annual-sheet-links-card,
+html body #app-content #annual .annual-mobile-card + .annual-sheet-links-card {
+  margin-top: 16px !important;
+}
+
+html body #app-content .annual-inline-sheet-edit {
+  margin-left: 6px !important;
+}

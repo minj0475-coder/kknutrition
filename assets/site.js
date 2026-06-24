@@ -1272,6 +1272,10 @@ function normalizeAnnualSheetUrl(value) {
 function setupAnnualSheetLinks() {
   const card = document.getElementById("annualSheetLinks");
   if (!card) return;
+  const desktopAnnualCard = document.querySelector("#annual .annual-desktop-card");
+  if (desktopAnnualCard && desktopAnnualCard.nextElementSibling !== card) {
+    desktopAnnualCard.insertAdjacentElement("afterend", card);
+  }
   const status = document.getElementById("annualSheetLinkStatus");
   let links = readAnnualSheetLinks();
 
@@ -1290,7 +1294,18 @@ function setupAnnualSheetLinks() {
     document.querySelectorAll("#annual li").forEach(item => {
       const itemText = normalizeInlineTargetText(item.textContent);
       const key = Object.keys(inlineTargets).find(name => itemText.startsWith(inlineTargets[name]));
-      if (!key || item.querySelector(`[data-annual-sheet-open="${key}"]`)) return;
+      if (!key) return;
+      if (item.querySelector(`[data-annual-sheet-open="${key}"]`)) {
+        if (!item.querySelector(`[data-annual-sheet-edit="${key}"]`)) {
+          const editLink = document.createElement("a");
+          editLink.className = "annual-inline-sheet-link annual-inline-sheet-edit";
+          editLink.dataset.annualSheetEdit = key;
+          editLink.href = "#annualSheetLinks";
+          editLink.textContent = "링크 수정";
+          item.append(" ", editLink);
+        }
+        return;
+      }
       const link = document.createElement("a");
       link.className = "annual-inline-sheet-link";
       link.dataset.annualSheetOpen = key;
@@ -1298,6 +1313,12 @@ function setupAnnualSheetLinks() {
       link.rel = "noopener";
       link.textContent = "스프레드시트";
       item.append(" ", link);
+      const editLink = document.createElement("a");
+      editLink.className = "annual-inline-sheet-link annual-inline-sheet-edit";
+      editLink.dataset.annualSheetEdit = key;
+      editLink.href = "#annualSheetLinks";
+      editLink.textContent = "링크 수정";
+      item.append(" ", editLink);
     });
   };
 
@@ -1367,6 +1388,12 @@ function setupAnnualSheetLinks() {
   card.ownerDocument.querySelectorAll(".annual-inline-sheet-link").forEach(link => {
     link.addEventListener("click", event => {
       if (link.classList.contains("is-disabled")) event.preventDefault();
+    });
+  });
+  card.ownerDocument.querySelectorAll(".annual-inline-sheet-edit").forEach(link => {
+    link.addEventListener("click", () => {
+      card.open = true;
+      window.setTimeout(() => card.scrollIntoView({ behavior: "smooth", block: "start" }), 20);
     });
   });
   window.setTimeout(() => {
