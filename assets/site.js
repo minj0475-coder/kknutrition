@@ -2192,7 +2192,7 @@ function getAcademicEventsForKey(key, userEvents) {
       url: user.url || "",
       endDate: endKey,
       done: Boolean(user.done),
-      color: user.color || "rose",
+      color: user.color || "blue",
       weight: user.weight || "normal",
       type: "user",
       source: "user",
@@ -2334,7 +2334,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function setAcademicColor(value) {
-    const nextColor = value || "rose";
+    const nextColor = value || "blue";
     if (colorInput) colorInput.value = nextColor;
     colorButtons.forEach(button => {
       const isSelected = button.getAttribute("data-academic-color") === nextColor;
@@ -2361,7 +2361,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (dateInput) dateInput.value = key;
     if (endDateInput) endDateInput.value = prefillEvent ? key : (current.endDate || state.selectedSourceKey);
     if (doneInput) doneInput.checked = Boolean(current.done);
-    setAcademicColor(current.color || "rose");
+    setAcademicColor(current.color || "blue");
     if (memoInput) memoInput.value = current.memo || "";
     if (urlInput) urlInput.value = current.url || "";
     renderCalendar();
@@ -2561,7 +2561,7 @@ document.addEventListener("DOMContentLoaded", () => {
       endDate: endKey,
       done: doneInput ? doneInput.checked : false,
       weight: "normal",
-      color: colorInput ? colorInput.value : "rose"
+      color: colorInput ? colorInput.value : "blue"
     };
     const isEditingExisting = state.selectedUserEventIndex !== null;
     if (isEditingExisting) {
@@ -2626,7 +2626,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   colorButtons.forEach(button => {
     button.addEventListener("click", () => {
-      setAcademicColor(button.getAttribute("data-academic-color") || "rose");
+      setAcademicColor(button.getAttribute("data-academic-color") || "blue");
     });
   });
 
@@ -2637,7 +2637,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (urlInput) urlInput.value = "";
     if (endDateInput) endDateInput.value = dateInput && dateInput.value ? dateInput.value : state.selectedKey;
     if (doneInput) doneInput.checked = false;
-    setAcademicColor("rose");
+    setAcademicColor("blue");
     if (state.selectedUserEventIndex !== null) {
       const nextEvents = getUserAcademicEventsForKey(userEvents, state.selectedSourceKey);
       nextEvents.splice(state.selectedUserEventIndex, 1);
