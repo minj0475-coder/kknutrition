@@ -14425,3 +14425,60 @@ html body #app-content #home.page-section .hero img.hero-asset {
     margin-left: 64px !important;
   }
 }
+
+/* Final-end sidebar open header polish: make logo and collapse control read as one balanced unit. */
+@media (min-width: 901px) {
+  html body:not(.sidebar-collapsed) .app-sidebar .sidebar-head,
+  html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-head {
+    width: calc(100% - 28px) !important;
+    min-height: 58px !important;
+    height: 58px !important;
+    margin: 14px 14px 10px !important;
+    padding: 6px 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    border: 1px solid rgba(232, 225, 216, .72) !important;
+    border-radius: 16px !important;
+    background: rgba(255, 255, 255, .72) !important;
+    box-shadow: 0 10px 26px rgba(63, 58, 53, .06) !important;
+    overflow: visible !important;
+  }
+
+  html body:not(.sidebar-collapsed) .app-sidebar .sidebar-logo-link,
+  html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-logo-link {
+    flex: 0 0 46px !important;
+    width: 46px !important;
+    max-width: 46px !important;
+    min-width: 46px !important;
+    height: 46px !important;
+    min-height: 46px !important;
+  }
+
+  html body:not(.sidebar-collapsed) .app-sidebar .sidebar-logo,
+  html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-logo {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+  }
+
+  html body:not(.sidebar-collapsed) .app-sidebar .sidebar-icon-btn,
+  html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-icon-btn {
+    position: static !important;
+    flex: 0 0 38px !important;
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    margin: 0 !important;
+    transform: none !important;
+    border-radius: 12px !important;
+    background: rgba(247, 247, 248, .88) !important;
+  }
+
+  html body:not(.sidebar-collapsed) .app-sidebar .sidebar-icon-btn:hover,
+  html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-icon-btn:hover {
+    background: #eeeeef !important;
+  }
+}
