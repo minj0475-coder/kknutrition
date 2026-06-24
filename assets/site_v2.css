@@ -15308,6 +15308,11 @@ html body #app-content #today-menu .message-template-copy-inline:focus-visible {
   }
 }
 
+/* 2026-06-24 staff accordion open state points upward. */
+html body #app-content .staff-accordion[open] summary::after {
+  transform: rotate(-135deg) translate(-1px, -1px) !important;
+}
+
 html body #app-content #today-menu .message-template-content-label textarea {
   padding-right: 54px !important;
 }
