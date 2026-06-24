@@ -15956,6 +15956,26 @@ html body #app-content #today-menu .message-template-copy-inline {
   box-shadow: none !important;
 }
 
+/* 2026-06-24 real message template text box wrapper. */
+html body #app-content #today-menu .message-template-textbox {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+}
+
+html body #app-content #today-menu .message-template-textbox textarea {
+  display: block !important;
+  width: 100% !important;
+  min-height: 244px !important;
+  padding: 18px 64px 18px 18px !important;
+}
+
+html body #app-content #today-menu .message-template-textbox .message-template-copy-inline {
+  position: absolute !important;
+  top: 10px !important;
+  right: 12px !important;
+}
+
 /* 2026-06-24 desktop sidebar menu breathing room. */
 @media (min-width: 901px) {
   html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-nav,

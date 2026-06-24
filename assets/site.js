@@ -221,6 +221,14 @@ function setupMessageTemplates() {
           <button class="message-template-delete" type="button" data-template-delete="${index}">삭제</button>
         </div>
       `;
+      const inlineCopyButton = details.querySelector(".message-template-copy-inline");
+      const bodyTextarea = details.querySelector("[data-template-body]");
+      if (inlineCopyButton && bodyTextarea) {
+        const textbox = document.createElement("div");
+        textbox.className = "message-template-textbox";
+        inlineCopyButton.before(textbox);
+        textbox.append(inlineCopyButton, bodyTextarea);
+      }
       details.querySelectorAll(".message-template-copy, .message-template-copy-inline").forEach(copyButton => copyButton.addEventListener("click", event => {
         event.preventDefault();
         event.stopPropagation();
