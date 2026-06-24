@@ -209,30 +209,26 @@ function setupMessageTemplates() {
       details.className = "message-template-item";
       details.innerHTML = `
         <summary>
-          <span class="message-template-title">${escapeTemplateHtml(item.title || "새 문자")}</span>
+          <input class="message-template-title-input" type="text" value="${escapeTemplateHtml(item.title || "")}" data-template-title="${index}" aria-label="문자 제목">
           <button class="copy-icon-btn message-template-copy" type="button" aria-label="문자 내용 복사" title="복사"></button>
         </summary>
         <div class="message-template-body">
-          <label>
-            <span>제목</span>
-            <input type="text" value="${escapeTemplateHtml(item.title || "")}" data-template-title="${index}">
-          </label>
-          <label>
+          <label class="message-template-content-label">
             <span>내용</span>
+            <button class="copy-icon-btn message-template-copy-inline" type="button" aria-label="문자 내용 복사" title="복사"></button>
             <textarea rows="10" data-template-body="${index}">${escapeTemplateHtml(item.body || "")}</textarea>
           </label>
           <button class="message-template-delete" type="button" data-template-delete="${index}">삭제</button>
         </div>
       `;
-      details.querySelector(".message-template-copy").addEventListener("click", event => {
+      details.querySelectorAll(".message-template-copy, .message-template-copy-inline").forEach(copyButton => copyButton.addEventListener("click", event => {
         event.preventDefault();
         event.stopPropagation();
         copyTemplate(index);
-      });
+      }));
       details.querySelector("[data-template-title]").addEventListener("input", event => {
         items[index].title = event.target.value;
         persist();
-        details.querySelector(".message-template-title").textContent = event.target.value.trim() || "새 문자";
       });
       details.querySelector("[data-template-body]").addEventListener("input", event => {
         items[index].body = event.target.value;
