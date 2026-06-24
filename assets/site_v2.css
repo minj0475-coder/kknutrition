@@ -15179,6 +15179,135 @@ html body #app-content #today-menu .message-template-copy-inline:focus-visible {
   background: #f1f1f1 !important;
 }
 
+/* 2026-06-24 polished mobile hero composition. */
+@media (max-width: 620px) {
+  html body #app-content .page-section > main.wrap > .hero,
+  html body #app-content #home.page-section > main.wrap > .hero,
+  html body #app-content .page-section:not(#home) > main.wrap > .hero,
+  html body #app-content #promo-contacts.page-section > main.wrap > .hero {
+    position: relative !important;
+    display: block !important;
+    height: 318px !important;
+    min-height: 318px !important;
+    max-height: 318px !important;
+    padding: 22px 20px !important;
+    overflow: hidden !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 20px !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+    text-align: left !important;
+  }
+
+  html body #app-content .page-section > main.wrap > .hero::after {
+    content: "" !important;
+    position: absolute !important;
+    right: -52px !important;
+    bottom: -60px !important;
+    width: 240px !important;
+    height: 180px !important;
+    border-radius: 999px !important;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 232, 237, .72), rgba(255, 255, 255, 0) 68%) !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+  }
+
+  html body #app-content .page-section > main.wrap > .hero .hero-content {
+    position: relative !important;
+    z-index: 2 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    text-align: left !important;
+  }
+
+  html body #app-content .page-section > main.wrap > .hero .kicker,
+  html body #app-content .page-section > main.wrap > .hero > .kicker {
+    position: relative !important;
+    z-index: 2 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    width: auto !important;
+    max-width: calc(100% - 18px) !important;
+    min-height: 26px !important;
+    margin: 0 0 8px !important;
+    padding: 5px 10px !important;
+    border: 1px solid #ead9d7 !important;
+    border-radius: 999px !important;
+    background: #fff8f8 !important;
+    color: #8f4a51 !important;
+    font-size: 12px !important;
+    font-weight: 750 !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0 !important;
+    text-align: left !important;
+  }
+
+  html body #app-content .page-section > main.wrap > .hero h1,
+  html body #app-content .page-section > main.wrap > .hero > h1 {
+    position: relative !important;
+    z-index: 2 !important;
+    max-width: 100% !important;
+    margin: 0 0 8px !important;
+    color: #202123 !important;
+    font-size: 31px !important;
+    font-weight: 820 !important;
+    line-height: 1.12 !important;
+    letter-spacing: 0 !important;
+    text-align: left !important;
+  }
+
+  html body #app-content .page-section > main.wrap > .hero .subtitle,
+  html body #app-content .page-section > main.wrap > .hero > .subtitle {
+    position: relative !important;
+    z-index: 2 !important;
+    min-height: 0 !important;
+    max-width: 82% !important;
+    margin: 0 !important;
+    color: #4b5563 !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    line-height: 1.55 !important;
+    letter-spacing: 0 !important;
+    text-align: left !important;
+    word-break: keep-all !important;
+  }
+
+  html body #app-content .page-section:not(#home) > main.wrap > .hero img.hero-asset,
+  html body #app-content #promo-contacts.page-section > main.wrap > .hero img.hero-asset,
+  html body #app-content #home.page-section > main.wrap > .hero img.hero-asset,
+  html body #app-content #home.page-section .hero img.hero-asset {
+    position: absolute !important;
+    right: 10px !important;
+    bottom: 8px !important;
+    width: min(184px, 48vw) !important;
+    min-width: 0 !important;
+    max-width: 184px !important;
+    max-height: 168px !important;
+    object-fit: contain !important;
+    z-index: 1 !important;
+    opacity: 1 !important;
+    scale: 1 !important;
+    translate: 0 0 !important;
+    transform: none !important;
+    animation: none !important;
+    filter: drop-shadow(0 16px 20px rgba(32, 33, 35, .10)) !important;
+  }
+
+  html body #app-content #home.page-section > main.wrap > .hero img.hero-asset,
+  html body #app-content #home.page-section .hero img.hero-asset {
+    right: -14px !important;
+    bottom: 4px !important;
+    width: min(230px, 58vw) !important;
+    max-width: 230px !important;
+    max-height: 190px !important;
+  }
+}
+
 html body #app-content #today-menu .message-template-content-label textarea {
   padding-right: 54px !important;
 }
