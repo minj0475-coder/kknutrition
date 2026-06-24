@@ -1560,7 +1560,12 @@ function buildSidebarToc() {
     const group = document.createElement("div");
     group.className = "sidebar-nav-group";
     group.appendChild(link);
-    const headings = section ? [...section.querySelectorAll(":scope main section.card h2, :scope main section.card summary")]
+    const headings = pageId === "today-menu"
+      ? [
+        { id: "todayMenuCooking", text: "조리방법 조회" },
+        { id: "messageTemplates", text: "문자내용 정리" }
+      ].filter(item => document.getElementById(item.id))
+      : section ? [...section.querySelectorAll(":scope main section.card h2, :scope main section.card summary")]
       .map((heading, index) => {
         const card = heading.closest("section.card");
         if (!card) return null;

@@ -15045,3 +15045,69 @@ html body:not(.sidebar-collapsed) .app-sidebar .sidebar-logo {
     top: 8px !important;
   }
 }
+
+/* 2026-06-24 meal note message accordion: title toggles, copy lives in content. */
+html body #app-content #today-menu .message-template-item {
+  position: relative !important;
+}
+
+html body #app-content #today-menu .message-template-item summary {
+  grid-template-columns: minmax(0, 1fr) 34px !important;
+  padding-right: 14px !important;
+}
+
+html body #app-content #today-menu .message-template-item summary::after {
+  content: "" !important;
+  justify-self: center !important;
+  width: 10px !important;
+  height: 10px !important;
+  border-right: 2px solid #5f6368 !important;
+  border-bottom: 2px solid #5f6368 !important;
+  transform: rotate(45deg) translateY(-2px) !important;
+  transition: transform .16s ease, border-color .16s ease !important;
+}
+
+html body #app-content #today-menu .message-template-item[open] summary::after {
+  transform: rotate(-135deg) translateY(-1px) !important;
+  border-color: #202123 !important;
+}
+
+html body #app-content #today-menu .message-template-copy {
+  display: none !important;
+}
+
+html body #app-content #today-menu .message-template-item[open] .message-template-copy {
+  display: inline-flex !important;
+  position: absolute !important;
+  top: 70px !important;
+  right: 18px !important;
+  z-index: 2 !important;
+  width: 50px !important;
+  height: 50px !important;
+  min-width: 50px !important;
+  min-height: 50px !important;
+  padding: 10px !important;
+  border-radius: 12px !important;
+  background: #ffffff !important;
+  color: #202123 !important;
+  box-shadow: none !important;
+}
+
+html body #app-content #today-menu .message-template-item[open] .message-template-copy::before {
+  width: 28px !important;
+  height: 28px !important;
+}
+
+html body #app-content #today-menu .message-template-item[open] .message-template-copy:hover,
+html body #app-content #today-menu .message-template-item[open] .message-template-copy:focus-visible {
+  background: #f1f1f1 !important;
+}
+
+html body #app-content #today-menu .message-template-body {
+  position: relative !important;
+  padding-top: 4px !important;
+}
+
+html body #app-content #today-menu .message-template-body label:first-of-type {
+  padding-right: 62px !important;
+}
