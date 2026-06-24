@@ -2324,7 +2324,16 @@ document.addEventListener("DOMContentLoaded", () => {
           const row = document.createElement("button");
           row.type = "button";
           row.className = `academic-week-row ${event.done ? "is-done" : ""}`;
-          row.innerHTML = `<span>${formatAcademicDate(key, false)}</span><strong>${escapeAcademicHtml(event.title)}</strong>`;
+          const memoPreview = event.memo ? `<small class="academic-week-memo">${escapeAcademicHtml(event.memo)}</small>` : "";
+          const statusBadge = event.done ? `<em class="academic-week-status">완료</em>` : "";
+          row.innerHTML = `
+            <span class="academic-week-date">${formatAcademicDate(key, false)}</span>
+            <span class="academic-week-content">
+              <strong>${escapeAcademicHtml(event.title)}</strong>
+              ${memoPreview}
+            </span>
+            ${statusBadge}
+          `;
           if (event.memo) {
             row.setAttribute("data-academic-memo", event.memo);
             row.setAttribute("title", event.memo);
