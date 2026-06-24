@@ -15846,3 +15846,9 @@ html body #app-content #today-menu .message-template-copy-inline:focus-visible {
     max-height: 176px !important;
   }
 }
+
+/* 2026-06-24 final staff accordion arrow direction. */
+html body #app-content #staff .staff-accordion[open] > summary::after,
+html body #app-content .staff-accordion[open] > summary::after {
+  transform: rotate(-135deg) translate(-1px, -1px) !important;
+}
