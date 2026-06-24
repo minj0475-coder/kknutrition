@@ -2254,12 +2254,27 @@ document.addEventListener("DOMContentLoaded", () => {
           pill.setAttribute("data-academic-memo", event.memo);
           pill.setAttribute("title", event.memo);
         }
+        pill.addEventListener("click", clickEvent => {
+          clickEvent.preventDefault();
+          clickEvent.stopPropagation();
+          if (event.source !== "user") return;
+          if (!isCurrentMonth) {
+            state.year = date.getFullYear();
+            state.month = date.getMonth();
+          }
+          openAcademicModal(key, event.userIndex, event.startKey);
+          renderWeeklyTable();
+        });
         button.appendChild(pill);
       });
       if (events.length > 3) {
         const more = document.createElement("span");
         more.className = "academic-pill anniversary";
         more.textContent = `+${events.length - 3}개 더`;
+        more.addEventListener("click", clickEvent => {
+          clickEvent.preventDefault();
+          clickEvent.stopPropagation();
+        });
         button.appendChild(more);
       }
       button.addEventListener("click", () => {
