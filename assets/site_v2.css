@@ -16203,8 +16203,23 @@ html body #app-content #today-menu .message-template-textbox .message-template-c
 
 /* 2026-06-25 mobile top bar separated by space, not a line. */
 @media (max-width: 760px) {
-  html body .top {
+  html body .top,
+  html body header.top,
+  html body .top-inner {
     border-bottom: 0 !important;
+    border-block-end: 0 !important;
+    box-shadow: none !important;
+  }
+
+  html body .top::before,
+  html body .top::after,
+  html body header.top::before,
+  html body header.top::after,
+  html body .top-inner::before,
+  html body .top-inner::after {
+    display: none !important;
+    content: none !important;
+    border: 0 !important;
     box-shadow: none !important;
   }
 
