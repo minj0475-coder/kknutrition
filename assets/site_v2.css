@@ -15115,7 +15115,7 @@ html body #app-content #today-menu .message-template-body label:first-of-type {
 /* 2026-06-24 annual sheet link editor placement and edit buttons. */
 html body #app-content #annual .annual-desktop-card + .annual-sheet-links-card,
 html body #app-content #annual .annual-mobile-card + .annual-sheet-links-card {
-  margin-top: 16px !important;
+  margin-top: 0 !important;
 }
 
 html body #app-content .annual-inline-sheet-edit {
