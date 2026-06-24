@@ -15955,3 +15955,11 @@ html body #app-content #today-menu .message-template-copy-inline {
   color: #202123 !important;
   box-shadow: none !important;
 }
+
+/* 2026-06-24 desktop sidebar menu breathing room. */
+@media (min-width: 901px) {
+  html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-nav,
+  html body:not(.sidebar-collapsed) .app-sidebar .sidebar-nav {
+    padding-top: 12px !important;
+  }
+}
