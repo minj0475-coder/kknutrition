@@ -13940,12 +13940,12 @@ html body .app-sidebar .sidebar-subnav a.active {
 
 /* Final-end 2026-06-23 UI tuning: intentionally last. */
 html body #app-content .memo-full-btn svg {
-  width: 28px !important;
-  height: 28px !important;
-  min-width: 28px !important;
-  min-height: 28px !important;
-  stroke-width: 2.2 !important;
-  transform: scale(1.18) !important;
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  min-height: 24px !important;
+  stroke-width: 2 !important;
+  transform: scale(1) !important;
   transform-origin: center !important;
 }
 
