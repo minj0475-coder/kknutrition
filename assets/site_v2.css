@@ -15963,3 +15963,32 @@ html body #app-content #today-menu .message-template-copy-inline {
     padding-top: 12px !important;
   }
 }
+
+/* 2026-06-24 desktop home hero text alignment. */
+@media (min-width: 901px) {
+  html body #app-content #home.page-section > main.wrap > .hero {
+    border-color: rgba(232, 222, 218, 0.96) !important;
+  }
+
+  html body #app-content #home.page-section > main.wrap > .hero .hero-content {
+    align-self: stretch !important;
+    justify-content: flex-start !important;
+    max-width: 640px !important;
+    margin-left: 16px !important;
+    padding-top: 12px !important;
+    gap: 0 !important;
+  }
+
+  html body #app-content #home.page-section > main.wrap > .hero .kicker {
+    margin: 0 0 14px !important;
+  }
+
+  html body #app-content #home.page-section > main.wrap > .hero h1 {
+    margin: 0 0 clamp(42px, 4.4vw, 68px) !important;
+  }
+
+  html body #app-content #home.page-section > main.wrap > .hero .subtitle {
+    max-width: 640px !important;
+    margin: 0 !important;
+  }
+}
