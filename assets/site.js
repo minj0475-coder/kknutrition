@@ -209,10 +209,14 @@ function setupMessageTemplates() {
       details.className = "message-template-item";
       details.innerHTML = `
         <summary>
-          <input class="message-template-title-input" type="text" value="${escapeTemplateHtml(item.title || "")}" data-template-title="${index}" aria-label="문자 제목">
+          <span class="message-template-title" data-template-title-display="${index}">${escapeTemplateHtml(item.title || "")}</span>
           <button class="copy-icon-btn message-template-copy" type="button" aria-label="문자 내용 복사" title="복사"></button>
         </summary>
         <div class="message-template-body">
+          <label class="message-template-title-label">
+            <span>제목</span>
+            <input class="message-template-title-input" type="text" value="${escapeTemplateHtml(item.title || "")}" data-template-title="${index}" aria-label="문자 제목">
+          </label>
           <label class="message-template-content-label">
             <span>내용</span>
             <button class="copy-icon-btn message-template-copy-inline" type="button" aria-label="문자 내용 복사" title="복사"></button>
@@ -236,6 +240,8 @@ function setupMessageTemplates() {
       }));
       details.querySelector("[data-template-title]").addEventListener("input", event => {
         items[index].title = event.target.value;
+        const titleDisplay = details.querySelector("[data-template-title-display]");
+        if (titleDisplay) titleDisplay.textContent = event.target.value || "새 문자";
         persist();
       });
       details.querySelector("[data-template-body]").addEventListener("input", event => {
