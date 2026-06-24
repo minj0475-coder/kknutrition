@@ -2153,6 +2153,8 @@ function isAcademicNonWorkingDay(key) {
 }
 
 function getUserAcademicEventOccurrencesForKey(userEvents, key) {
+  const day = parseAcademicKey(key).getDay();
+  if (day === 0 || day === 6) return [];
   const occurrences = [];
   Object.keys(userEvents || {}).sort().forEach(startKey => {
     getUserAcademicEventsForKey(userEvents, startKey).forEach((event, userIndex) => {
