@@ -16340,8 +16340,8 @@ html body #app-content #today-menu #todayMenuAllSectionWrap.open {
   }
 
   html body #app-content #today-menu #messageTemplateAddBtn:active {
-    background: #f2f2f2 !important;
-    transform: scale(.98) !important;
+    background: transparent !important;
+    transform: none !important;
   }
 }
 
