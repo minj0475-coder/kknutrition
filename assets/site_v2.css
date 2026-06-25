@@ -16253,3 +16253,18 @@ html body #app-content #today-menu .message-template-textbox .message-template-c
     left: 18px !important;
   }
 }
+
+/* 2026-06-25 academic calendar title spacing: separate section title from month controls. */
+html body #app-content #monthly .academic-calendar-card .academic-head {
+  margin-bottom: 18px !important;
+}
+
+html body #app-content #monthly .academic-calendar-card .academic-toolbar {
+  margin-top: 0 !important;
+}
+
+@media (max-width: 900px) {
+  html body #app-content #monthly .academic-calendar-card .academic-head {
+    margin-bottom: 14px !important;
+  }
+}
