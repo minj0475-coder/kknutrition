@@ -16507,3 +16507,23 @@ html body #app-content #home.page-section .hero img.hero-asset {
     transform: translateX(-50%) scale(1.1) !important;
   }
 }
+
+/* 2026-06-25 promo section numbers: match the standard rounded number badge. */
+html body #app-content #promo-contacts .promo-contact-title .num,
+html body #promo-contacts .promo-contact-title .num {
+  display: inline-grid !important;
+  place-items: center !important;
+  flex: 0 0 32px !important;
+  min-width: 32px !important;
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  border-radius: 8px !important;
+  border: 1px solid var(--ui-line, var(--card-soft)) !important;
+  background: var(--ui-soft, var(--blue-soft)) !important;
+  color: var(--ui-text, var(--text)) !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  box-shadow: none !important;
+}
