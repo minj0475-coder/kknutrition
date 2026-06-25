@@ -16280,6 +16280,13 @@ html body #app-content #today-menu #todayMenuAllSectionWrap.open {
   display: grid !important;
 }
 
+/* 2026-06-25 mobile full-menu toggle gap equals neighboring cards. */
+@media (max-width: 640px) {
+  html body #app-content #today-menu .message-template-card {
+    margin-top: 0 !important;
+  }
+}
+
 /* 2026-06-25 mobile message template add button polish. */
 @media (max-width: 640px) {
   html body #app-content #today-menu .message-template-head {
