@@ -1936,8 +1936,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const vendorSearchInput = document.getElementById("vendorNetworkSearch");
   const addBtn = document.getElementById("promoAddRowBtn");
   const vendorAddBtn = document.getElementById("vendorNetworkAddRowBtn");
+  const vendorFullscreenBtn = document.getElementById("vendorNetworkFullscreenBtn");
   const vendorAccordion = document.getElementById("vendorNetworkAccordion");
   const fullscreenBtn = document.getElementById("promoFullscreenBtn");
+  const vendorPanel = document.getElementById("vendorNetworkPanel");
   const panel = document.getElementById("promoContactPanel");
   const emptyState = document.getElementById("promoEmptyState");
   const statusEl = document.getElementById("promoContactStatus");
@@ -2190,8 +2192,25 @@ document.addEventListener("DOMContentLoaded", () => {
       saveVendorNetwork(vendorRows);
       openVendorGroups.add("기타");
       renderVendorNetwork();
-      const last = vendorBody ? vendorBody.querySelector("tr:last-child [data-vendor-field='group']") : null;
+      const last = vendorAccordion
+        ? vendorAccordion.querySelector(".vendor-accordion-card:last-child [data-vendor-field='group']")
+        : (vendorBody ? vendorBody.querySelector("tr:last-child [data-vendor-field='group']") : null);
       if (last) last.focus();
+    });
+  }
+  if (vendorFullscreenBtn && vendorPanel) {
+    vendorFullscreenBtn.addEventListener("click", async () => {
+      try {
+        if (document.fullscreenElement) {
+          await document.exitFullscreen();
+        } else if (vendorPanel.requestFullscreen) {
+          await vendorPanel.requestFullscreen();
+        } else {
+          vendorPanel.classList.toggle("is-expanded");
+        }
+      } catch (e) {
+        vendorPanel.classList.toggle("is-expanded");
+      }
     });
   }
   if (fullscreenBtn && panel) {
