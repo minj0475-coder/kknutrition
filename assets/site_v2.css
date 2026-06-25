@@ -16475,3 +16475,15 @@ html body #app-content .academic-pill.is-drag-target {
   outline: 2px solid rgba(32, 33, 35, .28) !important;
   outline-offset: 2px !important;
 }
+
+/* 2026-06-25 mobile daily kkul: give the character a little more presence without changing the card size. */
+@media (max-width: 640px) {
+  html body #app-content .daily-kkul-card .daily-kkul-image,
+  html body #app-content .daily-kkul-card .daily-kkul-image-wrap img,
+  html body #app-content .home-grid-left .daily-kkul-card .daily-kkul-image {
+    width: min(162px, 41vw) !important;
+    max-width: 162px !important;
+    max-height: 146px !important;
+    object-fit: contain !important;
+  }
+}
