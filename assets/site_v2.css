@@ -16307,3 +16307,42 @@ html body #app-content #monthly .academic-calendar-card .academic-toolbar {
     margin: 0 !important;
   }
 }
+
+/* 2026-06-25 mobile message title editor: place editable title box beside label. */
+@media (max-width: 640px) {
+  html body #app-content #today-menu .message-template-title-label {
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr) !important;
+    align-items: center !important;
+    gap: 12px !important;
+    margin: 2px 0 8px !important;
+  }
+
+  html body #app-content #today-menu .message-template-title-label > span {
+    margin: 0 !important;
+    color: #202123 !important;
+    font-size: 15px !important;
+    font-weight: 760 !important;
+    line-height: 1.25 !important;
+    white-space: nowrap !important;
+  }
+
+  html body #app-content #today-menu .message-template-title-label .message-template-title-input {
+    min-height: 44px !important;
+    padding: 9px 12px !important;
+    border: 1px solid #dedede !important;
+    border-radius: 12px !important;
+    background: #ffffff !important;
+    color: #202123 !important;
+    font-size: 15.5px !important;
+    font-weight: 700 !important;
+    line-height: 1.35 !important;
+    box-shadow: none !important;
+  }
+
+  html body #app-content #today-menu .message-template-title-label .message-template-title-input:focus {
+    outline: 2px solid rgba(32, 33, 35, .16) !important;
+    outline-offset: 2px !important;
+    border-color: #c9c9c9 !important;
+  }
+}
