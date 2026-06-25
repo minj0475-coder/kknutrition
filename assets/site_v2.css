@@ -16504,7 +16504,8 @@ html body #app-content #home.page-section .hero img.hero-asset {
 @media (max-width: 620px) {
   html body #app-content #home.page-section > main.wrap > .hero img.hero-asset,
   html body #app-content #home.page-section .hero img.hero-asset {
-    transform: translateX(-50%) scale(1.1) !important;
+    --home-kkul-float-x: -50%;
+    --home-kkul-float-scale: 1.1;
   }
 }
 
@@ -16684,5 +16685,115 @@ html body #app-content #home.page-section .hero img.hero-asset {
   html body #app-content #monthly .academic-calendar-card .academic-actions .academic-today-btn {
     min-width: 48px !important;
     padding: 0 8px !important;
+  }
+}
+
+/* 2026-06-26 home hero Kkul: slower float and separate breathing ground shadow. */
+@keyframes homeKkulSoftFloat {
+  0%,
+  100% {
+    transform:
+      translateX(var(--home-kkul-float-x, 0px))
+      translateY(var(--home-kkul-float-y, -3px))
+      scale(var(--home-kkul-float-scale, var(--kkul-hero-scale, 1)));
+  }
+
+  50% {
+    transform:
+      translateX(var(--home-kkul-float-x, 0px))
+      translateY(calc(var(--home-kkul-float-y, -3px) - 4px))
+      scale(var(--home-kkul-float-scale, var(--kkul-hero-scale, 1)));
+  }
+}
+
+@keyframes homeKkulShadowBreath {
+  0%,
+  100% {
+    opacity: .17;
+    transform: translateX(-50%) scaleX(.94) scaleY(.86);
+  }
+
+  50% {
+    opacity: .24;
+    transform: translateX(-50%) scaleX(1.04) scaleY(.94);
+  }
+}
+
+html body #app-content #home.page-section > main.wrap > .hero {
+  position: relative !important;
+}
+
+html body #app-content #home.page-section > main.wrap > .hero img.hero-asset,
+html body #app-content #home.page-section .hero img.hero-asset {
+  --home-kkul-float-y: -3px;
+  animation: homeKkulSoftFloat 7.6s ease-in-out infinite !important;
+  filter: none !important;
+  will-change: transform !important;
+  z-index: 1 !important;
+}
+
+@media (max-width: 620px) {
+  html body #app-content #home.page-section > main.wrap > .hero img.hero-asset,
+  html body #app-content #home.page-section .hero img.hero-asset {
+    --home-kkul-float-x: -50%;
+    --home-kkul-float-y: 0px;
+    --home-kkul-float-scale: 1.1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body #app-content #home.page-section > main.wrap > .hero img.hero-asset,
+  html body #app-content #home.page-section .hero img.hero-asset {
+    animation: none !important;
+    transform:
+      translateX(var(--home-kkul-float-x, 0px))
+      translateY(var(--home-kkul-float-y, -3px))
+      scale(var(--home-kkul-float-scale, var(--kkul-hero-scale, 1))) !important;
+  }
+}
+
+html body #app-content #home.page-section > main.wrap > .hero::after {
+  content: none !important;
+  display: none !important;
+}
+
+html body #app-content #home.page-section > main.wrap > .hero .home-kkul-shadow {
+  position: absolute !important;
+  right: clamp(42px, 8vw, 120px) !important;
+  bottom: 22px !important;
+  width: clamp(148px, 21vw, 250px) !important;
+  height: 28px !important;
+  border-radius: 999px !important;
+  background: radial-gradient(ellipse at center, rgba(32, 33, 35, .26) 0%, rgba(32, 33, 35, .11) 42%, rgba(32, 33, 35, 0) 72%) !important;
+  filter: blur(8px) !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+  transform-origin: center center;
+  animation: homeKkulShadowBreath 7.6s ease-in-out infinite;
+}
+
+@media (max-width: 900px) {
+  html body #app-content #home.page-section > main.wrap > .hero .home-kkul-shadow {
+    right: clamp(18px, 12vw, 70px) !important;
+    bottom: 18px !important;
+    width: clamp(112px, 32vw, 190px) !important;
+    height: 22px !important;
+  }
+}
+
+@media (max-width: 620px) {
+  html body #app-content #home.page-section > main.wrap > .hero .home-kkul-shadow {
+    right: 22px !important;
+    bottom: 18px !important;
+    width: min(172px, 45vw) !important;
+    height: 22px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body #app-content #home.page-section > main.wrap > .hero .home-kkul-shadow {
+    animation: none;
+    opacity: .18;
+    transform: translateX(-50%) scaleX(.96) scaleY(.88);
   }
 }
