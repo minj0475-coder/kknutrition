@@ -16290,11 +16290,12 @@ html body #app-content #today-menu #todayMenuAllSectionWrap.open {
 /* 2026-06-25 mobile message template add button polish. */
 @media (max-width: 640px) {
   html body #app-content #today-menu .message-template-head {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) 34px !important;
+    display: flex !important;
+    flex-direction: row !important;
     align-items: center !important;
-    gap: 10px !important;
-    padding-right: 14px !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    padding: 0 4px 0 0 !important;
     margin-bottom: 16px !important;
   }
 
@@ -16305,13 +16306,13 @@ html body #app-content #today-menu #todayMenuAllSectionWrap.open {
   }
 
   html body #app-content #today-menu #messageTemplateAddBtn {
-    width: 34px !important;
-    height: 34px !important;
-    min-width: 34px !important;
-    min-height: 34px !important;
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
     padding: 0 !important;
     border: 0 !important;
-    border-radius: 10px !important;
+    border-radius: 999px !important;
     background: transparent !important;
     color: #202123 !important;
     box-shadow: none !important;
@@ -16320,7 +16321,8 @@ html body #app-content #today-menu #todayMenuAllSectionWrap.open {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    justify-self: center !important;
+    flex: 0 0 38px !important;
+    margin: 0 -2px 0 0 !important;
   }
 
   html body #app-content #today-menu #messageTemplateAddBtn::before {
