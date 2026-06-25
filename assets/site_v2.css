@@ -16487,3 +16487,23 @@ html body #app-content .academic-pill.is-drag-target {
     object-fit: contain !important;
   }
 }
+
+/* 2026-06-25 home hero Kkul: make the main character 10% larger on desktop and mobile. */
+html body #app-content #home.page-section > main.wrap > .hero img.hero-asset,
+html body #app-content #home.page-section .hero img.hero-asset {
+  --kkul-hero-scale: 1.392 !important;
+}
+
+@media (max-width: 900px) {
+  html body #app-content #home.page-section > main.wrap > .hero img.hero-asset,
+  html body #app-content #home.page-section .hero img.hero-asset {
+    --kkul-hero-scale: 1.307 !important;
+  }
+}
+
+@media (max-width: 620px) {
+  html body #app-content #home.page-section > main.wrap > .hero img.hero-asset,
+  html body #app-content #home.page-section .hero img.hero-asset {
+    transform: translateX(-50%) scale(1.1) !important;
+  }
+}
