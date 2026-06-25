@@ -16280,6 +16280,56 @@ html body #app-content #today-menu #todayMenuAllSectionWrap.open {
   display: grid !important;
 }
 
+/* 2026-06-25 mobile message template add button polish. */
+@media (max-width: 640px) {
+  html body #app-content #today-menu .message-template-head {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 46px !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin-bottom: 16px !important;
+  }
+
+  html body #app-content #today-menu .message-template-head .section-title {
+    min-width: 0 !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  html body #app-content #today-menu #messageTemplateAddBtn {
+    width: 46px !important;
+    height: 46px !important;
+    min-width: 46px !important;
+    min-height: 46px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 14px !important;
+    background: #f2f2f2 !important;
+    color: #202123 !important;
+    box-shadow: none !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  html body #app-content #today-menu #messageTemplateAddBtn::before {
+    content: "" !important;
+    display: block !important;
+    width: 20px !important;
+    height: 20px !important;
+    background:
+      linear-gradient(currentColor, currentColor) center / 18px 2px no-repeat,
+      linear-gradient(currentColor, currentColor) center / 2px 18px no-repeat !important;
+  }
+
+  html body #app-content #today-menu #messageTemplateAddBtn:active {
+    background: #e8e8e8 !important;
+    transform: scale(.98) !important;
+  }
+}
+
 /* 2026-06-25 academic calendar title spacing: separate section title from month controls. */
 html body #app-content #monthly .academic-calendar-card .academic-head {
   margin-bottom: 18px !important;
