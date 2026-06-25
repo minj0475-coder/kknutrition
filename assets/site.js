@@ -1933,14 +1933,39 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!tableBody && !vendorBody) return;
 
   const searchInput = document.getElementById("promoContactSearch");
+  const vendorSearchInput = document.getElementById("vendorNetworkSearch");
   const addBtn = document.getElementById("promoAddRowBtn");
   const vendorAddBtn = document.getElementById("vendorNetworkAddRowBtn");
+  const vendorAccordion = document.getElementById("vendorNetworkAccordion");
   const fullscreenBtn = document.getElementById("promoFullscreenBtn");
   const panel = document.getElementById("promoContactPanel");
   const emptyState = document.getElementById("promoEmptyState");
   const statusEl = document.getElementById("promoContactStatus");
   let rows = readPromoContacts();
   let vendorRows = readVendorNetwork();
+  const vendorGroups = ["농산물", "축산물", "수산물", "공산품", "우유", "소모품", "기타"];
+  const openVendorGroups = new Set();
+
+  function getVendorGroupLabel(value) {
+    const group = String(value || "").trim();
+    if (!group) return "기타";
+    if (/농|채소|과일|쌀|김치/.test(group)) return "농산물";
+    if (/우유|유제품|요구르트|치즈/.test(group)) return "우유";
+    if (/축|육|고기|돈|계육|닭|달걀|계란/.test(group)) return "축산물";
+    if (/수|생선|해산|어패|건어/.test(group)) return "수산물";
+    if (/공|가공|냉동|양념|소스|김|떡|면|빵/.test(group)) return "공산품";
+    if (/소모|세제|장갑|위생|용품|비품/.test(group)) return "소모품";
+    return "기타";
+  }
+
+  function getVendorQuery() {
+    return (vendorSearchInput ? vendorSearchInput.value : "").trim().toLowerCase();
+  }
+
+  function vendorMatchesQuery(row, query) {
+    if (!query) return true;
+    return [row.group, row.company, row.phone, row.email].join(" ").toLowerCase().includes(query);
+  }
 
   function focusNextPromoCell(current) {
     const cells = Array.from(document.querySelectorAll(".promo-contact-table .promo-cell-input"));
@@ -1962,32 +1987,112 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderVendorNetwork() {
-    if (!vendorBody) return;
-    vendorBody.innerHTML = "";
-    vendorRows.forEach((row, index) => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td><input class="promo-cell-input" data-vendor-field="group" aria-label="업체군" value=""></td>
-        <td><input class="promo-cell-input" data-vendor-field="company" aria-label="업체명" value=""></td>
-        <td><input class="promo-cell-input" data-vendor-field="phone" aria-label="전화번호" value=""></td>
-        <td><input class="promo-cell-input" data-vendor-field="email" aria-label="이메일" value=""></td>
-        <td class="promo-row-tools"><button class="promo-delete-btn delete-icon-btn" type="button" aria-label="업체 연락망 행 삭제" title="삭제"></button></td>
-      `;
-      tr.querySelectorAll("[data-vendor-field]").forEach(input => {
-        const field = input.getAttribute("data-vendor-field");
-        input.value = row[field] || "";
-        input.addEventListener("input", () => {
-          vendorRows[index][field] = input.value;
+    const query = getVendorQuery();
+    const filtered = vendorRows
+      .map((row, index) => ({ row, index }))
+      .filter(({ row }) => vendorMatchesQuery(row, query));
+
+    if (vendorBody) {
+      vendorBody.innerHTML = "";
+      filtered.forEach(({ row, index }) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><input class="promo-cell-input" data-vendor-field="group" aria-label="업체군" value=""></td>
+          <td><input class="promo-cell-input" data-vendor-field="company" aria-label="업체명" value=""></td>
+          <td><input class="promo-cell-input" data-vendor-field="phone" aria-label="전화번호" value=""></td>
+          <td><input class="promo-cell-input" data-vendor-field="email" aria-label="이메일" value=""></td>
+          <td class="promo-row-tools"><button class="promo-delete-btn delete-icon-btn" type="button" aria-label="업체 연락망 행 삭제" title="삭제"></button></td>
+        `;
+        bindVendorInputs(tr, index, row);
+        tr.querySelector(".promo-delete-btn").addEventListener("click", () => {
+          vendorRows.splice(index, 1);
           saveVendorNetwork(vendorRows);
+          renderVendorNetwork();
         });
+        vendorBody.appendChild(tr);
       });
-      bindPromoCellKeyboard(tr);
-      tr.querySelector(".promo-delete-btn").addEventListener("click", () => {
-        vendorRows.splice(index, 1);
+    }
+
+    renderVendorNetworkAccordion(filtered, query);
+  }
+
+  function bindVendorInputs(root, index, row) {
+    root.querySelectorAll("[data-vendor-field]").forEach(input => {
+      const field = input.getAttribute("data-vendor-field");
+      input.value = row[field] || "";
+      input.addEventListener("input", () => {
+        vendorRows[index][field] = input.value;
         saveVendorNetwork(vendorRows);
+      });
+      if (field === "group") {
+        input.addEventListener("change", renderVendorNetwork);
+      }
+    });
+    bindPromoCellKeyboard(root);
+  }
+
+  function renderVendorNetworkAccordion(filtered, query) {
+    if (!vendorAccordion) return;
+    vendorAccordion.innerHTML = "";
+    const groups = new Map(vendorGroups.map(group => [group, []]));
+    filtered.forEach(item => {
+      const label = getVendorGroupLabel(item.row.group);
+      if (!groups.has(label)) groups.set(label, []);
+      groups.get(label).push(item);
+    });
+    if (query) {
+      groups.forEach((items, label) => {
+        if (items.length) openVendorGroups.add(label);
+      });
+    }
+
+    Array.from(groups.entries()).forEach(([label, items]) => {
+      const isOpen = query ? items.length > 0 : openVendorGroups.has(label);
+      const section = document.createElement("section");
+      section.className = "vendor-accordion-group";
+      section.dataset.group = label;
+      section.innerHTML = `
+        <button class="vendor-accordion-toggle" type="button" aria-expanded="${isOpen ? "true" : "false"}">
+          <span>${label}</span>
+          <em>${items.length}</em>
+        </button>
+        <div class="vendor-accordion-panel" ${isOpen ? "" : "hidden"}></div>
+      `;
+      const toggle = section.querySelector(".vendor-accordion-toggle");
+      const panel = section.querySelector(".vendor-accordion-panel");
+      toggle.addEventListener("click", () => {
+        if (openVendorGroups.has(label)) openVendorGroups.delete(label);
+        else openVendorGroups.add(label);
         renderVendorNetwork();
       });
-      vendorBody.appendChild(tr);
+
+      if (items.length) {
+        items.forEach(({ row, index }) => {
+          const card = document.createElement("div");
+          card.className = "vendor-accordion-card";
+          card.innerHTML = `
+            <label><span>업체군</span><input class="promo-cell-input" data-vendor-field="group" value=""></label>
+            <label><span>업체명</span><input class="promo-cell-input" data-vendor-field="company" value=""></label>
+            <label><span>전화번호</span><input class="promo-cell-input" data-vendor-field="phone" value=""></label>
+            <label><span>이메일</span><input class="promo-cell-input" data-vendor-field="email" value=""></label>
+            <div class="vendor-accordion-tools"><button class="promo-delete-btn delete-icon-btn" type="button" aria-label="업체 연락망 행 삭제" title="삭제"></button></div>
+          `;
+          bindVendorInputs(card, index, row);
+          card.querySelector(".promo-delete-btn").addEventListener("click", () => {
+            vendorRows.splice(index, 1);
+            saveVendorNetwork(vendorRows);
+            renderVendorNetwork();
+          });
+          panel.appendChild(card);
+        });
+      } else {
+        const empty = document.createElement("p");
+        empty.className = "vendor-accordion-empty";
+        empty.textContent = query ? "검색 결과가 없습니다." : "등록된 업체가 없습니다.";
+        panel.appendChild(empty);
+      }
+
+      vendorAccordion.appendChild(section);
     });
   }
 
@@ -2070,6 +2175,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (searchInput) searchInput.addEventListener("input", renderPromoContacts);
+  if (vendorSearchInput) vendorSearchInput.addEventListener("input", renderVendorNetwork);
   if (addBtn) {
     addBtn.addEventListener("click", () => {
       rows.unshift({ company: "", phone: "", link: "", memo: "" });
@@ -2082,6 +2188,7 @@ document.addEventListener("DOMContentLoaded", () => {
     vendorAddBtn.addEventListener("click", () => {
       vendorRows.push({ group: "", company: "", phone: "", email: "" });
       saveVendorNetwork(vendorRows);
+      openVendorGroups.add("기타");
       renderVendorNetwork();
       const last = vendorBody ? vendorBody.querySelector("tr:last-child [data-vendor-field='group']") : null;
       if (last) last.focus();
