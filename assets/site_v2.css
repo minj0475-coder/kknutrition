@@ -16694,14 +16694,14 @@ html body #app-content #home.page-section .hero img.hero-asset {
   100% {
     transform:
       translateX(var(--home-kkul-float-x, 0px))
-      translateY(var(--home-kkul-float-y, -3px))
+      translateY(var(--home-kkul-float-y, 4px))
       scale(var(--home-kkul-float-scale, var(--kkul-hero-scale, 1)));
   }
 
   50% {
     transform:
       translateX(var(--home-kkul-float-x, 0px))
-      translateY(calc(var(--home-kkul-float-y, -3px) - 4px))
+      translateY(calc(var(--home-kkul-float-y, 4px) - 7px))
       scale(var(--home-kkul-float-scale, var(--kkul-hero-scale, 1)));
   }
 }
@@ -16709,13 +16709,13 @@ html body #app-content #home.page-section .hero img.hero-asset {
 @keyframes homeKkulShadowBreath {
   0%,
   100% {
-    opacity: .17;
-    transform: translateX(-50%) scaleX(.94) scaleY(.86);
+    opacity: .2;
+    transform: translateX(-50%) scaleX(.9) scaleY(.82);
   }
 
   50% {
-    opacity: .24;
-    transform: translateX(-50%) scaleX(1.04) scaleY(.94);
+    opacity: .32;
+    transform: translateX(-50%) scaleX(1.12) scaleY(.98);
   }
 }
 
@@ -16725,8 +16725,8 @@ html body #app-content #home.page-section > main.wrap > .hero {
 
 html body #app-content #home.page-section > main.wrap > .hero img.hero-asset,
 html body #app-content #home.page-section .hero img.hero-asset {
-  --home-kkul-float-y: -3px;
-  animation: homeKkulSoftFloat 7.6s ease-in-out infinite !important;
+  --home-kkul-float-y: 8px;
+  animation: homeKkulSoftFloat 6.4s ease-in-out infinite !important;
   filter: none !important;
   will-change: transform !important;
   z-index: 1 !important;
@@ -16736,7 +16736,7 @@ html body #app-content #home.page-section .hero img.hero-asset {
   html body #app-content #home.page-section > main.wrap > .hero img.hero-asset,
   html body #app-content #home.page-section .hero img.hero-asset {
     --home-kkul-float-x: -50%;
-    --home-kkul-float-y: 0px;
+    --home-kkul-float-y: 10px;
     --home-kkul-float-scale: 1.1;
   }
 }
@@ -16747,7 +16747,7 @@ html body #app-content #home.page-section .hero img.hero-asset {
     animation: none !important;
     transform:
       translateX(var(--home-kkul-float-x, 0px))
-      translateY(var(--home-kkul-float-y, -3px))
+      translateY(var(--home-kkul-float-y, 4px))
       scale(var(--home-kkul-float-scale, var(--kkul-hero-scale, 1))) !important;
   }
 }
@@ -16760,7 +16760,7 @@ html body #app-content #home.page-section > main.wrap > .hero::after {
 html body #app-content #home.page-section > main.wrap > .hero .home-kkul-shadow {
   position: absolute !important;
   right: clamp(42px, 8vw, 120px) !important;
-  bottom: 22px !important;
+  bottom: 15px !important;
   width: clamp(148px, 21vw, 250px) !important;
   height: 28px !important;
   border-radius: 999px !important;
@@ -16769,13 +16769,13 @@ html body #app-content #home.page-section > main.wrap > .hero .home-kkul-shadow 
   pointer-events: none !important;
   z-index: 0 !important;
   transform-origin: center center;
-  animation: homeKkulShadowBreath 7.6s ease-in-out infinite;
+  animation: homeKkulShadowBreath 6.4s ease-in-out infinite;
 }
 
 @media (max-width: 900px) {
   html body #app-content #home.page-section > main.wrap > .hero .home-kkul-shadow {
     right: clamp(18px, 12vw, 70px) !important;
-    bottom: 18px !important;
+    bottom: 12px !important;
     width: clamp(112px, 32vw, 190px) !important;
     height: 22px !important;
   }
@@ -16784,7 +16784,7 @@ html body #app-content #home.page-section > main.wrap > .hero .home-kkul-shadow 
 @media (max-width: 620px) {
   html body #app-content #home.page-section > main.wrap > .hero .home-kkul-shadow {
     right: 22px !important;
-    bottom: 18px !important;
+    bottom: 12px !important;
     width: min(172px, 45vw) !important;
     height: 22px !important;
   }
@@ -16793,7 +16793,7 @@ html body #app-content #home.page-section > main.wrap > .hero .home-kkul-shadow 
 @media (prefers-reduced-motion: reduce) {
   html body #app-content #home.page-section > main.wrap > .hero .home-kkul-shadow {
     animation: none;
-    opacity: .18;
+    opacity: .2;
     transform: translateX(-50%) scaleX(.96) scaleY(.88);
   }
 }

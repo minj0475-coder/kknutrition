@@ -2889,4 +2889,50 @@ document.addEventListener("DOMContentLoaded", () => {
   renderWeeklyTable();
 });
 
+function initHomeHeroKkulMotion() {
+  const hero = document.querySelector("#home.page-section > main.wrap > .hero");
+  const image = document.querySelector("#home .hero img.hero-asset");
+  const shadow = document.querySelector("#home .hero .home-kkul-shadow");
+  if (!hero || !image || !shadow) return;
+
+  const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
+  if (reduceMotion && reduceMotion.matches) return;
+
+  const period = 6400;
+  const lift = 7;
+  let frameId = 0;
+
+  function readScale() {
+    const style = getComputedStyle(image);
+    const explicit = parseFloat(style.getPropertyValue("--home-kkul-float-scale"));
+    if (Number.isFinite(explicit)) return explicit;
+    const heroScale = parseFloat(style.getPropertyValue("--kkul-hero-scale"));
+    return Number.isFinite(heroScale) ? heroScale : 1;
+  }
+
+  function tick(now) {
+    const isCompact = window.innerWidth <= 620;
+    const x = isCompact ? "-50%" : "0px";
+    const baseY = isCompact ? 10 : 8;
+    const phase = (1 - Math.cos((now % period) / period * Math.PI * 2)) / 2;
+    const y = baseY - phase * lift;
+    const scale = isCompact ? 1.1 : readScale();
+    const shadowScaleX = 0.9 + phase * 0.22;
+    const shadowScaleY = 0.82 + phase * 0.16;
+    const shadowOpacity = 0.2 + phase * 0.12;
+
+    image.style.setProperty("transform", `translateX(${x}) translateY(${y.toFixed(2)}px) scale(${scale})`, "important");
+    shadow.style.opacity = shadowOpacity.toFixed(3);
+    shadow.style.transform = `translateX(-50%) scaleX(${shadowScaleX.toFixed(3)}) scaleY(${shadowScaleY.toFixed(3)})`;
+    frameId = window.requestAnimationFrame(tick);
+  }
+
+  frameId = window.requestAnimationFrame(tick);
+  window.addEventListener("pagehide", () => {
+    if (frameId) window.cancelAnimationFrame(frameId);
+  }, { once: true });
+}
+
+document.addEventListener("DOMContentLoaded", initHomeHeroKkulMotion);
+
 
