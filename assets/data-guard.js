@@ -14,6 +14,7 @@
     "kkulkkoori_recent_pages_v1",
     "kkulkkoori_active_hash_v1",
     "kkulkkoori_sidebar_open_v1",
+    "kkulkkoori_cloud_sync_meta_v1",
   ]);
 
   const PROTECTED_KEYS = new Set([
@@ -189,6 +190,14 @@
         // The user data has still been written; backup can be inspected separately.
       }
 
+      try {
+        window.dispatchEvent(new CustomEvent("kknutrition:local-data-changed", {
+          detail: { key: normalizedKey, value: String(value), deleted: false, updatedAt: Date.now() }
+        }));
+      } catch (error) {
+        // Sync notifications should never block storage writes.
+      }
+
       return result;
     }
 
@@ -205,7 +214,19 @@
       }
     }
 
-    return nativeRemoveItem.call(this, key);
+    const result = nativeRemoveItem.call(this, key);
+
+    if (isLocalStorage(this) && !isWritingBackup && isProtectedKey(normalizedKey)) {
+      try {
+        window.dispatchEvent(new CustomEvent("kknutrition:local-data-changed", {
+          detail: { key: normalizedKey, value: "", deleted: true, updatedAt: Date.now() }
+        }));
+      } catch (error) {
+        // Sync notifications should never block storage writes.
+      }
+    }
+
+    return result;
   };
 
   window.KKNutritionDataGuard = {

@@ -267,6 +267,12 @@ function setupMessageTemplates() {
       setStatus("새 문자 양식을 추가했습니다.");
     });
   }
+  window.addEventListener("kknutrition:cloud-data-applied", event => {
+    if (!event.detail || event.detail.key !== MESSAGE_TEMPLATES_KEY) return;
+    items = readMessageTemplates();
+    render();
+    setStatus("다른 기기의 최신 문자 내용을 불러왔습니다.");
+  });
   render();
 }
 
@@ -310,6 +316,12 @@ function setupSheetLink() {
   loadSheetLink();
   const saveBtn = document.getElementById("sheetLinkSaveBtn");
   if (saveBtn) saveBtn.addEventListener("click", saveSheetLink);
+  window.addEventListener("kknutrition:cloud-data-applied", event => {
+    if (!event.detail || event.detail.key !== SHEET_LINK_KEY) return;
+    loadSheetLink();
+    const status = document.getElementById("sheetLinkStatus");
+    if (status) status.textContent = "다른 기기의 최신 링크를 불러왔습니다.";
+  });
 }
 
 document.addEventListener("DOMContentLoaded", setupSheetLink);
@@ -1173,6 +1185,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const search = document.getElementById("recipeSearch");
   if (!search) return;
   if (search) search.addEventListener("input", renderRecipeList);
+  window.addEventListener("kknutrition:cloud-data-applied", event => {
+    if (!event.detail || event.detail.key !== RECIPE_STORAGE_KEY) return;
+    recipes = loadRecipes();
+    if (selectedIndex >= recipes.length) selectedIndex = recipes.length ? 0 : -1;
+    renderRecipeList();
+    if (selectedIndex >= 0) selectRecipe(selectedIndex);
+    const status = document.getElementById("recipeStatus");
+    if (status) status.textContent = "다른 기기의 최신 레시피를 불러왔습니다.";
+  });
   renderRecipeList();
   if (selectedIndex >= 0) selectRecipe(selectedIndex);
 });
@@ -1410,6 +1431,18 @@ function setupAnnualSheetLinks() {
     ensureInlineLinks();
     rows.forEach(updateRow);
   }, 120);
+
+  window.addEventListener("kknutrition:cloud-data-applied", event => {
+    if (!event.detail || event.detail.key !== ANNUAL_SHEET_LINKS_KEY) return;
+    links = readAnnualSheetLinks();
+    rows.forEach(row => {
+      const key = row.dataset.annualSheet;
+      const input = row.querySelector("input");
+      if (input) input.value = links[key] || "";
+      updateRow(row);
+    });
+    setStatus("다른 기기의 최신 스프레드시트 링크를 불러왔습니다.");
+  });
 
   const annualSection = document.getElementById("annual");
   if (annualSection) {
@@ -2053,6 +2086,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  window.addEventListener("kknutrition:cloud-data-applied", event => {
+    if (!event.detail) return;
+    if (event.detail.key === PROMO_CONTACTS_KEY) {
+      rows = readPromoContacts();
+      renderPromoContacts();
+      if (statusEl) statusEl.textContent = "다른 기기의 최신 홍보 업체 연락처를 불러왔습니다.";
+    }
+    if (event.detail.key === VENDOR_NETWORK_KEY) {
+      vendorRows = readVendorNetwork();
+      renderVendorNetwork();
+      if (statusEl) statusEl.textContent = "다른 기기의 최신 업체 연락망을 불러왔습니다.";
+    }
+  });
+
   renderVendorNetwork();
   renderPromoContacts();
 });
@@ -2659,6 +2706,13 @@ document.addEventListener("DOMContentLoaded", () => {
     renderCalendar();
     renderWeeklyTable();
   }
+
+  window.addEventListener("kknutrition:cloud-data-applied", event => {
+    if (!event.detail || event.detail.key !== ACADEMIC_EVENTS_KEY) return;
+    userEvents = readAcademicEvents();
+    renderAll();
+    setStatus("다른 기기의 최신 학사일정을 불러왔습니다.");
+  });
 
   function saveSelectedDate() {
     const key = dateInput && dateInput.value ? dateInput.value : state.selectedKey;

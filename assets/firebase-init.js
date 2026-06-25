@@ -40,6 +40,152 @@ window.syncBookmarksToFirebase = async function(data, meta = {}) {
   }
 };
 
+const CLOUD_DATA_COLLECTION = "appData";
+const CLOUD_SYNC_META_KEY = "kkulkkoori_cloud_sync_meta_v1";
+const CLOUD_SYNC_KEYS = [
+  "kkulkkoori_service_sheet_link",
+  "kkulkkoori_message_templates_v1",
+  "kkulkkoori_annual_sheet_links_v1",
+  "kkulkkoori_vendor_network_v1",
+  "kkulkkoori_promo_contacts_v1",
+  "kkulkkoori_academic_events_v1",
+  "kkulkkoori_cheongsu_recipes_v3"
+];
+const CLOUD_SYNC_MAX_BYTES = 900000;
+let cloudApplyingRemote = false;
+let cloudSyncReady = false;
+
+function readCloudSyncMeta() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(CLOUD_SYNC_META_KEY) || "{}");
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch (error) {
+    return {};
+  }
+}
+
+function writeCloudSyncMeta(meta) {
+  try {
+    localStorage.setItem(CLOUD_SYNC_META_KEY, JSON.stringify(meta || {}));
+  } catch (error) {}
+}
+
+function getCloudLocalUpdatedAt(key) {
+  const meta = readCloudSyncMeta();
+  return Number(meta[key]) || 0;
+}
+
+function setCloudLocalUpdatedAt(key, updatedAt) {
+  const meta = readCloudSyncMeta();
+  meta[key] = Number(updatedAt) || Date.now();
+  writeCloudSyncMeta(meta);
+}
+
+function getCloudStringSize(value) {
+  try {
+    return new Blob([String(value || "")]).size;
+  } catch (error) {
+    return String(value || "").length;
+  }
+}
+
+async function uploadCloudDataKey(key, value, updatedAt = Date.now(), deleted = false) {
+  if (!db || !CLOUD_SYNC_KEYS.includes(key)) return false;
+  const textValue = String(value || "");
+  if (!deleted && getCloudStringSize(textValue) > CLOUD_SYNC_MAX_BYTES) {
+    console.warn("Cloud sync skipped because data is too large:", key);
+    return false;
+  }
+  await setDoc(doc(db, CLOUD_DATA_COLLECTION, key), {
+    key,
+    value: deleted ? "" : textValue,
+    deleted: Boolean(deleted),
+    updatedAt: Number(updatedAt) || Date.now()
+  });
+  return true;
+}
+
+function applyCloudDataLocally(key, value, updatedAt, deleted) {
+  cloudApplyingRemote = true;
+  try {
+    if (deleted) {
+      localStorage.removeItem(key);
+    } else {
+      localStorage.setItem(key, String(value || ""));
+    }
+    setCloudLocalUpdatedAt(key, updatedAt);
+  } finally {
+    cloudApplyingRemote = false;
+  }
+  try {
+    window.dispatchEvent(new CustomEvent("kknutrition:cloud-data-applied", {
+      detail: { key, value: String(value || ""), deleted: Boolean(deleted), updatedAt }
+    }));
+  } catch (error) {}
+}
+
+function setupCloudDataSync() {
+  if (!db || cloudSyncReady) return;
+  cloudSyncReady = true;
+
+  window.addEventListener("kknutrition:local-data-changed", event => {
+    const detail = event.detail || {};
+    const key = String(detail.key || "");
+    if (cloudApplyingRemote || !CLOUD_SYNC_KEYS.includes(key)) return;
+    const updatedAt = Number(detail.updatedAt) || Date.now();
+    setCloudLocalUpdatedAt(key, updatedAt);
+    uploadCloudDataKey(key, detail.value || "", updatedAt, Boolean(detail.deleted))
+      .catch(error => console.error("공용 데이터 동기화 실패:", key, error));
+  });
+
+  CLOUD_SYNC_KEYS.forEach(key => {
+    onSnapshot(doc(db, CLOUD_DATA_COLLECTION, key), snapshot => {
+      const localValue = localStorage.getItem(key);
+      const localUpdatedAt = getCloudLocalUpdatedAt(key);
+
+      if (!snapshot.exists()) {
+        if (localValue) {
+          const seedUpdatedAt = localUpdatedAt || Date.now();
+          setCloudLocalUpdatedAt(key, seedUpdatedAt);
+          uploadCloudDataKey(key, localValue, seedUpdatedAt, false)
+            .catch(error => console.error("공용 데이터 초기 업로드 실패:", key, error));
+        }
+        return;
+      }
+
+      const data = snapshot.data() || {};
+      const remoteUpdatedAt = Number(data.updatedAt) || 0;
+      if (localUpdatedAt && localUpdatedAt > remoteUpdatedAt) {
+        uploadCloudDataKey(key, localValue || "", localUpdatedAt, !localValue)
+          .catch(error => console.error("공용 데이터 최신 로컬 복구 실패:", key, error));
+        return;
+      }
+
+      if (remoteUpdatedAt >= localUpdatedAt && String(data.value || "") !== String(localValue || "")) {
+        applyCloudDataLocally(key, data.value || "", remoteUpdatedAt || Date.now(), Boolean(data.deleted));
+      } else if (remoteUpdatedAt > localUpdatedAt) {
+        setCloudLocalUpdatedAt(key, remoteUpdatedAt);
+      }
+    }, error => {
+      console.error("공용 데이터 수신 실패:", key, error);
+    });
+  });
+}
+
+window.KKNutritionCloudSync = {
+  syncNow: () => {
+    CLOUD_SYNC_KEYS.forEach(key => {
+      const value = localStorage.getItem(key);
+      if (value) {
+        const updatedAt = Date.now();
+        setCloudLocalUpdatedAt(key, updatedAt);
+        uploadCloudDataKey(key, value, updatedAt, false)
+          .catch(error => console.error("수동 공용 데이터 동기화 실패:", key, error));
+      }
+    });
+  }
+};
+
 const defaultMemos = [
   { text: "식단 확인", checked: false },
   { text: "알레르기 확인", checked: false },
@@ -714,6 +860,7 @@ function init() {
   }
 
   if (db) {
+    setupCloudDataSync();
     loadLocalMemos();
     updateAllMemosDOM();
 
