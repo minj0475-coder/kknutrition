@@ -1218,12 +1218,15 @@ const MOBILE_PAGE_TITLES = {
 };
 
 function getStoredActiveHash() {
-  try {
-    const hash = sessionStorage.getItem(ACTIVE_HASH_KEY);
-    return hash && document.querySelector(hash) ? hash : "";
-  } catch(e) {
-    return "";
-  }
+  const readHash = storage => {
+    try {
+      const hash = storage.getItem(ACTIVE_HASH_KEY);
+      return hash && document.querySelector(hash) ? hash : "";
+    } catch(e) {
+      return "";
+    }
+  };
+  return readHash(sessionStorage) || readHash(localStorage);
 }
 
 function storeActiveHash(hash) {
@@ -1231,6 +1234,20 @@ function storeActiveHash(hash) {
   try {
     sessionStorage.setItem(ACTIVE_HASH_KEY, hash);
   } catch(e) {}
+  try {
+    localStorage.setItem(ACTIVE_HASH_KEY, hash);
+  } catch(e) {}
+}
+
+function restoreHashBeforeFirstRender() {
+  if (window.location.hash) return;
+  const storedHash = getStoredActiveHash();
+  if (!storedHash || !document.querySelector(storedHash)) return;
+  try {
+    history.replaceState(null, "", storedHash);
+  } catch(e) {
+    window.location.hash = storedHash;
+  }
 }
 
 function updateTabs() {
@@ -1276,7 +1293,10 @@ function updateTabs() {
   }
 }
 window.addEventListener('hashchange', updateTabs);
-document.addEventListener('DOMContentLoaded', updateTabs);
+document.addEventListener('DOMContentLoaded', () => {
+  restoreHashBeforeFirstRender();
+  updateTabs();
+});
 
 const ANNUAL_SHEET_LINKS_KEY = "kkulkkoori_annual_sheet_links_v1";
 const ANNUAL_SHEET_LINK_DEFAULTS = {
