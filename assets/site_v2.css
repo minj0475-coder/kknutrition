@@ -16346,3 +16346,27 @@ html body #app-content #monthly .academic-calendar-card .academic-toolbar {
     border-color: #c9c9c9 !important;
   }
 }
+
+/* 2026-06-25 academic event ordering: drag user schedules within the same day. */
+html body #app-content .academic-pill.is-sortable {
+  cursor: grab !important;
+  touch-action: none !important;
+  user-select: none !important;
+}
+
+html body #app-content .academic-pill.is-sortable:active,
+html body #app-content .academic-pill.is-sortable.is-dragging {
+  cursor: grabbing !important;
+}
+
+html body #app-content .academic-pill.is-dragging {
+  opacity: .72 !important;
+  transform: scale(.98) !important;
+  outline: 2px solid rgba(32, 33, 35, .14) !important;
+  outline-offset: 1px !important;
+}
+
+html body #app-content .academic-pill.is-drag-target {
+  outline: 2px solid rgba(32, 33, 35, .28) !important;
+  outline-offset: 2px !important;
+}

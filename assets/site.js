@@ -2284,6 +2284,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let modalBodyOverflow = "";
   let memoTooltip = null;
   const academicWeekCollapsed = {};
+  let academicDragState = null;
+  let suppressAcademicClickUntil = 0;
 
   function ensureAcademicMemoTooltip() {
     if (memoTooltip) return memoTooltip;
@@ -2355,6 +2357,87 @@ document.addEventListener("DOMContentLoaded", () => {
       button.classList.toggle("is-selected", isSelected);
       button.setAttribute("aria-checked", isSelected ? "true" : "false");
     });
+  }
+
+  function reorderAcademicEventsForKey(key, fromIndex, toIndex) {
+    const nextEvents = getUserAcademicEventsForKey(userEvents, key);
+    if (!nextEvents[fromIndex] || !nextEvents[toIndex] || fromIndex === toIndex) return false;
+    const [moved] = nextEvents.splice(fromIndex, 1);
+    nextEvents.splice(toIndex, 0, moved);
+    setUserAcademicEventsForKey(userEvents, key, nextEvents);
+    saveAcademicEvents(userEvents);
+    return true;
+  }
+
+  function getAcademicDragTarget(clientX, clientY, key) {
+    const target = document.elementFromPoint(clientX, clientY);
+    const pill = target && target.closest ? target.closest(".academic-pill[data-academic-date]") : null;
+    if (!pill || pill.getAttribute("data-academic-date") !== key) return null;
+    const index = Number(pill.getAttribute("data-academic-user-index"));
+    return Number.isInteger(index) ? { pill, index } : null;
+  }
+
+  function clearAcademicDragTarget() {
+    document.querySelectorAll(".academic-pill.is-drag-target").forEach(element => element.classList.remove("is-drag-target"));
+  }
+
+  function cleanupAcademicDrag() {
+    if (academicDragState && academicDragState.pill) {
+      academicDragState.pill.classList.remove("is-dragging");
+    }
+    clearAcademicDragTarget();
+    academicDragState = null;
+  }
+
+  function startAcademicPillDrag(event, pill, academicEvent, key) {
+    const query = (searchInput ? searchInput.value : "").trim();
+    if (query || !academicEvent || academicEvent.source !== "user" || academicEvent.startKey !== key) return;
+    if (getUserAcademicEventsForKey(userEvents, key).length < 2) return;
+    academicDragState = {
+      key,
+      fromIndex: academicEvent.userIndex,
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      dragging: false,
+      targetIndex: academicEvent.userIndex,
+      pill
+    };
+    if (pill.setPointerCapture && event.pointerId !== undefined) {
+      try { pill.setPointerCapture(event.pointerId); } catch(e) {}
+    }
+  }
+
+  function moveAcademicPillDrag(event) {
+    if (!academicDragState || academicDragState.pointerId !== event.pointerId) return;
+    const distance = Math.hypot(event.clientX - academicDragState.startX, event.clientY - academicDragState.startY);
+    if (!academicDragState.dragging && distance < 8) return;
+    academicDragState.dragging = true;
+    academicDragState.pill.classList.add("is-dragging");
+    event.preventDefault();
+    const target = getAcademicDragTarget(event.clientX, event.clientY, academicDragState.key);
+    clearAcademicDragTarget();
+    if (target && target.index !== academicDragState.fromIndex) {
+      academicDragState.targetIndex = target.index;
+      target.pill.classList.add("is-drag-target");
+    } else {
+      academicDragState.targetIndex = academicDragState.fromIndex;
+    }
+  }
+
+  function endAcademicPillDrag(event) {
+    if (!academicDragState || academicDragState.pointerId !== event.pointerId) return;
+    const dragState = academicDragState;
+    if (dragState.dragging) {
+      event.preventDefault();
+      event.stopPropagation();
+      suppressAcademicClickUntil = Date.now() + 350;
+      if (reorderAcademicEventsForKey(dragState.key, dragState.fromIndex, dragState.targetIndex)) {
+        renderAll();
+        setStatus("일정 순서를 변경했습니다.");
+      }
+    }
+    cleanupAcademicDrag();
   }
 
   function getMonthGridDates() {
@@ -2439,6 +2522,16 @@ document.addEventListener("DOMContentLoaded", () => {
         const pill = document.createElement("span");
         pill.className = `academic-pill ${event.type} ${event.color ? `color-${event.color}` : ""} ${event.done ? "is-done" : ""} ${event.weight === "bold" ? "is-bold" : ""}`;
         pill.textContent = event.title;
+        if (event.source === "user" && event.startKey === key && getUserAcademicEventsForKey(userEvents, key).length > 1 && !query) {
+          pill.classList.add("is-sortable");
+          pill.setAttribute("data-academic-date", key);
+          pill.setAttribute("data-academic-user-index", String(event.userIndex));
+          pill.setAttribute("aria-label", `${event.title} 일정 순서 바꾸기`);
+          pill.addEventListener("pointerdown", pointerEvent => startAcademicPillDrag(pointerEvent, pill, event, key));
+          pill.addEventListener("pointermove", moveAcademicPillDrag);
+          pill.addEventListener("pointerup", endAcademicPillDrag);
+          pill.addEventListener("pointercancel", cleanupAcademicDrag);
+        }
         if (event.memo) {
           pill.setAttribute("data-academic-memo", event.memo);
           pill.setAttribute("title", event.memo);
@@ -2446,6 +2539,7 @@ document.addEventListener("DOMContentLoaded", () => {
         pill.addEventListener("click", clickEvent => {
           clickEvent.preventDefault();
           clickEvent.stopPropagation();
+          if (Date.now() < suppressAcademicClickUntil) return;
           if (event.source !== "user") return;
           if (!isCurrentMonth) {
             state.year = date.getFullYear();
@@ -2468,6 +2562,7 @@ document.addEventListener("DOMContentLoaded", () => {
         button.appendChild(more);
       }
       button.addEventListener("click", () => {
+        if (Date.now() < suppressAcademicClickUntil) return;
         if (!isCurrentMonth) {
           state.year = date.getFullYear();
           state.month = date.getMonth();
