@@ -16327,6 +16327,10 @@ html body #app-content #today-menu #todayMenuAllSectionWrap.open {
     justify-content: center !important;
     flex: 0 0 38px !important;
     margin: 0 -2px 0 0 !important;
+    outline: 0 !important;
+    -webkit-tap-highlight-color: transparent !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
   }
 
   html body #app-content #today-menu #messageTemplateAddBtn::before {
@@ -16341,6 +16345,16 @@ html body #app-content #today-menu #todayMenuAllSectionWrap.open {
 
   html body #app-content #today-menu #messageTemplateAddBtn:active {
     background: transparent !important;
+    transform: none !important;
+  }
+
+  html body #app-content #today-menu #messageTemplateAddBtn:hover,
+  html body #app-content #today-menu #messageTemplateAddBtn:focus,
+  html body #app-content #today-menu #messageTemplateAddBtn:focus-visible,
+  html body #app-content #today-menu #messageTemplateAddBtn:active {
+    background: transparent !important;
+    box-shadow: none !important;
+    outline: 0 !important;
     transform: none !important;
   }
 }
