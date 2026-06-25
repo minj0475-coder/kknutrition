@@ -16268,3 +16268,42 @@ html body #app-content #monthly .academic-calendar-card .academic-toolbar {
     margin-bottom: 14px !important;
   }
 }
+
+/* 2026-06-25 mobile staff sheet actions: keep open beside title and save beside link. */
+@media (max-width: 640px) {
+  html body #app-content #service-sheet .sheet-link-card .sheet-link-head {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 10px !important;
+    margin-bottom: 16px !important;
+  }
+
+  html body #app-content #service-sheet .sheet-link-card .sheet-link-title-group {
+    flex: 0 1 auto !important;
+    min-width: 0 !important;
+  }
+
+  html body #app-content #service-sheet #sheetLinkOpenBtn {
+    flex: 0 0 46px !important;
+    margin: 0 !important;
+  }
+
+  html body #app-content #service-sheet .sheet-link-card .sheet-link-row {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  html body #app-content #service-sheet .sheet-link-card .sheet-link-input {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+
+  html body #app-content #service-sheet #sheetLinkSaveBtn {
+    flex: 0 0 46px !important;
+    margin: 0 !important;
+  }
+}
