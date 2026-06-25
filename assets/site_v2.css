@@ -16614,8 +16614,8 @@ html body #app-content #home.page-section .hero img.hero-asset {
       "month actions"
       "search search" !important;
     align-items: center !important;
-    gap: 12px 10px !important;
-    padding: 14px !important;
+    gap: 12px 8px !important;
+    padding: 12px !important;
   }
 
   html body #app-content #monthly .academic-calendar-card .academic-toolbar > div:first-child {
@@ -16624,7 +16624,7 @@ html body #app-content #home.page-section .hero img.hero-asset {
   }
 
   html body #app-content #monthly .academic-calendar-card .academic-month-label {
-    font-size: clamp(28px, 8.4vw, 36px) !important;
+    font-size: clamp(22px, 6.2vw, 28px) !important;
     line-height: 1.05 !important;
     white-space: nowrap !important;
   }
@@ -16638,20 +16638,20 @@ html body #app-content #home.page-section .hero img.hero-asset {
 
   html body #app-content #monthly .academic-calendar-card .academic-actions .academic-nav-btn,
   html body #app-content #monthly .academic-calendar-card .academic-actions .academic-today-btn {
-    height: 44px !important;
-    min-height: 44px !important;
+    height: 40px !important;
+    min-height: 40px !important;
     border-radius: 12px !important;
   }
 
   html body #app-content #monthly .academic-calendar-card .academic-actions .academic-nav-btn {
-    width: 44px !important;
-    min-width: 44px !important;
+    width: 40px !important;
+    min-width: 40px !important;
     padding: 0 !important;
   }
 
   html body #app-content #monthly .academic-calendar-card .academic-actions .academic-today-btn {
-    min-width: 58px !important;
-    padding: 0 14px !important;
+    min-width: 52px !important;
+    padding: 0 10px !important;
     white-space: nowrap !important;
   }
 
@@ -16663,7 +16663,7 @@ html body #app-content #home.page-section .hero img.hero-asset {
 
 @media (max-width: 380px) {
   html body #app-content #monthly .academic-calendar-card .academic-month-label {
-    font-size: 26px !important;
+    font-size: 21px !important;
   }
 
   html body #app-content #monthly .academic-calendar-card .academic-actions {
@@ -16672,17 +16672,17 @@ html body #app-content #home.page-section .hero img.hero-asset {
 
   html body #app-content #monthly .academic-calendar-card .academic-actions .academic-nav-btn,
   html body #app-content #monthly .academic-calendar-card .academic-actions .academic-today-btn {
-    height: 40px !important;
-    min-height: 40px !important;
+    height: 36px !important;
+    min-height: 36px !important;
   }
 
   html body #app-content #monthly .academic-calendar-card .academic-actions .academic-nav-btn {
-    width: 40px !important;
-    min-width: 40px !important;
+    width: 36px !important;
+    min-width: 36px !important;
   }
 
   html body #app-content #monthly .academic-calendar-card .academic-actions .academic-today-btn {
-    min-width: 52px !important;
-    padding: 0 10px !important;
+    min-width: 48px !important;
+    padding: 0 8px !important;
   }
 }
