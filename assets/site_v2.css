@@ -16254,6 +16254,32 @@ html body #app-content #today-menu .message-template-textbox .message-template-c
   }
 }
 
+/* 2026-06-25 keep the full-menu toggle in the same card rhythm. */
+html body #app-content #today-menu #todayMenuCooking {
+  display: grid !important;
+  gap: 12px !important;
+  margin-bottom: 0 !important;
+}
+
+html body #app-content #today-menu #todayMenuCooking > .card,
+html body #app-content #today-menu #todayMenuShowAllWrap,
+html body #app-content #today-menu #todayMenuShowAllWrapBottom {
+  margin: 0 !important;
+}
+
+html body #app-content #today-menu #todayMenuAllSectionWrap:not(.open) {
+  display: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+html body #app-content #today-menu #todayMenuAllSectionWrap.open {
+  display: grid !important;
+}
+
 /* 2026-06-25 academic calendar title spacing: separate section title from month controls. */
 html body #app-content #monthly .academic-calendar-card .academic-head {
   margin-bottom: 18px !important;
