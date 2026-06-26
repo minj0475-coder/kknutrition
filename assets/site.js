@@ -129,6 +129,36 @@ function setupStaffAccordion() {
 }
 
 const MESSAGE_TEMPLATES_KEY = "kkulkkoori_message_templates_v1";
+const WORK_NOTES_KEY = "kkulkkoori_work_notes_v1";
+const DEFAULT_WORK_NOTES = [
+  {
+    title: "꿀꿀이 색감 기준",
+    body: `핑크색 부분은 기존 기준처럼 맑은 핑크 계열로 유지하고,
+핑크 외 꿀꿀이 털 부분은 노란기·베이지기·살구기를 줄여
+깨끗한 아주 연한 핑크 아이보리/화이트 크림톤으로 표현해주세요.
+전체 털이 누렇게 보이지 않도록 밝고 깨끗한 크림색으로 맞춰주세요.
+
+귀: 코랄빛 말고 맑은 핑크 계열
+
+코: 진한 코랄보다는 쨍하지 않은 딸기우유 핑크
+
+볼터치: 연한 복숭아핑크 느낌
+
+소품은 꿀꿀이와 구분되게 감각적으로 색상을 표현해주세요.
+소품 색상은 코랄·주황기를 제거할 필요 없으며, 소품 특성에 맞게 자연스럽고 예쁘게 표현해주세요.
+
+전체 분위기는 꿀꿀이 기준으로 코랄·주황기를 줄이고,
+핑크 + 크림톤 중심으로 통일해주세요.
+
+꿀꿀이 디자인, 형태, 표정, 소품, 털 질감은 바꾸지 말고 그대로 유지해주세요.
+
+색감만 첨부한 기준 이미지처럼 수정하고,
+전체적으로는 밝은 밀크 아이보리/화이트 크림 털 + 맑은 핑크 귀/코 색감으로 맞춰주세요.
+
+배경은 누끼를 따기 쉽도록 초록·파랑 계열의 단색 배경으로 넣어주세요.
+누끼를 땄을 때 테두리가 생기지 않도록 가장자리 색 번짐 없이 깔끔하게 표현해주세요.`
+  }
+];
 const DEFAULT_MESSAGE_TEMPLATES = [
   {
     title: "영양 상담 문자",
@@ -166,6 +196,27 @@ function readMessageTemplates() {
 function saveMessageTemplates(items) {
   try {
     localStorage.setItem(MESSAGE_TEMPLATES_KEY, JSON.stringify(items));
+  } catch(e) {}
+}
+
+function readWorkNotes() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(WORK_NOTES_KEY) || "null");
+    if (Array.isArray(parsed) && parsed.length) {
+      return parsed
+        .filter(item => item && typeof item === "object")
+        .map(item => ({
+          title: String(item.title || "").trim() || "새 작업노트",
+          body: String(item.body || "")
+        }));
+    }
+  } catch(e) {}
+  return DEFAULT_WORK_NOTES.map(item => ({ ...item }));
+}
+
+function saveWorkNotes(items) {
+  try {
+    localStorage.setItem(WORK_NOTES_KEY, JSON.stringify(items));
   } catch(e) {}
 }
 
@@ -276,9 +327,121 @@ function setupMessageTemplates() {
   render();
 }
 
+function setupWorkNotes() {
+  const list = document.getElementById("workNoteList");
+  const addBtn = document.getElementById("workNoteAddBtn");
+  const titleInput = document.getElementById("workNoteTitleInput");
+  const bodyInput = document.getElementById("workNoteBodyInput");
+  const copyBtn = document.getElementById("workNoteCopyBtn");
+  const deleteBtn = document.getElementById("workNoteDeleteBtn");
+  const status = document.getElementById("workNoteStatus");
+  if (!list || !titleInput || !bodyInput) return;
+  let notes = readWorkNotes();
+  let activeIndex = 0;
+  const setStatus = message => {
+    if (!status) return;
+    status.textContent = message || "";
+    window.clearTimeout(status._timer);
+    if (message) status._timer = window.setTimeout(() => { status.textContent = ""; }, 1600);
+  };
+  const persist = () => saveWorkNotes(notes);
+  const normalizeActiveIndex = () => {
+    if (!notes.length) notes = [{ title: "새 작업노트", body: "" }];
+    activeIndex = Math.max(0, Math.min(activeIndex, notes.length - 1));
+  };
+  const renderList = () => {
+    normalizeActiveIndex();
+    list.innerHTML = "";
+    notes.forEach((note, index) => {
+      const button = document.createElement("button");
+      button.className = "work-note-toc-item";
+      button.type = "button";
+      button.dataset.workNoteIndex = String(index);
+      button.setAttribute("aria-pressed", index === activeIndex ? "true" : "false");
+      button.innerHTML = `
+        <span class="work-note-toc-title">${escapeTemplateHtml(note.title || "새 작업노트")}</span>
+        <span class="work-note-toc-meta">${escapeTemplateHtml(String(note.body || "").trim().split(/\s+/).filter(Boolean).length)}개 단어</span>
+      `;
+      button.addEventListener("click", () => {
+        activeIndex = index;
+        render();
+      });
+      list.appendChild(button);
+    });
+  };
+  const renderEditor = () => {
+    normalizeActiveIndex();
+    const note = notes[activeIndex];
+    titleInput.value = note.title || "";
+    bodyInput.value = note.body || "";
+    bodyInput.placeholder = "긴 작업 기준, 이미지 프롬프트, 반복해서 쓰는 문장 등을 적어두세요.";
+    titleInput.placeholder = "작업노트 제목";
+    if (deleteBtn) deleteBtn.disabled = notes.length <= 1;
+  };
+  const render = () => {
+    renderList();
+    renderEditor();
+  };
+  titleInput.addEventListener("input", event => {
+    normalizeActiveIndex();
+    notes[activeIndex].title = event.target.value || "새 작업노트";
+    persist();
+    renderList();
+  });
+  bodyInput.addEventListener("input", event => {
+    normalizeActiveIndex();
+    notes[activeIndex].body = event.target.value;
+    persist();
+    renderList();
+  });
+  if (addBtn) {
+    addBtn.addEventListener("click", () => {
+      notes.push({ title: "새 작업노트", body: "" });
+      activeIndex = notes.length - 1;
+      persist();
+      render();
+      titleInput.focus();
+      titleInput.select();
+      setStatus("새 작업노트를 추가했습니다.");
+    });
+  }
+  if (copyBtn) {
+    copyBtn.addEventListener("click", async () => {
+      normalizeActiveIndex();
+      const text = String(notes[activeIndex].body || "").trim();
+      if (!text) return setStatus("복사할 내용이 없습니다.");
+      try {
+        await navigator.clipboard.writeText(text.replace(/\r?\n/g, "\r\n"));
+        setStatus("작업노트 내용을 복사했습니다.");
+      } catch(e) {
+        setStatus("복사하지 못했습니다. 내용을 직접 선택해 주세요.");
+      }
+    });
+  }
+  if (deleteBtn) {
+    deleteBtn.addEventListener("click", () => {
+      if (notes.length <= 1) return setStatus("작업노트는 최소 1개가 필요합니다.");
+      notes.splice(activeIndex, 1);
+      activeIndex = Math.max(0, activeIndex - 1);
+      persist();
+      render();
+      setStatus("삭제했습니다.");
+    });
+  }
+  window.addEventListener("kknutrition:cloud-data-applied", event => {
+    if (!event.detail || event.detail.key !== WORK_NOTES_KEY) return;
+    notes = readWorkNotes();
+    activeIndex = 0;
+    render();
+    setStatus("다른 기기의 최신 작업노트를 불러왔습니다.");
+  });
+  render();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   setupDailyKkul();
   setupStaffAccordion();
+  setupWorkNotes();
   setupMessageTemplates();
 });
 
@@ -1653,6 +1816,7 @@ function buildSidebarToc() {
     const headings = pageId === "today-menu"
       ? [
         { id: "todayMenuCooking", text: "조리방법 조회" },
+        { id: "workNotes", text: "작업노트" },
         { id: "messageTemplates", text: "문자내용 정리" }
       ].filter(item => document.getElementById(item.id))
       : section ? [...section.querySelectorAll(":scope main section.card h2, :scope main section.card summary")]

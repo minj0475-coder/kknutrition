@@ -25,6 +25,7 @@
     "kknutrition_bookmarks_v4",
     "kknutrition_bookmarks_v4_meta",
     "kkulkkoori_service_sheet_link",
+    "kkulkkoori_work_notes_v1",
     "kkulkkoori_message_templates_v1",
     "cookingMethodUploadedData_v2",
     "cookingMethodUploadedData_v3",
