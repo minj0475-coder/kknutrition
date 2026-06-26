@@ -2051,7 +2051,7 @@ document.addEventListener("DOMContentLoaded", () => {
     Array.from(groups.entries()).forEach(([label, items]) => {
       const isOpen = query ? items.length > 0 : openVendorGroups.has(label);
       const section = document.createElement("section");
-      section.className = "vendor-accordion-group";
+      section.className = `vendor-accordion-group${isOpen ? " is-open" : ""}`;
       section.dataset.group = label;
       section.innerHTML = `
         <button class="vendor-accordion-toggle" type="button" aria-expanded="${isOpen ? "true" : "false"}">
