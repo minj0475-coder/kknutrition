@@ -17676,3 +17676,25 @@ html body #promo-contacts .vendor-add-row-main-btn span {
     min-height: 34px !important;
   }
 }
+
+/* 2026-06-26 match bookmark/contact section spacing to the home tab rhythm. */
+html body #app-content #bookmarks .bookmark-controls,
+html body #bookmarks .bookmark-controls {
+  gap: 12px !important;
+  margin-bottom: 0 !important;
+}
+
+html body #app-content #bookmarks .fab-bookmark-edit-btn,
+html body #bookmarks .fab-bookmark-edit-btn {
+  margin-top: 0 !important;
+}
+
+html body #app-content #promo-contacts .promo-contact-global-search,
+html body #promo-contacts .promo-contact-global-search {
+  margin-bottom: 0 !important;
+}
+
+html body #app-content #promo-contacts .vendor-network-card + .promo-contact-card,
+html body #promo-contacts .vendor-network-card + .promo-contact-card {
+  margin-top: 0 !important;
+}
