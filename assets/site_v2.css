@@ -17419,7 +17419,7 @@ html body #promo-contacts .vendor-network-card .promo-contact-actions {
 /* 2026-06-26 category editing and gentler sidebar offset. */
 html body #app-content #promo-contacts .promo-contact-global-search,
 html body #promo-contacts .promo-contact-global-search {
-  margin: 16px 0 14px !important;
+  margin: 0 0 14px !important;
 }
 
 html body #app-content #promo-contacts .vendor-category-manager,
