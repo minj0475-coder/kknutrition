@@ -17698,3 +17698,12 @@ html body #app-content #promo-contacts .vendor-network-card + .promo-contact-car
 html body #promo-contacts .vendor-network-card + .promo-contact-card {
   margin-top: 0 !important;
 }
+
+/* 2026-06-26 keep Today's Kkul card still; hero Kkul motion stays separate. */
+html body #app-content .daily-kkul-card,
+html body #app-content .daily-kkul-card .daily-kkul-image-wrap,
+html body #app-content .daily-kkul-card .daily-kkul-image,
+html body #app-content .daily-kkul-card .daily-kkul-image-wrap img {
+  animation: none !important;
+  will-change: auto !important;
+}
