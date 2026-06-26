@@ -17409,3 +17409,110 @@ html body #promo-contacts .vendor-network-card .promo-contact-actions {
     width: auto !important;
   }
 }
+
+/* 2026-06-26 category editing and gentler sidebar offset. */
+html body #app-content #promo-contacts .promo-contact-global-search,
+html body #promo-contacts .promo-contact-global-search {
+  margin: 16px 0 14px !important;
+}
+
+html body #app-content #promo-contacts .vendor-category-manager,
+html body #promo-contacts .vendor-category-manager {
+  display: grid !important;
+  gap: 10px !important;
+  margin: 0 18px 14px !important;
+  padding: 12px !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 12px !important;
+  background: #f9fafb !important;
+}
+
+html body #app-content #promo-contacts .vendor-category-manager[hidden],
+html body #promo-contacts .vendor-category-manager[hidden] {
+  display: none !important;
+}
+
+html body #app-content #promo-contacts .vendor-category-manager-head,
+html body #promo-contacts .vendor-category-manager-head {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  color: #111827 !important;
+}
+
+html body #app-content #promo-contacts .vendor-category-list,
+html body #promo-contacts .vendor-category-list {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+  gap: 8px !important;
+}
+
+html body #app-content #promo-contacts .vendor-category-item,
+html body #promo-contacts .vendor-category-item {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 38px !important;
+  gap: 8px !important;
+  align-items: center !important;
+}
+
+html body #app-content #promo-contacts .vendor-category-name-input,
+html body #promo-contacts .vendor-category-name-input {
+  min-height: 38px !important;
+  border-radius: 10px !important;
+}
+
+html body #app-content #promo-contacts .vendor-accordion-add-row,
+html body #promo-contacts .vendor-accordion-add-row {
+  display: flex !important;
+  justify-content: flex-end !important;
+}
+
+html body #app-content #promo-contacts .vendor-category-row-add-btn,
+html body #promo-contacts .vendor-category-row-add-btn {
+  min-height: 36px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  padding: 0 12px !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+  color: #111827 !important;
+  font-size: 13px !important;
+  font-weight: 750 !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+}
+
+html body #app-content #promo-contacts .vendor-category-row-add-btn:hover,
+html body #promo-contacts .vendor-category-row-add-btn:hover {
+  background: #f3f4f6 !important;
+}
+
+@media (min-width: 901px) {
+  html body.sidebar-open #app-content,
+  html body.sidebar-open #app-content#app-content,
+  html body.sidebar-open div#app-content[style] {
+    margin-left: 200px !important;
+    padding-left: 0 !important;
+  }
+}
+
+@media (max-width: 760px) {
+  html body #app-content #promo-contacts .promo-contact-global-search,
+  html body #promo-contacts .promo-contact-global-search {
+    margin: 12px 0 12px !important;
+  }
+
+  html body #app-content #promo-contacts .vendor-category-manager,
+  html body #promo-contacts .vendor-category-manager {
+    margin: 0 12px 12px !important;
+  }
+
+  html body #app-content #promo-contacts .vendor-category-list,
+  html body #promo-contacts .vendor-category-list {
+    grid-template-columns: 1fr !important;
+  }
+}

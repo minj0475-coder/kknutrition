@@ -1821,6 +1821,8 @@ function setupSidebarSearch(sidebarSearch, closeDrawer) {
 
 // Promo contacts table
 const VENDOR_NETWORK_KEY = "kkulkkoori_vendor_network_v1";
+const VENDOR_GROUPS_KEY = "kkulkkoori_vendor_groups_v1";
+const VENDOR_GROUPS_DEFAULT = ["농산물", "축산물", "수산물", "공산품", "우유", "소모품", "기타"];
 const VENDOR_NETWORK_DEFAULT = [
   { group: "공산", company: "", phone: "", email: "" },
   { group: "농산", company: "", phone: "", email: "" },
@@ -1937,6 +1939,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const vendorSearchInput = document.getElementById("vendorNetworkSearch");
   const addBtn = document.getElementById("promoAddRowBtn");
   const vendorAddBtn = document.getElementById("vendorNetworkAddRowBtn");
+  const vendorCategoryManageBtn = document.getElementById("vendorCategoryManageBtn");
+  const vendorCategoryManager = document.getElementById("vendorCategoryManager");
+  const vendorCategoryAddBtn = document.getElementById("vendorCategoryAddBtn");
+  const vendorCategoryList = document.getElementById("vendorCategoryList");
   const vendorFullscreenBtn = document.getElementById("vendorNetworkFullscreenBtn");
   const vendorAccordion = document.getElementById("vendorNetworkAccordion");
   const fullscreenBtn = document.getElementById("promoFullscreenBtn");
@@ -1946,7 +1952,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const statusEl = document.getElementById("promoContactStatus");
   let rows = readPromoContacts();
   let vendorRows = readVendorNetwork();
-  const vendorGroups = ["농산물", "축산물", "수산물", "공산품", "우유", "소모품", "기타"];
+  let vendorGroups = readVendorGroups();
   const openVendorGroups = new Set();
 
   function getPromoContactQuery() {
@@ -1956,14 +1962,97 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function getVendorGroupLabel(value) {
     const group = String(value || "").trim();
-    if (!group) return "기타";
-    if (/농|채소|과일|쌀|김치/.test(group)) return "농산물";
-    if (/우유|유제품|요구르트|치즈/.test(group)) return "우유";
-    if (/축|육|고기|돈|계육|닭|달걀|계란/.test(group)) return "축산물";
-    if (/수|생선|해산|어패|건어/.test(group)) return "수산물";
-    if (/공|가공|냉동|양념|소스|김|떡|면|빵/.test(group)) return "공산품";
-    if (/소모|세제|장갑|위생|용품|비품/.test(group)) return "소모품";
-    return "기타";
+    if (group && vendorGroups.includes(group)) return group;
+    const fallback = vendorGroups.includes("기타") ? "기타" : (vendorGroups[0] || "기타");
+    if (!group) return fallback;
+    if (/농|채소|과일|쌀|김치/.test(group)) return vendorGroups.includes("농산물") ? "농산물" : fallback;
+    if (/우유|유제품|요구르트|치즈/.test(group)) return vendorGroups.includes("우유") ? "우유" : fallback;
+    if (/축|육|고기|돈|계육|닭|달걀|계란/.test(group)) return vendorGroups.includes("축산물") ? "축산물" : fallback;
+    if (/수|생선|해산|어패|건어/.test(group)) return vendorGroups.includes("수산물") ? "수산물" : fallback;
+    if (/공|가공|냉동|양념|소스|김|떡|면|빵/.test(group)) return vendorGroups.includes("공산품") ? "공산품" : fallback;
+    if (/소모|세제|장갑|위생|용품|비품/.test(group)) return vendorGroups.includes("소모품") ? "소모품" : fallback;
+    return fallback;
+  }
+
+  function getPreferredVendorAddGroup() {
+    return Array.from(openVendorGroups).find(group => vendorGroups.includes(group)) || vendorGroups[0] || "기타";
+  }
+
+  function makeUniqueVendorGroupName(base) {
+    const clean = String(base || "새 카테고리").trim() || "새 카테고리";
+    if (!vendorGroups.includes(clean)) return clean;
+    let index = 2;
+    while (vendorGroups.includes(`${clean} ${index}`)) index += 1;
+    return `${clean} ${index}`;
+  }
+
+  function addVendorNetworkRow(group) {
+    const targetGroup = group || getPreferredVendorAddGroup();
+    vendorRows.push({ group: targetGroup, company: "", phone: "", email: "" });
+    saveVendorNetwork(vendorRows);
+    openVendorGroups.add(targetGroup);
+    renderVendorNetwork();
+    const groupSection = vendorAccordion
+      ? Array.from(vendorAccordion.querySelectorAll(".vendor-accordion-group")).find(section => section.dataset.group === targetGroup)
+      : null;
+    const cards = groupSection ? groupSection.querySelectorAll(".vendor-accordion-card") : [];
+    const lastCard = cards.length ? cards[cards.length - 1] : null;
+    const last = lastCard
+      ? lastCard.querySelector("[data-vendor-field='company']")
+      : (vendorBody ? vendorBody.querySelector("tr:last-child [data-vendor-field='company']") : null);
+    if (last) last.focus();
+  }
+
+  function renderVendorCategoryManager() {
+    if (!vendorCategoryList) return;
+    vendorCategoryList.innerHTML = "";
+    vendorGroups.forEach((group, index) => {
+      const item = document.createElement("div");
+      item.className = "vendor-category-item";
+      item.innerHTML = `
+        <input class="promo-cell-input vendor-category-name-input" type="text" aria-label="카테고리 이름" value="">
+        <button class="icon-only-btn vendor-category-delete-btn" type="button" aria-label="카테고리 삭제" title="카테고리 삭제">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 14h10l1-14M9 7V4h6v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      `;
+      const input = item.querySelector(".vendor-category-name-input");
+      const deleteBtn = item.querySelector(".vendor-category-delete-btn");
+      input.value = group;
+      input.addEventListener("change", () => {
+        const next = input.value.trim();
+        if (!next || (vendorGroups.includes(next) && next !== group)) {
+          input.value = group;
+          return;
+        }
+        vendorGroups[index] = next;
+        vendorRows.forEach(row => {
+          if (getVendorGroupLabel(row.group) === group || row.group === group) row.group = next;
+        });
+        if (openVendorGroups.has(group)) {
+          openVendorGroups.delete(group);
+          openVendorGroups.add(next);
+        }
+        saveVendorGroups(vendorGroups);
+        saveVendorNetwork(vendorRows);
+        renderVendorCategoryManager();
+        renderVendorNetwork();
+      });
+      deleteBtn.addEventListener("click", () => {
+        if (vendorGroups.length <= 1) return;
+        const fallback = vendorGroups.find(item => item !== group) || "기타";
+        vendorGroups = vendorGroups.filter(item => item !== group);
+        vendorRows.forEach(row => {
+          if (getVendorGroupLabel(row.group) === group || row.group === group) row.group = fallback;
+        });
+        openVendorGroups.delete(group);
+        openVendorGroups.add(fallback);
+        saveVendorGroups(vendorGroups);
+        saveVendorNetwork(vendorRows);
+        renderVendorCategoryManager();
+        renderVendorNetwork();
+      });
+      vendorCategoryList.appendChild(item);
+    });
   }
 
   function getVendorQuery() {
@@ -2100,6 +2189,16 @@ document.addEventListener("DOMContentLoaded", () => {
         empty.textContent = query ? "검색 결과가 없습니다." : "등록된 업체가 없습니다.";
         panel.appendChild(empty);
       }
+      const addWrap = document.createElement("div");
+      addWrap.className = "vendor-accordion-add-row";
+      addWrap.innerHTML = `
+        <button class="vendor-category-row-add-btn" type="button" aria-label="${label} 업체 추가" title="${label} 업체 추가">
+          <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+          <span>${label} 업체 추가</span>
+        </button>
+      `;
+      addWrap.querySelector("button").addEventListener("click", () => addVendorNetworkRow(label));
+      panel.appendChild(addWrap);
 
       vendorAccordion.appendChild(section);
     });
@@ -2191,6 +2290,30 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   if (searchInput) searchInput.addEventListener("input", renderPromoContacts);
   if (vendorSearchInput) vendorSearchInput.addEventListener("input", renderVendorNetwork);
+  if (vendorCategoryManageBtn && vendorCategoryManager) {
+    vendorCategoryManageBtn.setAttribute("aria-expanded", "false");
+    vendorCategoryManageBtn.addEventListener("click", () => {
+      vendorCategoryManager.hidden = !vendorCategoryManager.hidden;
+      vendorCategoryManageBtn.setAttribute("aria-expanded", vendorCategoryManager.hidden ? "false" : "true");
+      if (!vendorCategoryManager.hidden) renderVendorCategoryManager();
+    });
+  }
+  if (vendorCategoryAddBtn) {
+    vendorCategoryAddBtn.addEventListener("click", () => {
+      const name = makeUniqueVendorGroupName("새 카테고리");
+      vendorGroups.push(name);
+      saveVendorGroups(vendorGroups);
+      openVendorGroups.add(name);
+      renderVendorCategoryManager();
+      renderVendorNetwork();
+      const inputs = vendorCategoryList ? vendorCategoryList.querySelectorAll(".vendor-category-name-input") : [];
+      const input = inputs[inputs.length - 1];
+      if (input) {
+        input.focus();
+        input.select();
+      }
+    });
+  }
   if (addBtn) {
     addBtn.addEventListener("click", () => {
       rows.unshift({ company: "", phone: "", link: "", memo: "" });
@@ -2201,14 +2324,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   if (vendorAddBtn) {
     vendorAddBtn.addEventListener("click", () => {
-      vendorRows.push({ group: "", company: "", phone: "", email: "" });
-      saveVendorNetwork(vendorRows);
-      openVendorGroups.add("기타");
-      renderVendorNetwork();
-      const last = vendorAccordion
-        ? vendorAccordion.querySelector(".vendor-accordion-card:last-child [data-vendor-field='group']")
-        : (vendorBody ? vendorBody.querySelector("tr:last-child [data-vendor-field='group']") : null);
-      if (last) last.focus();
+      addVendorNetworkRow(getPreferredVendorAddGroup());
     });
   }
   if (vendorFullscreenBtn && vendorPanel) {
@@ -2256,6 +2372,12 @@ document.addEventListener("DOMContentLoaded", () => {
       vendorRows = readVendorNetwork();
       renderVendorNetwork();
       if (statusEl) statusEl.textContent = "다른 기기의 최신 업체 연락망을 불러왔습니다.";
+    }
+    if (event.detail.key === VENDOR_GROUPS_KEY) {
+      vendorGroups = readVendorGroups();
+      renderVendorCategoryManager();
+      renderVendorNetwork();
+      if (statusEl) statusEl.textContent = "다른 기기의 최신 업체 카테고리를 불러왔습니다.";
     }
   });
 
@@ -3070,6 +3192,29 @@ function initHomeHeroKkulMotion() {
   window.addEventListener("pagehide", () => {
     if (frameId) window.cancelAnimationFrame(frameId);
   }, { once: true });
+}
+
+function normalizeVendorGroups(groups) {
+  const result = [];
+  (Array.isArray(groups) ? groups : []).forEach(group => {
+    const value = String(group || "").trim();
+    if (value && !result.includes(value)) result.push(value);
+  });
+  return result.length ? result : VENDOR_GROUPS_DEFAULT.slice();
+}
+
+function readVendorGroups() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(VENDOR_GROUPS_KEY) || "null");
+    if (Array.isArray(parsed)) return normalizeVendorGroups(parsed);
+  } catch(e) {}
+  return VENDOR_GROUPS_DEFAULT.slice();
+}
+
+function saveVendorGroups(groups) {
+  try {
+    localStorage.setItem(VENDOR_GROUPS_KEY, JSON.stringify(normalizeVendorGroups(groups)));
+  } catch(e) {}
 }
 
 document.addEventListener("DOMContentLoaded", initHomeHeroKkulMotion);
