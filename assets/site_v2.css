@@ -17828,3 +17828,17 @@ html body #app-content .academic-apply-option input[type="radio"] {
     margin: 0 !important;
   }
 }
+
+/* 2026-06-26 home labels are text badges, not fixed-width number badges. */
+html body #app-content #home .daily-kkul-card .section-title,
+html body #app-content #home .home-today-card .section-title {
+  gap: 8px !important;
+}
+
+html body #app-content #home .daily-kkul-card .section-title > .num,
+html body #app-content #home .home-today-card .section-title > .num {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  white-space: nowrap !important;
+}
