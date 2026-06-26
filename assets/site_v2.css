@@ -17516,3 +17516,102 @@ html body #promo-contacts .vendor-category-row-add-btn:hover {
     grid-template-columns: 1fr !important;
   }
 }
+
+/* 2026-06-26 mobile vendor header: title left, tools right. */
+html body #app-content #promo-contacts .vendor-add-row-main-btn,
+html body #promo-contacts .vendor-add-row-main-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+}
+
+@media (max-width: 760px) {
+  html body #app-content #promo-contacts .vendor-network-card .promo-contact-toolbar,
+  html body #promo-contacts .vendor-network-card .promo-contact-toolbar {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+
+  html body #app-content #promo-contacts .vendor-network-card .promo-contact-title,
+  html body #promo-contacts .vendor-network-card .promo-contact-title {
+    justify-self: start !important;
+    min-width: 0 !important;
+    gap: 9px !important;
+  }
+
+  html body #app-content #promo-contacts .vendor-network-card .promo-contact-title .section-title,
+  html body #promo-contacts .vendor-network-card .promo-contact-title .section-title {
+    font-size: 21px !important;
+    white-space: nowrap !important;
+  }
+
+  html body #app-content #promo-contacts .vendor-network-card .promo-contact-actions,
+  html body #promo-contacts .vendor-network-card .promo-contact-actions {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    justify-self: end !important;
+    gap: 8px !important;
+    width: auto !important;
+    min-width: 0 !important;
+  }
+
+  html body #app-content #promo-contacts .vendor-network-card .promo-contact-actions :where(.icon-only-btn, .vendor-add-row-main-btn),
+  html body #promo-contacts .vendor-network-card .promo-contact-actions :where(.icon-only-btn, .vendor-add-row-main-btn) {
+    width: 36px !important;
+    min-width: 36px !important;
+    height: 36px !important;
+    padding: 0 !important;
+    border-radius: 10px !important;
+  }
+
+  html body #app-content #promo-contacts .vendor-add-row-main-btn span,
+  html body #promo-contacts .vendor-add-row-main-btn span {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    white-space: nowrap !important;
+  }
+}
+
+@media (max-width: 380px) {
+  html body #app-content #promo-contacts .vendor-network-card .promo-contact-toolbar,
+  html body #promo-contacts .vendor-network-card .promo-contact-toolbar {
+    gap: 8px !important;
+  }
+
+  html body #app-content #promo-contacts .vendor-network-card .promo-contact-actions,
+  html body #promo-contacts .vendor-network-card .promo-contact-actions {
+    gap: 6px !important;
+  }
+
+  html body #app-content #promo-contacts .vendor-network-card .promo-contact-title,
+  html body #promo-contacts .vendor-network-card .promo-contact-title {
+    gap: 6px !important;
+  }
+
+  html body #app-content #promo-contacts .vendor-network-card .promo-contact-title .section-number,
+  html body #promo-contacts .vendor-network-card .promo-contact-title .section-number {
+    width: 30px !important;
+    min-width: 30px !important;
+    height: 30px !important;
+    font-size: 14px !important;
+  }
+
+  html body #app-content #promo-contacts .vendor-network-card .promo-contact-title .section-title,
+  html body #promo-contacts .vendor-network-card .promo-contact-title .section-title {
+    font-size: 17px !important;
+  }
+
+  html body #app-content #promo-contacts .vendor-network-card .promo-contact-actions :where(.icon-only-btn, .vendor-add-row-main-btn),
+  html body #promo-contacts .vendor-network-card .promo-contact-actions :where(.icon-only-btn, .vendor-add-row-main-btn) {
+    width: 34px !important;
+    min-width: 34px !important;
+    height: 34px !important;
+  }
+}
