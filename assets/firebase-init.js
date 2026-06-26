@@ -44,6 +44,7 @@ const CLOUD_DATA_COLLECTION = "appData";
 const CLOUD_SYNC_META_KEY = "kkulkkoori_cloud_sync_meta_v1";
 const CLOUD_SYNC_KEYS = [
   "kkulkkoori_service_sheet_link",
+  "kkulkkoori_work_notes_v1",
   "kkulkkoori_message_templates_v1",
   "kkulkkoori_annual_sheet_links_v1",
   "kkulkkoori_vendor_network_v1",
@@ -87,6 +88,10 @@ function getCloudStringSize(value) {
   } catch (error) {
     return String(value || "").length;
   }
+}
+
+function hasMeaningfulLocalValue(value) {
+  return value != null && String(value).trim() !== "";
 }
 
 async function uploadCloudDataKey(key, value, updatedAt = Date.now(), deleted = false) {
@@ -144,7 +149,7 @@ function setupCloudDataSync() {
       const localUpdatedAt = getCloudLocalUpdatedAt(key);
 
       if (!snapshot.exists()) {
-        if (localValue) {
+        if (hasMeaningfulLocalValue(localValue)) {
           const seedUpdatedAt = localUpdatedAt || Date.now();
           setCloudLocalUpdatedAt(key, seedUpdatedAt);
           uploadCloudDataKey(key, localValue, seedUpdatedAt, false)
@@ -155,6 +160,15 @@ function setupCloudDataSync() {
 
       const data = snapshot.data() || {};
       const remoteUpdatedAt = Number(data.updatedAt) || 0;
+
+      if (hasMeaningfulLocalValue(localValue) && !localUpdatedAt) {
+        const seedUpdatedAt = Date.now();
+        setCloudLocalUpdatedAt(key, seedUpdatedAt);
+        uploadCloudDataKey(key, localValue, seedUpdatedAt, false)
+          .catch(error => console.error("공용 데이터 로컬 우선 보존 실패:", key, error));
+        return;
+      }
+
       if (localUpdatedAt && localUpdatedAt > remoteUpdatedAt) {
         uploadCloudDataKey(key, localValue || "", localUpdatedAt, !localValue)
           .catch(error => console.error("공용 데이터 최신 로컬 복구 실패:", key, error));
@@ -248,6 +262,10 @@ function loadLocalMemos() {
     memos = [...defaultMemos];
     memoUpdatedAt = 0;
   }
+}
+
+function hasMeaningfulMemos(items) {
+  return Array.isArray(items) && items.some(item => item && String(item.text || "").trim());
 }
 
 function saveLocalMemos() {
@@ -889,6 +907,15 @@ function init() {
         if (data.items) {
           const remoteUpdatedAt = Number(data.updatedAt) || 0;
           const localUpdatedAt = memoUpdatedAt || Number(readMemoLocalMeta().updatedAt) || 0;
+          if (!localUpdatedAt && hasMeaningfulMemos(memos)) {
+            const seedUpdatedAt = Date.now();
+            writeLocalMemos(seedUpdatedAt);
+            setDoc(doc(db, "memos", MEMO_DOC_ID), {
+              items: memos,
+              updatedAt: seedUpdatedAt
+            }).catch((error) => console.error("Firestore 메모 로컬 우선 보존 실패:", error));
+            return;
+          }
           if (localUpdatedAt && remoteUpdatedAt && remoteUpdatedAt < localUpdatedAt) {
             setDoc(doc(db, "memos", MEMO_DOC_ID), {
               items: memos,

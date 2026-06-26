@@ -87,6 +87,12 @@ function writeBookmarkStorage(items, updatedAt) {
   }));
 }
 
+function hasMeaningfulBookmarkData(items) {
+  return Array.isArray(items) && items.some(function(item) {
+    return item && (String(item.title || '').trim() || String(item.url || '').trim());
+  });
+}
+
 // ---- LocalStorage (v4: new category names) ----
 (function loadFromStorage() {
   try {
@@ -142,6 +148,14 @@ window.updateBookmarkData = function(newData, remoteMeta) {
   if (!Array.isArray(newData)) return;
   var remoteUpdatedAt = Number(remoteMeta && remoteMeta.updatedAt) || 0;
   var localUpdatedAt = bookmarkUpdatedAt || Number(readBookmarkLocalMeta().updatedAt) || 0;
+  if (!localUpdatedAt && hasMeaningfulBookmarkData(bookmarkData)) {
+    localUpdatedAt = Date.now();
+    writeBookmarkStorage(bookmarkData, localUpdatedAt);
+    if (typeof window.syncBookmarksToFirebase === 'function') {
+      window.syncBookmarksToFirebase(bookmarkData, { updatedAt: localUpdatedAt });
+    }
+    return;
+  }
   if (localUpdatedAt && remoteUpdatedAt && remoteUpdatedAt < localUpdatedAt) {
     if (typeof window.syncBookmarksToFirebase === 'function') {
       window.syncBookmarksToFirebase(bookmarkData, { updatedAt: localUpdatedAt });
