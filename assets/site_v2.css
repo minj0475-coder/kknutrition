@@ -17523,7 +17523,22 @@ html body #promo-contacts .vendor-add-row-main-btn {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 7px !important;
+  width: 42px !important;
+  min-width: 42px !important;
+  height: 42px !important;
+  padding: 0 !important;
+  gap: 0 !important;
+  border-radius: 12px !important;
+}
+
+html body #app-content #promo-contacts .vendor-add-row-main-btn span,
+html body #promo-contacts .vendor-add-row-main-btn span {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  white-space: nowrap !important;
 }
 
 @media (max-width: 760px) {
@@ -17564,19 +17579,19 @@ html body #promo-contacts .vendor-add-row-main-btn {
     width: 36px !important;
     min-width: 36px !important;
     height: 36px !important;
+    min-height: 36px !important;
     padding: 0 !important;
     border-radius: 10px !important;
   }
 
-  html body #app-content #promo-contacts .vendor-add-row-main-btn span,
-  html body #promo-contacts .vendor-add-row-main-btn span {
-    position: absolute !important;
-    width: 1px !important;
-    height: 1px !important;
-    overflow: hidden !important;
-    clip: rect(0 0 0 0) !important;
-    white-space: nowrap !important;
+  html body #app-content #promo-contacts .vendor-network-card .promo-contact-actions button.icon-only-btn,
+  html body #promo-contacts .vendor-network-card .promo-contact-actions button.icon-only-btn {
+    width: 36px !important;
+    min-width: 36px !important;
+    height: 36px !important;
+    min-height: 36px !important;
   }
+
 }
 
 @media (max-width: 380px) {
@@ -17613,5 +17628,14 @@ html body #promo-contacts .vendor-add-row-main-btn {
     width: 34px !important;
     min-width: 34px !important;
     height: 34px !important;
+    min-height: 34px !important;
+  }
+
+  html body #app-content #promo-contacts .vendor-network-card .promo-contact-actions button.icon-only-btn,
+  html body #promo-contacts .vendor-network-card .promo-contact-actions button.icon-only-btn {
+    width: 34px !important;
+    min-width: 34px !important;
+    height: 34px !important;
+    min-height: 34px !important;
   }
 }
