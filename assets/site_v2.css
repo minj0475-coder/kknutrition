@@ -5108,6 +5108,12 @@ nav a.active::after {
   box-shadow: 0 0 0 3px rgba(255,107,107,0.1);
 }
 
+html body #app-content #bookmarks .search-wrap,
+html body #bookmarks .search-wrap {
+  width: min(520px, 100%) !important;
+  max-width: 520px !important;
+}
+
 .filter-chips {
   display: flex;
   gap: 8px;
