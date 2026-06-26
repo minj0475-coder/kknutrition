@@ -10,7 +10,7 @@
 <meta property="og:image" content="https://minj0475-coder.github.io/kknutrition/assets/og-image.png?v=2">
 <meta property="og:url" content="https://minj0475-coder.github.io/kknutrition/">
 <title>급식 업무 포털</title>
-<link rel="stylesheet" href="assets/site_v2.css?v=20260626_019">
+<link rel="stylesheet" href="assets/site_v2.css?v=20260626_020">
 <link rel="manifest" href="manifest.json?v=4">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/app-icon-192.png?v=4">
 <link rel="apple-touch-icon" href="assets/app-icon-180.png?v=4">
@@ -326,6 +326,23 @@
         <span>종료일</span>
         <input id="academicEventEndDate" type="date">
       </label>
+      <fieldset id="academicApplyScope" class="academic-property wide academic-apply-scope" hidden>
+        <legend>적용 범위</legend>
+        <div class="academic-apply-options" role="radiogroup" aria-label="일정 수정 적용 범위">
+          <label class="academic-apply-option">
+            <input type="radio" name="academicApplyScope" value="single">
+            <span>이 날짜만 수정</span>
+          </label>
+          <label class="academic-apply-option">
+            <input type="radio" name="academicApplyScope" value="series">
+            <span>같은 일정 전체 수정</span>
+          </label>
+          <label class="academic-apply-option">
+            <input type="radio" name="academicApplyScope" value="range">
+            <span>선택한 기간 전체 수정</span>
+          </label>
+        </div>
+      </fieldset>
       <label class="academic-property academic-done-property">
         <span>완료</span>
         <input id="academicEventDone" type="checkbox">

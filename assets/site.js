@@ -2460,10 +2460,33 @@ function formatAcademicDate(key, includeWeekday = true) {
   return includeWeekday ? `${base} (${weekdays[date.getDay()]})` : base;
 }
 
+function createAcademicSeriesId() {
+  return `academic-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 9)}`;
+}
+
+function normalizeAcademicEvents(events) {
+  const nextEvents = {};
+  let changed = false;
+  Object.keys(events || {}).forEach(key => {
+    const value = events[key];
+    const entries = Array.isArray(value) ? value : (value ? [value] : []);
+    nextEvents[key] = entries.map(event => {
+      if (!event || typeof event !== "object" || event.seriesId) return event;
+      changed = true;
+      return { ...event, seriesId: createAcademicSeriesId() };
+    });
+  });
+  return { events: nextEvents, changed };
+}
+
 function readAcademicEvents() {
   try {
     const parsed = JSON.parse(localStorage.getItem(ACADEMIC_EVENTS_KEY) || "{}");
-    if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) return parsed;
+    if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+      const normalized = normalizeAcademicEvents(parsed);
+      if (normalized.changed) localStorage.setItem(ACADEMIC_EVENTS_KEY, JSON.stringify(normalized.events));
+      return normalized.events;
+    }
   } catch(e) {}
   return {};
 }
@@ -2539,7 +2562,8 @@ function getAcademicEventsForKey(key, userEvents) {
       type: "user",
       source: "user",
       userIndex,
-      startKey
+      startKey,
+      seriesId: user.seriesId || ""
     });
   });
   return events;
@@ -2586,6 +2610,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const titleInput = document.getElementById("academicEventTitle");
   const dateInput = document.getElementById("academicEventDate");
   const endDateInput = document.getElementById("academicEventEndDate");
+  const applyScope = document.getElementById("academicApplyScope");
+  const applyScopeInputs = applyScope ? applyScope.querySelectorAll("input[name='academicApplyScope']") : [];
   const doneInput = document.getElementById("academicEventDone");
   const colorInput = document.getElementById("academicEventColor");
   const colorButtons = modal ? modal.querySelectorAll("[data-academic-color]") : [];
@@ -2603,7 +2629,9 @@ document.addEventListener("DOMContentLoaded", () => {
     selectedSourceKey: makeAcademicKey(today),
     selectedUserEventIndex: null,
     selectedOccurrenceKey: makeAcademicKey(today),
-    prefillEvent: null
+    prefillEvent: null,
+    originalStartKey: null,
+    originalEndKey: null
   };
   let userEvents = readAcademicEvents();
   let modalScrollY = 0;
@@ -2685,6 +2713,61 @@ document.addEventListener("DOMContentLoaded", () => {
       button.classList.toggle("is-selected", isSelected);
       button.setAttribute("aria-checked", isSelected ? "true" : "false");
     });
+  }
+
+  function getSelectedAcademicEvent() {
+    if (!Number.isInteger(state.selectedUserEventIndex)) return null;
+    const events = getUserAcademicEventsForKey(userEvents, state.selectedSourceKey);
+    const event = events[state.selectedUserEventIndex];
+    return event && typeof event === "object" ? event : null;
+  }
+
+  function getAcademicApplyScope() {
+    const selected = Array.from(applyScopeInputs).find(input => input.checked);
+    return selected ? selected.value : "single";
+  }
+
+  function setAcademicApplyScope(value) {
+    Array.from(applyScopeInputs).forEach(input => {
+      input.checked = input.value === value;
+    });
+  }
+
+  function syncAcademicDatesForScope(scope) {
+    const event = getSelectedAcademicEvent();
+    if (!event || !dateInput || !endDateInput) return;
+    const originalStart = state.originalStartKey || state.selectedSourceKey;
+    const originalEnd = state.originalEndKey || getAcademicEventEndKey(originalStart, event);
+    if (scope === "single") {
+      dateInput.value = state.selectedOccurrenceKey;
+      endDateInput.value = state.selectedOccurrenceKey;
+      return;
+    }
+    dateInput.value = originalStart;
+    endDateInput.value = originalEnd;
+  }
+
+  function updateAcademicApplyScope(event) {
+    const isEditing = Boolean(event);
+    if (applyScope) applyScope.hidden = !isEditing;
+    if (!isEditing) return;
+    const originalStart = state.originalStartKey || state.selectedSourceKey;
+    const originalEnd = state.originalEndKey || getAcademicEventEndKey(originalStart, event);
+    const isRange = originalEnd > originalStart;
+    setAcademicApplyScope(isRange ? "series" : "single");
+  }
+
+  function removeAcademicEventAt(sourceKey, index) {
+    const events = getUserAcademicEventsForKey(userEvents, sourceKey);
+    if (!events[index]) return null;
+    const [removed] = events.splice(index, 1);
+    setUserAcademicEventsForKey(userEvents, sourceKey, events);
+    return removed;
+  }
+
+  function addAcademicSkipDate(event, key) {
+    const skipDates = Array.isArray(event.skipDates) ? event.skipDates : [];
+    if (!skipDates.includes(key)) event.skipDates = [...skipDates, key].sort();
   }
 
   function reorderAcademicEventsForKey(key, fromIndex, toIndex) {
@@ -2782,13 +2865,18 @@ document.addEventListener("DOMContentLoaded", () => {
     state.prefillEvent = prefillEvent || null;
     const userEventList = getUserAcademicEventsForKey(userEvents, state.selectedSourceKey);
     const current = prefillEvent || (state.selectedUserEventIndex !== null ? (userEventList[state.selectedUserEventIndex] || {}) : {});
+    const selectedEvent = getSelectedAcademicEvent();
+    const editingEvent = selectedEvent || (state.selectedUserEventIndex !== null ? current : null);
+    state.originalStartKey = editingEvent ? state.selectedSourceKey : null;
+    state.originalEndKey = editingEvent ? getAcademicEventEndKey(state.selectedSourceKey, editingEvent) : null;
     if (titleInput) titleInput.value = current.title || "";
-    if (dateInput) dateInput.value = key;
-    if (endDateInput) endDateInput.value = prefillEvent ? key : (current.endDate || state.selectedSourceKey);
+    if (dateInput) dateInput.value = editingEvent ? state.originalStartKey : key;
+    if (endDateInput) endDateInput.value = editingEvent ? state.originalEndKey : key;
     if (doneInput) doneInput.checked = Boolean(current.done);
     setAcademicColor(current.color || "blue");
     if (memoInput) memoInput.value = current.memo || "";
     if (urlInput) urlInput.value = current.url || "";
+    updateAcademicApplyScope(editingEvent);
     renderCalendar();
   }
 
@@ -2873,8 +2961,7 @@ document.addEventListener("DOMContentLoaded", () => {
             state.year = date.getFullYear();
             state.month = date.getMonth();
           }
-          const isRangeOccurrence = event.startKey && event.startKey !== key;
-          openAcademicModal(key, isRangeOccurrence ? null : event.userIndex, isRangeOccurrence ? event.startKey : event.startKey, isRangeOccurrence ? event : null);
+          openAcademicModal(key, event.userIndex, event.startKey, event);
           renderWeeklyTable();
         });
         button.appendChild(pill);
@@ -2966,12 +3053,11 @@ document.addEventListener("DOMContentLoaded", () => {
             row.setAttribute("title", event.memo);
           }
           row.addEventListener("click", () => {
-            const isRangeOccurrence = event.source === "user" && event.startKey && event.startKey !== key;
             openAcademicModal(
               key,
-              event.source === "user" && !isRangeOccurrence ? event.userIndex : null,
+              event.source === "user" ? event.userIndex : null,
               event.source === "user" ? event.startKey : key,
-              isRangeOccurrence ? event : null
+              event.source === "user" ? event : null
             );
           });
           items.appendChild(row);
@@ -2998,6 +3084,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function saveSelectedDate() {
     const key = dateInput && dateInput.value ? dateInput.value : state.selectedKey;
     const endKey = endDateInput && endDateInput.value && endDateInput.value >= key ? endDateInput.value : key;
+    const original = getSelectedAcademicEvent();
+    const originalStartKey = state.originalStartKey || state.selectedSourceKey;
+    const originalEndKey = original ? (state.originalEndKey || getAcademicEventEndKey(originalStartKey, original)) : key;
+    const scope = original ? getAcademicApplyScope() : "new";
     const entry = {
       title: titleInput ? titleInput.value.trim() : "",
       memo: memoInput ? memoInput.value.trim() : "",
@@ -3005,31 +3095,60 @@ document.addEventListener("DOMContentLoaded", () => {
       endDate: endKey,
       done: doneInput ? doneInput.checked : false,
       weight: "normal",
-      color: colorInput ? colorInput.value : "blue"
+      color: colorInput ? colorInput.value : "blue",
+      seriesId: original && original.seriesId ? original.seriesId : createAcademicSeriesId()
     };
-    const isEditingExisting = state.selectedUserEventIndex !== null;
-    if (isEditingExisting) {
-      const originalEvents = getUserAcademicEventsForKey(userEvents, state.selectedSourceKey);
-      originalEvents.splice(state.selectedUserEventIndex, 1);
-      setUserAcademicEventsForKey(userEvents, state.selectedSourceKey, originalEvents);
-    } else if (state.prefillEvent && state.selectedSourceKey !== state.selectedOccurrenceKey) {
-      const originalEvents = getUserAcademicEventsForKey(userEvents, state.selectedSourceKey);
-      const originalIndex = Number.isInteger(state.prefillEvent.userIndex) ? state.prefillEvent.userIndex : -1;
-      if (originalEvents[originalIndex]) {
-        const skipDates = Array.isArray(originalEvents[originalIndex].skipDates) ? originalEvents[originalIndex].skipDates : [];
-        if (!skipDates.includes(state.selectedOccurrenceKey)) originalEvents[originalIndex].skipDates = [...skipDates, state.selectedOccurrenceKey].sort();
-        setUserAcademicEventsForKey(userEvents, state.selectedSourceKey, originalEvents);
+    const hasContent = Boolean(entry.title || entry.memo || entry.url);
+
+    if (!original) {
+      if (hasContent) {
+        const nextEvents = getUserAcademicEventsForKey(userEvents, key);
+        nextEvents.push(entry);
+        setUserAcademicEventsForKey(userEvents, key, nextEvents);
       }
-    }
-    if (entry.title || entry.memo || entry.url) {
-      const nextEvents = getUserAcademicEventsForKey(userEvents, key);
-      nextEvents.push(entry);
-      setUserAcademicEventsForKey(userEvents, key, nextEvents);
+    } else if (scope === "single") {
+      const isRange = originalEndKey > originalStartKey;
+      if (!isRange) {
+        removeAcademicEventAt(originalStartKey, state.selectedUserEventIndex);
+        if (hasContent) {
+          entry.endDate = key;
+          const nextEvents = getUserAcademicEventsForKey(userEvents, key);
+          nextEvents.push(entry);
+          setUserAcademicEventsForKey(userEvents, key, nextEvents);
+        }
+      } else {
+        addAcademicSkipDate(original, state.selectedOccurrenceKey);
+        setUserAcademicEventsForKey(userEvents, originalStartKey, getUserAcademicEventsForKey(userEvents, originalStartKey));
+        if (hasContent) {
+          const nextEvents = getUserAcademicEventsForKey(userEvents, state.selectedOccurrenceKey);
+          nextEvents.push({ ...entry, endDate: state.selectedOccurrenceKey, seriesId: createAcademicSeriesId(), parentSeriesId: original.seriesId || "" });
+          setUserAcademicEventsForKey(userEvents, state.selectedOccurrenceKey, nextEvents);
+        }
+      }
+    } else if (scope === "series") {
+      const originalEvents = getUserAcademicEventsForKey(userEvents, originalStartKey);
+      entry.endDate = originalEndKey;
+      entry.seriesId = original.seriesId || entry.seriesId;
+      if (hasContent) {
+        originalEvents[state.selectedUserEventIndex] = entry;
+      } else {
+        originalEvents.splice(state.selectedUserEventIndex, 1);
+      }
+      setUserAcademicEventsForKey(userEvents, originalStartKey, originalEvents);
+    } else {
+      removeAcademicEventAt(originalStartKey, state.selectedUserEventIndex);
+      if (hasContent) {
+        const nextEvents = getUserAcademicEventsForKey(userEvents, key);
+        nextEvents.push({ ...entry, seriesId: original.seriesId || entry.seriesId });
+        setUserAcademicEventsForKey(userEvents, key, nextEvents);
+      }
     }
     state.selectedKey = key;
     state.selectedSourceKey = key;
     state.selectedUserEventIndex = null;
     state.prefillEvent = null;
+    state.originalStartKey = null;
+    state.originalEndKey = null;
     const nextDate = parseAcademicKey(key);
     state.year = nextDate.getFullYear();
     state.month = nextDate.getMonth();
@@ -3074,6 +3193,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  applyScopeInputs.forEach(input => {
+    input.addEventListener("change", () => {
+      if (input.checked) syncAcademicDatesForScope(input.value);
+    });
+  });
+
   if (saveBtn) saveBtn.addEventListener("click", saveSelectedDate);
   if (clearBtn) clearBtn.addEventListener("click", () => {
     if (titleInput) titleInput.value = "";
@@ -3082,21 +3207,19 @@ document.addEventListener("DOMContentLoaded", () => {
     if (endDateInput) endDateInput.value = dateInput && dateInput.value ? dateInput.value : state.selectedKey;
     if (doneInput) doneInput.checked = false;
     setAcademicColor("blue");
-    if (state.selectedUserEventIndex !== null) {
-      const nextEvents = getUserAcademicEventsForKey(userEvents, state.selectedSourceKey);
-      nextEvents.splice(state.selectedUserEventIndex, 1);
-      setUserAcademicEventsForKey(userEvents, state.selectedSourceKey, nextEvents);
-      state.selectedUserEventIndex = null;
-    } else if (state.prefillEvent && state.selectedSourceKey !== state.selectedOccurrenceKey) {
-      const occurrenceKey = state.selectedOccurrenceKey;
-      const nextEvents = getUserAcademicEventsForKey(userEvents, state.selectedSourceKey);
-      const originalIndex = Number.isInteger(state.prefillEvent.userIndex) ? state.prefillEvent.userIndex : -1;
-      if (nextEvents[originalIndex]) {
-        const skipDates = Array.isArray(nextEvents[originalIndex].skipDates) ? nextEvents[originalIndex].skipDates : [];
-        if (!skipDates.includes(occurrenceKey)) nextEvents[originalIndex].skipDates = [...skipDates, occurrenceKey].sort();
-        setUserAcademicEventsForKey(userEvents, state.selectedSourceKey, nextEvents);
+    const original = getSelectedAcademicEvent();
+    if (original) {
+      const originalEndKey = state.originalEndKey || getAcademicEventEndKey(state.selectedSourceKey, original);
+      if (originalEndKey > state.selectedSourceKey && state.selectedOccurrenceKey !== state.selectedSourceKey) {
+        addAcademicSkipDate(original, state.selectedOccurrenceKey);
+        setUserAcademicEventsForKey(userEvents, state.selectedSourceKey, getUserAcademicEventsForKey(userEvents, state.selectedSourceKey));
+      } else {
+        removeAcademicEventAt(state.selectedSourceKey, state.selectedUserEventIndex);
       }
+      state.selectedUserEventIndex = null;
       state.prefillEvent = null;
+      state.originalStartKey = null;
+      state.originalEndKey = null;
     }
     saveAcademicEvents(userEvents);
     renderAll();
