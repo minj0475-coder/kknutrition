@@ -17820,3 +17820,11 @@ html body #app-content .academic-apply-option input[type="radio"] {
     font-size: 13px;
   }
 }
+
+/* 2026-06-26 mobile promo contacts: let the page grid own the search spacing. */
+@media (max-width: 760px) {
+  html body #app-content #promo-contacts .promo-contact-global-search,
+  html body #promo-contacts .promo-contact-global-search {
+    margin: 0 !important;
+  }
+}
