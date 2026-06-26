@@ -17842,3 +17842,22 @@ html body #app-content #home .home-today-card .section-title > .num {
   min-width: 0 !important;
   white-space: nowrap !important;
 }
+
+/* 2026-06-26 desktop vendor card: match the standard 24px card inset. */
+@media (min-width: 761px) {
+  html body #app-content #promo-contacts .vendor-network-card,
+  html body #promo-contacts .vendor-network-card {
+    padding: 24px !important;
+  }
+
+  html body #app-content #promo-contacts .vendor-network-card .promo-contact-toolbar,
+  html body #promo-contacts .vendor-network-card .promo-contact-toolbar {
+    min-height: 0 !important;
+    padding: 0 0 16px !important;
+  }
+
+  html body #app-content #promo-contacts .vendor-network-card .vendor-network-accordion,
+  html body #promo-contacts .vendor-network-card .vendor-network-accordion {
+    padding: 0 !important;
+  }
+}
