@@ -3039,10 +3039,10 @@ function initHomeHeroKkulMotion() {
   function tick(now) {
     const isCompact = window.innerWidth <= 620;
     const x = isCompact ? "-50%" : "0px";
-    const baseY = isCompact ? 18 : 14;
+    const baseY = isCompact ? 13 : 14;
     const phase = (1 - Math.cos((now % period) / period * Math.PI * 2)) / 2;
     const y = baseY - phase * lift;
-    const scale = isCompact ? 1.28 : readScale();
+    const scale = isCompact ? 1.34 : readScale();
     const shadowScaleX = 0.9 + phase * 0.22;
     const shadowScaleY = 0.82 + phase * 0.16;
     const shadowOpacity = 0.2 + phase * 0.12;
