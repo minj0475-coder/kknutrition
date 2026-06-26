@@ -17316,3 +17316,96 @@ html body #promo-contacts .vendor-accordion-empty {
     align-items: center !important;
   }
 }
+
+/* 2026-06-26 promo contacts: one clean page-level search. */
+html body #app-content #promo-contacts .promo-contact-global-search,
+html body #promo-contacts .promo-contact-global-search {
+  display: flex !important;
+  justify-content: flex-end !important;
+  margin: -8px 0 14px !important;
+}
+
+html body #app-content #promo-contacts .promo-contact-master-search,
+html body #promo-contacts .promo-contact-master-search {
+  width: min(520px, 100%) !important;
+  min-width: 0 !important;
+  height: 44px !important;
+  display: grid !important;
+  grid-template-columns: 22px minmax(0, 1fr) !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 0 14px !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 14px !important;
+  background: #ffffff !important;
+  color: #6b7280 !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .03) !important;
+  overflow: hidden !important;
+}
+
+html body #app-content #promo-contacts .promo-contact-master-search:focus-within,
+html body #promo-contacts .promo-contact-master-search:focus-within {
+  border-color: #9ca3af !important;
+  box-shadow: 0 0 0 3px rgba(17, 24, 39, .08) !important;
+}
+
+html body #app-content #promo-contacts .promo-contact-master-search span,
+html body #promo-contacts .promo-contact-master-search span {
+  position: static !important;
+  width: 22px !important;
+  height: 22px !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  transform: none !important;
+  color: #6b7280 !important;
+  line-height: 1 !important;
+}
+
+html body #app-content #promo-contacts .promo-contact-master-search input,
+html body #promo-contacts .promo-contact-master-search input {
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 42px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  color: #111827 !important;
+  font-size: 14px !important;
+  box-shadow: none !important;
+}
+
+html body #app-content #promo-contacts .promo-contact-master-search input::placeholder,
+html body #promo-contacts .promo-contact-master-search input::placeholder {
+  color: #9ca3af !important;
+}
+
+html body #app-content #promo-contacts .promo-contact-card .promo-contact-actions,
+html body #app-content #promo-contacts .vendor-network-card .promo-contact-actions,
+html body #promo-contacts .promo-contact-card .promo-contact-actions,
+html body #promo-contacts .vendor-network-card .promo-contact-actions {
+  flex: 0 0 auto !important;
+}
+
+@media (max-width: 760px) {
+  html body #app-content #promo-contacts .promo-contact-global-search,
+  html body #promo-contacts .promo-contact-global-search {
+    justify-content: stretch !important;
+    margin: -4px 0 12px !important;
+  }
+
+  html body #app-content #promo-contacts .promo-contact-master-search,
+  html body #promo-contacts .promo-contact-master-search {
+    width: 100% !important;
+    height: 46px !important;
+  }
+
+  html body #app-content #promo-contacts .promo-contact-card .promo-contact-actions,
+  html body #app-content #promo-contacts .vendor-network-card .promo-contact-actions,
+  html body #promo-contacts .promo-contact-card .promo-contact-actions,
+  html body #promo-contacts .vendor-network-card .promo-contact-actions {
+    display: flex !important;
+    justify-content: flex-end !important;
+    width: auto !important;
+  }
+}

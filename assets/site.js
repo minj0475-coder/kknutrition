@@ -1932,6 +1932,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const vendorBody = document.getElementById("vendorNetworkTableBody");
   if (!tableBody && !vendorBody) return;
 
+  const globalSearchInput = document.getElementById("promoContactsGlobalSearch");
   const searchInput = document.getElementById("promoContactSearch");
   const vendorSearchInput = document.getElementById("vendorNetworkSearch");
   const addBtn = document.getElementById("promoAddRowBtn");
@@ -1948,6 +1949,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const vendorGroups = ["농산물", "축산물", "수산물", "공산품", "우유", "소모품", "기타"];
   const openVendorGroups = new Set();
 
+  function getPromoContactQuery() {
+    const input = globalSearchInput || searchInput;
+    return input ? input.value.trim().toLowerCase() : "";
+  }
+
   function getVendorGroupLabel(value) {
     const group = String(value || "").trim();
     if (!group) return "기타";
@@ -1961,7 +1967,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function getVendorQuery() {
-    return (vendorSearchInput ? vendorSearchInput.value : "").trim().toLowerCase();
+    const input = globalSearchInput || vendorSearchInput;
+    return input ? input.value.trim().toLowerCase() : "";
   }
 
   function vendorMatchesQuery(row, query) {
@@ -2104,7 +2111,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderPromoContacts() {
-    const query = (searchInput ? searchInput.value : "").trim().toLowerCase();
+    const query = getPromoContactQuery();
     const filtered = rows
       .map((row, index) => ({ row, index }))
       .filter(({ row }) => {
@@ -2176,6 +2183,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  if (globalSearchInput) {
+    globalSearchInput.addEventListener("input", () => {
+      renderVendorNetwork();
+      renderPromoContacts();
+    });
+  }
   if (searchInput) searchInput.addEventListener("input", renderPromoContacts);
   if (vendorSearchInput) vendorSearchInput.addEventListener("input", renderVendorNetwork);
   if (addBtn) {
