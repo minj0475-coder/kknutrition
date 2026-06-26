@@ -19,7 +19,7 @@ let bookmarkData = [
 
   // 자료
   { title: "식품안전나라 교육자료", url: "https://www.foodsafetykorea.go.kr/portal/board/boardDetail.do?menu_no=2880&menu_grp=MENU_NEW05&bbs_no=bbs110&ntctxt_no=1104499", category: "자료" },
-  { title: "교육급식정보나누방", url: "https://more.goe.go.kr/schoollunch/index.do", category: "자료" },
+  { title: "교육급식정보나눔방", url: "https://more.goe.go.kr/schoollunch/index.do", category: "자료" },
   { title: "학교급식 정보마당", url: "https://www.sfic.go.kr/board/view.do?boardId=BBS_0000008&menuCd=DOM_000000105001000000&startPage=1&searchType=DATA_TITLE&keyword=%EC%8B%9D%EC%83%9D%ED%99%9C&dataSid=57497", category: "자료" },
   { title: "영양광장", url: "https://agora-nutrition.com/", category: "자료" },
   { title: "영양사도우미", url: "https://www.kdclub.com/", category: "자료" },

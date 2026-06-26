@@ -9169,7 +9169,7 @@ button,
 
   .promo-contact-table:not(.vendor-network-table) td:nth-child(1)::before { content: "업체명"; }
   .promo-contact-table:not(.vendor-network-table) td:nth-child(2)::before { content: "연락처"; }
-  .promo-contact-table:not(.vendor-network-table) td:nth-child(3)::before { content: "전자단가"; }
+  .promo-contact-table:not(.vendor-network-table) td:nth-child(3)::before { content: "전자 단가"; }
   .promo-contact-table:not(.vendor-network-table) td:nth-child(4)::before { content: "메모"; }
   .promo-contact-table:not(.vendor-network-table) td:nth-child(5)::before { content: "작업"; }
 
@@ -9675,7 +9675,7 @@ body #home .hero-asset {
 
   .promo-contact-table:not(.vendor-network-table) td:nth-child(1)::before { content: "업체명"; }
   .promo-contact-table:not(.vendor-network-table) td:nth-child(2)::before { content: "연락처"; }
-  .promo-contact-table:not(.vendor-network-table) td:nth-child(3)::before { content: "전자단가"; }
+  .promo-contact-table:not(.vendor-network-table) td:nth-child(3)::before { content: "전자 단가"; }
   .promo-contact-table:not(.vendor-network-table) td:nth-child(4)::before { content: "메모"; }
   .promo-contact-table:not(.vendor-network-table) td:nth-child(5)::before { content: "관리"; }
   .vendor-network-table td:nth-child(1)::before { content: "업체군"; }

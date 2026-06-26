@@ -136,11 +136,11 @@ const DEFAULT_MESSAGE_TEMPLATES = [
   },
   {
     title: "무상 우유 조사 문자",
-    body: "안녕하세요. 청수초 급식실입니다.\n\n2026학년도 무상우유 급식 신청 가능 대상자이십니다. 안내문을 확인하신 후 아래 신청서 링크를 통해 2026. 5. 26.(화)까지 신청해주시기 바랍니다.\n\n안내문 링크:\nhttps://drive.google.com/file/d/1FCDcdH8AtCyBQAgkITNMoWVmOtEAXKeo/view?usp=drive_link\n\n신청서 링크:\nhttps://moaform.com/q/E8mukb"
+    body: "안녕하세요. 청수초 급식실입니다.\n\n2026학년도 무상우유 급식 신청 가능 대상자이십니다. 안내문을 확인하신 후 아래 신청서 링크를 통해 2026. 5. 26.(화)까지 신청해 주시기 바랍니다.\n\n안내문 링크:\nhttps://drive.google.com/file/d/1FCDcdH8AtCyBQAgkITNMoWVmOtEAXKeo/view?usp=drive_link\n\n신청서 링크:\nhttps://moaform.com/q/E8mukb"
   },
   {
     title: "급식공개의 날 문자",
-    body: "안녕하세요. 청수초 급식실입니다.\n학부모 급식 공개의 날은 학부모님께서 학교급식을 직접 드셔보시고, 급식 운영에 대한 의견을 나누기 위해 마련한 자리입니다.\n아래와 같이 운영하오니 참석을 원하시는 학부모님께서는 구글스프레드시트에 신청해주시기 바랍니다.\n\n■ 일시: 7월 8일 수요일 11시 20분\n■ 장소: 2층 학생식당\n■ 신청 인원: 선착순 15명\n\n신청 링크\nhttps://docs.google.com/spreadsheets/d/1s-lyMuH3Bm5DcmwqXnm0EiYZiALjxTQXz_yJRd1OTzs/edit?usp=sharing\n\n※ 작성해주신 정보는 참석 확인 목적으로만 사용되며, 급식 공개의 날 종료 후 삭제 예정입니다.\n감사합니다."
+    body: "안녕하세요. 청수초 급식실입니다.\n학부모 급식 공개의 날은 학부모님께서 학교급식을 직접 드셔보시고, 급식 운영에 대한 의견을 나누기 위해 마련한 자리입니다.\n아래와 같이 운영하오니 참석을 원하시는 학부모님께서는 구글 스프레드시트에 신청해 주시기 바랍니다.\n\n■ 일시: 7월 8일 수요일 11시 20분\n■ 장소: 2층 학생식당\n■ 신청 인원: 선착순 15명\n\n신청 링크\nhttps://docs.google.com/spreadsheets/d/1s-lyMuH3Bm5DcmwqXnm0EiYZiALjxTQXz_yJRd1OTzs/edit?usp=sharing\n\n※ 작성해 주신 정보는 참석 확인 목적으로만 사용되며, 급식 공개의 날 종료 후 삭제 예정입니다.\n감사합니다."
   },
   {
     title: "학부모 모니터링 공지 문자",
@@ -2227,15 +2227,15 @@ document.addEventListener("DOMContentLoaded", () => {
         <td><input class="promo-cell-input" data-field="company" aria-label="업체명" value=""></td>
         <td>
           <div class="promo-copy-field">
-            <input class="promo-cell-input" data-field="phone" aria-label="홍보영양사님연락처" value="">
+            <input class="promo-cell-input" data-field="phone" aria-label="홍보 영양사님 연락처" value="">
             <button class="promo-copy-btn copy-icon-btn" type="button" data-copy-field="phone" aria-label="연락처 복사" title="복사"></button>
           </div>
         </td>
         <td>
           <div class="promo-copy-field">
-            <input class="promo-cell-input" data-field="link" aria-label="전자단가링크" value="">
-            <button class="promo-copy-btn copy-icon-btn" type="button" data-copy-field="link" aria-label="전자단가 링크 복사" title="복사"></button>
-            <a class="promo-open-link open-icon-btn" href="#" target="_blank" rel="noopener" aria-label="전자단가 링크 열기" title="열기"></a>
+            <input class="promo-cell-input" data-field="link" aria-label="전자 단가 링크" value="">
+            <button class="promo-copy-btn copy-icon-btn" type="button" data-copy-field="link" aria-label="전자 단가 링크 복사" title="복사"></button>
+            <a class="promo-open-link open-icon-btn" href="#" target="_blank" rel="noopener" aria-label="전자 단가 링크 열기" title="열기"></a>
           </div>
         </td>
         <td><textarea class="promo-cell-input" data-field="memo" aria-label="메모"></textarea></td>
