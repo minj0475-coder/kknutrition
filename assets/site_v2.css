@@ -17707,3 +17707,52 @@ html body #app-content .daily-kkul-card .daily-kkul-image-wrap img {
   animation: none !important;
   will-change: auto !important;
 }
+
+/* 2026-06-26 shared visual rhythm: one typeface, card radius, and section-title spacing. */
+:root {
+  --portal-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --portal-card-radius: 16px;
+  --portal-button-radius: 12px;
+  --portal-hero-radius: 20px;
+}
+
+html body,
+html body :is(button, input, select, textarea) {
+  font-family: var(--portal-font) !important;
+}
+
+html body #app-content :is(.card, .note, .panel, .memo-card, .home-today-card, .weekly-check-card, .academic-calendar-card, .academic-weekly-card, .vendor-network-card, .promo-contact-card, .staff-accordion-card, .bookmark-folder-section, .annual-sheet-links-card) {
+  border-radius: var(--portal-card-radius) !important;
+}
+
+html body #app-content .hero {
+  border-radius: var(--portal-hero-radius) !important;
+}
+
+html body #app-content :is(button, .btn, .download-btn, .quick, .promo-btn, .fab-edit-btn, .fab-bookmark-edit-btn, .home-today-link, .academic-nav-btn, .academic-today-btn, .academic-save-btn, .academic-clear-btn, input[type="button"], input[type="submit"]) {
+  border-radius: var(--portal-button-radius) !important;
+}
+
+html body #app-content .section-title,
+html body #app-content .promo-contact-title,
+html body #app-content .home-today-head > div:first-child {
+  gap: 12px !important;
+}
+
+html body #app-content .section-title > .num,
+html body #app-content .promo-contact-title > .num {
+  flex: 0 0 32px !important;
+  margin-right: 0 !important;
+}
+
+html body #app-content .home-today-head {
+  gap: 14px !important;
+}
+
+@media (max-width: 640px) {
+  html body #app-content .section-title,
+  html body #app-content .promo-contact-title,
+  html body #app-content .home-today-head > div:first-child {
+    gap: 10px !important;
+  }
+}
