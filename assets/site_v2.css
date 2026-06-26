@@ -17321,7 +17321,7 @@ html body #promo-contacts .vendor-accordion-empty {
 html body #app-content #promo-contacts .promo-contact-global-search,
 html body #promo-contacts .promo-contact-global-search {
   display: flex !important;
-  justify-content: flex-end !important;
+  justify-content: flex-start !important;
   margin: -8px 0 14px !important;
 }
 
