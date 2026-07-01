@@ -78,6 +78,19 @@ function getCloudLocalUpdatedAt(key) {
   return Number(meta[key]) || 0;
 }
 
+function getStructuredCloudValueUpdatedAt(value) {
+  const parsed = parseCloudJsonValue(value);
+  return parsed ? Number(parsed.updatedAt) || 0 : 0;
+}
+
+function getEffectiveCloudLocalUpdatedAt(key, value) {
+  const valueUpdatedAt = getStructuredCloudValueUpdatedAt(value);
+  if (key === "kkulkkoori_work_notes_v1" || key === "kkulkkoori_message_templates_v1") {
+    return valueUpdatedAt;
+  }
+  return Math.max(getCloudLocalUpdatedAt(key), valueUpdatedAt);
+}
+
 function setCloudLocalUpdatedAt(key, updatedAt) {
   const meta = readCloudSyncMeta();
   meta[key] = Number(updatedAt) || Date.now();
@@ -225,7 +238,7 @@ function setupCloudDataSync() {
   CLOUD_SYNC_KEYS.forEach(key => {
     onSnapshot(doc(db, CLOUD_DATA_COLLECTION, key), snapshot => {
       const localValue = localStorage.getItem(key);
-      const localUpdatedAt = getCloudLocalUpdatedAt(key);
+      const localUpdatedAt = getEffectiveCloudLocalUpdatedAt(key, localValue);
 
       if (!snapshot.exists()) {
         if (hasMeaningfulLocalValue(localValue)) {
@@ -345,6 +358,15 @@ function readMemoLocalMeta() {
     return JSON.parse(localStorage.getItem(LOCAL_MEMO_META_KEY) || "{}");
   } catch (e) {
     return {};
+  }
+}
+
+function readSavedMemoUpdatedAt() {
+  try {
+    const parsed = normalizeMemoPayload(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "null"));
+    return parsed ? Number(parsed.updatedAt) || 0 : 0;
+  } catch (e) {
+    return 0;
   }
 }
 
@@ -1105,7 +1127,8 @@ function init() {
         const data = snapshot.data();
         if (data.items) {
           const remoteUpdatedAt = Number(data.updatedAt) || 0;
-          const localUpdatedAt = memoUpdatedAt || Number(readMemoLocalMeta().updatedAt) || 0;
+          const savedMemoUpdatedAt = readSavedMemoUpdatedAt();
+          const localUpdatedAt = savedMemoUpdatedAt || memoUpdatedAt || Number(readMemoLocalMeta().updatedAt) || 0;
           const remoteHasUserMemos = hasUserMemos(data.items);
           const localHasUserMemos = hasUserMemos(memos);
           if (!remoteHasUserMemos) {
