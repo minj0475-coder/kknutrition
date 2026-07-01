@@ -131,7 +131,7 @@ function setupStaffAccordion() {
 const MESSAGE_TEMPLATES_KEY = "kkulkkoori_message_templates_v1";
 const WORK_NOTES_KEY = "kkulkkoori_work_notes_v1";
 const NOTE_DATA_VERSION = 2;
-const DEFAULT_WORK_NOTE_TITLE = "작업노트";
+const DEFAULT_WORK_NOTE_TITLE = "생각서랍";
 const DEFAULT_MESSAGE_TEMPLATE_TITLE = "새 문자";
 const DEFAULT_WORK_NOTES = [
   {
@@ -428,7 +428,7 @@ function setupWorkNotes() {
     titleInput.value = note.titleManual ? (note.title || "") : "";
     bodyInput.value = note.body || "";
     bodyInput.placeholder = "긴 작업 기준, 이미지 프롬프트, 반복해서 쓰는 문장 등을 적어두세요.";
-    titleInput.placeholder = "작업노트 제목";
+    titleInput.placeholder = "생각서랍 제목";
     if (deleteBtn) deleteBtn.disabled = false;
   };
   const render = () => {
@@ -461,7 +461,7 @@ function setupWorkNotes() {
       persist();
       render();
       bodyInput.focus();
-      setStatus("새 작업노트를 추가했습니다.");
+      setStatus("새 생각서랍을 추가했습니다.");
     });
   }
   if (copyBtn) {
@@ -471,7 +471,7 @@ function setupWorkNotes() {
       if (!text) return setStatus("복사할 내용이 없습니다.");
       try {
         await navigator.clipboard.writeText(text.replace(/\r?\n/g, "\r\n"));
-        setStatus("작업노트 내용을 복사했습니다.");
+        setStatus("생각서랍 내용을 복사했습니다.");
       } catch(e) {
         setStatus("복사하지 못했습니다. 내용을 직접 선택해 주세요.");
       }
@@ -491,7 +491,7 @@ function setupWorkNotes() {
     notes = readWorkNotes();
     activeIndex = 0;
     render();
-    setStatus("다른 기기의 최신 작업노트를 불러왔습니다.");
+    setStatus("다른 기기의 최신 생각서랍을 불러왔습니다.");
   });
   render();
 }
@@ -1874,7 +1874,7 @@ function buildSidebarToc() {
     const headings = pageId === "today-menu"
       ? [
         { id: "todayMenuCooking", text: "조리방법 조회" },
-        { id: "workNotes", text: "작업노트" },
+        { id: "workNotes", text: "생각서랍" },
         { id: "messageTemplates", text: "문자내용 정리" }
       ].filter(item => document.getElementById(item.id))
       : section ? [...section.querySelectorAll(":scope main section.card h2, :scope main section.card summary")]

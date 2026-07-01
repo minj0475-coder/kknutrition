@@ -865,20 +865,20 @@
 <section class="card work-note-card" id="workNotes">
   <div class="work-note-head">
     <div>
-      <h2 class="section-title"><span class="num">2</span>작업노트</h2>
+      <h2 class="section-title"><span class="num">2</span>생각서랍</h2>
       <p class="work-note-lead">긴 작업 기준과 프롬프트를 목차로 정리하고 바로 수정할 수 있습니다.</p>
     </div>
     <button id="workNoteAddBtn" class="promo-btn primary" type="button">추가</button>
   </div>
   <div class="work-note-shell">
-    <aside class="work-note-toc" aria-label="작업노트 목차">
+    <aside class="work-note-toc" aria-label="생각서랍 목차">
       <div id="workNoteList" class="work-note-list"></div>
     </aside>
-    <section class="work-note-editor" aria-label="작업노트 편집">
+    <section class="work-note-editor" aria-label="생각서랍 편집">
       <label class="work-note-title-label" for="workNoteTitleInput">제목</label>
       <input id="workNoteTitleInput" class="work-note-title-input" type="text" autocomplete="off">
       <div class="work-note-textbox">
-        <button id="workNoteCopyBtn" class="copy-icon-btn work-note-copy-btn" type="button" aria-label="작업노트 내용 복사" title="복사"></button>
+        <button id="workNoteCopyBtn" class="copy-icon-btn work-note-copy-btn" type="button" aria-label="생각서랍 내용 복사" title="복사"></button>
         <textarea id="workNoteBodyInput" class="work-note-body-input" rows="16"></textarea>
       </div>
       <div class="work-note-actions">
@@ -1212,13 +1212,13 @@
 <script src="assets/auth.js?v=20260623_002" defer></script>
 <script src="assets/data-guard.js?v=20260701_001" defer></script>
 <script src="assets/bookmarks.js?v=20260627_002" defer></script>
-<script src="assets/site.js?v=20260701_001" defer></script>
+<script src="assets/site.js?v=20260701_002" defer></script>
 <script src="assets/excel-parser.js?v=20260615_455" defer></script>
 <script type="module" src="assets/firebase-init.js?v=20260701_001" defer></script>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('service-worker.js?v=20260701_001');
+      navigator.serviceWorker.register('service-worker.js?v=20260701_002');
     });
   }
 </script>
