@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kknutrition-pwa-v14';
+const CACHE_NAME = 'kknutrition-pwa-v15';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();

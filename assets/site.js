@@ -246,6 +246,27 @@ function normalizeTemplateItem(item) {
   };
 }
 
+function makeTemplateUniqueKey(item) {
+  if (!item || typeof item !== "object") return "";
+  const title = String(item.title || "").trim();
+  const body = String(item.body || "").trim();
+  if (title && title !== DEFAULT_MESSAGE_TEMPLATE_TITLE) return `title:${title}`;
+  return `${title}\n${body}`;
+}
+
+function dedupeTemplateItems(items) {
+  const map = new Map();
+  (Array.isArray(items) ? items : []).forEach(rawItem => {
+    const item = normalizeTemplateItem(rawItem);
+    const key = makeTemplateUniqueKey(item) || `id:${item.id}`;
+    const current = map.get(key);
+    if (!current || Number(item.updatedAt) >= Number(current.updatedAt)) {
+      map.set(key, item);
+    }
+  });
+  return Array.from(map.values());
+}
+
 function normalizeWorkNoteItem(item) {
   const body = String(item && item.body || "");
   const titleManual = Boolean(item && item.titleManual);
@@ -266,17 +287,15 @@ function readMessageTemplates() {
     const parsed = JSON.parse(localStorage.getItem(MESSAGE_TEMPLATES_KEY) || "null");
     const rawItems = extractVersionedItems(parsed);
     if (rawItems) {
-      return rawItems
-        .filter(item => item && typeof item === "object")
-        .map(normalizeTemplateItem);
+      return dedupeTemplateItems(rawItems.filter(item => item && typeof item === "object"));
     }
   } catch(e) {}
-  return DEFAULT_MESSAGE_TEMPLATES.map(normalizeTemplateItem);
+  return dedupeTemplateItems(DEFAULT_MESSAGE_TEMPLATES);
 }
 
 function saveMessageTemplates(items) {
   try {
-    localStorage.setItem(MESSAGE_TEMPLATES_KEY, JSON.stringify(makeVersionedList(items.map(normalizeTemplateItem))));
+    localStorage.setItem(MESSAGE_TEMPLATES_KEY, JSON.stringify(makeVersionedList(dedupeTemplateItems(items))));
   } catch(e) {}
 }
 
@@ -335,6 +354,7 @@ function setupMessageTemplates() {
   const status = document.getElementById("messageTemplateStatus");
   if (!list) return;
   let items = readMessageTemplates();
+  saveMessageTemplates(items);
   const setStatus = message => {
     if (!status) return;
     status.textContent = message || "";
@@ -360,7 +380,6 @@ function setupMessageTemplates() {
       details.innerHTML = `
         <summary>
           <span class="message-template-title" data-template-title-display="${index}">${escapeTemplateHtml(item.title || "")}</span>
-          <button class="copy-icon-btn message-template-copy" type="button" aria-label="문자 내용 복사" title="복사"></button>
         </summary>
         <div class="message-template-body">
           <label class="message-template-title-label">
@@ -383,7 +402,7 @@ function setupMessageTemplates() {
         inlineCopyButton.before(textbox);
         textbox.append(inlineCopyButton, bodyTextarea);
       }
-      details.querySelectorAll(".message-template-copy, .message-template-copy-inline").forEach(copyButton => copyButton.addEventListener("click", event => {
+      details.querySelectorAll(".message-template-copy-inline").forEach(copyButton => copyButton.addEventListener("click", event => {
         event.preventDefault();
         event.stopPropagation();
         copyTemplate(index);
@@ -422,6 +441,7 @@ function setupMessageTemplates() {
   window.addEventListener("kknutrition:cloud-data-applied", event => {
     if (!event.detail || event.detail.key !== MESSAGE_TEMPLATES_KEY) return;
     items = readMessageTemplates();
+    saveMessageTemplates(items);
     render();
     setStatus("다른 기기의 최신 문자 내용을 불러왔습니다.");
   });

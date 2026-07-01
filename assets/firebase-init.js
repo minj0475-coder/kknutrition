@@ -123,6 +123,13 @@ function stableCloudBodyKey(item) {
   return `body:${String(item.title || "").trim()}\n${String(item.body || "").trim()}`;
 }
 
+function stableCloudTemplateKey(item) {
+  if (!item || typeof item !== "object") return "";
+  const title = String(item.title || "").trim();
+  if (title && title !== "새 문자") return `title:${title}`;
+  return stableCloudBodyKey(item);
+}
+
 function mergeCloudListValues(key, localValue, remoteValue, remoteUpdatedAt) {
   if (key !== "kkulkkoori_work_notes_v1" && key !== "kkulkkoori_message_templates_v1") return null;
   const local = parseCloudJsonValue(localValue);
@@ -134,7 +141,9 @@ function mergeCloudListValues(key, localValue, remoteValue, remoteUpdatedAt) {
   const mergedMap = new Map();
   const addItem = item => {
     if (!item || typeof item !== "object") return;
-    const itemKey = stableCloudItemKey(item);
+    const itemKey = key === "kkulkkoori_message_templates_v1"
+      ? stableCloudTemplateKey(item)
+      : stableCloudItemKey(item);
     if (!itemKey) return;
     if (
       (item.id && deletedIds.has(String(item.id)))
