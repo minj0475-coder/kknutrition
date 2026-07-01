@@ -177,7 +177,7 @@ async function uploadCloudDataKey(key, value, updatedAt = Date.now(), deleted = 
 }
 
 async function uploadLocalCloudChange(key, value, updatedAt, deleted) {
-  if (deleted || (key !== "kkulkkoori_work_notes_v1" && key !== "kkulkkoori_message_templates_v1")) {
+  if (deleted || key !== "kkulkkoori_message_templates_v1") {
     return uploadCloudDataKey(key, value, updatedAt, deleted);
   }
   try {
@@ -414,11 +414,6 @@ function isDefaultMemoList(items) {
 
 function hasUserMemos(items) {
   return hasMeaningfulMemos(items) && !isDefaultMemoList(items);
-}
-
-function countMeaningfulMemoItems(items) {
-  if (!Array.isArray(items)) return 0;
-  return items.filter(item => item && String(item.text || "").trim()).length;
 }
 
 function readMemoBackup() {
@@ -1130,36 +1125,24 @@ function init() {
             }).catch((error) => console.error("Firestore 메모 로컬 우선 보존 실패:", error));
             return;
           }
-          if (localUpdatedAt && remoteUpdatedAt && remoteUpdatedAt < localUpdatedAt && localHasUserMemos) {
+          if (localUpdatedAt && (!remoteUpdatedAt || remoteUpdatedAt < localUpdatedAt) && localHasUserMemos) {
             setDoc(doc(db, "memos", MEMO_DOC_ID), {
               items: memos,
               updatedAt: localUpdatedAt
             }).catch((error) => console.error("Firestore 메모 복구 실패:", error));
-            return;
-          }
-          if (localUpdatedAt && !remoteUpdatedAt && localHasUserMemos) {
-            setDoc(doc(db, "memos", MEMO_DOC_ID), {
-              items: memos,
-              updatedAt: localUpdatedAt
-            }).catch((error) => console.error("Firestore 메모 복구 실패:", error));
-            return;
-          }
-          if (
-            localHasUserMemos
-            && remoteHasUserMemos
-            && countMeaningfulMemoItems(data.items) < countMeaningfulMemoItems(memos)
-          ) {
-            const protectedAt = Math.max(Date.now(), localUpdatedAt || 0, remoteUpdatedAt || 0);
-            writeLocalMemos(protectedAt);
-            setDoc(doc(db, "memos", MEMO_DOC_ID), {
-              items: memos,
-              updatedAt: protectedAt
-            }).catch((error) => console.error("Firestore 메모 축소 덮어쓰기 방지 실패:", error));
             return;
           }
           // If totally equal, skip
           if (JSON.stringify(memos) === JSON.stringify(data.items)) {
             if (remoteUpdatedAt > localUpdatedAt) writeLocalMemos(remoteUpdatedAt);
+            return;
+          }
+
+          if (localUpdatedAt && remoteUpdatedAt && remoteUpdatedAt <= localUpdatedAt) {
+            setDoc(doc(db, "memos", MEMO_DOC_ID), {
+              items: memos,
+              updatedAt: Math.max(Date.now(), localUpdatedAt)
+            }).catch((error) => console.error("Firestore 메모 최신 로컬 저장 실패:", error));
             return;
           }
           
