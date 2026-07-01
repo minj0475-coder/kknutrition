@@ -20,6 +20,7 @@
   const PROTECTED_KEYS = new Set([
     "kknutrition_memo",
     "kknutrition_memo_meta",
+    "kknutrition_memo_lastBackup",
     "kknutrition_bookmarks_v2",
     "kknutrition_bookmarks_v3",
     "kknutrition_bookmarks_v4",
@@ -48,6 +49,7 @@
   const nativeGetItem = Storage.prototype.getItem;
   const nativeSetItem = Storage.prototype.setItem;
   const nativeRemoveItem = Storage.prototype.removeItem;
+  const nativeClear = Storage.prototype.clear;
   let isWritingBackup = false;
 
   const nowStamp = () => new Date().toISOString();
@@ -73,6 +75,41 @@
 
   function writeRaw(key, value) {
     nativeSetItem.call(window.localStorage, key, value);
+  }
+
+  function parseMemoPayload(value) {
+    try {
+      const parsed = JSON.parse(String(value || "null"));
+      if (Array.isArray(parsed)) return { items: parsed, updatedAt: 0 };
+      if (parsed && typeof parsed === "object" && Array.isArray(parsed.items)) {
+        return { items: parsed.items, updatedAt: Number(parsed.updatedAt) || 0 };
+      }
+    } catch (error) {}
+    return null;
+  }
+
+  function isDefaultMemoList(items) {
+    const defaults = ["식단 확인", "알레르기 확인", "전달사항 메모"];
+    return Array.isArray(items)
+      && items.length === defaults.length
+      && items.every((item, index) => item && String(item.text || "") === defaults[index] && !item.checked);
+  }
+
+  function hasUserMemoValue(value) {
+    const parsed = parseMemoPayload(value);
+    return Boolean(parsed && Array.isArray(parsed.items)
+      && parsed.items.some(item => item && String(item.text || "").trim())
+      && !isDefaultMemoList(parsed.items));
+  }
+
+  function readMemoFallbackValue() {
+    const current = readRaw("kknutrition_memo");
+    if (hasUserMemoValue(current)) return current;
+    const backup = readRaw("kknutrition_memo_lastBackup");
+    if (hasUserMemoValue(backup)) return backup;
+    const backups = listBackups("kknutrition_memo");
+    const latest = backups.find(entry => entry && hasUserMemoValue(entry.value));
+    return latest ? latest.value : "";
   }
 
   function readBackupStore() {
@@ -178,6 +215,17 @@
   Storage.prototype.setItem = function guardedSetItem(key, value) {
     const normalizedKey = String(key);
     if (isLocalStorage(this) && !isWritingBackup && isProtectedKey(normalizedKey)) {
+      if (normalizedKey === "kknutrition_memo" && !hasUserMemoValue(value)) {
+        const fallback = readMemoFallbackValue();
+        if (fallback) {
+          try {
+            backupValue(normalizedKey, fallback, "blocked-empty-memo-write");
+            writeRaw("kknutrition_memo_lastBackup", fallback);
+          } catch (error) {}
+          return undefined;
+        }
+      }
+
       try {
         backupValue(normalizedKey, readRaw(normalizedKey), "before-write");
       } catch (error) {
@@ -185,6 +233,12 @@
       }
 
       const result = nativeSetItem.call(this, key, value);
+
+      if (normalizedKey === "kknutrition_memo" && hasUserMemoValue(value)) {
+        try {
+          writeRaw("kknutrition_memo_lastBackup", String(value));
+        } catch (error) {}
+      }
 
       try {
         backupValue(normalizedKey, String(value), "after-write");
@@ -214,6 +268,15 @@
       } catch (error) {
         // Removal should not fail because backup storage is unavailable.
       }
+      if (normalizedKey === "kknutrition_memo") {
+        const fallback = readMemoFallbackValue();
+        if (fallback) {
+          try {
+            writeRaw("kknutrition_memo_lastBackup", fallback);
+          } catch (error) {}
+          return undefined;
+        }
+      }
     }
 
     const result = nativeRemoveItem.call(this, key);
@@ -227,6 +290,46 @@
         // Sync notifications should never block storage writes.
       }
     }
+
+    return result;
+  };
+
+  Storage.prototype.clear = function guardedClear() {
+    if (!isLocalStorage(this) || isWritingBackup) {
+      return nativeClear.call(this);
+    }
+
+    const preserved = {};
+    backupCurrentData("before-clear");
+    for (let index = 0; index < window.localStorage.length; index += 1) {
+      const key = window.localStorage.key(index);
+      if (!key || (key !== BACKUP_KEY && !isProtectedKey(key))) continue;
+      const value = readRaw(key);
+      if (value != null) preserved[key] = value;
+    }
+
+    const memoFallback = readMemoFallbackValue();
+    const result = nativeClear.call(this);
+
+    isWritingBackup = true;
+    try {
+      Object.entries(preserved).forEach(([key, value]) => writeRaw(key, value));
+      if (memoFallback) {
+        writeRaw("kknutrition_memo", memoFallback);
+        writeRaw("kknutrition_memo_lastBackup", memoFallback);
+      }
+    } finally {
+      isWritingBackup = false;
+    }
+
+    try {
+      Object.entries(preserved).forEach(([key, value]) => {
+        if (key === BACKUP_KEY) return;
+        window.dispatchEvent(new CustomEvent("kknutrition:local-data-changed", {
+          detail: { key, value: String(value), deleted: false, updatedAt: Date.now() }
+        }));
+      });
+    } catch (error) {}
 
     return result;
   };

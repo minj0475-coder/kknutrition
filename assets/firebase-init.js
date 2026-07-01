@@ -25,6 +25,7 @@ const MEMO_DOC_ID = "main-memo";
 const BOOKMARK_DOC_ID = "main-bookmarks";
 const LOCAL_STORAGE_KEY = "kknutrition_memo";
 const LOCAL_MEMO_META_KEY = "kknutrition_memo_meta";
+const LOCAL_MEMO_BACKUP_KEY = "kknutrition_memo_lastBackup";
 
 window.syncBookmarksToFirebase = async function(data, meta = {}) {
   if (db) {
@@ -325,7 +326,20 @@ function readMemoLocalMeta() {
   }
 }
 
-function writeLocalMemos(updatedAt) {
+function writeLocalMemos(updatedAt, options = {}) {
+  const nextUpdatedAt = Number(updatedAt) || Date.now();
+  const nextHasUserMemos = hasUserMemos(memos);
+  const existing = getRecoverableMemoPayload();
+  if (!options.allowEmpty && !nextHasUserMemos && existing) {
+    memos = existing.items;
+    memoUpdatedAt = Number(existing.updatedAt) || nextUpdatedAt;
+    return false;
+  }
+
+  if (!options.skipBackup && nextHasUserMemos) {
+    writeMemoBackup(memos, nextUpdatedAt);
+  }
+
   memoUpdatedAt = Number(updatedAt) || Date.now();
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({
     items: memos,
@@ -334,6 +348,7 @@ function writeLocalMemos(updatedAt) {
   localStorage.setItem(LOCAL_MEMO_META_KEY, JSON.stringify({
     updatedAt: memoUpdatedAt
   }));
+  return true;
 }
 
 function loadLocalMemos() {
@@ -342,19 +357,28 @@ function loadLocalMemos() {
     try {
       const parsed = normalizeMemoPayload(JSON.parse(saved));
       if (parsed) {
-        memos = parsed.items;
-        memoUpdatedAt = parsed.updatedAt || Number(readMemoLocalMeta().updatedAt) || 0;
+        if (hasMeaningfulMemos(parsed.items) || !restoreMemosFromBackupIfUseful()) {
+          memos = parsed.items;
+          memoUpdatedAt = parsed.updatedAt || Number(readMemoLocalMeta().updatedAt) || 0;
+          writeMemoBackup(memos, memoUpdatedAt);
+        }
       } else {
+        if (!restoreMemosFromBackupIfUseful()) {
+          memos = [...defaultMemos];
+          memoUpdatedAt = 0;
+        }
+      }
+    } catch (e) {
+      if (!restoreMemosFromBackupIfUseful()) {
         memos = [...defaultMemos];
         memoUpdatedAt = 0;
       }
-    } catch (e) {
+    }
+  } else {
+    if (!restoreMemosFromBackupIfUseful()) {
       memos = [...defaultMemos];
       memoUpdatedAt = 0;
     }
-  } else {
-    memos = [...defaultMemos];
-    memoUpdatedAt = 0;
   }
 }
 
@@ -362,12 +386,70 @@ function hasMeaningfulMemos(items) {
   return Array.isArray(items) && items.some(item => item && String(item.text || "").trim());
 }
 
+function isDefaultMemoList(items) {
+  return Array.isArray(items)
+    && items.length === defaultMemos.length
+    && items.every((item, index) => (
+      item
+      && String(item.text || "") === defaultMemos[index].text
+      && Boolean(item.checked) === Boolean(defaultMemos[index].checked)
+    ));
+}
+
+function hasUserMemos(items) {
+  return hasMeaningfulMemos(items) && !isDefaultMemoList(items);
+}
+
+function readMemoBackup() {
+  try {
+    const parsed = normalizeMemoPayload(JSON.parse(localStorage.getItem(LOCAL_MEMO_BACKUP_KEY) || "null"));
+    if (parsed && hasUserMemos(parsed.items)) return parsed;
+  } catch (error) {}
+  return null;
+}
+
+function writeMemoBackup(items, updatedAt = Date.now()) {
+  if (!hasUserMemos(items)) return false;
+  try {
+    localStorage.setItem(LOCAL_MEMO_BACKUP_KEY, JSON.stringify({
+      items,
+      updatedAt: Number(updatedAt) || Date.now(),
+      backedUpAt: Date.now()
+    }));
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+function getRecoverableMemoPayload() {
+  const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+  if (saved) {
+    try {
+      const parsed = normalizeMemoPayload(JSON.parse(saved));
+      if (parsed && hasUserMemos(parsed.items)) return parsed;
+    } catch (error) {}
+  }
+  return readMemoBackup();
+}
+
+function restoreMemosFromBackupIfUseful() {
+  const backup = readMemoBackup();
+  if (!backup) return false;
+  memos = backup.items;
+  writeLocalMemos(backup.updatedAt || Date.now(), { skipBackup: true, allowEmpty: false });
+  return true;
+}
+
 function saveLocalMemos() {
-  writeLocalMemos(Date.now());
+  return writeLocalMemos(Date.now());
 }
 
 async function saveMemos() {
-  saveLocalMemos();
+  if (saveLocalMemos() === false) {
+    updateAllMemosDOM();
+    return;
+  }
   if (db && isFirebaseLoaded) {
     try {
       await setDoc(doc(db, "memos", MEMO_DOC_ID), {
@@ -447,6 +529,7 @@ function renderMemoList(containerId, isHome) {
     textarea.oninput = () => {
       memos[index].text = textarea.value;
       resizeTextarea();
+      saveLocalMemos();
       
       clearTimeout(textarea._saveTimeout);
       textarea._saveTimeout = setTimeout(() => {
@@ -1001,7 +1084,23 @@ function init() {
         if (data.items) {
           const remoteUpdatedAt = Number(data.updatedAt) || 0;
           const localUpdatedAt = memoUpdatedAt || Number(readMemoLocalMeta().updatedAt) || 0;
-          if (!localUpdatedAt && hasMeaningfulMemos(memos)) {
+          const remoteHasUserMemos = hasUserMemos(data.items);
+          const localHasUserMemos = hasUserMemos(memos);
+          if (!remoteHasUserMemos) {
+            const recoverable = localHasUserMemos ? { items: memos, updatedAt: localUpdatedAt || Date.now() } : getRecoverableMemoPayload();
+            if (recoverable) {
+              memos = recoverable.items;
+              const recoveredAt = Math.max(Date.now(), Number(recoverable.updatedAt) || 0, remoteUpdatedAt || 0);
+              writeLocalMemos(recoveredAt);
+              setDoc(doc(db, "memos", MEMO_DOC_ID), {
+                items: memos,
+                updatedAt: recoveredAt
+              }).catch((error) => console.error("Firestore 빈 메모 덮어쓰기 방지 복구 실패:", error));
+              updateAllMemosDOM();
+              return;
+            }
+          }
+          if (!localUpdatedAt && localHasUserMemos) {
             const seedUpdatedAt = Date.now();
             writeLocalMemos(seedUpdatedAt);
             setDoc(doc(db, "memos", MEMO_DOC_ID), {
@@ -1010,14 +1109,14 @@ function init() {
             }).catch((error) => console.error("Firestore 메모 로컬 우선 보존 실패:", error));
             return;
           }
-          if (localUpdatedAt && remoteUpdatedAt && remoteUpdatedAt < localUpdatedAt) {
+          if (localUpdatedAt && remoteUpdatedAt && remoteUpdatedAt < localUpdatedAt && localHasUserMemos) {
             setDoc(doc(db, "memos", MEMO_DOC_ID), {
               items: memos,
               updatedAt: localUpdatedAt
             }).catch((error) => console.error("Firestore 메모 복구 실패:", error));
             return;
           }
-          if (localUpdatedAt && !remoteUpdatedAt) {
+          if (localUpdatedAt && !remoteUpdatedAt && localHasUserMemos) {
             setDoc(doc(db, "memos", MEMO_DOC_ID), {
               items: memos,
               updatedAt: localUpdatedAt
