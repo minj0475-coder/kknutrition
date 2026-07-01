@@ -352,7 +352,6 @@ function setupMessageTemplates() {
   const status = document.getElementById("messageTemplateStatus");
   if (!list) return;
   let items = readMessageTemplates();
-  saveMessageTemplates(items);
   const setStatus = message => {
     if (!status) return;
     status.textContent = message || "";
@@ -439,7 +438,6 @@ function setupMessageTemplates() {
   window.addEventListener("kknutrition:cloud-data-applied", event => {
     if (!event.detail || event.detail.key !== MESSAGE_TEMPLATES_KEY) return;
     items = readMessageTemplates();
-    saveMessageTemplates(items);
     render();
     setStatus("다른 기기의 최신 문자 내용을 불러왔습니다.");
   });

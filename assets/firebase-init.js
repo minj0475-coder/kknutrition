@@ -256,6 +256,10 @@ function setupCloudDataSync() {
 
       if (hasMeaningfulLocalValue(localValue) && !localUpdatedAt) {
         if (shouldUseLatestWholeValue) {
+          if (remoteUpdatedAt) {
+            applyCloudDataLocally(key, data.value || "", remoteUpdatedAt, Boolean(data.deleted));
+            return;
+          }
           const seedUpdatedAt = Date.now();
           setCloudLocalUpdatedAt(key, seedUpdatedAt);
           uploadCloudDataKey(key, localValue, seedUpdatedAt, false)
@@ -1146,6 +1150,12 @@ function init() {
             }
           }
           if (!localUpdatedAt && localHasUserMemos) {
+            if (remoteUpdatedAt && remoteHasUserMemos) {
+              memos = data.items;
+              writeLocalMemos(remoteUpdatedAt);
+              updateAllMemosDOM();
+              return;
+            }
             const seedUpdatedAt = Date.now();
             writeLocalMemos(seedUpdatedAt);
             setDoc(doc(db, "memos", MEMO_DOC_ID), {
