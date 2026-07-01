@@ -18332,3 +18332,114 @@ html body #app-content #home .home-today-card .section-title > .num {
   flex: 0 0 auto !important;
   margin-right: 0 !important;
 }
+
+/* 2026-07-01 promo contacts: icon add button and no-wrap mobile labels. */
+html body #app-content #promo-contacts #promoAddRowBtn,
+html body #promo-contacts #promoAddRowBtn {
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px !important;
+  min-height: 42px !important;
+  max-width: 42px !important;
+  max-height: 42px !important;
+  flex: 0 0 42px !important;
+  padding: 0 !important;
+  border-radius: 12px !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+}
+
+html body #app-content #promo-contacts #promoAddRowBtn::before,
+html body #promo-contacts #promoAddRowBtn::before {
+  content: "" !important;
+  display: block !important;
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  min-height: 20px !important;
+  background:
+    linear-gradient(currentColor, currentColor) center / 18px 2px no-repeat,
+    linear-gradient(currentColor, currentColor) center / 2px 18px no-repeat !important;
+}
+
+html body #app-content .app-sidebar :is(.sidebar-nav a, .sidebar-subnav a, .sidebar-recent-list a),
+html body #app-content .sidebar-search-result-title {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 760px) {
+  html body #app-content #promo-contacts .promo-contact-card .promo-contact-toolbar,
+  html body #promo-contacts .promo-contact-card .promo-contact-toolbar {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+
+  html body #app-content #promo-contacts .promo-contact-card .promo-contact-title,
+  html body #promo-contacts .promo-contact-card .promo-contact-title {
+    min-width: 0 !important;
+    gap: 12px !important;
+  }
+
+  html body #app-content #promo-contacts .promo-contact-card .promo-contact-title .section-title,
+  html body #promo-contacts .promo-contact-card .promo-contact-title .section-title {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: clip !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    font-size: clamp(16px, 4.35vw, 20px) !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0 !important;
+  }
+
+  html body #app-content #promo-contacts #promoAddRowBtn,
+  html body #promo-contacts #promoAddRowBtn {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    max-width: 36px !important;
+    max-height: 36px !important;
+    flex-basis: 36px !important;
+    border-radius: 10px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  html body #app-content #promo-contacts .promo-contact-card .promo-contact-title {
+    gap: 8px !important;
+  }
+
+  html body #app-content #promo-contacts .promo-contact-card .promo-contact-title .num,
+  html body #promo-contacts .promo-contact-card .promo-contact-title .num {
+    min-width: 30px !important;
+    width: 30px !important;
+    height: 30px !important;
+    font-size: 14px !important;
+  }
+
+  html body #app-content #promo-contacts .promo-contact-card .promo-contact-title .section-title,
+  html body #promo-contacts .promo-contact-card .promo-contact-title .section-title {
+    font-size: clamp(14px, 4.1vw, 16px) !important;
+  }
+
+  html body #app-content #promo-contacts #promoAddRowBtn,
+  html body #promo-contacts #promoAddRowBtn {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+    max-width: 34px !important;
+    max-height: 34px !important;
+    flex-basis: 34px !important;
+  }
+}
