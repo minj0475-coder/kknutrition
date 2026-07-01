@@ -186,26 +186,6 @@ async function uploadCloudDataKey(key, value, updatedAt = Date.now(), deleted = 
 }
 
 async function uploadLocalCloudChange(key, value, updatedAt, deleted) {
-  if (deleted || key !== "kkulkkoori_message_templates_v1") {
-    return uploadCloudDataKey(key, value, updatedAt, deleted);
-  }
-  try {
-    const snapshot = await getDoc(doc(db, CLOUD_DATA_COLLECTION, key));
-    if (snapshot.exists()) {
-      const data = snapshot.data() || {};
-      const remoteUpdatedAt = Number(data.updatedAt) || 0;
-      const mergedValue = mergeCloudListValues(key, value || "", data.value || "", remoteUpdatedAt);
-      if (mergedValue) {
-        const mergedAt = Math.max(Date.now(), Number(updatedAt) || 0, remoteUpdatedAt || 0);
-        if (String(mergedValue) !== String(value || "")) {
-          applyCloudDataLocally(key, mergedValue, mergedAt, false);
-        }
-        return uploadCloudDataKey(key, mergedValue, mergedAt, false);
-      }
-    }
-  } catch (error) {
-    console.error("Cloud pre-upload merge failed:", key, error);
-  }
   return uploadCloudDataKey(key, value, updatedAt, deleted);
 }
 
@@ -259,8 +239,16 @@ function setupCloudDataSync() {
 
       const data = snapshot.data() || {};
       const remoteUpdatedAt = Number(data.updatedAt) || 0;
+      const shouldUseLatestWholeValue = key === "kkulkkoori_work_notes_v1" || key === "kkulkkoori_message_templates_v1";
 
       if (hasMeaningfulLocalValue(localValue) && !localUpdatedAt) {
+        if (shouldUseLatestWholeValue) {
+          const seedUpdatedAt = Date.now();
+          setCloudLocalUpdatedAt(key, seedUpdatedAt);
+          uploadCloudDataKey(key, localValue, seedUpdatedAt, false)
+            .catch(error => console.error("공용 데이터 로컬 우선 보존 실패:", key, error));
+          return;
+        }
         const mergedValue = mergeCloudListValues(key, localValue || "", data.value || "", remoteUpdatedAt);
         const seedUpdatedAt = Date.now();
         const seedValue = mergedValue || localValue;
@@ -274,6 +262,11 @@ function setupCloudDataSync() {
       }
 
       if (localUpdatedAt && localUpdatedAt > remoteUpdatedAt) {
+        if (shouldUseLatestWholeValue) {
+          uploadCloudDataKey(key, localValue || "", localUpdatedAt, !localValue)
+            .catch(error => console.error("공용 데이터 최신 로컬 복구 실패:", key, error));
+          return;
+        }
         const mergedValue = mergeCloudListValues(key, localValue || "", data.value || "", remoteUpdatedAt);
         const uploadValue = mergedValue || localValue || "";
         const uploadTime = mergedValue ? Date.now() : localUpdatedAt;
@@ -286,6 +279,10 @@ function setupCloudDataSync() {
       }
 
       if (remoteUpdatedAt >= localUpdatedAt && String(data.value || "") !== String(localValue || "")) {
+        if (shouldUseLatestWholeValue) {
+          applyCloudDataLocally(key, data.value || "", remoteUpdatedAt || Date.now(), Boolean(data.deleted));
+          return;
+        }
         const mergedValue = hasMeaningfulLocalValue(localValue)
           ? mergeCloudListValues(key, localValue || "", data.value || "", remoteUpdatedAt)
           : null;
