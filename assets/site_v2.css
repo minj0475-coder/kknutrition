@@ -18289,6 +18289,41 @@ html body #app-content #today-menu #messageTemplateAddBtn:focus-visible {
   outline: 0 !important;
 }
 
+/* 2026-07-01 staff accordion: tighten collapsed card vertical rhythm. */
+html body #app-content #staff .staff-accordion-card,
+html body #staff .staff-accordion-card {
+  padding: 0 !important;
+}
+
+html body #app-content #staff .staff-accordion > summary,
+html body #staff .staff-accordion > summary {
+  min-height: 72px !important;
+  padding: 0 24px !important;
+}
+
+html body #app-content #staff .staff-accordion:not([open]) > summary,
+html body #staff .staff-accordion:not([open]) > summary {
+  border-bottom: 0 !important;
+}
+
+html body #app-content #staff .staff-accordion-body,
+html body #staff .staff-accordion-body {
+  padding: 18px 24px 22px !important;
+}
+
+@media (max-width: 760px) {
+  html body #app-content #staff .staff-accordion > summary,
+  html body #staff .staff-accordion > summary {
+    min-height: 64px !important;
+    padding: 0 18px !important;
+  }
+
+  html body #app-content #staff .staff-accordion-body,
+  html body #staff .staff-accordion-body {
+    padding: 16px 18px 20px !important;
+  }
+}
+
 /* 2026-07-01 final visual rhythm pass: font, radii, and heading spacing. */
 html body,
 html body #app-content,
