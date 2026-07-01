@@ -99,11 +99,13 @@ function hasMeaningfulLocalValue(value) {
 function parseCloudJsonValue(value) {
   try {
     const parsed = JSON.parse(String(value || "null"));
-    if (Array.isArray(parsed)) return { items: parsed, updatedAt: 0 };
+    if (Array.isArray(parsed)) return { items: parsed, updatedAt: 0, deletedIds: [], deletedKeys: [] };
     if (parsed && typeof parsed === "object" && Array.isArray(parsed.items)) {
       return {
         items: parsed.items,
-        updatedAt: Number(parsed.updatedAt) || 0
+        updatedAt: Number(parsed.updatedAt) || 0,
+        deletedIds: Array.isArray(parsed.deletedIds) ? parsed.deletedIds.map(String).filter(Boolean) : [],
+        deletedKeys: Array.isArray(parsed.deletedKeys) ? parsed.deletedKeys.map(String).filter(Boolean) : []
       };
     }
   } catch (error) {}
@@ -113,6 +115,11 @@ function parseCloudJsonValue(value) {
 function stableCloudItemKey(item) {
   if (!item || typeof item !== "object") return "";
   if (item.id) return `id:${String(item.id)}`;
+  return stableCloudBodyKey(item);
+}
+
+function stableCloudBodyKey(item) {
+  if (!item || typeof item !== "object") return "";
   return `body:${String(item.title || "").trim()}\n${String(item.body || "").trim()}`;
 }
 
@@ -122,11 +129,18 @@ function mergeCloudListValues(key, localValue, remoteValue, remoteUpdatedAt) {
   const remote = parseCloudJsonValue(remoteValue);
   if (!local || !remote) return null;
 
+  const deletedIds = new Set([...(remote.deletedIds || []), ...(local.deletedIds || [])].map(String).filter(Boolean));
+  const deletedKeys = new Set([...(remote.deletedKeys || []), ...(local.deletedKeys || [])].map(String).filter(Boolean));
   const mergedMap = new Map();
   const addItem = item => {
     if (!item || typeof item !== "object") return;
     const itemKey = stableCloudItemKey(item);
     if (!itemKey) return;
+    if (
+      (item.id && deletedIds.has(String(item.id)))
+      || deletedKeys.has(itemKey)
+      || deletedKeys.has(stableCloudBodyKey(item))
+    ) return;
     const current = mergedMap.get(itemKey);
     const itemUpdatedAt = Number(item.updatedAt) || 0;
     const currentUpdatedAt = current ? Number(current.updatedAt) || 0 : -1;
@@ -140,7 +154,9 @@ function mergeCloudListValues(key, localValue, remoteValue, remoteUpdatedAt) {
   return JSON.stringify({
     version: 2,
     updatedAt: Math.max(Date.now(), Number(local.updatedAt) || 0, Number(remote.updatedAt) || remoteUpdatedAt || 0),
-    items
+    items,
+    deletedIds: Array.from(deletedIds),
+    deletedKeys: Array.from(deletedKeys)
   });
 }
 
@@ -398,6 +414,11 @@ function isDefaultMemoList(items) {
 
 function hasUserMemos(items) {
   return hasMeaningfulMemos(items) && !isDefaultMemoList(items);
+}
+
+function countMeaningfulMemoItems(items) {
+  if (!Array.isArray(items)) return 0;
+  return items.filter(item => item && String(item.text || "").trim()).length;
 }
 
 function readMemoBackup() {
@@ -1121,6 +1142,19 @@ function init() {
               items: memos,
               updatedAt: localUpdatedAt
             }).catch((error) => console.error("Firestore 메모 복구 실패:", error));
+            return;
+          }
+          if (
+            localHasUserMemos
+            && remoteHasUserMemos
+            && countMeaningfulMemoItems(data.items) < countMeaningfulMemoItems(memos)
+          ) {
+            const protectedAt = Math.max(Date.now(), localUpdatedAt || 0, remoteUpdatedAt || 0);
+            writeLocalMemos(protectedAt);
+            setDoc(doc(db, "memos", MEMO_DOC_ID), {
+              items: memos,
+              updatedAt: protectedAt
+            }).catch((error) => console.error("Firestore 메모 축소 덮어쓰기 방지 실패:", error));
             return;
           }
           // If totally equal, skip

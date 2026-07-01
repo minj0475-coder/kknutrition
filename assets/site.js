@@ -188,18 +188,46 @@ function makeNoteItemId(prefix = "item") {
   return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
 }
 
-function makeVersionedList(items) {
-  return {
+function makeVersionedList(items, options = {}) {
+  const payload = {
     version: NOTE_DATA_VERSION,
     updatedAt: Date.now(),
     items
   };
+  if (Array.isArray(options.deletedIds) && options.deletedIds.length) {
+    payload.deletedIds = Array.from(new Set(options.deletedIds.map(String).filter(Boolean)));
+  }
+  if (Array.isArray(options.deletedKeys) && options.deletedKeys.length) {
+    payload.deletedKeys = Array.from(new Set(options.deletedKeys.map(String).filter(Boolean)));
+  }
+  return payload;
 }
 
 function extractVersionedItems(parsed) {
   if (Array.isArray(parsed)) return parsed;
   if (parsed && typeof parsed === "object" && Array.isArray(parsed.items)) return parsed.items;
   return null;
+}
+
+function extractVersionedDeletedState(parsed) {
+  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+    return { ids: [], keys: [] };
+  }
+  return {
+    ids: Array.isArray(parsed.deletedIds) ? parsed.deletedIds.map(String).filter(Boolean) : [],
+    keys: Array.isArray(parsed.deletedKeys) ? parsed.deletedKeys.map(String).filter(Boolean) : []
+  };
+}
+
+function makeLocalListItemKey(item) {
+  if (!item || typeof item !== "object") return "";
+  if (item.id) return `id:${String(item.id)}`;
+  return makeLocalListBodyKey(item);
+}
+
+function makeLocalListBodyKey(item) {
+  if (!item || typeof item !== "object") return "";
+  return `body:${String(item.title || "").trim()}\n${String(item.body || "").trim()}`;
 }
 
 function makeAutoTitle(body, fallback = DEFAULT_WORK_NOTE_TITLE) {
@@ -256,18 +284,38 @@ function readWorkNotes() {
   try {
     const parsed = JSON.parse(localStorage.getItem(WORK_NOTES_KEY) || "null");
     const rawItems = extractVersionedItems(parsed);
+    const deleted = extractVersionedDeletedState(parsed);
+    const deletedIds = new Set(deleted.ids);
+    const deletedKeys = new Set(deleted.keys);
     if (rawItems) {
       return rawItems
         .filter(item => item && typeof item === "object")
-        .map(normalizeWorkNoteItem);
+        .map(normalizeWorkNoteItem)
+        .filter(item => !deletedIds.has(item.id)
+          && !deletedKeys.has(makeLocalListItemKey(item))
+          && !deletedKeys.has(makeLocalListBodyKey(item)));
     }
   } catch(e) {}
   return DEFAULT_WORK_NOTES.map(item => normalizeWorkNoteItem({ ...item, titleManual: true }));
 }
 
-function saveWorkNotes(items) {
+function readWorkNoteDeletedState() {
   try {
-    localStorage.setItem(WORK_NOTES_KEY, JSON.stringify(makeVersionedList(items.map(normalizeWorkNoteItem))));
+    return extractVersionedDeletedState(JSON.parse(localStorage.getItem(WORK_NOTES_KEY) || "null"));
+  } catch(e) {
+    return { ids: [], keys: [] };
+  }
+}
+
+function saveWorkNotes(items, deletedState = readWorkNoteDeletedState()) {
+  try {
+    localStorage.setItem(WORK_NOTES_KEY, JSON.stringify(makeVersionedList(
+      items.map(normalizeWorkNoteItem),
+      {
+        deletedIds: deletedState.ids,
+        deletedKeys: deletedState.keys
+      }
+    )));
   } catch(e) {}
 }
 
@@ -390,6 +438,7 @@ function setupWorkNotes() {
   const status = document.getElementById("workNoteStatus");
   if (!list || !titleInput || !bodyInput) return;
   let notes = readWorkNotes();
+  let deletedState = readWorkNoteDeletedState();
   let activeIndex = 0;
   const setStatus = message => {
     if (!status) return;
@@ -397,7 +446,7 @@ function setupWorkNotes() {
     window.clearTimeout(status._timer);
     if (message) status._timer = window.setTimeout(() => { status.textContent = ""; }, 1600);
   };
-  const persist = () => saveWorkNotes(notes);
+  const persist = () => saveWorkNotes(notes, deletedState);
   const normalizeActiveIndex = () => {
     if (!notes.length) notes = [normalizeWorkNoteItem({ title: "", body: "", titleManual: false })];
     activeIndex = Math.max(0, Math.min(activeIndex, notes.length - 1));
@@ -479,6 +528,15 @@ function setupWorkNotes() {
   }
   if (deleteBtn) {
     deleteBtn.addEventListener("click", () => {
+      const deletedNote = notes[activeIndex];
+      if (deletedNote) {
+        deletedState.ids = Array.from(new Set([...(deletedState.ids || []), String(deletedNote.id || "")].filter(Boolean)));
+        deletedState.keys = Array.from(new Set([
+          ...(deletedState.keys || []),
+          makeLocalListItemKey(deletedNote),
+          makeLocalListBodyKey(deletedNote)
+        ].filter(Boolean)));
+      }
       notes.splice(activeIndex, 1);
       activeIndex = Math.max(0, activeIndex - 1);
       persist();
@@ -488,6 +546,7 @@ function setupWorkNotes() {
   }
   window.addEventListener("kknutrition:cloud-data-applied", event => {
     if (!event.detail || event.detail.key !== WORK_NOTES_KEY) return;
+    deletedState = readWorkNoteDeletedState();
     notes = readWorkNotes();
     activeIndex = 0;
     render();

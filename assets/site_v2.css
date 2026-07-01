@@ -18478,3 +18478,62 @@ html body #app-content .sidebar-search-result-title {
     flex-basis: 34px !important;
   }
 }
+
+/* 2026-07-01 promo contacts: stable icon-only add button and mobile title flow. */
+html body #app-content #promo-contacts #promoAddRowBtn,
+html body #promo-contacts #promoAddRowBtn {
+  border: 0 !important;
+  background: transparent !important;
+  color: #202123 !important;
+  box-shadow: none !important;
+}
+
+html body #app-content #promo-contacts #promoAddRowBtn::before,
+html body #promo-contacts #promoAddRowBtn::before {
+  content: none !important;
+  display: none !important;
+}
+
+html body #app-content #promo-contacts #promoAddRowBtn:hover,
+html body #app-content #promo-contacts #promoAddRowBtn:focus-visible,
+html body #promo-contacts #promoAddRowBtn:hover,
+html body #promo-contacts #promoAddRowBtn:focus-visible {
+  background: #f7f7f8 !important;
+}
+
+html body #app-content #promo-contacts #promoAddRowBtn svg,
+html body #promo-contacts #promoAddRowBtn svg {
+  width: 20px !important;
+  height: 20px !important;
+  flex: 0 0 20px !important;
+}
+
+@media (max-width: 760px) {
+  html body #app-content #promo-contacts .promo-contact-card .promo-contact-toolbar,
+  html body #promo-contacts .promo-contact-card .promo-contact-toolbar,
+  html body #app-content #promo-contacts .vendor-network-card .promo-contact-toolbar,
+  html body #promo-contacts .vendor-network-card .promo-contact-toolbar {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: start !important;
+  }
+
+  html body #app-content #promo-contacts .promo-contact-actions,
+  html body #promo-contacts .promo-contact-actions {
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 8px !important;
+    min-width: max-content !important;
+  }
+
+  html body #app-content #promo-contacts .promo-contact-card .promo-contact-title .section-title,
+  html body #promo-contacts .promo-contact-card .promo-contact-title .section-title {
+    display: -webkit-box !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    white-space: normal !important;
+    word-break: keep-all !important;
+    overflow-wrap: anywhere !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-line-clamp: 2 !important;
+  }
+}
