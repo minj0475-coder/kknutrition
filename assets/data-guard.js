@@ -34,6 +34,7 @@
     "kkulkkoori_cheongsu_recipes_v3",
     "kkulkkoori_annual_sheet_links_v1",
     "kkulkkoori_vendor_network_v1",
+    "kkulkkoori_vendor_groups_v1",
     "kkulkkoori_promo_contacts_v1",
     "kkulkkoori_academic_events_v1",
   ]);

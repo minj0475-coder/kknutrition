@@ -130,6 +130,9 @@ function setupStaffAccordion() {
 
 const MESSAGE_TEMPLATES_KEY = "kkulkkoori_message_templates_v1";
 const WORK_NOTES_KEY = "kkulkkoori_work_notes_v1";
+const NOTE_DATA_VERSION = 2;
+const DEFAULT_WORK_NOTE_TITLE = "작업노트";
+const DEFAULT_MESSAGE_TEMPLATE_TITLE = "새 문자";
 const DEFAULT_WORK_NOTES = [
   {
     title: "꿀꿀이 색감 기준",
@@ -178,45 +181,93 @@ const DEFAULT_MESSAGE_TEMPLATES = [
   }
 ];
 
+function makeNoteItemId(prefix = "item") {
+  if (window.crypto && typeof window.crypto.randomUUID === "function") {
+    return `${prefix}-${window.crypto.randomUUID()}`;
+  }
+  return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
+function makeVersionedList(items) {
+  return {
+    version: NOTE_DATA_VERSION,
+    updatedAt: Date.now(),
+    items
+  };
+}
+
+function extractVersionedItems(parsed) {
+  if (Array.isArray(parsed)) return parsed;
+  if (parsed && typeof parsed === "object" && Array.isArray(parsed.items)) return parsed.items;
+  return null;
+}
+
+function makeAutoTitle(body, fallback = DEFAULT_WORK_NOTE_TITLE) {
+  const firstLine = String(body || "").split(/\r?\n/).map(line => line.trim()).find(Boolean) || "";
+  if (!firstLine) return fallback;
+  return firstLine.length > 28 ? `${firstLine.slice(0, 28)}...` : firstLine;
+}
+
+function normalizeTemplateItem(item) {
+  const now = Date.now();
+  return {
+    id: String(item && item.id || makeNoteItemId("message")),
+    title: String(item && item.title || "").trim() || DEFAULT_MESSAGE_TEMPLATE_TITLE,
+    body: String(item && item.body || ""),
+    updatedAt: Number(item && item.updatedAt) || now
+  };
+}
+
+function normalizeWorkNoteItem(item) {
+  const body = String(item && item.body || "");
+  const titleManual = Boolean(item && item.titleManual);
+  const rawTitle = String(item && item.title || "").trim();
+  const title = rawTitle || makeAutoTitle(body);
+  const now = Date.now();
+  return {
+    id: String(item && item.id || makeNoteItemId("work")),
+    title,
+    titleManual: titleManual || Boolean(rawTitle),
+    body,
+    updatedAt: Number(item && item.updatedAt) || now
+  };
+}
+
 function readMessageTemplates() {
   try {
     const parsed = JSON.parse(localStorage.getItem(MESSAGE_TEMPLATES_KEY) || "null");
-    if (Array.isArray(parsed) && parsed.length) {
-      return parsed
+    const rawItems = extractVersionedItems(parsed);
+    if (rawItems) {
+      return rawItems
         .filter(item => item && typeof item === "object")
-        .map(item => ({
-          title: String(item.title || "").trim() || "새 문자",
-          body: String(item.body || "")
-        }));
+        .map(normalizeTemplateItem);
     }
   } catch(e) {}
-  return DEFAULT_MESSAGE_TEMPLATES.map(item => ({ ...item }));
+  return DEFAULT_MESSAGE_TEMPLATES.map(normalizeTemplateItem);
 }
 
 function saveMessageTemplates(items) {
   try {
-    localStorage.setItem(MESSAGE_TEMPLATES_KEY, JSON.stringify(items));
+    localStorage.setItem(MESSAGE_TEMPLATES_KEY, JSON.stringify(makeVersionedList(items.map(normalizeTemplateItem))));
   } catch(e) {}
 }
 
 function readWorkNotes() {
   try {
     const parsed = JSON.parse(localStorage.getItem(WORK_NOTES_KEY) || "null");
-    if (Array.isArray(parsed) && parsed.length) {
-      return parsed
+    const rawItems = extractVersionedItems(parsed);
+    if (rawItems) {
+      return rawItems
         .filter(item => item && typeof item === "object")
-        .map(item => ({
-          title: String(item.title || "").trim() || "새 작업노트",
-          body: String(item.body || "")
-        }));
+        .map(normalizeWorkNoteItem);
     }
   } catch(e) {}
-  return DEFAULT_WORK_NOTES.map(item => ({ ...item }));
+  return DEFAULT_WORK_NOTES.map(item => normalizeWorkNoteItem({ ...item, titleManual: true }));
 }
 
 function saveWorkNotes(items) {
   try {
-    localStorage.setItem(WORK_NOTES_KEY, JSON.stringify(items));
+    localStorage.setItem(WORK_NOTES_KEY, JSON.stringify(makeVersionedList(items.map(normalizeWorkNoteItem))));
   } catch(e) {}
 }
 
@@ -291,12 +342,14 @@ function setupMessageTemplates() {
       }));
       details.querySelector("[data-template-title]").addEventListener("input", event => {
         items[index].title = event.target.value;
+        items[index].updatedAt = Date.now();
         const titleDisplay = details.querySelector("[data-template-title-display]");
-        if (titleDisplay) titleDisplay.textContent = event.target.value || "새 문자";
+        if (titleDisplay) titleDisplay.textContent = event.target.value || DEFAULT_MESSAGE_TEMPLATE_TITLE;
         persist();
       });
       details.querySelector("[data-template-body]").addEventListener("input", event => {
         items[index].body = event.target.value;
+        items[index].updatedAt = Date.now();
         persist();
       });
       details.querySelector("[data-template-delete]").addEventListener("click", () => {
@@ -310,7 +363,7 @@ function setupMessageTemplates() {
   };
   if (addBtn) {
     addBtn.addEventListener("click", () => {
-      items.push({ title: "새 문자", body: "" });
+      items.push(normalizeTemplateItem({ title: DEFAULT_MESSAGE_TEMPLATE_TITLE, body: "" }));
       persist();
       render();
       const added = list.querySelector(".message-template-item:last-child");
@@ -346,7 +399,7 @@ function setupWorkNotes() {
   };
   const persist = () => saveWorkNotes(notes);
   const normalizeActiveIndex = () => {
-    if (!notes.length) notes = [{ title: "새 작업노트", body: "" }];
+    if (!notes.length) notes = [normalizeWorkNoteItem({ title: "", body: "", titleManual: false })];
     activeIndex = Math.max(0, Math.min(activeIndex, notes.length - 1));
   };
   const renderList = () => {
@@ -359,7 +412,7 @@ function setupWorkNotes() {
       button.dataset.workNoteIndex = String(index);
       button.setAttribute("aria-pressed", index === activeIndex ? "true" : "false");
       button.innerHTML = `
-        <span class="work-note-toc-title">${escapeTemplateHtml(note.title || "새 작업노트")}</span>
+        <span class="work-note-toc-title">${escapeTemplateHtml(note.title || DEFAULT_WORK_NOTE_TITLE)}</span>
         <span class="work-note-toc-meta">${escapeTemplateHtml(String(note.body || "").trim().split(/\s+/).filter(Boolean).length)}개 단어</span>
       `;
       button.addEventListener("click", () => {
@@ -372,11 +425,11 @@ function setupWorkNotes() {
   const renderEditor = () => {
     normalizeActiveIndex();
     const note = notes[activeIndex];
-    titleInput.value = note.title || "";
+    titleInput.value = note.titleManual ? (note.title || "") : "";
     bodyInput.value = note.body || "";
     bodyInput.placeholder = "긴 작업 기준, 이미지 프롬프트, 반복해서 쓰는 문장 등을 적어두세요.";
     titleInput.placeholder = "작업노트 제목";
-    if (deleteBtn) deleteBtn.disabled = notes.length <= 1;
+    if (deleteBtn) deleteBtn.disabled = false;
   };
   const render = () => {
     renderList();
@@ -384,24 +437,30 @@ function setupWorkNotes() {
   };
   titleInput.addEventListener("input", event => {
     normalizeActiveIndex();
-    notes[activeIndex].title = event.target.value || "새 작업노트";
+    const value = event.target.value.trim();
+    notes[activeIndex].titleManual = Boolean(value);
+    notes[activeIndex].title = value || makeAutoTitle(notes[activeIndex].body);
+    notes[activeIndex].updatedAt = Date.now();
     persist();
     renderList();
   });
   bodyInput.addEventListener("input", event => {
     normalizeActiveIndex();
     notes[activeIndex].body = event.target.value;
+    if (!notes[activeIndex].titleManual) {
+      notes[activeIndex].title = makeAutoTitle(notes[activeIndex].body);
+    }
+    notes[activeIndex].updatedAt = Date.now();
     persist();
     renderList();
   });
   if (addBtn) {
     addBtn.addEventListener("click", () => {
-      notes.push({ title: "새 작업노트", body: "" });
+      notes.push(normalizeWorkNoteItem({ title: "", body: "", titleManual: false }));
       activeIndex = notes.length - 1;
       persist();
       render();
-      titleInput.focus();
-      titleInput.select();
+      bodyInput.focus();
       setStatus("새 작업노트를 추가했습니다.");
     });
   }
@@ -420,7 +479,6 @@ function setupWorkNotes() {
   }
   if (deleteBtn) {
     deleteBtn.addEventListener("click", () => {
-      if (notes.length <= 1) return setStatus("작업노트는 최소 1개가 필요합니다.");
       notes.splice(activeIndex, 1);
       activeIndex = Math.max(0, activeIndex - 1);
       persist();
@@ -2173,7 +2231,12 @@ document.addEventListener("DOMContentLoaded", () => {
     vendorGroups.forEach((group, index) => {
       const item = document.createElement("div");
       item.className = "vendor-category-item";
+      item.draggable = true;
+      item.dataset.categoryIndex = String(index);
       item.innerHTML = `
+        <button class="vendor-category-drag-handle" type="button" aria-label="카테고리 순서 변경" title="순서 변경">
+          <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M8 7h8M8 12h8M8 17h8" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+        </button>
         <input class="promo-cell-input vendor-category-name-input" type="text" aria-label="카테고리 이름" value="">
         <button class="icon-only-btn vendor-category-delete-btn" type="button" aria-label="카테고리 삭제" title="카테고리 삭제">
           <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 14h10l1-14M9 7V4h6v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -2212,6 +2275,34 @@ document.addEventListener("DOMContentLoaded", () => {
         openVendorGroups.add(fallback);
         saveVendorGroups(vendorGroups);
         saveVendorNetwork(vendorRows);
+        renderVendorCategoryManager();
+        renderVendorNetwork();
+      });
+      item.addEventListener("dragstart", event => {
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.setData("text/plain", String(index));
+        item.classList.add("is-dragging");
+      });
+      item.addEventListener("dragend", () => {
+        item.classList.remove("is-dragging");
+      });
+      item.addEventListener("dragover", event => {
+        event.preventDefault();
+        event.dataTransfer.dropEffect = "move";
+        item.classList.add("is-drop-target");
+      });
+      item.addEventListener("dragleave", () => {
+        item.classList.remove("is-drop-target");
+      });
+      item.addEventListener("drop", event => {
+        event.preventDefault();
+        item.classList.remove("is-drop-target");
+        const fromIndex = Number(event.dataTransfer.getData("text/plain"));
+        const toIndex = index;
+        if (!Number.isInteger(fromIndex) || fromIndex === toIndex || fromIndex < 0 || fromIndex >= vendorGroups.length) return;
+        const [moved] = vendorGroups.splice(fromIndex, 1);
+        vendorGroups.splice(toIndex, 0, moved);
+        saveVendorGroups(vendorGroups);
         renderVendorCategoryManager();
         renderVendorNetwork();
       });

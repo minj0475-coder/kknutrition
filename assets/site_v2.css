@@ -17773,9 +17773,44 @@ html body #promo-contacts .vendor-category-list {
 html body #app-content #promo-contacts .vendor-category-item,
 html body #promo-contacts .vendor-category-item {
   display: grid !important;
-  grid-template-columns: minmax(0, 1fr) 38px !important;
+  grid-template-columns: 34px minmax(0, 1fr) 38px !important;
   gap: 8px !important;
   align-items: center !important;
+}
+
+html body #app-content #promo-contacts .vendor-category-drag-handle,
+html body #promo-contacts .vendor-category-drag-handle {
+  width: 34px !important;
+  height: 38px !important;
+  min-width: 34px !important;
+  min-height: 38px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+  color: #6b7280 !important;
+  cursor: grab !important;
+  box-shadow: none !important;
+}
+
+html body #app-content #promo-contacts .vendor-category-drag-handle:active,
+html body #promo-contacts .vendor-category-drag-handle:active {
+  cursor: grabbing !important;
+}
+
+html body #app-content #promo-contacts .vendor-category-item.is-dragging,
+html body #promo-contacts .vendor-category-item.is-dragging {
+  opacity: .55 !important;
+}
+
+html body #app-content #promo-contacts .vendor-category-item.is-drop-target,
+html body #promo-contacts .vendor-category-item.is-drop-target {
+  outline: 2px solid #111827 !important;
+  outline-offset: 2px !important;
+  border-radius: 12px !important;
 }
 
 html body #app-content #promo-contacts .vendor-category-name-input,
@@ -18180,4 +18215,53 @@ html body #app-content #home .home-today-card .section-title > .num {
   html body #promo-contacts .vendor-network-card .vendor-network-accordion {
     padding: 0 !important;
   }
+}
+
+/* 2026-07-01 note/template add buttons and vendor category ordering. */
+html body #app-content #today-menu #workNoteAddBtn,
+html body #app-content #today-menu #messageTemplateAddBtn {
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  min-height: 38px !important;
+  max-width: 38px !important;
+  max-height: 38px !important;
+  aspect-ratio: 1 / 1 !important;
+  flex: 0 0 38px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  color: #202123 !important;
+  box-shadow: none !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+}
+
+html body #app-content #today-menu #workNoteAddBtn::before,
+html body #app-content #today-menu #messageTemplateAddBtn::before {
+  content: "" !important;
+  display: block !important;
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  min-height: 20px !important;
+  background:
+    linear-gradient(currentColor, currentColor) center / 18px 2px no-repeat,
+    linear-gradient(currentColor, currentColor) center / 2px 18px no-repeat !important;
+}
+
+html body #app-content #today-menu #workNoteAddBtn:hover,
+html body #app-content #today-menu #workNoteAddBtn:focus-visible,
+html body #app-content #today-menu #messageTemplateAddBtn:hover,
+html body #app-content #today-menu #messageTemplateAddBtn:focus-visible {
+  background: #f1f1f1 !important;
+  box-shadow: none !important;
+  outline: 0 !important;
 }
