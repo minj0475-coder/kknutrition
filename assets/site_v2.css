@@ -18288,3 +18288,47 @@ html body #app-content #today-menu #messageTemplateAddBtn:focus-visible {
   box-shadow: none !important;
   outline: 0 !important;
 }
+
+/* 2026-07-01 final visual rhythm pass: font, radii, and heading spacing. */
+html body,
+html body #app-content,
+html body #app-content :is(button, input, select, textarea, optgroup, option) {
+  font-family: var(--portal-font) !important;
+}
+
+html body #app-content :is(.card, .note, .panel, .memo-card, .home-today-card, .daily-kkul-card, .weekly-check-card, .academic-calendar-card, .academic-weekly-card, .vendor-network-card, .promo-contact-card, .staff-accordion-card, .bookmark-folder-section, .annual-sheet-links-card, .message-template-item, .work-note-toc-item, .vendor-accordion-card) {
+  border-radius: var(--portal-card-radius) !important;
+}
+
+html body #app-content .daily-kkul-card.daily-kkul-card,
+html body #app-content .home-grid-left .daily-kkul-card.daily-kkul-card,
+html body #app-content .home-grid .home-grid-left .daily-kkul-card.daily-kkul-card.card {
+  border-radius: var(--portal-card-radius) !important;
+}
+
+html body #app-content :is(.hero, .page-section > main.wrap > .hero, #home.page-section > main.wrap > .hero) {
+  border-radius: var(--portal-hero-radius) !important;
+}
+
+html body #app-content :is(button, .btn, .download-btn, .promo-btn, .home-today-link, .academic-nav-btn, .academic-today-btn, .academic-save-btn, .academic-clear-btn, .academic-week-range, input[type="button"], input[type="submit"]):not(.icon-only-btn):not(.copy-icon-btn):not(.open-icon-btn):not(.delete-icon-btn):not(.mobile-menu-btn):not(.sidebar-icon-btn):not(#workNoteAddBtn):not(#messageTemplateAddBtn) {
+  border-radius: var(--portal-button-radius) !important;
+}
+
+html body #app-content :is(input, select, textarea):not([type="checkbox"]):not([type="radio"]) {
+  border-radius: var(--portal-button-radius) !important;
+}
+
+html body #app-content :is(.section-title, .promo-contact-title, .home-today-head > div:first-child),
+html body #app-content #home .daily-kkul-card .section-title,
+html body #app-content #home .home-today-card .section-title,
+html body #app-content #promo-contacts .vendor-network-card .promo-contact-title .section-title,
+html body #promo-contacts .vendor-network-card .promo-contact-title .section-title {
+  gap: 14px !important;
+}
+
+html body #app-content :is(.section-title, .promo-contact-title) > .num,
+html body #app-content #home .daily-kkul-card .section-title > .num,
+html body #app-content #home .home-today-card .section-title > .num {
+  flex: 0 0 auto !important;
+  margin-right: 0 !important;
+}
