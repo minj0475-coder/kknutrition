@@ -269,14 +269,12 @@ function dedupeTemplateItems(items) {
 
 function normalizeWorkNoteItem(item) {
   const body = String(item && item.body || "");
-  const titleManual = Boolean(item && item.titleManual);
-  const rawTitle = String(item && item.title || "").trim();
-  const title = rawTitle || makeAutoTitle(body);
+  const title = makeAutoTitle(body);
   const now = Date.now();
   return {
     id: String(item && item.id || makeNoteItemId("work")),
     title,
-    titleManual: titleManual || Boolean(rawTitle),
+    titleManual: false,
     body,
     updatedAt: Number(item && item.updatedAt) || now
   };
@@ -315,7 +313,7 @@ function readWorkNotes() {
           && !deletedKeys.has(makeLocalListBodyKey(item)));
     }
   } catch(e) {}
-  return DEFAULT_WORK_NOTES.map(item => normalizeWorkNoteItem({ ...item, titleManual: true }));
+  return DEFAULT_WORK_NOTES.map(item => normalizeWorkNoteItem(item));
 }
 
 function readWorkNoteDeletedState() {
@@ -451,12 +449,11 @@ function setupMessageTemplates() {
 function setupWorkNotes() {
   const list = document.getElementById("workNoteList");
   const addBtn = document.getElementById("workNoteAddBtn");
-  const titleInput = document.getElementById("workNoteTitleInput");
   const bodyInput = document.getElementById("workNoteBodyInput");
   const copyBtn = document.getElementById("workNoteCopyBtn");
   const deleteBtn = document.getElementById("workNoteDeleteBtn");
   const status = document.getElementById("workNoteStatus");
-  if (!list || !titleInput || !bodyInput) return;
+  if (!list || !bodyInput) return;
   let notes = readWorkNotes();
   let deletedState = readWorkNoteDeletedState();
   let activeIndex = 0;
@@ -494,31 +491,19 @@ function setupWorkNotes() {
   const renderEditor = () => {
     normalizeActiveIndex();
     const note = notes[activeIndex];
-    titleInput.value = note.titleManual ? (note.title || "") : "";
     bodyInput.value = note.body || "";
-    bodyInput.placeholder = "긴 작업 기준, 이미지 프롬프트, 반복해서 쓰는 문장 등을 적어두세요.";
-    titleInput.placeholder = "생각서랍 제목";
+    bodyInput.placeholder = "첫 줄은 생각서랍 제목으로 표시됩니다.\n\n긴 작업 기준, 이미지 프롬프트, 반복해서 쓰는 문장 등을 적어두세요.";
     if (deleteBtn) deleteBtn.disabled = false;
   };
   const render = () => {
     renderList();
     renderEditor();
   };
-  titleInput.addEventListener("input", event => {
-    normalizeActiveIndex();
-    const value = event.target.value.trim();
-    notes[activeIndex].titleManual = Boolean(value);
-    notes[activeIndex].title = value || makeAutoTitle(notes[activeIndex].body);
-    notes[activeIndex].updatedAt = Date.now();
-    persist();
-    renderList();
-  });
   bodyInput.addEventListener("input", event => {
     normalizeActiveIndex();
     notes[activeIndex].body = event.target.value;
-    if (!notes[activeIndex].titleManual) {
-      notes[activeIndex].title = makeAutoTitle(notes[activeIndex].body);
-    }
+    notes[activeIndex].title = makeAutoTitle(notes[activeIndex].body);
+    notes[activeIndex].titleManual = false;
     notes[activeIndex].updatedAt = Date.now();
     persist();
     renderList();

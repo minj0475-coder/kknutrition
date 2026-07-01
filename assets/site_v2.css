@@ -129,7 +129,7 @@ html body #app-content #today-menu .work-note-toc-meta {
 
 html body #app-content #today-menu .work-note-editor {
   display: grid !important;
-  grid-template-rows: auto auto minmax(0, 1fr) auto !important;
+  grid-template-rows: minmax(0, 1fr) auto !important;
   gap: 10px !important;
   min-width: 0 !important;
   min-height: 0 !important;
