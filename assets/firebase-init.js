@@ -57,6 +57,8 @@ const CLOUD_SYNC_KEYS = [
 const CLOUD_SYNC_MAX_BYTES = 900000;
 let cloudApplyingRemote = false;
 let cloudSyncReady = false;
+const cloudPendingLocalWrites = new Map();
+let memoPendingLocalWriteAt = 0;
 
 function readCloudSyncMeta() {
   try {
@@ -230,6 +232,11 @@ function setupCloudDataSync() {
     const key = String(detail.key || "");
     if (cloudApplyingRemote || !CLOUD_SYNC_KEYS.includes(key)) return;
     const updatedAt = Number(detail.updatedAt) || Date.now();
+    cloudPendingLocalWrites.set(key, {
+      value: String(detail.value || ""),
+      updatedAt,
+      deleted: Boolean(detail.deleted)
+    });
     setCloudLocalUpdatedAt(key, updatedAt);
     uploadLocalCloudChange(key, detail.value || "", updatedAt, Boolean(detail.deleted))
       .catch(error => console.error("공용 데이터 동기화 실패:", key, error));
@@ -253,6 +260,24 @@ function setupCloudDataSync() {
       const data = snapshot.data() || {};
       const remoteUpdatedAt = Number(data.updatedAt) || 0;
       const shouldUseLatestWholeValue = key === "kkulkkoori_work_notes_v1" || key === "kkulkkoori_message_templates_v1";
+
+      if (shouldUseLatestWholeValue) {
+        const pending = cloudPendingLocalWrites.get(key);
+        if (pending && remoteUpdatedAt >= pending.updatedAt) {
+          cloudPendingLocalWrites.delete(key);
+        }
+        if (pending && pending.updatedAt > remoteUpdatedAt) {
+          uploadCloudDataKey(key, pending.value, pending.updatedAt, pending.deleted)
+            .catch(error => console.error("공용 데이터 최신 로컬 업로드 대기 실패:", key, error));
+          return;
+        }
+        if (String(data.value || "") !== String(localValue || "") || Boolean(data.deleted)) {
+          applyCloudDataLocally(key, data.value || "", remoteUpdatedAt || Date.now(), Boolean(data.deleted));
+        } else if (remoteUpdatedAt) {
+          setCloudLocalUpdatedAt(key, remoteUpdatedAt);
+        }
+        return;
+      }
 
       if (hasMeaningfulLocalValue(localValue) && !localUpdatedAt) {
         if (shouldUseLatestWholeValue) {
@@ -500,6 +525,7 @@ async function saveMemos() {
   }
   if (db && isFirebaseLoaded) {
     try {
+      memoPendingLocalWriteAt = memoUpdatedAt || Date.now();
       await setDoc(doc(db, "memos", MEMO_DOC_ID), {
         items: memos,
         updatedAt: memoUpdatedAt
@@ -1131,63 +1157,21 @@ function init() {
         const data = snapshot.data();
         if (data.items) {
           const remoteUpdatedAt = Number(data.updatedAt) || 0;
-          const savedMemoUpdatedAt = readSavedMemoUpdatedAt();
-          const localUpdatedAt = savedMemoUpdatedAt || memoUpdatedAt || Number(readMemoLocalMeta().updatedAt) || 0;
-          const remoteHasUserMemos = hasUserMemos(data.items);
-          const localHasUserMemos = hasUserMemos(memos);
-          if (!remoteHasUserMemos) {
-            const recoverable = localHasUserMemos ? { items: memos, updatedAt: localUpdatedAt || Date.now() } : getRecoverableMemoPayload();
-            if (recoverable) {
-              memos = recoverable.items;
-              const recoveredAt = Math.max(Date.now(), Number(recoverable.updatedAt) || 0, remoteUpdatedAt || 0);
-              writeLocalMemos(recoveredAt);
-              setDoc(doc(db, "memos", MEMO_DOC_ID), {
-                items: memos,
-                updatedAt: recoveredAt
-              }).catch((error) => console.error("Firestore 빈 메모 덮어쓰기 방지 복구 실패:", error));
-              updateAllMemosDOM();
-              return;
-            }
+          if (memoPendingLocalWriteAt && remoteUpdatedAt >= memoPendingLocalWriteAt) {
+            memoPendingLocalWriteAt = 0;
           }
-          if (!localUpdatedAt && localHasUserMemos) {
-            if (remoteUpdatedAt && remoteHasUserMemos) {
-              memos = data.items;
-              writeLocalMemos(remoteUpdatedAt);
-              updateAllMemosDOM();
-              return;
-            }
-            const seedUpdatedAt = Date.now();
-            writeLocalMemos(seedUpdatedAt);
+          if (memoPendingLocalWriteAt && memoPendingLocalWriteAt > remoteUpdatedAt) {
             setDoc(doc(db, "memos", MEMO_DOC_ID), {
               items: memos,
-              updatedAt: seedUpdatedAt
-            }).catch((error) => console.error("Firestore 메모 로컬 우선 보존 실패:", error));
+              updatedAt: memoPendingLocalWriteAt
+            }).catch((error) => console.error("Firestore 메모 최신 로컬 업로드 대기 실패:", error));
             return;
           }
-          if (localUpdatedAt && (!remoteUpdatedAt || remoteUpdatedAt < localUpdatedAt) && localHasUserMemos) {
-            setDoc(doc(db, "memos", MEMO_DOC_ID), {
-              items: memos,
-              updatedAt: localUpdatedAt
-            }).catch((error) => console.error("Firestore 메모 복구 실패:", error));
-            return;
+          if (JSON.stringify(memos) !== JSON.stringify(data.items) || (remoteUpdatedAt && remoteUpdatedAt !== memoUpdatedAt)) {
+            memos = data.items;
+            writeLocalMemos(remoteUpdatedAt || Date.now(), { allowEmpty: true });
+            updateAllMemosDOM();
           }
-          // If totally equal, skip
-          if (JSON.stringify(memos) === JSON.stringify(data.items)) {
-            if (remoteUpdatedAt > localUpdatedAt) writeLocalMemos(remoteUpdatedAt);
-            return;
-          }
-
-          if (localUpdatedAt && remoteUpdatedAt && remoteUpdatedAt <= localUpdatedAt) {
-            setDoc(doc(db, "memos", MEMO_DOC_ID), {
-              items: memos,
-              updatedAt: Math.max(Date.now(), localUpdatedAt)
-            }).catch((error) => console.error("Firestore 메모 최신 로컬 저장 실패:", error));
-            return;
-          }
-          
-          memos = data.items;
-          writeLocalMemos(remoteUpdatedAt || Date.now());
-          updateAllMemosDOM();
         }
       } else {
         loadLocalMemos();
