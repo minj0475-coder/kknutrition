@@ -132,14 +132,14 @@ const MESSAGE_TEMPLATES_KEY = "kkulkkoori_message_templates_v1";
 const WORK_NOTES_KEY = "kkulkkoori_work_notes_v1";
 const NOTE_DATA_VERSION = 2;
 
-function notifyNoteDataChanged(key, value) {
+function notifyNoteDataChanged(key, value, updatedAt = Date.now()) {
   try {
     window.dispatchEvent(new CustomEvent("kknutrition:local-data-changed", {
       detail: {
         key,
         value: String(value || ""),
         deleted: false,
-        updatedAt: Date.now()
+        updatedAt: Number(updatedAt) || Date.now()
       }
     }));
   } catch(e) {}
@@ -306,10 +306,13 @@ function readMessageTemplates() {
 
 function saveMessageTemplates(items) {
   try {
-    const value = JSON.stringify(makeVersionedList(dedupeTemplateItems(items)));
+    const payload = makeVersionedList(dedupeTemplateItems(items));
+    const value = JSON.stringify(payload);
     localStorage.setItem(MESSAGE_TEMPLATES_KEY, value);
-    notifyNoteDataChanged(MESSAGE_TEMPLATES_KEY, value);
+    notifyNoteDataChanged(MESSAGE_TEMPLATES_KEY, value, payload.updatedAt);
+    return payload.updatedAt;
   } catch(e) {}
+  return Date.now();
 }
 
 function readWorkNotes() {
@@ -341,16 +344,19 @@ function readWorkNoteDeletedState() {
 
 function saveWorkNotes(items, deletedState = readWorkNoteDeletedState()) {
   try {
-    const value = JSON.stringify(makeVersionedList(
+    const payload = makeVersionedList(
       items.map(normalizeWorkNoteItem),
       {
         deletedIds: deletedState.ids,
         deletedKeys: deletedState.keys
       }
-    ));
+    );
+    const value = JSON.stringify(payload);
     localStorage.setItem(WORK_NOTES_KEY, value);
-    notifyNoteDataChanged(WORK_NOTES_KEY, value);
+    notifyNoteDataChanged(WORK_NOTES_KEY, value, payload.updatedAt);
+    return payload.updatedAt;
   } catch(e) {}
+  return Date.now();
 }
 
 function escapeTemplateHtml(value) {
@@ -369,13 +375,16 @@ function setupMessageTemplates() {
   const status = document.getElementById("messageTemplateStatus");
   if (!list) return;
   let items = readMessageTemplates();
+  let lastLocalTemplateSaveAt = 0;
   const setStatus = message => {
     if (!status) return;
     status.textContent = message || "";
     window.clearTimeout(status._timer);
     if (message) status._timer = window.setTimeout(() => { status.textContent = ""; }, 1600);
   };
-  const persist = () => saveMessageTemplates(items);
+  const persist = () => {
+    lastLocalTemplateSaveAt = saveMessageTemplates(items);
+  };
   const copyTemplate = async index => {
     const text = items[index] && items[index].body ? items[index].body.trim() : "";
     if (!text) return setStatus("복사할 문자 내용이 없습니다.");
@@ -454,6 +463,11 @@ function setupMessageTemplates() {
   }
   window.addEventListener("kknutrition:cloud-data-applied", event => {
     if (!event.detail || event.detail.key !== MESSAGE_TEMPLATES_KEY) return;
+    const remoteUpdatedAt = Number(event.detail.updatedAt) || 0;
+    if (remoteUpdatedAt < lastLocalTemplateSaveAt || list.contains(document.activeElement)) {
+      lastLocalTemplateSaveAt = saveMessageTemplates(items);
+      return;
+    }
     items = readMessageTemplates();
     render();
     setStatus("다른 기기의 최신 문자 내용을 불러왔습니다.");
@@ -472,13 +486,16 @@ function setupWorkNotes() {
   let notes = readWorkNotes();
   let deletedState = readWorkNoteDeletedState();
   let activeIndex = 0;
+  let lastLocalWorkNoteSaveAt = 0;
   const setStatus = message => {
     if (!status) return;
     status.textContent = message || "";
     window.clearTimeout(status._timer);
     if (message) status._timer = window.setTimeout(() => { status.textContent = ""; }, 1600);
   };
-  const persist = () => saveWorkNotes(notes, deletedState);
+  const persist = () => {
+    lastLocalWorkNoteSaveAt = saveWorkNotes(notes, deletedState);
+  };
   const normalizeActiveIndex = () => {
     if (!notes.length) notes = [normalizeWorkNoteItem({ title: "", body: "", titleManual: false })];
     activeIndex = Math.max(0, Math.min(activeIndex, notes.length - 1));
@@ -566,6 +583,11 @@ function setupWorkNotes() {
   }
   window.addEventListener("kknutrition:cloud-data-applied", event => {
     if (!event.detail || event.detail.key !== WORK_NOTES_KEY) return;
+    const remoteUpdatedAt = Number(event.detail.updatedAt) || 0;
+    if (remoteUpdatedAt < lastLocalWorkNoteSaveAt || document.activeElement === bodyInput) {
+      lastLocalWorkNoteSaveAt = saveWorkNotes(notes, deletedState);
+      return;
+    }
     deletedState = readWorkNoteDeletedState();
     notes = readWorkNotes();
     activeIndex = 0;
