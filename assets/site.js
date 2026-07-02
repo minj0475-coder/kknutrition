@@ -439,6 +439,21 @@ function setupMessageTemplates() {
       `;
       const saveButton = details.querySelector("[data-template-save]");
       if (saveButton) saveButton.textContent = "저장";
+      const actionWrap = details.querySelector(".message-template-actions");
+      if (actionWrap) {
+        actionWrap.innerHTML = "";
+        const cleanSaveButton = document.createElement("button");
+        cleanSaveButton.className = "message-template-save";
+        cleanSaveButton.type = "button";
+        cleanSaveButton.dataset.templateSave = String(index);
+        cleanSaveButton.textContent = "저장";
+        const cleanDeleteButton = document.createElement("button");
+        cleanDeleteButton.className = "message-template-delete";
+        cleanDeleteButton.type = "button";
+        cleanDeleteButton.dataset.templateDelete = String(index);
+        cleanDeleteButton.textContent = "삭제";
+        actionWrap.append(cleanSaveButton, cleanDeleteButton);
+      }
       const inlineCopyButton = details.querySelector(".message-template-copy-inline");
       const bodyTextarea = details.querySelector("[data-template-body]");
       if (inlineCopyButton && bodyTextarea) {
