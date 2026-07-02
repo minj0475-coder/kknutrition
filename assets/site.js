@@ -304,12 +304,14 @@ function readMessageTemplates() {
   return dedupeTemplateItems(DEFAULT_MESSAGE_TEMPLATES);
 }
 
-function saveMessageTemplates(items) {
+function saveMessageTemplates(items, options = {}) {
   try {
     const payload = makeVersionedList(dedupeTemplateItems(items));
     const value = JSON.stringify(payload);
     localStorage.setItem(MESSAGE_TEMPLATES_KEY, value);
-    notifyNoteDataChanged(MESSAGE_TEMPLATES_KEY, value, payload.updatedAt);
+    if (options.sync !== false) {
+      notifyNoteDataChanged(MESSAGE_TEMPLATES_KEY, value, payload.updatedAt);
+    }
     return payload.updatedAt;
   } catch(e) {}
   return Date.now();
@@ -383,11 +385,12 @@ function setupMessageTemplates() {
     if (message) status._timer = window.setTimeout(() => { status.textContent = ""; }, 1600);
   };
   const persist = () => {
-    lastLocalTemplateSaveAt = saveMessageTemplates(items);
+    lastLocalTemplateSaveAt = saveMessageTemplates(items, { sync: false });
     return lastLocalTemplateSaveAt;
   };
   const forcePersist = async () => {
-    const savedAt = persist();
+    const savedAt = saveMessageTemplates(items, { sync: false });
+    lastLocalTemplateSaveAt = savedAt;
     const value = localStorage.getItem(MESSAGE_TEMPLATES_KEY) || "";
     if (window.KKNutritionCloudSync && typeof window.KKNutritionCloudSync.saveKey === "function") {
       setStatus("저장 중입니다...");
