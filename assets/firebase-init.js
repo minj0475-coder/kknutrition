@@ -271,11 +271,6 @@ function setupCloudDataSync() {
             .catch(error => console.error("공용 데이터 최신 로컬 업로드 대기 실패:", key, error));
           return;
         }
-        if (localUpdatedAt && localUpdatedAt > remoteUpdatedAt) {
-          uploadCloudDataKey(key, localValue || "", localUpdatedAt, !localValue)
-            .catch(error => console.error("Cloud latest local upload failed:", key, error));
-          return;
-        }
         if (String(data.value || "") !== String(localValue || "") || Boolean(data.deleted)) {
           applyCloudDataLocally(key, data.value || "", remoteUpdatedAt || Date.now(), Boolean(data.deleted));
         } else if (remoteUpdatedAt) {
