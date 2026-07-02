@@ -378,6 +378,7 @@ function setupMessageTemplates() {
   if (!list) return;
   let items = readMessageTemplates();
   let lastLocalTemplateSaveAt = 0;
+  let templateHasUnsyncedLocalChanges = false;
   const setStatus = message => {
     if (!status) return;
     status.textContent = message || "";
@@ -386,6 +387,7 @@ function setupMessageTemplates() {
   };
   const persist = () => {
     lastLocalTemplateSaveAt = saveMessageTemplates(items, { sync: false });
+    templateHasUnsyncedLocalChanges = true;
     return lastLocalTemplateSaveAt;
   };
   const forcePersist = async () => {
@@ -396,6 +398,7 @@ function setupMessageTemplates() {
       setStatus("저장 중입니다...");
       try {
         await window.KKNutritionCloudSync.saveKey(MESSAGE_TEMPLATES_KEY, value, savedAt, false);
+        templateHasUnsyncedLocalChanges = false;
         setStatus("저장했습니다.");
       } catch (error) {
         console.error("Message template save failed:", error);
@@ -450,6 +453,7 @@ function setupMessageTemplates() {
         cleanSaveButton.type = "button";
         cleanSaveButton.dataset.templateSave = String(index);
         cleanSaveButton.textContent = "저장";
+        cleanSaveButton.textContent = "\uC800\uC7A5";
         const cleanDeleteButton = document.createElement("button");
         cleanDeleteButton.className = "message-template-delete";
         cleanDeleteButton.type = "button";
@@ -507,10 +511,11 @@ function setupMessageTemplates() {
   window.addEventListener("kknutrition:cloud-data-applied", event => {
     if (!event.detail || event.detail.key !== MESSAGE_TEMPLATES_KEY) return;
     const remoteUpdatedAt = Number(event.detail.updatedAt) || 0;
-    if (remoteUpdatedAt < lastLocalTemplateSaveAt) {
-      lastLocalTemplateSaveAt = saveMessageTemplates(items);
+    if (templateHasUnsyncedLocalChanges && remoteUpdatedAt < lastLocalTemplateSaveAt) {
+      lastLocalTemplateSaveAt = saveMessageTemplates(items, { sync: false });
       return;
     }
+    templateHasUnsyncedLocalChanges = false;
     items = readMessageTemplates();
     render();
     setStatus("다른 기기의 최신 문자 내용을 불러왔습니다.");
