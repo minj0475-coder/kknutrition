@@ -131,6 +131,19 @@ function setupStaffAccordion() {
 const MESSAGE_TEMPLATES_KEY = "kkulkkoori_message_templates_v1";
 const WORK_NOTES_KEY = "kkulkkoori_work_notes_v1";
 const NOTE_DATA_VERSION = 2;
+
+function notifyNoteDataChanged(key, value) {
+  try {
+    window.dispatchEvent(new CustomEvent("kknutrition:local-data-changed", {
+      detail: {
+        key,
+        value: String(value || ""),
+        deleted: false,
+        updatedAt: Date.now()
+      }
+    }));
+  } catch(e) {}
+}
 const DEFAULT_WORK_NOTE_TITLE = "생각서랍";
 const DEFAULT_MESSAGE_TEMPLATE_TITLE = "새 문자";
 const DEFAULT_WORK_NOTES = [
@@ -293,7 +306,9 @@ function readMessageTemplates() {
 
 function saveMessageTemplates(items) {
   try {
-    localStorage.setItem(MESSAGE_TEMPLATES_KEY, JSON.stringify(makeVersionedList(dedupeTemplateItems(items))));
+    const value = JSON.stringify(makeVersionedList(dedupeTemplateItems(items)));
+    localStorage.setItem(MESSAGE_TEMPLATES_KEY, value);
+    notifyNoteDataChanged(MESSAGE_TEMPLATES_KEY, value);
   } catch(e) {}
 }
 
@@ -326,13 +341,15 @@ function readWorkNoteDeletedState() {
 
 function saveWorkNotes(items, deletedState = readWorkNoteDeletedState()) {
   try {
-    localStorage.setItem(WORK_NOTES_KEY, JSON.stringify(makeVersionedList(
+    const value = JSON.stringify(makeVersionedList(
       items.map(normalizeWorkNoteItem),
       {
         deletedIds: deletedState.ids,
         deletedKeys: deletedState.keys
       }
-    )));
+    ));
+    localStorage.setItem(WORK_NOTES_KEY, value);
+    notifyNoteDataChanged(WORK_NOTES_KEY, value);
   } catch(e) {}
 }
 
