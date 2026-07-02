@@ -2173,7 +2173,9 @@ function readVendorNetwork() {
 
 function saveVendorNetwork(rows) {
   try {
-    localStorage.setItem(VENDOR_NETWORK_KEY, JSON.stringify(rows.map(normalizeVendorNetwork)));
+    const value = JSON.stringify(rows.map(normalizeVendorNetwork));
+    localStorage.setItem(VENDOR_NETWORK_KEY, value);
+    notifyNoteDataChanged(VENDOR_NETWORK_KEY, value);
   } catch(e) {}
 }
 
@@ -2187,7 +2189,9 @@ function readPromoContacts() {
 
 function savePromoContacts(rows) {
   try {
-    localStorage.setItem(PROMO_CONTACTS_KEY, JSON.stringify(rows.map(normalizePromoContact)));
+    const value = JSON.stringify(rows.map(normalizePromoContact));
+    localStorage.setItem(PROMO_CONTACTS_KEY, value);
+    notifyNoteDataChanged(PROMO_CONTACTS_KEY, value);
   } catch(e) {}
 }
 
@@ -3670,7 +3674,9 @@ function readVendorGroups() {
 
 function saveVendorGroups(groups) {
   try {
-    localStorage.setItem(VENDOR_GROUPS_KEY, JSON.stringify(normalizeVendorGroups(groups)));
+    const value = JSON.stringify(normalizeVendorGroups(groups));
+    localStorage.setItem(VENDOR_GROUPS_KEY, value);
+    notifyNoteDataChanged(VENDOR_GROUPS_KEY, value);
   } catch(e) {}
 }
 

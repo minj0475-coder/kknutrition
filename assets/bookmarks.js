@@ -40,6 +40,7 @@ let bookmarkData = [
 const BOOKMARK_STORAGE_KEY = 'kknutrition_bookmarks_v4';
 const BOOKMARK_LOCAL_META_KEY = 'kknutrition_bookmarks_v4_meta';
 let bookmarkUpdatedAt = 0;
+let bookmarkPendingLocalWriteAt = 0;
 
 function normalizeBookmarkCategory(category) {
   if (category === '공산·단가' || category === '공산, 단가' || category === '공산 단가' || category === '공산·단가 관련') {
@@ -139,7 +140,9 @@ function hasMeaningfulBookmarkData(items) {
 function saveToStorage() {
   writeBookmarkStorage(bookmarkData, Date.now());
   if (typeof window.syncBookmarksToFirebase === 'function') {
-    window.syncBookmarksToFirebase(bookmarkData, { updatedAt: bookmarkUpdatedAt });
+    bookmarkPendingLocalWriteAt = bookmarkUpdatedAt;
+    window.syncBookmarksToFirebase(bookmarkData, { updatedAt: bookmarkUpdatedAt })
+      .catch(function(error) { console.error('Firestore bookmark save failed:', error); });
   }
 }
 
@@ -148,6 +151,16 @@ window.updateBookmarkData = function(newData, remoteMeta) {
   if (!Array.isArray(newData)) return;
   var remoteUpdatedAt = Number(remoteMeta && remoteMeta.updatedAt) || 0;
   var localUpdatedAt = bookmarkUpdatedAt || Number(readBookmarkLocalMeta().updatedAt) || 0;
+  if (bookmarkPendingLocalWriteAt && remoteUpdatedAt >= bookmarkPendingLocalWriteAt) {
+    bookmarkPendingLocalWriteAt = 0;
+  }
+  if (bookmarkPendingLocalWriteAt && bookmarkPendingLocalWriteAt > remoteUpdatedAt) {
+    if (typeof window.syncBookmarksToFirebase === 'function') {
+      window.syncBookmarksToFirebase(bookmarkData, { updatedAt: bookmarkPendingLocalWriteAt })
+        .catch(function(error) { console.error('Firestore bookmark pending save failed:', error); });
+    }
+    return;
+  }
   if (!localUpdatedAt && hasMeaningfulBookmarkData(bookmarkData)) {
     localUpdatedAt = Date.now();
     writeBookmarkStorage(bookmarkData, localUpdatedAt);
