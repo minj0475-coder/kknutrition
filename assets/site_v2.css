@@ -15307,6 +15307,13 @@ html body #app-content .message-template-body textarea {
   resize: vertical !important;
 }
 
+html body #app-content .message-template-actions {
+  display: flex !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+}
+
+html body #app-content .message-template-save,
 html body #app-content .message-template-delete {
   justify-self: end !important;
   min-height: 38px !important;
@@ -15318,6 +15325,16 @@ html body #app-content .message-template-delete {
   font-size: 13px !important;
   font-weight: 700 !important;
   box-shadow: none !important;
+}
+
+html body #app-content .message-template-save {
+  border-color: var(--primary) !important;
+  background: var(--primary) !important;
+  color: #ffffff !important;
+}
+
+html body #app-content .message-template-save:hover {
+  filter: brightness(0.96) !important;
 }
 
 html body #app-content .message-template-delete:hover {
@@ -15967,6 +15984,7 @@ html body #app-content #today-menu .message-template-content-label textarea {
   padding-right: 56px !important;
 }
 
+html body #app-content #today-menu .message-template-save,
 html body #app-content #today-menu .message-template-delete {
   margin-top: 2px !important;
   align-self: end !important;

@@ -385,6 +385,13 @@ function setupMessageTemplates() {
   const persist = () => {
     lastLocalTemplateSaveAt = saveMessageTemplates(items);
   };
+  const forcePersist = () => {
+    persist();
+    if (window.KKNutritionCloudSync && typeof window.KKNutritionCloudSync.syncNow === "function") {
+      window.KKNutritionCloudSync.syncNow();
+    }
+    setStatus("저장했습니다.");
+  };
   const copyTemplate = async index => {
     const text = items[index] && items[index].body ? items[index].body.trim() : "";
     if (!text) return setStatus("복사할 문자 내용이 없습니다.");
@@ -414,7 +421,10 @@ function setupMessageTemplates() {
             <button class="copy-icon-btn message-template-copy-inline" type="button" aria-label="문자 내용 복사" title="복사"></button>
             <textarea rows="10" data-template-body="${index}">${escapeTemplateHtml(item.body || "")}</textarea>
           </label>
-          <button class="message-template-delete" type="button" data-template-delete="${index}">삭제</button>
+          <div class="message-template-actions">
+            <button class="message-template-save" type="button" data-template-save="${index}">저장</button>
+            <button class="message-template-delete" type="button" data-template-delete="${index}">삭제</button>
+          </div>
         </div>
       `;
       const inlineCopyButton = details.querySelector(".message-template-copy-inline");
@@ -441,6 +451,9 @@ function setupMessageTemplates() {
         items[index].body = event.target.value;
         items[index].updatedAt = Date.now();
         persist();
+      });
+      details.querySelector("[data-template-save]").addEventListener("click", () => {
+        forcePersist();
       });
       details.querySelector("[data-template-delete]").addEventListener("click", () => {
         items.splice(index, 1);
