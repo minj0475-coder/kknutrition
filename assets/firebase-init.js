@@ -307,6 +307,9 @@ function setupCloudDataSync() {
             .catch(error => console.error("공용 데이터 최신 로컬 업로드 대기 실패:", key, error));
           return;
         }
+        if (key === "kkulkkoori_message_templates_v1" && localUpdatedAt > remoteUpdatedAt) {
+          return;
+        }
         if (String(data.value || "") !== String(localValue || "") || Boolean(data.deleted)) {
           applyCloudDataLocally(key, data.value || "", remoteUpdatedAt || Date.now(), Boolean(data.deleted));
         } else if (remoteUpdatedAt) {
