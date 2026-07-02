@@ -200,6 +200,42 @@ async function uploadCloudDataKey(key, value, updatedAt = Date.now(), deleted = 
   return true;
 }
 
+async function uploadCloudDataKeyViaRest(key, value, updatedAt = Date.now(), deleted = false) {
+  if (!CLOUD_SYNC_KEYS.includes(key)) return false;
+  const textValue = String(value || "");
+  if (!deleted && getCloudStringSize(textValue) > CLOUD_SYNC_MAX_BYTES) {
+    throw new Error("Cloud data is too large");
+  }
+  const url = `https://firestore.googleapis.com/v1/projects/${firebaseConfig.projectId}/databases/(default)/documents/${CLOUD_DATA_COLLECTION}/${encodeURIComponent(key)}`;
+  const response = await fetch(url, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      fields: {
+        key: { stringValue: key },
+        value: { stringValue: deleted ? "" : textValue },
+        deleted: { booleanValue: Boolean(deleted) },
+        updatedAt: { integerValue: String(Number(updatedAt) || Date.now()) }
+      }
+    })
+  });
+  if (!response.ok) {
+    let detail = "";
+    try { detail = (await response.json()).error?.message || ""; } catch (error) {}
+    throw new Error(detail || `REST save failed: ${response.status}`);
+  }
+  return true;
+}
+
+function withCloudSaveTimeout(promise, timeoutMs = 5000) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => {
+      window.setTimeout(() => reject(new Error("Cloud save timed out")), timeoutMs);
+    })
+  ]);
+}
+
 async function uploadLocalCloudChange(key, value, updatedAt, deleted) {
   return uploadCloudDataKey(key, value, updatedAt, deleted);
 }
@@ -370,11 +406,13 @@ window.KKNutritionCloudSync.saveKey = async (key, value, updatedAt = Date.now(),
     updatedAt: savedAt,
     deleted: Boolean(deleted)
   });
-  const saved = await uploadCloudDataKey(key, value || "", savedAt, Boolean(deleted));
-  if (!saved) {
-    throw new Error("Cloud save was skipped");
+  try {
+    const saved = await withCloudSaveTimeout(uploadCloudDataKey(key, value || "", savedAt, Boolean(deleted)));
+    if (saved) return true;
+  } catch (error) {
+    console.warn("Firebase SDK save did not complete, trying REST fallback:", key, error);
   }
-  return saved;
+  return uploadCloudDataKeyViaRest(key, value || "", savedAt, Boolean(deleted));
 };
 
 window.KKNutritionCloudSync.syncNow = () => {
