@@ -370,7 +370,11 @@ window.KKNutritionCloudSync.saveKey = async (key, value, updatedAt = Date.now(),
     updatedAt: savedAt,
     deleted: Boolean(deleted)
   });
-  return uploadCloudDataKey(key, value || "", savedAt, Boolean(deleted));
+  const saved = await uploadCloudDataKey(key, value || "", savedAt, Boolean(deleted));
+  if (!saved) {
+    throw new Error("Cloud save was skipped");
+  }
+  return saved;
 };
 
 window.KKNutritionCloudSync.syncNow = () => {

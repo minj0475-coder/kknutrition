@@ -437,6 +437,8 @@ function setupMessageTemplates() {
           </div>
         </div>
       `;
+      const saveButton = details.querySelector("[data-template-save]");
+      if (saveButton) saveButton.textContent = "저장";
       const inlineCopyButton = details.querySelector(".message-template-copy-inline");
       const bodyTextarea = details.querySelector("[data-template-body]");
       if (inlineCopyButton && bodyTextarea) {
@@ -487,7 +489,7 @@ function setupMessageTemplates() {
   window.addEventListener("kknutrition:cloud-data-applied", event => {
     if (!event.detail || event.detail.key !== MESSAGE_TEMPLATES_KEY) return;
     const remoteUpdatedAt = Number(event.detail.updatedAt) || 0;
-    if (remoteUpdatedAt < lastLocalTemplateSaveAt || list.contains(document.activeElement)) {
+    if (remoteUpdatedAt < lastLocalTemplateSaveAt) {
       lastLocalTemplateSaveAt = saveMessageTemplates(items);
       return;
     }
@@ -607,7 +609,7 @@ function setupWorkNotes() {
   window.addEventListener("kknutrition:cloud-data-applied", event => {
     if (!event.detail || event.detail.key !== WORK_NOTES_KEY) return;
     const remoteUpdatedAt = Number(event.detail.updatedAt) || 0;
-    if (remoteUpdatedAt < lastLocalWorkNoteSaveAt || document.activeElement === bodyInput) {
+    if (remoteUpdatedAt < lastLocalWorkNoteSaveAt) {
       lastLocalWorkNoteSaveAt = saveWorkNotes(notes, deletedState);
       return;
     }
