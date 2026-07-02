@@ -271,6 +271,11 @@ function setupCloudDataSync() {
             .catch(error => console.error("공용 데이터 최신 로컬 업로드 대기 실패:", key, error));
           return;
         }
+        if (localUpdatedAt && localUpdatedAt > remoteUpdatedAt) {
+          uploadCloudDataKey(key, localValue || "", localUpdatedAt, !localValue)
+            .catch(error => console.error("Cloud latest local upload failed:", key, error));
+          return;
+        }
         if (String(data.value || "") !== String(localValue || "") || Boolean(data.deleted)) {
           applyCloudDataLocally(key, data.value || "", remoteUpdatedAt || Date.now(), Boolean(data.deleted));
         } else if (remoteUpdatedAt) {
@@ -357,6 +362,32 @@ window.KKNutritionCloudSync = {
       }
     });
   }
+};
+
+window.KKNutritionCloudSync.saveKey = async (key, value, updatedAt = Date.now(), deleted = false) => {
+  if (!CLOUD_SYNC_KEYS.includes(key)) {
+    throw new Error("Unsupported shared data key");
+  }
+  const savedAt = Number(updatedAt) || Date.now();
+  setCloudLocalUpdatedAt(key, savedAt);
+  cloudPendingLocalWrites.set(key, {
+    value: String(value || ""),
+    updatedAt: savedAt,
+    deleted: Boolean(deleted)
+  });
+  return uploadCloudDataKey(key, value || "", savedAt, Boolean(deleted));
+};
+
+window.KKNutritionCloudSync.syncNow = () => {
+  const uploads = [];
+  CLOUD_SYNC_KEYS.forEach(key => {
+    const value = localStorage.getItem(key);
+    if (!value) return;
+    const updatedAt = Date.now();
+    setCloudLocalUpdatedAt(key, updatedAt);
+    uploads.push(uploadCloudDataKey(key, value, updatedAt, false));
+  });
+  return Promise.all(uploads);
 };
 
 const defaultMemos = [

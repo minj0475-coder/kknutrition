@@ -384,13 +384,23 @@ function setupMessageTemplates() {
   };
   const persist = () => {
     lastLocalTemplateSaveAt = saveMessageTemplates(items);
+    return lastLocalTemplateSaveAt;
   };
-  const forcePersist = () => {
-    persist();
-    if (window.KKNutritionCloudSync && typeof window.KKNutritionCloudSync.syncNow === "function") {
-      window.KKNutritionCloudSync.syncNow();
+  const forcePersist = async () => {
+    const savedAt = persist();
+    const value = localStorage.getItem(MESSAGE_TEMPLATES_KEY) || "";
+    if (window.KKNutritionCloudSync && typeof window.KKNutritionCloudSync.saveKey === "function") {
+      setStatus("저장 중입니다...");
+      try {
+        await window.KKNutritionCloudSync.saveKey(MESSAGE_TEMPLATES_KEY, value, savedAt, false);
+        setStatus("저장했습니다.");
+      } catch (error) {
+        console.error("Message template save failed:", error);
+        setStatus("저장에 실패했습니다. 인터넷 연결 또는 Firebase 권한을 확인해 주세요.");
+      }
+      return;
     }
-    setStatus("저장했습니다.");
+    setStatus("이 브라우저에는 저장했습니다. 클라우드 동기화는 아직 준비 중입니다.");
   };
   const copyTemplate = async index => {
     const text = items[index] && items[index].body ? items[index].body.trim() : "";
