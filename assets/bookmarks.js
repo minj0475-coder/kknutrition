@@ -137,18 +137,22 @@ function hasMeaningfulBookmarkData(items) {
   } catch (e) { /* ignore */ }
 })();
 
-function saveToStorage() {
+function saveToStorage(options) {
+  options = options || {};
   writeBookmarkStorage(bookmarkData, Date.now());
+  if (options.sync === false) return;
   if (typeof window.syncBookmarksToFirebase === 'function') {
     bookmarkPendingLocalWriteAt = bookmarkUpdatedAt;
-    window.syncBookmarksToFirebase(bookmarkData, { updatedAt: bookmarkUpdatedAt })
+    return window.syncBookmarksToFirebase(bookmarkData, { updatedAt: bookmarkUpdatedAt })
       .catch(function(error) { console.error('Firestore bookmark save failed:', error); });
   }
+  return Promise.resolve();
 }
 
 // Firebase에서 외부 업데이트를 받을 때 호출되는 함수
 window.updateBookmarkData = function(newData, remoteMeta) {
   if (!Array.isArray(newData)) return;
+  if (isEditMode) return;
   var remoteUpdatedAt = Number(remoteMeta && remoteMeta.updatedAt) || 0;
   var localUpdatedAt = bookmarkUpdatedAt || Number(readBookmarkLocalMeta().updatedAt) || 0;
   if (bookmarkPendingLocalWriteAt && remoteUpdatedAt >= bookmarkPendingLocalWriteAt) {
@@ -298,7 +302,7 @@ function handleSave() {
   } else {
     bookmarkData.push(newItem);
   }
-  saveToStorage();
+  saveToStorage(isEditMode ? { sync: false } : undefined);
   closeModal();
   renderBookmarks();
 }
@@ -450,7 +454,7 @@ function renderBookmarks() {
         });
         if (item) {
           item.clickCount = (item.clickCount || 0) + 1;
-          saveToStorage();
+          saveToStorage({ sync: false });
         }
       });
     });
@@ -464,7 +468,7 @@ window.bmOpenModal = openModal;
 window.bmDelete = function(idx) {
   if (confirm('\uC774 \uBD81\uB9C8\uD06C\uB97C \uC0AD\uC81C\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?')) {
     bookmarkData.splice(idx, 1);
-    saveToStorage();
+    saveToStorage(isEditMode ? { sync: false } : undefined);
     renderBookmarks();
   }
 };
@@ -475,7 +479,7 @@ window.bmToggleFavorite = function(idx) {
     if (bookmarkData[idx].isFavorite) {
       bookmarkData[idx].favoriteTime = Date.now();
     }
-    saveToStorage();
+    saveToStorage(isEditMode ? { sync: false } : undefined);
     renderBookmarks();
   }
 };
@@ -496,8 +500,13 @@ document.addEventListener('DOMContentLoaded', function() {
   var editBtn = document.getElementById('editBtnBookmarks');
   if (editBtn) {
     editBtn.innerHTML = '\uC218\uC815';
-    editBtn.addEventListener('click', function() {
-      isEditMode = !isEditMode;
+    editBtn.addEventListener('click', async function() {
+      if (isEditMode) {
+        await saveToStorage();
+        isEditMode = false;
+      } else {
+        isEditMode = true;
+      }
       editBtn.innerHTML = isEditMode ? '\uC800\uC7A5' : '\uC218\uC815';
       editBtn.classList.toggle('saving', isEditMode);
       renderBookmarks();

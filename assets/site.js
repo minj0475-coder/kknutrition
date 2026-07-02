@@ -379,6 +379,17 @@ function setupMessageTemplates() {
   let items = readMessageTemplates();
   let lastLocalTemplateSaveAt = 0;
   let templateHasUnsyncedLocalChanges = false;
+  let templateEditMode = false;
+  let templateDirty = false;
+  const templateEditBtn = document.createElement("button");
+  templateEditBtn.className = "promo-btn primary";
+  templateEditBtn.type = "button";
+  templateEditBtn.textContent = "\uC218\uC815";
+  const templateHead = list.closest(".message-template-card")?.querySelector(".message-template-head");
+  if (templateHead && !document.getElementById("messageTemplateEditSaveBtn")) {
+    templateEditBtn.id = "messageTemplateEditSaveBtn";
+    templateHead.appendChild(templateEditBtn);
+  }
   const setStatus = message => {
     if (!status) return;
     status.textContent = message || "";
@@ -386,8 +397,9 @@ function setupMessageTemplates() {
     if (message) status._timer = window.setTimeout(() => { status.textContent = ""; }, 1600);
   };
   const persist = () => {
-    lastLocalTemplateSaveAt = saveMessageTemplates(items, { sync: false });
+    lastLocalTemplateSaveAt = Date.now();
     templateHasUnsyncedLocalChanges = true;
+    templateDirty = true;
     return lastLocalTemplateSaveAt;
   };
   const forcePersist = async () => {
@@ -399,14 +411,31 @@ function setupMessageTemplates() {
       try {
         await window.KKNutritionCloudSync.saveKey(MESSAGE_TEMPLATES_KEY, value, savedAt, false);
         templateHasUnsyncedLocalChanges = false;
+        templateDirty = false;
         setStatus("저장했습니다.");
       } catch (error) {
         console.error("Message template save failed:", error);
+        templateDirty = true;
         setStatus("저장에 실패했습니다. 인터넷 연결 또는 Firebase 권한을 확인해 주세요.");
       }
       return;
     }
+    templateDirty = false;
     setStatus("이 브라우저에는 저장했습니다. 클라우드 동기화는 아직 준비 중입니다.");
+  };
+  const syncTemplateEditControls = () => {
+    if (addBtn) addBtn.style.display = templateEditMode ? "" : "none";
+    templateEditBtn.textContent = templateEditMode ? "\uC800\uC7A5" : "\uC218\uC815";
+    list.querySelectorAll("[data-template-title], [data-template-body]").forEach(input => {
+      input.disabled = !templateEditMode;
+    });
+    list.querySelectorAll("[data-template-save]").forEach(button => {
+      button.style.display = "none";
+    });
+    list.querySelectorAll("[data-template-delete]").forEach(button => {
+      button.style.display = templateEditMode ? "" : "none";
+      button.disabled = !templateEditMode;
+    });
   };
   const copyTemplate = async index => {
     const text = items[index] && items[index].body ? items[index].body.trim() : "";
@@ -475,6 +504,7 @@ function setupMessageTemplates() {
         copyTemplate(index);
       }));
       details.querySelector("[data-template-title]").addEventListener("input", event => {
+        if (!templateEditMode) return;
         items[index].title = event.target.value;
         items[index].updatedAt = Date.now();
         const titleDisplay = details.querySelector("[data-template-title-display]");
@@ -482,6 +512,7 @@ function setupMessageTemplates() {
         persist();
       });
       details.querySelector("[data-template-body]").addEventListener("input", event => {
+        if (!templateEditMode) return;
         items[index].body = event.target.value;
         items[index].updatedAt = Date.now();
         persist();
@@ -490,6 +521,7 @@ function setupMessageTemplates() {
         forcePersist();
       });
       details.querySelector("[data-template-delete]").addEventListener("click", () => {
+        if (!templateEditMode) return;
         items.splice(index, 1);
         persist();
         render();
@@ -497,9 +529,11 @@ function setupMessageTemplates() {
       });
       list.appendChild(details);
     });
+    syncTemplateEditControls();
   };
   if (addBtn) {
     addBtn.addEventListener("click", () => {
+      if (!templateEditMode) return;
       items.push(normalizeTemplateItem({ title: DEFAULT_MESSAGE_TEMPLATE_TITLE, body: "" }));
       persist();
       render();
@@ -508,8 +542,22 @@ function setupMessageTemplates() {
       setStatus("새 문자 양식을 추가했습니다.");
     });
   }
+  templateEditBtn.addEventListener("click", async () => {
+    if (!templateEditMode) {
+      templateEditMode = true;
+      syncTemplateEditControls();
+      setStatus("\uC218\uC815 \uBAA8\uB4DC\uC785\uB2C8\uB2E4.");
+      return;
+    }
+    await forcePersist();
+    if (!templateDirty) {
+      templateEditMode = false;
+      syncTemplateEditControls();
+    }
+  });
   window.addEventListener("kknutrition:cloud-data-applied", event => {
     if (!event.detail || event.detail.key !== MESSAGE_TEMPLATES_KEY) return;
+    if (templateEditMode || templateDirty) return;
     const remoteUpdatedAt = Number(event.detail.updatedAt) || 0;
     if (templateHasUnsyncedLocalChanges && remoteUpdatedAt < lastLocalTemplateSaveAt) {
       lastLocalTemplateSaveAt = saveMessageTemplates(items, { sync: false });
@@ -535,6 +583,17 @@ function setupWorkNotes() {
   let deletedState = readWorkNoteDeletedState();
   let activeIndex = 0;
   let lastLocalWorkNoteSaveAt = 0;
+  let workNoteEditMode = false;
+  let workNoteDirty = false;
+  const workNoteEditBtn = document.createElement("button");
+  workNoteEditBtn.className = "promo-btn primary";
+  workNoteEditBtn.type = "button";
+  workNoteEditBtn.textContent = "\uC218\uC815";
+  const workNoteHead = list.closest(".work-note-card")?.querySelector(".work-note-head");
+  if (workNoteHead && !document.getElementById("workNoteEditSaveBtn")) {
+    workNoteEditBtn.id = "workNoteEditSaveBtn";
+    workNoteHead.appendChild(workNoteEditBtn);
+  }
   const setStatus = message => {
     if (!status) return;
     status.textContent = message || "";
@@ -542,7 +601,37 @@ function setupWorkNotes() {
     if (message) status._timer = window.setTimeout(() => { status.textContent = ""; }, 1600);
   };
   const persist = () => {
-    lastLocalWorkNoteSaveAt = saveWorkNotes(notes, deletedState);
+    lastLocalWorkNoteSaveAt = Date.now();
+    workNoteDirty = true;
+  };
+  const forcePersist = async () => {
+    const savedAt = saveWorkNotes(notes, deletedState);
+    lastLocalWorkNoteSaveAt = savedAt;
+    const value = localStorage.getItem(WORK_NOTES_KEY) || "";
+    if (window.KKNutritionCloudSync && typeof window.KKNutritionCloudSync.saveKey === "function") {
+      setStatus("\uC800\uC7A5 \uC911\uC785\uB2C8\uB2E4...");
+      try {
+        await window.KKNutritionCloudSync.saveKey(WORK_NOTES_KEY, value, savedAt, false);
+        workNoteDirty = false;
+        setStatus("\uC800\uC7A5\uD588\uC2B5\uB2C8\uB2E4.");
+      } catch (error) {
+        console.error("Work note save failed:", error);
+        workNoteDirty = true;
+        setStatus("\uC800\uC7A5\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4. \uC778\uD130\uB137 \uC5F0\uACB0\uC744 \uD655\uC778\uD574 \uC8FC\uC138\uC694.");
+      }
+      return;
+    }
+    workNoteDirty = false;
+    setStatus("\uC774 \uBE0C\uB77C\uC6B0\uC800\uC5D0\uB294 \uC800\uC7A5\uD588\uC2B5\uB2C8\uB2E4.");
+  };
+  const syncWorkNoteEditControls = () => {
+    if (addBtn) addBtn.style.display = workNoteEditMode ? "" : "none";
+    if (deleteBtn) {
+      deleteBtn.style.display = workNoteEditMode ? "" : "none";
+      deleteBtn.disabled = !workNoteEditMode;
+    }
+    bodyInput.disabled = !workNoteEditMode;
+    workNoteEditBtn.textContent = workNoteEditMode ? "\uC800\uC7A5" : "\uC218\uC815";
   };
   const normalizeActiveIndex = () => {
     if (!notes.length) notes = [normalizeWorkNoteItem({ title: "", body: "", titleManual: false })];
@@ -574,12 +663,14 @@ function setupWorkNotes() {
     bodyInput.value = note.body || "";
     bodyInput.placeholder = "첫 줄은 생각서랍 제목으로 표시됩니다.\n\n긴 작업 기준, 이미지 프롬프트, 반복해서 쓰는 문장 등을 적어두세요.";
     if (deleteBtn) deleteBtn.disabled = false;
+    syncWorkNoteEditControls();
   };
   const render = () => {
     renderList();
     renderEditor();
   };
   bodyInput.addEventListener("input", event => {
+    if (!workNoteEditMode) return;
     normalizeActiveIndex();
     notes[activeIndex].body = event.target.value;
     notes[activeIndex].title = makeAutoTitle(notes[activeIndex].body);
@@ -590,6 +681,7 @@ function setupWorkNotes() {
   });
   if (addBtn) {
     addBtn.addEventListener("click", () => {
+      if (!workNoteEditMode) return;
       notes.push(normalizeWorkNoteItem({ title: "", body: "", titleManual: false }));
       activeIndex = notes.length - 1;
       persist();
@@ -613,6 +705,7 @@ function setupWorkNotes() {
   }
   if (deleteBtn) {
     deleteBtn.addEventListener("click", () => {
+      if (!workNoteEditMode) return;
       const deletedNote = notes[activeIndex];
       if (deletedNote) {
         deletedState.ids = Array.from(new Set([...(deletedState.ids || []), String(deletedNote.id || "")].filter(Boolean)));
@@ -629,8 +722,23 @@ function setupWorkNotes() {
       setStatus("삭제했습니다.");
     });
   }
+  workNoteEditBtn.addEventListener("click", async () => {
+    if (!workNoteEditMode) {
+      workNoteEditMode = true;
+      syncWorkNoteEditControls();
+      bodyInput.focus();
+      setStatus("\uC218\uC815 \uBAA8\uB4DC\uC785\uB2C8\uB2E4.");
+      return;
+    }
+    await forcePersist();
+    if (!workNoteDirty) {
+      workNoteEditMode = false;
+      syncWorkNoteEditControls();
+    }
+  });
   window.addEventListener("kknutrition:cloud-data-applied", event => {
     if (!event.detail || event.detail.key !== WORK_NOTES_KEY) return;
+    if (workNoteEditMode || workNoteDirty) return;
     const remoteUpdatedAt = Number(event.detail.updatedAt) || 0;
     if (remoteUpdatedAt < lastLocalWorkNoteSaveAt) {
       lastLocalWorkNoteSaveAt = saveWorkNotes(notes, deletedState);
@@ -2241,11 +2349,11 @@ function readVendorNetwork() {
   return VENDOR_NETWORK_DEFAULT.map(normalizeVendorNetwork);
 }
 
-function saveVendorNetwork(rows) {
+function saveVendorNetwork(rows, options = {}) {
   try {
     const value = JSON.stringify(rows.map(normalizeVendorNetwork));
     localStorage.setItem(VENDOR_NETWORK_KEY, value);
-    notifyNoteDataChanged(VENDOR_NETWORK_KEY, value);
+    if (options.sync !== false) notifyNoteDataChanged(VENDOR_NETWORK_KEY, value);
   } catch(e) {}
 }
 
@@ -2257,11 +2365,11 @@ function readPromoContacts() {
   return PROMO_CONTACTS_DEFAULT.map(normalizePromoContact);
 }
 
-function savePromoContacts(rows) {
+function savePromoContacts(rows, options = {}) {
   try {
     const value = JSON.stringify(rows.map(normalizePromoContact));
     localStorage.setItem(PROMO_CONTACTS_KEY, value);
-    notifyNoteDataChanged(PROMO_CONTACTS_KEY, value);
+    if (options.sync !== false) notifyNoteDataChanged(PROMO_CONTACTS_KEY, value);
   } catch(e) {}
 }
 
@@ -2329,6 +2437,72 @@ document.addEventListener("DOMContentLoaded", () => {
   let vendorRows = readVendorNetwork();
   let vendorGroups = readVendorGroups();
   const openVendorGroups = new Set();
+  let promoEditMode = false;
+  let promoDirty = false;
+  const promoEditBtn = document.createElement("button");
+  promoEditBtn.id = "promoContactsEditSaveBtn";
+  promoEditBtn.className = "promo-btn primary";
+  promoEditBtn.type = "button";
+  promoEditBtn.textContent = "\uC218\uC815";
+  const promoActions = document.querySelector("#vendorNetworkPanel .promo-contact-actions") || document.querySelector("#promoContactPanel .promo-contact-actions");
+  if (promoActions && !document.getElementById("promoContactsEditSaveBtn")) {
+    promoActions.appendChild(promoEditBtn);
+  }
+
+  function markPromoDirty() {
+    promoDirty = true;
+  }
+
+  function setPromoStatus(message) {
+    if (!statusEl) return;
+    statusEl.textContent = message || "";
+    window.clearTimeout(statusEl._timer);
+    if (message) statusEl._timer = window.setTimeout(() => { statusEl.textContent = ""; }, 1800);
+  }
+
+  async function savePromoEditingData() {
+    setPromoStatus("\uC800\uC7A5 \uC911\uC785\uB2C8\uB2E4...");
+    saveVendorGroups(vendorGroups, { sync: false });
+    saveVendorNetwork(vendorRows, { sync: false });
+    savePromoContacts(rows, { sync: false });
+    if (window.KKNutritionCloudSync && typeof window.KKNutritionCloudSync.saveKey === "function") {
+      const savedAt = Date.now();
+      try {
+        await Promise.all([
+          window.KKNutritionCloudSync.saveKey(VENDOR_GROUPS_KEY, localStorage.getItem(VENDOR_GROUPS_KEY) || "", savedAt, false),
+          window.KKNutritionCloudSync.saveKey(VENDOR_NETWORK_KEY, localStorage.getItem(VENDOR_NETWORK_KEY) || "", savedAt, false),
+          window.KKNutritionCloudSync.saveKey(PROMO_CONTACTS_KEY, localStorage.getItem(PROMO_CONTACTS_KEY) || "", savedAt, false)
+        ]);
+      } catch (error) {
+        console.error("Promo contacts save failed:", error);
+        promoDirty = true;
+        setPromoStatus("\uC800\uC7A5\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4. \uC778\uD130\uB137 \uC5F0\uACB0\uC744 \uD655\uC778\uD574 \uC8FC\uC138\uC694.");
+        return;
+      }
+    }
+    promoDirty = false;
+    setPromoStatus("\uC800\uC7A5\uD588\uC2B5\uB2C8\uB2E4.");
+  }
+
+  function syncPromoEditControls() {
+    promoEditBtn.textContent = promoEditMode ? "\uC800\uC7A5" : "\uC218\uC815";
+    [addBtn, vendorAddBtn, vendorCategoryManageBtn, vendorCategoryAddBtn].forEach(button => {
+      if (!button) return;
+      button.style.display = promoEditMode ? "" : "none";
+      button.disabled = !promoEditMode;
+    });
+    document.querySelectorAll("#vendorNetworkPanel .promo-cell-input, #promoContactPanel .promo-cell-input").forEach(input => {
+      input.disabled = !promoEditMode;
+    });
+    document.querySelectorAll("#vendorNetworkPanel .promo-delete-btn, #promoContactPanel .promo-delete-btn, #vendorNetworkPanel .vendor-category-delete-btn").forEach(button => {
+      button.style.display = promoEditMode ? "" : "none";
+      button.disabled = !promoEditMode;
+    });
+    if (vendorCategoryManager && !promoEditMode) {
+      vendorCategoryManager.hidden = true;
+      if (vendorCategoryManageBtn) vendorCategoryManageBtn.setAttribute("aria-expanded", "false");
+    }
+  }
 
   function getPromoContactQuery() {
     const input = globalSearchInput || searchInput;
@@ -2362,9 +2536,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function addVendorNetworkRow(group) {
+    if (!promoEditMode) return;
     const targetGroup = group || getPreferredVendorAddGroup();
     vendorRows.push({ group: targetGroup, company: "", phone: "", email: "" });
-    saveVendorNetwork(vendorRows);
+    markPromoDirty();
     openVendorGroups.add(targetGroup);
     renderVendorNetwork();
     const groupSection = vendorAccordion
@@ -2399,6 +2574,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const deleteBtn = item.querySelector(".vendor-category-delete-btn");
       input.value = group;
       input.addEventListener("change", () => {
+        if (!promoEditMode) return;
         const next = input.value.trim();
         if (!next || (vendorGroups.includes(next) && next !== group)) {
           input.value = group;
@@ -2412,12 +2588,12 @@ document.addEventListener("DOMContentLoaded", () => {
           openVendorGroups.delete(group);
           openVendorGroups.add(next);
         }
-        saveVendorGroups(vendorGroups);
-        saveVendorNetwork(vendorRows);
+        markPromoDirty();
         renderVendorCategoryManager();
         renderVendorNetwork();
       });
       deleteBtn.addEventListener("click", () => {
+        if (!promoEditMode) return;
         if (vendorGroups.length <= 1) return;
         const fallback = vendorGroups.find(item => item !== group) || "기타";
         vendorGroups = vendorGroups.filter(item => item !== group);
@@ -2426,8 +2602,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         openVendorGroups.delete(group);
         openVendorGroups.add(fallback);
-        saveVendorGroups(vendorGroups);
-        saveVendorNetwork(vendorRows);
+        markPromoDirty();
         renderVendorCategoryManager();
         renderVendorNetwork();
       });
@@ -2455,7 +2630,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!Number.isInteger(fromIndex) || fromIndex === toIndex || fromIndex < 0 || fromIndex >= vendorGroups.length) return;
         const [moved] = vendorGroups.splice(fromIndex, 1);
         vendorGroups.splice(toIndex, 0, moved);
-        saveVendorGroups(vendorGroups);
+        markPromoDirty();
         renderVendorCategoryManager();
         renderVendorNetwork();
       });
@@ -2511,8 +2686,9 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
         bindVendorInputs(tr, index, row);
         tr.querySelector(".promo-delete-btn").addEventListener("click", () => {
+          if (!promoEditMode) return;
           vendorRows.splice(index, 1);
-          saveVendorNetwork(vendorRows);
+          markPromoDirty();
           renderVendorNetwork();
         });
         vendorBody.appendChild(tr);
@@ -2520,6 +2696,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     renderVendorNetworkAccordion(filtered, query);
+    syncPromoEditControls();
   }
 
   function bindVendorInputs(root, index, row) {
@@ -2527,8 +2704,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const field = input.getAttribute("data-vendor-field");
       input.value = row[field] || "";
       input.addEventListener("input", () => {
+        if (!promoEditMode) return;
         vendorRows[index][field] = input.value;
-        saveVendorNetwork(vendorRows);
+        markPromoDirty();
       });
       if (field === "group") {
         input.addEventListener("change", renderVendorNetwork);
@@ -2585,8 +2763,9 @@ document.addEventListener("DOMContentLoaded", () => {
           `;
           bindVendorInputs(card, index, row);
           card.querySelector(".promo-delete-btn").addEventListener("click", () => {
+            if (!promoEditMode) return;
             vendorRows.splice(index, 1);
-            saveVendorNetwork(vendorRows);
+            markPromoDirty();
             renderVendorNetwork();
           });
           panel.appendChild(card);
@@ -2613,7 +2792,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function persistAndRender() {
-    savePromoContacts(rows);
+    markPromoDirty();
     renderPromoContacts();
   }
 
@@ -2654,8 +2833,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const field = input.getAttribute("data-field");
         input.value = row[field] || "";
         input.addEventListener("input", () => {
+          if (!promoEditMode) return;
           rows[index][field] = input.value;
-          savePromoContacts(rows);
+          markPromoDirty();
           if (field === "link") updateOpenLink(tr, rows[index].link);
         });
       });
@@ -2669,6 +2849,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       tr.querySelector(".promo-delete-btn").addEventListener("click", () => {
+        if (!promoEditMode) return;
         rows.splice(index, 1);
         persistAndRender();
       });
@@ -2676,6 +2857,7 @@ document.addEventListener("DOMContentLoaded", () => {
       updateOpenLink(tr, row.link);
       tableBody.appendChild(tr);
     });
+    syncPromoEditControls();
   }
 
   function updateOpenLink(tr, link) {
@@ -2701,6 +2883,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (vendorCategoryManageBtn && vendorCategoryManager) {
     vendorCategoryManageBtn.setAttribute("aria-expanded", "false");
     vendorCategoryManageBtn.addEventListener("click", () => {
+      if (!promoEditMode) return;
       vendorCategoryManager.hidden = !vendorCategoryManager.hidden;
       vendorCategoryManageBtn.setAttribute("aria-expanded", vendorCategoryManager.hidden ? "false" : "true");
       if (!vendorCategoryManager.hidden) renderVendorCategoryManager();
@@ -2708,9 +2891,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   if (vendorCategoryAddBtn) {
     vendorCategoryAddBtn.addEventListener("click", () => {
+      if (!promoEditMode) return;
       const name = makeUniqueVendorGroupName("새 카테고리");
       vendorGroups.push(name);
-      saveVendorGroups(vendorGroups);
+      markPromoDirty();
       openVendorGroups.add(name);
       renderVendorCategoryManager();
       renderVendorNetwork();
@@ -2724,6 +2908,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   if (addBtn) {
     addBtn.addEventListener("click", () => {
+      if (!promoEditMode) return;
       rows.unshift({ company: "", phone: "", link: "", memo: "" });
       persistAndRender();
       const firstInput = tableBody.querySelector("[data-field='company']");
@@ -2732,9 +2917,26 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   if (vendorAddBtn) {
     vendorAddBtn.addEventListener("click", () => {
+      if (!promoEditMode) return;
       addVendorNetworkRow(getPreferredVendorAddGroup());
     });
   }
+  promoEditBtn.addEventListener("click", async () => {
+    if (!promoEditMode) {
+      promoEditMode = true;
+      syncPromoEditControls();
+      setPromoStatus("\uC218\uC815 \uBAA8\uB4DC\uC785\uB2C8\uB2E4.");
+      return;
+    }
+    await savePromoEditingData();
+    if (!promoDirty) {
+      promoEditMode = false;
+      renderVendorCategoryManager();
+      renderVendorNetwork();
+      renderPromoContacts();
+      syncPromoEditControls();
+    }
+  });
   if (vendorFullscreenBtn && vendorPanel) {
     vendorFullscreenBtn.addEventListener("click", async () => {
       try {
@@ -2771,6 +2973,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.addEventListener("kknutrition:cloud-data-applied", event => {
     if (!event.detail) return;
+    if (promoEditMode || promoDirty) return;
     if (event.detail.key === PROMO_CONTACTS_KEY) {
       rows = readPromoContacts();
       renderPromoContacts();
@@ -3742,11 +3945,11 @@ function readVendorGroups() {
   return VENDOR_GROUPS_DEFAULT.slice();
 }
 
-function saveVendorGroups(groups) {
+function saveVendorGroups(groups, options = {}) {
   try {
     const value = JSON.stringify(normalizeVendorGroups(groups));
     localStorage.setItem(VENDOR_GROUPS_KEY, value);
-    notifyNoteDataChanged(VENDOR_GROUPS_KEY, value);
+    if (options.sync !== false) notifyNoteDataChanged(VENDOR_GROUPS_KEY, value);
   } catch(e) {}
 }
 
