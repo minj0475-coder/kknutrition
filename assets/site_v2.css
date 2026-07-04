@@ -20231,3 +20231,18 @@ html body:not(.sidebar-collapsed) .app-sidebar button#sidebarCloseBtn.sidebar-ic
   top: 8px !important;
   transform: none !important;
 }
+
+/* 2026-07-05 collapsed desktop sidebar: the pig logo is the only rail toggle. */
+@media (min-width: 901px) {
+  html body.sidebar-collapsed .app-sidebar .sidebar-icon-btn,
+  html body.sidebar-collapsed .app-sidebar button#sidebarCloseBtn.sidebar-icon-btn {
+    display: none !important;
+    pointer-events: none !important;
+  }
+
+  html body.sidebar-collapsed .app-sidebar .sidebar-logo-link {
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    z-index: 3 !important;
+  }
+}
