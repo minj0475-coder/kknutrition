@@ -18829,3 +18829,135 @@ html body #app-content #bookmarks .add-new-card:focus-within {
   outline-style: solid !important;
   background: #ffffff !important;
 }
+
+/* 2026-07-04 unsaved changes modal: clean, readable action buttons. */
+html body #unsavedModalOverlay.unsaved-modal-overlay,
+html body #unsavedModalOverlay.memo-modal-overlay {
+  z-index: 10000 !important;
+  background: rgba(32, 33, 35, 0.52) !important;
+  backdrop-filter: blur(5px) !important;
+  -webkit-backdrop-filter: blur(5px) !important;
+}
+
+html body #unsavedModalOverlay .unsaved-modal,
+html body #unsavedModalOverlay .memo-modal {
+  width: min(90vw, 396px) !important;
+  max-width: 396px !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-radius: 20px !important;
+  background: #ffffff !important;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22) !important;
+  overflow: hidden !important;
+  position: relative !important;
+}
+
+html body #unsavedModalOverlay .unsaved-modal-body {
+  padding: 36px 26px 28px !important;
+  text-align: center !important;
+}
+
+html body #unsavedModalOverlay .unsaved-modal-icon {
+  width: 58px !important;
+  height: 58px !important;
+  margin: 0 auto 22px !important;
+  border-radius: 999px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #fff0f0 !important;
+  color: #a5665f !important;
+}
+
+html body #unsavedModalOverlay .unsaved-modal-icon svg {
+  color: currentColor !important;
+  stroke: currentColor !important;
+}
+
+html body #unsavedModalOverlay h3 {
+  margin: 0 0 12px !important;
+  color: #202123 !important;
+  font-size: 24px !important;
+  line-height: 1.25 !important;
+  letter-spacing: 0 !important;
+}
+
+html body #unsavedModalOverlay p {
+  margin: 0 0 28px !important;
+  color: #4f4f55 !important;
+  font-size: 16px !important;
+  line-height: 1.65 !important;
+}
+
+html body #unsavedModalOverlay .unsaved-modal-actions {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+
+html body #unsavedModalOverlay button#unsavedModalConfirmBtn,
+html body button#unsavedModalConfirmBtn.unsaved-modal-confirm {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 48px !important;
+  width: 100% !important;
+  padding: 13px 18px !important;
+  border: 1px solid #202123 !important;
+  border-radius: 12px !important;
+  background: #202123 !important;
+  color: #ffffff !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  line-height: 1.25 !important;
+  text-align: center !important;
+  box-shadow: none !important;
+}
+
+html body #unsavedModalOverlay button#unsavedModalCancelBtn,
+html body button#unsavedModalCancelBtn.unsaved-modal-cancel {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 48px !important;
+  width: 100% !important;
+  padding: 13px 18px !important;
+  border: 1px solid #d9d9df !important;
+  border-radius: 12px !important;
+  background: #ffffff !important;
+  color: #202123 !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  line-height: 1.25 !important;
+  text-align: center !important;
+  box-shadow: none !important;
+}
+
+html body #unsavedModalOverlay button#unsavedModalCloseBtn,
+html body button#unsavedModalCloseBtn.unsaved-modal-close {
+  position: absolute !important;
+  top: 14px !important;
+  right: 14px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 40px !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  padding: 8px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  color: #202123 !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html body #unsavedModalOverlay button#unsavedModalConfirmBtn:hover {
+    background: #000000 !important;
+    border-color: #000000 !important;
+  }
+
+  html body #unsavedModalOverlay button#unsavedModalCancelBtn:hover,
+  html body #unsavedModalOverlay button#unsavedModalCloseBtn:hover {
+    background: #f4f4f5 !important;
+  }
+}

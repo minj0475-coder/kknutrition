@@ -439,6 +439,16 @@ function setupMessageTemplates() {
       button.disabled = !templateEditMode;
     });
   };
+  window.isMessageTemplateEditMode = () => templateEditMode;
+  window.exitMessageTemplateEditMode = () => {
+    if (!templateEditMode && !templateDirty) return;
+    templateEditMode = false;
+    templateDirty = false;
+    templateHasUnsyncedLocalChanges = false;
+    items = readMessageTemplates();
+    render();
+    setStatus("");
+  };
   const copyTemplate = async index => {
     const text = items[index] && items[index].body ? items[index].body.trim() : "";
     if (!text) return setStatus("복사할 문자 내용이 없습니다.");
@@ -636,6 +646,17 @@ function setupWorkNotes() {
     }
     bodyInput.disabled = !workNoteEditMode;
     workNoteEditBtn.textContent = workNoteEditMode ? "\uC800\uC7A5" : "\uC218\uC815";
+  };
+  window.isWorkNoteEditMode = () => workNoteEditMode;
+  window.exitWorkNoteEditMode = () => {
+    if (!workNoteEditMode && !workNoteDirty) return;
+    workNoteEditMode = false;
+    workNoteDirty = false;
+    deletedState = readWorkNoteDeletedState();
+    notes = readWorkNotes();
+    activeIndex = 0;
+    render();
+    setStatus("");
   };
   const normalizeActiveIndex = () => {
     if (!notes.length) notes = [normalizeWorkNoteItem({ title: "", body: "", titleManual: false })];
@@ -1780,6 +1801,146 @@ document.addEventListener('DOMContentLoaded', () => {
   updateTabs();
 });
 
+function setupUnsavedNavigationGuard() {
+  if (window.__kkUnsavedGuardReady) return;
+  window.__kkUnsavedGuardReady = true;
+
+  const hasEditablePageContent = () => Boolean(document.querySelector('.editable-content[contenteditable="true"]'));
+  const hasSectionEditMode = () => Boolean(document.querySelector(
+    '.work-note-card.is-editing, .message-template-card.is-editing, #vendorNetworkPanel.is-editing, #promoContactPanel.is-editing, #bookmarks .edit-mode-card'
+  ));
+  window.hasUnsavedChanges = () => {
+    const bookmarkUnsaved = (typeof window.isBookmarkEditMode === 'function' && window.isBookmarkEditMode());
+    const workNoteUnsaved = (typeof window.isWorkNoteEditMode === 'function' && window.isWorkNoteEditMode());
+    const messageTemplateUnsaved = (typeof window.isMessageTemplateEditMode === 'function' && window.isMessageTemplateEditMode());
+    const promoContactsUnsaved = (typeof window.isPromoContactsEditMode === 'function' && window.isPromoContactsEditMode());
+    return hasEditablePageContent() || hasSectionEditMode() || bookmarkUnsaved || workNoteUnsaved || messageTemplateUnsaved || promoContactsUnsaved;
+  };
+
+  window.clearUnsavedEditModes = () => {
+    document.querySelectorAll('.editable-content[contenteditable="true"]').forEach(el => el.removeAttribute('contenteditable'));
+    document.querySelectorAll('.fab-edit-btn.saving').forEach(btn => {
+      btn.textContent = "수정";
+      btn.classList.remove('saving');
+    });
+    if (typeof window.exitBookmarkEditMode === 'function') window.exitBookmarkEditMode();
+    if (typeof window.exitWorkNoteEditMode === 'function') window.exitWorkNoteEditMode();
+    if (typeof window.exitMessageTemplateEditMode === 'function') window.exitMessageTemplateEditMode();
+    if (typeof window.exitPromoContactsEditMode === 'function') window.exitPromoContactsEditMode();
+    document.querySelectorAll('.work-note-card.is-editing, .message-template-card.is-editing, #vendorNetworkPanel.is-editing, #promoContactPanel.is-editing').forEach(card => {
+      card.classList.remove('is-editing');
+    });
+    document.querySelectorAll('#workNoteEditSaveBtn, #messageTemplateEditSaveBtn, #promoContactsEditSaveBtn, #editBtnBookmarks').forEach(btn => {
+      btn.textContent = "수정";
+      btn.classList.remove('saving');
+    });
+  };
+
+  const ensureUnsavedModal = () => {
+    let modal = document.getElementById('unsavedModalOverlay');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'unsavedModalOverlay';
+      modal.className = 'memo-modal-overlay unsaved-modal-overlay';
+      modal.style.cssText = 'display:none;z-index:10000;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;backdrop-filter:blur(4px);transition:opacity 0.2s;';
+      modal.innerHTML = `
+        <div class="memo-modal unsaved-modal">
+          <button id="unsavedModalCloseBtn" class="unsaved-modal-close" type="button" aria-label="닫기">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+          <div class="unsaved-modal-body">
+            <div class="unsaved-modal-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </div>
+            <h3>저장하지 않은 내용</h3>
+            <p>이 화면을 나가면 수정한 내용이<br>사라질 수 있습니다.</p>
+            <div class="unsaved-modal-actions">
+              <button id="unsavedModalConfirmBtn" class="unsaved-modal-confirm" type="button">저장하지 않고 나가기</button>
+              <button id="unsavedModalCancelBtn" class="unsaved-modal-cancel" type="button">계속 작성하기</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+    modal.classList.add('unsaved-modal-overlay');
+    const panel = modal.querySelector('.memo-modal');
+    if (panel) panel.classList.add('unsaved-modal');
+    const body = modal.querySelector('.unsaved-modal-body') || panel?.querySelector(':scope > div:not(.memo-modal-header)');
+    if (body) body.classList.add('unsaved-modal-body');
+    const icon = modal.querySelector('.unsaved-modal-icon') || body?.querySelector(':scope > div:first-child');
+    if (icon) icon.classList.add('unsaved-modal-icon');
+    const actions = modal.querySelector('.unsaved-modal-actions') || body?.querySelector(':scope > div:last-child');
+    if (actions) actions.classList.add('unsaved-modal-actions');
+    const confirm = modal.querySelector('#unsavedModalConfirmBtn');
+    const cancel = modal.querySelector('#unsavedModalCancelBtn');
+    const close = modal.querySelector('#unsavedModalCloseBtn');
+    if (confirm) confirm.classList.add('unsaved-modal-confirm');
+    if (cancel) cancel.classList.add('unsaved-modal-cancel');
+    if (close) close.classList.add('unsaved-modal-close');
+    return modal;
+  };
+
+  const showUnsavedModal = targetHash => {
+    const modal = ensureUnsavedModal();
+    const closeBtn = modal.querySelector('#unsavedModalCloseBtn');
+    const cancelBtn = modal.querySelector('#unsavedModalCancelBtn');
+    const confirmBtn = modal.querySelector('#unsavedModalConfirmBtn');
+    if (!closeBtn || !cancelBtn || !confirmBtn) return;
+
+    const cleanupAndClose = () => {
+      modal.style.opacity = '0';
+      modal.style.pointerEvents = 'none';
+      modal.classList.remove('active');
+      window.setTimeout(() => { modal.style.display = 'none'; }, 180);
+      closeBtn.removeEventListener('click', cleanupAndClose);
+      cancelBtn.removeEventListener('click', cleanupAndClose);
+      confirmBtn.removeEventListener('click', confirmNav);
+    };
+
+    const confirmNav = () => {
+      if (typeof window.clearUnsavedEditModes === 'function') window.clearUnsavedEditModes();
+      cleanupAndClose();
+      window.location.hash = targetHash;
+    };
+
+    modal.style.display = 'flex';
+    void modal.offsetWidth;
+    modal.style.opacity = '1';
+    modal.style.pointerEvents = 'auto';
+    modal.classList.add('active');
+    closeBtn.addEventListener('click', cleanupAndClose);
+    cancelBtn.addEventListener('click', cleanupAndClose);
+    confirmBtn.addEventListener('click', confirmNav);
+  };
+
+  window.addEventListener('beforeunload', event => {
+    if (!window.hasUnsavedChanges()) return;
+    event.preventDefault();
+    event.returnValue = '';
+  });
+
+  document.addEventListener('click', event => {
+    const link = event.target.closest('a[href^="#"]');
+    if (!link) return;
+    const targetHash = link.getAttribute('href');
+    const currentHash = window.location.hash || '#home';
+    if (!targetHash || targetHash === currentHash || !window.hasUnsavedChanges()) return;
+    event.preventDefault();
+    showUnsavedModal(targetHash);
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', setupUnsavedNavigationGuard);
+} else {
+  setupUnsavedNavigationGuard();
+}
+
 const ANNUAL_SHEET_LINKS_KEY = "kkulkkoori_annual_sheet_links_v1";
 const ANNUAL_SHEET_LINK_DEFAULTS = {
   allergy: "",
@@ -2509,6 +2670,20 @@ document.addEventListener("DOMContentLoaded", () => {
       if (vendorCategoryManageBtn) vendorCategoryManageBtn.setAttribute("aria-expanded", "false");
     }
   }
+  window.isPromoContactsEditMode = () => promoEditMode;
+  window.exitPromoContactsEditMode = () => {
+    if (!promoEditMode && !promoDirty) return;
+    promoEditMode = false;
+    promoDirty = false;
+    rows = readPromoContacts();
+    vendorRows = readVendorNetwork();
+    vendorGroups = readVendorGroups();
+    renderVendorCategoryManager();
+    renderVendorNetwork();
+    renderPromoContacts();
+    syncPromoEditControls();
+    setPromoStatus("");
+  };
 
   function getPromoContactQuery() {
     const input = globalSearchInput || searchInput;

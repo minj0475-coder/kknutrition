@@ -1073,10 +1073,37 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
 });
 
 // ====== Navigation Guard Logic ======
+if (!window.__kkUnsavedGuardReady) {
 window.hasUnsavedChanges = () => {
   const otherUnsaved = Object.values(editingState).some(state => state === true);
   const bookmarkUnsaved = (typeof window.isBookmarkEditMode === 'function' && window.isBookmarkEditMode());
-  return otherUnsaved || bookmarkUnsaved;
+  const workNoteUnsaved = (typeof window.isWorkNoteEditMode === 'function' && window.isWorkNoteEditMode());
+  const messageTemplateUnsaved = (typeof window.isMessageTemplateEditMode === 'function' && window.isMessageTemplateEditMode());
+  const promoContactsUnsaved = (typeof window.isPromoContactsEditMode === 'function' && window.isPromoContactsEditMode());
+  return otherUnsaved || bookmarkUnsaved || workNoteUnsaved || messageTemplateUnsaved || promoContactsUnsaved;
+};
+
+window.clearUnsavedEditModes = () => {
+  for (let key in editingState) {
+    if (editingState[key]) {
+      editingState[key] = false;
+      const section = document.getElementById(key);
+      if (section) {
+        const btn = section.querySelector('.fab-edit-btn');
+        if (btn) {
+          btn.textContent = "수정";
+          btn.classList.remove('saving');
+        }
+        const editables = section.querySelectorAll('.editable-content');
+        editables.forEach(el => el.removeAttribute('contenteditable'));
+      }
+    }
+  }
+
+  if (typeof window.exitBookmarkEditMode === 'function') window.exitBookmarkEditMode();
+  if (typeof window.exitWorkNoteEditMode === 'function') window.exitWorkNoteEditMode();
+  if (typeof window.exitMessageTemplateEditMode === 'function') window.exitMessageTemplateEditMode();
+  if (typeof window.exitPromoContactsEditMode === 'function') window.exitPromoContactsEditMode();
 };
 
 window.addEventListener('beforeunload', (e) => {
@@ -1100,15 +1127,15 @@ document.addEventListener('click', (e) => {
     if (!modal) {
       modal = document.createElement('div');
       modal.id = 'unsavedModalOverlay';
-      modal.className = 'memo-modal-overlay';
+      modal.className = 'memo-modal-overlay unsaved-modal-overlay';
       modal.style.cssText = 'display: none; z-index: 10000; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; backdrop-filter: blur(4px); transition: opacity 0.2s;';
       modal.innerHTML = `
-        <div class="memo-modal" style="max-width: 360px; width: 90%; background: var(--card); border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.15); margin: auto;">
-          <button id="unsavedModalCloseBtn" type="button" aria-label="닫기" style="position: absolute; top: 16px; right: 16px; background: transparent; border: none; padding: 8px; cursor: pointer; color: var(--text); border-radius: 50%; transition: background 0.2s;" onmouseover="this.style.background='var(--line)'" onmouseout="this.style.background='transparent'">
+        <div class="memo-modal unsaved-modal" style="max-width: 360px; width: 90%; background: var(--card); border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.15); margin: auto;">
+          <button id="unsavedModalCloseBtn" class="unsaved-modal-close" type="button" aria-label="닫기" style="position: absolute; top: 16px; right: 16px; background: transparent; border: none; padding: 8px; cursor: pointer; color: var(--text); border-radius: 50%; transition: background 0.2s;" onmouseover="this.style.background='var(--line)'" onmouseout="this.style.background='transparent'">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
           </button>
-          <div style="padding: 32px 24px 24px; text-align: center;">
-            <div style="width: 54px; height: 54px; border-radius: 50%; background: rgba(255, 107, 107, 0.1); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+          <div class="unsaved-modal-body" style="padding: 32px 24px 24px; text-align: center;">
+            <div class="unsaved-modal-icon" style="width: 54px; height: 54px; border-radius: 50%; background: rgba(255, 107, 107, 0.1); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
                 <line x1="12" y1="9" x2="12" y2="13"></line>
@@ -1119,15 +1146,26 @@ document.addEventListener('click', (e) => {
             <p style="margin: 0 0 28px; line-height: 1.6; font-size: 15px; color: var(--text);">
               이 화면을 나가면 수정한 내용이<br>사라질 수 있습니다.
             </p>
-            <div style="display: flex; flex-direction: column; gap: 10px;">
-              <button id="unsavedModalConfirmBtn" type="button" style="width: 100%; padding: 14px 0; font-size: 16px; font-weight: 700; background: var(--primary); color: #ffffff !important; border: none; border-radius: 12px; cursor: pointer; box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);">저장하지 않고 나가기</button>
-              <button id="unsavedModalCancelBtn" type="button" style="width: 100%; padding: 14px 0; font-size: 16px; font-weight: 700; background: var(--card-soft); color: var(--heading); border: 1px solid var(--line); border-radius: 12px; cursor: pointer;">계속 작성하기</button>
+            <div class="unsaved-modal-actions" style="display: flex; flex-direction: column; gap: 10px;">
+              <button id="unsavedModalConfirmBtn" class="unsaved-modal-confirm" type="button" style="width: 100%; padding: 14px 0; font-size: 16px; font-weight: 700; background: var(--primary); color: #ffffff !important; border: none; border-radius: 12px; cursor: pointer; box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);">저장하지 않고 나가기</button>
+              <button id="unsavedModalCancelBtn" class="unsaved-modal-cancel" type="button" style="width: 100%; padding: 14px 0; font-size: 16px; font-weight: 700; background: var(--card-soft); color: var(--heading); border: 1px solid var(--line); border-radius: 12px; cursor: pointer;">계속 작성하기</button>
             </div>
           </div>
         </div>
       `;
       document.body.appendChild(modal);
     }
+    modal.classList.add('unsaved-modal-overlay');
+    const modalPanel = modal.querySelector('.memo-modal');
+    if (modalPanel) modalPanel.classList.add('unsaved-modal');
+    const modalBody = modal.querySelector('.unsaved-modal-body') || modalPanel?.querySelector(':scope > div:not(.memo-modal-header)');
+    if (modalBody) modalBody.classList.add('unsaved-modal-body');
+    const confirmButton = modal.querySelector('#unsavedModalConfirmBtn');
+    const cancelButton = modal.querySelector('#unsavedModalCancelBtn');
+    const closeButton = modal.querySelector('#unsavedModalCloseBtn');
+    if (confirmButton) confirmButton.classList.add('unsaved-modal-confirm');
+    if (cancelButton) cancelButton.classList.add('unsaved-modal-cancel');
+    if (closeButton) closeButton.classList.add('unsaved-modal-close');
     
     // Force visibility regardless of CSS issues
     modal.style.display = 'flex';
@@ -1153,26 +1191,7 @@ document.addEventListener('click', (e) => {
     };
     
     const confirmNav = () => {
-      for (let key in editingState) {
-        if (editingState[key]) {
-          editingState[key] = false;
-          const section = document.getElementById(key);
-          if (section) {
-            const btn = section.querySelector('.fab-edit-btn');
-            if (btn) {
-              btn.textContent = "수정";
-              btn.classList.remove('saving');
-            }
-            const editables = section.querySelectorAll('.editable-content');
-            editables.forEach(el => el.removeAttribute('contenteditable'));
-          }
-        }
-      }
-      
-      if (typeof window.exitBookmarkEditMode === 'function') {
-        window.exitBookmarkEditMode();
-      }
-      
+      if (typeof window.clearUnsavedEditModes === 'function') window.clearUnsavedEditModes();
       cleanupAndClose();
       window.location.hash = targetHash;
     };
@@ -1182,6 +1201,7 @@ document.addEventListener('click', (e) => {
     confirmBtn.addEventListener('click', confirmNav);
   }
 });
+}
 // ===================================
 
 function init() {
