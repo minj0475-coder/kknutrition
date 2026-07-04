@@ -18961,3 +18961,26 @@ html body button#unsavedModalCloseBtn.unsaved-modal-close {
     background: #f4f4f5 !important;
   }
 }
+
+/* 2026-07-04 unsaved modal button contrast hotfix: override app-content button resets. */
+html body #app-content #unsavedModalOverlay button#unsavedModalConfirmBtn,
+html body #app-content #unsavedModalOverlay button#unsavedModalConfirmBtn.unsaved-modal-confirm,
+html body #app-content button#unsavedModalConfirmBtn.unsaved-modal-confirm:not(.academic-day):not(.brand):not(.mobile-menu-btn):not(.sidebar-icon-btn) {
+  background: #202123 !important;
+  background-color: #202123 !important;
+  border: 1px solid #202123 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+html body #app-content #unsavedModalOverlay button#unsavedModalCancelBtn,
+html body #app-content #unsavedModalOverlay button#unsavedModalCancelBtn.unsaved-modal-cancel,
+html body #app-content button#unsavedModalCancelBtn.unsaved-modal-cancel:not(.academic-day):not(.brand):not(.mobile-menu-btn):not(.sidebar-icon-btn) {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border: 1px solid #d9d9df !important;
+  color: #202123 !important;
+  -webkit-text-fill-color: #202123 !important;
+  opacity: 1 !important;
+}
