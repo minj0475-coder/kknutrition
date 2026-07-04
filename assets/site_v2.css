@@ -18800,6 +18800,46 @@ html body #promo-contacts .promo-contact-card.is-editing .promo-contact-table {
   outline-offset: 0 !important;
 }
 
+/* 2026-07-04 logo cleanup: keep the pig logo position fixed and remove stray icon layers behind it. */
+html body #app-content > header.top .brand,
+html body #app-content > header.top .brand:where(:link, :visited),
+html body .app-sidebar .sidebar-logo-link,
+html body.sidebar-open .app-sidebar .sidebar-logo-link,
+html body.sidebar-collapsed .app-sidebar .sidebar-logo-link,
+html body:not(.sidebar-collapsed) .app-sidebar .sidebar-logo-link {
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+html body #app-content > header.top .brand::before,
+html body #app-content > header.top .brand::after,
+html body .app-sidebar .sidebar-logo-link::before,
+html body .app-sidebar .sidebar-logo-link::after,
+html body.sidebar-open .app-sidebar .sidebar-logo-link::before,
+html body.sidebar-open .app-sidebar .sidebar-logo-link::after,
+html body.sidebar-collapsed .app-sidebar .sidebar-logo-link::before,
+html body.sidebar-collapsed .app-sidebar .sidebar-logo-link::after,
+html body:not(.sidebar-collapsed) .app-sidebar .sidebar-logo-link::before,
+html body:not(.sidebar-collapsed) .app-sidebar .sidebar-logo-link::after,
+html body #app-content > header.top .brand .logo::before,
+html body #app-content > header.top .brand .logo::after,
+html body .app-sidebar .sidebar-logo-link .logo::before,
+html body .app-sidebar .sidebar-logo-link .logo::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+html body #app-content > header.top .brand-logo-img,
+html body .app-sidebar .sidebar-logo {
+  position: relative !important;
+  z-index: 1 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
 html body #app-content #today-menu .work-note-card.is-editing:focus-within,
 html body #app-content #today-menu .message-template-card.is-editing:focus-within,
 html body #app-content #promo-contacts .vendor-network-card.is-editing:focus-within,
