@@ -18746,3 +18746,9 @@ html body #app-content #promo-contacts #promoContactsEditSaveBtn {
     padding-inline: 12px !important;
   }
 }
+
+/* 2026-07-04 keep the character hero only on Home; work tabs start with content. */
+html body #app-content .page-section:not(#home) > main.wrap > .hero,
+html body .page-section:not(#home) > main.wrap > .hero {
+  display: none !important;
+}
