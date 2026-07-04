@@ -19985,3 +19985,10 @@ html body #app-content #bookmarks img.bm-favicon {
   transform: scale(1.12) !important;
   transform-origin: center !important;
 }
+
+/* 2026-07-05 staff accordion: remove the divider under opened headers. */
+html body #app-content #staff .staff-accordion[open] > summary,
+html body #staff .staff-accordion[open] > summary {
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+}
