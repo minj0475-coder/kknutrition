@@ -19367,3 +19367,13 @@ html body #app-content :is(#academicPrevMonthBtn, #academicNextMonthBtn).academi
   font-size: 22px !important;
   line-height: 1 !important;
 }
+
+@media (max-width: 768px) {
+  html {
+    touch-action: pan-x pan-y;
+  }
+
+  html body :is(input, textarea, select) {
+    font-size: max(16px, 1rem) !important;
+  }
+}
