@@ -18680,8 +18680,7 @@ html body #app-content :is(
 html body #app-content :is(
   #workNoteEditSaveBtn,
   #messageTemplateEditSaveBtn,
-  #promoContactsEditSaveBtn,
-  #promoContactsEditSaveBtnSecondary
+  #promoContactsEditSaveBtn
 ).quiet-edit-toggle {
   min-width: 58px !important;
   min-height: 38px !important;
@@ -18700,14 +18699,12 @@ html body #app-content :is(
 html body #app-content :is(
   #workNoteEditSaveBtn,
   #messageTemplateEditSaveBtn,
-  #promoContactsEditSaveBtn,
-  #promoContactsEditSaveBtnSecondary
+  #promoContactsEditSaveBtn
 ).quiet-edit-toggle:hover,
 html body #app-content :is(
   #workNoteEditSaveBtn,
   #messageTemplateEditSaveBtn,
-  #promoContactsEditSaveBtn,
-  #promoContactsEditSaveBtnSecondary
+  #promoContactsEditSaveBtn
 ).quiet-edit-toggle:focus-visible {
   border-color: #cfcfcf !important;
   background: #f7f7f8 !important;
@@ -18719,4 +18716,33 @@ html body #app-content :is(
 html body #app-content :is(.work-note-head, .message-template-head, #promo-contacts .promo-contact-actions) .quiet-edit-toggle {
   flex: 0 0 auto !important;
   justify-self: end !important;
+}
+
+html body #app-content #promo-contacts .promo-contact-global-search,
+html body #promo-contacts .promo-contact-global-search {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+html body #app-content #promo-contacts .promo-contact-global-search .promo-contact-master-search,
+html body #promo-contacts .promo-contact-global-search .promo-contact-master-search {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+html body #app-content #promo-contacts #promoContactsEditSaveBtn {
+  flex: 0 0 auto !important;
+}
+
+@media (max-width: 640px) {
+  html body #app-content #promo-contacts .promo-contact-global-search,
+  html body #promo-contacts .promo-contact-global-search {
+    align-items: stretch !important;
+  }
+
+  html body #app-content #promo-contacts #promoContactsEditSaveBtn {
+    min-width: 64px !important;
+    padding-inline: 12px !important;
+  }
 }

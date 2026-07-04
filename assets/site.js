@@ -2448,18 +2448,9 @@ document.addEventListener("DOMContentLoaded", () => {
   promoEditBtn.className = "promo-btn quiet-edit-toggle";
   promoEditBtn.type = "button";
   promoEditBtn.textContent = "\uC218\uC815";
-  const promoEditBtnSecondary = document.createElement("button");
-  promoEditBtnSecondary.id = "promoContactsEditSaveBtnSecondary";
-  promoEditBtnSecondary.className = "promo-btn quiet-edit-toggle";
-  promoEditBtnSecondary.type = "button";
-  promoEditBtnSecondary.textContent = "\uC218\uC815";
-  const promoActions = document.querySelector("#vendorNetworkPanel .promo-contact-actions") || document.querySelector("#promoContactPanel .promo-contact-actions");
-  if (promoActions && !document.getElementById("promoContactsEditSaveBtn")) {
-    promoActions.appendChild(promoEditBtn);
-  }
-  const promoSecondaryActions = document.querySelector("#promoContactPanel .promo-contact-actions");
-  if (promoSecondaryActions && !document.getElementById("promoContactsEditSaveBtnSecondary")) {
-    promoSecondaryActions.appendChild(promoEditBtnSecondary);
+  const promoGlobalSearch = document.querySelector("#promo-contacts .promo-contact-global-search");
+  if (promoGlobalSearch && !document.getElementById("promoContactsEditSaveBtn")) {
+    promoGlobalSearch.appendChild(promoEditBtn);
   }
 
   function markPromoDirty() {
@@ -2501,7 +2492,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (vendorPanel) vendorPanel.classList.toggle("is-editing", promoEditMode);
     if (panel) panel.classList.toggle("is-editing", promoEditMode);
     promoEditBtn.textContent = promoEditMode ? "\uC800\uC7A5" : "\uC218\uC815";
-    promoEditBtnSecondary.textContent = promoEditMode ? "\uC800\uC7A5" : "\uC218\uC815";
     [addBtn, vendorAddBtn, vendorCategoryManageBtn, vendorCategoryAddBtn].forEach(button => {
       if (!button) return;
       button.style.display = promoEditMode ? "" : "none";
@@ -2954,7 +2944,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
   promoEditBtn.addEventListener("click", togglePromoEditMode);
-  promoEditBtnSecondary.addEventListener("click", togglePromoEditMode);
   if (vendorFullscreenBtn && vendorPanel) {
     vendorFullscreenBtn.addEventListener("click", async () => {
       try {
