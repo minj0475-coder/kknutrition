@@ -15984,16 +15984,20 @@ html body #app-content #today-menu .message-template-delete {
 
 /* 2026-06-24 final accordion and sidebar alignment pass. */
 html body #app-content section#monthly.page-section .academic-weekly-card .academic-week-list .academic-week-group > button.academic-week-range.academic-week-range {
-  width: 112px !important;
-  min-width: 112px !important;
-  max-width: 112px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  width: 140px !important;
+  min-width: 140px !important;
+  max-width: 100% !important;
   justify-content: space-between !important;
   white-space: nowrap !important;
-  padding: 9px 12px !important;
+  padding: 9px 14px 9px 16px !important;
 }
 
 html body #app-content .academic-week-range-text {
   display: block !important;
+  flex: 0 0 auto !important;
   min-width: 0 !important;
   overflow: visible !important;
   white-space: nowrap !important;
@@ -16002,7 +16006,9 @@ html body #app-content .academic-week-range-text {
 html body #app-content .academic-week-toggle {
   width: 9px !important;
   height: 9px !important;
+  flex: 0 0 9px !important;
   min-width: 9px !important;
+  margin-left: 0 !important;
   border-right: 1.8px solid currentColor !important;
   border-bottom: 1.8px solid currentColor !important;
   transform: rotate(-135deg) translate(-1px, -1px) !important;
