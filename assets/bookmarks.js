@@ -362,17 +362,17 @@ function faviconImg(url) {
   try {
     var domain = extractDomain(url);
     if (LOCAL_ICONS[domain]) {
-      return '<img src="' + LOCAL_ICONS[domain] + '" class="bm-favicon" alt="" loading="lazy"'
-        + ' onerror="this.onerror=null;this.src=\'assets/app-icon-192.png\';">';
+      return '<span class="bm-favicon-frame" aria-hidden="true"><img src="' + LOCAL_ICONS[domain] + '" class="bm-favicon" alt="" loading="lazy"'
+        + ' onerror="this.onerror=null;this.src=\'assets/app-icon-192.png\';"></span>';
     }
 
     var g = 'https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://' + domain + '&size=64';
     
     // 로딩 시 지연 방지
-    return '<img src="' + g + '" class="bm-favicon" alt="" loading="lazy"'
-      + ' onerror="this.onerror=null;this.src=\'assets/app-icon-192.png\';">';
+    return '<span class="bm-favicon-frame" aria-hidden="true"><img src="' + g + '" class="bm-favicon" alt="" loading="lazy"'
+      + ' onerror="this.onerror=null;this.src=\'assets/app-icon-192.png\';"></span>';
   } catch(e) {
-    return '<img src="assets/app-icon-192.png" class="bm-favicon" alt="">';
+    return '<span class="bm-favicon-frame" aria-hidden="true"><img src="assets/app-icon-192.png" class="bm-favicon" alt=""></span>';
   }
 }
 

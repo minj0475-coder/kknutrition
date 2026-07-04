@@ -19953,3 +19953,35 @@ html body #app-content #today-menu :is(#workNoteEditSaveBtn, #messageTemplateEdi
     max-width: 64px !important;
   }
 }
+
+/* 2026-07-05 bookmark favicons: crop leftover white edges like app icons. */
+html body #app-content #bookmarks .bm-favicon-frame {
+  display: inline-grid !important;
+  place-items: center !important;
+  width: 30px !important;
+  height: 30px !important;
+  min-width: 30px !important;
+  flex: 0 0 30px !important;
+  border-radius: 9px !important;
+  overflow: hidden !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  isolation: isolate !important;
+}
+
+html body #app-content #bookmarks .bm-favicon-frame .bm-favicon,
+html body #app-content #bookmarks img.bm-favicon {
+  display: block !important;
+  width: 30px !important;
+  height: 30px !important;
+  min-width: 30px !important;
+  min-height: 30px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 9px !important;
+  background: transparent !important;
+  object-fit: cover !important;
+  box-shadow: none !important;
+  transform: scale(1.12) !important;
+  transform-origin: center !important;
+}
