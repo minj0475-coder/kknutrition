@@ -19825,12 +19825,52 @@ html body #app-content #annual.is-page-editing #edit-annual-1 {
     padding: 2px 0 !important;
   }
 
-  html body #app-content #academicModal .academic-done-property input[type="checkbox"] {
+html body #app-content #academicModal .academic-done-property input[type="checkbox"] {
     justify-self: start !important;
     width: 20px !important;
     height: 20px !important;
     min-width: 20px !important;
     margin: 0 !important;
     accent-color: #202123 !important;
+  }
+}
+
+/* 2026-07-04 final bookmark edit override: neutral fill and mobile non-overlap. */
+html body #app-content #bookmarks .edit-mode-card,
+html body #app-content #bookmarks .edit-mode-card:hover,
+html body #app-content #bookmarks .edit-mode-card:focus-within,
+html body #app-content #bookmarks .add-new-card,
+html body #app-content #bookmarks .add-new-card:hover,
+html body #app-content #bookmarks .add-new-card:focus-within {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border-color: #d9d9df !important;
+  box-shadow: none !important;
+}
+
+html body #app-content #bookmarks .edit-mode-card,
+html body #app-content #bookmarks .add-new-card {
+  outline: 1px solid #202123 !important;
+  outline-offset: 2px !important;
+}
+
+@media (max-width: 768px) {
+  html body #app-content section#bookmarks.page-section #bookmarkGrid.bookmark-grid {
+    gap: 14px !important;
+    padding: 2px 1px !important;
+  }
+
+  html body #app-content section#bookmarks.page-section #bookmarkGrid .bookmark-card.edit-mode-card,
+  html body #app-content section#bookmarks.page-section #bookmarkGrid .bookmark-card.edit-mode-card:hover,
+  html body #app-content section#bookmarks.page-section #bookmarkGrid .bookmark-card.edit-mode-card:focus-within,
+  html body #app-content section#bookmarks.page-section #bookmarkGrid .bookmark-card.add-new-card,
+  html body #app-content section#bookmarks.page-section #bookmarkGrid .bookmark-card.add-new-card:hover,
+  html body #app-content section#bookmarks.page-section #bookmarkGrid .bookmark-card.add-new-card:focus-within {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    outline: 0 !important;
+    border: 1.5px solid #202123 !important;
+    border-radius: 12px !important;
+    transform: none !important;
   }
 }
