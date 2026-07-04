@@ -18735,6 +18735,22 @@ html body #app-content #promo-contacts #promoContactsEditSaveBtn {
   flex: 0 0 auto !important;
 }
 
+/* 2026-07-04 default view mode: keep edit-only tools hidden until Edit is pressed. */
+html body #app-content #today-menu .work-note-card:not(.is-editing) #workNoteAddBtn,
+html body #app-content #today-menu .work-note-card:not(.is-editing) #workNoteDeleteBtn,
+html body #app-content #today-menu .message-template-card:not(.is-editing) #messageTemplateAddBtn,
+html body #app-content #today-menu .message-template-card:not(.is-editing) .message-template-delete,
+html body #app-content #promo-contacts .vendor-network-card:not(.is-editing) #vendorCategoryManageBtn,
+html body #app-content #promo-contacts .vendor-network-card:not(.is-editing) #vendorCategoryAddBtn,
+html body #app-content #promo-contacts .vendor-network-card:not(.is-editing) #vendorNetworkAddRowBtn,
+html body #app-content #promo-contacts .vendor-network-card:not(.is-editing) .vendor-category-delete-btn,
+html body #app-content #promo-contacts .vendor-network-card:not(.is-editing) .vendor-category-row-add-btn,
+html body #app-content #promo-contacts .vendor-network-card:not(.is-editing) .promo-delete-btn,
+html body #app-content #promo-contacts .promo-contact-card:not(.is-editing) #promoAddRowBtn,
+html body #app-content #promo-contacts .promo-contact-card:not(.is-editing) .promo-delete-btn {
+  display: none !important;
+}
+
 @media (max-width: 640px) {
   html body #app-content #promo-contacts .promo-contact-global-search,
   html body #promo-contacts .promo-contact-global-search {
