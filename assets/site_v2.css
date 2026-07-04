@@ -18638,9 +18638,7 @@ html body #app-content :is(
   .work-note-card.is-editing .work-note-textbox,
   .message-template-card.is-editing .message-template-item,
   .message-template-card.is-editing .message-template-textbox,
-  #promo-contacts .vendor-network-card.is-editing .promo-table-wrap,
-  #promo-contacts .vendor-network-card.is-editing .vendor-category-manager,
-  #promo-contacts .promo-contact-card.is-editing .promo-table-wrap
+  #promo-contacts .vendor-network-card.is-editing .vendor-category-manager
 ) {
   border-width: 1px !important;
   border-color: rgba(201, 120, 120, 0.56) !important;
@@ -18653,9 +18651,7 @@ html body #app-content :is(
 html body #app-content :is(
   .work-note-card.is-editing .work-note-textbox:focus-within,
   .message-template-card.is-editing .message-template-item:focus-within,
-  #promo-contacts .vendor-network-card.is-editing .promo-table-wrap:focus-within,
-  #promo-contacts .vendor-network-card.is-editing .vendor-category-manager:focus-within,
-  #promo-contacts .promo-contact-card.is-editing .promo-table-wrap:focus-within
+  #promo-contacts .vendor-network-card.is-editing .vendor-category-manager:focus-within
 ) {
   border-color: rgba(201, 120, 120, 0.72) !important;
   background: #ffffff !important;
