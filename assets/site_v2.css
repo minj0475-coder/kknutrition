@@ -18764,3 +18764,68 @@ html body #app-content #promo-contacts .promo-contact-card:not(.is-editing) .pro
     padding-inline: 12px !important;
   }
 }
+
+/* 2026-07-04 edit mode outline alignment: match daily/monthly/annual editable outlines. */
+html body #app-content #today-menu .work-note-card.is-editing,
+html body #app-content #today-menu .message-template-card.is-editing,
+html body #app-content #promo-contacts .vendor-network-card.is-editing,
+html body #app-content #promo-contacts .promo-contact-card.is-editing,
+html body #promo-contacts .vendor-network-card.is-editing,
+html body #promo-contacts .promo-contact-card.is-editing {
+  outline: 2px dashed var(--primary) !important;
+  outline-offset: 4px !important;
+  border-color: transparent !important;
+  background: rgba(255,107,107,0.02) !important;
+}
+
+html body #app-content #bookmarks .edit-mode-card,
+html body #app-content #bookmarks .add-new-card {
+  outline: 2px dashed var(--primary) !important;
+  outline-offset: 4px !important;
+  border-color: transparent !important;
+  background: rgba(255,107,107,0.02) !important;
+}
+
+html body #app-content #today-menu :is(
+  .work-note-card.is-editing .work-note-textbox,
+  .work-note-card.is-editing .work-note-textbox:focus-within,
+  .message-template-card.is-editing .message-template-item,
+  .message-template-card.is-editing .message-template-item:focus-within,
+  .message-template-card.is-editing .message-template-textbox,
+  .message-template-card.is-editing .message-template-textbox:focus-within
+),
+html body #app-content #promo-contacts .vendor-network-card.is-editing :is(
+  .vendor-category-manager,
+  .vendor-category-manager:focus-within,
+  .vendor-accordion-group,
+  .vendor-accordion-group:focus-within
+),
+html body #promo-contacts .vendor-network-card.is-editing :is(
+  .vendor-category-manager,
+  .vendor-category-manager:focus-within,
+  .vendor-accordion-group,
+  .vendor-accordion-group:focus-within
+) {
+  border-color: transparent !important;
+  border-style: solid !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+html body #app-content #promo-contacts .promo-contact-card.is-editing .promo-contact-table,
+html body #promo-contacts .promo-contact-card.is-editing .promo-contact-table {
+  outline: 0 !important;
+  outline-offset: 0 !important;
+}
+
+html body #app-content #today-menu .work-note-card.is-editing:focus-within,
+html body #app-content #today-menu .message-template-card.is-editing:focus-within,
+html body #app-content #promo-contacts .vendor-network-card.is-editing:focus-within,
+html body #app-content #promo-contacts .promo-contact-card.is-editing:focus-within,
+html body #promo-contacts .vendor-network-card.is-editing:focus-within,
+html body #promo-contacts .promo-contact-card.is-editing:focus-within,
+html body #app-content #bookmarks .edit-mode-card:focus-within,
+html body #app-content #bookmarks .add-new-card:focus-within {
+  outline-style: solid !important;
+  background: #ffffff !important;
+}
