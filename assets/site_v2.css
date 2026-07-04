@@ -19377,3 +19377,49 @@ html body #app-content :is(#academicPrevMonthBtn, #academicNextMonthBtn).academi
     font-size: max(16px, 1rem) !important;
   }
 }
+
+/* 2026-07-04 edit mode: keep the outer edit outline only, without pink fills or inner red guide lines. */
+html body #app-content #today-menu .message-template-card.is-editing,
+html body #app-content #promo-contacts .vendor-network-card.is-editing,
+html body #app-content #promo-contacts .promo-contact-card.is-editing,
+html body #promo-contacts .vendor-network-card.is-editing,
+html body #promo-contacts .promo-contact-card.is-editing {
+  background: #ffffff !important;
+}
+
+html body #app-content #today-menu .message-template-card.is-editing:focus-within,
+html body #app-content #promo-contacts .vendor-network-card.is-editing:focus-within,
+html body #app-content #promo-contacts .promo-contact-card.is-editing:focus-within,
+html body #promo-contacts .vendor-network-card.is-editing:focus-within,
+html body #promo-contacts .promo-contact-card.is-editing:focus-within {
+  background: #ffffff !important;
+}
+
+html body #app-content #today-menu .message-template-card.is-editing :is(
+  .message-template-item,
+  .message-template-item:focus-within,
+  .message-template-textbox,
+  .message-template-textbox:focus-within
+),
+html body #app-content #promo-contacts .vendor-network-card.is-editing :is(
+  .vendor-category-manager,
+  .vendor-category-manager:focus-within,
+  .vendor-accordion-group,
+  .vendor-accordion-group:focus-within
+),
+html body #promo-contacts .vendor-network-card.is-editing :is(
+  .vendor-category-manager,
+  .vendor-category-manager:focus-within,
+  .vendor-accordion-group,
+  .vendor-accordion-group:focus-within
+) {
+  border: 1px solid var(--portal-control-line) !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+}
+
+html body #app-content #promo-contacts .promo-contact-card.is-editing .promo-contact-table,
+html body #promo-contacts .promo-contact-card.is-editing .promo-contact-table {
+  outline: 0 !important;
+  outline-offset: 0 !important;
+}
