@@ -478,9 +478,6 @@ function setupMessageTemplates() {
     list.querySelectorAll("[data-template-title], [data-template-body]").forEach(input => {
       input.disabled = !templateEditMode;
     });
-    list.querySelectorAll("[data-template-save]").forEach(button => {
-      button.style.display = "none";
-    });
     list.querySelectorAll("[data-template-delete]").forEach(button => {
       button.style.display = templateEditMode ? "" : "none";
       button.disabled = !templateEditMode;
@@ -526,28 +523,19 @@ function setupMessageTemplates() {
             <textarea rows="10" data-template-body="${index}">${escapeTemplateHtml(item.body || "")}</textarea>
           </label>
           <div class="message-template-actions">
-            <button class="message-template-save" type="button" data-template-save="${index}">저장</button>
             <button class="message-template-delete" type="button" data-template-delete="${index}">삭제</button>
           </div>
         </div>
       `;
-      const saveButton = details.querySelector("[data-template-save]");
-      if (saveButton) saveButton.textContent = "저장";
       const actionWrap = details.querySelector(".message-template-actions");
       if (actionWrap) {
         actionWrap.innerHTML = "";
-        const cleanSaveButton = document.createElement("button");
-        cleanSaveButton.className = "message-template-save";
-        cleanSaveButton.type = "button";
-        cleanSaveButton.dataset.templateSave = String(index);
-        cleanSaveButton.textContent = "저장";
-        cleanSaveButton.textContent = "\uC800\uC7A5";
         const cleanDeleteButton = document.createElement("button");
         cleanDeleteButton.className = "message-template-delete";
         cleanDeleteButton.type = "button";
         cleanDeleteButton.dataset.templateDelete = String(index);
         cleanDeleteButton.textContent = "삭제";
-        actionWrap.append(cleanSaveButton, cleanDeleteButton);
+        actionWrap.append(cleanDeleteButton);
       }
       const inlineCopyButton = details.querySelector(".message-template-copy-inline");
       const bodyTextarea = details.querySelector("[data-template-body]");
@@ -575,9 +563,6 @@ function setupMessageTemplates() {
         items[index].body = event.target.value;
         items[index].updatedAt = Date.now();
         persist();
-      });
-      details.querySelector("[data-template-save]").addEventListener("click", () => {
-        forcePersist();
       });
       details.querySelector("[data-template-delete]").addEventListener("click", () => {
         if (!templateEditMode) return;
