@@ -318,6 +318,15 @@ html body #app-content #today-menu .work-note-status {
   }
 }
 
+/* 2026-07-04 academic calendar: remove the awkward outer frame only. */
+html body #app-content section#monthly.page-section .academic-calendar-panel,
+html body #app-content #monthly .academic-calendar-panel {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
