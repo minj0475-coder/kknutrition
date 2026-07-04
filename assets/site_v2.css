@@ -860,6 +860,7 @@ td:first-child{
     grid-template-columns:repeat(3,minmax(0,1fr))!important;
   }
 }
+
 @media(max-width:900px){
   .grid3,.grid2,.month-list{grid-template-columns:1fr}
   .top-inner{align-items:flex-start;flex-direction:column}
@@ -19895,5 +19896,60 @@ html body #app-content #bookmarks .add-new-card {
     border: 1.5px solid #202123 !important;
     border-radius: 12px !important;
     transform: none !important;
+  }
+}
+
+/* 2026-07-05 work note/template header actions: keep edit/save fixed. */
+html body #app-content #today-menu .work-note-head,
+html body #app-content #today-menu .message-template-head {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 40px 68px !important;
+  align-items: start !important;
+  column-gap: 10px !important;
+  row-gap: 8px !important;
+}
+
+html body #app-content #today-menu .work-note-head > div,
+html body #app-content #today-menu .message-template-head .section-title {
+  grid-column: 1 !important;
+  min-width: 0 !important;
+}
+
+html body #app-content #today-menu :is(#workNoteAddBtn, #messageTemplateAddBtn) {
+  grid-column: 2 !important;
+  justify-self: end !important;
+  align-self: start !important;
+}
+
+html body #app-content #today-menu #workNoteAddBtn#workNoteAddBtn,
+html body #app-content #today-menu #messageTemplateAddBtn#messageTemplateAddBtn {
+  justify-self: end !important;
+  align-self: start !important;
+  margin: 0 !important;
+}
+
+html body #app-content #today-menu :is(#workNoteEditSaveBtn, #messageTemplateEditSaveBtn).quiet-edit-toggle {
+  grid-column: 3 !important;
+  justify-self: stretch !important;
+  align-self: start !important;
+  width: 68px !important;
+  min-width: 68px !important;
+  max-width: 68px !important;
+  min-height: 40px !important;
+  padding: 9px 0 !important;
+  text-align: center !important;
+}
+
+@media (max-width: 420px) {
+  html body #app-content #today-menu .work-note-head,
+  html body #app-content #today-menu .message-template-head {
+    grid-template-columns: minmax(0, 1fr) 40px 64px !important;
+    column-gap: 8px !important;
+  }
+
+  html body #app-content #today-menu :is(#workNoteEditSaveBtn, #messageTemplateEditSaveBtn).quiet-edit-toggle {
+    width: 64px !important;
+    min-width: 64px !important;
+    max-width: 64px !important;
   }
 }
