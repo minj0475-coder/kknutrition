@@ -612,6 +612,26 @@ function renderMemoList(containerId, isHome) {
   if (!container) return;
 
   const displayMemos = isHome ? memos.slice(0, 3) : memos;
+  const focusMemoWithoutPageJump = (textarea, options = {}) => {
+    if (!textarea) return;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const scrollParent = textarea.closest(".memo-modal-body .memo-list");
+    const parentScrollTop = scrollParent ? scrollParent.scrollTop : null;
+    textarea.focus({ preventScroll: true });
+    if (options.cursorEnd && typeof textarea.setSelectionRange === "function") {
+      const length = textarea.value.length;
+      textarea.setSelectionRange(length, length);
+    }
+    requestAnimationFrame(() => {
+      window.scrollTo(scrollX, scrollY);
+      if (scrollParent && parentScrollTop !== null) scrollParent.scrollTop = parentScrollTop;
+    });
+    setTimeout(() => {
+      window.scrollTo(scrollX, scrollY);
+      if (scrollParent && parentScrollTop !== null) scrollParent.scrollTop = parentScrollTop;
+    }, 80);
+  };
 
   // 1. Remove extra items
   while (container.children.length > displayMemos.length) {
@@ -693,18 +713,14 @@ function renderMemoList(containerId, isHome) {
                 const modalList = document.getElementById("memoModalList");
                 const nextTextarea = modalList.children[index + 1]?.querySelector("textarea");
                 if (nextTextarea) {
-                    nextTextarea.focus({ preventScroll: true });
-                    const len = nextTextarea.value.length;
-                    nextTextarea.setSelectionRange(len, len);
+                    focusMemoWithoutPageJump(nextTextarea, { cursorEnd: true });
                 }
             }, 100);
             return;
           }
           const nextTextarea = container.children[index + 1]?.querySelector("textarea");
           if (nextTextarea) {
-            nextTextarea.focus({ preventScroll: true });
-            const len = nextTextarea.value.length;
-            nextTextarea.setSelectionRange(len, len);
+            focusMemoWithoutPageJump(nextTextarea, { cursorEnd: true });
           }
         } else {
           textarea.blur();
@@ -717,8 +733,7 @@ function renderMemoList(containerId, isHome) {
                   const modalList = document.getElementById("memoModalList");
                   const nextTextarea = modalList.children[index + 1]?.querySelector("textarea");
                   if (nextTextarea) {
-                      nextTextarea.focus({ preventScroll: true });
-                      nextTextarea.parentElement.scrollIntoView({ behavior: "smooth", block: "center" });
+                      focusMemoWithoutPageJump(nextTextarea, { cursorEnd: true });
                   }
               }, 100);
               return;
@@ -727,8 +742,7 @@ function renderMemoList(containerId, isHome) {
           setTimeout(() => {
             const nextTextarea = container.children[index + 1]?.querySelector("textarea");
             if (nextTextarea) {
-                nextTextarea.focus({ preventScroll: true });
-                nextTextarea.parentElement.scrollIntoView({ behavior: "smooth", block: "center" });
+                focusMemoWithoutPageJump(nextTextarea, { cursorEnd: true });
             }
           }, 10);
         }
@@ -744,17 +758,13 @@ function renderMemoList(containerId, isHome) {
             setTimeout(() => {
               const targetTextarea = container.children[targetIndex]?.querySelector("textarea");
               if (targetTextarea) {
-                targetTextarea.focus({ preventScroll: true });
-                const len = targetTextarea.value.length;
-                targetTextarea.setSelectionRange(len, len);
+                focusMemoWithoutPageJump(targetTextarea, { cursorEnd: true });
               }
             }, 10);
           } else if (index > 0) {
             const prevTextarea = container.children[index - 1]?.querySelector("textarea");
             if (prevTextarea) {
-              prevTextarea.focus({ preventScroll: true });
-              const len = prevTextarea.value.length;
-              prevTextarea.setSelectionRange(len, len);
+              focusMemoWithoutPageJump(prevTextarea, { cursorEnd: true });
             }
           }
         }
@@ -771,9 +781,7 @@ function renderMemoList(containerId, isHome) {
             setTimeout(() => {
               const targetTextarea = container.children[targetIndex]?.querySelector("textarea");
               if (targetTextarea) {
-                targetTextarea.focus({ preventScroll: true });
-                const length = targetTextarea.value.length;
-                targetTextarea.setSelectionRange(length, length);
+                focusMemoWithoutPageJump(targetTextarea, { cursorEnd: true });
               }
             }, 10);
           } else if (index < memos.length - 1) {
@@ -784,18 +792,14 @@ function renderMemoList(containerId, isHome) {
                   const modalList = document.getElementById("memoModalList");
                   const nextTextarea = modalList.children[index + 1]?.querySelector("textarea");
                   if (nextTextarea) {
-                      nextTextarea.focus({ preventScroll: true });
-                      const length = nextTextarea.value.length;
-                      nextTextarea.setSelectionRange(length, length);
+                      focusMemoWithoutPageJump(nextTextarea, { cursorEnd: true });
                   }
               }, 100);
               return;
             }
             const nextTextarea = container.children[index + 1]?.querySelector("textarea");
             if (nextTextarea) {
-              nextTextarea.focus({ preventScroll: true });
-              const length = nextTextarea.value.length;
-              nextTextarea.setSelectionRange(length, length);
+              focusMemoWithoutPageJump(nextTextarea, { cursorEnd: true });
             }
           } else {
             textarea.blur();
@@ -808,8 +812,7 @@ function renderMemoList(containerId, isHome) {
                     const modalList = document.getElementById("memoModalList");
                     const nextTextarea = modalList.children[index + 1]?.querySelector("textarea");
                     if (nextTextarea) {
-                        nextTextarea.focus({ preventScroll: true });
-                        nextTextarea.parentElement.scrollIntoView({ behavior: "smooth", block: "center" });
+                        focusMemoWithoutPageJump(nextTextarea, { cursorEnd: true });
                     }
                 }, 100);
                 return;
@@ -818,8 +821,7 @@ function renderMemoList(containerId, isHome) {
             setTimeout(() => {
               const nextTextarea = container.children[index + 1]?.querySelector("textarea");
               if (nextTextarea) {
-                  nextTextarea.focus({ preventScroll: true });
-                  nextTextarea.parentElement.scrollIntoView({ behavior: "smooth", block: "center" });
+                  focusMemoWithoutPageJump(nextTextarea, { cursorEnd: true });
               }
             }, 10);
           }
@@ -834,9 +836,7 @@ function renderMemoList(containerId, isHome) {
         setTimeout(() => {
           const targetTextarea = container.children[targetIndex]?.querySelector("textarea");
           if (targetTextarea) {
-            targetTextarea.focus({ preventScroll: true });
-            const len = targetTextarea.value.length;
-            targetTextarea.setSelectionRange(len, len);
+            focusMemoWithoutPageJump(targetTextarea, { cursorEnd: true });
           }
         }, 10);
       }
@@ -861,7 +861,7 @@ function renderMemoList(containerId, isHome) {
         updateAllMemosDOM();
         setTimeout(() => {
           const textareas = container.querySelectorAll("textarea");
-          if (textareas.length > 0) textareas[textareas.length - 1].focus({ preventScroll: true });
+          if (textareas.length > 0) focusMemoWithoutPageJump(textareas[textareas.length - 1], { cursorEnd: true });
         }, 10);
       };
       container.appendChild(newAddBtn);
@@ -877,7 +877,7 @@ function renderMemoList(containerId, isHome) {
       updateAllMemosDOM();
       setTimeout(() => {
         const textareas = container.querySelectorAll("textarea");
-        if (textareas.length > 0) textareas[textareas.length - 1].focus({ preventScroll: true });
+        if (textareas.length > 0) focusMemoWithoutPageJump(textareas[textareas.length - 1], { cursorEnd: true });
       }, 10);
     };
     container.appendChild(newAddBtn);
@@ -1025,6 +1025,7 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
     if (!isEditing) {
       // Enter edit mode
       editingState[pageId] = true;
+      section.classList.add('is-page-editing');
       targetBtn.textContent = "저장";
       targetBtn.classList.add('saving');
       
@@ -1033,7 +1034,7 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
       });
       
       if (editables.length > 0) {
-        editables[0].focus();
+        editables[0].focus({ preventScroll: true });
       }
     } else {
       // Save mode
@@ -1047,6 +1048,7 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
 
       if (!isFirebaseConfigured || !db) {
         editingState[pageId] = false;
+        section.classList.remove('is-page-editing');
         targetBtn.textContent = "수정";
         targetBtn.classList.remove('saving');
         if (pageId === 'annual') syncAnnualMobileCards();
@@ -1055,6 +1057,7 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
 
       setDoc(doc(db, "pageContents", pageId), updateData).then(() => {
         editingState[pageId] = false;
+        section.classList.remove('is-page-editing');
         targetBtn.textContent = "수정";
         targetBtn.classList.remove('saving');
         
@@ -1065,6 +1068,7 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
         console.error("Save failed:", err);
         alert("저장에 실패했습니다.");
         editingState[pageId] = false;
+        section.classList.remove('is-page-editing');
         targetBtn.textContent = "수정";
         targetBtn.classList.remove('saving');
       });
@@ -1089,6 +1093,7 @@ window.clearUnsavedEditModes = () => {
       editingState[key] = false;
       const section = document.getElementById(key);
       if (section) {
+        section.classList.remove('is-page-editing');
         const btn = section.querySelector('.fab-edit-btn');
         if (btn) {
           btn.textContent = "수정";

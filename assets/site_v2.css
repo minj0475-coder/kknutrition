@@ -19624,3 +19624,93 @@ html body #promo-contacts .promo-contact-card.is-editing .promo-contact-table {
   outline: 0 !important;
   outline-offset: 0 !important;
 }
+
+/* 2026-07-04 final override: menu alignment, white edit surfaces, annual table outline. */
+html body .app-sidebar,
+html body.sidebar-open .app-sidebar,
+html body:not(.sidebar-collapsed) .app-sidebar {
+  background: #ffffff !important;
+  background-image: none !important;
+}
+
+html body .app-sidebar .sidebar-head,
+html body.sidebar-open .app-sidebar .sidebar-head,
+html body:not(.sidebar-collapsed) .app-sidebar .sidebar-head {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  overflow: hidden !important;
+  background: #ffffff !important;
+  border-bottom: 1px solid #ececf0 !important;
+}
+
+html body .app-sidebar .sidebar-logo-link,
+html body.sidebar-open .app-sidebar .sidebar-logo-link,
+html body:not(.sidebar-collapsed) .app-sidebar .sidebar-logo-link {
+  background: transparent !important;
+  border: 0 !important;
+  overflow: visible !important;
+}
+
+html body.sidebar-open .app-sidebar .sidebar-logo-link,
+html body:not(.sidebar-collapsed) .app-sidebar .sidebar-logo-link {
+  width: min(220px, calc(100% - 86px)) !important;
+  max-width: min(220px, calc(100% - 86px)) !important;
+}
+
+html body .app-sidebar .sidebar-logo,
+html body.sidebar-open .app-sidebar .sidebar-logo,
+html body:not(.sidebar-collapsed) .app-sidebar .sidebar-logo,
+html body.sidebar-collapsed .app-sidebar .sidebar-logo {
+  width: 46px !important;
+  height: 46px !important;
+  min-width: 46px !important;
+  min-height: 46px !important;
+  object-fit: contain !important;
+  transform: none !important;
+}
+
+html body .app-sidebar .sidebar-logo-link span,
+html body.sidebar-open .app-sidebar .sidebar-logo-link span,
+html body:not(.sidebar-collapsed) .app-sidebar .sidebar-logo-link span {
+  display: block !important;
+  left: 60px !important;
+  top: 50% !important;
+  max-width: 142px !important;
+  overflow: hidden !important;
+  color: #202123 !important;
+  font-size: 14px !important;
+  font-weight: 760 !important;
+  line-height: 1.25 !important;
+  text-overflow: ellipsis !important;
+  transform: translateY(-50%) !important;
+}
+
+html body.sidebar-collapsed .app-sidebar .sidebar-logo-link span {
+  display: none !important;
+}
+
+html body #app-content .editable-content[contenteditable="true"],
+html body #app-content .editable-content[contenteditable="true"]:focus {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  outline-color: #202123 !important;
+  box-shadow: none !important;
+}
+
+html body #app-content #annual.is-page-editing .annual-desktop-card {
+  display: block !important;
+}
+
+html body #app-content #annual.is-page-editing #edit-annual-1,
+html body #app-content #annual.is-page-editing #edit-annual-2 {
+  background: #ffffff !important;
+  outline: 2px solid #202123 !important;
+  outline-offset: 4px !important;
+  border-radius: 8px !important;
+}
+
+html body #app-content #annual.is-page-editing #edit-annual-1 {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+}
