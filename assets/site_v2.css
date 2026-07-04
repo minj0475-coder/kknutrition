@@ -18675,3 +18675,48 @@ html body #app-content :is(
 ) {
   outline: none !important;
 }
+
+/* 2026-07-04 quiet edit/save buttons for shared editable sections. */
+html body #app-content :is(
+  #workNoteEditSaveBtn,
+  #messageTemplateEditSaveBtn,
+  #promoContactsEditSaveBtn,
+  #promoContactsEditSaveBtnSecondary
+).quiet-edit-toggle {
+  min-width: 58px !important;
+  min-height: 38px !important;
+  padding: 8px 14px !important;
+  border: 1px solid #dedede !important;
+  border-radius: 12px !important;
+  background: #ffffff !important;
+  color: #202123 !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+html body #app-content :is(
+  #workNoteEditSaveBtn,
+  #messageTemplateEditSaveBtn,
+  #promoContactsEditSaveBtn,
+  #promoContactsEditSaveBtnSecondary
+).quiet-edit-toggle:hover,
+html body #app-content :is(
+  #workNoteEditSaveBtn,
+  #messageTemplateEditSaveBtn,
+  #promoContactsEditSaveBtn,
+  #promoContactsEditSaveBtnSecondary
+).quiet-edit-toggle:focus-visible {
+  border-color: #cfcfcf !important;
+  background: #f7f7f8 !important;
+  color: #202123 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+html body #app-content :is(.work-note-head, .message-template-head, #promo-contacts .promo-contact-actions) .quiet-edit-toggle {
+  flex: 0 0 auto !important;
+  justify-self: end !important;
+}

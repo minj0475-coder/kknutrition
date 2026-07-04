@@ -383,7 +383,7 @@ function setupMessageTemplates() {
   let templateEditMode = false;
   let templateDirty = false;
   const templateEditBtn = document.createElement("button");
-  templateEditBtn.className = "promo-btn primary";
+  templateEditBtn.className = "promo-btn quiet-edit-toggle";
   templateEditBtn.type = "button";
   templateEditBtn.textContent = "\uC218\uC815";
   const templateHead = templateCard?.querySelector(".message-template-head");
@@ -589,7 +589,7 @@ function setupWorkNotes() {
   let workNoteEditMode = false;
   let workNoteDirty = false;
   const workNoteEditBtn = document.createElement("button");
-  workNoteEditBtn.className = "promo-btn primary";
+  workNoteEditBtn.className = "promo-btn quiet-edit-toggle";
   workNoteEditBtn.type = "button";
   workNoteEditBtn.textContent = "\uC218\uC815";
   const workNoteHead = workNoteCard?.querySelector(".work-note-head");
@@ -2445,12 +2445,21 @@ document.addEventListener("DOMContentLoaded", () => {
   let promoDirty = false;
   const promoEditBtn = document.createElement("button");
   promoEditBtn.id = "promoContactsEditSaveBtn";
-  promoEditBtn.className = "promo-btn primary";
+  promoEditBtn.className = "promo-btn quiet-edit-toggle";
   promoEditBtn.type = "button";
   promoEditBtn.textContent = "\uC218\uC815";
+  const promoEditBtnSecondary = document.createElement("button");
+  promoEditBtnSecondary.id = "promoContactsEditSaveBtnSecondary";
+  promoEditBtnSecondary.className = "promo-btn quiet-edit-toggle";
+  promoEditBtnSecondary.type = "button";
+  promoEditBtnSecondary.textContent = "\uC218\uC815";
   const promoActions = document.querySelector("#vendorNetworkPanel .promo-contact-actions") || document.querySelector("#promoContactPanel .promo-contact-actions");
   if (promoActions && !document.getElementById("promoContactsEditSaveBtn")) {
     promoActions.appendChild(promoEditBtn);
+  }
+  const promoSecondaryActions = document.querySelector("#promoContactPanel .promo-contact-actions");
+  if (promoSecondaryActions && !document.getElementById("promoContactsEditSaveBtnSecondary")) {
+    promoSecondaryActions.appendChild(promoEditBtnSecondary);
   }
 
   function markPromoDirty() {
@@ -2492,6 +2501,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (vendorPanel) vendorPanel.classList.toggle("is-editing", promoEditMode);
     if (panel) panel.classList.toggle("is-editing", promoEditMode);
     promoEditBtn.textContent = promoEditMode ? "\uC800\uC7A5" : "\uC218\uC815";
+    promoEditBtnSecondary.textContent = promoEditMode ? "\uC800\uC7A5" : "\uC218\uC815";
     [addBtn, vendorAddBtn, vendorCategoryManageBtn, vendorCategoryAddBtn].forEach(button => {
       if (!button) return;
       button.style.display = promoEditMode ? "" : "none";
@@ -2927,7 +2937,7 @@ document.addEventListener("DOMContentLoaded", () => {
       addVendorNetworkRow(getPreferredVendorAddGroup());
     });
   }
-  promoEditBtn.addEventListener("click", async () => {
+  const togglePromoEditMode = async () => {
     if (!promoEditMode) {
       promoEditMode = true;
       syncPromoEditControls();
@@ -2942,7 +2952,9 @@ document.addEventListener("DOMContentLoaded", () => {
       renderPromoContacts();
       syncPromoEditControls();
     }
-  });
+  };
+  promoEditBtn.addEventListener("click", togglePromoEditMode);
+  promoEditBtnSecondary.addEventListener("click", togglePromoEditMode);
   if (vendorFullscreenBtn && vendorPanel) {
     vendorFullscreenBtn.addEventListener("click", async () => {
       try {
