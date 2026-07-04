@@ -18984,3 +18984,83 @@ html body #app-content button#unsavedModalCancelBtn.unsaved-modal-cancel:not(.ac
   -webkit-text-fill-color: #202123 !important;
   opacity: 1 !important;
 }
+
+/* 2026-07-04 mobile home: remove heavy hero and surface today's Kkul first. */
+@media (max-width: 900px) {
+  html body #app-content #home.page-section > main.wrap {
+    padding-top: 14px !important;
+  }
+
+  html body #app-content #home.page-section > main.wrap > .hero {
+    display: none !important;
+  }
+
+  html body #app-content #home .home-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+  }
+
+  html body #app-content #home .home-grid-left {
+    display: contents !important;
+  }
+
+  html body #app-content #home .daily-kkul-card.daily-kkul-card {
+    order: 1 !important;
+    min-height: 168px !important;
+    padding: 18px 18px 16px !important;
+    margin-top: 0 !important;
+    grid-template-columns: minmax(0, 1.08fr) minmax(108px, 0.72fr) !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+
+  html body #app-content #home .memo-card {
+    order: 2 !important;
+  }
+
+  html body #app-content #home .home-grid-right {
+    order: 3 !important;
+  }
+
+  html body #app-content #home .daily-kkul-card .section-title,
+  html body #app-content #home .daily-kkul-card.daily-kkul-card .section-title {
+    font-size: 23px !important;
+    line-height: 1.12 !important;
+    margin-bottom: 8px !important;
+  }
+
+  html body #app-content #home .daily-kkul-message,
+  html body #app-content #home .daily-kkul-card.daily-kkul-card .daily-kkul-message {
+    font-size: 14px !important;
+    line-height: 1.55 !important;
+    margin: 0 !important;
+  }
+
+  html body #app-content #home .daily-kkul-image-wrap,
+  html body #app-content #home .daily-kkul-card.daily-kkul-card .daily-kkul-image-wrap {
+    min-height: 112px !important;
+    height: 112px !important;
+    align-self: center !important;
+  }
+
+  html body #app-content #home .daily-kkul-image,
+  html body #app-content #home .daily-kkul-image-wrap img,
+  html body #app-content #home .daily-kkul-card.daily-kkul-card .daily-kkul-image {
+    max-width: min(126px, 33vw) !important;
+    max-height: 116px !important;
+    object-fit: contain !important;
+  }
+}
+
+@media (max-width: 420px) {
+  html body #app-content #home .daily-kkul-card.daily-kkul-card {
+    grid-template-columns: minmax(0, 1fr) minmax(94px, 0.58fr) !important;
+    padding: 16px !important;
+  }
+
+  html body #app-content #home .daily-kkul-image,
+  html body #app-content #home .daily-kkul-image-wrap img {
+    max-width: min(112px, 30vw) !important;
+  }
+}
