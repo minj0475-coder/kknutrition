@@ -6501,129 +6501,168 @@ nav a.active {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, var(--background) 0%, #f0ede6 100%);
+  background: #f7f7f8;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 100000;
-  padding: 20px;
+  padding: 24px;
 }
 
 .auth-box {
-  background: var(--card);
-  border-radius: 28px;
-  padding: 48px 32px;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 34px 30px 30px;
   width: 100%;
-  max-width: 420px;
+  max-width: 390px;
   text-align: center;
-  box-shadow: 0 24px 48px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.03);
-  border: 1px solid rgba(255,255,255,0.6);
+  box-shadow: 0 18px 50px rgba(32, 33, 35, 0.08);
+  border: 1px solid #e5e5e5;
   position: relative;
   overflow: hidden;
 }
 
-/* Subtle background accent inside the box */
 .auth-box::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; height: 6px;
-  background: linear-gradient(90deg, var(--primary), #ffa8a8);
+  display: none;
 }
 
 .auth-icon {
-  width: 72px;
-  height: 72px;
-  margin: 0 auto 24px;
-  background: linear-gradient(135deg, rgba(255,107,107,0.15) 0%, rgba(255,107,107,0.05) 100%);
+  width: 86px;
+  height: 86px;
+  margin: 0 auto 22px;
+  background: #ffffff;
+  border: 1px solid #ececf0;
   border-radius: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: inset 0 2px 4px rgba(255,255,255,0.8);
-  transform: rotate(-3deg);
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 28px rgba(32, 33, 35, 0.08);
+  overflow: hidden;
 }
 
-.auth-box:hover .auth-icon {
-  transform: rotate(3deg) scale(1.05);
+.auth-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
 }
 
 .auth-title {
-  font-size: 1.6rem;
+  font-size: 24px;
   font-weight: 800;
-  color: var(--heading);
-  margin-bottom: 14px;
-  letter-spacing: -0.5px;
+  color: #202123;
+  margin: 0 0 10px;
+  letter-spacing: 0;
 }
 
 .auth-desc {
   font-size: 15px;
-  color: var(--text);
-  margin-bottom: 36px;
+  color: #5f6368;
+  margin: 0 0 28px;
   line-height: 1.6;
-  opacity: 0.8;
+}
+
+#authForm {
+  display: grid;
+  gap: 12px;
 }
 
 .auth-input {
   width: 100%;
-  padding: 18px 20px;
-  border: 2px solid transparent;
-  border-radius: 16px;
-  background: var(--background);
+  min-height: 50px;
+  padding: 0 15px;
+  border: 1px solid #d9d9df;
+  border-radius: 12px;
+  background: #ffffff;
   font-size: 16px;
-  text-align: center;
-  margin-bottom: 16px;
-  transition: all 0.3s ease;
-  color: var(--heading);
-  font-weight: 600;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+  text-align: left;
+  color: #202123;
+  font-weight: 650;
+  box-shadow: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
 }
 
 .auth-input::placeholder {
-  color: #a09d98;
+  color: #8e8ea0;
   font-weight: 500;
 }
 
 .auth-input:focus {
   outline: none;
-  border-color: var(--primary);
-  background: var(--card);
-  box-shadow: 0 0 0 4px rgba(255,107,107,0.15), inset 0 2px 4px rgba(0,0,0,0.01);
-  transform: translateY(-2px);
+  border-color: #202123;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(32, 33, 35, 0.08);
 }
 
 .auth-btn {
   width: 100%;
-  padding: 18px 20px;
-  background: linear-gradient(135deg, var(--primary) 0%, #ff5252 100%);
+  min-height: 50px;
+  padding: 0 18px;
+  background: #202123;
   color: #ffffff !important;
-  border: none;
-  border-radius: 16px;
-  font-size: 17px;
+  border: 1px solid #202123;
+  border-radius: 12px;
+  font-size: 16px;
   font-weight: 800;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 0 6px 16px rgba(255,107,107,0.3);
-  letter-spacing: 0.5px;
+  transition: background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  box-shadow: none;
+  letter-spacing: 0;
 }
 
 .auth-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(255,107,107,0.4);
+  background: #343541;
+  border-color: #343541;
+  box-shadow: 0 8px 20px rgba(32, 33, 35, 0.12);
 }
 
 .auth-btn:active {
-  transform: translateY(1px);
-  box-shadow: 0 4px 8px rgba(255,107,107,0.3);
+  background: #111111;
+  border-color: #111111;
 }
 
 .auth-error {
-  color: var(--danger);
+  color: #b42318;
   font-size: 14px;
   font-weight: 700;
-  margin-top: 16px;
+  line-height: 1.4;
+  margin: 0;
+  padding: 10px 12px;
+  background: #fff1f1;
+  border: 1px solid #ffd7d7;
+  border-radius: 10px;
   display: none;
   animation: modal-fade-in 0.3s ease-out;
+}
+
+@media (max-width: 480px) {
+  #auth-screen {
+    padding: 18px;
+  }
+
+  .auth-box {
+    padding: 28px 20px 24px;
+    border-radius: 16px;
+  }
+
+  .auth-icon {
+    width: 78px;
+    height: 78px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+
+  .auth-icon img {
+    border-radius: 18px;
+  }
+
+  .auth-title {
+    font-size: 22px;
+  }
+
+  .auth-desc {
+    margin-bottom: 24px;
+  }
 }
 
 @keyframes shake {
@@ -11551,51 +11590,6 @@ body #promo-contacts .promo-delete-btn {
 }
 
 /* 2026-06-22 readability and auth convenience polish. */
-.auth-passkey-actions {
-  display: grid;
-  gap: 9px;
-  margin-top: 12px;
-}
-
-.auth-passkey-btn {
-  width: 100%;
-  min-height: 48px;
-  border: 1px solid #d9d9d9;
-  border-radius: 14px;
-  background: #ffffff;
-  color: #202123;
-  font-size: 15px;
-  font-weight: 750;
-  letter-spacing: 0;
-  cursor: pointer;
-}
-
-.auth-passkey-btn.secondary {
-  background: #f7f7f8;
-}
-
-.auth-passkey-btn:disabled {
-  color: #9ca3af;
-  cursor: not-allowed;
-}
-
-.auth-passkey-status {
-  min-height: 18px;
-  margin: 0;
-  color: #6b7280;
-  font-size: 13px;
-  line-height: 1.35;
-  text-align: center;
-}
-
-.auth-passkey-status[data-type="ok"] {
-  color: #16794c;
-}
-
-.auth-passkey-status[data-type="error"] {
-  color: #b42318;
-}
-
 body #app-content :where(button, .btn, .download-btn, .excel-upload-btn, .memo-full-btn, .home-today-link, .today-menu-show-all-btn, .promo-btn, .academic-nav-btn, .academic-today-btn, .academic-save-btn, .academic-clear-btn, .fab-edit-btn, .fab-bookmark-edit-btn):not(.academic-day):not(.brand):not(.mobile-menu-btn):not(.sidebar-icon-btn):not(.annual-sheet-save-btn):not(.annual-sheet-open-btn) {
   display: inline-flex !important;
   align-items: center !important;

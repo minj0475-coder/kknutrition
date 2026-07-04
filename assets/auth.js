@@ -6,178 +6,11 @@
 // --- ?ㅼ젙 (Settings) ---
 const PORTAL_PASSWORD = "Zxcv2041520!"; // ?꾩떆 珥덇린 鍮꾨?踰덊샇 (?먰븯?쒕뒗 鍮꾨?踰덊샇濡?蹂寃쏀븯?몄슂)
 const AUTH_KEY = "kknutrition_portal_auth";
-const PASSKEY_KEY = "kknutrition_portal_passkey";
 const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycby3sgo-M0JiwyMBnlw6zjHY9p8n5vJdUk0NSTF1dd-chEMtDGnrknvKW51ZKQygynkD/exec"; // Google Apps Script 諛고룷 ???앹꽦???뱀빋 URL???ш린???낅젰?섏꽭??
-let passkeySupportState = null;
 
 function isPublicPage() {
   const path = decodeURIComponent(window.location.pathname || "");
   return path.includes("신규대체조리종사원_안내");
-}
-
-function bufferToBase64url(buffer) {
-  const bytes = new Uint8Array(buffer);
-  let binary = "";
-  bytes.forEach(byte => { binary += String.fromCharCode(byte); });
-  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
-}
-
-function base64urlToBuffer(value) {
-  const base64 = value.replace(/-/g, "+").replace(/_/g, "/") + "===".slice((value.length + 3) % 4);
-  const binary = atob(base64);
-  const bytes = new Uint8Array(binary.length);
-  for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
-  return bytes.buffer;
-}
-
-function randomBuffer(length = 32) {
-  const bytes = new Uint8Array(length);
-  crypto.getRandomValues(bytes);
-  return bytes.buffer;
-}
-
-function getPasskeyRecord() {
-  try {
-    return JSON.parse(localStorage.getItem(PASSKEY_KEY) || "null");
-  } catch(e) {
-    return null;
-  }
-}
-
-function setAuthStatus(message, type = "") {
-  const status = document.getElementById("authPasskeyStatus");
-  if (!status) return;
-  status.textContent = message || "";
-  status.dataset.type = type;
-}
-
-async function passkeyAvailable() {
-  if (!window.PublicKeyCredential || !navigator.credentials) return false;
-  if (!PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable) return true;
-  try {
-    return await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
-  } catch(e) {
-    return false;
-  }
-}
-
-function getPasskeyErrorMessage(error, action) {
-  const name = error && error.name ? error.name : "";
-  if (name === "NotAllowedError") {
-    return `${action} 요청이 취소되었거나 시간 초과되었습니다. 브라우저의 Face ID/지문 창을 확인한 뒤 다시 시도해 주세요.`;
-  }
-  if (name === "InvalidStateError") {
-    return "이미 이 기기에 등록된 인증 정보가 있습니다. Face ID/지문으로 접속을 시도해 주세요.";
-  }
-  if (name === "SecurityError") {
-    return "브라우저 보안 설정 때문에 간편 인증을 시작하지 못했습니다. Safari 또는 Chrome에서 GitHub Pages 주소로 직접 접속해 주세요.";
-  }
-  if (name === "NotSupportedError" || name === "ConstraintError") {
-    return "이 브라우저 또는 기기의 간편 인증 방식과 호환되지 않습니다. 브라우저와 운영체제를 최신 버전으로 업데이트해 주세요.";
-  }
-  return `${action}에 실패했습니다. 브라우저에서 Face ID/지문 사용이 허용되어 있는지 확인해 주세요.`;
-}
-
-async function registerPasskey() {
-  const input = document.getElementById("authPasswordInput");
-  const errorMsg = document.getElementById("authErrorMsg");
-  if (!input || input.value !== PORTAL_PASSWORD) {
-    if (errorMsg) errorMsg.style.display = "block";
-    if (input) input.focus();
-    setAuthStatus("비밀번호를 먼저 입력한 뒤 간편 인증을 등록해 주세요.", "error");
-    return;
-  }
-  if (passkeySupportState === false) {
-    setAuthStatus("이 브라우저에서는 Face ID/지문 간편 인증을 사용할 수 없습니다.", "error");
-    return;
-  }
-  try {
-    setAuthStatus("기기 인증을 진행해 주세요.", "");
-    const credential = await navigator.credentials.create({
-      publicKey: {
-        challenge: randomBuffer(32),
-        rp: { name: "급식 업무 포털" },
-        user: {
-          id: randomBuffer(16),
-          name: "kknutrition",
-          displayName: "급식 업무 포털"
-        },
-        pubKeyCredParams: [
-          { type: "public-key", alg: -7 },
-          { type: "public-key", alg: -257 }
-        ],
-        authenticatorSelection: {
-          authenticatorAttachment: "platform",
-          userVerification: "required"
-        },
-        timeout: 60000,
-        attestation: "none"
-      }
-    });
-    if (!credential) throw new Error("No credential");
-    localStorage.setItem(PASSKEY_KEY, JSON.stringify({
-      id: credential.id,
-      rawId: bufferToBase64url(credential.rawId),
-      createdAt: Date.now()
-    }));
-    setAuthStatus("간편 인증이 등록되었습니다.", "ok");
-    grantAccess(true);
-  } catch(e) {
-    console.error("Passkey registration failed:", e);
-    setAuthStatus(getPasskeyErrorMessage(e, "간편 인증 등록"), "error");
-  }
-}
-
-async function loginWithPasskey() {
-  const record = getPasskeyRecord();
-  if (!record || !record.rawId) {
-    setAuthStatus("이 기기에 등록된 간편 인증이 없습니다. 먼저 비밀번호로 등록해 주세요.", "error");
-    return;
-  }
-  if (passkeySupportState === false) {
-    setAuthStatus("이 브라우저에서는 Face ID/지문 간편 인증을 사용할 수 없습니다.", "error");
-    return;
-  }
-  try {
-    setAuthStatus("기기 인증을 진행해 주세요.", "");
-    const credential = await navigator.credentials.get({
-      publicKey: {
-        challenge: randomBuffer(32),
-        allowCredentials: [{ type: "public-key", id: base64urlToBuffer(record.rawId) }],
-        userVerification: "required",
-        timeout: 60000
-      }
-    });
-    if (!credential) throw new Error("No credential");
-    setAuthStatus("간편 인증이 완료되었습니다.", "ok");
-    grantAccess(false);
-  } catch(e) {
-    console.error("Passkey login failed:", e);
-    setAuthStatus(getPasskeyErrorMessage(e, "간편 인증"), "error");
-  }
-}
-
-function setupPasskeyControls() {
-  const form = document.getElementById("authForm");
-  if (!form || document.getElementById("authPasskeyActions")) return;
-  const actions = document.createElement("div");
-  actions.id = "authPasskeyActions";
-  actions.className = "auth-passkey-actions";
-  actions.innerHTML = `
-    <button id="authPasskeyLoginBtn" class="auth-passkey-btn" type="button">Face ID/지문으로 접속</button>
-    <button id="authPasskeyRegisterBtn" class="auth-passkey-btn secondary" type="button">이 기기 간편 인증 등록</button>
-    <p id="authPasskeyStatus" class="auth-passkey-status" aria-live="polite"></p>
-  `;
-  form.appendChild(actions);
-  document.getElementById("authPasskeyLoginBtn").addEventListener("click", loginWithPasskey);
-  document.getElementById("authPasskeyRegisterBtn").addEventListener("click", registerPasskey);
-  passkeyAvailable().then(available => {
-    passkeySupportState = available;
-    if (!available) {
-      actions.querySelectorAll("button").forEach(button => { button.disabled = true; });
-      setAuthStatus("이 브라우저에서는 기기 간편 인증을 지원하지 않습니다.", "error");
-    }
-  });
 }
 
 // --- ?몄쬆 ?곹깭 ?뺤씤 (Check Auth) ---
@@ -262,8 +95,6 @@ function initAuth() {
   if (!document.getElementById("auth-screen") || !document.getElementById("app-content")) {
     return;
   }
-  setupPasskeyControls();
-
   if (!checkAuth()) {
     document.getElementById("app-content").style.display = "none";
     document.getElementById("auth-screen").style.display = "flex";
