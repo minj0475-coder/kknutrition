@@ -376,6 +376,7 @@ function setupMessageTemplates() {
   const addBtn = document.getElementById("messageTemplateAddBtn");
   const status = document.getElementById("messageTemplateStatus");
   if (!list) return;
+  const templateCard = list.closest(".message-template-card");
   let items = readMessageTemplates();
   let lastLocalTemplateSaveAt = 0;
   let templateHasUnsyncedLocalChanges = false;
@@ -385,7 +386,7 @@ function setupMessageTemplates() {
   templateEditBtn.className = "promo-btn primary";
   templateEditBtn.type = "button";
   templateEditBtn.textContent = "\uC218\uC815";
-  const templateHead = list.closest(".message-template-card")?.querySelector(".message-template-head");
+  const templateHead = templateCard?.querySelector(".message-template-head");
   if (templateHead && !document.getElementById("messageTemplateEditSaveBtn")) {
     templateEditBtn.id = "messageTemplateEditSaveBtn";
     templateHead.appendChild(templateEditBtn);
@@ -424,6 +425,7 @@ function setupMessageTemplates() {
     setStatus("이 브라우저에는 저장했습니다. 클라우드 동기화는 아직 준비 중입니다.");
   };
   const syncTemplateEditControls = () => {
+    if (templateCard) templateCard.classList.toggle("is-editing", templateEditMode);
     if (addBtn) addBtn.style.display = templateEditMode ? "" : "none";
     templateEditBtn.textContent = templateEditMode ? "\uC800\uC7A5" : "\uC218\uC815";
     list.querySelectorAll("[data-template-title], [data-template-body]").forEach(input => {
@@ -579,6 +581,7 @@ function setupWorkNotes() {
   const deleteBtn = document.getElementById("workNoteDeleteBtn");
   const status = document.getElementById("workNoteStatus");
   if (!list || !bodyInput) return;
+  const workNoteCard = list.closest(".work-note-card");
   let notes = readWorkNotes();
   let deletedState = readWorkNoteDeletedState();
   let activeIndex = 0;
@@ -589,7 +592,7 @@ function setupWorkNotes() {
   workNoteEditBtn.className = "promo-btn primary";
   workNoteEditBtn.type = "button";
   workNoteEditBtn.textContent = "\uC218\uC815";
-  const workNoteHead = list.closest(".work-note-card")?.querySelector(".work-note-head");
+  const workNoteHead = workNoteCard?.querySelector(".work-note-head");
   if (workNoteHead && !document.getElementById("workNoteEditSaveBtn")) {
     workNoteEditBtn.id = "workNoteEditSaveBtn";
     workNoteHead.appendChild(workNoteEditBtn);
@@ -625,6 +628,7 @@ function setupWorkNotes() {
     setStatus("\uC774 \uBE0C\uB77C\uC6B0\uC800\uC5D0\uB294 \uC800\uC7A5\uD588\uC2B5\uB2C8\uB2E4.");
   };
   const syncWorkNoteEditControls = () => {
+    if (workNoteCard) workNoteCard.classList.toggle("is-editing", workNoteEditMode);
     if (addBtn) addBtn.style.display = workNoteEditMode ? "" : "none";
     if (deleteBtn) {
       deleteBtn.style.display = workNoteEditMode ? "" : "none";
@@ -2485,6 +2489,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function syncPromoEditControls() {
+    if (vendorPanel) vendorPanel.classList.toggle("is-editing", promoEditMode);
+    if (panel) panel.classList.toggle("is-editing", promoEditMode);
     promoEditBtn.textContent = promoEditMode ? "\uC800\uC7A5" : "\uC218\uC815";
     [addBtn, vendorAddBtn, vendorCategoryManageBtn, vendorCategoryAddBtn].forEach(button => {
       if (!button) return;
