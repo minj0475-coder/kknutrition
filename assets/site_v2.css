@@ -33,6 +33,14 @@
   --peach-soft: var(--accent);
 }
 
+/* 2026-07-04 memo header: remove only the top-right action border. */
+html body #app-content #home .memo-card #openMemoModalBtn.memo-full-btn,
+html body #app-content #home .memo-card #openMemoModalBtn.memo-full-btn:hover,
+html body #app-content #home .memo-card #openMemoModalBtn.memo-full-btn:focus-visible {
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
 /* 2026-06-27 meal note work notes: clean long-form editor with table of contents. */
 html body #app-content #today-menu .work-note-card {
   display: grid !important;
