@@ -20104,3 +20104,60 @@ html body #staff .staff-accordion[open] > summary {
     width: clamp(94px, 29vw, 112px) !important;
   }
 }
+
+/* 2026-07-05 edit outlines: use one solid outer line on requested editable panels. */
+:root {
+  --portal-edit-outline-color: var(--portal-edit-line, #b56f68);
+  --portal-edit-outline-width: 2px;
+  --portal-edit-outline-offset: 4px;
+}
+
+html body #app-content #bookmarks .bookmark-card.edit-mode-card,
+html body #app-content #bookmarks .bookmark-card.edit-mode-card:hover,
+html body #app-content #bookmarks .bookmark-card.edit-mode-card:focus-within,
+html body #app-content #bookmarks .bookmark-card.add-new-card,
+html body #app-content #bookmarks .bookmark-card.add-new-card:hover,
+html body #app-content #bookmarks .bookmark-card.add-new-card:focus-within {
+  outline: var(--portal-edit-outline-width) solid var(--portal-edit-outline-color) !important;
+  outline-offset: var(--portal-edit-outline-offset) !important;
+  border-color: #d9d9df !important;
+  border-style: solid !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+html body #app-content #daily .editable-content[contenteditable="true"],
+html body #app-content #daily .editable-content[contenteditable="true"]:focus,
+html body #app-content #monthly .editable-content[contenteditable="true"],
+html body #app-content #monthly .editable-content[contenteditable="true"]:focus,
+html body #app-content #annual .editable-content[contenteditable="true"],
+html body #app-content #annual .editable-content[contenteditable="true"]:focus,
+html body #app-content #daily.is-page-editing :is(#edit-daily-1, #edit-daily-2),
+html body #app-content #monthly.is-page-editing :is(#edit-monthly-1, .academic-calendar-card),
+html body #app-content #annual.is-page-editing :is(#edit-annual-1, #edit-annual-2) {
+  outline: var(--portal-edit-outline-width) solid var(--portal-edit-outline-color) !important;
+  outline-offset: var(--portal-edit-outline-offset) !important;
+  border-color: inherit !important;
+  border-style: solid !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 768px) {
+  html body #app-content section#bookmarks.page-section #bookmarkGrid .bookmark-card.edit-mode-card,
+  html body #app-content section#bookmarks.page-section #bookmarkGrid .bookmark-card.edit-mode-card:hover,
+  html body #app-content section#bookmarks.page-section #bookmarkGrid .bookmark-card.edit-mode-card:focus-within,
+  html body #app-content section#bookmarks.page-section #bookmarkGrid .bookmark-card.add-new-card,
+  html body #app-content section#bookmarks.page-section #bookmarkGrid .bookmark-card.add-new-card:hover,
+  html body #app-content section#bookmarks.page-section #bookmarkGrid .bookmark-card.add-new-card:focus-within {
+    outline: var(--portal-edit-outline-width) solid var(--portal-edit-outline-color) !important;
+    outline-offset: var(--portal-edit-outline-offset) !important;
+    border: 1px solid #d9d9df !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+}
