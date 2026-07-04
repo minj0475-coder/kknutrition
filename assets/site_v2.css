@@ -18633,35 +18633,45 @@ html body #app-content #today-menu #messageTemplateAddBtn:focus-visible {
     align-self: center !important;
   }
 }
-/* 2026-07-04 shared edit mode affordance: match schedule edit outlines. */
+/* 2026-07-04 shared edit mode affordance: quiet grouped outlines. */
 html body #app-content :is(
-  .work-note-card.is-editing .work-note-body-input,
-  .message-template-card.is-editing .message-template-title-input,
+  .work-note-card.is-editing .work-note-textbox,
+  .message-template-card.is-editing .message-template-item,
   .message-template-card.is-editing .message-template-textbox,
-  #promo-contacts .vendor-network-card.is-editing .promo-cell-input,
-  #promo-contacts .promo-contact-card.is-editing .promo-cell-input,
+  #promo-contacts .vendor-network-card.is-editing .promo-table-wrap,
   #promo-contacts .vendor-network-card.is-editing .vendor-category-manager,
-  #promo-contacts .vendor-network-card.is-editing .vendor-accordion-card
+  #promo-contacts .promo-contact-card.is-editing .promo-table-wrap
 ) {
-  outline: 2px dashed var(--primary) !important;
-  outline-offset: 4px !important;
-  background: rgba(255, 107, 107, 0.02) !important;
+  border-width: 1px !important;
+  border-color: rgba(201, 120, 120, 0.56) !important;
+  border-style: dashed !important;
+  border-radius: 12px !important;
+  background: rgba(255, 107, 107, 0.018) !important;
+  box-shadow: inset 0 0 0 1px rgba(239, 166, 166, 0.12) !important;
 }
 
 html body #app-content :is(
-  .work-note-card.is-editing .work-note-body-input:focus,
-  .message-template-card.is-editing .message-template-title-input:focus,
-  .message-template-card.is-editing .message-template-textbox:focus-within,
-  #promo-contacts .vendor-network-card.is-editing .promo-cell-input:focus,
-  #promo-contacts .promo-contact-card.is-editing .promo-cell-input:focus,
+  .work-note-card.is-editing .work-note-textbox:focus-within,
+  .message-template-card.is-editing .message-template-item:focus-within,
+  #promo-contacts .vendor-network-card.is-editing .promo-table-wrap:focus-within,
   #promo-contacts .vendor-network-card.is-editing .vendor-category-manager:focus-within,
-  #promo-contacts .vendor-network-card.is-editing .vendor-accordion-card:focus-within
+  #promo-contacts .promo-contact-card.is-editing .promo-table-wrap:focus-within
 ) {
-  outline: 2px solid var(--primary) !important;
+  border-color: rgba(201, 120, 120, 0.72) !important;
   background: #ffffff !important;
 }
 
-html body #app-content #promo-contacts :is(.vendor-network-card, .promo-contact-card).is-editing .promo-contact-table tr {
-  outline: 2px dashed var(--primary) !important;
-  outline-offset: -4px !important;
+html body #app-content #promo-contacts .vendor-network-card.is-editing .vendor-accordion-group,
+html body #promo-contacts .vendor-network-card.is-editing .vendor-accordion-group {
+  border-color: rgba(201, 120, 120, 0.56) !important;
+  border-style: dashed !important;
+}
+
+html body #app-content :is(
+  .work-note-card.is-editing .work-note-body-input,
+  .message-template-card.is-editing .message-template-title-input,
+  .message-template-card.is-editing .message-template-textbox textarea,
+  #promo-contacts :is(.vendor-network-card, .promo-contact-card).is-editing .promo-cell-input
+) {
+  outline: none !important;
 }
