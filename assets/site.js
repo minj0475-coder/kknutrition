@@ -1,13 +1,60 @@
-window.addEventListener("load",function(){if(typeof XLSX==="undefined"){var s=document.createElement("script");s.src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js";document.head.appendChild(s);}});
+const XLSX_LOCAL_SRC = "assets/xlsx.full.min.js";
+const XLSX_CDN_SRC = "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js";
+let xlsxLoadPromise = null;
 
-;
+function loadScriptOnce(src) {
+  return new Promise((resolve, reject) => {
+    const existing = document.querySelector(`script[data-lazy-src="${src}"], script[src="${src}"]`);
+    if (existing) {
+      if (existing.dataset.loaded === "true") {
+        resolve();
+        return;
+      }
+      existing.addEventListener("load", resolve, { once: true });
+      existing.addEventListener("error", reject, { once: true });
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = src;
+    script.defer = true;
+    script.dataset.lazySrc = src;
+    script.onload = () => {
+      script.dataset.loaded = "true";
+      resolve();
+    };
+    script.onerror = () => reject(new Error(`Script load failed: ${src}`));
+    document.head.appendChild(script);
+  });
+}
+
+async function ensureXlsxLib() {
+  const ready = getXlsxLib();
+  if (ready) return ready;
+
+  if (!xlsxLoadPromise) {
+    xlsxLoadPromise = loadScriptOnce(XLSX_LOCAL_SRC)
+      .catch(() => loadScriptOnce(XLSX_CDN_SRC))
+      .then(() => {
+        const loaded = getXlsxLib();
+        if (!loaded) throw new Error("엑셀 읽기 기능을 불러오지 못했습니다. 인터넷 연결 후 다시 열어 주세요.");
+        return loaded;
+      })
+      .catch(error => {
+        xlsxLoadPromise = null;
+        throw error;
+      });
+  }
+
+  return xlsxLoadPromise;
+}
 
 const DEFAULT_SHEET_LINK = "https://docs.google.com/spreadsheets/d/1qlBNjqRtXsD-R8zTbEGudD4LLcNjL1VmM_J0MIOVVEE/edit?usp=sharing";
 const SHEET_LINK_KEY = "kkulkkoori_service_sheet_link";
 const DAILY_KKUL_KEY = "kkulkkoori_daily_character";
 const DAILY_KKUL_IMAGES = Array.from(
   { length: 56 },
-  (_, index) => `assets/images/kkul/kkul_${index + 1}.png`
+  (_, index) => `assets/images/kkul-display/kkul_${index + 1}.png`
 );
 const DAILY_KKUL_MESSAGES = [
   "마음을 담은 한 끼는 오래 기억돼요.",
@@ -1496,8 +1543,7 @@ async function handleTodayMenuUpload(event) {
   const search = document.getElementById("menuSearchInput");
   if (status) status.textContent = "엑셀 파일 읽는 중...";
   try {
-    const xlsx = getXlsxLib();
-    if (!xlsx) throw new Error("엑셀 읽기 기능을 불러오지 못했습니다. 인터넷 연결 후 다시 열어 주세요.");
+    const xlsx = await ensureXlsxLib();
     const buffer = await file.arrayBuffer();
     const workbook = xlsx.read(buffer, { type: "array", cellDates: false });
     const best = chooseAndParseMenuWorkbook(workbook);
