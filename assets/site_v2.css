@@ -18841,6 +18841,47 @@ html body .app-sidebar .sidebar-logo {
   box-shadow: none !important;
 }
 
+/* 2026-07-04 mobile read mode clarity: disabled fields should read like content, not faded controls. */
+@media (max-width: 768px) {
+  html body #app-content #today-menu .work-note-card:not(.is-editing) :is(
+    .work-note-title-input:disabled,
+    .work-note-body-input:disabled
+  ),
+  html body #app-content #today-menu .message-template-card:not(.is-editing) :is(
+    .message-template-title-input:disabled,
+    .message-template-textbox textarea:disabled
+  ),
+  html body #app-content #promo-contacts :is(
+    .vendor-network-card:not(.is-editing),
+    .promo-contact-card:not(.is-editing)
+  ) :is(.promo-cell-input:disabled, textarea.promo-cell-input:disabled) {
+    color: #202123 !important;
+    -webkit-text-fill-color: #202123 !important;
+    opacity: 1 !important;
+    background: #ffffff !important;
+    filter: none !important;
+  }
+
+  html body #app-content #today-menu .work-note-card:not(.is-editing) .work-note-title-input:disabled {
+    background: transparent !important;
+  }
+
+  html body #app-content #today-menu .message-template-card:not(.is-editing) .message-template-title-input:disabled,
+  html body #app-content #promo-contacts :is(
+    .vendor-network-card:not(.is-editing),
+    .promo-contact-card:not(.is-editing)
+  ) .promo-cell-input:disabled {
+    cursor: default !important;
+  }
+
+  html body #app-content #today-menu .message-template-card:not(.is-editing) .message-template-title,
+  html body #app-content #today-menu .work-note-card:not(.is-editing) .work-note-toc-title,
+  html body #app-content #promo-contacts :is(.vendor-network-card, .promo-contact-card) :is(td, td::before, .vendor-accordion-title) {
+    color: #202123 !important;
+    opacity: 1 !important;
+  }
+}
+
 html body #app-content #today-menu .work-note-card.is-editing:focus-within,
 html body #app-content #today-menu .message-template-card.is-editing:focus-within,
 html body #app-content #promo-contacts .vendor-network-card.is-editing:focus-within,
