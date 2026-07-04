@@ -20161,3 +20161,67 @@ html body #app-content #annual.is-page-editing :is(#edit-annual-1, #edit-annual-
     transform: none !important;
   }
 }
+
+/* 2026-07-05 sidebar header: hide title and align the close icon with the pig logo. */
+html body .app-sidebar .sidebar-head,
+html body.sidebar-open .app-sidebar .sidebar-head,
+html body.sidebar-collapsed .app-sidebar .sidebar-head,
+html body:not(.sidebar-collapsed) .app-sidebar .sidebar-head {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  min-height: 72px !important;
+  overflow: visible !important;
+}
+
+html body .app-sidebar .sidebar-logo-link,
+html body.sidebar-open .app-sidebar .sidebar-logo-link,
+html body.sidebar-collapsed .app-sidebar .sidebar-logo-link,
+html body:not(.sidebar-collapsed) .app-sidebar .sidebar-logo-link {
+  flex: 0 0 58px !important;
+  width: 58px !important;
+  max-width: 58px !important;
+  min-width: 58px !important;
+  overflow: visible !important;
+  z-index: 2 !important;
+}
+
+html body .app-sidebar .sidebar-logo-link span,
+html body.sidebar-open .app-sidebar .sidebar-logo-link span,
+html body.sidebar-collapsed .app-sidebar .sidebar-logo-link span,
+html body:not(.sidebar-collapsed) .app-sidebar .sidebar-logo-link span {
+  display: none !important;
+}
+
+html body .app-sidebar .sidebar-icon-btn,
+html body.sidebar-open .app-sidebar .sidebar-icon-btn,
+html body.sidebar-collapsed .app-sidebar .sidebar-icon-btn,
+html body:not(.sidebar-collapsed) .app-sidebar .sidebar-icon-btn {
+  position: absolute !important;
+  top: 8px !important;
+  right: 14px !important;
+  left: auto !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transform: none !important;
+  z-index: 3 !important;
+}
+
+html body .app-sidebar .sidebar-icon-btn::before,
+html body .app-sidebar .sidebar-icon-btn::after {
+  content: none !important;
+  display: none !important;
+}
+
+html body .app-sidebar button#sidebarCloseBtn.sidebar-icon-btn,
+html body.sidebar-open .app-sidebar button#sidebarCloseBtn.sidebar-icon-btn,
+html body.sidebar-collapsed .app-sidebar button#sidebarCloseBtn.sidebar-icon-btn,
+html body:not(.sidebar-collapsed) .app-sidebar button#sidebarCloseBtn.sidebar-icon-btn {
+  top: 8px !important;
+  transform: none !important;
+}
