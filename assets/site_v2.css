@@ -18663,6 +18663,12 @@ html body #promo-contacts .vendor-network-card.is-editing .vendor-accordion-grou
   border-style: dashed !important;
 }
 
+html body #app-content #promo-contacts .promo-contact-card.is-editing .promo-contact-table,
+html body #promo-contacts .promo-contact-card.is-editing .promo-contact-table {
+  outline: 1px dashed rgba(201, 120, 120, 0.56) !important;
+  outline-offset: -1px !important;
+}
+
 html body #app-content :is(
   .work-note-card.is-editing .work-note-body-input,
   .message-template-card.is-editing .message-template-title-input,
