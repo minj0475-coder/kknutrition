@@ -3284,6 +3284,11 @@ function formatAcademicDate(key, includeWeekday = true) {
   return includeWeekday ? `${base} (${weekdays[date.getDay()]})` : base;
 }
 
+function formatAcademicWeekDate(key) {
+  const date = parseAcademicKey(key);
+  return `${date.getMonth() + 1}월 ${date.getDate()}일`;
+}
+
 function createAcademicSeriesId() {
   return `academic-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 9)}`;
 }
@@ -3865,7 +3870,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const memoPreview = event.memo ? `<small class="academic-week-memo">${escapeAcademicHtml(event.memo)}</small>` : "";
           const statusBadge = event.done ? `<em class="academic-week-status">완료</em>` : "";
           row.innerHTML = `
-            <span class="academic-week-date">${formatAcademicDate(key, false)}</span>
+            <span class="academic-week-date">${formatAcademicWeekDate(key)}</span>
             <span class="academic-week-content">
               <strong>${escapeAcademicHtml(event.title)}</strong>
               ${memoPreview}

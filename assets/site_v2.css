@@ -20382,3 +20382,47 @@ html body .app-sidebar .sidebar-subnav a.active::after {
   height: 0 !important;
   background: transparent !important;
 }
+
+/* 2026-07-05 academic weekly list: compact dates, left aligned clipped content. */
+html body #app-content #monthly .academic-week-row {
+  box-sizing: border-box !important;
+  justify-items: stretch !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  text-align: left !important;
+}
+
+html body #app-content #monthly .academic-week-date {
+  justify-content: flex-start !important;
+  text-align: left !important;
+}
+
+html body #app-content #monthly .academic-week-content,
+html body #app-content #monthly .academic-week-row strong,
+html body #app-content #monthly .academic-week-memo {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  text-align: left !important;
+}
+
+html body #app-content #monthly .academic-week-row strong,
+html body #app-content #monthly .academic-week-memo {
+  display: block !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 560px) {
+  html body #app-content #monthly .academic-week-row {
+    grid-template-columns: 72px minmax(0, 1fr) !important;
+    align-items: start !important;
+    column-gap: 10px !important;
+  }
+
+  html body #app-content #monthly .academic-week-content {
+    grid-column: auto !important;
+    justify-self: stretch !important;
+  }
+}
