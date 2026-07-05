@@ -20314,3 +20314,36 @@ html body #app-content .academic-week-memo {
 html body #app-content .academic-week-content {
   justify-self: stretch !important;
 }
+
+/* 2026-07-05 academic calendar: minimal weekday labels on the card grid. */
+html body #app-content section#monthly.page-section .academic-weekdays {
+  min-height: 38px !important;
+  border-bottom: 1px solid #eef0f3 !important;
+  background: rgba(255, 255, 255, 0.64) !important;
+  box-shadow: none !important;
+}
+
+html body #app-content section#monthly.page-section .academic-weekdays span {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 38px !important;
+  padding: 0 8px !important;
+  background: transparent !important;
+  color: #374151 !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  text-align: center !important;
+}
+
+html body #app-content section#monthly.page-section .academic-weekdays span:first-child {
+  color: #dc3f4f !important;
+  background: transparent !important;
+}
+
+html body #app-content section#monthly.page-section .academic-weekdays span:last-child {
+  color: #256fb8 !important;
+  background: transparent !important;
+}
