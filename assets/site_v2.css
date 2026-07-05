@@ -20523,3 +20523,14 @@ html body #app-content #saveMemoModalBtn.memo-save-btn {
     margin-top: 4px !important;
   }
 }
+
+/* 2026-07-05 mobile daily kkul: soften the pink wash and use the standard card border. */
+@media (max-width: 900px) {
+  html body #app-content #home .daily-kkul-card.daily-kkul-card,
+  html body #app-content #home .home-grid-left .daily-kkul-card.daily-kkul-card {
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.99) 0%, rgba(255, 251, 252, 0.92) 58%, rgba(255, 255, 255, 0.98) 100%) !important;
+    border-color: var(--line) !important;
+    box-shadow: 0 12px 28px rgba(63, 58, 53, 0.055) !important;
+  }
+}
