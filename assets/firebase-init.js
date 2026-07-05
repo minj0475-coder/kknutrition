@@ -439,6 +439,7 @@ const defaultMemos = [
 let memos = [];
 let isFirebaseLoaded = false;
 let memoUpdatedAt = 0;
+let memoDraftMemos = null;
 
 function normalizeMemoPayload(value) {
   if (Array.isArray(value)) {
@@ -607,11 +608,21 @@ async function saveMemos() {
   }
 }
 
+function cloneMemoItems(items) {
+  return Array.isArray(items)
+    ? items.map(item => ({
+        text: String(item && item.text || ""),
+        checked: Boolean(item && item.checked)
+      }))
+    : [];
+}
+
 function renderMemoList(containerId, isHome) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
-  const displayMemos = isHome ? memos.slice(0, 3) : memos;
+  const activeMemos = isHome ? memos : (memoDraftMemos || memos);
+  const displayMemos = isHome ? activeMemos.slice(0, 3) : activeMemos;
   const focusMemoWithoutPageJump = (textarea, options = {}) => {
     if (!textarea) return;
     const scrollX = window.scrollX;
@@ -633,211 +644,115 @@ function renderMemoList(containerId, isHome) {
     }, 80);
   };
 
-  // 1. Remove extra items
-  while (container.children.length > displayMemos.length) {
-    const last = container.lastElementChild;
-    if (last) last.remove();
-  }
+  container.innerHTML = "";
 
-  // 2. Update or Create items
   displayMemos.forEach((memo, index) => {
-    let itemDiv = container.children[index];
-    let isNew = false;
-    if (!itemDiv || itemDiv.classList.contains('memo-add-btn')) {
-      if (itemDiv && itemDiv.classList.contains('memo-add-btn')) {
-        itemDiv.remove();
-      }
-      isNew = true;
-      itemDiv = document.createElement("div");
-      itemDiv.className = "memo-item";
+    const itemDiv = document.createElement("div");
+    itemDiv.className = "memo-item";
 
-      const checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.className = "memo-checkbox";
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.className = "memo-checkbox";
+    checkbox.checked = Boolean(memo.checked);
 
-      const textarea = document.createElement("textarea");
-      textarea.className = "memo-input";
-      textarea.rows = 1;
+    const textarea = document.createElement("textarea");
+    textarea.className = "memo-input";
+    textarea.rows = 1;
+    textarea.value = memo.text || "";
 
-      itemDiv.appendChild(checkbox);
-      itemDiv.appendChild(textarea);
-      container.insertBefore(itemDiv, container.children[index] || null);
-    }
+    itemDiv.appendChild(checkbox);
+    itemDiv.appendChild(textarea);
+    container.appendChild(itemDiv);
 
-    const checkbox = itemDiv.querySelector(".memo-checkbox");
-    const textarea = itemDiv.querySelector(".memo-input");
-
-    if (checkbox.checked !== memo.checked) checkbox.checked = memo.checked;
-
-    // Only update textarea value if it's NOT currently focused, to avoid cursor jumping
-    // Or if this is a newly created textarea
-    if (isNew || (textarea.value !== memo.text && document.activeElement !== textarea)) {
-      textarea.value = memo.text;
-    }
-
-    // Auto-resize
     const resizeTextarea = () => {
       if (!isHome) {
-        textarea.style.height = 'auto';
-        textarea.style.height = textarea.scrollHeight + 'px';
+        textarea.style.height = "auto";
+        textarea.style.height = textarea.scrollHeight + "px";
       } else {
-        textarea.style.height = ''; // Let css handle max-height
+        textarea.style.height = "";
       }
     };
 
-    // Events
+    if (isHome) {
+      checkbox.disabled = true;
+      textarea.readOnly = true;
+      textarea.tabIndex = -1;
+      textarea.setAttribute("aria-readonly", "true");
+      setTimeout(resizeTextarea, 0);
+      return;
+    }
+
     checkbox.onchange = () => {
-      memos[index].checked = checkbox.checked;
-      saveMemos();
+      activeMemos[index].checked = checkbox.checked;
     };
 
     textarea.oninput = () => {
-      memos[index].text = textarea.value;
+      activeMemos[index].text = textarea.value;
       resizeTextarea();
-      saveLocalMemos();
-      
-      clearTimeout(textarea._saveTimeout);
-      textarea._saveTimeout = setTimeout(() => {
-        saveMemos();
-      }, 500);
     };
 
     textarea.onkeydown = (e) => {
       if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
-        if (index < memos.length - 1) {
-          if (isHome && index + 1 >= 3) {
-            textarea.blur();
-            openMemoModal();
-            setTimeout(() => {
-                const modalList = document.getElementById("memoModalList");
-                const nextTextarea = modalList.children[index + 1]?.querySelector("textarea");
-                if (nextTextarea) {
-                    focusMemoWithoutPageJump(nextTextarea, { cursorEnd: true });
-                }
-            }, 100);
-            return;
-          }
+        if (index < activeMemos.length - 1) {
           const nextTextarea = container.children[index + 1]?.querySelector("textarea");
-          if (nextTextarea) {
-            focusMemoWithoutPageJump(nextTextarea, { cursorEnd: true });
-          }
+          if (nextTextarea) focusMemoWithoutPageJump(nextTextarea, { cursorEnd: true });
         } else {
-          textarea.blur();
-          memos.splice(index + 1, 0, { text: "", checked: false });
-          saveMemos();
-          if (isHome && index + 1 >= 3) {
-              updateAllMemosDOM();
-              openMemoModal();
-              setTimeout(() => {
-                  const modalList = document.getElementById("memoModalList");
-                  const nextTextarea = modalList.children[index + 1]?.querySelector("textarea");
-                  if (nextTextarea) {
-                      focusMemoWithoutPageJump(nextTextarea, { cursorEnd: true });
-                  }
-              }, 100);
-              return;
-          }
-          updateAllMemosDOM();
+          activeMemos.splice(index + 1, 0, { text: "", checked: false });
+          renderMemoList(containerId, false);
           setTimeout(() => {
             const nextTextarea = container.children[index + 1]?.querySelector("textarea");
-            if (nextTextarea) {
-                focusMemoWithoutPageJump(nextTextarea, { cursorEnd: true });
-            }
+            if (nextTextarea) focusMemoWithoutPageJump(nextTextarea, { cursorEnd: true });
           }, 10);
         }
       } else if (e.key === "ArrowUp") {
         if (textarea.selectionStart === 0 && textarea.selectionEnd === 0) {
           e.preventDefault();
-          if (textarea.value === "" && memos.length > 1) {
-            memos.splice(index, 1);
-            textarea.blur();
-            saveMemos();
-            updateAllMemosDOM();
+          if (textarea.value === "" && activeMemos.length > 1) {
+            activeMemos.splice(index, 1);
+            renderMemoList(containerId, false);
             const targetIndex = index > 0 ? index - 1 : 0;
             setTimeout(() => {
               const targetTextarea = container.children[targetIndex]?.querySelector("textarea");
-              if (targetTextarea) {
-                focusMemoWithoutPageJump(targetTextarea, { cursorEnd: true });
-              }
+              if (targetTextarea) focusMemoWithoutPageJump(targetTextarea, { cursorEnd: true });
             }, 10);
           } else if (index > 0) {
             const prevTextarea = container.children[index - 1]?.querySelector("textarea");
-            if (prevTextarea) {
-              focusMemoWithoutPageJump(prevTextarea, { cursorEnd: true });
-            }
+            if (prevTextarea) focusMemoWithoutPageJump(prevTextarea, { cursorEnd: true });
           }
         }
       } else if (e.key === "ArrowDown") {
         const len = textarea.value.length;
         if (textarea.selectionStart === len && textarea.selectionEnd === len) {
           e.preventDefault();
-          if (textarea.value === "" && memos.length > 1) {
-            memos.splice(index, 1);
-            textarea.blur();
-            saveMemos();
-            updateAllMemosDOM();
-            const targetIndex = index < memos.length ? index : memos.length - 1;
+          if (textarea.value === "" && activeMemos.length > 1) {
+            activeMemos.splice(index, 1);
+            renderMemoList(containerId, false);
+            const targetIndex = index < activeMemos.length ? index : activeMemos.length - 1;
             setTimeout(() => {
               const targetTextarea = container.children[targetIndex]?.querySelector("textarea");
-              if (targetTextarea) {
-                focusMemoWithoutPageJump(targetTextarea, { cursorEnd: true });
-              }
+              if (targetTextarea) focusMemoWithoutPageJump(targetTextarea, { cursorEnd: true });
             }, 10);
-          } else if (index < memos.length - 1) {
-            if (isHome && index + 1 >= 3) {
-              textarea.blur();
-              openMemoModal();
-              setTimeout(() => {
-                  const modalList = document.getElementById("memoModalList");
-                  const nextTextarea = modalList.children[index + 1]?.querySelector("textarea");
-                  if (nextTextarea) {
-                      focusMemoWithoutPageJump(nextTextarea, { cursorEnd: true });
-                  }
-              }, 100);
-              return;
-            }
+          } else if (index < activeMemos.length - 1) {
             const nextTextarea = container.children[index + 1]?.querySelector("textarea");
-            if (nextTextarea) {
-              focusMemoWithoutPageJump(nextTextarea, { cursorEnd: true });
-            }
+            if (nextTextarea) focusMemoWithoutPageJump(nextTextarea, { cursorEnd: true });
           } else {
-            textarea.blur();
-            memos.splice(index + 1, 0, { text: "", checked: false });
-            saveMemos();
-            if (isHome && index + 1 >= 3) {
-                updateAllMemosDOM();
-                openMemoModal();
-                setTimeout(() => {
-                    const modalList = document.getElementById("memoModalList");
-                    const nextTextarea = modalList.children[index + 1]?.querySelector("textarea");
-                    if (nextTextarea) {
-                        focusMemoWithoutPageJump(nextTextarea, { cursorEnd: true });
-                    }
-                }, 100);
-                return;
-            }
-            updateAllMemosDOM();
+            activeMemos.splice(index + 1, 0, { text: "", checked: false });
+            renderMemoList(containerId, false);
             setTimeout(() => {
               const nextTextarea = container.children[index + 1]?.querySelector("textarea");
-              if (nextTextarea) {
-                  focusMemoWithoutPageJump(nextTextarea, { cursorEnd: true });
-              }
+              if (nextTextarea) focusMemoWithoutPageJump(nextTextarea, { cursorEnd: true });
             }, 10);
           }
         }
-      } else if (e.key === "Backspace" && textarea.value === "" && memos.length > 1) {
+      } else if (e.key === "Backspace" && textarea.value === "" && activeMemos.length > 1) {
         e.preventDefault();
-        memos.splice(index, 1);
-        textarea.blur();
-        saveMemos();
-        updateAllMemosDOM();
+        activeMemos.splice(index, 1);
+        renderMemoList(containerId, false);
         const targetIndex = index > 0 ? index - 1 : 0;
         setTimeout(() => {
           const targetTextarea = container.children[targetIndex]?.querySelector("textarea");
-          if (targetTextarea) {
-            focusMemoWithoutPageJump(targetTextarea, { cursorEnd: true });
-          }
+          if (targetTextarea) focusMemoWithoutPageJump(targetTextarea, { cursorEnd: true });
         }, 10);
       }
     };
@@ -845,36 +760,14 @@ function renderMemoList(containerId, isHome) {
     setTimeout(resizeTextarea, 0);
   });
 
-  // 3. Add button
-  let addBtn = container.querySelector('.memo-add-btn');
-  if (addBtn) addBtn.remove();
-  
-  if (isHome) {
-    if (memos.length < 3) {
-      const newAddBtn = document.createElement("button");
-      newAddBtn.className = "memo-add-btn";
-      newAddBtn.textContent = "+ 항목 추가";
-      newAddBtn.type = "button";
-      newAddBtn.onclick = () => {
-        memos.push({ text: "", checked: false });
-        saveMemos();
-        updateAllMemosDOM();
-        setTimeout(() => {
-          const textareas = container.querySelectorAll("textarea");
-          if (textareas.length > 0) focusMemoWithoutPageJump(textareas[textareas.length - 1], { cursorEnd: true });
-        }, 10);
-      };
-      container.appendChild(newAddBtn);
-    }
-  } else {
+  if (!isHome) {
     const newAddBtn = document.createElement("button");
     newAddBtn.className = "memo-add-btn";
-    newAddBtn.textContent = "+ 항목 추가";
+    newAddBtn.textContent = "+ 메모 추가";
     newAddBtn.type = "button";
     newAddBtn.onclick = () => {
-      memos.push({ text: "", checked: false });
-      saveMemos();
-      updateAllMemosDOM();
+      activeMemos.push({ text: "", checked: false });
+      renderMemoList(containerId, false);
       setTimeout(() => {
         const textareas = container.querySelectorAll("textarea");
         if (textareas.length > 0) focusMemoWithoutPageJump(textareas[textareas.length - 1], { cursorEnd: true });
@@ -883,7 +776,6 @@ function renderMemoList(containerId, isHome) {
     container.appendChild(newAddBtn);
   }
 }
-
 function updateAllMemosDOM() {
   renderMemoList("memoList", true);
   const overlay = document.getElementById("memoModalOverlay");
@@ -895,8 +787,8 @@ function updateAllMemosDOM() {
 function openMemoModal() {
   const overlay = document.getElementById("memoModalOverlay");
   if (overlay) {
+    memoDraftMemos = cloneMemoItems(memos);
     overlay.style.display = "flex";
-    // For transition to work, wait a frame
     requestAnimationFrame(() => {
       overlay.classList.add("active");
     });
@@ -904,7 +796,16 @@ function openMemoModal() {
   }
 }
 
+async function saveMemoModal() {
+  if (!memoDraftMemos) return;
+  memos = cloneMemoItems(memoDraftMemos);
+  memoDraftMemos = null;
+  await saveMemos();
+  closeMemoModal();
+}
+
 function closeMemoModal() {
+  memoDraftMemos = null;
   const overlay = document.getElementById("memoModalOverlay");
   if (overlay) {
     overlay.classList.remove("active");
@@ -1216,6 +1117,8 @@ function init() {
   
   const closeBtn = document.getElementById("closeMemoModalBtn");
   if (closeBtn) closeBtn.addEventListener("click", closeMemoModal);
+  const saveMemoBtn = document.getElementById("saveMemoModalBtn");
+  if (saveMemoBtn) saveMemoBtn.addEventListener("click", saveMemoModal);
   
   const overlay = document.getElementById("memoModalOverlay");
   if (overlay) {

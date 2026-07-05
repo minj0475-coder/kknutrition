@@ -20422,3 +20422,52 @@ html body #app-content #monthly .academic-week-memo {
     pointer-events: none !important;
   }
 }
+
+/* 2026-07-05 memo editing: home card is preview-only; edits are saved from the modal. */
+html body #app-content #homeMemoCard .memo-edit-btn {
+  width: auto !important;
+  min-width: 58px !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  padding: 0 14px !important;
+  border-radius: 12px !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+}
+
+html body #app-content #homeMemoCard .memo-checkbox:disabled {
+  opacity: 1 !important;
+  cursor: default !important;
+}
+
+html body #app-content #homeMemoCard .memo-input[readonly] {
+  cursor: default !important;
+  caret-color: transparent !important;
+}
+
+html body #app-content .memo-modal-actions {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+html body #app-content #saveMemoModalBtn.memo-save-btn {
+  min-height: 38px !important;
+  padding: 0 15px !important;
+  border: 1px solid #202123 !important;
+  border-radius: 12px !important;
+  background: #202123 !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 850 !important;
+  box-shadow: none !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html body #app-content #saveMemoModalBtn.memo-save-btn:hover {
+    background: #343541 !important;
+    border-color: #343541 !important;
+    transform: none !important;
+  }
+}
