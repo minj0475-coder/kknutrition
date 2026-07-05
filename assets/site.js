@@ -2335,17 +2335,6 @@ function getSidebarCustomHeadings(groupName) {
   return null;
 }
 
-function getSidebarDisplayText(pageId, text) {
-  const map = {
-    staff: {
-      "신규 대체 조리종사원 문자 발송": "대체인력 문자 발송",
-      "조리종사원 전달 사항": "전달사항",
-      "조리종사원 복무": "복무"
-    }
-  };
-  return map[pageId]?.[text] || text;
-}
-
 function buildSidebarToc() {
   const nav = document.getElementById("sidebarNav");
   if (!nav || nav.dataset.ready) return;
@@ -2371,7 +2360,7 @@ function buildSidebarToc() {
         const clone = heading.cloneNode(true);
         clone.querySelectorAll(".num").forEach(num => num.remove());
         const text = clone.textContent.trim().replace(/\s+/g, " ");
-        return { id: card.id, text: getSidebarDisplayText(pageId, text), card };
+        return { id: card.id, text, card };
       })
       .filter(item => item && item.text && !shouldHideSidebarTocItem(pageId, item.text, item.card))
       .filter((item, index, items) => {
