@@ -21079,3 +21079,100 @@ html body #app-content #staff.is-page-editing #service-sheet .sheet-link-card {
   outline-offset: 0 !important;
   box-shadow: none !important;
 }
+
+/* 2026-07-06 unified edit/save controls. */
+:root {
+  --portal-action-button-height: 40px;
+  --portal-action-button-padding-x: 15px;
+  --portal-action-button-radius: 12px;
+  --portal-action-button-border: #d9d9df;
+  --portal-action-button-border-hover: #cfcfd6;
+  --portal-action-button-bg: #ffffff;
+  --portal-action-button-bg-hover: #f7f7f8;
+  --portal-action-button-text: #202123;
+}
+
+html body #app-content :is(
+  .fab-edit-btn,
+  .fab-bookmark-edit-btn,
+  .quiet-edit-toggle,
+  .academic-save-btn,
+  .memo-save-btn,
+  .memo-edit-btn,
+  #menuGithubTokenSaveBtn
+) {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 58px !important;
+  width: auto !important;
+  height: var(--portal-action-button-height) !important;
+  min-height: var(--portal-action-button-height) !important;
+  padding: 0 var(--portal-action-button-padding-x) !important;
+  border: 1px solid var(--portal-action-button-border) !important;
+  border-radius: var(--portal-action-button-radius) !important;
+  background: var(--portal-action-button-bg) !important;
+  color: var(--portal-action-button-text) !important;
+  -webkit-text-fill-color: var(--portal-action-button-text) !important;
+  font-family: inherit !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+html body #app-content :is(
+  .fab-edit-btn,
+  .fab-bookmark-edit-btn,
+  .quiet-edit-toggle,
+  .academic-save-btn,
+  .memo-save-btn,
+  .memo-edit-btn,
+  #menuGithubTokenSaveBtn
+):hover,
+html body #app-content :is(
+  .fab-edit-btn,
+  .fab-bookmark-edit-btn,
+  .quiet-edit-toggle,
+  .academic-save-btn,
+  .memo-save-btn,
+  .memo-edit-btn,
+  #menuGithubTokenSaveBtn
+):focus-visible {
+  border-color: var(--portal-action-button-border-hover) !important;
+  background: var(--portal-action-button-bg-hover) !important;
+  color: var(--portal-action-button-text) !important;
+  -webkit-text-fill-color: var(--portal-action-button-text) !important;
+  box-shadow: none !important;
+  outline: none !important;
+  transform: none !important;
+}
+
+html body #app-content :is(.fab-edit-btn.saving, .fab-bookmark-edit-btn.saving) {
+  border-color: var(--portal-action-button-border) !important;
+  background: var(--portal-action-button-bg) !important;
+  color: var(--portal-action-button-text) !important;
+  -webkit-text-fill-color: var(--portal-action-button-text) !important;
+}
+
+html body #app-content :is(.annual-sheet-save-btn, #sheetLinkSaveBtn) {
+  border-color: var(--portal-action-button-border) !important;
+  background: var(--portal-action-button-bg) !important;
+  color: var(--portal-action-button-text) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+html body #app-content :is(.annual-sheet-save-btn, #sheetLinkSaveBtn):hover,
+html body #app-content :is(.annual-sheet-save-btn, #sheetLinkSaveBtn):focus-visible {
+  border-color: var(--portal-action-button-border-hover) !important;
+  background: var(--portal-action-button-bg-hover) !important;
+  color: var(--portal-action-button-text) !important;
+  box-shadow: none !important;
+  outline: none !important;
+  transform: none !important;
+}
