@@ -20300,3 +20300,17 @@ html body:not(.sidebar-collapsed) .app-sidebar button#sidebarCloseBtn.sidebar-ic
     padding: 8px 12px 0 !important;
   }
 }
+
+/* 2026-07-05 academic weekly list: keep expanded schedule text left aligned. */
+html body #app-content .academic-week-items,
+html body #app-content .academic-week-row,
+html body #app-content .academic-week-content,
+html body #app-content .academic-week-row strong,
+html body #app-content .academic-week-memo {
+  text-align: left !important;
+  justify-items: start !important;
+}
+
+html body #app-content .academic-week-content {
+  justify-self: stretch !important;
+}
