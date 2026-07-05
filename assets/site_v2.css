@@ -20368,3 +20368,17 @@ html body #app-content #promo-contacts #promoContactsEditSaveBtn.quiet-edit-togg
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }
+
+/* 2026-07-05 sidebar navigation: remove the active red underline. */
+html body .app-sidebar nav a::after,
+html body .app-sidebar .sidebar-nav a::after,
+html body .app-sidebar .sidebar-subnav a::after,
+html body .app-sidebar nav a.active::after,
+html body .app-sidebar .sidebar-nav a.active::after,
+html body .app-sidebar .sidebar-subnav a.active::after {
+  content: none !important;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
