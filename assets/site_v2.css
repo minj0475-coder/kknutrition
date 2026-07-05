@@ -20347,3 +20347,13 @@ html body #app-content section#monthly.page-section .academic-weekdays span:last
   color: #256fb8 !important;
   background: transparent !important;
 }
+
+/* 2026-07-05 collapsed desktop sidebar: keep the pig logo locked to the open position. */
+@media (min-width: 901px) {
+  html body.sidebar-collapsed .app-sidebar .sidebar-logo-link {
+    flex: 0 0 46px !important;
+    width: 46px !important;
+    min-width: 46px !important;
+    max-width: 46px !important;
+  }
+}
