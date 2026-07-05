@@ -21058,3 +21058,24 @@ html body .app-sidebar.is-open button#sidebarCloseBtn.sidebar-icon-btn:hover {
   background-color: transparent !important;
   box-shadow: none !important;
 }
+
+/* 2026-07-06 staff edit mode: use the same outer edit outline as other tabs. */
+html body #app-content #staff.is-page-editing .staff-accordion-card,
+html body #app-content #staff.is-page-editing .staff-accordion-card:focus-within {
+  outline: var(--portal-edit-outline-width) solid var(--portal-edit-outline-color) !important;
+  outline-offset: var(--portal-edit-outline-offset) !important;
+  border-color: inherit !important;
+  border-style: solid !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+html body #app-content #staff .editable-content[contenteditable="true"],
+html body #app-content #staff .editable-content[contenteditable="true"]:focus,
+html body #app-content #staff.is-page-editing .staff-accordion-card .editable-content,
+html body #app-content #staff.is-page-editing #service-sheet .sheet-link-card {
+  outline: 0 !important;
+  outline-offset: 0 !important;
+  box-shadow: none !important;
+}
