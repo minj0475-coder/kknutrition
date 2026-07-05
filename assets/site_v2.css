@@ -20996,3 +20996,65 @@ html body #app-content #home .home-grid-left .daily-kkul-card .section-title {
     line-height: 1.2 !important;
   }
 }
+
+/* 2026-07-06 sidebar open state: match the fixed collapsed Kkul logo position. */
+html body:not(.sidebar-collapsed) .app-sidebar .sidebar-head,
+html body.sidebar-open .app-sidebar .sidebar-head,
+html body .app-sidebar.is-open .sidebar-head {
+  position: relative !important;
+  min-height: 58px !important;
+  height: 58px !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+html body:not(.sidebar-collapsed) .app-sidebar .sidebar-logo-link,
+html body.sidebar-open .app-sidebar .sidebar-logo-link,
+html body .app-sidebar.is-open .sidebar-logo-link {
+  position: absolute !important;
+  left: 14px !important;
+  top: 2px !important;
+  width: 46px !important;
+  height: 46px !important;
+  min-width: 46px !important;
+  min-height: 46px !important;
+  max-width: 46px !important;
+  max-height: 46px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transform: none !important;
+  overflow: visible !important;
+}
+
+html body:not(.sidebar-collapsed) .app-sidebar .sidebar-logo,
+html body.sidebar-open .app-sidebar .sidebar-logo,
+html body .app-sidebar.is-open .sidebar-logo {
+  width: 46px !important;
+  height: 46px !important;
+  min-width: 46px !important;
+  min-height: 46px !important;
+  margin: 0 !important;
+  transform: none !important;
+  object-fit: contain !important;
+}
+
+html body .app-sidebar button#sidebarCloseBtn.sidebar-icon-btn,
+html body.sidebar-open .app-sidebar button#sidebarCloseBtn.sidebar-icon-btn,
+html body:not(.sidebar-collapsed) .app-sidebar button#sidebarCloseBtn.sidebar-icon-btn,
+html body .app-sidebar.is-open button#sidebarCloseBtn.sidebar-icon-btn {
+  border: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+}
+
+html body .app-sidebar button#sidebarCloseBtn.sidebar-icon-btn:hover,
+html body.sidebar-open .app-sidebar button#sidebarCloseBtn.sidebar-icon-btn:hover,
+html body:not(.sidebar-collapsed) .app-sidebar button#sidebarCloseBtn.sidebar-icon-btn:hover,
+html body .app-sidebar.is-open button#sidebarCloseBtn.sidebar-icon-btn:hover {
+  border: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
