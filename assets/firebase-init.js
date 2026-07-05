@@ -1156,7 +1156,7 @@ function init() {
           }
         }
       } else {
-        if (typeof window.getBookmarkData === 'function') {
+        if (typeof window.getBookmarkData === 'function' && typeof window.hasStoredBookmarkData === 'function' && window.hasStoredBookmarkData()) {
           const meta = typeof window.getBookmarkSyncMeta === 'function' ? window.getBookmarkSyncMeta() : {};
           window.syncBookmarksToFirebase(window.getBookmarkData(), meta);
         }

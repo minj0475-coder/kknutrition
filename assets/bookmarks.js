@@ -41,6 +41,7 @@ const BOOKMARK_STORAGE_KEY = 'kknutrition_bookmarks_v4';
 const BOOKMARK_LOCAL_META_KEY = 'kknutrition_bookmarks_v4_meta';
 let bookmarkUpdatedAt = 0;
 let bookmarkPendingLocalWriteAt = 0;
+let bookmarkLoadedFromFallback = true;
 
 function normalizeBookmarkCategory(category) {
   if (category === '공산·단가' || category === '공산, 단가' || category === '공산 단가' || category === '공산·단가 관련') {
@@ -79,6 +80,7 @@ function readBookmarkLocalMeta() {
 
 function writeBookmarkStorage(items, updatedAt) {
   bookmarkUpdatedAt = Number(updatedAt) || Date.now();
+  bookmarkLoadedFromFallback = false;
   localStorage.setItem(BOOKMARK_STORAGE_KEY, JSON.stringify({
     items: items.map(normalizeBookmarkItem),
     updatedAt: bookmarkUpdatedAt
@@ -94,45 +96,21 @@ function hasMeaningfulBookmarkData(items) {
   });
 }
 
-// ---- LocalStorage (v4: new category names) ----
+// ---- LocalStorage (v4 only) ----
 (function loadFromStorage() {
   try {
-    // v4 키로 먼저 시도
+    // Read only the current v4 storage key.
     var saved = localStorage.getItem(BOOKMARK_STORAGE_KEY);
     if (!saved) {
-      // v3 또는 v2 데이터가 있으면 마이그레이션
-      var old = localStorage.getItem('kknutrition_bookmarks_v3');
-      if (!old) {
-        old = localStorage.getItem('kknutrition_bookmarks_v2');
-      }
-      
-      if (old) {
-        var parsed = JSON.parse(old);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          // 카테고리명 매핑
-          var catMap = {
-            '필수 업무': '급식',
-            '급식·위생': '급식',
-            '학교': '급식',
-            '소통·학교': '급식',
-            '공산·단가 관련': '자료',
-            '자료·연수': '자료'
-          };
-          bookmarkData = parsed.map(function(b) {
-            return { title: b.title, url: b.url, category: normalizeBookmarkCategory(catMap[b.category] || b.category), clickCount: b.clickCount || 0 };
-          });
-          // v4 키로 저장 후 과거 키 삭제
-          writeBookmarkStorage(bookmarkData, Date.now());
-          localStorage.removeItem('kknutrition_bookmarks_v3');
-          localStorage.removeItem('kknutrition_bookmarks_v2');
-        }
-      }
+      bookmarkLoadedFromFallback = true;
+      bookmarkUpdatedAt = 0;
       return;
     }
     var parsed = normalizeBookmarkStoragePayload(JSON.parse(saved));
-    if (parsed) {
+    if (parsed && hasMeaningfulBookmarkData(parsed.items)) {
       bookmarkData = parsed.items.map(normalizeBookmarkItem);
       bookmarkUpdatedAt = parsed.updatedAt || Number(readBookmarkLocalMeta().updatedAt) || 0;
+      bookmarkLoadedFromFallback = false;
     }
   } catch (e) { /* ignore */ }
 })();
@@ -165,7 +143,17 @@ window.updateBookmarkData = function(newData, remoteMeta) {
     }
     return;
   }
-  if (!localUpdatedAt && hasMeaningfulBookmarkData(bookmarkData)) {
+  if (bookmarkLoadedFromFallback && !localUpdatedAt) {
+    if (hasMeaningfulBookmarkData(newData)) {
+      bookmarkData = newData.map(normalizeBookmarkItem);
+      writeBookmarkStorage(bookmarkData, remoteUpdatedAt || Date.now());
+      if (typeof window.renderBookmarks === 'function') {
+        window.renderBookmarks();
+      }
+    }
+    return;
+  }
+  if (!localUpdatedAt && !bookmarkLoadedFromFallback && hasMeaningfulBookmarkData(bookmarkData)) {
     localUpdatedAt = Date.now();
     writeBookmarkStorage(bookmarkData, localUpdatedAt);
     if (typeof window.syncBookmarksToFirebase === 'function') {
@@ -198,6 +186,10 @@ window.getBookmarkData = function() {
 
 window.getBookmarkSyncMeta = function() {
   return { updatedAt: bookmarkUpdatedAt || Number(readBookmarkLocalMeta().updatedAt) || 0 };
+};
+
+window.hasStoredBookmarkData = function() {
+  return !bookmarkLoadedFromFallback && hasMeaningfulBookmarkData(bookmarkData);
 };
 
 // ---- State ----
