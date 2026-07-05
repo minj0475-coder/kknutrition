@@ -21176,3 +21176,49 @@ html body #app-content :is(.annual-sheet-save-btn, #sheetLinkSaveBtn):focus-visi
   outline: none !important;
   transform: none !important;
 }
+
+/* 2026-07-06 full memo modal: save bottom-right, add memo as a quiet left action. */
+html body #app-content #memoModalOverlay .memo-modal {
+  position: relative !important;
+}
+
+html body #app-content #memoModalOverlay .memo-modal-body {
+  padding-bottom: 74px !important;
+}
+
+html body #app-content #memoModalOverlay #saveMemoModalBtn.memo-save-btn {
+  position: absolute !important;
+  right: 24px !important;
+  bottom: 22px !important;
+  z-index: 4 !important;
+  margin: 0 !important;
+}
+
+html body #app-content #memoModalOverlay .memo-modal-body .memo-add-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  align-self: flex-start !important;
+  width: auto !important;
+  min-width: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 10px 0 0 !important;
+  padding: 8px 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: var(--portal-action-button-text) !important;
+  -webkit-text-fill-color: var(--portal-action-button-text) !important;
+  box-shadow: none !important;
+  text-align: left !important;
+}
+
+html body #app-content #memoModalOverlay .memo-modal-body .memo-add-btn:hover,
+html body #app-content #memoModalOverlay .memo-modal-body .memo-add-btn:focus-visible {
+  border: 0 !important;
+  background: transparent !important;
+  color: var(--portal-action-button-text) !important;
+  -webkit-text-fill-color: var(--portal-action-button-text) !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
