@@ -21059,6 +21059,33 @@ html body .app-sidebar.is-open button#sidebarCloseBtn.sidebar-icon-btn:hover {
   box-shadow: none !important;
 }
 
+/* 2026-07-06 mobile sidebar menu spacing. */
+@media (max-width: 900px) {
+  html body.sidebar-open .app-sidebar .sidebar-nav,
+  html body.sidebar-open .app-sidebar nav.sidebar-nav,
+  html body .app-sidebar.is-open .sidebar-nav,
+  html body .app-sidebar.is-open nav.sidebar-nav {
+    gap: 7px !important;
+    padding: 10px 8px 0 !important;
+  }
+
+  html body.sidebar-open .app-sidebar .sidebar-nav > .sidebar-nav-group > a,
+  html body.sidebar-open .app-sidebar .sidebar-nav a,
+  html body .app-sidebar.is-open .sidebar-nav > .sidebar-nav-group > a,
+  html body .app-sidebar.is-open .sidebar-nav a {
+    min-height: 37px !important;
+    padding: 7px 12px !important;
+    align-items: center !important;
+    line-height: 1.28 !important;
+  }
+
+  html body.sidebar-open .app-sidebar .sidebar-section,
+  html body .app-sidebar.is-open .sidebar-section {
+    margin-top: 14px !important;
+    padding-top: 12px !important;
+  }
+}
+
 /* 2026-07-06 staff edit mode: use the same outer edit outline as other tabs. */
 html body #app-content #staff.is-page-editing .staff-accordion-card,
 html body #app-content #staff.is-page-editing .staff-accordion-card:focus-within {
