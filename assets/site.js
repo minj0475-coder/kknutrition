@@ -967,8 +967,10 @@ function setupWorkNotes() {
       button.type = "button";
       button.dataset.workNoteIndex = String(index);
       button.setAttribute("aria-pressed", index === activeIndex ? "true" : "false");
+      const preview = String(note.body || "").replace(/\s+/g, " ").trim();
       button.innerHTML = `
         <span class="work-note-toc-title">${escapeTemplateHtml(note.title || DEFAULT_WORK_NOTE_TITLE)}</span>
+        <span class="work-note-toc-preview">${escapeTemplateHtml(preview || "내용 없음")}</span>
         <span class="work-note-toc-meta">${escapeTemplateHtml(String(note.body || "").trim().split(/\s+/).filter(Boolean).length)}개 단어</span>
       `;
       button.addEventListener("click", () => {
@@ -2529,6 +2531,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const RECENT_PAGE_KEY = "kkulkkoori_recent_pages_v1";
+const HIDDEN_RECENT_LABELS = new Set(["첫 출근 조회 및 인사말 정리", "상세 안내문"]);
 
 function getPageLabel(hash) {
   const link = document.querySelector(`.sidebar-nav a[href="${hash}"], .desktop-nav a[href="${hash}"]`);
@@ -2549,9 +2552,12 @@ function getPageLabel(hash) {
 function recordRecentPage(hash) {
   if (!hash || hash === "#home" || !document.querySelector(hash)) return;
   const item = { hash, label: getPageLabel(hash), time: Date.now() };
+  if (HIDDEN_RECENT_LABELS.has(item.label)) return;
   let list = [];
   try { list = JSON.parse(localStorage.getItem(RECENT_PAGE_KEY) || "[]"); } catch(e) {}
-  list = [item, ...list.filter(saved => saved.hash !== hash)].slice(0, 18);
+  list = [item, ...list.filter(saved => saved.hash !== hash)]
+    .filter(saved => !HIDDEN_RECENT_LABELS.has(saved.label))
+    .slice(0, 18);
   try { localStorage.setItem(RECENT_PAGE_KEY, JSON.stringify(list)); } catch(e) {}
   renderRecentPages();
 }
@@ -2561,7 +2567,7 @@ function renderRecentPages() {
   if (!wrap) return;
   let list = [];
   try { list = JSON.parse(localStorage.getItem(RECENT_PAGE_KEY) || "[]"); } catch(e) {}
-  const visible = list.slice(0, 3);
+  const visible = list.filter(item => !HIDDEN_RECENT_LABELS.has(item.label)).slice(0, 3);
   wrap.innerHTML = visible.length ? "" : `<span class="sidebar-empty">최근 항목이 없습니다.</span>`;
   visible.forEach(item => {
     const a = document.createElement("a");
@@ -2621,6 +2627,7 @@ function buildSidebarToc() {
       ].filter(item => document.getElementById(item.id))
       : section ? [...section.querySelectorAll(":scope main section.card h2, :scope main section.card summary")]
       .map((heading, index) => {
+        if (heading.closest("#staffNoticeList")) return null;
         const card = heading.closest("section.card");
         if (!card) return null;
         if (!card.id) card.id = `${pageId}-item-${index + 1}`;

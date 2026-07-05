@@ -20762,3 +20762,224 @@ html body #app-content #staff .staff-notice-body textarea:disabled {
     width: auto !important;
   }
 }
+
+/* 2026-07-05 final sidebar density, work notes mobile list, and daily Kkul title sizing. */
+html body .app-sidebar,
+html body.sidebar-open .app-sidebar,
+html body:not(.sidebar-collapsed) .app-sidebar {
+  width: 272px !important;
+  padding: 14px 10px !important;
+  border-right: 1px solid #eef0f3 !important;
+  background: #ffffff !important;
+  box-shadow: 8px 0 22px rgba(15, 23, 42, 0.035) !important;
+}
+
+@media (min-width: 901px) {
+  html body:not(.sidebar-collapsed) #app-content,
+  html body.sidebar-open #app-content {
+    padding-left: 272px !important;
+  }
+}
+
+html body .app-sidebar .sidebar-nav,
+html body .app-sidebar nav.sidebar-nav {
+  gap: 2px !important;
+  margin-bottom: 12px !important;
+}
+
+html body .app-sidebar .sidebar-nav-group {
+  gap: 1px !important;
+}
+
+html body .app-sidebar .sidebar-nav > .sidebar-nav-group > a,
+html body .app-sidebar .sidebar-nav a {
+  min-height: 32px !important;
+  padding: 6px 10px !important;
+  border-radius: 8px !important;
+  color: #202123 !important;
+  font-size: 15px !important;
+  font-weight: 720 !important;
+  line-height: 1.25 !important;
+}
+
+html body .app-sidebar .sidebar-subnav {
+  gap: 0 !important;
+  margin: 0 0 6px 4px !important;
+  padding-left: 10px !important;
+  border-left: 1px solid #eef0f3 !important;
+}
+
+html body .app-sidebar .sidebar-subnav a {
+  min-height: 26px !important;
+  padding: 4px 8px !important;
+  border-radius: 7px !important;
+  color: #5f6368 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 1.25 !important;
+}
+
+html body .app-sidebar .sidebar-nav a:hover,
+html body .app-sidebar .sidebar-subnav a:hover,
+html body .app-sidebar .sidebar-recent-list a:hover,
+html body .app-sidebar .sidebar-nav a.active,
+html body .app-sidebar .sidebar-subnav a.active {
+  background: #f4f4f5 !important;
+  color: #202123 !important;
+}
+
+html body .app-sidebar .sidebar-section {
+  margin-top: 8px !important;
+  padding: 10px 8px 0 !important;
+  border-top: 1px solid #eef0f3 !important;
+}
+
+html body .app-sidebar .sidebar-section-title {
+  margin: 0 0 5px 2px !important;
+  color: #8a8f98 !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+}
+
+html body .app-sidebar .sidebar-recent-list {
+  gap: 1px !important;
+}
+
+html body .app-sidebar .sidebar-recent-list a,
+html body .app-sidebar .sidebar-empty {
+  min-height: 25px !important;
+  padding: 4px 2px !important;
+  color: #5f6368 !important;
+  font-size: 12.5px !important;
+  font-weight: 650 !important;
+  line-height: 1.25 !important;
+}
+
+@media (max-width: 900px) {
+  html body .app-sidebar,
+  html body.sidebar-open .app-sidebar,
+  html body .app-sidebar.is-open {
+    width: min(292px, 84vw) !important;
+    padding: 12px 8px !important;
+  }
+
+  html body.sidebar-open .app-sidebar .sidebar-nav,
+  html body.sidebar-open .app-sidebar nav.sidebar-nav,
+  html body .app-sidebar.is-open .sidebar-nav,
+  html body .app-sidebar.is-open nav.sidebar-nav {
+    gap: 1px !important;
+    padding: 2px 8px 0 !important;
+  }
+
+  html body.sidebar-open .app-sidebar .sidebar-nav > .sidebar-nav-group > a,
+  html body .app-sidebar.is-open .sidebar-nav > .sidebar-nav-group > a {
+    min-height: 31px !important;
+    padding: 5px 10px !important;
+    font-size: 15px !important;
+  }
+
+  html body.sidebar-open .app-sidebar .sidebar-subnav,
+  html body .app-sidebar.is-open .sidebar-subnav {
+    margin-bottom: 5px !important;
+    padding-left: 10px !important;
+  }
+
+  html body.sidebar-open .app-sidebar .sidebar-subnav a,
+  html body .app-sidebar.is-open .sidebar-subnav a {
+    min-height: 25px !important;
+    padding: 3px 8px !important;
+    font-size: 13.5px !important;
+  }
+
+  html body.sidebar-open .app-sidebar .sidebar-section,
+  html body .app-sidebar.is-open .sidebar-section {
+    margin-top: 6px !important;
+    padding: 8px 8px 0 !important;
+  }
+}
+
+html body #app-content #today-menu .work-note-lead {
+  display: none !important;
+}
+
+html body #app-content #today-menu .work-note-toc-preview {
+  display: block !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  color: #6b7280 !important;
+  font-size: 12.5px !important;
+  font-weight: 500 !important;
+  line-height: 1.35 !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 760px) {
+  html body #app-content #today-menu .work-note-shell {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 14px !important;
+    min-height: 0 !important;
+  }
+
+  html body #app-content #today-menu .work-note-toc {
+    border-right: 0 !important;
+    border-bottom: 0 !important;
+    padding: 0 !important;
+  }
+
+  html body #app-content #today-menu .work-note-list {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 8px !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    scroll-snap-type: none !important;
+  }
+
+  html body #app-content #today-menu .work-note-toc-item {
+    display: grid !important;
+    flex: initial !important;
+    min-height: 64px !important;
+    padding: 11px 12px !important;
+    border: 1px solid #ececf1 !important;
+    border-radius: 10px !important;
+    background: #ffffff !important;
+  }
+
+  html body #app-content #today-menu .work-note-toc-item[aria-pressed="true"] {
+    border-color: #dedfe4 !important;
+    background: #f7f7f8 !important;
+  }
+
+  html body #app-content #today-menu .work-note-toc-title {
+    display: -webkit-box !important;
+    overflow: hidden !important;
+    white-space: normal !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-line-clamp: 2 !important;
+  }
+
+  html body #app-content #today-menu .work-note-toc-preview {
+    white-space: nowrap !important;
+  }
+}
+
+html body #app-content #home .daily-kkul-card .section-title,
+html body #app-content #home .daily-kkul-card.daily-kkul-card .section-title,
+html body #app-content #home .home-grid-left .daily-kkul-card .section-title {
+  font-size: 22px !important;
+  line-height: 1.22 !important;
+  font-weight: 800 !important;
+  letter-spacing: 0 !important;
+}
+
+@media (max-width: 900px) {
+  html body #app-content #home .daily-kkul-card .section-title,
+  html body #app-content #home .daily-kkul-card.daily-kkul-card .section-title,
+  html body #app-content #home .home-grid-left .daily-kkul-card .section-title {
+    font-size: 20px !important;
+    line-height: 1.2 !important;
+  }
+}
