@@ -56,12 +56,10 @@
   <nav id="sidebarNav" class="sidebar-nav">
     <a href="#homeMemoCard">메모장</a>
     <a href="#homeTodayCard">오늘의 식단</a>
-    <a href="#daily" data-page="daily">하루 일정</a>
-    <a href="#monthly" data-page="monthly">한 달 일정</a>
-    <a href="#annual" data-page="annual">연간 일정</a>
+    <a href="#daily" data-toc-group="schedule">일정</a>
     <a href="#today-menu" data-page="today-menu">급식노트</a>
     <a href="#bookmarks" data-page="bookmarks">북마크</a>
-    <a href="#promo-contacts" data-page="promo-contacts">업체 연락처</a>
+    <a href="#promo-contacts" data-toc-group="vendors">업체 관리</a>
     <a href="#staff" data-page="staff">조리종사원</a>
   </nav>
   <div class="sidebar-section">
@@ -1196,7 +1194,7 @@
 <script src="assets/auth.js?v=20260704_001" defer></script>
 <script src="assets/data-guard.js?v=20260701_002" defer></script>
 <script src="assets/bookmarks.js?v=20260705_001" defer></script>
-<script src="assets/site.js?v=20260705_011" defer></script>
+<script src="assets/site.js?v=20260705_012" defer></script>
 <script type="module" src="assets/firebase-init.js?v=20260705_001" defer></script>
 <script>
   if ('serviceWorker' in navigator) {

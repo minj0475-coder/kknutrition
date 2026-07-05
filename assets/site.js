@@ -1747,7 +1747,7 @@ const MOBILE_PAGE_TITLES = {
   annual: "연간 일정",
   "today-menu": "급식노트",
   bookmarks: "북마크",
-  "promo-contacts": "업체 연락처",
+  "promo-contacts": "업체 관리",
   staff: "조리종사원"
 };
 
@@ -2308,17 +2308,56 @@ function shouldHideSidebarTocItem(pageId, text, card) {
   return pageId === "home" && (Boolean(card && card.classList.contains("daily-kkul-card")) || text === "오늘의 꿀꿀이" || text === "꿀꿀이");
 }
 
+function ensureSidebarTargetId(selector, fallbackId) {
+  const element = document.querySelector(selector);
+  if (!element) return "";
+  if (!element.id) element.id = fallbackId;
+  return element.id;
+}
+
+function getSidebarCustomHeadings(groupName) {
+  if (groupName === "schedule") {
+    return [
+      { id: ensureSidebarTargetId("#daily main section.card:nth-of-type(1)", "daily-item-1"), text: "하루 일정표" },
+      { id: ensureSidebarTargetId("#daily main section.card:nth-of-type(2)", "daily-item-2"), text: "금요일 확인" },
+      { id: ensureSidebarTargetId("#monthly main section.card:nth-of-type(1)", "monthly-item-1"), text: "한 달 일정표" },
+      { id: ensureSidebarTargetId("#monthly main section.card:nth-of-type(2)", "monthly-item-2"), text: "학사일정" },
+      { id: ensureSidebarTargetId("#annual main section.annual-desktop-card", "annual-item-2"), text: "연간 일정표" },
+      { id: ensureSidebarTargetId("#annual main section.card:nth-of-type(3)", "annual-item-3"), text: "학기별 일정" }
+    ].filter(item => item.id);
+  }
+  if (groupName === "vendors") {
+    return [
+      { id: "vendorNetworkPanel", text: "업체 연락망" },
+      { id: "promoContactPanel", text: "홍보업체 · 전자단가" }
+    ].filter(item => document.getElementById(item.id));
+  }
+  return null;
+}
+
+function getSidebarDisplayText(pageId, text) {
+  const map = {
+    staff: {
+      "신규 대체 조리종사원 문자 발송": "대체인력 문자 발송",
+      "조리종사원 전달 사항": "전달사항",
+      "조리종사원 복무": "복무"
+    }
+  };
+  return map[pageId]?.[text] || text;
+}
+
 function buildSidebarToc() {
   const nav = document.getElementById("sidebarNav");
   if (!nav || nav.dataset.ready) return;
   const links = [...nav.querySelectorAll(":scope > a")];
   links.forEach(link => {
     const pageId = link.dataset.page;
+    const customGroup = link.dataset.tocGroup;
     const section = document.getElementById(pageId);
     const group = document.createElement("div");
     group.className = "sidebar-nav-group";
     group.appendChild(link);
-    const headings = pageId === "today-menu"
+    const headings = getSidebarCustomHeadings(customGroup) || (pageId === "today-menu"
       ? [
         { id: "todayMenuCooking", text: "조리방법 조회" },
         { id: "workNotes", text: "생각서랍" },
@@ -2331,7 +2370,8 @@ function buildSidebarToc() {
         if (!card.id) card.id = `${pageId}-item-${index + 1}`;
         const clone = heading.cloneNode(true);
         clone.querySelectorAll(".num").forEach(num => num.remove());
-        return { id: card.id, text: clone.textContent.trim().replace(/\s+/g, " "), card };
+        const text = clone.textContent.trim().replace(/\s+/g, " ");
+        return { id: card.id, text: getSidebarDisplayText(pageId, text), card };
       })
       .filter(item => item && item.text && !shouldHideSidebarTocItem(pageId, item.text, item.card))
       .filter((item, index, items) => {
@@ -2340,7 +2380,7 @@ function buildSidebarToc() {
           ? items.findIndex(candidate => candidate.text === item.text && candidate.card.classList.contains("annual-desktop-card"))
           : items.findIndex(candidate => candidate.text === item.text);
         return index === preferredIndex;
-      }) : [];
+      }) : []);
     if (headings.length) {
       const sub = document.createElement("div");
       sub.className = "sidebar-subnav";
