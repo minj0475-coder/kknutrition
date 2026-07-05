@@ -20289,11 +20289,6 @@ html body:not(.sidebar-collapsed) .app-sidebar button#sidebarCloseBtn.sidebar-ic
     border-radius: 10px !important;
   }
 
-  html body.sidebar-open .app-sidebar .sidebar-subnav,
-  html body .app-sidebar.is-open .sidebar-subnav {
-    display: none !important;
-  }
-
   html body.sidebar-open .app-sidebar .sidebar-section,
   html body .app-sidebar.is-open .sidebar-section {
     margin-top: 8px !important;
@@ -20355,5 +20350,13 @@ html body #app-content section#monthly.page-section .academic-weekdays span:last
     width: 46px !important;
     min-width: 46px !important;
     max-width: 46px !important;
+  }
+}
+
+/* 2026-07-05 mobile sidebar: show every table-of-contents item without omission. */
+@media (max-width: 900px) {
+  html body.sidebar-open .app-sidebar .sidebar-subnav,
+  html body .app-sidebar.is-open .sidebar-subnav {
+    display: grid !important;
   }
 }
