@@ -480,10 +480,9 @@ function escapeTemplateHtml(value) {
 function setupStaffNotices() {
   const list = document.getElementById("staffNoticeList");
   const addBtn = document.getElementById("staffNoticeAddBtn");
-  const editBtn = document.getElementById("staffNoticeEditSaveBtn");
   const status = document.getElementById("staffNoticeStatus");
   const card = document.getElementById("staff-notice");
-  if (!list || !editBtn) return;
+  if (!list) return;
 
   const defaultItems = extractDefaultStaffNotices();
   let items = readStaffNotices(defaultItems);
@@ -532,7 +531,6 @@ function setupStaffNotices() {
   const syncControls = () => {
     if (card) card.classList.toggle("is-editing", editMode);
     if (addBtn) addBtn.style.display = editMode ? "" : "none";
-    editBtn.textContent = editMode ? "저장" : "수정";
     list.querySelectorAll("[data-staff-notice-title], [data-staff-notice-body]").forEach(input => {
       input.disabled = !editMode;
     });
@@ -632,22 +630,29 @@ function setupStaffNotices() {
     });
   }
 
-  editBtn.addEventListener("click", async () => {
+  const enterEditMode = () => {
     if (!editMode) {
       editMode = true;
       syncControls();
       setStatus("수정 모드입니다.");
-      return;
     }
+  };
+
+  const saveEditMode = async () => {
+    if (!editMode && !dirty) return true;
     await forcePersist();
     if (!dirty) {
       editMode = false;
       openItemId = "";
       render();
+      return true;
     }
-  });
+    return false;
+  };
 
   window.isStaffNoticeEditMode = () => editMode;
+  window.enterStaffNoticeEditMode = enterEditMode;
+  window.saveStaffNoticeEditMode = saveEditMode;
   window.exitStaffNoticeEditMode = () => {
     if (!editMode && !dirty) return;
     editMode = false;

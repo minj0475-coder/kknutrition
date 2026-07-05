@@ -915,7 +915,7 @@ syncAnnualMobileCards();
 
 // Setup Edit/Save buttons
 document.querySelectorAll('.fab-edit-btn').forEach(btn => {
-  btn.addEventListener('click', (e) => {
+  btn.addEventListener('click', async (e) => {
     const targetBtn = e.currentTarget;
     const pageId = targetBtn.getAttribute('data-target');
     const isEditing = editingState[pageId];
@@ -934,6 +934,10 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
       editables.forEach(el => {
         el.setAttribute('contenteditable', 'true');
       });
+
+      if (pageId === 'staff' && typeof window.enterStaffNoticeEditMode === 'function') {
+        window.enterStaffNoticeEditMode();
+      }
       
       if (editables.length > 0) {
         editables[0].focus({ preventScroll: true });
@@ -947,6 +951,14 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
         el.removeAttribute('contenteditable');
         updateData[el.id] = el.innerHTML;
       });
+
+      if (pageId === 'staff' && typeof window.saveStaffNoticeEditMode === 'function') {
+        const staffNoticeSaved = await window.saveStaffNoticeEditMode();
+        if (!staffNoticeSaved) {
+          targetBtn.textContent = "저장";
+          return;
+        }
+      }
 
       if (!isFirebaseConfigured || !db) {
         editingState[pageId] = false;
