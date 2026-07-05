@@ -8509,19 +8509,6 @@ body #staff .hero {
   font-size: 13px;
 }
 
-.sidebar-more-btn {
-  width: 100%;
-  margin-top: 5px;
-  border: 0;
-  border-radius: 10px;
-  padding: 8px 10px;
-  color: #7a6662;
-  background: transparent;
-  text-align: left;
-  font-weight: 850;
-  cursor: pointer;
-}
-
 #app-content .wrap {
   max-width: 1240px;
 }
@@ -9642,8 +9629,7 @@ button.academic-day.is-other-month {
   body.sidebar-collapsed .app-sidebar .sidebar-nav-group,
   body.sidebar-collapsed .app-sidebar .sidebar-subnav,
   body.sidebar-collapsed .app-sidebar .sidebar-section,
-  body.sidebar-collapsed .app-sidebar .sidebar-recent-list,
-  body.sidebar-collapsed .app-sidebar .sidebar-more-btn {
+  body.sidebar-collapsed .app-sidebar .sidebar-recent-list {
     display: none !important;
     visibility: hidden !important;
   }
@@ -10721,8 +10707,7 @@ body .top .brand-logo-img {
   body.sidebar-collapsed .app-sidebar .sidebar-nav-group,
   body.sidebar-collapsed .app-sidebar .sidebar-subnav,
   body.sidebar-collapsed .app-sidebar .sidebar-section,
-  body.sidebar-collapsed .app-sidebar .sidebar-recent-list,
-  body.sidebar-collapsed .app-sidebar .sidebar-more-btn {
+  body.sidebar-collapsed .app-sidebar .sidebar-recent-list {
     display: initial !important;
   }
 

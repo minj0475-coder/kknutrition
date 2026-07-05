@@ -2289,13 +2289,12 @@ function recordRecentPage(hash) {
   renderRecentPages();
 }
 
-function renderRecentPages(showAll = false) {
+function renderRecentPages() {
   const wrap = document.getElementById("sidebarRecentList");
   if (!wrap) return;
   let list = [];
   try { list = JSON.parse(localStorage.getItem(RECENT_PAGE_KEY) || "[]"); } catch(e) {}
-  const moreBtn = document.getElementById("sidebarRecentMoreBtn");
-  const visible = showAll ? list : list.slice(0, 3);
+  const visible = list.slice(0, 3);
   wrap.innerHTML = visible.length ? "" : `<span class="sidebar-empty">최근 항목이 없습니다.</span>`;
   visible.forEach(item => {
     const a = document.createElement("a");
@@ -2303,11 +2302,6 @@ function renderRecentPages(showAll = false) {
     a.textContent = item.label;
     wrap.appendChild(a);
   });
-  if (moreBtn) {
-    moreBtn.hidden = list.length <= 3;
-    moreBtn.textContent = showAll ? "접기" : "더보기";
-    moreBtn.onclick = () => renderRecentPages(!showAll);
-  }
 }
 
 function shouldHideSidebarTocItem(pageId, text, card) {
