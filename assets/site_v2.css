@@ -20539,11 +20539,13 @@ html body #app-content #saveMemoModalBtn.memo-save-btn {
 html body #app-content #staff .staff-notice-head {
   display: flex !important;
   justify-content: flex-end !important;
-  position: sticky !important;
-  top: 10px !important;
+  position: absolute !important;
+  top: -36px !important;
+  right: 50px !important;
   z-index: 12 !important;
   pointer-events: none !important;
-  margin: 0 0 10px !important;
+  height: 0 !important;
+  margin: 0 !important;
 }
 
 html body #app-content #staff .staff-notice-actions {
@@ -20583,13 +20585,17 @@ html body #app-content #staff .staff-notice-add-btn:focus-visible {
 
 html body #app-content #staff .staff-notice-status {
   min-height: 18px !important;
-  margin: 0 0 10px !important;
+  margin: 0 0 8px !important;
 }
 
 html body #app-content #staff .staff-notice-list {
   display: grid !important;
   grid-template-columns: 1fr !important;
   gap: 10px !important;
+}
+
+html body #app-content #staff #staff-notice .staff-accordion-body {
+  position: relative !important;
 }
 
 html body #app-content #staff .staff-notice-item {
@@ -20621,15 +20627,16 @@ html body #app-content #staff .staff-notice-item summary::after {
   content: "" !important;
   width: 9px !important;
   height: 9px !important;
-  border-right: 2px solid #5f6368 !important;
+  border-left: 2px solid #5f6368 !important;
+  border-right: 0 !important;
   border-bottom: 2px solid #5f6368 !important;
-  transform: rotate(45deg) !important;
+  transform: rotate(-45deg) !important;
   transition: transform .18s ease !important;
   justify-self: end !important;
 }
 
 html body #app-content #staff .staff-notice-item[open] summary::after {
-  transform: rotate(-135deg) translate(-1px, -1px) !important;
+  transform: rotate(135deg) translate(1px, -1px) !important;
 }
 
 html body #app-content #staff .staff-notice-item[open] summary {
@@ -20706,22 +20713,25 @@ html body #app-content #staff .staff-notice-copy-inline {
   height: 42px !important;
   min-width: 42px !important;
   min-height: 42px !important;
-  border: 1px solid #e7e7e7 !important;
+  border: 0 !important;
   border-radius: 12px !important;
-  background: #f8f8f8 !important;
+  background: transparent !important;
   color: #202123 !important;
   box-shadow: none !important;
 }
 
 html body #app-content #staff .staff-notice-copy-inline::before {
-  width: 20px !important;
-  height: 20px !important;
+  width: 26px !important;
+  height: 26px !important;
+  min-width: 26px !important;
+  min-height: 26px !important;
 }
 
 html body #app-content #staff .staff-notice-copy-inline:hover,
 html body #app-content #staff .staff-notice-copy-inline:focus-visible {
-  border-color: #dedede !important;
-  background: #eeeeee !important;
+  border-color: transparent !important;
+  background: transparent !important;
+  color: #202123 !important;
 }
 
 html body #app-content #staff .staff-notice-item-actions {
@@ -20743,7 +20753,8 @@ html body #app-content #staff .staff-notice-delete {
 
 html body #app-content #staff .staff-notice-delete:hover {
   background: #f7f7f8 !important;
-  color: #b42318 !important;
+  color: #5f6368 !important;
+  border-color: #d8d8dc !important;
 }
 
 html body #app-content #staff .staff-notice-body input:disabled,
@@ -20756,6 +20767,8 @@ html body #app-content #staff .staff-notice-body textarea:disabled {
 @media (max-width: 640px) {
   html body #app-content #staff .staff-notice-head {
     justify-content: flex-end !important;
+    top: -34px !important;
+    right: 44px !important;
   }
 
   html body #app-content #staff .staff-notice-actions {
