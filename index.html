@@ -54,7 +54,8 @@
     </button>
   </div>
   <nav id="sidebarNav" class="sidebar-nav">
-    <a href="#home" data-page="home">홈</a>
+    <a href="#homeMemoCard">메모장</a>
+    <a href="#homeTodayCard">오늘의 식단</a>
     <a href="#daily" data-page="daily">하루 일정</a>
     <a href="#monthly" data-page="monthly">한 달 일정</a>
     <a href="#annual" data-page="annual">연간 일정</a>
@@ -113,7 +114,7 @@
 
 <div class="home-grid">
   <div class="home-grid-left">
-    <section class="card memo-card">
+    <section id="homeMemoCard" class="card memo-card">
       <div class="memo-head" style="display: flex; align-items: center; justify-content: space-between;">
         <h2 class="section-title" style="margin-bottom: 0;">메모장</h2>
         <button type="button" id="openMemoModalBtn" class="memo-full-btn" aria-label="메모장 전체 보기">
@@ -137,7 +138,7 @@
   </div>
 
   <div class="home-grid-right">
-    <section class="card home-today-card">
+    <section id="homeTodayCard" class="card home-today-card">
       <div class="home-today-head">
         <div>
           <h2 class="section-title"><span class="num">두근두근</span>오늘의 식단</h2>
