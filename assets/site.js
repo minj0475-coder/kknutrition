@@ -177,6 +177,7 @@ function setupStaffAccordion() {
 
 const MESSAGE_TEMPLATES_KEY = "kkulkkoori_message_templates_v1";
 const WORK_NOTES_KEY = "kkulkkoori_work_notes_v1";
+const STAFF_NOTICES_KEY = "kkulkkoori_staff_notices_v1";
 const NOTE_DATA_VERSION = 2;
 
 function notifyNoteDataChanged(key, value, updatedAt = Date.now()) {
@@ -306,6 +307,16 @@ function normalizeTemplateItem(item) {
   };
 }
 
+function normalizeStaffNoticeItem(item) {
+  const now = Date.now();
+  return {
+    id: String(item && item.id || makeNoteItemId("staff-notice")),
+    title: String(item && item.title || "").trim() || "새 전달사항",
+    body: String(item && item.body || ""),
+    updatedAt: Number(item && item.updatedAt) || now
+  };
+}
+
 function makeTemplateUniqueKey(item) {
   if (!item || typeof item !== "object") return "";
   const title = String(item.title || "").trim();
@@ -319,6 +330,19 @@ function dedupeTemplateItems(items) {
   (Array.isArray(items) ? items : []).forEach(rawItem => {
     const item = normalizeTemplateItem(rawItem);
     const key = makeTemplateUniqueKey(item) || `id:${item.id}`;
+    const current = map.get(key);
+    if (!current || Number(item.updatedAt) >= Number(current.updatedAt)) {
+      map.set(key, item);
+    }
+  });
+  return Array.from(map.values());
+}
+
+function dedupeStaffNoticeItems(items) {
+  const map = new Map();
+  (Array.isArray(items) ? items : []).forEach(rawItem => {
+    const item = normalizeStaffNoticeItem(rawItem);
+    const key = makeLocalListItemKey(item) || makeLocalListBodyKey(item) || `id:${item.id}`;
     const current = map.get(key);
     if (!current || Number(item.updatedAt) >= Number(current.updatedAt)) {
       map.set(key, item);
@@ -358,6 +382,41 @@ function saveMessageTemplates(items, options = {}) {
     localStorage.setItem(MESSAGE_TEMPLATES_KEY, value);
     if (options.sync !== false) {
       notifyNoteDataChanged(MESSAGE_TEMPLATES_KEY, value, payload.updatedAt);
+    }
+    return payload.updatedAt;
+  } catch(e) {}
+  return Date.now();
+}
+
+function extractDefaultStaffNotices() {
+  const list = document.getElementById("staffNoticeList");
+  if (!list) return [];
+  return [...list.querySelectorAll(":scope > .staff-block")].map((block, index) => {
+    const title = block.querySelector(".staff-block-head strong")?.textContent.trim() || `전달사항 ${index + 1}`;
+    const bodyNode = block.querySelector(".staff-text, .print-doc, .editable-content");
+    const body = bodyNode ? bodyNode.innerText.trim() : "";
+    return normalizeStaffNoticeItem({ title, body });
+  }).filter(item => item.title || item.body);
+}
+
+function readStaffNotices(defaultItems = []) {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(STAFF_NOTICES_KEY) || "null");
+    const rawItems = extractVersionedItems(parsed);
+    if (rawItems) {
+      return dedupeStaffNoticeItems(rawItems.filter(item => item && typeof item === "object"));
+    }
+  } catch(e) {}
+  return dedupeStaffNoticeItems(defaultItems);
+}
+
+function saveStaffNotices(items, options = {}) {
+  try {
+    const payload = makeVersionedList(dedupeStaffNoticeItems(items));
+    const value = JSON.stringify(payload);
+    localStorage.setItem(STAFF_NOTICES_KEY, value);
+    if (options.sync !== false) {
+      notifyNoteDataChanged(STAFF_NOTICES_KEY, value, payload.updatedAt);
     }
     return payload.updatedAt;
   } catch(e) {}
@@ -416,6 +475,206 @@ function escapeTemplateHtml(value) {
     '"': "&quot;",
     "'": "&#39;"
   }[char]));
+}
+
+function setupStaffNotices() {
+  const list = document.getElementById("staffNoticeList");
+  const addBtn = document.getElementById("staffNoticeAddBtn");
+  const editBtn = document.getElementById("staffNoticeEditSaveBtn");
+  const status = document.getElementById("staffNoticeStatus");
+  const card = document.getElementById("staff-notice");
+  if (!list || !editBtn) return;
+
+  const defaultItems = extractDefaultStaffNotices();
+  let items = readStaffNotices(defaultItems);
+  let editMode = false;
+  let dirty = false;
+  let lastLocalSaveAt = 0;
+  let hasUnsyncedLocalChanges = false;
+  let openItemId = "";
+
+  const setStatus = message => {
+    if (!status) return;
+    status.textContent = message || "";
+    window.clearTimeout(status._timer);
+    if (message) status._timer = window.setTimeout(() => { status.textContent = ""; }, 1800);
+  };
+
+  const persist = () => {
+    lastLocalSaveAt = Date.now();
+    hasUnsyncedLocalChanges = true;
+    dirty = true;
+    return lastLocalSaveAt;
+  };
+
+  const forcePersist = async () => {
+    const savedAt = saveStaffNotices(items, { sync: false });
+    lastLocalSaveAt = savedAt;
+    const value = localStorage.getItem(STAFF_NOTICES_KEY) || "";
+    if (window.KKNutritionCloudSync && typeof window.KKNutritionCloudSync.saveKey === "function") {
+      setStatus("저장 중입니다...");
+      try {
+        await window.KKNutritionCloudSync.saveKey(STAFF_NOTICES_KEY, value, savedAt, false);
+        hasUnsyncedLocalChanges = false;
+        dirty = false;
+        setStatus("저장했습니다.");
+      } catch (error) {
+        console.error("Staff notice save failed:", error);
+        dirty = true;
+        setStatus("저장에 실패했습니다. 인터넷 연결을 확인해 주세요.");
+      }
+      return;
+    }
+    dirty = false;
+    setStatus("이 브라우저에는 저장했습니다.");
+  };
+
+  const syncControls = () => {
+    if (card) card.classList.toggle("is-editing", editMode);
+    if (addBtn) addBtn.style.display = editMode ? "" : "none";
+    editBtn.textContent = editMode ? "저장" : "수정";
+    list.querySelectorAll("[data-staff-notice-title], [data-staff-notice-body]").forEach(input => {
+      input.disabled = !editMode;
+    });
+    list.querySelectorAll("[data-staff-notice-delete]").forEach(button => {
+      button.style.display = editMode ? "" : "none";
+      button.disabled = !editMode;
+    });
+  };
+
+  const copyNotice = async index => {
+    const text = items[index] && items[index].body ? items[index].body.trim() : "";
+    if (!text) return setStatus("복사할 전달사항 내용이 없습니다.");
+    try {
+      await navigator.clipboard.writeText(text.replace(/\r?\n/g, "\r\n"));
+      setStatus("전달사항을 복사했습니다.");
+    } catch(e) {
+      setStatus("복사하지 못했습니다. 내용을 직접 선택해 주세요.");
+    }
+  };
+
+  const render = () => {
+    list.innerHTML = "";
+    items.forEach((item, index) => {
+      const details = document.createElement("details");
+      details.className = "staff-notice-item";
+      details.dataset.staffNoticeId = item.id;
+      details.open = Boolean(openItemId && openItemId === item.id);
+      details.innerHTML = `
+        <summary>
+          <span class="staff-notice-title">${escapeTemplateHtml(item.title || "새 전달사항")}</span>
+        </summary>
+        <div class="staff-notice-body">
+          <label class="staff-notice-title-label">
+            <span>제목</span>
+            <input class="staff-notice-title-input" type="text" value="${escapeTemplateHtml(item.title || "")}" data-staff-notice-title="${index}" aria-label="전달사항 제목">
+          </label>
+          <label class="staff-notice-content-label">
+            <span>내용</span>
+            <div class="staff-notice-textbox">
+              <button class="copy-icon-btn staff-notice-copy-inline" type="button" aria-label="전달사항 복사" title="복사"></button>
+              <textarea rows="12" data-staff-notice-body="${index}">${escapeTemplateHtml(item.body || "")}</textarea>
+            </div>
+          </label>
+          <div class="staff-notice-item-actions">
+            <button class="staff-notice-delete" type="button" data-staff-notice-delete="${index}">삭제</button>
+          </div>
+        </div>
+      `;
+      details.addEventListener("toggle", () => {
+        if (details.open) openItemId = item.id;
+        else if (openItemId === item.id) openItemId = "";
+      });
+      details.querySelector(".staff-notice-copy-inline")?.addEventListener("click", event => {
+        event.preventDefault();
+        event.stopPropagation();
+        copyNotice(index);
+      });
+      details.querySelector("[data-staff-notice-title]")?.addEventListener("input", event => {
+        if (!editMode) return;
+        items[index].title = event.target.value;
+        items[index].updatedAt = Date.now();
+        const titleDisplay = details.querySelector(".staff-notice-title");
+        if (titleDisplay) titleDisplay.textContent = event.target.value || "새 전달사항";
+        persist();
+      });
+      details.querySelector("[data-staff-notice-body]")?.addEventListener("input", event => {
+        if (!editMode) return;
+        items[index].body = event.target.value;
+        items[index].updatedAt = Date.now();
+        persist();
+      });
+      details.querySelector("[data-staff-notice-delete]")?.addEventListener("click", () => {
+        if (!editMode) return;
+        items.splice(index, 1);
+        openItemId = "";
+        persist();
+        render();
+        setStatus("삭제했습니다.");
+      });
+      list.appendChild(details);
+    });
+    syncControls();
+  };
+
+  if (addBtn) {
+    addBtn.addEventListener("click", () => {
+      if (!editMode) return;
+      const item = normalizeStaffNoticeItem({ title: "새 전달사항", body: "" });
+      items.push(item);
+      openItemId = item.id;
+      persist();
+      render();
+      const safeId = window.CSS && typeof CSS.escape === "function" ? CSS.escape(item.id) : item.id.replace(/"/g, '\\"');
+      const input = list.querySelector(`[data-staff-notice-id="${safeId}"] [data-staff-notice-title]`);
+      if (input) input.focus();
+      setStatus("새 전달사항을 추가했습니다.");
+    });
+  }
+
+  editBtn.addEventListener("click", async () => {
+    if (!editMode) {
+      editMode = true;
+      syncControls();
+      setStatus("수정 모드입니다.");
+      return;
+    }
+    await forcePersist();
+    if (!dirty) {
+      editMode = false;
+      openItemId = "";
+      render();
+    }
+  });
+
+  window.isStaffNoticeEditMode = () => editMode;
+  window.exitStaffNoticeEditMode = () => {
+    if (!editMode && !dirty) return;
+    editMode = false;
+    dirty = false;
+    hasUnsyncedLocalChanges = false;
+    openItemId = "";
+    items = readStaffNotices(defaultItems);
+    render();
+    setStatus("");
+  };
+
+  window.addEventListener("kknutrition:cloud-data-applied", event => {
+    if (!event.detail || event.detail.key !== STAFF_NOTICES_KEY) return;
+    if (editMode || dirty) return;
+    const remoteUpdatedAt = Number(event.detail.updatedAt) || 0;
+    if (hasUnsyncedLocalChanges && remoteUpdatedAt < lastLocalSaveAt) {
+      lastLocalSaveAt = saveStaffNotices(items, { sync: false });
+      return;
+    }
+    hasUnsyncedLocalChanges = false;
+    openItemId = "";
+    items = readStaffNotices(defaultItems);
+    render();
+    setStatus("다른 기기의 최신 전달사항을 불러왔습니다.");
+  });
+
+  render();
 }
 
 function setupMessageTemplates() {
@@ -813,6 +1072,7 @@ function setupWorkNotes() {
 document.addEventListener("DOMContentLoaded", () => {
   setupDailyKkul();
   setupStaffAccordion();
+  setupStaffNotices();
   setupWorkNotes();
   setupMessageTemplates();
 });
@@ -1838,14 +2098,15 @@ function setupUnsavedNavigationGuard() {
 
   const hasEditablePageContent = () => Boolean(document.querySelector('.editable-content[contenteditable="true"]'));
   const hasSectionEditMode = () => Boolean(document.querySelector(
-    '.work-note-card.is-editing, .message-template-card.is-editing, #vendorNetworkPanel.is-editing, #promoContactPanel.is-editing, #bookmarks .edit-mode-card'
+    '.work-note-card.is-editing, .message-template-card.is-editing, #staff-notice.is-editing, #vendorNetworkPanel.is-editing, #promoContactPanel.is-editing, #bookmarks .edit-mode-card'
   ));
   window.hasUnsavedChanges = () => {
     const bookmarkUnsaved = (typeof window.isBookmarkEditMode === 'function' && window.isBookmarkEditMode());
     const workNoteUnsaved = (typeof window.isWorkNoteEditMode === 'function' && window.isWorkNoteEditMode());
     const messageTemplateUnsaved = (typeof window.isMessageTemplateEditMode === 'function' && window.isMessageTemplateEditMode());
+    const staffNoticeUnsaved = (typeof window.isStaffNoticeEditMode === 'function' && window.isStaffNoticeEditMode());
     const promoContactsUnsaved = (typeof window.isPromoContactsEditMode === 'function' && window.isPromoContactsEditMode());
-    return hasEditablePageContent() || hasSectionEditMode() || bookmarkUnsaved || workNoteUnsaved || messageTemplateUnsaved || promoContactsUnsaved;
+    return hasEditablePageContent() || hasSectionEditMode() || bookmarkUnsaved || workNoteUnsaved || messageTemplateUnsaved || staffNoticeUnsaved || promoContactsUnsaved;
   };
 
   window.clearUnsavedEditModes = () => {
@@ -1857,8 +2118,9 @@ function setupUnsavedNavigationGuard() {
     if (typeof window.exitBookmarkEditMode === 'function') window.exitBookmarkEditMode();
     if (typeof window.exitWorkNoteEditMode === 'function') window.exitWorkNoteEditMode();
     if (typeof window.exitMessageTemplateEditMode === 'function') window.exitMessageTemplateEditMode();
+    if (typeof window.exitStaffNoticeEditMode === 'function') window.exitStaffNoticeEditMode();
     if (typeof window.exitPromoContactsEditMode === 'function') window.exitPromoContactsEditMode();
-    document.querySelectorAll('.work-note-card.is-editing, .message-template-card.is-editing, #vendorNetworkPanel.is-editing, #promoContactPanel.is-editing').forEach(card => {
+    document.querySelectorAll('.work-note-card.is-editing, .message-template-card.is-editing, #staff-notice.is-editing, #vendorNetworkPanel.is-editing, #promoContactPanel.is-editing').forEach(card => {
       card.classList.remove('is-editing');
     });
     document.querySelectorAll('#workNoteEditSaveBtn, #messageTemplateEditSaveBtn, #promoContactsEditSaveBtn, #editBtnBookmarks').forEach(btn => {
