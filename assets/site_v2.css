@@ -20360,3 +20360,11 @@ html body #app-content section#monthly.page-section .academic-weekdays span:last
     display: grid !important;
   }
 }
+
+/* 2026-07-05 promo contacts: align edit button height with the search field. */
+html body #app-content #promo-contacts #promoContactsEditSaveBtn.quiet-edit-toggle {
+  height: 44px !important;
+  min-height: 44px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
