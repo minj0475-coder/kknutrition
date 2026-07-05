@@ -20471,3 +20471,55 @@ html body #app-content #saveMemoModalBtn.memo-save-btn {
     transform: none !important;
   }
 }
+
+/* 2026-07-05 academic weekly list: lock mobile date/content columns to one alignment. */
+@media (max-width: 560px) {
+  html body #app-content #monthly .academic-week-items {
+    align-items: stretch !important;
+    justify-items: stretch !important;
+  }
+
+  html body #app-content #monthly .academic-week-row {
+    display: grid !important;
+    grid-template-columns: 82px minmax(0, 1fr) !important;
+    grid-auto-flow: column !important;
+    align-items: center !important;
+    justify-items: stretch !important;
+    column-gap: 10px !important;
+    text-align: left !important;
+  }
+
+  html body #app-content #monthly .academic-week-date {
+    grid-column: 1 !important;
+    width: 82px !important;
+    min-width: 82px !important;
+    max-width: 82px !important;
+    justify-self: start !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+  }
+
+  html body #app-content #monthly .academic-week-content {
+    grid-column: 2 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    justify-self: stretch !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    text-align: left !important;
+  }
+
+  html body #app-content #monthly .academic-week-row strong,
+  html body #app-content #monthly .academic-week-memo {
+    width: 100% !important;
+    text-align: left !important;
+  }
+
+  html body #app-content #monthly .academic-week-status {
+    grid-column: 2 !important;
+    justify-self: start !important;
+    margin-top: 4px !important;
+  }
+}
