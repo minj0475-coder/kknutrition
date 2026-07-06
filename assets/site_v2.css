@@ -21808,3 +21808,10 @@ html body.sidebar-open .app-sidebar.is-open .sidebar-logo {
   transform: none !important;
   translate: 0 0 !important;
 }
+
+@media (max-width: 900px) {
+  html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-logo-link,
+  html body.sidebar-open .app-sidebar.is-open .sidebar-logo-link {
+    top: -5px !important;
+  }
+}
