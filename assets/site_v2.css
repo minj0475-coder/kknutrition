@@ -21526,3 +21526,53 @@ html body #app-content #monthly .academic-week-status {
     max-width: 56px !important;
   }
 }
+
+/* 2026-07-06 academic weekly list: keep mobile rows like the preferred two-column capture. */
+html body #app-content #monthly .academic-week-row.academic-week-row {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  gap: 10px !important;
+  text-align: left !important;
+}
+
+html body #app-content #monthly .academic-week-date.academic-week-date {
+  flex: 0 0 92px !important;
+  width: 92px !important;
+  min-width: 92px !important;
+  max-width: 92px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-align: left !important;
+}
+
+html body #app-content #monthly .academic-week-content.academic-week-content {
+  flex: 1 1 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  text-align: left !important;
+}
+
+html body #app-content #monthly .academic-week-row strong,
+html body #app-content #monthly .academic-week-row .academic-week-memo {
+  align-self: stretch !important;
+  margin: 0 !important;
+  text-align: left !important;
+}
+
+@media (max-width: 560px) {
+  html body #app-content #monthly .academic-week-row.academic-week-row {
+    gap: 8px !important;
+  }
+
+  html body #app-content #monthly .academic-week-date.academic-week-date {
+    flex-basis: 88px !important;
+    width: 88px !important;
+    min-width: 88px !important;
+    max-width: 88px !important;
+  }
+}
