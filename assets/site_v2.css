@@ -20537,6 +20537,10 @@ html body #app-content #saveMemoModalBtn.memo-save-btn {
 }
 
 /* 2026-07-05 staff notices: editable, copyable collapsed cards. */
+html body #app-content #staff #staff-notice {
+  position: relative !important;
+}
+
 html body #app-content #staff .staff-notice-head {
   display: flex !important;
   justify-content: flex-end !important;
@@ -20587,6 +20591,12 @@ html body #app-content #staff .staff-notice-add-btn:focus-visible {
 html body #app-content #staff .staff-notice-status {
   min-height: 18px !important;
   margin: 0 0 8px !important;
+}
+
+html body #app-content #staff .staff-notice-status:empty {
+  display: none !important;
+  min-height: 0 !important;
+  margin: 0 !important;
 }
 
 html body #app-content #staff .staff-notice-list {
