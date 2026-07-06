@@ -21815,3 +21815,32 @@ html body.sidebar-open .app-sidebar.is-open .sidebar-logo {
     top: -5px !important;
   }
 }
+
+/* 2026-07-06 open sidebar logo viewport lock: do not let panel padding move the logo. */
+html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-logo-link,
+html body.sidebar-open .app-sidebar.is-open .sidebar-logo-link {
+  position: fixed !important;
+  left: 10px !important;
+  top: 5px !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: 46px !important;
+  height: 46px !important;
+  min-width: 46px !important;
+  min-height: 46px !important;
+  max-width: 46px !important;
+  max-height: 46px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  transform: none !important;
+  translate: 0 0 !important;
+  z-index: 6 !important;
+}
+
+html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-logo,
+html body.sidebar-open .app-sidebar.is-open .sidebar-logo {
+  width: 46px !important;
+  height: 46px !important;
+  min-width: 46px !important;
+  min-height: 46px !important;
+}
