@@ -21576,3 +21576,63 @@ html body #app-content #monthly .academic-week-row .academic-week-memo {
     max-width: 88px !important;
   }
 }
+
+/* 2026-07-06 desktop sidebar: give the table of contents more breathing room. */
+@media (min-width: 901px) {
+  html body .app-sidebar:not(.is-open),
+  html body.sidebar-open .app-sidebar,
+  html body:not(.sidebar-collapsed) .app-sidebar {
+    padding-top: 16px !important;
+    padding-bottom: 18px !important;
+  }
+
+  html body .app-sidebar .sidebar-nav,
+  html body .app-sidebar nav.sidebar-nav {
+    gap: 5px !important;
+    margin-bottom: 16px !important;
+  }
+
+  html body .app-sidebar .sidebar-nav-group {
+    gap: 4px !important;
+    margin-bottom: 7px !important;
+  }
+
+  html body .app-sidebar .sidebar-nav > .sidebar-nav-group > a,
+  html body .app-sidebar .sidebar-nav a {
+    min-height: 36px !important;
+    padding: 8px 11px !important;
+    line-height: 1.32 !important;
+  }
+
+  html body .app-sidebar .sidebar-subnav {
+    gap: 3px !important;
+    margin: 2px 0 10px 4px !important;
+    padding-left: 13px !important;
+  }
+
+  html body .app-sidebar .sidebar-subnav a {
+    min-height: 30px !important;
+    padding: 5px 9px !important;
+    line-height: 1.35 !important;
+  }
+
+  html body .app-sidebar .sidebar-section {
+    margin-top: 14px !important;
+    padding: 14px 8px 0 !important;
+  }
+
+  html body .app-sidebar .sidebar-section-title {
+    margin-bottom: 8px !important;
+  }
+
+  html body .app-sidebar .sidebar-recent-list {
+    gap: 4px !important;
+  }
+
+  html body .app-sidebar .sidebar-recent-list a,
+  html body .app-sidebar .sidebar-empty {
+    min-height: 29px !important;
+    padding: 5px 2px !important;
+    line-height: 1.35 !important;
+  }
+}
