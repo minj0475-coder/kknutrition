@@ -21687,3 +21687,85 @@ html body #app-content #monthly .academic-week-row.color-gray:focus-visible {
     line-height: 1.35 !important;
   }
 }
+
+/* 2026-07-06 mobile sidebar: compact enough to show through staff duty. */
+@media (max-width: 900px) {
+  html body.sidebar-open .app-sidebar,
+  html body .app-sidebar.is-open {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+  }
+
+  html body.sidebar-open .app-sidebar .sidebar-head,
+  html body .app-sidebar.is-open .sidebar-head {
+    min-height: 50px !important;
+    height: 50px !important;
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+  }
+
+  html body.sidebar-open .app-sidebar .sidebar-nav,
+  html body.sidebar-open .app-sidebar nav.sidebar-nav,
+  html body .app-sidebar.is-open .sidebar-nav,
+  html body .app-sidebar.is-open nav.sidebar-nav {
+    gap: 2px !important;
+    padding-top: 2px !important;
+  }
+
+  html body.sidebar-open .app-sidebar .sidebar-nav-group,
+  html body .app-sidebar.is-open .sidebar-nav-group {
+    gap: 1px !important;
+    margin-bottom: 2px !important;
+  }
+
+  html body.sidebar-open .app-sidebar .sidebar-nav > .sidebar-nav-group > a,
+  html body.sidebar-open .app-sidebar .sidebar-nav a,
+  html body .app-sidebar.is-open .sidebar-nav > .sidebar-nav-group > a,
+  html body .app-sidebar.is-open .sidebar-nav a {
+    min-height: 28px !important;
+    padding: 4px 10px !important;
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+  }
+
+  html body.sidebar-open .app-sidebar .sidebar-subnav,
+  html body .app-sidebar.is-open .sidebar-subnav {
+    gap: 0 !important;
+    margin: 0 0 4px 4px !important;
+    padding-left: 9px !important;
+  }
+
+  html body.sidebar-open .app-sidebar .sidebar-subnav a,
+  html body .app-sidebar.is-open .sidebar-subnav a {
+    min-height: 23px !important;
+    padding: 2px 8px !important;
+    font-size: 13px !important;
+    line-height: 1.2 !important;
+  }
+
+  html body.sidebar-open .app-sidebar .sidebar-section,
+  html body .app-sidebar.is-open .sidebar-section {
+    margin-top: 6px !important;
+    padding: 6px 8px 0 !important;
+  }
+
+  html body.sidebar-open .app-sidebar .sidebar-section-title,
+  html body .app-sidebar.is-open .sidebar-section-title {
+    margin-bottom: 3px !important;
+  }
+
+  html body.sidebar-open .app-sidebar .sidebar-recent-list,
+  html body .app-sidebar.is-open .sidebar-recent-list {
+    gap: 0 !important;
+  }
+
+  html body.sidebar-open .app-sidebar .sidebar-recent-list a,
+  html body.sidebar-open .app-sidebar .sidebar-empty,
+  html body .app-sidebar.is-open .sidebar-recent-list a,
+  html body .app-sidebar.is-open .sidebar-empty {
+    min-height: 22px !important;
+    padding: 2px !important;
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+  }
+}
