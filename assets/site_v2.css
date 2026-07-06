@@ -21406,6 +21406,21 @@ html body #app-content #monthly :is(#academicPrevMonthBtn, #academicNextMonthBtn
   text-align: center !important;
 }
 
+/* 2026-07-06 staff notices: align the add control with the unchanged accordion toggle. */
+html body #app-content #staff #staff-notice .staff-notice-head {
+  top: 18px !important;
+  right: 50px !important;
+  height: 36px !important;
+  align-items: center !important;
+}
+
+@media (max-width: 760px) {
+  html body #app-content #staff #staff-notice .staff-notice-head {
+    top: 14px !important;
+    right: 44px !important;
+  }
+}
+
 /* 2026-07-06 open sidebar logo: align to the unchanged collapsed logo position. */
 @media (min-width: 901px) {
   html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar.is-open .sidebar-logo-link,
