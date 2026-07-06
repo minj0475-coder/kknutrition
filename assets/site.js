@@ -3768,6 +3768,11 @@ document.addEventListener("DOMContentLoaded", () => {
   let academicDragState = null;
   let suppressAcademicClickUntil = 0;
 
+  function isAcademicEditMode() {
+    const monthlySection = document.getElementById("monthly");
+    return Boolean(monthlySection && monthlySection.classList.contains("is-page-editing"));
+  }
+
   function ensureAcademicMemoTooltip() {
     if (memoTooltip) return memoTooltip;
     memoTooltip = document.createElement("div");
@@ -3926,6 +3931,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function startAcademicPillDrag(event, pill, academicEvent, key) {
+    if (!isAcademicEditMode()) return;
     const query = (searchInput ? searchInput.value : "").trim();
     if (query || !academicEvent || academicEvent.source !== "user" || academicEvent.startKey !== key) return;
     if (getUserAcademicEventsForKey(userEvents, key).length < 2) return;
@@ -4006,6 +4012,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function openAcademicModal(key, userEventIndex = null, sourceKey = key, prefillEvent = null) {
+    if (!isAcademicEditMode()) {
+      selectDate(key, userEventIndex, sourceKey, prefillEvent);
+      return;
+    }
     hideAcademicMemoTooltip();
     selectDate(key, userEventIndex, sourceKey, prefillEvent);
     if (modal) {
@@ -4178,6 +4188,10 @@ document.addEventListener("DOMContentLoaded", () => {
             row.setAttribute("title", event.memo);
           }
           row.addEventListener("click", () => {
+            if (!isAcademicEditMode()) {
+              selectDate(key);
+              return;
+            }
             openAcademicModal(
               key,
               event.source === "user" ? event.userIndex : null,
@@ -4207,6 +4221,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function saveSelectedDate() {
+    if (!isAcademicEditMode()) return;
     const key = dateInput && dateInput.value ? dateInput.value : state.selectedKey;
     const endKey = endDateInput && endDateInput.value && endDateInput.value >= key ? endDateInput.value : key;
     const original = getSelectedAcademicEvent();
@@ -4326,6 +4341,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (saveBtn) saveBtn.addEventListener("click", saveSelectedDate);
   if (clearBtn) clearBtn.addEventListener("click", () => {
+    if (!isAcademicEditMode()) return;
     if (titleInput) titleInput.value = "";
     if (memoInput) memoInput.value = "";
     if (urlInput) urlInput.value = "";

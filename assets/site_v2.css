@@ -20119,7 +20119,7 @@ html body #app-content #monthly .editable-content[contenteditable="true"]:focus,
 html body #app-content #annual .editable-content[contenteditable="true"],
 html body #app-content #annual .editable-content[contenteditable="true"]:focus,
 html body #app-content #daily.is-page-editing :is(#edit-daily-1, #edit-daily-2),
-html body #app-content #monthly.is-page-editing :is(#edit-monthly-1, .academic-calendar-card),
+html body #app-content #monthly.is-page-editing :is(#edit-monthly-1),
 html body #app-content #annual.is-page-editing :is(#edit-annual-1, #edit-annual-2) {
   outline: var(--portal-edit-outline-width) solid var(--portal-edit-outline-color) !important;
   outline-offset: var(--portal-edit-outline-offset) !important;
@@ -20131,9 +20131,12 @@ html body #app-content #annual.is-page-editing :is(#edit-annual-1, #edit-annual-
 }
 
 html body #app-content #monthly #editBtnMonthly.monthly-edit-btn {
-  display: inline-flex !important;
-  margin: 18px 0 30px auto !important;
-  position: relative !important;
+  display: flex !important;
+  width: fit-content !important;
+  min-width: 58px !important;
+  margin: 18px auto 30px !important;
+  position: static !important;
+  inset: auto !important;
   z-index: 1;
 }
 
