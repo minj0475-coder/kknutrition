@@ -21417,3 +21417,85 @@ html body #app-content #monthly :is(#academicPrevMonthBtn, #academicNextMonthBtn
     translate: 0 0 !important;
   }
 }
+
+/* 2026-07-06 academic weekly list: fixed date/content columns for every row. */
+html body #app-content #monthly .academic-week-items {
+  display: grid !important;
+  align-items: stretch !important;
+  justify-items: stretch !important;
+  gap: 8px !important;
+}
+
+html body #app-content #monthly .academic-week-row {
+  display: grid !important;
+  grid-template-columns: 92px minmax(0, 1fr) auto !important;
+  grid-auto-flow: row !important;
+  align-items: start !important;
+  justify-items: stretch !important;
+  column-gap: 12px !important;
+  row-gap: 4px !important;
+  min-width: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  text-align: left !important;
+}
+
+html body #app-content #monthly .academic-week-date {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  width: 92px !important;
+  min-width: 92px !important;
+  max-width: 92px !important;
+  justify-self: start !important;
+  align-self: start !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+}
+
+html body #app-content #monthly .academic-week-content {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  display: grid !important;
+  align-self: start !important;
+  justify-self: stretch !important;
+  justify-items: stretch !important;
+  align-items: start !important;
+  min-width: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  text-align: left !important;
+}
+
+html body #app-content #monthly .academic-week-row strong,
+html body #app-content #monthly .academic-week-memo {
+  display: block !important;
+  justify-self: stretch !important;
+  min-width: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  text-align: left !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+html body #app-content #monthly .academic-week-status {
+  grid-column: 3 !important;
+  grid-row: 1 !important;
+  justify-self: end !important;
+  align-self: start !important;
+}
+
+@media (max-width: 560px) {
+  html body #app-content #monthly .academic-week-row {
+    grid-template-columns: 78px minmax(0, 1fr) auto !important;
+    column-gap: 10px !important;
+    padding: 11px 12px !important;
+  }
+
+  html body #app-content #monthly .academic-week-date {
+    width: 78px !important;
+    min-width: 78px !important;
+    max-width: 78px !important;
+  }
+}
