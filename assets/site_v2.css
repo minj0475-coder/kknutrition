@@ -21375,6 +21375,23 @@ html body #app-content #today-menu .work-note-toc-item > .work-note-toc-preview 
   text-align: left !important;
 }
 
+/* 2026-07-06 academic calendar nav arrows: center glyphs in their boxes. */
+html body #app-content #monthly :is(#academicPrevMonthBtn, #academicNextMonthBtn).academic-nav-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  width: 40px !important;
+  min-width: 40px !important;
+  padding: 0 0 2px !important;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  text-align: center !important;
+}
+
 /* 2026-07-06 open sidebar logo: align to the unchanged collapsed logo position. */
 @media (min-width: 901px) {
   html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar.is-open .sidebar-logo-link,
