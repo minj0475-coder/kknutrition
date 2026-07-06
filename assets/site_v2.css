@@ -21313,6 +21313,68 @@ html body #app-content #today-menu .work-note-toc-meta {
   display: none !important;
 }
 
+/* 2026-07-06 memo footer, staff notices, and short work-note titles alignment. */
+html body #app-content #memoModalOverlay .memo-hint {
+  position: absolute !important;
+  left: 24px !important;
+  right: 96px !important;
+  bottom: 22px !important;
+  z-index: 3 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  min-height: var(--portal-action-button-height) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  text-align: left !important;
+  white-space: nowrap !important;
+}
+
+html body #app-content #staff #staff-notice .staff-accordion-body {
+  padding-top: 8px !important;
+}
+
+html body #app-content #staff #staff-notice .staff-notice-head {
+  top: -48px !important;
+  right: 62px !important;
+}
+
+html body #app-content #staff #staff-notice .staff-notice-add-btn {
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  border-radius: 10px !important;
+  font-size: 26px !important;
+  line-height: 1 !important;
+}
+
+html body #app-content #staff #staff-notice .staff-notice-add-btn:hover,
+html body #app-content #staff #staff-notice .staff-notice-add-btn:focus-visible {
+  background: #f2f2f2 !important;
+}
+
+html body #app-content #staff #staff-notice .staff-notice-status {
+  min-height: 0 !important;
+  margin: 0 !important;
+}
+
+html body #app-content #today-menu .work-note-toc-item {
+  display: grid !important;
+  justify-content: stretch !important;
+  justify-items: stretch !important;
+  align-items: start !important;
+  text-align: left !important;
+}
+
+html body #app-content #today-menu .work-note-toc-item > .work-note-toc-title,
+html body #app-content #today-menu .work-note-toc-item > .work-note-toc-preview {
+  display: block !important;
+  justify-self: stretch !important;
+  text-align: left !important;
+}
+
 /* 2026-07-06 open sidebar logo: align to the unchanged collapsed logo position. */
 @media (min-width: 901px) {
   html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar.is-open .sidebar-logo-link,
