@@ -21532,15 +21532,15 @@ html body #app-content #monthly .academic-week-row.academic-week-row {
   display: flex !important;
   align-items: flex-start !important;
   justify-content: flex-start !important;
-  gap: 10px !important;
+  gap: 6px !important;
   text-align: left !important;
 }
 
 html body #app-content #monthly .academic-week-date.academic-week-date {
-  flex: 0 0 92px !important;
-  width: 92px !important;
-  min-width: 92px !important;
-  max-width: 92px !important;
+  flex: 0 0 72px !important;
+  width: 72px !important;
+  min-width: 72px !important;
+  max-width: 72px !important;
   margin: 0 !important;
   padding: 0 !important;
   text-align: left !important;
@@ -21564,67 +21564,61 @@ html body #app-content #monthly .academic-week-row .academic-week-memo {
   text-align: left !important;
 }
 
-/* 2026-07-06 academic weekly list: inherit event colors with a quiet tint. */
+/* 2026-07-06 academic weekly list: use color as a quiet signal, not a filled card. */
+html body #app-content #monthly .academic-week-row.academic-week-row {
+  --week-accent: #9b9693;
+  border-left: 0 !important;
+  background: #ffffff !important;
+  box-shadow: 0 1px 1px rgba(15, 23, 42, .02) !important;
+}
+
+html body #app-content #monthly .academic-week-row.academic-week-row:hover,
+html body #app-content #monthly .academic-week-row.academic-week-row:focus-visible {
+  background: #fbfbfc !important;
+}
+
+html body #app-content #monthly .academic-week-row strong::before {
+  content: "" !important;
+  display: inline-block !important;
+  width: 7px !important;
+  height: 7px !important;
+  margin-right: 7px !important;
+  border-radius: 999px !important;
+  background: var(--week-accent) !important;
+  vertical-align: 2px !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--week-accent) 14%, transparent) !important;
+}
+
 html body #app-content #monthly .academic-week-row.color-blue {
-  border-left: 4px solid #72aee8 !important;
-  background: #f4f9ff !important;
+  --week-accent: #4f8fd8;
 }
 
 html body #app-content #monthly .academic-week-row.color-mint {
-  border-left: 4px solid #61c9b8 !important;
-  background: #f3fbf8 !important;
+  --week-accent: #3fae9b;
 }
 
 html body #app-content #monthly .academic-week-row.color-gold {
-  border-left: 4px solid #eabb52 !important;
-  background: #fffaf0 !important;
+  --week-accent: #d19a22;
 }
 
 html body #app-content #monthly .academic-week-row.color-rose {
-  border-left: 4px solid #ef8799 !important;
-  background: #fff6f8 !important;
+  --week-accent: #df7487;
 }
 
 html body #app-content #monthly .academic-week-row.color-gray {
-  border-left: 4px solid #9b9693 !important;
-  background: #fbfaf9 !important;
-}
-
-html body #app-content #monthly .academic-week-row.color-blue:hover,
-html body #app-content #monthly .academic-week-row.color-blue:focus-visible {
-  background: #eef6ff !important;
-}
-
-html body #app-content #monthly .academic-week-row.color-mint:hover,
-html body #app-content #monthly .academic-week-row.color-mint:focus-visible {
-  background: #edf8f5 !important;
-}
-
-html body #app-content #monthly .academic-week-row.color-gold:hover,
-html body #app-content #monthly .academic-week-row.color-gold:focus-visible {
-  background: #fff5df !important;
-}
-
-html body #app-content #monthly .academic-week-row.color-rose:hover,
-html body #app-content #monthly .academic-week-row.color-rose:focus-visible {
-  background: #fff0f3 !important;
-}
-
-html body #app-content #monthly .academic-week-row.color-gray:hover,
-html body #app-content #monthly .academic-week-row.color-gray:focus-visible {
-  background: #f6f5f4 !important;
+  --week-accent: #8f8a86;
 }
 
 @media (max-width: 560px) {
   html body #app-content #monthly .academic-week-row.academic-week-row {
-    gap: 8px !important;
+    gap: 5px !important;
   }
 
   html body #app-content #monthly .academic-week-date.academic-week-date {
-    flex-basis: 88px !important;
-    width: 88px !important;
-    min-width: 88px !important;
-    max-width: 88px !important;
+    flex-basis: 68px !important;
+    width: 68px !important;
+    min-width: 68px !important;
+    max-width: 68px !important;
   }
 }
 
