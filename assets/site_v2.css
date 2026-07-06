@@ -21816,33 +21816,35 @@ html body.sidebar-open .app-sidebar.is-open .sidebar-logo {
   }
 }
 
-/* 2026-07-06 open sidebar logo viewport lock: do not let panel padding move the logo. */
-html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-logo-link,
-html body.sidebar-open .app-sidebar.is-open .sidebar-logo-link {
-  position: fixed !important;
-  left: 10px !important;
-  top: 5px !important;
-  right: auto !important;
-  bottom: auto !important;
-  width: 46px !important;
-  height: 46px !important;
-  min-width: 46px !important;
-  min-height: 46px !important;
-  max-width: 46px !important;
-  max-height: 46px !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  transform: none !important;
-  translate: 0 0 !important;
-  z-index: 6 !important;
-}
+/* 2026-07-06 mobile open sidebar logo: match the unopened top logo exactly. */
+@media (max-width: 900px) {
+  html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-logo-link,
+  html body.sidebar-open .app-sidebar.is-open .sidebar-logo-link {
+    position: fixed !important;
+    left: 14px !important;
+    top: 12px !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    max-width: 48px !important;
+    max-height: 48px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+    translate: 0 0 !important;
+    z-index: 6 !important;
+  }
 
-html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-logo,
-html body.sidebar-open .app-sidebar.is-open .sidebar-logo {
-  width: 46px !important;
-  height: 46px !important;
-  min-width: 46px !important;
-  min-height: 46px !important;
+  html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-logo,
+  html body.sidebar-open .app-sidebar.is-open .sidebar-logo {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    min-height: 42px !important;
+  }
 }
 
 /* 2026-07-06 cooking method search: align Excel upload with the search field. */
