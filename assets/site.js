@@ -971,7 +971,6 @@ function setupWorkNotes() {
       button.innerHTML = `
         <span class="work-note-toc-title">${escapeTemplateHtml(note.title || DEFAULT_WORK_NOTE_TITLE)}</span>
         <span class="work-note-toc-preview">${escapeTemplateHtml(preview || "내용 없음")}</span>
-        <span class="work-note-toc-meta">${escapeTemplateHtml(String(note.body || "").trim().split(/\s+/).filter(Boolean).length)}개 단어</span>
       `;
       button.addEventListener("click", () => {
         activeIndex = index;

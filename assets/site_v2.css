@@ -21293,6 +21293,26 @@ html body #app-content #memoModalOverlay #saveMemoModalBtn.memo-save-btn:focus-v
   transform: none !important;
 }
 
+/* 2026-07-06 work note drawer: left-align items and remove word counts. */
+html body #app-content #today-menu .work-note-list,
+html body #app-content #today-menu .work-note-toc-item,
+html body #app-content #today-menu .work-note-toc-title,
+html body #app-content #today-menu .work-note-toc-preview {
+  text-align: left !important;
+  justify-items: start !important;
+  align-items: start !important;
+}
+
+html body #app-content #today-menu .work-note-toc-title,
+html body #app-content #today-menu .work-note-toc-preview {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+html body #app-content #today-menu .work-note-toc-meta {
+  display: none !important;
+}
+
 /* 2026-07-06 open sidebar logo: align to the unchanged collapsed logo position. */
 @media (min-width: 901px) {
   html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar.is-open .sidebar-logo-link,
