@@ -20555,6 +20555,7 @@ html body #app-content #staff .staff-notice-add-btn {
   display: none !important;
   align-items: center !important;
   justify-content: center !important;
+  position: relative !important;
   width: 38px !important;
   height: 38px !important;
   min-width: 38px !important;
@@ -20563,11 +20564,30 @@ html body #app-content #staff .staff-notice-add-btn {
   border: 0 !important;
   border-radius: 10px !important;
   background: transparent !important;
-  color: #202123 !important;
-  font-size: 28px !important;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  font-size: 0 !important;
   font-weight: 400 !important;
   line-height: 1 !important;
   box-shadow: none !important;
+}
+
+html body #app-content #staff .staff-notice-add-btn::before,
+html body #app-content #staff .staff-notice-add-btn::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  width: 14px !important;
+  height: 1.8px !important;
+  border-radius: 999px !important;
+  background: #202123 !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+html body #app-content #staff .staff-notice-add-btn::after {
+  width: 1.8px !important;
+  height: 14px !important;
 }
 
 html body #app-content #staff #staff-notice.is-editing .staff-notice-add-btn {
@@ -21337,7 +21357,7 @@ html body #app-content #staff #staff-notice .staff-notice-add-btn {
   min-width: 36px !important;
   min-height: 36px !important;
   border-radius: 10px !important;
-  font-size: 26px !important;
+  font-size: 0 !important;
   line-height: 1 !important;
 }
 
