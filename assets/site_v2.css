@@ -20130,9 +20130,9 @@ html body #app-content #annual.is-page-editing :is(#edit-annual-1, #edit-annual-
   box-shadow: none !important;
 }
 
-html body #app-content #monthly .academic-calendar-card #editBtnMonthly.fab-edit-btn {
+html body #app-content #monthly #editBtnMonthly.monthly-edit-btn {
   display: inline-flex !important;
-  margin: 18px 0 0 auto !important;
+  margin: 18px 0 30px auto !important;
   position: relative !important;
   z-index: 1;
 }
