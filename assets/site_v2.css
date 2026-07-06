@@ -20544,18 +20544,6 @@ html body #app-content #staff #staff-notice {
   position: relative !important;
 }
 
-html body #app-content #staff .staff-notice-head {
-  display: flex !important;
-  justify-content: flex-end !important;
-  position: absolute !important;
-  top: -36px !important;
-  right: 50px !important;
-  z-index: 12 !important;
-  pointer-events: none !important;
-  height: 0 !important;
-  margin: 0 !important;
-}
-
 html body #app-content #staff .staff-notice-actions {
   display: inline-flex !important;
   align-items: center !important;
@@ -20779,12 +20767,6 @@ html body #app-content #staff .staff-notice-body textarea:disabled {
 }
 
 @media (max-width: 640px) {
-  html body #app-content #staff .staff-notice-head {
-    justify-content: flex-end !important;
-    top: -34px !important;
-    right: 44px !important;
-  }
-
   html body #app-content #staff .staff-notice-actions {
     width: auto !important;
   }
@@ -21349,11 +21331,6 @@ html body #app-content #staff #staff-notice .staff-accordion-body {
   padding-top: 8px !important;
 }
 
-html body #app-content #staff #staff-notice .staff-notice-head {
-  top: -48px !important;
-  right: 62px !important;
-}
-
 html body #app-content #staff #staff-notice .staff-notice-add-btn {
   width: 36px !important;
   height: 36px !important;
@@ -21406,19 +21383,28 @@ html body #app-content #monthly :is(#academicPrevMonthBtn, #academicNextMonthBtn
   text-align: center !important;
 }
 
-/* 2026-07-06 staff notices: align the add control with the unchanged accordion toggle. */
-html body #app-content #staff #staff-notice .staff-notice-head {
-  top: 18px !important;
-  right: 50px !important;
-  height: 36px !important;
+/* 2026-07-06 staff notices: place add control inside the header row. */
+html body #app-content #staff #staff-notice .staff-accordion > summary {
+  display: flex !important;
   align-items: center !important;
+  gap: 10px !important;
 }
 
-@media (max-width: 760px) {
-  html body #app-content #staff #staff-notice .staff-notice-head {
-    top: 14px !important;
-    right: 44px !important;
-  }
+html body #app-content #staff #staff-notice .staff-accordion-title {
+  min-width: 0 !important;
+}
+
+html body #app-content #staff #staff-notice .staff-notice-actions {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-left: auto !important;
+  margin-right: 12px !important;
+  pointer-events: auto !important;
+}
+
+html body #app-content #staff #staff-notice .staff-accordion > summary::after {
+  margin-left: 0 !important;
 }
 
 /* 2026-07-06 open sidebar logo: align to the unchanged collapsed logo position. */

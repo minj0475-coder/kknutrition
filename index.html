@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://minj0475-coder.github.io/kknutrition/assets/og-image.png?v=20260704_001">
 <meta property="og:url" content="https://minj0475-coder.github.io/kknutrition/">
 <title>급식 업무 포털</title>
-<link rel="stylesheet" href="assets/site_v2.css?v=20260706_019">
+<link rel="stylesheet" href="assets/site_v2.css?v=20260706_020">
 <link rel="manifest" href="manifest.json?v=6">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/app-icon-192.png?v=6">
 <link rel="apple-touch-icon" href="assets/app-icon-180.png?v=6">
@@ -1039,14 +1039,13 @@
 
 <section class="card staff-accordion-card" id="staff-notice">
   <details class="staff-accordion">
-    <summary>전달사항</summary>
+    <summary>
+      <span class="staff-accordion-title">전달사항</span>
+      <span class="staff-notice-actions">
+        <button id="staffNoticeAddBtn" class="staff-notice-add-btn" type="button" aria-label="전달사항 추가" title="전달사항 추가">+</button>
+      </span>
+    </summary>
     <div class="staff-accordion-body">
-
-  <div class="staff-notice-head">
-    <div class="staff-notice-actions">
-      <button id="staffNoticeAddBtn" class="staff-notice-add-btn" type="button" aria-label="전달사항 추가" title="전달사항 추가">+</button>
-    </div>
-  </div>
   <p id="staffNoticeStatus" class="mini staff-notice-status" aria-live="polite"></p>
 
   <div id="staffNoticeList" class="staff-layout staff-notice-list">
@@ -1198,7 +1197,7 @@
 <script src="assets/auth.js?v=20260704_001" defer></script>
 <script src="assets/data-guard.js?v=20260705_003" defer></script>
 <script src="assets/bookmarks.js?v=20260705_001" defer></script>
-<script src="assets/site.js?v=20260706_002" defer></script>
+<script src="assets/site.js?v=20260706_003" defer></script>
 <script type="module" src="assets/firebase-init.js?v=20260705_003" defer></script>
 <script>
   if ('serviceWorker' in navigator) {

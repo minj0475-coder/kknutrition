@@ -616,7 +616,9 @@ function setupStaffNotices() {
   };
 
   if (addBtn) {
-    addBtn.addEventListener("click", () => {
+    addBtn.addEventListener("click", event => {
+      event.preventDefault();
+      event.stopPropagation();
       if (!editMode) return;
       const item = normalizeStaffNoticeItem({ title: "새 전달사항", body: "" });
       items.push(item);
