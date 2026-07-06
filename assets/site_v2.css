@@ -21855,3 +21855,41 @@ html body #app-content #today-menu #todayMenuCooking .menu-search-box .excel-upl
   padding-bottom: 0 !important;
   align-self: stretch !important;
 }
+
+/* 2026-07-06 open sidebar logo: use the unchanged top logo position. */
+@media (max-width: 900px) {
+  html body.sidebar-open #app-content > header.top .brand {
+    position: fixed !important;
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    top: 12px !important;
+    left: 14px !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transform: none !important;
+    translate: 0 0 !important;
+    z-index: 1602 !important;
+  }
+
+  html body.sidebar-open #app-content > header.top .brand-logo-img {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    min-height: 42px !important;
+  }
+
+  html body.sidebar-open .app-sidebar .sidebar-logo-link,
+  html body.sidebar-open .app-sidebar.is-open .sidebar-logo-link {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+}
