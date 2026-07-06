@@ -2542,7 +2542,7 @@ function getPageLabel(hash) {
     const title = target.querySelector("h2, summary, h3");
     if (title) {
       const clone = title.cloneNode(true);
-      clone.querySelectorAll(".num").forEach(num => num.remove());
+      clone.querySelectorAll(".num, button, .staff-notice-actions").forEach(element => element.remove());
       return clone.textContent.trim().replace(/\s+/g, " ");
     }
   }
@@ -2633,7 +2633,7 @@ function buildSidebarToc() {
         if (!card) return null;
         if (!card.id) card.id = `${pageId}-item-${index + 1}`;
         const clone = heading.cloneNode(true);
-        clone.querySelectorAll(".num").forEach(num => num.remove());
+        clone.querySelectorAll(".num, button, .staff-notice-actions").forEach(element => element.remove());
         const text = clone.textContent.trim().replace(/\s+/g, " ");
         return { id: card.id, text, card };
       })

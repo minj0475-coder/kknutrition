@@ -21398,8 +21398,8 @@ html body #app-content #staff #staff-notice .staff-notice-actions {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  margin-left: auto !important;
-  margin-right: 12px !important;
+  margin-left: 8px !important;
+  margin-right: auto !important;
   pointer-events: auto !important;
 }
 
