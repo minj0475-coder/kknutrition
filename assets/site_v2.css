@@ -21581,13 +21581,13 @@ html body #app-content #monthly .academic-week-row.academic-week-row:focus-visib
 html body #app-content #monthly .academic-week-row strong::before {
   content: "" !important;
   display: inline-block !important;
-  width: 7px !important;
-  height: 7px !important;
-  margin-right: 7px !important;
+  width: 6px !important;
+  height: 6px !important;
+  margin-right: 8px !important;
   border-radius: 999px !important;
   background: var(--week-accent) !important;
   vertical-align: 2px !important;
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--week-accent) 14%, transparent) !important;
+  box-shadow: none !important;
 }
 
 html body #app-content #monthly .academic-week-row.color-blue {
