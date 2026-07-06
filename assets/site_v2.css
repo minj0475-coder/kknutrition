@@ -21428,11 +21428,11 @@ html body #app-content #monthly .academic-week-items {
 
 html body #app-content #monthly .academic-week-row {
   display: grid !important;
-  grid-template-columns: 92px minmax(0, 1fr) auto !important;
+  grid-template-columns: 80px minmax(0, 1fr) auto !important;
   grid-auto-flow: row !important;
   align-items: start !important;
   justify-items: stretch !important;
-  column-gap: 12px !important;
+  column-gap: 8px !important;
   row-gap: 4px !important;
   min-width: 0 !important;
   width: 100% !important;
@@ -21443,9 +21443,9 @@ html body #app-content #monthly .academic-week-row {
 html body #app-content #monthly .academic-week-date {
   grid-column: 1 !important;
   grid-row: 1 !important;
-  width: 92px !important;
-  min-width: 92px !important;
-  max-width: 92px !important;
+  width: 80px !important;
+  min-width: 80px !important;
+  max-width: 80px !important;
   justify-self: start !important;
   align-self: start !important;
   justify-content: flex-start !important;
@@ -21488,14 +21488,14 @@ html body #app-content #monthly .academic-week-status {
 
 @media (max-width: 560px) {
   html body #app-content #monthly .academic-week-row {
-    grid-template-columns: 78px minmax(0, 1fr) auto !important;
-    column-gap: 10px !important;
+    grid-template-columns: 64px minmax(0, 1fr) auto !important;
+    column-gap: 8px !important;
     padding: 11px 12px !important;
   }
 
   html body #app-content #monthly .academic-week-date {
-    width: 78px !important;
-    min-width: 78px !important;
-    max-width: 78px !important;
+    width: 64px !important;
+    min-width: 64px !important;
+    max-width: 64px !important;
   }
 }
