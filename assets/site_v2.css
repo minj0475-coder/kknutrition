@@ -21844,3 +21844,12 @@ html body.sidebar-open .app-sidebar.is-open .sidebar-logo {
   min-width: 46px !important;
   min-height: 46px !important;
 }
+
+/* 2026-07-06 cooking method search: align Excel upload with the search field. */
+html body #app-content #today-menu #todayMenuCooking .menu-search-box .excel-upload-btn {
+  height: 44px !important;
+  min-height: 44px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  align-self: stretch !important;
+}
