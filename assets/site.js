@@ -4174,7 +4174,11 @@ document.addEventListener("DOMContentLoaded", () => {
         weekEvents.forEach(({ key, event }) => {
           const row = document.createElement("button");
           row.type = "button";
-          row.className = `academic-week-row ${event.done ? "is-done" : ""}`;
+          row.className = [
+            "academic-week-row",
+            event.color ? `color-${event.color}` : "",
+            event.done ? "is-done" : ""
+          ].filter(Boolean).join(" ");
           const memoPreview = event.memo ? `<small class="academic-week-memo">${escapeAcademicHtml(event.memo)}</small>` : "";
           const statusBadge = event.done ? `<em class="academic-week-status">완료</em>` : "";
           row.innerHTML = `

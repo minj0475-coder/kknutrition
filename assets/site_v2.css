@@ -21564,6 +21564,57 @@ html body #app-content #monthly .academic-week-row .academic-week-memo {
   text-align: left !important;
 }
 
+/* 2026-07-06 academic weekly list: inherit event colors with a quiet tint. */
+html body #app-content #monthly .academic-week-row.color-blue {
+  border-left: 4px solid #72aee8 !important;
+  background: #f4f9ff !important;
+}
+
+html body #app-content #monthly .academic-week-row.color-mint {
+  border-left: 4px solid #61c9b8 !important;
+  background: #f3fbf8 !important;
+}
+
+html body #app-content #monthly .academic-week-row.color-gold {
+  border-left: 4px solid #eabb52 !important;
+  background: #fffaf0 !important;
+}
+
+html body #app-content #monthly .academic-week-row.color-rose {
+  border-left: 4px solid #ef8799 !important;
+  background: #fff6f8 !important;
+}
+
+html body #app-content #monthly .academic-week-row.color-gray {
+  border-left: 4px solid #9b9693 !important;
+  background: #fbfaf9 !important;
+}
+
+html body #app-content #monthly .academic-week-row.color-blue:hover,
+html body #app-content #monthly .academic-week-row.color-blue:focus-visible {
+  background: #eef6ff !important;
+}
+
+html body #app-content #monthly .academic-week-row.color-mint:hover,
+html body #app-content #monthly .academic-week-row.color-mint:focus-visible {
+  background: #edf8f5 !important;
+}
+
+html body #app-content #monthly .academic-week-row.color-gold:hover,
+html body #app-content #monthly .academic-week-row.color-gold:focus-visible {
+  background: #fff5df !important;
+}
+
+html body #app-content #monthly .academic-week-row.color-rose:hover,
+html body #app-content #monthly .academic-week-row.color-rose:focus-visible {
+  background: #fff0f3 !important;
+}
+
+html body #app-content #monthly .academic-week-row.color-gray:hover,
+html body #app-content #monthly .academic-week-row.color-gray:focus-visible {
+  background: #f6f5f4 !important;
+}
+
 @media (max-width: 560px) {
   html body #app-content #monthly .academic-week-row.academic-week-row {
     gap: 8px !important;
