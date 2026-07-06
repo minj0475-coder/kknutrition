@@ -21292,3 +21292,15 @@ html body #app-content #memoModalOverlay #saveMemoModalBtn.memo-save-btn:focus-v
   outline: none !important;
   transform: none !important;
 }
+
+/* 2026-07-06 open sidebar logo: align to the unchanged collapsed logo position. */
+@media (min-width: 901px) {
+  html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar.is-open .sidebar-logo-link,
+  html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-logo-link,
+  html body:not(.sidebar-collapsed) .app-sidebar.is-open .sidebar-logo-link {
+    left: 14px !important;
+    top: -1px !important;
+    transform: none !important;
+    translate: 0 0 !important;
+  }
+}
