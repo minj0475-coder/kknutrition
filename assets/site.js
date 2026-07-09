@@ -3618,6 +3618,14 @@ function readAcademicEvents() {
   return {};
 }
 
+function cloneAcademicEvents(events) {
+  try {
+    return JSON.parse(JSON.stringify(events || {}));
+  } catch(e) {
+    return {};
+  }
+}
+
 function getUserAcademicEventsForKey(userEvents, key) {
   const value = userEvents[key];
   const events = Array.isArray(value) ? value : (value ? [value] : []);
@@ -3775,6 +3783,28 @@ document.addEventListener("DOMContentLoaded", () => {
     return Boolean(monthlySection && monthlySection.classList.contains("is-page-editing"));
   }
 
+  window.enterAcademicCalendarEditMode = function enterAcademicCalendarEditMode() {
+    userEvents = cloneAcademicEvents(readAcademicEvents());
+    renderAll();
+    setStatus("학사일정 수정 모드입니다.");
+  };
+
+  window.saveAcademicCalendarEditMode = function saveAcademicCalendarEditMode() {
+    saveAcademicEvents(userEvents);
+    userEvents = readAcademicEvents();
+    renderAll();
+    closeAcademicModal();
+    setStatus("학사일정을 저장했습니다.");
+    return true;
+  };
+
+  window.exitAcademicCalendarEditMode = function exitAcademicCalendarEditMode() {
+    cleanupAcademicDrag();
+    closeAcademicModal();
+    userEvents = readAcademicEvents();
+    renderAll();
+  };
+
   function ensureAcademicMemoTooltip() {
     if (memoTooltip) return memoTooltip;
     memoTooltip = document.createElement("div");
@@ -3908,7 +3938,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const [moved] = nextEvents.splice(fromIndex, 1);
     nextEvents.splice(toIndex, 0, moved);
     setUserAcademicEventsForKey(userEvents, key, nextEvents);
-    saveAcademicEvents(userEvents);
     return true;
   }
 
@@ -4221,6 +4250,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.addEventListener("kknutrition:cloud-data-applied", event => {
     if (!event.detail || event.detail.key !== ACADEMIC_EVENTS_KEY) return;
+    if (isAcademicEditMode()) {
+      setStatus("수정 중이라 외부 학사일정 갱신은 저장 후 반영됩니다.");
+      return;
+    }
     userEvents = readAcademicEvents();
     renderAll();
     setStatus("다른 기기의 최신 학사일정을 불러왔습니다.");
@@ -4298,9 +4331,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const nextDate = parseAcademicKey(key);
     state.year = nextDate.getFullYear();
     state.month = nextDate.getMonth();
-    saveAcademicEvents(userEvents);
     renderAll();
-    setStatus("저장되었습니다.");
+    setStatus("수정 내용이 임시 반영되었습니다.");
     closeAcademicModal();
   }
 
@@ -4368,9 +4400,8 @@ document.addEventListener("DOMContentLoaded", () => {
       state.originalStartKey = null;
       state.originalEndKey = null;
     }
-    saveAcademicEvents(userEvents);
     renderAll();
-    setStatus("비웠습니다.");
+    setStatus("수정 내용이 임시 반영되었습니다.");
     closeAcademicModal();
   });
   if (modalCloseBtn) modalCloseBtn.addEventListener("click", closeAcademicModal);

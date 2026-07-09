@@ -938,6 +938,10 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
       if (pageId === 'staff' && typeof window.enterStaffNoticeEditMode === 'function') {
         window.enterStaffNoticeEditMode();
       }
+
+      if (pageId === 'monthly' && typeof window.enterAcademicCalendarEditMode === 'function') {
+        window.enterAcademicCalendarEditMode();
+      }
       
       if (editables.length > 0) {
         editables[0].focus({ preventScroll: true });
@@ -955,6 +959,14 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
       if (pageId === 'staff' && typeof window.saveStaffNoticeEditMode === 'function') {
         const staffNoticeSaved = await window.saveStaffNoticeEditMode();
         if (!staffNoticeSaved) {
+          targetBtn.textContent = "저장";
+          return;
+        }
+      }
+
+      if (pageId === 'monthly' && typeof window.saveAcademicCalendarEditMode === 'function') {
+        const academicSaved = await window.saveAcademicCalendarEditMode();
+        if (!academicSaved) {
           targetBtn.textContent = "저장";
           return;
         }
@@ -1023,6 +1035,7 @@ window.clearUnsavedEditModes = () => {
   if (typeof window.exitWorkNoteEditMode === 'function') window.exitWorkNoteEditMode();
   if (typeof window.exitMessageTemplateEditMode === 'function') window.exitMessageTemplateEditMode();
   if (typeof window.exitPromoContactsEditMode === 'function') window.exitPromoContactsEditMode();
+  if (typeof window.exitAcademicCalendarEditMode === 'function') window.exitAcademicCalendarEditMode();
 };
 
 window.addEventListener('beforeunload', (e) => {
