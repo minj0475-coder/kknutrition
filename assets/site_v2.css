@@ -21765,88 +21765,6 @@ html body #app-content #monthly .academic-week-row.color-gray {
   }
 }
 
-/* 2026-07-06 opened sidebar logo: match the unchanged closed logo position. */
-html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-head,
-html body.sidebar-open .app-sidebar.is-open .sidebar-head {
-  position: relative !important;
-  min-height: 54px !important;
-  height: 54px !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  overflow: visible !important;
-}
-
-html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-logo-link,
-html body.sidebar-open .app-sidebar.is-open .sidebar-logo-link {
-  position: absolute !important;
-  left: 10px !important;
-  top: 5px !important;
-  right: auto !important;
-  bottom: auto !important;
-  width: 46px !important;
-  height: 46px !important;
-  min-width: 46px !important;
-  min-height: 46px !important;
-  max-width: 46px !important;
-  max-height: 46px !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  transform: none !important;
-  translate: 0 0 !important;
-}
-
-html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-logo,
-html body.sidebar-open .app-sidebar.is-open .sidebar-logo {
-  display: block !important;
-  width: 46px !important;
-  height: 46px !important;
-  min-width: 46px !important;
-  min-height: 46px !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  object-fit: contain !important;
-  transform: none !important;
-  translate: 0 0 !important;
-}
-
-@media (max-width: 900px) {
-  html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-logo-link,
-  html body.sidebar-open .app-sidebar.is-open .sidebar-logo-link {
-    top: -5px !important;
-  }
-}
-
-/* 2026-07-06 mobile open sidebar logo: match the unopened top logo exactly. */
-@media (max-width: 900px) {
-  html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-logo-link,
-  html body.sidebar-open .app-sidebar.is-open .sidebar-logo-link {
-    position: fixed !important;
-    left: 14px !important;
-    top: 12px !important;
-    right: auto !important;
-    bottom: auto !important;
-    width: 48px !important;
-    height: 48px !important;
-    min-width: 48px !important;
-    min-height: 48px !important;
-    max-width: 48px !important;
-    max-height: 48px !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    transform: none !important;
-    translate: 0 0 !important;
-    z-index: 6 !important;
-  }
-
-  html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-logo,
-  html body.sidebar-open .app-sidebar.is-open .sidebar-logo {
-    width: 42px !important;
-    height: 42px !important;
-    min-width: 42px !important;
-    min-height: 42px !important;
-  }
-}
-
 /* 2026-07-06 cooking method search: align Excel upload with the search field. */
 html body #app-content #today-menu #todayMenuCooking .menu-search-box .excel-upload-btn {
   height: 44px !important;
@@ -21856,92 +21774,19 @@ html body #app-content #today-menu #todayMenuCooking .menu-search-box .excel-upl
   align-self: stretch !important;
 }
 
-/* 2026-07-06 open sidebar logo: use the unchanged top logo position. */
-@media (max-width: 900px) {
-  html body.sidebar-open #app-content > header.top .brand {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-  }
-
-  html body.sidebar-open .app-sidebar .sidebar-logo-link,
-  html body.sidebar-open .app-sidebar.is-open .sidebar-logo-link {
-    position: fixed !important;
-    display: inline-flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    pointer-events: auto !important;
-    left: 14px !important;
-    top: 12px !important;
-    right: auto !important;
-    bottom: auto !important;
-    width: 48px !important;
-    height: 48px !important;
-    min-width: 48px !important;
-    min-height: 48px !important;
-    max-width: 48px !important;
-    max-height: 48px !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    align-items: center !important;
-    justify-content: center !important;
-    transform: none !important;
-    translate: 0 0 !important;
-    z-index: 1602 !important;
-  }
-
-  html body.sidebar-open .app-sidebar .sidebar-logo,
-  html body.sidebar-open .app-sidebar.is-open .sidebar-logo {
-    width: 42px !important;
-    height: 42px !important;
-    min-width: 42px !important;
-    min-height: 42px !important;
-  }
-}
-
-@media (min-width: 901px) {
-  html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-logo-link,
-  html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar.is-open .sidebar-logo-link {
-    position: fixed !important;
-    left: 10px !important;
-    top: 21px !important;
-    right: auto !important;
-    bottom: auto !important;
-    width: 46px !important;
-    height: 46px !important;
-    min-width: 46px !important;
-    min-height: 46px !important;
-    max-width: 46px !important;
-    max-height: 46px !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    transform: none !important;
-    translate: 0 0 !important;
-    z-index: 1602 !important;
-  }
-
-  html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-logo,
-  html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar.is-open .sidebar-logo {
-    width: 46px !important;
-    height: 46px !important;
-    min-width: 46px !important;
-    min-height: 46px !important;
-  }
-}
-
-/* 2026-07-07 sidebar logo source of truth: one visible logo per viewport state. */
+/* 2026-07-09 sidebar logo source of truth: keep one fixed logo position per viewport. */
 html body {
   --kkul-mobile-logo-left: 14px;
   --kkul-mobile-logo-top: 12px;
   --kkul-mobile-logo-box: 48px;
   --kkul-mobile-logo-image: 42px;
   --kkul-desktop-rail-logo-left: 10px;
-  --kkul-desktop-rail-logo-top: 21px;
+  --kkul-desktop-rail-logo-top: 12px;
   --kkul-desktop-rail-logo-box: 46px;
 }
 
 @media (max-width: 900px) {
+  html body #app-content > header.top .brand,
   html body.sidebar-open #app-content > header.top .brand {
     position: fixed !important;
     display: inline-flex !important;
@@ -21967,6 +21812,7 @@ html body {
     z-index: 2200 !important;
   }
 
+  html body #app-content > header.top .brand-logo-img,
   html body.sidebar-open #app-content > header.top .brand-logo-img {
     width: var(--kkul-mobile-logo-image) !important;
     height: var(--kkul-mobile-logo-image) !important;
@@ -21986,6 +21832,8 @@ html body {
 }
 
 @media (min-width: 901px) {
+  html body.sidebar-collapsed .app-sidebar .sidebar-logo-link,
+  html body:not(.sidebar-open).sidebar-collapsed .app-sidebar .sidebar-logo-link,
   html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-logo-link,
   html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar.is-open .sidebar-logo-link {
     position: fixed !important;
@@ -22010,6 +21858,8 @@ html body {
     z-index: 2200 !important;
   }
 
+  html body.sidebar-collapsed .app-sidebar .sidebar-logo,
+  html body:not(.sidebar-open).sidebar-collapsed .app-sidebar .sidebar-logo,
   html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar .sidebar-logo,
   html body.sidebar-open:not(.sidebar-collapsed) .app-sidebar.is-open .sidebar-logo {
     width: var(--kkul-desktop-rail-logo-box) !important;
