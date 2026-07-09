@@ -21774,7 +21774,7 @@ html body #app-content #today-menu #todayMenuCooking .menu-search-box .excel-upl
   align-self: stretch !important;
 }
 
-/* 2026-07-09 sidebar logo source of truth: keep one fixed logo position per viewport. */
+/* 2026-07-09 sidebar logo source of truth: keep mobile closed/open visibility distinct. */
 html body {
   --kkul-mobile-logo-left: 14px;
   --kkul-mobile-logo-top: 12px;
@@ -21786,7 +21786,13 @@ html body {
 }
 
 @media (max-width: 900px) {
-  html body #app-content > header.top .brand,
+  html body #app-content > header.top .brand {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
   html body.sidebar-open #app-content > header.top .brand {
     position: fixed !important;
     display: inline-flex !important;
@@ -21812,7 +21818,6 @@ html body {
     z-index: 2200 !important;
   }
 
-  html body #app-content > header.top .brand-logo-img,
   html body.sidebar-open #app-content > header.top .brand-logo-img {
     width: var(--kkul-mobile-logo-image) !important;
     height: var(--kkul-mobile-logo-image) !important;
