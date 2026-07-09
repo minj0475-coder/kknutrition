@@ -21830,6 +21830,47 @@ html body {
 
   html body.sidebar-open .app-sidebar .sidebar-logo-link,
   html body.sidebar-open .app-sidebar.is-open .sidebar-logo-link {
+    position: fixed !important;
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    left: var(--kkul-mobile-logo-left) !important;
+    top: var(--kkul-mobile-logo-top) !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: var(--kkul-mobile-logo-box) !important;
+    height: var(--kkul-mobile-logo-box) !important;
+    min-width: var(--kkul-mobile-logo-box) !important;
+    min-height: var(--kkul-mobile-logo-box) !important;
+    max-width: var(--kkul-mobile-logo-box) !important;
+    max-height: var(--kkul-mobile-logo-box) !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transform: none !important;
+    translate: 0 0 !important;
+    z-index: 2400 !important;
+  }
+
+  html body.sidebar-open .app-sidebar .sidebar-logo-link span,
+  html body.sidebar-open .app-sidebar.is-open .sidebar-logo-link span {
+    display: none !important;
+  }
+
+  html body.sidebar-open .app-sidebar .sidebar-logo,
+  html body.sidebar-open .app-sidebar.is-open .sidebar-logo {
+    display: block !important;
+    width: var(--kkul-mobile-logo-image) !important;
+    height: var(--kkul-mobile-logo-image) !important;
+    min-width: var(--kkul-mobile-logo-image) !important;
+    min-height: var(--kkul-mobile-logo-image) !important;
+    transform: none !important;
+    translate: 0 0 !important;
+  }
+
+  html body.sidebar-open #app-content > header.top .brand {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
