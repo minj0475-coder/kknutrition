@@ -21848,6 +21848,19 @@ html body {
     min-width: var(--kkul-desktop-rail-width) !important;
   }
 
+  html body.sidebar-collapsed .app-sidebar::after {
+    content: "" !important;
+    position: fixed !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: calc(var(--kkul-desktop-rail-width) - 1px) !important;
+    display: block !important;
+    width: 1px !important;
+    background: #e5e5e5 !important;
+    pointer-events: none !important;
+    z-index: 2301 !important;
+  }
+
   html body.sidebar-collapsed .app-sidebar .sidebar-head {
     width: var(--kkul-desktop-rail-width) !important;
     max-width: var(--kkul-desktop-rail-width) !important;
