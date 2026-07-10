@@ -839,11 +839,11 @@ function syncAnnualMobileCards() {
   let currentMonthCard = null;
 
   const rows = table.querySelectorAll('tr');
-  rows.forEach(row => {
+  rows.forEach((row, rowIndex) => {
     const cells = row.querySelectorAll('td, th');
     if (cells.length === 0) return;
 
-    let titleText, contentHtml;
+    let titleText, contentHtml, titleCellIndex, contentCellIndex;
 
     if (cells.length >= 3) {
       // New month
@@ -852,15 +852,21 @@ function syncAnnualMobileCards() {
       currentMonthCard.className = 'annual-month-card';
       const h3 = document.createElement('h3');
       h3.textContent = monthText;
+      h3.dataset.annualRowIndex = String(rowIndex);
+      h3.dataset.annualCellIndex = '0';
       currentMonthCard.appendChild(h3);
       listContainer.appendChild(currentMonthCard);
 
       titleText = cells[1].innerText.trim();
       contentHtml = cells[2].innerHTML;
+      titleCellIndex = 1;
+      contentCellIndex = 2;
     } else if (cells.length === 2 && currentMonthCard) {
       // Continue same month
       titleText = cells[0].innerText.trim();
       contentHtml = cells[1].innerHTML;
+      titleCellIndex = 0;
+      contentCellIndex = 1;
     } else {
       return;
     }
@@ -868,6 +874,9 @@ function syncAnnualMobileCards() {
     if (currentMonthCard && (titleText || contentHtml)) {
       const taskDiv = document.createElement('div');
       taskDiv.className = 'annual-task';
+      taskDiv.dataset.annualRowIndex = String(rowIndex);
+      taskDiv.dataset.annualTitleCellIndex = String(titleCellIndex);
+      taskDiv.dataset.annualContentCellIndex = String(contentCellIndex);
       
       const strong = document.createElement('strong');
       strong.textContent = titleText;
@@ -881,6 +890,55 @@ function syncAnnualMobileCards() {
       }
 
       currentMonthCard.appendChild(taskDiv);
+    }
+  });
+}
+
+function isAnnualMobileLayout() {
+  return window.matchMedia && window.matchMedia('(max-width: 640px)').matches;
+}
+
+function enterAnnualMobileEditMode() {
+  if (!isAnnualMobileLayout()) return;
+  document.querySelectorAll('#annual-mobile-auto-list h3[data-annual-row-index], #annual-mobile-auto-list .annual-task[data-annual-row-index]').forEach(el => {
+    el.setAttribute('contenteditable', 'true');
+    el.setAttribute('spellcheck', 'false');
+  });
+}
+
+function exitAnnualMobileEditMode() {
+  document.querySelectorAll('#annual-mobile-auto-list [contenteditable="true"]').forEach(el => {
+    el.removeAttribute('contenteditable');
+    el.removeAttribute('spellcheck');
+  });
+}
+
+function syncAnnualMobileCardsToTable() {
+  if (!isAnnualMobileLayout()) return;
+  const rows = Array.from(document.querySelectorAll('.annual-table tbody tr'));
+  if (!rows.length) return;
+
+  document.querySelectorAll('#annual-mobile-auto-list h3[data-annual-row-index][data-annual-cell-index]').forEach(heading => {
+    const row = rows[Number(heading.dataset.annualRowIndex)];
+    const cell = row && row.querySelectorAll('td, th')[Number(heading.dataset.annualCellIndex)];
+    if (cell) cell.textContent = heading.textContent.trim();
+  });
+
+  document.querySelectorAll('#annual-mobile-auto-list .annual-task[data-annual-row-index]').forEach(task => {
+    const row = rows[Number(task.dataset.annualRowIndex)];
+    const cells = row ? row.querySelectorAll('td, th') : [];
+    const titleCell = cells[Number(task.dataset.annualTitleCellIndex)];
+    const contentCell = cells[Number(task.dataset.annualContentCellIndex)];
+    const title = task.querySelector('strong');
+
+    if (titleCell && title) titleCell.textContent = title.textContent.trim();
+    if (contentCell) {
+      const contentWrapper = document.createElement('div');
+      Array.from(task.childNodes).forEach(node => {
+        if (node === title) return;
+        contentWrapper.appendChild(node.cloneNode(true));
+      });
+      contentCell.innerHTML = contentWrapper.innerHTML.trim();
     }
   });
 }
@@ -942,6 +1000,10 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
       if (pageId === 'monthly' && typeof window.enterAcademicCalendarEditMode === 'function') {
         window.enterAcademicCalendarEditMode();
       }
+
+      if (pageId === 'annual') {
+        enterAnnualMobileEditMode();
+      }
       
       if (editables.length > 0) {
         editables[0].focus({ preventScroll: true });
@@ -950,6 +1012,10 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
       // Save mode
       targetBtn.textContent = "저장 중...";
       
+      if (pageId === 'annual') {
+        syncAnnualMobileCardsToTable();
+      }
+
       const updateData = {};
       editables.forEach(el => {
         el.removeAttribute('contenteditable');
@@ -977,7 +1043,10 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
         section.classList.remove('is-page-editing');
         targetBtn.textContent = "수정";
         targetBtn.classList.remove('saving');
-        if (pageId === 'annual') syncAnnualMobileCards();
+        if (pageId === 'annual') {
+          exitAnnualMobileEditMode();
+          syncAnnualMobileCards();
+        }
         return;
       }
 
@@ -988,6 +1057,7 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
         targetBtn.classList.remove('saving');
         
         if (pageId === 'annual') {
+          exitAnnualMobileEditMode();
           syncAnnualMobileCards();
         }
       }).catch(err => {

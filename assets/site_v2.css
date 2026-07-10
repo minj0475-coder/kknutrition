@@ -19724,69 +19724,21 @@ html body #app-content #annual.is-page-editing #edit-annual-1 {
   -webkit-overflow-scrolling: touch !important;
 }
 
-/* 2026-07-10 annual mobile edit: replace the read-only mobile cards with the editable source table. */
+/* 2026-07-10 annual mobile edit: keep the mobile card layout while editing. */
 @media (max-width: 640px) {
   html body #app-content #annual.is-page-editing .annual-mobile-card {
-    display: none !important;
+    display: block !important;
+    outline: 2px solid #202123 !important;
+    outline-offset: 4px !important;
   }
 
   html body #app-content #annual.is-page-editing .annual-desktop-card {
-    display: block !important;
-  }
-
-  html body #app-content #annual.is-page-editing .annual-desktop-card .mobile-scroll-note {
     display: none !important;
   }
 
-  html body #app-content #annual.is-page-editing #edit-annual-1 {
-    overflow-x: auto !important;
-    overflow-y: visible !important;
-    -webkit-overflow-scrolling: touch !important;
-  }
-
-  html body #app-content #annual.is-page-editing #edit-annual-1 table.annual-table {
-    display: table !important;
-    width: max-content !important;
-    min-width: 760px !important;
-    border-collapse: separate !important;
-    border-spacing: 0 !important;
-    background: #ffffff !important;
-  }
-
-  html body #app-content #annual.is-page-editing #edit-annual-1 table.annual-table thead {
-    display: table-header-group !important;
-  }
-
-  html body #app-content #annual.is-page-editing #edit-annual-1 table.annual-table tbody {
-    display: table-row-group !important;
-  }
-
-  html body #app-content #annual.is-page-editing #edit-annual-1 table.annual-table tr {
-    display: table-row !important;
-    width: auto !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-  }
-
-  html body #app-content #annual.is-page-editing #edit-annual-1 table.annual-table th,
-  html body #app-content #annual.is-page-editing #edit-annual-1 table.annual-table td {
-    display: table-cell !important;
-    width: auto !important;
-    grid-template-columns: none !important;
-    gap: 0 !important;
-    padding: 12px 14px !important;
-    border-right: 1px solid var(--line) !important;
-    border-bottom: 1px solid var(--line) !important;
-    vertical-align: top !important;
-  }
-
-  html body #app-content #annual.is-page-editing #edit-annual-1 table.annual-table th::before,
-  html body #app-content #annual.is-page-editing #edit-annual-1 table.annual-table td::before {
-    content: none !important;
-    display: none !important;
+  html body #app-content #annual.is-page-editing #annual-mobile-auto-list :is(h3, .annual-task)[contenteditable="true"] {
+    outline: 0 !important;
+    box-shadow: none !important;
   }
 }
 
