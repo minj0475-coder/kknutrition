@@ -607,6 +607,7 @@ function setupComplaintRecords() {
   const searchInput = document.getElementById("complaintSearchInput");
   const filters = document.getElementById("complaintAudienceFilters");
   const addBtn = document.getElementById("complaintAddBtn");
+  const editBtn = document.getElementById("editBtnComplaints");
   const modal = document.getElementById("complaintModal");
   const form = document.getElementById("complaintForm");
   const closeBtn = document.getElementById("complaintModalCloseBtn");
@@ -629,6 +630,8 @@ function setupComplaintRecords() {
   let items = readComplaintRecords();
   let activeAudience = "전체";
   let toastTimer = 0;
+  let complaintEditMode = false;
+  let editingId = "";
 
   const showToast = message => {
     if (!toast) return;
@@ -649,16 +652,46 @@ function setupComplaintRecords() {
     try { localStorage.setItem(COMPLAINT_LAST_SCHOOL_KEY, String(school || "").trim()); } catch(e) {}
   };
 
+  const syncComplaintEditControls = () => {
+    page.classList.toggle("is-editing", complaintEditMode);
+    if (editBtn) {
+      editBtn.textContent = complaintEditMode ? "저장" : "수정";
+      editBtn.classList.toggle("saving", complaintEditMode);
+    }
+  };
+
+  window.isComplaintEditMode = () => complaintEditMode;
+  window.enterComplaintEditMode = () => {
+    if (complaintEditMode) return;
+    complaintEditMode = true;
+    syncComplaintEditControls();
+  };
+  window.saveComplaintEditMode = () => {
+    if (!complaintEditMode) return true;
+    complaintEditMode = false;
+    syncComplaintEditControls();
+    showToast("수정 내용을 저장했습니다.");
+    return true;
+  };
+  window.exitComplaintEditMode = () => {
+    if (!complaintEditMode) return;
+    complaintEditMode = false;
+    closeModal();
+    syncComplaintEditControls();
+  };
+
   const setField = (key, value) => {
     if (inputs[key]) inputs[key].value = value || "";
   };
 
-  const openModal = () => {
-    const record = normalizeComplaintRecord({
+  const openModal = (sourceItem = null) => {
+    if (!complaintEditMode) window.enterComplaintEditMode();
+    const record = normalizeComplaintRecord(sourceItem || {
       school: readLastSchool(),
       date: getKoreanDateValue(),
       audience: "학부모"
     });
+    editingId = sourceItem && sourceItem.id ? String(sourceItem.id) : "";
     setField("title", record.title);
     setField("school", record.school);
     setField("date", record.date || getKoreanDateValue());
@@ -677,6 +710,7 @@ function setupComplaintRecords() {
     modal.hidden = true;
     document.body.classList.remove("complaint-modal-open");
     form.reset();
+    editingId = "";
   };
 
   const getVisibleItems = () => {
@@ -753,6 +787,13 @@ function setupComplaintRecords() {
       copyAllBtn.setAttribute("aria-label", "의견·민원 대응 기록 전체 복사");
       copyAllBtn.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 8h10v12H8zM6 16H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>';
       copyAllBtn.addEventListener("click", () => writeComplaintText(getComplaintCopyText(item), () => showToast("전체 내용을 복사했습니다.")));
+      const editCardBtn = document.createElement("button");
+      editCardBtn.className = "icon-only-btn complaint-icon-btn";
+      editCardBtn.type = "button";
+      editCardBtn.title = "수정";
+      editCardBtn.setAttribute("aria-label", "의견·민원 대응 기록 수정");
+      editCardBtn.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 20h4l11-11a2.8 2.8 0 0 0-4-4L4 16zM13.5 6.5l4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      editCardBtn.addEventListener("click", () => openModal(item));
       const deleteBtn = document.createElement("button");
       deleteBtn.className = "icon-only-btn complaint-icon-btn danger";
       deleteBtn.type = "button";
@@ -766,7 +807,7 @@ function setupComplaintRecords() {
         render();
         showToast("기록을 삭제했습니다.");
       });
-      actions.append(copyAllBtn, deleteBtn);
+      actions.append(copyAllBtn, editCardBtn, deleteBtn);
       top.append(chips, actions);
       card.appendChild(top);
 
@@ -778,6 +819,7 @@ function setupComplaintRecords() {
       appendSection(card, "■ 처리 결과", item.result);
       list.appendChild(card);
     });
+    syncComplaintEditControls();
   };
 
   COMPLAINT_AUDIENCES.forEach(audience => {
@@ -797,7 +839,13 @@ function setupComplaintRecords() {
     filters.appendChild(button);
   });
 
-  addBtn.addEventListener("click", openModal);
+  addBtn.addEventListener("click", () => openModal());
+  if (editBtn) {
+    editBtn.addEventListener("click", () => {
+      if (!complaintEditMode) window.enterComplaintEditMode();
+      else window.saveComplaintEditMode();
+    });
+  }
   searchInput.addEventListener("input", render);
   if (closeBtn) closeBtn.addEventListener("click", closeModal);
   if (cancelBtn) cancelBtn.addEventListener("click", closeModal);
@@ -810,8 +858,9 @@ function setupComplaintRecords() {
   form.addEventListener("submit", event => {
     event.preventDefault();
     const now = Date.now();
+    const currentItem = editingId ? items.find(item => item.id === editingId) : null;
     const next = normalizeComplaintRecord({
-      id: makeNoteItemId("complaint"),
+      id: editingId || makeNoteItemId("complaint"),
       title: inputs.title.value,
       school: inputs.school.value,
       date: inputs.date.value || getKoreanDateValue(),
@@ -821,16 +870,18 @@ function setupComplaintRecords() {
       response: inputs.response.value,
       phrase: inputs.phrase.value,
       result: inputs.result.value,
-      createdAt: now,
+      createdAt: currentItem ? currentItem.createdAt : now,
       updatedAt: now
     });
     if (!next.title || !next.school || !next.date || !next.audience) return;
-    items = [next, ...items];
+    items = editingId
+      ? items.map(item => item.id === editingId ? next : item)
+      : [next, ...items];
     saveLastSchool(next.school);
     saveComplaintRecords(items);
     closeModal();
     render();
-    showToast("새 기록을 저장했습니다.");
+    showToast(currentItem ? "기록을 수정했습니다." : "새 기록을 저장했습니다.");
   });
 
   window.addEventListener("kknutrition:cloud-data-applied", event => {
@@ -840,6 +891,7 @@ function setupComplaintRecords() {
   });
 
   render();
+  syncComplaintEditControls();
 }
 
 function setupStaffNotices() {
@@ -2524,7 +2576,7 @@ function setupUnsavedNavigationGuard() {
 
   const hasEditablePageContent = () => Boolean(document.querySelector('.editable-content[contenteditable="true"]'));
   const hasSectionEditMode = () => Boolean(document.querySelector(
-    '.work-note-card.is-editing, .message-template-card.is-editing, #staff-notice.is-editing, #vendorNetworkPanel.is-editing, #promoContactPanel.is-editing, #bookmarks .edit-mode-card'
+    '.work-note-card.is-editing, .message-template-card.is-editing, #staff-notice.is-editing, #vendorNetworkPanel.is-editing, #promoContactPanel.is-editing, #complaints.is-editing, #bookmarks .edit-mode-card'
   ));
   window.hasUnsavedChanges = () => {
     const bookmarkUnsaved = (typeof window.isBookmarkEditMode === 'function' && window.isBookmarkEditMode());
@@ -2532,7 +2584,8 @@ function setupUnsavedNavigationGuard() {
     const messageTemplateUnsaved = (typeof window.isMessageTemplateEditMode === 'function' && window.isMessageTemplateEditMode());
     const staffNoticeUnsaved = (typeof window.isStaffNoticeEditMode === 'function' && window.isStaffNoticeEditMode());
     const promoContactsUnsaved = (typeof window.isPromoContactsEditMode === 'function' && window.isPromoContactsEditMode());
-    return hasEditablePageContent() || hasSectionEditMode() || bookmarkUnsaved || workNoteUnsaved || messageTemplateUnsaved || staffNoticeUnsaved || promoContactsUnsaved;
+    const complaintUnsaved = (typeof window.isComplaintEditMode === 'function' && window.isComplaintEditMode());
+    return hasEditablePageContent() || hasSectionEditMode() || bookmarkUnsaved || workNoteUnsaved || messageTemplateUnsaved || staffNoticeUnsaved || promoContactsUnsaved || complaintUnsaved;
   };
 
   window.clearUnsavedEditModes = () => {
@@ -2546,7 +2599,8 @@ function setupUnsavedNavigationGuard() {
     if (typeof window.exitMessageTemplateEditMode === 'function') window.exitMessageTemplateEditMode();
     if (typeof window.exitStaffNoticeEditMode === 'function') window.exitStaffNoticeEditMode();
     if (typeof window.exitPromoContactsEditMode === 'function') window.exitPromoContactsEditMode();
-    document.querySelectorAll('.work-note-card.is-editing, .message-template-card.is-editing, #staff-notice.is-editing, #vendorNetworkPanel.is-editing, #promoContactPanel.is-editing').forEach(card => {
+    if (typeof window.exitComplaintEditMode === 'function') window.exitComplaintEditMode();
+    document.querySelectorAll('.work-note-card.is-editing, .message-template-card.is-editing, #staff-notice.is-editing, #vendorNetworkPanel.is-editing, #promoContactPanel.is-editing, #complaints.is-editing').forEach(card => {
       card.classList.remove('is-editing');
     });
     document.querySelectorAll('#workNoteEditSaveBtn, #messageTemplateEditSaveBtn, #promoContactsEditSaveBtn, #editBtnBookmarks').forEach(btn => {

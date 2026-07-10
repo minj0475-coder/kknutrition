@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://minj0475-coder.github.io/kknutrition/assets/og-image.png?v=20260704_001">
 <meta property="og:url" content="https://minj0475-coder.github.io/kknutrition/">
 <title>급식 업무 포털</title>
-<link rel="stylesheet" href="assets/site_v2.css?v=20260711_001">
+<link rel="stylesheet" href="assets/site_v2.css?v=20260711_002">
 <link rel="manifest" href="manifest.json?v=6">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/app-icon-192.png?v=6">
 <link rel="apple-touch-icon" href="assets/app-icon-180.png?v=6">
@@ -910,21 +910,16 @@
 
 <section id="complaints" class="page-section">
   <main class="wrap complaint-wrap">
-    <section class="complaint-hero card" aria-labelledby="complaintPageTitle">
-      <div>
-        <p class="complaint-kicker">학교 현장 대응 기록</p>
-        <h1 id="complaintPageTitle">의견·민원 대응</h1>
-      </div>
-      <button id="complaintAddBtn" class="complaint-add-btn" type="button" aria-label="의견·민원 대응 새 기록 추가">+ 새 기록</button>
-    </section>
-
     <section class="complaint-controls card" aria-label="의견·민원 대응 검색 및 필터">
-      <label class="complaint-search" for="complaintSearchInput">
-        <span aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="18" height="18"><path d="m21 21-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-        </span>
-        <input id="complaintSearchInput" type="search" placeholder="사례·학교명·대응 문구를 검색하세요" autocomplete="off">
-      </label>
+      <div class="complaint-control-main-row">
+        <label class="complaint-search" for="complaintSearchInput">
+          <span aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="m21 21-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </span>
+          <input id="complaintSearchInput" type="search" placeholder="사례·학교명·대응 문구를 검색하세요" autocomplete="off" aria-label="의견·민원 대응 기록 검색">
+        </label>
+        <button id="complaintAddBtn" class="complaint-add-btn" type="button" aria-label="의견·민원 대응 새 기록 추가">+ 새 기록</button>
+      </div>
       <div id="complaintAudienceFilters" class="complaint-filter-row" aria-label="대상별 필터"></div>
     </section>
 
@@ -932,6 +927,7 @@
       <div id="complaintList" class="complaint-list"></div>
       <div id="complaintEmpty" class="complaint-empty" role="status"></div>
     </section>
+    <button id="editBtnComplaints" class="fab-edit-btn complaint-edit-btn" type="button" data-target="complaints">수정</button>
   </main>
 
   <div id="complaintModal" class="complaint-modal-overlay" hidden>
@@ -1283,7 +1279,7 @@
 <script src="assets/auth.js?v=20260710_001" defer></script>
 <script src="assets/data-guard.js?v=20260710_001" defer></script>
 <script src="assets/bookmarks.js?v=20260705_001" defer></script>
-<script src="assets/site.js?v=20260711_001" defer></script>
+<script src="assets/site.js?v=20260711_002" defer></script>
 <script type="module" src="assets/firebase-init.js?v=20260710_002" defer></script>
 <script>
   if ('serviceWorker' in navigator) {
