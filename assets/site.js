@@ -787,13 +787,6 @@ function setupComplaintRecords() {
       copyAllBtn.setAttribute("aria-label", "의견·민원 대응 기록 전체 복사");
       copyAllBtn.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 8h10v12H8zM6 16H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>';
       copyAllBtn.addEventListener("click", () => writeComplaintText(getComplaintCopyText(item), () => showToast("전체 내용을 복사했습니다.")));
-      const editCardBtn = document.createElement("button");
-      editCardBtn.className = "icon-only-btn complaint-icon-btn";
-      editCardBtn.type = "button";
-      editCardBtn.title = "수정";
-      editCardBtn.setAttribute("aria-label", "의견·민원 대응 기록 수정");
-      editCardBtn.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 20h4l11-11a2.8 2.8 0 0 0-4-4L4 16zM13.5 6.5l4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-      editCardBtn.addEventListener("click", () => openModal(item));
       const deleteBtn = document.createElement("button");
       deleteBtn.className = "icon-only-btn complaint-icon-btn danger";
       deleteBtn.type = "button";
@@ -807,9 +800,14 @@ function setupComplaintRecords() {
         render();
         showToast("기록을 삭제했습니다.");
       });
-      actions.append(copyAllBtn, editCardBtn, deleteBtn);
+      actions.append(copyAllBtn, deleteBtn);
       top.append(chips, actions);
       card.appendChild(top);
+      card.addEventListener("click", event => {
+        if (!complaintEditMode) return;
+        if (event.target.closest("button")) return;
+        openModal(item);
+      });
 
       card.appendChild(makeTextNode("h2", "complaint-card-title", item.title));
       card.appendChild(makeTextNode("p", "complaint-card-meta", `${item.school} · ${item.date}`));
