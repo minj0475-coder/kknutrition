@@ -22561,3 +22561,23 @@ html body #app-content #annual .annual-sheet-link-controls :is(.annual-sheet-sav
   min-height: 24px !important;
   stroke-width: 2 !important;
 }
+
+/* 2026-07-10 work notes: keep the add button aligned to the card header corner. */
+html body #app-content #today-menu .work-note-card.is-editing .work-note-head {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  align-items: start !important;
+  gap: 12px !important;
+}
+
+html body #app-content #today-menu .work-note-card.is-editing .work-note-head > div {
+  min-width: 0 !important;
+}
+
+html body #app-content #today-menu .work-note-card.is-editing #workNoteAddBtn {
+  grid-column: 2 !important;
+  justify-self: end !important;
+  align-self: start !important;
+  margin: 0 !important;
+  transform: none !important;
+}
