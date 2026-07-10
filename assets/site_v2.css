@@ -19724,6 +19724,26 @@ html body #app-content #annual.is-page-editing #edit-annual-1 {
   -webkit-overflow-scrolling: touch !important;
 }
 
+/* 2026-07-10 annual mobile edit: replace the read-only mobile cards with the editable source table. */
+@media (max-width: 640px) {
+  html body #app-content #annual.is-page-editing .annual-mobile-card {
+    display: none !important;
+  }
+
+  html body #app-content #annual.is-page-editing .annual-desktop-card {
+    display: block !important;
+  }
+
+  html body #app-content #annual.is-page-editing .annual-desktop-card .mobile-scroll-note {
+    display: none !important;
+  }
+
+  html body #app-content #annual.is-page-editing #edit-annual-1 {
+    overflow: visible !important;
+    -webkit-overflow-scrolling: auto !important;
+  }
+}
+
 /* 2026-07-04 academic modal mobile polish: date fields, apply scope, and done checkbox. */
 @media (max-width: 760px) {
   body.modal-open #academicModal .academic-modal,
