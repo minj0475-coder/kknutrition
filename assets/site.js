@@ -751,6 +751,25 @@ function setupMessageTemplates() {
     templateEditBtn.classList.toggle("saving", templateEditMode);
   };
   window.isMessageTemplateEditMode = () => templateEditMode;
+  const enterTemplateEditMode = () => {
+    if (!templateEditMode) {
+      templateEditMode = true;
+      syncTemplateEditControls();
+      setStatus("\uC218\uC815 \uBAA8\uB4DC\uC785\uB2C8\uB2E4.");
+    }
+  };
+  const saveTemplateEditMode = async () => {
+    if (!templateEditMode && !templateDirty) return true;
+    await forcePersist();
+    if (!templateDirty) {
+      templateEditMode = false;
+      syncTemplateEditControls();
+      return true;
+    }
+    return false;
+  };
+  window.enterMessageTemplateEditMode = enterTemplateEditMode;
+  window.saveMessageTemplateEditMode = saveTemplateEditMode;
   window.exitMessageTemplateEditMode = () => {
     if (!templateEditMode && !templateDirty) return;
     templateEditMode = false;
@@ -854,17 +873,12 @@ function setupMessageTemplates() {
     });
   }
   templateEditBtn.addEventListener("click", async () => {
-    if (!templateEditMode) {
-      templateEditMode = true;
-      syncTemplateEditControls();
-      setStatus("\uC218\uC815 \uBAA8\uB4DC\uC785\uB2C8\uB2E4.");
+    if (typeof window.toggleTodayMenuWritingEditMode === "function") {
+      window.toggleTodayMenuWritingEditMode();
       return;
     }
-    await forcePersist();
-    if (!templateDirty) {
-      templateEditMode = false;
-      syncTemplateEditControls();
-    }
+    if (!templateEditMode) enterTemplateEditMode();
+    else await saveTemplateEditMode();
   });
   window.addEventListener("kknutrition:cloud-data-applied", event => {
     if (!event.detail || event.detail.key !== MESSAGE_TEMPLATES_KEY) return;
@@ -948,6 +962,26 @@ function setupWorkNotes() {
     workNoteEditBtn.classList.toggle("saving", workNoteEditMode);
   };
   window.isWorkNoteEditMode = () => workNoteEditMode;
+  const enterWorkNoteEditMode = () => {
+    if (!workNoteEditMode) {
+      workNoteEditMode = true;
+      syncWorkNoteEditControls();
+      bodyInput.focus();
+      setStatus("\uC218\uC815 \uBAA8\uB4DC\uC785\uB2C8\uB2E4.");
+    }
+  };
+  const saveWorkNoteEditMode = async () => {
+    if (!workNoteEditMode && !workNoteDirty) return true;
+    await forcePersist();
+    if (!workNoteDirty) {
+      workNoteEditMode = false;
+      syncWorkNoteEditControls();
+      return true;
+    }
+    return false;
+  };
+  window.enterWorkNoteEditMode = enterWorkNoteEditMode;
+  window.saveWorkNoteEditMode = saveWorkNoteEditMode;
   window.exitWorkNoteEditMode = () => {
     if (!workNoteEditMode && !workNoteDirty) return;
     workNoteEditMode = false;
@@ -1049,18 +1083,12 @@ function setupWorkNotes() {
     });
   }
   workNoteEditBtn.addEventListener("click", async () => {
-    if (!workNoteEditMode) {
-      workNoteEditMode = true;
-      syncWorkNoteEditControls();
-      bodyInput.focus();
-      setStatus("\uC218\uC815 \uBAA8\uB4DC\uC785\uB2C8\uB2E4.");
+    if (typeof window.toggleTodayMenuWritingEditMode === "function") {
+      window.toggleTodayMenuWritingEditMode();
       return;
     }
-    await forcePersist();
-    if (!workNoteDirty) {
-      workNoteEditMode = false;
-      syncWorkNoteEditControls();
-    }
+    if (!workNoteEditMode) enterWorkNoteEditMode();
+    else await saveWorkNoteEditMode();
   });
   window.addEventListener("kknutrition:cloud-data-applied", event => {
     if (!event.detail || event.detail.key !== WORK_NOTES_KEY) return;
@@ -1078,6 +1106,27 @@ function setupWorkNotes() {
   });
   render();
 }
+
+window.toggleTodayMenuWritingEditMode = async function toggleTodayMenuWritingEditMode() {
+  const workEditing = typeof window.isWorkNoteEditMode === "function" && window.isWorkNoteEditMode();
+  const templateEditing = typeof window.isMessageTemplateEditMode === "function" && window.isMessageTemplateEditMode();
+
+  if (!workEditing || !templateEditing) {
+    if (typeof window.enterWorkNoteEditMode === "function") window.enterWorkNoteEditMode();
+    if (typeof window.enterMessageTemplateEditMode === "function") window.enterMessageTemplateEditMode();
+    return;
+  }
+
+  const workSaved = typeof window.saveWorkNoteEditMode === "function"
+    ? await window.saveWorkNoteEditMode()
+    : true;
+  const templateSaved = typeof window.saveMessageTemplateEditMode === "function"
+    ? await window.saveMessageTemplateEditMode()
+    : true;
+
+  if (!workSaved && typeof window.enterWorkNoteEditMode === "function") window.enterWorkNoteEditMode();
+  if (!templateSaved && typeof window.enterMessageTemplateEditMode === "function") window.enterMessageTemplateEditMode();
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   setupDailyKkul();
