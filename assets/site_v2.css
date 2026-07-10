@@ -22574,3 +22574,38 @@ html body:has(#service-sheet:target) #app-content #staff.active button#editBtnSt
     border-radius: 23px !important;
   }
 }
+
+/* 2026-07-10 annual sheet link buttons: borderless, equal icon controls. */
+html body #app-content #annual .annual-sheet-link-controls {
+  grid-template-columns: minmax(0, 1fr) 46px 46px !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+html body #app-content #annual .annual-sheet-link-controls :is(.annual-sheet-save-btn, .annual-sheet-open-btn),
+html body #app-content #annual .annual-sheet-link-controls :is(.annual-sheet-save-btn, .annual-sheet-open-btn):hover,
+html body #app-content #annual .annual-sheet-link-controls :is(.annual-sheet-save-btn, .annual-sheet-open-btn):focus-visible {
+  flex: 0 0 46px !important;
+  width: 46px !important;
+  height: 46px !important;
+  min-width: 46px !important;
+  min-height: 46px !important;
+  max-width: 46px !important;
+  max-height: 46px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-color: transparent !important;
+  border-radius: 12px !important;
+  background: #f7f7f8 !important;
+  color: #202123 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+html body #app-content #annual .annual-sheet-link-controls :is(.annual-sheet-save-btn, .annual-sheet-open-btn) svg {
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  min-height: 24px !important;
+  stroke-width: 2 !important;
+}
