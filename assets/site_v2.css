@@ -20130,6 +20130,20 @@ html body #app-content #annual.is-page-editing :is(#edit-annual-1, #edit-annual-
   box-shadow: none !important;
 }
 
+/* 2026-07-10 edit mode: keep only the outer edit outline, without an extra inner border. */
+html body #app-content #daily .editable-content[contenteditable="true"],
+html body #app-content #daily .editable-content[contenteditable="true"]:focus,
+html body #app-content #monthly .editable-content[contenteditable="true"],
+html body #app-content #monthly .editable-content[contenteditable="true"]:focus,
+html body #app-content #annual .editable-content[contenteditable="true"],
+html body #app-content #annual .editable-content[contenteditable="true"]:focus,
+html body #app-content #daily.is-page-editing :is(#edit-daily-1, #edit-daily-2),
+html body #app-content #monthly.is-page-editing :is(#edit-monthly-1, .academic-calendar-card),
+html body #app-content #annual.is-page-editing :is(#edit-annual-1, #edit-annual-2) {
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
 html body #app-content #monthly #editBtnMonthly.monthly-edit-btn {
   display: flex !important;
   width: fit-content !important;
