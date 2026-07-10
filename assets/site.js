@@ -3080,35 +3080,212 @@ function buildSidebarToc() {
   nav.dataset.ready = "true";
 }
 
+let siteSearchIndexCache = null;
+let siteSearchIndexBuiltAt = 0;
+
 function normalizeSiteSearchText(value) {
-  return String(value || "").toLowerCase().replace(/\s+/g, " ").trim();
+  return String(value || "")
+    .normalize("NFKC")
+    .toLowerCase()
+    .replace(/[‐‒–—―-]/g, "-")
+    .replace(/[^\p{L}\p{N}\s@./:#?&=+\-]/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function getSiteSearchCompactText(value) {
+  return normalizeSiteSearchText(value).replace(/[\s\-./:#?&=+]/g, "");
+}
+
+function getSiteSearchPhoneText(value) {
+  return String(value || "").replace(/\D/g, "");
 }
 
 function getCleanHeadingText(element) {
   if (!element) return "";
   const clone = element.cloneNode(true);
-  clone.querySelectorAll(".num, button, svg, input, select, textarea").forEach(node => node.remove());
+  clone.querySelectorAll(".num, button, svg, input, select, textarea, script, style").forEach(node => node.remove());
   return clone.textContent.trim().replace(/\s+/g, " ");
 }
 
-function buildSiteSearchIndex() {
+function getSiteSearchPageLabel(section) {
+  const labels = {
+    home: "홈",
+    daily: "하루 일정",
+    monthly: "한 달 일정",
+    annual: "연간 일정",
+    "today-menu": "급식노트",
+    complaints: "의견·민원 대응",
+    bookmarks: "북마크",
+    "promo-contacts": "업체 연락처",
+    staff: "조리종사원"
+  };
+  return labels[section && section.id] || getCleanHeadingText(section && section.querySelector(".hero h1")) || (section && section.id) || "포털";
+}
+
+function escapeSiteSearchHtml(value) {
+  return String(value || "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;",
+    "'": "&#39;"
+  }[char]));
+}
+
+function getSiteSearchSnippet(text, query, maxLength = 92) {
+  const source = String(text || "").replace(/\s+/g, " ").trim();
+  if (!source) return "";
+  const plainQuery = String(query || "").trim();
+  const lower = source.toLowerCase();
+  const index = plainQuery ? lower.indexOf(plainQuery.toLowerCase()) : -1;
+  const start = index > 28 ? Math.max(0, index - 28) : 0;
+  const snippet = source.slice(start, start + maxLength).trim();
+  return `${start > 0 ? "…" : ""}${snippet}${start + maxLength < source.length ? "…" : ""}`;
+}
+
+function highlightSiteSearchMatch(text, query) {
+  const escaped = escapeSiteSearchHtml(text);
+  const rawQuery = String(query || "").trim();
+  if (!rawQuery) return escaped;
+  const terms = rawQuery.split(/\s+/).map(term => term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).filter(Boolean);
+  if (!terms.length) return escaped;
+  return escaped.replace(new RegExp(`(${terms.join("|")})`, "gi"), "<mark>$1</mark>");
+}
+
+function invalidateSiteSearchIndex() {
+  siteSearchIndexCache = null;
+  siteSearchIndexBuiltAt = 0;
+  try {
+    window.dispatchEvent(new CustomEvent("kknutrition:site-search-index-invalidated"));
+  } catch(e) {}
+}
+
+function makeSiteSearchEntry(entry) {
+  const title = String(entry.title || "").replace(/\s+/g, " ").trim();
+  const context = String(entry.context || "").replace(/\s+/g, " ").trim();
+  const group = String(entry.group || "포털").replace(/\s+/g, " ").trim();
+  const haystackSource = `${title} ${context} ${group}`;
+  return {
+    href: entry.href || "#home",
+    targetId: entry.targetId || String(entry.href || "#home").replace(/^#/, ""),
+    title,
+    context,
+    group,
+    source: entry.source || "dom",
+    haystack: normalizeSiteSearchText(haystackSource),
+    compactHaystack: getSiteSearchCompactText(haystackSource),
+    phoneHaystack: getSiteSearchPhoneText(haystackSource)
+  };
+}
+
+function collectSiteSearchStorageEntries(pushEntry) {
+  const safeStorageSources = [
+    { key: "kknutrition_memo", group: "메모장", href: "#homeMemoCard" },
+    { key: "kkulkkoori_work_notes_v1", group: "생각서랍", href: "#workNotes" },
+    { key: "kkulkkoori_message_templates_v1", group: "문자내용 정리", href: "#messageTemplates" },
+    { key: "kkulkkoori_complaint_records_v1", group: "의견·민원 대응", href: "#complaints" },
+    { key: "cookingMethodUploadedData_v5", group: "조리방법 자료", href: "#todayMenuCooking" },
+    { key: "kkulkkoori_cheongsu_recipes_v3", group: "급식노트", href: "#today-menu" },
+    { key: "kkulkkoori_academic_events_v1", group: "학사일정", href: "#monthly-item-2" },
+    { key: "kkulkkoori_annual_sheet_links_v1", group: "연간 일정", href: "#annual" },
+    { key: "kkulkkoori_vendor_network_v1", group: "업체 연락망", href: "#vendorNetworkPanel" },
+    { key: "kkulkkoori_promo_contacts_v1", group: "홍보업체 · 전자단가", href: "#promoContactPanel" },
+    { key: "kkulkkoori_staff_notices_v1", group: "조리종사원 전달사항", href: "#staff-notice" },
+    { key: "kknutrition_bookmarks_v4", group: "북마크", href: "#bookmarks" },
+    { key: "kkulkkoori_service_sheet_link", group: "조리종사원", href: "#service-sheet" }
+  ];
+  const blockedFieldPattern = /(password|token|auth|api.?key|secret|credential|firebase|github)/i;
+
+  function flattenValue(value, parts = [], depth = 0) {
+    if (value == null || depth > 4) return parts;
+    if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+      const text = String(value).trim();
+      if (text) parts.push(text);
+      return parts;
+    }
+    if (Array.isArray(value)) {
+      value.forEach(item => flattenValue(item, parts, depth + 1));
+      return parts;
+    }
+    if (typeof value === "object") {
+      Object.entries(value).forEach(([key, item]) => {
+        if (blockedFieldPattern.test(key)) return;
+        flattenValue(item, parts, depth + 1);
+      });
+    }
+    return parts;
+  }
+
+  safeStorageSources.forEach(source => {
+    let raw = "";
+    try {
+      raw = localStorage.getItem(source.key) || "";
+    } catch(e) {}
+    if (!raw) return;
+    let parsed = raw;
+    try {
+      parsed = JSON.parse(raw);
+    } catch(e) {}
+    const items = Array.isArray(parsed) ? parsed : parsed && Array.isArray(parsed.items) ? parsed.items : null;
+    if (items) {
+      items.forEach((item, index) => {
+        const text = flattenValue(item).join(" ");
+        if (!text) return;
+        const title = String(item.title || item.name || item.company || item.school || item.date || `${source.group} ${index + 1}`).trim();
+        pushEntry({
+          href: source.href,
+          title,
+          context: text,
+          group: source.group,
+          source: "storage"
+        });
+      });
+      return;
+    }
+    if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+      Object.entries(parsed).forEach(([key, value]) => {
+        if (blockedFieldPattern.test(key)) return;
+        const text = flattenValue(value).join(" ");
+        if (!text) return;
+        pushEntry({
+          href: source.href,
+          title: key,
+          context: text,
+          group: source.group,
+          source: "storage"
+        });
+      });
+      return;
+    }
+    const text = String(parsed || "").trim();
+    if (text) {
+      pushEntry({
+        href: source.href,
+        title: source.group,
+        context: text,
+        group: source.group,
+        source: "storage"
+      });
+    }
+  });
+}
+
+function buildSiteSearchIndex(options = {}) {
+  if (!options.force && siteSearchIndexCache) return siteSearchIndexCache;
+
   const entries = [];
   const seen = new Set();
   const pushEntry = (entry) => {
-    const href = entry.href || "";
-    const title = entry.title || "";
-    if (!href || !title || seen.has(`${href}|${title}`)) return;
-    seen.add(`${href}|${title}`);
-    entries.push({
-      href,
-      title,
-      context: entry.context || "",
-      group: entry.group || "포털",
-      haystack: normalizeSiteSearchText(`${title} ${entry.context || ""} ${entry.group || ""}`)
-    });
+    const normalized = makeSiteSearchEntry(entry);
+    if (!normalized.href || !normalized.title) return;
+    const key = `${normalized.href}|${normalized.group}|${normalized.title}|${normalized.context.slice(0, 80)}`;
+    if (seen.has(key)) return;
+    seen.add(key);
+    entries.push(normalized);
   };
 
-  document.querySelectorAll(".sidebar-nav a, .sidebar-subnav a").forEach(link => {
+  document.querySelectorAll(".sidebar-nav a, .sidebar-subnav a, .desktop-nav a, .drawer-nav a").forEach(link => {
     pushEntry({
       href: link.getAttribute("href"),
       title: link.textContent.trim(),
@@ -3117,7 +3294,7 @@ function buildSiteSearchIndex() {
   });
 
   document.querySelectorAll(".page-section").forEach(section => {
-    const pageTitle = getCleanHeadingText(section.querySelector(".hero h1")) || section.id;
+    const pageTitle = getSiteSearchPageLabel(section);
     const pageSubtitle = getCleanHeadingText(section.querySelector(".hero .subtitle"));
     pushEntry({
       href: `#${section.id}`,
@@ -3126,14 +3303,16 @@ function buildSiteSearchIndex() {
       group: "페이지"
     });
 
-    section.querySelectorAll("section.card, details.card, article.card").forEach((card, index) => {
-      const heading = card.querySelector("h2, summary, h3");
+    section.querySelectorAll("section.card, details.card, article.card, .bookmark-card, .work-note-toc-item, .message-template-item, .complaint-card, .vendor-accordion-card, .promo-contact-card").forEach((card, index) => {
+      if (card.closest("#auth-screen")) return;
+      const heading = card.querySelector("h2, summary, h3, strong, .work-note-toc-title, .message-template-title, .complaint-card-title, .bookmark-title");
       const title = getCleanHeadingText(heading);
       if (!title) return;
       if (!card.id) card.id = `${section.id}-search-${index + 1}`;
-      const bodyText = card.textContent.trim().replace(/\s+/g, " ").slice(0, 220);
+      const bodyText = card.textContent.trim().replace(/\s+/g, " ").slice(0, 420);
       pushEntry({
         href: `#${card.id}`,
+        targetId: card.id,
         title,
         context: bodyText,
         group: pageTitle
@@ -3141,7 +3320,82 @@ function buildSiteSearchIndex() {
     });
   });
 
+  collectSiteSearchStorageEntries(pushEntry);
+  siteSearchIndexCache = entries;
+  siteSearchIndexBuiltAt = Date.now();
   return entries;
+}
+
+function doesSiteSearchEntryMatch(entry, query) {
+  if (!query.normalized) return false;
+  if (entry.haystack.includes(query.normalized)) return true;
+  if (query.compact && entry.compactHaystack.includes(query.compact)) return true;
+  return Boolean(query.phone && query.phone.length >= 3 && entry.phoneHaystack.includes(query.phone));
+}
+
+function rankSiteSearchEntry(entry, query) {
+  const title = normalizeSiteSearchText(entry.title);
+  const group = normalizeSiteSearchText(entry.group);
+  if (title === query.normalized) return 0;
+  if (title.includes(query.normalized)) return 10;
+  if (group.includes(query.normalized)) return 20;
+  if (entry.haystack.includes(query.normalized)) return 30;
+  if (query.compact && entry.compactHaystack.includes(query.compact)) return 40;
+  if (query.phone && entry.phoneHaystack.includes(query.phone)) return 45;
+  return 80;
+}
+
+function getSiteSearchQuery(value) {
+  const normalized = normalizeSiteSearchText(value);
+  return {
+    raw: String(value || "").trim(),
+    normalized,
+    compact: getSiteSearchCompactText(value),
+    phone: getSiteSearchPhoneText(value)
+  };
+}
+
+function performSiteSearch(value, options = {}) {
+  const query = getSiteSearchQuery(value);
+  if (!query.normalized) return [];
+  return buildSiteSearchIndex(options)
+    .filter(entry => doesSiteSearchEntryMatch(entry, query))
+    .sort((a, b) => rankSiteSearchEntry(a, query) - rankSiteSearchEntry(b, query) || a.title.length - b.title.length)
+    .slice(0, options.limit || 50);
+}
+
+function highlightSiteSearchTarget(target) {
+  if (!target) return;
+  target.classList.remove("site-search-jump-highlight");
+  void target.offsetWidth;
+  target.classList.add("site-search-jump-highlight");
+  window.setTimeout(() => target.classList.remove("site-search-jump-highlight"), 1600);
+}
+
+function closeSiteSearchMobileChrome() {
+  const closeDrawerBtn = document.getElementById("closeDrawerBtn");
+  const sidebarCloseBtn = document.getElementById("sidebarCloseBtn");
+  if (document.body.classList.contains("mobile-drawer-open") && closeDrawerBtn) closeDrawerBtn.click();
+  if (document.body.classList.contains("sidebar-open") && sidebarCloseBtn) sidebarCloseBtn.click();
+}
+
+function goToSiteSearchEntry(entry) {
+  if (!entry || !entry.href) return;
+  closeSiteSearchMobileChrome();
+  const hash = entry.href.startsWith("#") ? entry.href : `#${entry.href}`;
+  const scrollToTarget = () => {
+    const target = document.getElementById(entry.targetId) || document.querySelector(hash);
+    if (!target) return;
+    target.scrollIntoView({ behavior: "smooth", block: "center" });
+    highlightSiteSearchTarget(target);
+  };
+  if (window.location.hash !== hash) {
+    window.location.hash = hash;
+  } else if (typeof updateTabs === "function") {
+    updateTabs();
+  }
+  window.setTimeout(scrollToTarget, 140);
+  window.setTimeout(scrollToTarget, 420);
 }
 
 function setupSidebarSearch(sidebarSearch, closeDrawer) {
@@ -3167,14 +3421,7 @@ function setupSidebarSearch(sidebarSearch, closeDrawer) {
     });
     if (!query) return [];
 
-    const matches = buildSiteSearchIndex()
-      .filter(entry => entry.haystack.includes(query))
-      .sort((a, b) => {
-        const aTitle = normalizeSiteSearchText(a.title).includes(query) ? 0 : 1;
-        const bTitle = normalizeSiteSearchText(b.title).includes(query) ? 0 : 1;
-        return aTitle - bTitle || a.title.length - b.title.length;
-      })
-      .slice(0, 8);
+    const matches = performSiteSearch(sidebarSearch.value, { limit: 8 });
 
     if (!matches.length) {
       results.innerHTML = `<div class="sidebar-search-empty">검색 결과가 없습니다.</div>`;
@@ -3189,6 +3436,7 @@ function setupSidebarSearch(sidebarSearch, closeDrawer) {
       link.querySelector(".sidebar-search-result-title").textContent = item.title;
       link.querySelector(".sidebar-search-result-meta").textContent = item.group;
       link.addEventListener("click", () => {
+        goToSiteSearchEntry(item);
         sidebarSearch.value = "";
         renderResults();
         if (window.matchMedia("(max-width: 900px)").matches) closeDrawer();
@@ -3204,12 +3452,165 @@ function setupSidebarSearch(sidebarSearch, closeDrawer) {
     const [first] = renderResults();
     if (!first) return;
     event.preventDefault();
-    window.location.hash = first.href;
+    goToSiteSearchEntry(first);
     sidebarSearch.value = "";
     renderResults();
     if (window.matchMedia("(max-width: 900px)").matches) closeDrawer();
   });
 }
+
+function setupHomeGlobalSearch() {
+  const input = document.getElementById("homeGlobalSearchInput");
+  const clearBtn = document.getElementById("homeGlobalSearchClear");
+  const results = document.getElementById("homeGlobalSearchResults");
+  if (!input || !clearBtn || !results) return;
+
+  let activeIndex = -1;
+  let currentMatches = [];
+  let showAll = false;
+  let renderTimer = 0;
+
+  const closeResults = () => {
+    results.hidden = true;
+    results.innerHTML = "";
+    activeIndex = -1;
+    input.setAttribute("aria-expanded", "false");
+  };
+
+  const setActiveIndex = index => {
+    activeIndex = index;
+    results.querySelectorAll(".home-search-result").forEach((item, itemIndex) => {
+      const selected = itemIndex === activeIndex;
+      item.classList.toggle("is-active", selected);
+      item.setAttribute("aria-selected", selected ? "true" : "false");
+      if (selected) item.scrollIntoView({ block: "nearest" });
+    });
+  };
+
+  const render = () => {
+    const query = getSiteSearchQuery(input.value);
+    clearBtn.hidden = !query.raw;
+    input.setAttribute("aria-expanded", query.raw ? "true" : "false");
+    results.innerHTML = "";
+    showAll = showAll && Boolean(query.raw);
+    if (!query.normalized) {
+      closeResults();
+      return;
+    }
+
+    currentMatches = performSiteSearch(input.value, { limit: showAll ? 30 : 11 });
+    results.hidden = false;
+
+    if (!currentMatches.length) {
+      results.innerHTML = `<div class="home-search-empty">검색 결과가 없습니다. 다른 검색어로 찾아보세요.</div>`;
+      activeIndex = -1;
+      return;
+    }
+
+    const visibleMatches = showAll ? currentMatches.slice(0, 30) : currentMatches.slice(0, 10);
+    visibleMatches.forEach((item, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "home-search-result";
+      button.setAttribute("role", "option");
+      button.setAttribute("aria-selected", "false");
+      const snippet = getSiteSearchSnippet(item.context || item.title, query.raw);
+      button.innerHTML = `
+        <span class="home-search-result__group">${highlightSiteSearchMatch(item.group, query.raw)}</span>
+        <strong class="home-search-result__title">${highlightSiteSearchMatch(item.title, query.raw)}</strong>
+        <span class="home-search-result__snippet">${highlightSiteSearchMatch(snippet || item.context || item.title, query.raw)}</span>
+      `;
+      button.addEventListener("mouseenter", () => setActiveIndex(index));
+      button.addEventListener("click", () => {
+        goToSiteSearchEntry(item);
+        closeResults();
+      });
+      results.appendChild(button);
+    });
+
+    if (!showAll && currentMatches.length > 10) {
+      const more = document.createElement("button");
+      more.type = "button";
+      more.className = "home-search-more";
+      more.textContent = "검색 결과 더보기";
+      more.addEventListener("click", () => {
+        showAll = true;
+        render();
+      });
+      results.appendChild(more);
+    }
+    setActiveIndex(Math.min(Math.max(activeIndex, -1), visibleMatches.length - 1));
+  };
+
+  const scheduleRender = () => {
+    window.clearTimeout(renderTimer);
+    renderTimer = window.setTimeout(render, 80);
+  };
+
+  input.addEventListener("input", () => {
+    activeIndex = -1;
+    showAll = false;
+    scheduleRender();
+  });
+  input.addEventListener("focus", () => {
+    if (input.value.trim()) render();
+  });
+  input.addEventListener("keydown", event => {
+    const resultButtons = [...results.querySelectorAll(".home-search-result")];
+    if (event.key === "Escape") {
+      closeResults();
+      return;
+    }
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      if (!resultButtons.length) render();
+      setActiveIndex(Math.min(activeIndex + 1, Math.max(resultButtons.length - 1, 0)));
+      return;
+    }
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      setActiveIndex(Math.max(activeIndex - 1, 0));
+      return;
+    }
+    if (event.key === "Enter") {
+      const target = currentMatches[activeIndex >= 0 ? activeIndex : 0];
+      if (!target) return;
+      event.preventDefault();
+      goToSiteSearchEntry(target);
+      closeResults();
+    }
+  });
+  clearBtn.addEventListener("click", () => {
+    input.value = "";
+    closeResults();
+    clearBtn.hidden = true;
+    input.focus();
+  });
+  document.addEventListener("click", event => {
+    if (event.target === input || results.contains(event.target) || clearBtn.contains(event.target)) return;
+    closeResults();
+  });
+  document.addEventListener("keydown", event => {
+    if (!(event.ctrlKey || event.metaKey) || event.key.toLowerCase() !== "k") return;
+    event.preventDefault();
+    input.focus();
+    input.select();
+    render();
+  });
+  window.addEventListener("kknutrition:site-search-index-invalidated", () => {
+    if (input.value.trim()) render();
+  });
+}
+
+window.addEventListener("kknutrition:local-data-changed", invalidateSiteSearchIndex);
+window.addEventListener("kknutrition:cloud-data-applied", () => {
+  window.setTimeout(invalidateSiteSearchIndex, 80);
+});
+window.addEventListener("storage", invalidateSiteSearchIndex);
+document.addEventListener("DOMContentLoaded", () => {
+  setupHomeGlobalSearch();
+  window.setTimeout(() => buildSiteSearchIndex({ force: true }), 240);
+});
 
 // Promo contacts table
 const VENDOR_NETWORK_KEY = "kkulkkoori_vendor_network_v1";
