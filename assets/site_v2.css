@@ -12131,6 +12131,21 @@ body #unsavedModalCloseBtn {
     font-size: 24px !important;
   }
 
+  html body #app-content #homeMemoCard.memo-card {
+    padding: 18px 18px 20px !important;
+  }
+
+  html body #app-content #homeMemoCard .memo-head {
+    align-items: flex-start !important;
+    gap: 14px !important;
+    padding: 0 8px 4px 0 !important;
+  }
+
+  html body #app-content #homeMemoCard #openMemoModalBtn.memo-edit-btn {
+    margin: 0 !important;
+    transform: translate(-2px, 2px) !important;
+  }
+
   body #app-content .memo-modal {
     width: calc(100vw - 28px) !important;
     max-width: none !important;
