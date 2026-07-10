@@ -23404,19 +23404,26 @@ html body #app-content .site-search-jump-highlight {
 /* 2026-07-11 complaints: compact controls, edit mode, and squared chips. */
 html body #app-content #complaints .complaint-wrap {
   gap: 14px !important;
-  padding-top: 18px !important;
+  padding-top: 10px !important;
 }
 
 html body #app-content #complaints .complaint-hero {
   display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
 }
 
 html body #app-content #complaints .complaint-controls {
   display: grid !important;
   grid-template-columns: minmax(0, 1fr) !important;
-  gap: 14px !important;
+  gap: 12px !important;
   align-items: stretch !important;
-  padding: 16px !important;
+  min-height: 0 !important;
+  padding: 14px !important;
 }
 
 html body #app-content #complaints .complaint-control-main-row {
@@ -23472,6 +23479,8 @@ html body #app-content #complaints .complaint-add-btn {
 html body #app-content #complaints .complaint-filter-row {
   width: 100% !important;
   gap: 8px !important;
+  flex-wrap: wrap !important;
+  overflow-x: visible !important;
 }
 
 html body #app-content #complaints .complaint-filter-chip {
@@ -23522,12 +23531,13 @@ html body #app-content #complaints.active button#editBtnComplaints.fab-edit-btn.
   html body #app-content #complaints .complaint-controls {
     align-items: stretch !important;
     flex-direction: initial !important;
+    min-height: 0 !important;
   }
 
   html body #app-content #complaints .complaint-control-main-row {
     display: grid !important;
     grid-template-columns: minmax(0, 1fr) !important;
-    gap: 10px !important;
+    gap: 8px !important;
   }
 
   html body #app-content #complaints .complaint-search,
@@ -23536,20 +23546,64 @@ html body #app-content #complaints.active button#editBtnComplaints.fab-edit-btn.
   }
 
   html body #app-content #complaints .complaint-filter-row {
+    display: flex !important;
     flex-wrap: wrap !important;
     overflow-x: visible !important;
+    overflow-y: visible !important;
+    padding-bottom: 0 !important;
+  }
+
+  html body #app-content #complaints .complaint-filter-chip {
+    flex: 1 1 calc(33.333% - 8px) !important;
+    min-width: 0 !important;
   }
 }
 
 @media (max-width: 520px) {
   html body #app-content #complaints .complaint-wrap {
-    padding-top: 12px !important;
+    padding-top: 8px !important;
     padding-bottom: max(108px, calc(48px + env(safe-area-inset-bottom))) !important;
   }
 
   html body #app-content #complaints .complaint-controls {
-    padding: 14px !important;
-    gap: 12px !important;
+    padding: 12px !important;
+    gap: 10px !important;
+    border-radius: 16px !important;
+  }
+
+  html body #app-content #complaints .complaint-control-main-row {
+    gap: 8px !important;
+  }
+
+  html body #app-content #complaints .complaint-search,
+  html body #app-content #complaints .complaint-add-btn {
+    min-height: 44px !important;
+    height: 44px !important;
+    border-radius: 12px !important;
+  }
+
+  html body #app-content #complaints .complaint-search input,
+  html body #app-content #complaints .complaint-search input[type="search"] {
+    height: 42px !important;
+    min-height: 42px !important;
+    font-size: 14px !important;
+  }
+
+  html body #app-content #complaints .complaint-filter-row {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 7px !important;
+    overflow: visible !important;
+  }
+
+  html body #app-content #complaints .complaint-filter-chip {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 36px !important;
+    padding: 0 8px !important;
+    border-radius: 9px !important;
+    font-size: 13px !important;
+    white-space: nowrap !important;
   }
 
   html body #app-content #complaints .complaint-card-top {
