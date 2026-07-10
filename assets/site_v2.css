@@ -23059,3 +23059,12 @@ html body .complaint-toast {
     width: 100%;
   }
 }
+
+/* 2026-07-10 sidebar header: align the close icon to the fixed pig logo center. */
+html body .app-sidebar button#sidebarCloseBtn.sidebar-icon-btn,
+html body.sidebar-open .app-sidebar button#sidebarCloseBtn.sidebar-icon-btn,
+html body:not(.sidebar-collapsed) .app-sidebar button#sidebarCloseBtn.sidebar-icon-btn,
+html body .app-sidebar.is-open button#sidebarCloseBtn.sidebar-icon-btn {
+  top: 5px !important;
+  transform: none !important;
+}
