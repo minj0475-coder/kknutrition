@@ -22581,3 +22581,25 @@ html body #app-content #today-menu .work-note-card.is-editing #workNoteAddBtn {
   margin: 0 !important;
   transform: none !important;
 }
+
+/* 2026-07-10 message templates: keep the add button aligned to the card header corner. */
+html body #app-content #today-menu .message-template-card.is-editing .message-template-head {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  align-items: start !important;
+  justify-content: stretch !important;
+  gap: 12px !important;
+  padding-right: 0 !important;
+}
+
+html body #app-content #today-menu .message-template-card.is-editing .message-template-head .section-title {
+  min-width: 0 !important;
+}
+
+html body #app-content #today-menu .message-template-card.is-editing #messageTemplateAddBtn {
+  grid-column: 2 !important;
+  justify-self: end !important;
+  align-self: start !important;
+  margin: 0 !important;
+  transform: none !important;
+}
