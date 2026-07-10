@@ -2984,6 +2984,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (vendorPanel) vendorPanel.classList.toggle("is-editing", promoEditMode);
     if (panel) panel.classList.toggle("is-editing", promoEditMode);
     promoEditBtn.textContent = promoEditMode ? "\uC800\uC7A5" : "\uC218\uC815";
+    promoEditBtn.classList.toggle("saving", promoEditMode);
     [addBtn, vendorAddBtn, vendorCategoryManageBtn, vendorCategoryAddBtn].forEach(button => {
       if (!button) return;
       button.style.display = promoEditMode ? "" : "none";
