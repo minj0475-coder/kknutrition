@@ -748,6 +748,7 @@ function setupMessageTemplates() {
       button.style.display = templateEditMode ? "" : "none";
       button.disabled = !templateEditMode;
     });
+    templateEditBtn.classList.toggle("saving", templateEditMode);
   };
   window.isMessageTemplateEditMode = () => templateEditMode;
   window.exitMessageTemplateEditMode = () => {
@@ -944,6 +945,7 @@ function setupWorkNotes() {
     }
     bodyInput.disabled = !workNoteEditMode;
     workNoteEditBtn.textContent = workNoteEditMode ? "\uC800\uC7A5" : "\uC218\uC815";
+    workNoteEditBtn.classList.toggle("saving", workNoteEditMode);
   };
   window.isWorkNoteEditMode = () => workNoteEditMode;
   window.exitWorkNoteEditMode = () => {
