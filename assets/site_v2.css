@@ -22603,3 +22603,459 @@ html body #app-content #today-menu .message-template-card.is-editing #messageTem
   margin: 0 !important;
   transform: none !important;
 }
+
+/* 2026-07-10 complaints: opinion and civil complaint response records. */
+html body #app-content #complaints.active {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+html body #app-content #complaints .complaint-wrap {
+  display: grid;
+  gap: 16px;
+  max-width: 1120px;
+}
+
+html body #app-content #complaints .complaint-hero,
+html body #app-content #complaints .complaint-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0;
+}
+
+html body #app-content #complaints .complaint-hero {
+  padding: 22px 24px;
+}
+
+html body #app-content #complaints .complaint-kicker {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 780;
+  letter-spacing: 0;
+}
+
+html body #app-content #complaints #complaintPageTitle,
+html body #app-content #complaints #complaintModalTitle {
+  margin: 0;
+  color: var(--text);
+  font-size: 24px;
+  line-height: 1.22;
+  letter-spacing: 0;
+}
+
+html body #app-content #complaints .complaint-add-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 118px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid rgba(32, 33, 35, 0.96);
+  border-radius: 22px;
+  background: #202123;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 780;
+  letter-spacing: 0;
+  cursor: pointer;
+  box-shadow: 0 14px 34px rgba(32, 33, 35, 0.16);
+}
+
+html body #app-content #complaints .complaint-add-btn:hover,
+html body #app-content #complaints .complaint-add-btn:focus-visible {
+  background: #2b2c31;
+  outline: none;
+  transform: translateY(-1px);
+}
+
+html body #app-content #complaints .complaint-controls {
+  padding: 16px;
+  align-items: stretch;
+}
+
+html body #app-content #complaints .complaint-search {
+  flex: 1 1 360px;
+  min-width: 240px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 14px;
+  border: 1px solid rgba(32, 33, 35, 0.12);
+  border-radius: 14px;
+  background: #ffffff;
+  color: var(--muted);
+}
+
+html body #app-content #complaints .complaint-search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 15px;
+  letter-spacing: 0;
+}
+
+html body #app-content #complaints .complaint-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+html body #app-content #complaints .complaint-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid rgba(32, 33, 35, 0.10);
+  border-radius: 20px;
+  background: #ffffff;
+  color: #4f5565;
+  font-size: 13.5px;
+  font-weight: 720;
+  letter-spacing: 0;
+  cursor: pointer;
+}
+
+html body #app-content #complaints .complaint-filter-chip[aria-pressed="true"] {
+  border-color: #202123;
+  background: #202123;
+  color: #ffffff;
+}
+
+html body #app-content #complaints .complaint-list {
+  display: grid;
+  gap: 14px;
+}
+
+html body #app-content #complaints .complaint-card {
+  display: grid;
+  gap: 12px;
+  padding: 20px;
+  border: 1px solid rgba(32, 33, 35, 0.10);
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 16px 42px rgba(32, 33, 35, 0.07);
+}
+
+html body #app-content #complaints .complaint-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+html body #app-content #complaints .complaint-card-chips,
+html body #app-content #complaints .complaint-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+html body #app-content #complaints .complaint-card-actions {
+  justify-content: flex-end;
+  flex: 0 0 auto;
+}
+
+html body #app-content #complaints .complaint-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 10px;
+  border: 1px solid rgba(32, 33, 35, 0.09);
+  border-radius: 15px;
+  background: #f7f7f8;
+  color: #4f5565;
+  font-size: 12.5px;
+  font-weight: 760;
+  letter-spacing: 0;
+}
+
+html body #app-content #complaints .complaint-chip.audience {
+  background: #202123;
+  color: #ffffff;
+}
+
+html body #app-content #complaints .complaint-icon-btn.icon-only-btn {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  min-height: 38px;
+  border: 0;
+  background: #f7f7f8;
+  color: #202123;
+}
+
+html body #app-content #complaints .complaint-icon-btn.danger {
+  color: #b42318;
+}
+
+html body #app-content #complaints .complaint-card-title {
+  margin: 0;
+  color: var(--text);
+  font-size: 21px;
+  line-height: 1.3;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+
+html body #app-content #complaints .complaint-card-meta {
+  margin: -4px 0 2px;
+  color: var(--muted);
+  font-size: 13.5px;
+  font-weight: 650;
+}
+
+html body #app-content #complaints .complaint-card-section {
+  display: grid;
+  gap: 7px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(32, 33, 35, 0.08);
+}
+
+html body #app-content #complaints .complaint-card-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+html body #app-content #complaints .complaint-card-section h3 {
+  margin: 0;
+  color: #202123;
+  font-size: 14px;
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+
+html body #app-content #complaints .complaint-card-text {
+  margin: 0;
+  color: #3d4351;
+  font-size: 14.5px;
+  line-height: 1.65;
+  letter-spacing: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+html body #app-content #complaints .complaint-inline-copy {
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid rgba(32, 33, 35, 0.10);
+  border-radius: 17px;
+  background: #ffffff;
+  color: #202123;
+  font-size: 12.5px;
+  font-weight: 760;
+  cursor: pointer;
+}
+
+html body #app-content #complaints .complaint-empty {
+  padding: 34px 18px;
+  border: 1px dashed rgba(32, 33, 35, 0.18);
+  border-radius: 18px;
+  background: #ffffff;
+  color: var(--muted);
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+html body .complaint-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+  background: rgba(18, 19, 22, 0.42);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+}
+
+html body .complaint-modal-overlay[hidden] {
+  display: none !important;
+}
+
+html body .complaint-modal {
+  width: min(820px, 100%);
+  max-height: min(86vh, 860px);
+  overflow: auto;
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 22px;
+  background: #ffffff;
+  box-shadow: 0 30px 80px rgba(32, 33, 35, 0.24);
+}
+
+html body .complaint-modal-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+html body .complaint-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+html body .complaint-form-grid label {
+  display: grid;
+  gap: 7px;
+  color: #202123;
+  font-size: 13px;
+  font-weight: 760;
+  letter-spacing: 0;
+}
+
+html body .complaint-form-grid input,
+html body .complaint-form-grid select,
+html body .complaint-form-grid textarea {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid rgba(32, 33, 35, 0.13);
+  border-radius: 12px;
+  background: #ffffff;
+  color: #202123;
+  font: inherit;
+  font-size: 14.5px;
+  font-weight: 500;
+  letter-spacing: 0;
+  padding: 11px 12px;
+  outline: 0;
+}
+
+html body .complaint-form-grid textarea {
+  resize: vertical;
+  min-height: 104px;
+  line-height: 1.55;
+}
+
+html body .complaint-form-grid input:focus,
+html body .complaint-form-grid select:focus,
+html body .complaint-form-grid textarea:focus {
+  border-color: #202123;
+  box-shadow: 0 0 0 3px rgba(32, 33, 35, 0.08);
+}
+
+html body .complaint-field-wide {
+  grid-column: 1 / -1;
+}
+
+html body .complaint-modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+html body .complaint-toast {
+  position: fixed;
+  left: 50%;
+  bottom: max(24px, calc(18px + env(safe-area-inset-bottom)));
+  z-index: 10020;
+  transform: translateX(-50%);
+  max-width: min(420px, calc(100vw - 32px));
+  padding: 12px 16px;
+  border-radius: 18px;
+  background: #202123;
+  color: #ffffff;
+  font-size: 13.5px;
+  font-weight: 760;
+  text-align: center;
+  box-shadow: 0 18px 46px rgba(32, 33, 35, 0.24);
+}
+
+@media (max-width: 820px) {
+  html body #app-content #complaints .complaint-hero,
+  html body #app-content #complaints .complaint-controls {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  html body #app-content #complaints .complaint-add-btn {
+    width: 100%;
+  }
+
+  html body #app-content #complaints .complaint-filter-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+
+  html body #app-content #complaints .complaint-filter-chip {
+    flex: 0 0 auto;
+  }
+
+  html body #app-content #complaints .complaint-card-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  html body #app-content #complaints .complaint-card-actions {
+    justify-content: flex-start;
+  }
+
+  html body .complaint-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  html body #app-content #complaints .complaint-wrap {
+    gap: 12px;
+  }
+
+  html body #app-content #complaints .complaint-hero,
+  html body #app-content #complaints .complaint-controls,
+  html body #app-content #complaints .complaint-card {
+    border-radius: 16px;
+    padding: 16px;
+  }
+
+  html body #app-content #complaints #complaintPageTitle {
+    font-size: 22px;
+  }
+
+  html body #app-content #complaints .complaint-search {
+    min-width: 0;
+  }
+
+  html body #app-content #complaints .complaint-card-title {
+    font-size: 19px;
+  }
+
+  html body .complaint-modal-overlay {
+    align-items: flex-end;
+    padding: 10px;
+  }
+
+  html body .complaint-modal {
+    max-height: 92vh;
+    border-radius: 20px;
+    padding: 18px;
+  }
+
+  html body .complaint-modal-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  html body .complaint-modal-actions .btn {
+    width: 100%;
+  }
+}

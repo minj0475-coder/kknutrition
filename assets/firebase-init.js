@@ -48,6 +48,7 @@ const CLOUD_SYNC_KEYS = [
   "kkulkkoori_work_notes_v1",
   "kkulkkoori_message_templates_v1",
   "kkulkkoori_staff_notices_v1",
+  "kkulkkoori_complaint_records_v1",
   "kkulkkoori_annual_sheet_links_v1",
   "kkulkkoori_vendor_network_v1",
   "kkulkkoori_vendor_groups_v1",

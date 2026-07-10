@@ -477,6 +477,371 @@ function escapeTemplateHtml(value) {
   }[char]));
 }
 
+const COMPLAINT_RECORDS_KEY = "kkulkkoori_complaint_records_v1";
+const COMPLAINT_LAST_SCHOOL_KEY = "kkulkkoori_complaint_last_school_v1";
+const COMPLAINT_AUDIENCES = ["전체", "관리자", "교직원", "학생", "학부모", "기타"];
+const COMPLAINT_FIELDS = [
+  "title",
+  "school",
+  "audience",
+  "category",
+  "caseText",
+  "response",
+  "phrase",
+  "result"
+];
+
+function getKoreanDateValue() {
+  const now = new Date();
+  const local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+  return local.toISOString().slice(0, 10);
+}
+
+function normalizeComplaintRecord(item) {
+  const now = Date.now();
+  return {
+    id: String(item && item.id || makeNoteItemId("complaint")),
+    title: String(item && item.title || "").trim(),
+    school: String(item && item.school || "").trim(),
+    date: String(item && item.date || getKoreanDateValue()).slice(0, 10),
+    audience: COMPLAINT_AUDIENCES.includes(String(item && item.audience)) && String(item && item.audience) !== "전체"
+      ? String(item.audience)
+      : "기타",
+    category: String(item && item.category || "").trim(),
+    caseText: String(item && item.caseText || ""),
+    response: String(item && item.response || ""),
+    phrase: String(item && item.phrase || ""),
+    result: String(item && item.result || ""),
+    createdAt: Number(item && item.createdAt) || now,
+    updatedAt: Number(item && item.updatedAt) || Number(item && item.createdAt) || now
+  };
+}
+
+function sortComplaintRecords(items) {
+  return (Array.isArray(items) ? items : []).slice().sort((a, b) => {
+    const dateCompare = String(b.date || "").localeCompare(String(a.date || ""));
+    if (dateCompare) return dateCompare;
+    return (Number(b.updatedAt) || 0) - (Number(a.updatedAt) || 0);
+  });
+}
+
+function readComplaintRecords() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(COMPLAINT_RECORDS_KEY) || "null");
+    const rawItems = extractVersionedItems(parsed);
+    if (rawItems) {
+      return sortComplaintRecords(rawItems.filter(item => item && typeof item === "object").map(normalizeComplaintRecord));
+    }
+  } catch(e) {}
+  return [];
+}
+
+function saveComplaintRecords(items, options = {}) {
+  try {
+    const payload = makeVersionedList(sortComplaintRecords(items.map(normalizeComplaintRecord)));
+    const value = JSON.stringify(payload);
+    localStorage.setItem(COMPLAINT_RECORDS_KEY, value);
+    if (options.sync !== false) {
+      notifyNoteDataChanged(COMPLAINT_RECORDS_KEY, value, payload.updatedAt);
+    }
+    return payload.updatedAt;
+  } catch(e) {}
+  return Date.now();
+}
+
+function getComplaintSearchBlob(item) {
+  return COMPLAINT_FIELDS.map(key => String(item[key] || "")).join(" ").toLowerCase();
+}
+
+function getComplaintCopyText(item) {
+  return [
+    `[${item.audience || "기타"}] ${item.category || "미분류"}`,
+    item.title || "",
+    `${item.school || ""} · ${item.date || ""}`,
+    "",
+    "■ 사례",
+    item.caseText || "",
+    "",
+    "■ 대응",
+    item.response || "",
+    "",
+    "■ 대응 문구",
+    item.phrase || "",
+    "",
+    "■ 처리 결과",
+    item.result || ""
+  ].join("\n").trim();
+}
+
+function writeComplaintText(text, onDone) {
+  const value = String(text || "");
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(value).then(onDone).catch(() => {
+      const textarea = document.createElement("textarea");
+      textarea.value = value;
+      textarea.style.position = "fixed";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.select();
+      try { document.execCommand("copy"); } catch(e) {}
+      textarea.remove();
+      onDone();
+    });
+    return;
+  }
+  const textarea = document.createElement("textarea");
+  textarea.value = value;
+  textarea.style.position = "fixed";
+  textarea.style.left = "-9999px";
+  document.body.appendChild(textarea);
+  textarea.select();
+  try { document.execCommand("copy"); } catch(e) {}
+  textarea.remove();
+  onDone();
+}
+
+function setupComplaintRecords() {
+  const page = document.getElementById("complaints");
+  const list = document.getElementById("complaintList");
+  const empty = document.getElementById("complaintEmpty");
+  const searchInput = document.getElementById("complaintSearchInput");
+  const filters = document.getElementById("complaintAudienceFilters");
+  const addBtn = document.getElementById("complaintAddBtn");
+  const modal = document.getElementById("complaintModal");
+  const form = document.getElementById("complaintForm");
+  const closeBtn = document.getElementById("complaintModalCloseBtn");
+  const cancelBtn = document.getElementById("complaintCancelBtn");
+  const toast = document.getElementById("complaintToast");
+  if (!page || !list || !empty || !searchInput || !filters || !addBtn || !modal || !form) return;
+
+  const inputs = {
+    title: document.getElementById("complaintTitleInput"),
+    school: document.getElementById("complaintSchoolInput"),
+    date: document.getElementById("complaintDateInput"),
+    audience: document.getElementById("complaintAudienceInput"),
+    category: document.getElementById("complaintCategoryInput"),
+    caseText: document.getElementById("complaintCaseInput"),
+    response: document.getElementById("complaintResponseInput"),
+    phrase: document.getElementById("complaintPhraseInput"),
+    result: document.getElementById("complaintResultInput")
+  };
+
+  let items = readComplaintRecords();
+  let activeAudience = "전체";
+  let toastTimer = 0;
+
+  const showToast = message => {
+    if (!toast) return;
+    toast.textContent = message;
+    toast.hidden = false;
+    window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(() => {
+      toast.hidden = true;
+      toast.textContent = "";
+    }, 1400);
+  };
+
+  const readLastSchool = () => {
+    try { return localStorage.getItem(COMPLAINT_LAST_SCHOOL_KEY) || ""; } catch(e) { return ""; }
+  };
+
+  const saveLastSchool = school => {
+    try { localStorage.setItem(COMPLAINT_LAST_SCHOOL_KEY, String(school || "").trim()); } catch(e) {}
+  };
+
+  const setField = (key, value) => {
+    if (inputs[key]) inputs[key].value = value || "";
+  };
+
+  const openModal = () => {
+    const record = normalizeComplaintRecord({
+      school: readLastSchool(),
+      date: getKoreanDateValue(),
+      audience: "학부모"
+    });
+    setField("title", record.title);
+    setField("school", record.school);
+    setField("date", record.date || getKoreanDateValue());
+    setField("audience", record.audience || "학부모");
+    setField("category", record.category);
+    setField("caseText", record.caseText);
+    setField("response", record.response);
+    setField("phrase", record.phrase);
+    setField("result", record.result);
+    modal.hidden = false;
+    document.body.classList.add("complaint-modal-open");
+    window.setTimeout(() => inputs.title && inputs.title.focus(), 20);
+  };
+
+  const closeModal = () => {
+    modal.hidden = true;
+    document.body.classList.remove("complaint-modal-open");
+    form.reset();
+  };
+
+  const getVisibleItems = () => {
+    const query = String(searchInput.value || "").trim().toLowerCase();
+    return sortComplaintRecords(items).filter(item => {
+      const audienceMatch = activeAudience === "전체" || item.audience === activeAudience;
+      const searchMatch = !query || getComplaintSearchBlob(item).includes(query);
+      return audienceMatch && searchMatch;
+    });
+  };
+
+  const makeTextNode = (tag, className, text) => {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    node.textContent = text || "";
+    return node;
+  };
+
+  const appendSection = (card, title, body, options = {}) => {
+    const section = document.createElement("section");
+    section.className = "complaint-card-section";
+    const head = document.createElement("div");
+    head.className = "complaint-card-section-head";
+    head.appendChild(makeTextNode("h3", "", title));
+    if (options.copyPhrase) {
+      const copyBtn = document.createElement("button");
+      copyBtn.className = "complaint-inline-copy";
+      copyBtn.type = "button";
+      copyBtn.textContent = "복사";
+      copyBtn.setAttribute("aria-label", "대응 문구만 복사");
+      copyBtn.addEventListener("click", () => {
+        writeComplaintText(body, () => {
+          copyBtn.textContent = "복사됨";
+          showToast("대응 문구를 복사했습니다.");
+          window.setTimeout(() => { copyBtn.textContent = "복사"; }, 1200);
+        });
+      });
+      head.appendChild(copyBtn);
+    }
+    section.appendChild(head);
+    section.appendChild(makeTextNode("p", "complaint-card-text", body || "내용 없음"));
+    card.appendChild(section);
+  };
+
+  const render = () => {
+    const visible = getVisibleItems();
+    list.innerHTML = "";
+    empty.textContent = "";
+    if (!items.length) {
+      empty.innerHTML = "아직 등록된 의견·민원 대응 기록이 없습니다.<br>새 기록을 추가해 보세요.";
+      return;
+    }
+    if (!visible.length) {
+      empty.textContent = "검색 조건에 맞는 기록이 없습니다.";
+      return;
+    }
+    visible.forEach(item => {
+      const card = document.createElement("article");
+      card.className = "complaint-card";
+      card.dataset.id = item.id;
+
+      const top = document.createElement("div");
+      top.className = "complaint-card-top";
+      const chips = document.createElement("div");
+      chips.className = "complaint-card-chips";
+      chips.appendChild(makeTextNode("span", "complaint-chip audience", item.audience || "기타"));
+      chips.appendChild(makeTextNode("span", "complaint-chip", item.category || "미분류"));
+      const actions = document.createElement("div");
+      actions.className = "complaint-card-actions";
+      const copyAllBtn = document.createElement("button");
+      copyAllBtn.className = "icon-only-btn complaint-icon-btn";
+      copyAllBtn.type = "button";
+      copyAllBtn.title = "전체 복사";
+      copyAllBtn.setAttribute("aria-label", "의견·민원 대응 기록 전체 복사");
+      copyAllBtn.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 8h10v12H8zM6 16H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>';
+      copyAllBtn.addEventListener("click", () => writeComplaintText(getComplaintCopyText(item), () => showToast("전체 내용을 복사했습니다.")));
+      const deleteBtn = document.createElement("button");
+      deleteBtn.className = "icon-only-btn complaint-icon-btn danger";
+      deleteBtn.type = "button";
+      deleteBtn.title = "삭제";
+      deleteBtn.setAttribute("aria-label", "의견·민원 대응 기록 삭제");
+      deleteBtn.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      deleteBtn.addEventListener("click", () => {
+        if (!window.confirm("이 기록을 삭제할까요?")) return;
+        items = items.filter(candidate => candidate.id !== item.id);
+        saveComplaintRecords(items);
+        render();
+        showToast("기록을 삭제했습니다.");
+      });
+      actions.append(copyAllBtn, deleteBtn);
+      top.append(chips, actions);
+      card.appendChild(top);
+
+      card.appendChild(makeTextNode("h2", "complaint-card-title", item.title));
+      card.appendChild(makeTextNode("p", "complaint-card-meta", `${item.school} · ${item.date}`));
+      appendSection(card, "■ 사례", item.caseText);
+      appendSection(card, "■ 대응", item.response);
+      appendSection(card, "■ 대응 문구", item.phrase, { copyPhrase: true });
+      appendSection(card, "■ 처리 결과", item.result);
+      list.appendChild(card);
+    });
+  };
+
+  COMPLAINT_AUDIENCES.forEach(audience => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "complaint-filter-chip";
+    button.textContent = audience;
+    button.setAttribute("aria-label", `${audience} 대상 기록 보기`);
+    button.setAttribute("aria-pressed", audience === activeAudience ? "true" : "false");
+    button.addEventListener("click", () => {
+      activeAudience = audience;
+      filters.querySelectorAll(".complaint-filter-chip").forEach(chip => {
+        chip.setAttribute("aria-pressed", chip.textContent === activeAudience ? "true" : "false");
+      });
+      render();
+    });
+    filters.appendChild(button);
+  });
+
+  addBtn.addEventListener("click", openModal);
+  searchInput.addEventListener("input", render);
+  if (closeBtn) closeBtn.addEventListener("click", closeModal);
+  if (cancelBtn) cancelBtn.addEventListener("click", closeModal);
+  modal.addEventListener("click", event => {
+    if (event.target === modal) closeModal();
+  });
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && !modal.hidden) closeModal();
+  });
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+    const now = Date.now();
+    const next = normalizeComplaintRecord({
+      id: makeNoteItemId("complaint"),
+      title: inputs.title.value,
+      school: inputs.school.value,
+      date: inputs.date.value || getKoreanDateValue(),
+      audience: inputs.audience.value,
+      category: inputs.category.value,
+      caseText: inputs.caseText.value,
+      response: inputs.response.value,
+      phrase: inputs.phrase.value,
+      result: inputs.result.value,
+      createdAt: now,
+      updatedAt: now
+    });
+    if (!next.title || !next.school || !next.date || !next.audience) return;
+    items = [next, ...items];
+    saveLastSchool(next.school);
+    saveComplaintRecords(items);
+    closeModal();
+    render();
+    showToast("새 기록을 저장했습니다.");
+  });
+
+  window.addEventListener("kknutrition:cloud-data-applied", event => {
+    if (!event.detail || event.detail.key !== COMPLAINT_RECORDS_KEY) return;
+    items = readComplaintRecords();
+    render();
+  });
+
+  render();
+}
+
 function setupStaffNotices() {
   const list = document.getElementById("staffNoticeList");
   const addBtn = document.getElementById("staffNoticeAddBtn");
@@ -1134,6 +1499,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setupStaffNotices();
   setupWorkNotes();
   setupMessageTemplates();
+  setupComplaintRecords();
 });
 
 function getSheetInput() {
@@ -2065,6 +2431,7 @@ const MOBILE_PAGE_TITLES = {
   monthly: "한 달 일정",
   annual: "연간 일정",
   "today-menu": "급식노트",
+  complaints: "의견·민원 대응",
   bookmarks: "북마크",
   "promo-contacts": "업체 관리",
   staff: "조리종사원"
@@ -2677,6 +3044,7 @@ function buildSidebarToc() {
         { id: "workNotes", text: "생각서랍" },
         { id: "messageTemplates", text: "문자내용 정리" }
       ].filter(item => document.getElementById(item.id))
+      : pageId === "complaints" ? []
       : section ? [...section.querySelectorAll(":scope main section.card h2, :scope main section.card summary")]
       .map((heading, index) => {
         if (heading.closest("#staffNoticeList")) return null;

@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://minj0475-coder.github.io/kknutrition/assets/og-image.png?v=20260704_001">
 <meta property="og:url" content="https://minj0475-coder.github.io/kknutrition/">
 <title>급식 업무 포털</title>
-<link rel="stylesheet" href="assets/site_v2.css?v=20260710_018">
+<link rel="stylesheet" href="assets/site_v2.css?v=20260710_019">
 <link rel="manifest" href="manifest.json?v=6">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/app-icon-192.png?v=6">
 <link rel="apple-touch-icon" href="assets/app-icon-180.png?v=6">
@@ -58,6 +58,7 @@
     <a href="#homeTodayCard">오늘의 식단</a>
     <a href="#daily" data-toc-group="schedule">일정</a>
     <a href="#today-menu" data-page="today-menu">급식노트</a>
+    <a href="#complaints" data-page="complaints">의견·민원 대응</a>
     <a href="#bookmarks" data-page="bookmarks">북마크</a>
     <a href="#promo-contacts" data-toc-group="vendors">업체 관리</a>
     <a href="#staff" data-page="staff">조리종사원</a>
@@ -80,6 +81,7 @@
       <a href="#monthly">한 달 일정</a>
       <a href="#annual">연간 일정</a>
       <a href="#today-menu">급식노트</a>
+      <a href="#complaints">의견·민원 대응</a>
       <a href="#bookmarks">북마크</a>
       <a href="#promo-contacts">업체 연락처</a>
       <a href="#staff">조리종사원</a>
@@ -101,6 +103,7 @@
       <a href="#monthly">한 달 일정</a>
       <a href="#annual">연간 일정</a>
       <a href="#today-menu">급식노트</a>
+      <a href="#complaints">의견·민원 대응</a>
       <a href="#bookmarks">북마크</a>
       <a href="#promo-contacts">업체 연락처</a>
       <a href="#staff">조리종사원</a>
@@ -890,6 +893,74 @@
 </section>
 </main></section>
 
+<section id="complaints" class="page-section">
+  <main class="wrap complaint-wrap">
+    <section class="complaint-hero card" aria-labelledby="complaintPageTitle">
+      <div>
+        <p class="complaint-kicker">학교 현장 대응 기록</p>
+        <h1 id="complaintPageTitle">의견·민원 대응</h1>
+      </div>
+      <button id="complaintAddBtn" class="complaint-add-btn" type="button" aria-label="의견·민원 대응 새 기록 추가">+ 새 기록</button>
+    </section>
+
+    <section class="complaint-controls card" aria-label="의견·민원 대응 검색 및 필터">
+      <label class="complaint-search" for="complaintSearchInput">
+        <span aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path d="m21 21-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </span>
+        <input id="complaintSearchInput" type="search" placeholder="사례·학교명·대응 문구를 검색하세요" autocomplete="off">
+      </label>
+      <div id="complaintAudienceFilters" class="complaint-filter-row" aria-label="대상별 필터"></div>
+    </section>
+
+    <section class="complaint-list-section" aria-label="의견·민원 대응 기록 목록">
+      <div id="complaintList" class="complaint-list"></div>
+      <div id="complaintEmpty" class="complaint-empty" role="status"></div>
+    </section>
+  </main>
+
+  <div id="complaintModal" class="complaint-modal-overlay" hidden>
+    <form id="complaintForm" class="complaint-modal" aria-labelledby="complaintModalTitle">
+      <div class="complaint-modal-head">
+        <div>
+          <p class="complaint-kicker">기록 작성</p>
+          <h2 id="complaintModalTitle">의견·민원 대응 기록</h2>
+        </div>
+        <button id="complaintModalCloseBtn" class="icon-only-btn" type="button" aria-label="의견·민원 대응 기록 창 닫기">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+
+      <div class="complaint-form-grid">
+        <label>제목 <input id="complaintTitleInput" type="text" required autocomplete="off"></label>
+        <label>학교명 <input id="complaintSchoolInput" type="text" required autocomplete="organization"></label>
+        <label>날짜 <input id="complaintDateInput" type="date" required></label>
+        <label>대상
+          <select id="complaintAudienceInput" required>
+            <option value="관리자">관리자</option>
+            <option value="교직원">교직원</option>
+            <option value="학생">학생</option>
+            <option value="학부모">학부모</option>
+            <option value="기타">기타</option>
+          </select>
+        </label>
+        <label class="complaint-field-wide">분류 <input id="complaintCategoryInput" type="text" autocomplete="off"></label>
+        <label class="complaint-field-wide">사례 <textarea id="complaintCaseInput" rows="4"></textarea></label>
+        <label class="complaint-field-wide">대응 <textarea id="complaintResponseInput" rows="4"></textarea></label>
+        <label class="complaint-field-wide">대응 문구 <textarea id="complaintPhraseInput" rows="5"></textarea></label>
+        <label class="complaint-field-wide">처리 결과 <textarea id="complaintResultInput" rows="4"></textarea></label>
+      </div>
+
+      <p id="complaintFormStatus" class="mini complaint-form-status" aria-live="polite"></p>
+      <div class="complaint-modal-actions">
+        <button id="complaintCancelBtn" class="btn light" type="button">취소</button>
+        <button class="btn primary" type="submit">저장</button>
+      </div>
+    </form>
+  </div>
+  <div id="complaintToast" class="complaint-toast" role="status" aria-live="polite" hidden></div>
+</section>
+
 <section id="bookmarks" class="page-section">
   <main class="wrap">
 
@@ -1195,10 +1266,10 @@
 </div>
 
 <script src="assets/auth.js?v=20260710_001" defer></script>
-<script src="assets/data-guard.js?v=20260705_003" defer></script>
+<script src="assets/data-guard.js?v=20260710_001" defer></script>
 <script src="assets/bookmarks.js?v=20260705_001" defer></script>
-<script src="assets/site.js?v=20260710_003" defer></script>
-<script type="module" src="assets/firebase-init.js?v=20260710_001" defer></script>
+<script src="assets/site.js?v=20260710_004" defer></script>
+<script type="module" src="assets/firebase-init.js?v=20260710_002" defer></script>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
