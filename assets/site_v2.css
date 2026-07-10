@@ -21959,14 +21959,13 @@ html body #app-content #daily.active main.wrap {
 
 html body #app-content #daily.active #editBtnDaily.fab-edit-btn {
   position: fixed !important;
-  left: 50% !important;
-  right: auto !important;
+  left: auto !important;
+  right: max(26px, calc(22px + env(safe-area-inset-right))) !important;
   bottom: max(22px, calc(16px + env(safe-area-inset-bottom))) !important;
   z-index: 120 !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 8px !important;
   width: auto !important;
   min-width: 112px !important;
   min-height: 46px !important;
@@ -21983,19 +21982,14 @@ html body #app-content #daily.active #editBtnDaily.fab-edit-btn {
   line-height: 1 !important;
   letter-spacing: 0 !important;
   box-shadow: 0 18px 44px rgba(32, 33, 35, 0.16), 0 2px 10px rgba(32, 33, 35, 0.08) !important;
-  transform: translateX(-50%) !important;
+  transform: none !important;
   -webkit-backdrop-filter: blur(18px) saturate(1.25) !important;
   backdrop-filter: blur(18px) saturate(1.25) !important;
 }
 
 html body #app-content #daily.active #editBtnDaily.fab-edit-btn::before {
-  content: "" !important;
-  display: block !important;
-  width: 8px !important;
-  height: 8px !important;
-  border-radius: 999px !important;
-  background: #202123 !important;
-  box-shadow: 0 0 0 4px rgba(32, 33, 35, 0.08) !important;
+  content: none !important;
+  display: none !important;
 }
 
 html body #app-content #daily.active #editBtnDaily.fab-edit-btn.saving {
@@ -22007,8 +22001,8 @@ html body #app-content #daily.active #editBtnDaily.fab-edit-btn.saving {
 }
 
 html body #app-content #daily.active #editBtnDaily.fab-edit-btn.saving::before {
-  background: #ffffff !important;
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.16) !important;
+  content: none !important;
+  display: none !important;
 }
 
 html body #app-content #daily.active #editBtnDaily.fab-edit-btn:hover,
@@ -22017,7 +22011,7 @@ html body #app-content #daily.active #editBtnDaily.fab-edit-btn:focus-visible {
   background: #ffffff !important;
   box-shadow: 0 22px 54px rgba(32, 33, 35, 0.2), 0 3px 12px rgba(32, 33, 35, 0.1) !important;
   outline: none !important;
-  transform: translateX(-50%) translateY(-2px) !important;
+  transform: translateY(-2px) !important;
 }
 
 html body #app-content #daily.active #editBtnDaily.fab-edit-btn.saving:hover,
@@ -22032,6 +22026,7 @@ html body #app-content #daily.active #editBtnDaily.fab-edit-btn.saving:focus-vis
   }
 
   html body #app-content #daily.active #editBtnDaily.fab-edit-btn {
+    right: max(18px, calc(14px + env(safe-area-inset-right))) !important;
     bottom: max(18px, calc(12px + env(safe-area-inset-bottom))) !important;
     min-width: 104px !important;
     min-height: 44px !important;
