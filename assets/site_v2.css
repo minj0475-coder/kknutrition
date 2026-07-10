@@ -23087,6 +23087,26 @@ html body .complaint-toast {
     min-width: 0;
   }
 
+  html body .complaint-form-grid input[type="date"] {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    height: 56px;
+    min-height: 56px;
+    padding: 0 10px;
+    text-align: center;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  html body .complaint-form-grid input[type="date"]::-webkit-date-and-time-value {
+    min-width: 0;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+  }
+
   html body .complaint-modal-actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
