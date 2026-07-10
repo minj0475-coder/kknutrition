@@ -22066,6 +22066,11 @@ html body:has(#messageTemplates:target) #app-content #today-menu.active main.wra
   padding-bottom: max(96px, calc(36px + env(safe-area-inset-bottom))) !important;
 }
 
+html body:has(#workNotes:target) #app-content #today-menu.active #messageTemplateEditSaveBtn.quiet-edit-toggle,
+html body:has(#messageTemplates:target) #app-content #today-menu.active #workNoteEditSaveBtn.quiet-edit-toggle {
+  display: none !important;
+}
+
 html body:has(#workNotes:target) #app-content #today-menu.active #workNoteEditSaveBtn.quiet-edit-toggle,
 html body:has(#messageTemplates:target) #app-content #today-menu.active #messageTemplateEditSaveBtn.quiet-edit-toggle {
   --portal-action-button-radius: 24px !important;
