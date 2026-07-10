@@ -21946,18 +21946,18 @@ html body {
     translate: 0 0 !important;
   }
 }
-/* 2026-07-10 daily schedule: keep edit/save reachable while reviewing the Friday check card. */
-html body #app-content #daily.active {
+/* 2026-07-10 schedule pages: keep edit/save reachable while reviewing long cards. */
+html body #app-content :is(#daily, #monthly).active {
   animation: none !important;
   opacity: 1 !important;
   transform: none !important;
 }
 
-html body #app-content #daily.active main.wrap {
+html body #app-content :is(#daily, #monthly).active main.wrap {
   padding-bottom: max(96px, calc(36px + env(safe-area-inset-bottom))) !important;
 }
 
-html body #app-content #daily.active #editBtnDaily.fab-edit-btn {
+html body #app-content :is(#daily, #monthly).active :is(#editBtnDaily, #editBtnMonthly).fab-edit-btn {
   --portal-action-button-radius: 24px !important;
   position: fixed !important;
   left: auto !important;
@@ -21988,12 +21988,12 @@ html body #app-content #daily.active #editBtnDaily.fab-edit-btn {
   backdrop-filter: blur(20px) saturate(1.22) !important;
 }
 
-html body #app-content #daily.active #editBtnDaily.fab-edit-btn::before {
+html body #app-content :is(#daily, #monthly).active :is(#editBtnDaily, #editBtnMonthly).fab-edit-btn::before {
   content: none !important;
   display: none !important;
 }
 
-html body #app-content #daily.active #editBtnDaily.fab-edit-btn.saving {
+html body #app-content :is(#daily, #monthly).active :is(#editBtnDaily, #editBtnMonthly).fab-edit-btn.saving {
   border-color: rgba(32, 33, 35, 0.96) !important;
   background: linear-gradient(180deg, #2b2c31, #202123) !important;
   color: #ffffff !important;
@@ -22001,13 +22001,13 @@ html body #app-content #daily.active #editBtnDaily.fab-edit-btn.saving {
   box-shadow: 0 18px 46px rgba(32, 33, 35, 0.22), 0 4px 14px rgba(32, 33, 35, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
 }
 
-html body #app-content #daily.active #editBtnDaily.fab-edit-btn.saving::before {
+html body #app-content :is(#daily, #monthly).active :is(#editBtnDaily, #editBtnMonthly).fab-edit-btn.saving::before {
   content: none !important;
   display: none !important;
 }
 
-html body #app-content #daily.active #editBtnDaily.fab-edit-btn:hover,
-html body #app-content #daily.active #editBtnDaily.fab-edit-btn:focus-visible {
+html body #app-content :is(#daily, #monthly).active :is(#editBtnDaily, #editBtnMonthly).fab-edit-btn:hover,
+html body #app-content :is(#daily, #monthly).active :is(#editBtnDaily, #editBtnMonthly).fab-edit-btn:focus-visible {
   border-color: rgba(32, 33, 35, 0.16) !important;
   background: #ffffff !important;
   box-shadow: 0 20px 52px rgba(32, 33, 35, 0.18), 0 3px 12px rgba(32, 33, 35, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
@@ -22015,29 +22015,29 @@ html body #app-content #daily.active #editBtnDaily.fab-edit-btn:focus-visible {
   transform: translateY(-2px) !important;
 }
 
-html body #app-content #daily.active #editBtnDaily.fab-edit-btn.saving:hover,
-html body #app-content #daily.active #editBtnDaily.fab-edit-btn.saving:focus-visible {
+html body #app-content :is(#daily, #monthly).active :is(#editBtnDaily, #editBtnMonthly).fab-edit-btn.saving:hover,
+html body #app-content :is(#daily, #monthly).active :is(#editBtnDaily, #editBtnMonthly).fab-edit-btn.saving:focus-visible {
   background: #202123 !important;
   border-color: #202123 !important;
 }
 
-html body #app-content #daily.active button#editBtnDaily.fab-edit-btn,
-html body #app-content #daily.active button#editBtnDaily.fab-edit-btn:hover,
-html body #app-content #daily.active button#editBtnDaily.fab-edit-btn:focus-visible,
-html body #app-content #daily.active button#editBtnDaily.fab-edit-btn.saving {
+html body #app-content :is(#daily, #monthly).active :is(button#editBtnDaily, button#editBtnMonthly).fab-edit-btn,
+html body #app-content :is(#daily, #monthly).active :is(button#editBtnDaily, button#editBtnMonthly).fab-edit-btn:hover,
+html body #app-content :is(#daily, #monthly).active :is(button#editBtnDaily, button#editBtnMonthly).fab-edit-btn:focus-visible,
+html body #app-content :is(#daily, #monthly).active :is(button#editBtnDaily, button#editBtnMonthly).fab-edit-btn.saving {
   border-radius: 24px !important;
 }
 
-html body #app-content #daily.active button#editBtnDaily.fab-edit-btn:not(.icon-only-btn):not(.copy-icon-btn):not(.open-icon-btn):not(.delete-icon-btn):not(.mobile-menu-btn):not(.sidebar-icon-btn):not(#workNoteAddBtn):not(#messageTemplateAddBtn) {
+html body #app-content :is(#daily, #monthly).active :is(button#editBtnDaily, button#editBtnMonthly).fab-edit-btn:not(.icon-only-btn):not(.copy-icon-btn):not(.open-icon-btn):not(.delete-icon-btn):not(.mobile-menu-btn):not(.sidebar-icon-btn):not(#workNoteAddBtn):not(#messageTemplateAddBtn) {
   border-radius: 24px !important;
 }
 
 @media (max-width: 768px) {
-  html body #app-content #daily.active main.wrap {
+  html body #app-content :is(#daily, #monthly).active main.wrap {
     padding-bottom: max(108px, calc(48px + env(safe-area-inset-bottom))) !important;
   }
 
-  html body #app-content #daily.active #editBtnDaily.fab-edit-btn {
+  html body #app-content :is(#daily, #monthly).active :is(#editBtnDaily, #editBtnMonthly).fab-edit-btn {
     --portal-action-button-radius: 23px !important;
     right: max(18px, calc(14px + env(safe-area-inset-right))) !important;
     bottom: max(18px, calc(12px + env(safe-area-inset-bottom))) !important;
@@ -22048,7 +22048,7 @@ html body #app-content #daily.active button#editBtnDaily.fab-edit-btn:not(.icon-
     border-radius: 23px !important;
   }
 
-  html body #app-content #daily.active button#editBtnDaily.fab-edit-btn:not(.icon-only-btn):not(.copy-icon-btn):not(.open-icon-btn):not(.delete-icon-btn):not(.mobile-menu-btn):not(.sidebar-icon-btn):not(#workNoteAddBtn):not(#messageTemplateAddBtn) {
+  html body #app-content :is(#daily, #monthly).active :is(button#editBtnDaily, button#editBtnMonthly).fab-edit-btn:not(.icon-only-btn):not(.copy-icon-btn):not(.open-icon-btn):not(.delete-icon-btn):not(.mobile-menu-btn):not(.sidebar-icon-btn):not(#workNoteAddBtn):not(#messageTemplateAddBtn) {
     border-radius: 23px !important;
   }
 }
