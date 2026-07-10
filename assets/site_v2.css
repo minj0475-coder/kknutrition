@@ -21947,6 +21947,12 @@ html body {
   }
 }
 /* 2026-07-10 daily schedule: keep edit/save reachable while reviewing the Friday check card. */
+html body #app-content #daily.active {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
 html body #app-content #daily.active main.wrap {
   padding-bottom: max(96px, calc(36px + env(safe-area-inset-bottom))) !important;
 }
