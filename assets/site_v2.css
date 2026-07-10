@@ -23196,6 +23196,7 @@ html body .complaint-toast {
     height: 56px;
     min-height: 56px;
     padding: 0 10px;
+    line-height: 56px;
     text-align: center;
     -webkit-appearance: none;
     appearance: none;
@@ -23204,8 +23205,18 @@ html body .complaint-toast {
   html body .complaint-form-grid input[type="date"]::-webkit-date-and-time-value {
     min-width: 0;
     width: 100%;
+    height: 56px;
     margin: 0;
+    padding: 0;
+    line-height: 56px;
     text-align: center;
+  }
+
+  html body .complaint-form-grid input[type="date"]::-webkit-datetime-edit,
+  html body .complaint-form-grid input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+    height: 56px;
+    line-height: 56px;
+    padding: 0;
   }
 
   html body .complaint-modal-actions {
