@@ -24507,6 +24507,10 @@ html body #app-content #bookmarks:has(#editBtnBookmarks.saving) .bookmark-contro
   --kkn-edit-action-line-hover: rgba(32, 33, 35, 0.16) !important;
   --kkn-edit-action-shadow: 0 18px 42px rgba(32, 33, 35, 0.13), 0 2px 8px rgba(32, 33, 35, 0.06) !important;
   --kkn-edit-action-shadow-hover: 0 20px 46px rgba(32, 33, 35, 0.16), 0 3px 10px rgba(32, 33, 35, 0.07) !important;
+  --kkn-save-action-bg: #202123 !important;
+  --kkn-save-action-text: #ffffff !important;
+  --kkn-save-action-line: #202123 !important;
+  --kkn-save-action-shadow: 0 18px 42px rgba(32, 33, 35, 0.22), 0 4px 14px rgba(32, 33, 35, 0.14) !important;
 }
 
 html body #app-content :is(
@@ -24584,13 +24588,13 @@ html body #app-content :is(
   #messageTemplateEditSaveBtn#messageTemplateEditSaveBtn#messageTemplateEditSaveBtn.saving,
   #promoContactsEditSaveBtn#promoContactsEditSaveBtn#promoContactsEditSaveBtn.saving
 ) {
-  border-color: var(--kkn-edit-action-line) !important;
-  background: var(--kkn-edit-action-bg) !important;
-  background-color: var(--kkn-edit-action-bg) !important;
+  border-color: var(--kkn-save-action-line) !important;
+  background: var(--kkn-save-action-bg) !important;
+  background-color: var(--kkn-save-action-bg) !important;
   background-image: none !important;
-  color: var(--kkn-edit-action-text) !important;
-  -webkit-text-fill-color: var(--kkn-edit-action-text) !important;
-  box-shadow: var(--kkn-edit-action-shadow) !important;
+  color: var(--kkn-save-action-text) !important;
+  -webkit-text-fill-color: var(--kkn-save-action-text) !important;
+  box-shadow: var(--kkn-save-action-shadow) !important;
 }
 
 html body #app-content :is(
@@ -24620,6 +24624,34 @@ html body #app-content :is(
   -webkit-text-fill-color: var(--kkn-edit-action-text) !important;
   box-shadow: var(--kkn-edit-action-shadow-hover) !important;
   transform: translateY(-1px) !important;
+}
+
+html body #app-content :is(
+  #editBtnDaily#editBtnDaily#editBtnDaily.saving:hover,
+  #editBtnDaily#editBtnDaily#editBtnDaily.saving:focus-visible,
+  #editBtnMonthly#editBtnMonthly#editBtnMonthly.saving:hover,
+  #editBtnMonthly#editBtnMonthly#editBtnMonthly.saving:focus-visible,
+  #editBtnAnnual#editBtnAnnual#editBtnAnnual.saving:hover,
+  #editBtnAnnual#editBtnAnnual#editBtnAnnual.saving:focus-visible,
+  #editBtnComplaints#editBtnComplaints#editBtnComplaints.saving:hover,
+  #editBtnComplaints#editBtnComplaints#editBtnComplaints.saving:focus-visible,
+  #editBtnBookmarks#editBtnBookmarks#editBtnBookmarks.saving:hover,
+  #editBtnBookmarks#editBtnBookmarks#editBtnBookmarks.saving:focus-visible,
+  #editBtnStaff#editBtnStaff#editBtnStaff.saving:hover,
+  #editBtnStaff#editBtnStaff#editBtnStaff.saving:focus-visible,
+  #workNoteEditSaveBtn#workNoteEditSaveBtn#workNoteEditSaveBtn.saving:hover,
+  #workNoteEditSaveBtn#workNoteEditSaveBtn#workNoteEditSaveBtn.saving:focus-visible,
+  #messageTemplateEditSaveBtn#messageTemplateEditSaveBtn#messageTemplateEditSaveBtn.saving:hover,
+  #messageTemplateEditSaveBtn#messageTemplateEditSaveBtn#messageTemplateEditSaveBtn.saving:focus-visible,
+  #promoContactsEditSaveBtn#promoContactsEditSaveBtn#promoContactsEditSaveBtn.saving:hover,
+  #promoContactsEditSaveBtn#promoContactsEditSaveBtn#promoContactsEditSaveBtn.saving:focus-visible
+) {
+  border-color: var(--kkn-save-action-line) !important;
+  background: var(--kkn-save-action-bg) !important;
+  background-color: var(--kkn-save-action-bg) !important;
+  color: var(--kkn-save-action-text) !important;
+  -webkit-text-fill-color: var(--kkn-save-action-text) !important;
+  box-shadow: var(--kkn-save-action-shadow) !important;
 }
 
 html body #app-content :is(
