@@ -24516,9 +24516,10 @@ html body #app-content #bookmarks:has(#editBtnBookmarks.saving) .bookmark-contro
   --kkn-edit-action-shadow: 0 18px 42px rgba(32, 33, 35, 0.13), 0 2px 8px rgba(32, 33, 35, 0.06) !important;
   --kkn-edit-action-shadow-hover: 0 20px 46px rgba(32, 33, 35, 0.16), 0 3px 10px rgba(32, 33, 35, 0.07) !important;
   --kkn-save-action-bg: #202123 !important;
+  --kkn-save-action-image: linear-gradient(180deg, #2b2c31 0%, #202123 100%) !important;
   --kkn-save-action-text: #ffffff !important;
   --kkn-save-action-line: #202123 !important;
-  --kkn-save-action-shadow: 0 18px 42px rgba(32, 33, 35, 0.22), 0 4px 14px rgba(32, 33, 35, 0.14) !important;
+  --kkn-save-action-shadow: 0 18px 42px rgba(32, 33, 35, 0.26), 0 4px 14px rgba(32, 33, 35, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
 }
 
 html body #app-content :is(
@@ -24597,9 +24598,9 @@ html body #app-content :is(
   #promoContactsEditSaveBtn#promoContactsEditSaveBtn#promoContactsEditSaveBtn.saving
 ) {
   border-color: var(--kkn-save-action-line) !important;
-  background: var(--kkn-save-action-bg) !important;
+  background: var(--kkn-save-action-image) !important;
   background-color: var(--kkn-save-action-bg) !important;
-  background-image: none !important;
+  background-image: var(--kkn-save-action-image) !important;
   color: var(--kkn-save-action-text) !important;
   -webkit-text-fill-color: var(--kkn-save-action-text) !important;
   box-shadow: var(--kkn-save-action-shadow) !important;
@@ -24655,8 +24656,9 @@ html body #app-content :is(
   #promoContactsEditSaveBtn#promoContactsEditSaveBtn#promoContactsEditSaveBtn.saving:focus-visible
 ) {
   border-color: var(--kkn-save-action-line) !important;
-  background: var(--kkn-save-action-bg) !important;
+  background: var(--kkn-save-action-image) !important;
   background-color: var(--kkn-save-action-bg) !important;
+  background-image: var(--kkn-save-action-image) !important;
   color: var(--kkn-save-action-text) !important;
   -webkit-text-fill-color: var(--kkn-save-action-text) !important;
   box-shadow: var(--kkn-save-action-shadow) !important;
