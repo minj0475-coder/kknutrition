@@ -23961,7 +23961,7 @@ html body #app-content #complaints:not(.active) .complaint-edit-btn {
 
 /* 2026-07-11 unified neutral line color for existing gray borders. */
 :root {
-  --kkn-unified-line: #e3ddd7 !important;
+  --kkn-unified-line: rgba(32, 33, 35, 0.10) !important;
   --line: var(--kkn-unified-line) !important;
   --line-strong: var(--kkn-unified-line) !important;
   --ui-line: var(--kkn-unified-line) !important;
