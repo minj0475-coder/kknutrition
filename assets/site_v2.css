@@ -22651,9 +22651,14 @@ html body #app-content #staff.active #editBtnStaff.fab-edit-btn::before {
   }
 
   html body #app-content #promo-contacts .promo-contact-actions {
+    display: inline-flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
     align-items: center !important;
     justify-content: flex-end !important;
     gap: 10px !important;
+    width: auto !important;
+    justify-self: end !important;
   }
 }
 
