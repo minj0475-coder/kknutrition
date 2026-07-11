@@ -23958,3 +23958,98 @@ html body #app-content #complaints:not(.active) .complaint-edit-btn {
     align-items: flex-start !important;
   }
 }
+
+/* 2026-07-11 unified neutral line color for existing gray borders. */
+:root {
+  --kkn-unified-line: #e3ddd7 !important;
+  --line: var(--kkn-unified-line) !important;
+  --line-strong: var(--kkn-unified-line) !important;
+  --ui-line: var(--kkn-unified-line) !important;
+  --ui-line-strong: var(--kkn-unified-line) !important;
+  --portal-control-line: var(--kkn-unified-line) !important;
+  --portal-control-line-hover: var(--kkn-unified-line) !important;
+  --portal-action-button-border: var(--kkn-unified-line) !important;
+  --portal-action-button-border-hover: var(--kkn-unified-line) !important;
+}
+
+html body #app-content {
+  --line: var(--kkn-unified-line) !important;
+  --line-strong: var(--kkn-unified-line) !important;
+  --ui-line: var(--kkn-unified-line) !important;
+  --ui-line-strong: var(--kkn-unified-line) !important;
+  --portal-control-line: var(--kkn-unified-line) !important;
+  --portal-control-line-hover: var(--kkn-unified-line) !important;
+  --portal-action-button-border: var(--kkn-unified-line) !important;
+  --portal-action-button-border-hover: var(--kkn-unified-line) !important;
+}
+
+html body #app-content :is(
+  .card,
+  .note,
+  .panel,
+  .hero,
+  .table-wrap,
+  .memo-card,
+  .home-today-card,
+  .weekly-check-card,
+  .daily-kkul-card,
+  .menu-card-v2,
+  .date-section-v2,
+  .academic-calendar-card,
+  .academic-weekly-card,
+  .academic-modal,
+  .vendor-network-card,
+  .promo-contact-card,
+  .staff-accordion-card,
+  .bookmark-folder-section,
+  .bookmark-card,
+  .complaint-card,
+  .complaint-controls,
+  .complaint-modal,
+  .work-note-card,
+  .message-template-card
+) {
+  border-color: var(--kkn-unified-line) !important;
+}
+
+html body #app-content :is(
+  input,
+  textarea,
+  select,
+  .promo-search,
+  .global-search,
+  .search-box,
+  .menu-search-box,
+  .home-global-search,
+  .complaint-search,
+  .complaint-filter-chip,
+  .vendor-network-search,
+  .work-note-toc-item,
+  .message-template-item,
+  .vendor-accordion-group,
+  .vendor-category-manager,
+  .vendor-category-header,
+  .promo-contact-table,
+  .today-menu-tool,
+  .today-menu-results,
+  .today-menu-show-all-btn,
+  .home-search-hero__results,
+  .sidebar-search-results
+):not(:focus):not(:focus-within):not(.is-active):not(.active):not(.saving):not(.primary):not([aria-selected="true"]):not([aria-pressed="true"]) {
+  border-color: var(--kkn-unified-line) !important;
+}
+
+html body #app-content :is(
+  th,
+  td,
+  hr,
+  .divider,
+  .table-row,
+  .message-template-item + .message-template-item,
+  .home-search-result + .home-search-result,
+  .complaint-card-section,
+  .promo-contact-table th,
+  .promo-contact-table td
+) {
+  border-color: var(--kkn-unified-line) !important;
+}
