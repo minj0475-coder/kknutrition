@@ -24267,3 +24267,56 @@ html body #app-content :is(
   color: var(--kkn-text-strong) !important;
   -webkit-text-fill-color: var(--kkn-text-strong) !important;
 }
+
+/* 2026-07-11 final edit-border override: prevent old outlines while saving. */
+html body #app-content :is(
+  #daily:has(.editable-content[contenteditable="true"]) > main.wrap > .card,
+  #daily:has(#editBtnDaily.saving) > main.wrap > .card,
+  #monthly:has(.editable-content[contenteditable="true"]) > main.wrap > .card,
+  #monthly:has(#editBtnMonthly.saving) > main.wrap > .card,
+  #monthly.is-page-editing .academic-calendar-card,
+  #monthly:has(#editBtnMonthly.saving) .academic-calendar-card,
+  #annual:has(.editable-content[contenteditable="true"]) > main.wrap > .card,
+  #annual:has(#editBtnAnnual.saving) > main.wrap > .card,
+  #annual:has(#editBtnAnnual.saving) .annual-mobile-card
+) {
+  outline: 0 !important;
+  outline-offset: 0 !important;
+  border: 1px solid var(--kkn-edit-card-line) !important;
+  box-shadow: 0 0 0 2px var(--kkn-edit-card-ring), var(--shadow-flat) !important;
+  background-color: #ffffff !important;
+  transition: none !important;
+}
+
+html body #app-content :is(
+  #daily .editable-content[contenteditable="true"],
+  #daily .editable-content[contenteditable="true"]:focus,
+  #monthly .editable-content[contenteditable="true"],
+  #monthly .editable-content[contenteditable="true"]:focus,
+  #annual .editable-content[contenteditable="true"],
+  #annual .editable-content[contenteditable="true"]:focus,
+  #monthly.is-page-editing #edit-monthly-1,
+  #monthly:has(#editBtnMonthly.saving) #edit-monthly-1,
+  #monthly.is-page-editing .academic-calendar-card,
+  #monthly:has(#editBtnMonthly.saving) .academic-calendar-card
+) {
+  outline: 0 !important;
+  outline-offset: 0 !important;
+}
+
+html body #app-content section#bookmarks.page-section #bookmarkGrid .bookmark-card.edit-mode-card,
+html body #app-content section#bookmarks.page-section #bookmarkGrid .bookmark-card.edit-mode-card:hover,
+html body #app-content section#bookmarks.page-section #bookmarkGrid .bookmark-card.edit-mode-card:focus-within,
+html body #app-content section#bookmarks.page-section #bookmarkGrid .bookmark-card.add-new-card,
+html body #app-content section#bookmarks.page-section #bookmarkGrid .bookmark-card.add-new-card:hover,
+html body #app-content section#bookmarks.page-section #bookmarkGrid .bookmark-card.add-new-card:focus-within,
+html body #app-content section#bookmarks.page-section:has(#editBtnBookmarks.saving) #bookmarkGrid .bookmark-card {
+  outline: 0 !important;
+  outline-offset: 0 !important;
+  border: 1px solid var(--kkn-edit-card-line) !important;
+  box-shadow: 0 0 0 2px var(--kkn-edit-card-ring), var(--shadow-flat) !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  transform: none !important;
+  transition: none !important;
+}
