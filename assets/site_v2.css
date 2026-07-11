@@ -24150,3 +24150,120 @@ html body #app-content :is(
   outline-offset: 0 !important;
   box-shadow: none !important;
 }
+
+/* 2026-07-11 unified text color system. */
+:root {
+  --kkn-text-strong: #202123 !important;
+  --kkn-text-muted: #6b7280 !important;
+  --kkn-text-placeholder: #8a8f98 !important;
+  --text: var(--kkn-text-strong) !important;
+  --heading: var(--kkn-text-strong) !important;
+  --text-main: var(--kkn-text-strong) !important;
+  --ui-text: var(--kkn-text-strong) !important;
+  --navy: var(--kkn-text-strong) !important;
+  --muted: var(--kkn-text-muted) !important;
+  --text-muted: var(--kkn-text-muted) !important;
+  --ui-muted: var(--kkn-text-muted) !important;
+  --ui-faint: var(--kkn-text-placeholder) !important;
+}
+
+html body #app-content {
+  color: var(--kkn-text-strong) !important;
+}
+
+html body #app-content :is(
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .section-title,
+  .card-title,
+  .page-title,
+  summary,
+  strong,
+  th,
+  label,
+  .num,
+  .brand,
+  .sidebar-logo-title,
+  .sidebar-section-title,
+  .complaint-card-title,
+  .work-note-toc-title,
+  .message-template-title,
+  .academic-month-label,
+  .vendor-category-name,
+  .staff-accordion-title
+) {
+  color: var(--kkn-text-strong) !important;
+}
+
+html body #app-content :is(
+  p,
+  td,
+  li,
+  input,
+  textarea,
+  select,
+  .editable-content,
+  .message-box,
+  .plain-method,
+  .complaint-card-text,
+  .work-note-body-input,
+  .message-template-textbox textarea,
+  .promo-cell-input,
+  .sheet-link-input
+) {
+  color: var(--kkn-text-strong) !important;
+}
+
+html body #app-content :is(
+  .mini,
+  .subtitle,
+  .kicker,
+  .home-today-date,
+  .complaint-card-meta,
+  .complaint-kicker,
+  .work-note-toc-preview,
+  .work-note-toc-meta,
+  .message-template-status,
+  .work-note-status,
+  .promo-contact-status,
+  .academic-status,
+  .upload-status-v2,
+  .sheet-link-label,
+  .sheet-link-status,
+  .home-search-result__group,
+  .home-search-result__snippet,
+  .sidebar-search-group,
+  .sidebar-search-snippet,
+  .bookmark-url,
+  .bookmark-category,
+  .staff-block-head span
+) {
+  color: var(--kkn-text-muted) !important;
+}
+
+html body #app-content :is(
+  input,
+  textarea
+)::placeholder {
+  color: var(--kkn-text-placeholder) !important;
+  opacity: 1 !important;
+}
+
+html body #app-content :is(
+  button,
+  .btn,
+  .promo-btn,
+  .icon-only-btn,
+  .download-btn,
+  .home-today-link,
+  .today-menu-show-all-btn,
+  .fab-edit-btn,
+  .fab-bookmark-edit-btn
+):not(.primary):not(.saving):not(.active):not([aria-pressed="true"]):not([aria-selected="true"]) {
+  color: var(--kkn-text-strong) !important;
+  -webkit-text-fill-color: var(--kkn-text-strong) !important;
+}
