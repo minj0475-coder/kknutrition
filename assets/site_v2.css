@@ -22643,6 +22643,20 @@ html body #app-content #staff.active #editBtnStaff.fab-edit-btn::before {
   }
 }
 
+/* 2026-07-11 vendor mobile: fullscreen controls are desktop-only. */
+@media (max-width: 768px) {
+  html body #app-content #promo-contacts #vendorNetworkFullscreenBtn,
+  html body #app-content #promo-contacts #promoFullscreenBtn {
+    display: none !important;
+  }
+
+  html body #app-content #promo-contacts .promo-contact-actions {
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 10px !important;
+  }
+}
+
 /* 2026-07-10 annual sheet link buttons: borderless, equal icon controls. */
 html body #app-content #annual .annual-sheet-link-controls {
   grid-template-columns: minmax(0, 1fr) 46px 46px !important;
