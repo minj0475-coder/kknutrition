@@ -24053,3 +24053,85 @@ html body #app-content :is(
 ) {
   border-color: var(--kkn-unified-line) !important;
 }
+
+/* 2026-07-11 shared edit mode: use the complaints-style outer card line everywhere. */
+:root {
+  --kkn-edit-card-line: rgba(239, 166, 166, 0.86) !important;
+  --kkn-edit-card-line-strong: rgba(239, 166, 166, 0.96) !important;
+  --kkn-edit-card-ring: rgba(239, 166, 166, 0.20) !important;
+}
+
+html body #app-content :is(
+  #daily.is-page-editing > main.wrap > .card,
+  #monthly.is-page-editing > main.wrap > .card,
+  #annual.is-page-editing > main.wrap > .card,
+  #today-menu .work-note-card.is-editing,
+  #today-menu .message-template-card.is-editing,
+  #promo-contacts .vendor-network-card.is-editing,
+  #promo-contacts .promo-contact-card.is-editing,
+  #staff.is-page-editing .staff-accordion-card,
+  #bookmarks.is-page-editing .bookmark-controls,
+  #bookmarks .bookmark-card.edit-mode-card,
+  #bookmarks .bookmark-card.add-new-card,
+  #complaints.is-editing .complaint-controls,
+  #complaints.is-editing .complaint-card
+) {
+  outline: 0 !important;
+  outline-offset: 0 !important;
+  border-color: var(--kkn-edit-card-line) !important;
+  border-style: solid !important;
+  box-shadow: 0 0 0 2px var(--kkn-edit-card-ring), var(--shadow-flat) !important;
+  background-color: #ffffff !important;
+}
+
+html body #app-content :is(
+  #daily.is-page-editing > main.wrap > .card:hover,
+  #daily.is-page-editing > main.wrap > .card:focus-within,
+  #monthly.is-page-editing > main.wrap > .card:hover,
+  #monthly.is-page-editing > main.wrap > .card:focus-within,
+  #annual.is-page-editing > main.wrap > .card:hover,
+  #annual.is-page-editing > main.wrap > .card:focus-within,
+  #today-menu .work-note-card.is-editing:hover,
+  #today-menu .work-note-card.is-editing:focus-within,
+  #today-menu .message-template-card.is-editing:hover,
+  #today-menu .message-template-card.is-editing:focus-within,
+  #promo-contacts .vendor-network-card.is-editing:hover,
+  #promo-contacts .vendor-network-card.is-editing:focus-within,
+  #promo-contacts .promo-contact-card.is-editing:hover,
+  #promo-contacts .promo-contact-card.is-editing:focus-within,
+  #staff.is-page-editing .staff-accordion-card:hover,
+  #staff.is-page-editing .staff-accordion-card:focus-within,
+  #bookmarks.is-page-editing .bookmark-controls:hover,
+  #bookmarks.is-page-editing .bookmark-controls:focus-within,
+  #bookmarks .bookmark-card.edit-mode-card:hover,
+  #bookmarks .bookmark-card.edit-mode-card:focus-within,
+  #bookmarks .bookmark-card.add-new-card:hover,
+  #bookmarks .bookmark-card.add-new-card:focus-within,
+  #complaints.is-editing .complaint-controls:hover,
+  #complaints.is-editing .complaint-controls:focus-within,
+  #complaints.is-editing .complaint-card:hover,
+  #complaints.is-editing .complaint-card:focus-within
+) {
+  border-color: var(--kkn-edit-card-line-strong) !important;
+}
+
+html body #app-content :is(
+  #daily .editable-content[contenteditable="true"],
+  #daily .editable-content[contenteditable="true"]:focus,
+  #monthly .editable-content[contenteditable="true"],
+  #monthly .editable-content[contenteditable="true"]:focus,
+  #annual .editable-content[contenteditable="true"],
+  #annual .editable-content[contenteditable="true"]:focus,
+  #staff.is-page-editing .staff-accordion-card .editable-content,
+  #staff.is-page-editing #service-sheet .sheet-link-card,
+  #today-menu .work-note-card.is-editing .work-note-textbox,
+  #today-menu .message-template-card.is-editing .message-template-item,
+  #today-menu .message-template-card.is-editing .message-template-textbox,
+  #promo-contacts .vendor-network-card.is-editing .vendor-category-manager,
+  #promo-contacts .vendor-network-card.is-editing .vendor-accordion-group,
+  #promo-contacts .promo-contact-card.is-editing .promo-contact-table
+) {
+  outline: 0 !important;
+  outline-offset: 0 !important;
+  box-shadow: none !important;
+}

@@ -205,6 +205,8 @@ window.isBookmarkEditMode = function() {
 window.exitBookmarkEditMode = function() {
   if (!isEditMode) return;
   isEditMode = false;
+  var section = document.getElementById('bookmarks');
+  if (section) section.classList.remove('is-page-editing');
   var editBtn = document.getElementById('editBtnBookmarks');
   if (editBtn) {
     editBtn.innerHTML = '\uC218\uC815'; // '수정'
@@ -499,6 +501,8 @@ document.addEventListener('DOMContentLoaded', function() {
       } else {
         isEditMode = true;
       }
+      var section = document.getElementById('bookmarks');
+      if (section) section.classList.toggle('is-page-editing', isEditMode);
       editBtn.innerHTML = isEditMode ? '\uC800\uC7A5' : '\uC218\uC815';
       editBtn.classList.toggle('saving', isEditMode);
       renderBookmarks();
