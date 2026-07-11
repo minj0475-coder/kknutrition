@@ -1543,6 +1543,78 @@ window.toggleTodayMenuWritingEditMode = async function toggleTodayMenuWritingEdi
   if (!templateSaved && typeof window.enterMessageTemplateEditMode === "function") window.enterMessageTemplateEditMode();
 };
 
+function setupTodayMenuWritingFloatObserver() {
+  const todayMenu = document.getElementById("today-menu");
+  const workNotes = document.getElementById("workNotes");
+  const messageTemplates = document.getElementById("messageTemplates");
+  if (!todayMenu || !workNotes || !messageTemplates) return;
+
+  const clear = () => {
+    document.body.classList.remove("today-menu-work-visible", "today-menu-template-visible");
+  };
+
+  const isTodayMenuActive = () => todayMenu.classList.contains("active") || location.hash === "#today-menu";
+
+  const getVisibleScore = element => {
+    const rect = element.getBoundingClientRect();
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+    const visibleTop = Math.max(rect.top, 0);
+    const visibleBottom = Math.min(rect.bottom, viewportHeight);
+    const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+    if (visibleHeight <= 0) return 0;
+    const center = rect.top + rect.height / 2;
+    const centerDistance = Math.abs(center - viewportHeight / 2);
+    return visibleHeight - centerDistance * 0.25;
+  };
+
+  const update = () => {
+    if (!isTodayMenuActive()) {
+      clear();
+      return;
+    }
+
+    const workScore = getVisibleScore(workNotes);
+    const templateScore = getVisibleScore(messageTemplates);
+    clear();
+
+    if (workScore <= 0 && templateScore <= 0) return;
+    if (templateScore > workScore) {
+      document.body.classList.add("today-menu-template-visible");
+    } else {
+      document.body.classList.add("today-menu-work-visible");
+    }
+  };
+
+  let ticking = false;
+  const requestUpdate = () => {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(() => {
+      ticking = false;
+      update();
+    });
+  };
+
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(requestUpdate, {
+      root: null,
+      threshold: [0, 0.15, 0.35, 0.6]
+    });
+    observer.observe(workNotes);
+    observer.observe(messageTemplates);
+  }
+
+  window.addEventListener("scroll", requestUpdate, { passive: true });
+  window.addEventListener("resize", requestUpdate);
+  window.addEventListener("hashchange", requestUpdate);
+  document.addEventListener("click", event => {
+    if (event.target.closest("[data-page], .sidebar a, .mobile-menu a, a[href^='#']")) {
+      window.setTimeout(requestUpdate, 80);
+    }
+  });
+  requestUpdate();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   setupDailyKkul();
   setupStaffAccordion();
@@ -1550,6 +1622,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setupWorkNotes();
   setupMessageTemplates();
   setupComplaintRecords();
+  setupTodayMenuWritingFloatObserver();
 });
 
 function getSheetInput() {
