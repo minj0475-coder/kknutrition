@@ -24320,3 +24320,176 @@ html body #app-content section#bookmarks.page-section:has(#editBtnBookmarks.savi
   transform: none !important;
   transition: none !important;
 }
+
+/* 2026-07-11 unified icon sizing and color. */
+:root {
+  --kkn-icon-color: var(--kkn-text-strong, #202123) !important;
+  --kkn-icon-muted-color: var(--kkn-text-muted, #6b7280) !important;
+  --kkn-action-icon-size: 20px !important;
+  --kkn-search-icon-size: 22px !important;
+  --kkn-icon-button-box: 40px !important;
+}
+
+html body #app-content :is(
+  .icon-only-btn,
+  .copy-icon-btn,
+  .open-icon-btn,
+  .delete-icon-btn,
+  .promo-copy-btn,
+  .promo-open-link,
+  .promo-delete-btn,
+  .memo-full-btn,
+  .annual-sheet-save-btn,
+  .annual-sheet-open-btn,
+  .academic-nav-btn,
+  .academic-today-btn,
+  .academic-save-btn,
+  .academic-clear-btn,
+  .mobile-menu-btn,
+  .sidebar-icon-btn,
+  .close-drawer-btn,
+  .bm-delete-btn,
+  .complaint-icon-btn,
+  .vendor-category-add-btn,
+  .vendor-category-delete-btn,
+  .vendor-add-row-main-btn,
+  .staff-notice-add-btn
+) {
+  color: var(--kkn-icon-color) !important;
+}
+
+html body #app-content :is(
+  .icon-only-btn,
+  .copy-icon-btn,
+  .open-icon-btn,
+  .delete-icon-btn,
+  .memo-full-btn,
+  .mobile-menu-btn,
+  .sidebar-icon-btn,
+  .close-drawer-btn,
+  .bm-delete-btn,
+  .complaint-icon-btn
+) {
+  width: var(--kkn-icon-button-box) !important;
+  height: var(--kkn-icon-button-box) !important;
+  min-width: var(--kkn-icon-button-box) !important;
+  min-height: var(--kkn-icon-button-box) !important;
+  max-width: var(--kkn-icon-button-box) !important;
+  max-height: var(--kkn-icon-button-box) !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+html body #app-content :is(
+  button,
+  a,
+  summary,
+  .icon-only-btn,
+  .copy-icon-btn,
+  .open-icon-btn,
+  .delete-icon-btn,
+  .promo-copy-btn,
+  .promo-open-link,
+  .promo-delete-btn,
+  .memo-full-btn,
+  .annual-sheet-save-btn,
+  .annual-sheet-open-btn,
+  .academic-nav-btn,
+  .academic-today-btn,
+  .academic-save-btn,
+  .academic-clear-btn,
+  .mobile-menu-btn,
+  .sidebar-icon-btn,
+  .close-drawer-btn,
+  .bm-delete-btn,
+  .complaint-icon-btn,
+  .vendor-category-add-btn,
+  .vendor-category-delete-btn,
+  .vendor-add-row-main-btn,
+  .staff-notice-add-btn
+) svg {
+  width: var(--kkn-action-icon-size) !important;
+  height: var(--kkn-action-icon-size) !important;
+  min-width: var(--kkn-action-icon-size) !important;
+  min-height: var(--kkn-action-icon-size) !important;
+  max-width: var(--kkn-action-icon-size) !important;
+  max-height: var(--kkn-action-icon-size) !important;
+  flex: 0 0 var(--kkn-action-icon-size) !important;
+  stroke: currentColor !important;
+  fill: none;
+  stroke-width: 2 !important;
+}
+
+html body #app-content :is(
+  .copy-icon-btn,
+  .open-icon-btn,
+  .delete-icon-btn,
+  .promo-copy-btn,
+  .promo-open-link,
+  .promo-delete-btn,
+  .memo-full-btn,
+  .annual-sheet-save-btn,
+  .annual-sheet-open-btn,
+  .academic-save-btn,
+  .academic-clear-btn,
+  .bm-delete-btn,
+  .complaint-icon-btn
+)::before {
+  width: var(--kkn-action-icon-size) !important;
+  height: var(--kkn-action-icon-size) !important;
+  min-width: var(--kkn-action-icon-size) !important;
+  min-height: var(--kkn-action-icon-size) !important;
+  max-width: var(--kkn-action-icon-size) !important;
+  max-height: var(--kkn-action-icon-size) !important;
+  background-color: currentColor !important;
+  color: inherit !important;
+  flex: 0 0 var(--kkn-action-icon-size) !important;
+}
+
+html body #app-content :is(
+  .sidebar-search-wrap,
+  .home-search-input-shell,
+  .complaint-search-input,
+  .bookmark-search-wrap,
+  .promo-search-wrap,
+  .search-input-wrap,
+  .searchbar,
+  .global-search,
+  .home-search-hero__input-shell
+) svg {
+  width: var(--kkn-search-icon-size) !important;
+  height: var(--kkn-search-icon-size) !important;
+  min-width: var(--kkn-search-icon-size) !important;
+  min-height: var(--kkn-search-icon-size) !important;
+  max-width: var(--kkn-search-icon-size) !important;
+  max-height: var(--kkn-search-icon-size) !important;
+  flex: 0 0 var(--kkn-search-icon-size) !important;
+  color: var(--kkn-icon-muted-color) !important;
+  stroke: currentColor !important;
+  stroke-width: 2 !important;
+}
+
+html body #app-content :is(
+  .search-icon,
+  .home-search-icon,
+  .sidebar-search-icon
+) {
+  width: var(--kkn-search-icon-size) !important;
+  height: var(--kkn-search-icon-size) !important;
+  min-width: var(--kkn-search-icon-size) !important;
+  min-height: var(--kkn-search-icon-size) !important;
+  color: var(--kkn-icon-muted-color) !important;
+  background-color: currentColor !important;
+}
+
+html body #app-content :is(
+  .delete-icon-btn,
+  .promo-delete-btn,
+  .message-template-delete,
+  .vendor-category-delete-btn,
+  .bm-delete-btn
+):not(:hover):not(:focus-visible) {
+  color: var(--kkn-icon-color) !important;
+}
