@@ -24080,8 +24080,6 @@ html body #app-content :is(
   #promo-contacts:has(#promoContactsEditSaveBtn.saving) .promo-contact-card,
   #staff.is-page-editing .staff-accordion-card,
   #staff:has(#editBtnStaff.saving) .staff-accordion-card,
-  #bookmarks.is-page-editing .bookmark-controls,
-  #bookmarks:has(#editBtnBookmarks.saving) .bookmark-controls,
   #bookmarks .bookmark-card.edit-mode-card,
   #bookmarks:has(#editBtnBookmarks.saving) .bookmark-card,
   #bookmarks .bookmark-card.add-new-card,
@@ -24116,8 +24114,6 @@ html body #app-content :is(
   #promo-contacts .promo-contact-card.is-editing:focus-within,
   #staff.is-page-editing .staff-accordion-card:hover,
   #staff.is-page-editing .staff-accordion-card:focus-within,
-  #bookmarks.is-page-editing .bookmark-controls:hover,
-  #bookmarks.is-page-editing .bookmark-controls:focus-within,
   #bookmarks .bookmark-card.edit-mode-card:hover,
   #bookmarks .bookmark-card.edit-mode-card:focus-within,
   #bookmarks .bookmark-card.add-new-card:hover,
@@ -24492,4 +24488,13 @@ html body #app-content :is(
   .bm-delete-btn
 ):not(:hover):not(:focus-visible) {
   color: var(--kkn-icon-color) !important;
+}
+
+/* 2026-07-11 bookmarks: controls stay neutral while edit/save is active. */
+html body #app-content #bookmarks.is-page-editing .bookmark-controls,
+html body #app-content #bookmarks:has(#editBtnBookmarks.saving) .bookmark-controls {
+  outline: 0 !important;
+  outline-offset: 0 !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
 }
