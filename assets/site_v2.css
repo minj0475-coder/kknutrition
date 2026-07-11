@@ -24063,18 +24063,32 @@ html body #app-content :is(
 
 html body #app-content :is(
   #daily.is-page-editing > main.wrap > .card,
+  #daily:has(#editBtnDaily.saving) > main.wrap > .card,
   #monthly.is-page-editing > main.wrap > .card,
+  #monthly:has(#editBtnMonthly.saving) > main.wrap > .card,
   #annual.is-page-editing > main.wrap > .card,
+  #annual:has(#editBtnAnnual.saving) > main.wrap > .card,
+  #annual.is-page-editing .annual-mobile-card,
+  #annual:has(#editBtnAnnual.saving) .annual-mobile-card,
   #today-menu .work-note-card.is-editing,
+  #today-menu:has(#workNoteEditSaveBtn.saving) .work-note-card,
   #today-menu .message-template-card.is-editing,
+  #today-menu:has(#messageTemplateEditSaveBtn.saving) .message-template-card,
   #promo-contacts .vendor-network-card.is-editing,
+  #promo-contacts:has(#promoContactsEditSaveBtn.saving) .vendor-network-card,
   #promo-contacts .promo-contact-card.is-editing,
+  #promo-contacts:has(#promoContactsEditSaveBtn.saving) .promo-contact-card,
   #staff.is-page-editing .staff-accordion-card,
+  #staff:has(#editBtnStaff.saving) .staff-accordion-card,
   #bookmarks.is-page-editing .bookmark-controls,
+  #bookmarks:has(#editBtnBookmarks.saving) .bookmark-controls,
   #bookmarks .bookmark-card.edit-mode-card,
+  #bookmarks:has(#editBtnBookmarks.saving) .bookmark-card,
   #bookmarks .bookmark-card.add-new-card,
   #complaints.is-editing .complaint-controls,
-  #complaints.is-editing .complaint-card
+  #complaints:has(#editBtnComplaints.saving) .complaint-controls,
+  #complaints.is-editing .complaint-card,
+  #complaints:has(#editBtnComplaints.saving) .complaint-card
 ) {
   outline: 0 !important;
   outline-offset: 0 !important;
@@ -24082,6 +24096,7 @@ html body #app-content :is(
   border-style: solid !important;
   box-shadow: 0 0 0 2px var(--kkn-edit-card-ring), var(--shadow-flat) !important;
   background-color: #ffffff !important;
+  transition: none !important;
 }
 
 html body #app-content :is(
