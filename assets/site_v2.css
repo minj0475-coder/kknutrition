@@ -24488,6 +24488,22 @@ html body #app-content #bookmarks .search-wrap svg.search-icon {
   fill: none !important;
 }
 
+html body #app-content #promo-contacts .promo-contact-master-search span svg,
+html body #promo-contacts .promo-contact-master-search span svg {
+  width: var(--kkn-search-icon-size) !important;
+  height: var(--kkn-search-icon-size) !important;
+  min-width: var(--kkn-search-icon-size) !important;
+  min-height: var(--kkn-search-icon-size) !important;
+  max-width: var(--kkn-search-icon-size) !important;
+  max-height: var(--kkn-search-icon-size) !important;
+  color: var(--kkn-icon-muted-color) !important;
+  stroke: currentColor !important;
+  stroke-width: 1.8 !important;
+  fill: none !important;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
 html body #app-content :is(
   .delete-icon-btn,
   .promo-delete-btn,
