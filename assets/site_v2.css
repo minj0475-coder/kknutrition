@@ -24480,6 +24480,14 @@ html body #app-content :is(
   background-color: currentColor !important;
 }
 
+html body #app-content #bookmarks .search-wrap svg.search-icon {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--kkn-icon-muted-color) !important;
+  stroke: currentColor !important;
+  fill: none !important;
+}
+
 html body #app-content :is(
   .delete-icon-btn,
   .promo-delete-btn,
