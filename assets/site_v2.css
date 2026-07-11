@@ -24964,3 +24964,70 @@ html body #app-content :is(
     font-size: var(--kkn-action-font-size) !important;
   }
 }
+
+/* 2026-07-11 bookmarks: match the vendor-management edit/save button exactly. */
+html body #app-content :is(
+  #editBtnBookmarks#editBtnBookmarks#editBtnBookmarks#editBtnBookmarks,
+  #promoContactsEditSaveBtn#promoContactsEditSaveBtn#promoContactsEditSaveBtn#promoContactsEditSaveBtn
+) {
+  --portal-action-button-radius: var(--kkn-action-radius) !important;
+  position: fixed !important;
+  left: auto !important;
+  right: max(28px, calc(22px + env(safe-area-inset-right))) !important;
+  bottom: max(24px, calc(18px + env(safe-area-inset-bottom))) !important;
+  z-index: 160 !important;
+  width: auto !important;
+  min-width: var(--kkn-action-min-width) !important;
+  max-width: none !important;
+  height: var(--kkn-action-height) !important;
+  min-height: var(--kkn-action-height) !important;
+  max-height: var(--kkn-action-height) !important;
+  margin: 0 !important;
+  padding: 0 var(--kkn-action-padding-x) !important;
+  border: 1px solid var(--kkn-edit-action-line) !important;
+  border-radius: var(--kkn-action-radius) !important;
+  background: var(--kkn-edit-action-bg) !important;
+  background-color: var(--kkn-edit-action-bg) !important;
+  background-image: none !important;
+  color: var(--kkn-edit-action-text) !important;
+  -webkit-text-fill-color: var(--kkn-edit-action-text) !important;
+  box-shadow: var(--kkn-edit-action-shadow) !important;
+  font-size: var(--kkn-action-font-size) !important;
+  font-weight: 780 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  text-align: center !important;
+  transform: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+html body #app-content :is(
+  #editBtnBookmarks#editBtnBookmarks#editBtnBookmarks#editBtnBookmarks.saving,
+  #promoContactsEditSaveBtn#promoContactsEditSaveBtn#promoContactsEditSaveBtn#promoContactsEditSaveBtn.saving
+) {
+  border-color: var(--kkn-save-action-line) !important;
+  background: var(--kkn-save-action-image) !important;
+  background-color: var(--kkn-save-action-bg) !important;
+  background-image: var(--kkn-save-action-image) !important;
+  color: var(--kkn-save-action-text) !important;
+  -webkit-text-fill-color: var(--kkn-save-action-text) !important;
+  box-shadow: var(--kkn-save-action-shadow) !important;
+}
+
+@media (max-width: 768px) {
+  html body #app-content :is(
+    #editBtnBookmarks#editBtnBookmarks#editBtnBookmarks#editBtnBookmarks,
+    #promoContactsEditSaveBtn#promoContactsEditSaveBtn#promoContactsEditSaveBtn#promoContactsEditSaveBtn
+  ) {
+    right: max(18px, calc(14px + env(safe-area-inset-right))) !important;
+    bottom: max(18px, calc(12px + env(safe-area-inset-bottom))) !important;
+    min-width: var(--kkn-action-min-width) !important;
+    height: var(--kkn-action-height) !important;
+    min-height: var(--kkn-action-height) !important;
+    max-height: var(--kkn-action-height) !important;
+    padding: 0 24px !important;
+    border-radius: var(--kkn-action-radius) !important;
+    font-size: var(--kkn-action-font-size) !important;
+  }
+}
