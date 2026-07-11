@@ -24718,3 +24718,173 @@ html body #app-content :is(
     font-size: 15.5px !important;
   }
 }
+
+/* 2026-07-11 final action button polish: one ChatGPT-like rounded rectangle system. */
+:root {
+  --kkn-action-radius: 15px !important;
+  --kkn-action-height: 54px !important;
+  --kkn-action-min-width: 108px !important;
+  --kkn-action-padding-x: 26px !important;
+  --kkn-action-font-size: 15.5px !important;
+}
+
+html body #app-content :is(
+  #editBtnDaily,
+  #editBtnMonthly,
+  #editBtnAnnual,
+  #editBtnComplaints,
+  #editBtnBookmarks,
+  #editBtnStaff,
+  #workNoteEditSaveBtn,
+  #messageTemplateEditSaveBtn,
+  #promoContactsEditSaveBtn,
+  #openMemoModalBtn,
+  #saveMemoModalBtn,
+  #academicSaveBtn,
+  #menuGithubTokenSaveBtn,
+  #bmSave
+) {
+  border-radius: var(--kkn-action-radius) !important;
+  border: 1px solid var(--kkn-edit-action-line) !important;
+  background: var(--kkn-edit-action-bg) !important;
+  background-color: var(--kkn-edit-action-bg) !important;
+  background-image: none !important;
+  color: var(--kkn-edit-action-text) !important;
+  -webkit-text-fill-color: var(--kkn-edit-action-text) !important;
+  box-shadow: var(--kkn-edit-action-shadow) !important;
+  font-size: var(--kkn-action-font-size) !important;
+  font-weight: 780 !important;
+  letter-spacing: 0 !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  text-decoration: none !important;
+}
+
+html body #app-content :is(
+  #editBtnDaily,
+  #editBtnMonthly,
+  #editBtnAnnual,
+  #editBtnComplaints,
+  #editBtnBookmarks,
+  #editBtnStaff,
+  #workNoteEditSaveBtn,
+  #messageTemplateEditSaveBtn,
+  #promoContactsEditSaveBtn
+) {
+  position: fixed !important;
+  left: auto !important;
+  right: max(28px, calc(22px + env(safe-area-inset-right))) !important;
+  bottom: max(24px, calc(18px + env(safe-area-inset-bottom))) !important;
+  z-index: 160 !important;
+  width: auto !important;
+  min-width: var(--kkn-action-min-width) !important;
+  max-width: none !important;
+  height: var(--kkn-action-height) !important;
+  min-height: var(--kkn-action-height) !important;
+  max-height: var(--kkn-action-height) !important;
+  margin: 0 !important;
+  padding: 0 var(--kkn-action-padding-x) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+html body #app-content :is(
+  #openMemoModalBtn,
+  #saveMemoModalBtn,
+  #academicSaveBtn,
+  #menuGithubTokenSaveBtn,
+  #bmSave
+) {
+  min-height: 46px !important;
+  padding: 0 22px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+html body #app-content :is(
+  #editBtnDaily.saving,
+  #editBtnMonthly.saving,
+  #editBtnAnnual.saving,
+  #editBtnComplaints.saving,
+  #editBtnBookmarks.saving,
+  #editBtnStaff.saving,
+  #workNoteEditSaveBtn.saving,
+  #messageTemplateEditSaveBtn.saving,
+  #promoContactsEditSaveBtn.saving,
+  #saveMemoModalBtn,
+  #academicSaveBtn,
+  #menuGithubTokenSaveBtn,
+  #bmSave
+) {
+  border-color: var(--kkn-save-action-line) !important;
+  background: var(--kkn-save-action-image) !important;
+  background-color: var(--kkn-save-action-bg) !important;
+  background-image: var(--kkn-save-action-image) !important;
+  color: var(--kkn-save-action-text) !important;
+  -webkit-text-fill-color: var(--kkn-save-action-text) !important;
+  box-shadow: var(--kkn-save-action-shadow) !important;
+}
+
+html body #app-content :is(
+  #editBtnDaily,
+  #editBtnMonthly,
+  #editBtnAnnual,
+  #editBtnComplaints,
+  #editBtnBookmarks,
+  #editBtnStaff,
+  #workNoteEditSaveBtn,
+  #messageTemplateEditSaveBtn,
+  #promoContactsEditSaveBtn,
+  #openMemoModalBtn,
+  #saveMemoModalBtn,
+  #academicSaveBtn,
+  #menuGithubTokenSaveBtn,
+  #bmSave
+):is(:hover, :focus-visible) {
+  transform: translateY(-1px) !important;
+}
+
+html body #app-content :is(
+  #editBtnDaily,
+  #editBtnMonthly,
+  #editBtnAnnual,
+  #editBtnComplaints,
+  #editBtnBookmarks,
+  #editBtnStaff,
+  #workNoteEditSaveBtn,
+  #messageTemplateEditSaveBtn,
+  #promoContactsEditSaveBtn,
+  #openMemoModalBtn,
+  #saveMemoModalBtn,
+  #academicSaveBtn,
+  #menuGithubTokenSaveBtn,
+  #bmSave
+)::before {
+  content: none !important;
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  html body #app-content :is(
+    #editBtnDaily,
+    #editBtnMonthly,
+    #editBtnAnnual,
+    #editBtnComplaints,
+    #editBtnBookmarks,
+    #editBtnStaff,
+    #workNoteEditSaveBtn,
+    #messageTemplateEditSaveBtn,
+    #promoContactsEditSaveBtn
+  ) {
+    right: max(18px, calc(14px + env(safe-area-inset-right))) !important;
+    bottom: max(18px, calc(12px + env(safe-area-inset-bottom))) !important;
+    min-width: var(--kkn-action-min-width) !important;
+    height: var(--kkn-action-height) !important;
+    min-height: var(--kkn-action-height) !important;
+    max-height: var(--kkn-action-height) !important;
+    padding: 0 24px !important;
+    border-radius: var(--kkn-action-radius) !important;
+  }
+}
