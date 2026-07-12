@@ -18906,6 +18906,16 @@ html body .app-sidebar .sidebar-logo {
   }
 }
 
+/* Daily tables use the outer card line as the only edit-mode indicator. */
+html body #app-content #daily #edit-daily-1[contenteditable="true"],
+html body #app-content #daily #edit-daily-1[contenteditable="true"]:focus,
+html body #app-content #daily #edit-daily-2[contenteditable="true"],
+html body #app-content #daily #edit-daily-2[contenteditable="true"]:focus {
+  outline: 0 !important;
+  outline-offset: 0 !important;
+  box-shadow: none !important;
+}
+
 /* 2026-07-04 academic modal mobile fit: keep the event editor inside the viewport with no horizontal scroll. */
 @media (max-width: 760px) {
   html,
