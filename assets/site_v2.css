@@ -24828,6 +24828,23 @@ html body #app-content #annual #edit-annual-2[contenteditable="true"]:focus {
   }
 }
 
+/* The sidebar logo header has no divider in any open or collapsed state. */
+html body #appSidebar.app-sidebar .sidebar-head,
+html body.sidebar-open #appSidebar.app-sidebar .sidebar-head,
+html body.sidebar-collapsed #appSidebar.app-sidebar .sidebar-head,
+html body:not(.sidebar-collapsed) #appSidebar.app-sidebar .sidebar-head {
+  border: 0 !important;
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+  background-image: none !important;
+}
+
+html body #appSidebar.app-sidebar .sidebar-head::before,
+html body #appSidebar.app-sidebar .sidebar-head::after {
+  content: none !important;
+  display: none !important;
+}
+
 /* 2026-07-11 final action button polish: one ChatGPT-like rounded rectangle system. */
 :root {
   --kkn-action-radius: 15px !important;

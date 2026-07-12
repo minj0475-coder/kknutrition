@@ -3133,6 +3133,12 @@ function ensureSidebarTargetId(selector, fallbackId) {
 }
 
 function getSidebarCustomHeadings(groupName) {
+  if (groupName === "home") {
+    return [
+      { id: "homeMemoCard", text: "메모장" },
+      { id: "homeTodayCard", text: "오늘의 식단" }
+    ].filter(item => document.getElementById(item.id));
+  }
   if (groupName === "schedule") {
     return [
       { id: ensureSidebarTargetId("#daily main section.card:nth-of-type(1)", "daily-item-1"), text: "하루 일정표" },
