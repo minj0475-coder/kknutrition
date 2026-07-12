@@ -24780,6 +24780,20 @@ html body #app-content #home.page-section > main.wrap > .home-grid {
   margin-top: 0 !important;
 }
 
+/* Annual tables use the outer card line as the only edit-mode indicator. */
+html body #app-content #annual.is-page-editing #edit-annual-1,
+html body #app-content #annual.is-page-editing #edit-annual-1:focus,
+html body #app-content #annual.is-page-editing #edit-annual-2,
+html body #app-content #annual.is-page-editing #edit-annual-2:focus,
+html body #app-content #annual #edit-annual-1[contenteditable="true"],
+html body #app-content #annual #edit-annual-1[contenteditable="true"]:focus,
+html body #app-content #annual #edit-annual-2[contenteditable="true"],
+html body #app-content #annual #edit-annual-2[contenteditable="true"]:focus {
+  outline: 0 !important;
+  outline-offset: 0 !important;
+  box-shadow: none !important;
+}
+
 /* 2026-07-11 final action button polish: one ChatGPT-like rounded rectangle system. */
 :root {
   --kkn-action-radius: 15px !important;
