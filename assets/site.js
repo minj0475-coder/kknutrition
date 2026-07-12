@@ -763,12 +763,15 @@ function setupComplaintRecords() {
     const visible = getVisibleItems();
     list.innerHTML = "";
     empty.textContent = "";
+    empty.hidden = true;
     if (!items.length) {
       empty.innerHTML = "아직 등록된 의견·민원 대응 기록이 없습니다.<br>새 기록을 추가해 보세요.";
+      empty.hidden = false;
       return;
     }
     if (!visible.length) {
       empty.textContent = "검색 조건에 맞는 기록이 없습니다.";
+      empty.hidden = false;
       return;
     }
     visible.forEach(item => {
