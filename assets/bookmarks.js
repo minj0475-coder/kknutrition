@@ -292,6 +292,7 @@ function handleSave() {
 
   var newItem = { title: title, url: url, category: category };
   if (editingIdx >= 0) {
+    newItem = Object.assign({}, bookmarkData[editingIdx], newItem);
     bookmarkData[editingIdx] = newItem;
   } else {
     bookmarkData.push(newItem);
@@ -408,7 +409,7 @@ function renderBookmarks() {
         ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="#ffd700" stroke="#ffd700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>'
         : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>';
       var favMargin = isEditMode ? 'margin-left:auto; margin-right:32px;' : 'margin-left:auto;';
-      var favBtnHtml = '<button class="bm-favorite-btn" onclick="event.preventDefault(); event.stopPropagation(); window.bmToggleFavorite(' + origIdx + ');" title="\uC990\uACA8\uCC3E\uAE30" style="' + favMargin + ' background:transparent; border:none; color:var(--muted); cursor:pointer; padding:4px; display:flex; align-items:center;">' + starSvg + '</button>';
+      var favBtnHtml = '<button class="bm-favorite-btn" type="button" data-bookmark-index="' + origIdx + '" aria-label="\uC990\uACA8\uCC3E\uAE30" aria-pressed="' + (item.isFavorite ? 'true' : 'false') + '" title="\uC990\uACA8\uCC3E\uAE30" style="' + favMargin + ' background:transparent; border:none; color:var(--muted); cursor:pointer; padding:4px; display:flex; align-items:center;">' + starSvg + '</button>';
 
       if (isEditMode) {
         return '<div class="bookmark-card edit-mode-card" onclick="bmOpenModal(' + origIdx + ')" style="cursor:pointer;position:relative;">'
@@ -436,6 +437,14 @@ function renderBookmarks() {
   }
 
   container.innerHTML = html;
+
+  container.querySelectorAll('.bm-favorite-btn').forEach(function(button) {
+    button.addEventListener('click', function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      window.bmToggleFavorite(Number(button.dataset.bookmarkIndex));
+    });
+  });
 
   if (!isEditMode) {
     // click tracking for sort
