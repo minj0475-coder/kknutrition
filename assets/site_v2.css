@@ -25232,7 +25232,7 @@ html body #app-content #daily :is(#edit-daily-1, #edit-daily-2):focus-within {
   box-shadow: none !important;
 }
 
-/* 2026-07-12 mobile sidebar: roomier two-column menu tiles and clearer active state. */
+/* 2026-07-12 mobile sidebar: neutral ChatGPT-like hierarchy and two-column alignment. */
 @media (max-width: 900px) {
   html body #appSidebar.app-sidebar .sidebar-nav {
     gap: 8px !important;
@@ -25247,7 +25247,6 @@ html body #app-content #daily :is(#edit-daily-1, #edit-daily-2):focus-within {
   html body #appSidebar.app-sidebar .sidebar-subnav a {
     display: flex !important;
     align-items: center !important;
-    justify-content: center !important;
     min-width: 0 !important;
     min-height: 44px !important;
     box-sizing: border-box !important;
@@ -25255,10 +25254,19 @@ html body #app-content #daily :is(#edit-daily-1, #edit-daily-2):focus-within {
     border: 1px solid transparent !important;
     border-radius: 10px !important;
     line-height: 1.3 !important;
-    text-align: center !important;
     white-space: normal !important;
     overflow-wrap: anywhere !important;
     word-break: keep-all !important;
+  }
+
+  html body #appSidebar.app-sidebar .sidebar-nav > .sidebar-nav-group > a {
+    justify-content: flex-start !important;
+    text-align: left !important;
+  }
+
+  html body #appSidebar.app-sidebar .sidebar-subnav a {
+    justify-content: center !important;
+    text-align: center !important;
   }
 
   html body #appSidebar.app-sidebar .sidebar-subnav {
@@ -25272,12 +25280,16 @@ html body #app-content #daily :is(#edit-daily-1, #edit-daily-2):focus-within {
     border-left: 0 !important;
   }
 
+  html body #appSidebar.app-sidebar .sidebar-subnav a[href="#promoContactPanel"] {
+    grid-column: auto !important;
+  }
+
   html body #appSidebar.app-sidebar .sidebar-nav a.active,
   html body #appSidebar.app-sidebar .sidebar-subnav a.active {
-    border-color: #e6adbd !important;
-    background: #fbe8ef !important;
-    color: #7e3f54 !important;
-    box-shadow: 0 2px 8px rgba(164, 91, 116, 0.12) !important;
+    border-color: transparent !important;
+    background: #f4f4f5 !important;
+    color: #202123 !important;
+    box-shadow: none !important;
   }
 }
 
