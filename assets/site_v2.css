@@ -25372,6 +25372,40 @@ html body #app-content #daily :is(#edit-daily-1, #edit-daily-2) * {
   }
 }
 
+/* 2026-07-12 mobile sidebar: keep the main TOC comfortable while recent items may scroll below. */
+@media (max-width: 900px) {
+  html body #appSidebar.app-sidebar .sidebar-nav {
+    gap: 4px !important;
+    padding: 0 10px !important;
+  }
+
+  html body #appSidebar.app-sidebar .sidebar-nav-group {
+    gap: 3px !important;
+    margin-bottom: 4px !important;
+  }
+
+  html body #appSidebar.app-sidebar .sidebar-nav > .sidebar-nav-group > a {
+    min-height: 32px !important;
+    padding: 5px 10px !important;
+  }
+
+  html body #appSidebar.app-sidebar .sidebar-subnav {
+    grid-auto-rows: minmax(30px, auto) !important;
+    column-gap: 12px !important;
+    row-gap: 4px !important;
+    margin-bottom: 5px !important;
+  }
+
+  html body #appSidebar.app-sidebar .sidebar-subnav a {
+    min-height: 30px !important;
+    padding: 4px 9px !important;
+  }
+
+  html body #appSidebar.app-sidebar .sidebar-section {
+    margin-top: 6px !important;
+  }
+}
+
 /* 2026-07-11 bookmarks: match the vendor-management edit/save button exactly. */
 html body #app-content :is(
   #editBtnBookmarks#editBtnBookmarks#editBtnBookmarks#editBtnBookmarks,
