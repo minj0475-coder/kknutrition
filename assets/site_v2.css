@@ -18916,6 +18916,38 @@ html body #app-content #daily #edit-daily-2[contenteditable="true"]:focus {
   box-shadow: none !important;
 }
 
+/* Keep every save-state action consistent with the vendor save button. */
+html body #app-content :is(
+  #editBtnDaily#editBtnDaily#editBtnDaily#editBtnDaily#editBtnDaily#editBtnDaily.saving,
+  #editBtnMonthly#editBtnMonthly#editBtnMonthly#editBtnMonthly#editBtnMonthly#editBtnMonthly.saving,
+  #editBtnAnnual#editBtnAnnual#editBtnAnnual#editBtnAnnual#editBtnAnnual#editBtnAnnual.saving,
+  #editBtnComplaints#editBtnComplaints#editBtnComplaints#editBtnComplaints#editBtnComplaints#editBtnComplaints.saving,
+  #editBtnBookmarks#editBtnBookmarks#editBtnBookmarks#editBtnBookmarks#editBtnBookmarks#editBtnBookmarks.saving,
+  #editBtnStaff#editBtnStaff#editBtnStaff#editBtnStaff#editBtnStaff#editBtnStaff.saving,
+  #workNoteEditSaveBtn#workNoteEditSaveBtn#workNoteEditSaveBtn#workNoteEditSaveBtn#workNoteEditSaveBtn#workNoteEditSaveBtn.saving,
+  #messageTemplateEditSaveBtn#messageTemplateEditSaveBtn#messageTemplateEditSaveBtn#messageTemplateEditSaveBtn#messageTemplateEditSaveBtn#messageTemplateEditSaveBtn.saving,
+  #promoContactsEditSaveBtn#promoContactsEditSaveBtn#promoContactsEditSaveBtn#promoContactsEditSaveBtn#promoContactsEditSaveBtn#promoContactsEditSaveBtn.saving
+) {
+  width: auto !important;
+  min-width: 120px !important;
+  height: 60px !important;
+  min-height: 60px !important;
+  max-height: 60px !important;
+  padding: 0 28px !important;
+  border: 1px solid #202123 !important;
+  border-radius: 16px !important;
+  background: #202123 !important;
+  background-color: #202123 !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  box-shadow: 0 16px 34px rgba(32, 33, 35, 0.28), 0 4px 12px rgba(32, 33, 35, 0.18) !important;
+  font-size: 17px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+}
+
 /* 2026-07-04 academic modal mobile fit: keep the event editor inside the viewport with no horizontal scroll. */
 @media (max-width: 760px) {
   html,
