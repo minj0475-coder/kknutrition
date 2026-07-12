@@ -25191,6 +25191,37 @@ html body #app-content :is(
   }
 }
 
+/* 2026-07-12 memo card: ChatGPT-like borderless pencil edit button. */
+html body #app-content #home #homeMemoCard #openMemoModalBtn.memo-full-btn.memo-edit-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px !important;
+  min-width: 36px !important;
+  max-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  color: #202123 !important;
+  -webkit-text-fill-color: currentColor !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+html body #app-content #home #homeMemoCard #openMemoModalBtn.memo-full-btn.memo-edit-btn:hover,
+html body #app-content #home #homeMemoCard #openMemoModalBtn.memo-full-btn.memo-edit-btn:focus-visible {
+  border: 0 !important;
+  background: #f4f4f5 !important;
+  color: #202123 !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+  transform: none !important;
+}
+
 /* 2026-07-12 mobile sidebar: roomier two-column menu tiles and clearer active state. */
 @media (max-width: 900px) {
   html body #appSidebar.app-sidebar .sidebar-nav {
