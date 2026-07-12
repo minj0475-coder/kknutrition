@@ -24777,7 +24777,19 @@ html body #app-content #home.page-section > main.wrap > .home-search-hero.hero {
 html body #app-content #home.page-section > main.wrap > .home-grid {
   flex: 0 0 auto !important;
   width: 100% !important;
-  margin-top: 0 !important;
+  margin-top: clamp(112px, 9vw, 132px) !important;
+}
+
+@media (max-width: 900px) {
+  html body #app-content #home.page-section > main.wrap > .home-grid {
+    margin-top: clamp(72px, 12vw, 96px) !important;
+  }
+}
+
+@media (max-width: 620px) {
+  html body #app-content #home.page-section > main.wrap > .home-grid {
+    margin-top: clamp(48px, 14vw, 68px) !important;
+  }
 }
 
 /* Annual tables use the outer card line as the only edit-mode indicator. */
