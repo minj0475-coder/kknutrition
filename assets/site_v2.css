@@ -25325,6 +25325,27 @@ html body #app-content #daily:is(.is-page-editing, :has(#editBtnDaily.saving)) >
   transition: none !important;
 }
 
+/* 2026-07-12 home hero: keep the cloud tail tucked behind the search field. */
+html body #app-content #home.page-section .home-search-hero__image-wrap {
+  z-index: 1 !important;
+  margin-bottom: -8px !important;
+}
+
+html body #app-content #home.page-section .home-search-hero__search-wrap {
+  z-index: 5100 !important;
+}
+
+html body #app-content #home.page-section .home-global-search {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+}
+
+@media (max-width: 620px) {
+  html body #app-content #home.page-section .home-search-hero__image-wrap {
+    margin-bottom: -14px !important;
+  }
+}
+
 html body #app-content #daily :is(#edit-daily-1, #edit-daily-2),
 html body #app-content #daily :is(#edit-daily-1, #edit-daily-2):focus,
 html body #app-content #daily :is(#edit-daily-1, #edit-daily-2):focus-visible,
