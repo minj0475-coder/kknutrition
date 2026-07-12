@@ -24761,6 +24761,25 @@ html body #app-content :is(
   }
 }
 
+/* Home hero and dashboard content must occupy separate document-flow rows. */
+html body #app-content #home.page-section > main.wrap {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: clamp(24px, 3vw, 40px) !important;
+}
+
+html body #app-content #home.page-section > main.wrap > .home-search-hero.hero {
+  flex: 0 0 auto !important;
+  height: auto !important;
+}
+
+html body #app-content #home.page-section > main.wrap > .home-grid {
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  margin-top: 0 !important;
+}
+
 /* 2026-07-11 final action button polish: one ChatGPT-like rounded rectangle system. */
 :root {
   --kkn-action-radius: 15px !important;
