@@ -24857,6 +24857,48 @@ html body #appSidebar.app-sidebar .sidebar-head::after {
   display: none !important;
 }
 
+/* Mobile contents use the full width: larger labels and compact two-column submenus. */
+@media (max-width: 900px) {
+  html body #appSidebar.app-sidebar .sidebar-nav {
+    gap: 6px !important;
+  }
+
+  html body #appSidebar.app-sidebar .sidebar-nav-group {
+    gap: 2px !important;
+    margin-bottom: 6px !important;
+  }
+
+  html body #appSidebar.app-sidebar .sidebar-nav > .sidebar-nav-group > a {
+    min-height: 34px !important;
+    padding: 5px 10px !important;
+    font-size: 16.5px !important;
+    font-weight: 780 !important;
+    line-height: 1.25 !important;
+  }
+
+  html body #appSidebar.app-sidebar .sidebar-subnav {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 2px 8px !important;
+    margin: 1px 0 7px 4px !important;
+    padding-left: 10px !important;
+  }
+
+  html body #appSidebar.app-sidebar .sidebar-subnav a {
+    min-width: 0 !important;
+    min-height: 27px !important;
+    padding: 4px 8px !important;
+    font-size: 14.5px !important;
+    font-weight: 560 !important;
+    line-height: 1.25 !important;
+    word-break: keep-all !important;
+  }
+
+  html body #appSidebar.app-sidebar .sidebar-subnav a[href="#promoContactPanel"] {
+    grid-column: 1 / -1 !important;
+  }
+}
+
 /* Complaint cards show copy normally; edit and delete are edit-mode actions. */
 html body #app-content #complaints .complaint-card-actions {
   align-items: center !important;
