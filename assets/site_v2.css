@@ -25314,6 +25314,28 @@ html body #app-content #daily :is(#edit-daily-1, #edit-daily-2) * {
   }
 }
 
+/* 2026-07-12 daily schedule: retain only the thin outer edit line during save. */
+html body #app-content #daily:is(.is-page-editing, :has(#editBtnDaily.saving)) > main.wrap > .card,
+html body #app-content #daily:is(.is-page-editing, :has(#editBtnDaily.saving)) > main.wrap > .card:hover,
+html body #app-content #daily:is(.is-page-editing, :has(#editBtnDaily.saving)) > main.wrap > .card:focus-within {
+  outline: 0 !important;
+  outline-offset: 0 !important;
+  border: 1px solid var(--kkn-edit-card-line) !important;
+  box-shadow: var(--shadow-flat) !important;
+  transition: none !important;
+}
+
+html body #app-content #daily :is(#edit-daily-1, #edit-daily-2),
+html body #app-content #daily :is(#edit-daily-1, #edit-daily-2):focus,
+html body #app-content #daily :is(#edit-daily-1, #edit-daily-2):focus-visible,
+html body #app-content #daily :is(#edit-daily-1, #edit-daily-2):focus-within {
+  border: 0 !important;
+  outline: 0 !important;
+  outline-offset: 0 !important;
+  box-shadow: none !important;
+  transition: none !important;
+}
+
 @media (max-width: 280px) {
   html body #appSidebar.app-sidebar .sidebar-subnav {
     grid-template-columns: minmax(0, 1fr) !important;
