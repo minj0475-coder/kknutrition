@@ -24787,8 +24787,16 @@ html body #app-content #home.page-section > main.wrap > .home-grid {
 }
 
 @media (max-width: 620px) {
+  html body #app-content #home.page-section > main.wrap {
+    gap: 14px !important;
+  }
+
+  html body #app-content #home.page-section > main.wrap > .home-search-hero.hero {
+    padding-bottom: 0 !important;
+  }
+
   html body #app-content #home.page-section > main.wrap > .home-grid {
-    margin-top: clamp(48px, 14vw, 68px) !important;
+    margin-top: 0 !important;
   }
 }
 
