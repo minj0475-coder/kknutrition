@@ -25247,23 +25247,12 @@ html body #app-content #daily :is(#edit-daily-1, #edit-daily-2):focus-within {
 
 /* 2026-07-12 mobile sidebar: neutral ChatGPT-like hierarchy and two-column alignment. */
 @media (max-width: 900px) {
-  html body #appSidebar.app-sidebar .sidebar-nav {
-    gap: 8px !important;
-  }
-
-  html body #appSidebar.app-sidebar .sidebar-nav-group {
-    gap: 6px !important;
-    margin-bottom: 8px !important;
-  }
-
   html body #appSidebar.app-sidebar .sidebar-nav > .sidebar-nav-group > a,
   html body #appSidebar.app-sidebar .sidebar-subnav a {
     display: flex !important;
     align-items: center !important;
     min-width: 0 !important;
-    min-height: 44px !important;
     box-sizing: border-box !important;
-    padding: 8px 10px !important;
     border: 1px solid transparent !important;
     border-radius: 10px !important;
     line-height: 1.3 !important;
@@ -25285,10 +25274,6 @@ html body #app-content #daily :is(#edit-daily-1, #edit-daily-2):focus-within {
   html body #appSidebar.app-sidebar .sidebar-subnav {
     display: grid !important;
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    grid-auto-rows: minmax(44px, auto) !important;
-    column-gap: 12px !important;
-    row-gap: 8px !important;
-    margin: 2px 0 8px !important;
     padding: 0 !important;
     border-left: 0 !important;
   }
@@ -25345,14 +25330,14 @@ html body #app-content #daily :is(#edit-daily-1, #edit-daily-2):focus-within {
   }
 
   html body #appSidebar.app-sidebar .sidebar-subnav {
-    grid-auto-rows: minmax(28px, auto) !important;
-    column-gap: 8px !important;
+    grid-auto-rows: minmax(30px, auto) !important;
+    column-gap: 10px !important;
     row-gap: 3px !important;
     margin: 0 0 4px !important;
   }
 
   html body #appSidebar.app-sidebar .sidebar-subnav a {
-    min-height: 28px !important;
+    min-height: 30px !important;
     padding: 3px 7px !important;
     border-radius: 8px !important;
     font-size: 13.5px !important;
