@@ -482,7 +482,7 @@ window.bmToggleFavorite = function(idx) {
     if (bookmarkData[idx].isFavorite) {
       bookmarkData[idx].favoriteTime = Date.now();
     }
-    saveToStorage(isEditMode ? { sync: false } : undefined);
+    saveToStorage();
     renderBookmarks();
   }
 };
