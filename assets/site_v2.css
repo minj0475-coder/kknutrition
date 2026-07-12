@@ -24798,7 +24798,10 @@ html body #app-content #annual #edit-annual-2[contenteditable="true"]:focus {
 @media (max-width: 900px) {
   html body .app-sidebar,
   html body.sidebar-open .app-sidebar,
-  html body .app-sidebar.is-open {
+  html body .app-sidebar.is-open,
+  html body #appSidebar.app-sidebar,
+  html body.sidebar-open #appSidebar.app-sidebar,
+  html body #appSidebar.app-sidebar.is-open {
     position: fixed !important;
     inset: 0 !important;
     width: 100vw !important;
