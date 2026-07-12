@@ -24857,6 +24857,44 @@ html body #appSidebar.app-sidebar .sidebar-head::after {
   display: none !important;
 }
 
+/* Complaint cards show copy normally; edit and delete are edit-mode actions. */
+html body #app-content #complaints .complaint-card-actions {
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+}
+
+html body #app-content #complaints .complaint-card-actions .complaint-icon-btn {
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #202123 !important;
+}
+
+html body #app-content #complaints .complaint-card-actions .complaint-icon-btn:hover,
+html body #app-content #complaints .complaint-card-actions .complaint-icon-btn:focus-visible {
+  background: #f4f4f5 !important;
+  outline: 0 !important;
+}
+
+html body #app-content #complaints:not(.is-editing) .complaint-record-edit,
+html body #app-content #complaints:not(.is-editing) .complaint-card-actions .complaint-icon-btn.danger {
+  display: none !important;
+}
+
+html body #app-content #complaints.is-editing .complaint-record-edit,
+html body #app-content #complaints.is-editing .complaint-card-actions .complaint-icon-btn.danger {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
 /* 2026-07-11 final action button polish: one ChatGPT-like rounded rectangle system. */
 :root {
   --kkn-action-radius: 15px !important;

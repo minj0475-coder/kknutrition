@@ -780,6 +780,13 @@ function setupComplaintRecords() {
       chips.appendChild(makeTextNode("span", "complaint-chip", item.category || "미분류"));
       const actions = document.createElement("div");
       actions.className = "complaint-card-actions";
+      const editRecordBtn = document.createElement("button");
+      editRecordBtn.className = "icon-only-btn complaint-icon-btn complaint-record-edit";
+      editRecordBtn.type = "button";
+      editRecordBtn.title = "수정";
+      editRecordBtn.setAttribute("aria-label", "의견·민원 대응 기록 수정");
+      editRecordBtn.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 20h4l11-11a2.8 2.8 0 0 0-4-4L4 16v4ZM13.5 6.5l4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      editRecordBtn.addEventListener("click", () => openModal(item));
       const copyAllBtn = document.createElement("button");
       copyAllBtn.className = "icon-only-btn complaint-icon-btn";
       copyAllBtn.type = "button";
@@ -800,7 +807,7 @@ function setupComplaintRecords() {
         render();
         showToast("기록을 삭제했습니다.");
       });
-      actions.append(copyAllBtn, deleteBtn);
+      actions.append(editRecordBtn, copyAllBtn, deleteBtn);
       top.append(chips, actions);
       card.appendChild(top);
       card.addEventListener("click", event => {
