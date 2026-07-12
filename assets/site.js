@@ -3623,6 +3623,10 @@ function setupHomeGlobalSearch() {
   let showAll = false;
   let renderTimer = 0;
 
+  const syncClearButton = () => {
+    clearBtn.hidden = !getSiteSearchQuery(input.value).raw;
+  };
+
   const closeResults = () => {
     results.hidden = true;
     results.innerHTML = "";
@@ -3642,7 +3646,7 @@ function setupHomeGlobalSearch() {
 
   const render = () => {
     const query = getSiteSearchQuery(input.value);
-    clearBtn.hidden = !query.raw;
+    syncClearButton();
     input.setAttribute("aria-expanded", query.raw ? "true" : "false");
     results.innerHTML = "";
     showAll = showAll && Boolean(query.raw);
@@ -3703,6 +3707,7 @@ function setupHomeGlobalSearch() {
   input.addEventListener("input", () => {
     activeIndex = -1;
     showAll = false;
+    syncClearButton();
     scheduleRender();
   });
   input.addEventListener("focus", () => {
@@ -3733,10 +3738,11 @@ function setupHomeGlobalSearch() {
       closeResults();
     }
   });
-  clearBtn.addEventListener("click", () => {
+  clearBtn.addEventListener("click", event => {
+    event.preventDefault();
     input.value = "";
     closeResults();
-    clearBtn.hidden = true;
+    syncClearButton();
     input.focus();
   });
   document.addEventListener("click", event => {
@@ -3753,6 +3759,7 @@ function setupHomeGlobalSearch() {
   window.addEventListener("kknutrition:site-search-index-invalidated", () => {
     if (input.value.trim()) render();
   });
+  syncClearButton();
 }
 
 window.addEventListener("kknutrition:local-data-changed", invalidateSiteSearchIndex);

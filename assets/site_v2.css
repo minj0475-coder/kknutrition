@@ -23541,6 +23541,19 @@ html body #app-content #home.page-section .home-global-search input::placeholder
   opacity: .86 !important;
 }
 
+html body #app-content #home.page-section .home-global-search input[type="search"]::-webkit-search-cancel-button,
+html body #app-content #home.page-section .home-global-search input[type="search"]::-webkit-search-decoration {
+  display: none !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+
+html body #app-content #home.page-section .home-global-search input[type="search"]::-ms-clear {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
 html body #app-content #home.page-section .home-global-search__clear {
   display: inline-flex !important;
   align-items: center !important;
@@ -23556,6 +23569,10 @@ html body #app-content #home.page-section .home-global-search__clear {
   color: var(--muted) !important;
   box-shadow: none !important;
   cursor: pointer !important;
+}
+
+html body #app-content #home.page-section .home-global-search__clear[hidden] {
+  display: none !important;
 }
 
 html body #app-content #home.page-section .home-global-search__clear:hover,
