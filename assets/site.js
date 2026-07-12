@@ -479,7 +479,7 @@ function escapeTemplateHtml(value) {
 
 const COMPLAINT_RECORDS_KEY = "kkulkkoori_complaint_records_v1";
 const COMPLAINT_LAST_SCHOOL_KEY = "kkulkkoori_complaint_last_school_v1";
-const COMPLAINT_AUDIENCES = ["전체", "관리자", "교직원", "학생", "학부모", "기타"];
+const COMPLAINT_AUDIENCES = ["전체", "관리자", "행정실", "교직원", "학생", "학부모", "기타"];
 const COMPLAINT_FIELDS = [
   "title",
   "school",
