@@ -25222,6 +25222,16 @@ html body #app-content #home #homeMemoCard #openMemoModalBtn.memo-full-btn.memo-
   transform: none !important;
 }
 
+/* 2026-07-12 daily schedule: suppress the transient inner focus ring while saving. */
+html body #app-content #daily :is(#edit-daily-1, #edit-daily-2),
+html body #app-content #daily :is(#edit-daily-1, #edit-daily-2):focus,
+html body #app-content #daily :is(#edit-daily-1, #edit-daily-2):focus-visible,
+html body #app-content #daily :is(#edit-daily-1, #edit-daily-2):focus-within {
+  outline: 0 !important;
+  outline-offset: 0 !important;
+  box-shadow: none !important;
+}
+
 /* 2026-07-12 mobile sidebar: roomier two-column menu tiles and clearer active state. */
 @media (max-width: 900px) {
   html body #appSidebar.app-sidebar .sidebar-nav {
