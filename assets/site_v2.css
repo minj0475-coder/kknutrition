@@ -13415,6 +13415,20 @@ html body #app-content #bookmarks button.bm-favorite-btn.bm-favorite-btn[aria-pr
   stroke: #ffd700 !important;
 }
 
+html body #app-content #bookmarks .bm-favorite-status {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-left: auto !important;
+  color: #ffd700 !important;
+}
+
+html body #app-content #bookmarks .bm-favorite-status svg,
+html body #app-content #bookmarks .bm-favorite-status svg polygon {
+  fill: #ffd700 !important;
+  stroke: #ffd700 !important;
+}
+
 html body #app-content #academicModal button.academic-color-swatch.academic-color-swatch {
   width: 30px !important;
   height: 30px !important;
