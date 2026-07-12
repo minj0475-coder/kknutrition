@@ -545,8 +545,10 @@ function saveComplaintRecords(items, options = {}) {
       notifyNoteDataChanged(COMPLAINT_RECORDS_KEY, value, payload.updatedAt);
     }
     return payload.updatedAt;
-  } catch(e) {}
-  return Date.now();
+  } catch(e) {
+    console.error("Complaint record save failed:", e);
+    return null;
+  }
 }
 
 function getComplaintSearchBlob(item) {
@@ -612,6 +614,7 @@ function setupComplaintRecords() {
   const form = document.getElementById("complaintForm");
   const closeBtn = document.getElementById("complaintModalCloseBtn");
   const cancelBtn = document.getElementById("complaintCancelBtn");
+  const formStatus = document.getElementById("complaintFormStatus");
   const toast = document.getElementById("complaintToast");
   if (!page || !list || !empty || !searchInput || !filters || !addBtn || !modal || !form) return;
 
@@ -686,6 +689,7 @@ function setupComplaintRecords() {
 
   const openModal = (sourceItem = null) => {
     if (!complaintEditMode) window.enterComplaintEditMode();
+    if (formStatus) formStatus.textContent = "";
     const record = normalizeComplaintRecord(sourceItem || {
       school: readLastSchool(),
       date: getKoreanDateValue(),
@@ -854,11 +858,10 @@ function setupComplaintRecords() {
   searchInput.addEventListener("input", render);
   if (closeBtn) closeBtn.addEventListener("click", closeModal);
   if (cancelBtn) cancelBtn.addEventListener("click", closeModal);
-  modal.addEventListener("click", event => {
-    if (event.target === modal) closeModal();
-  });
-  document.addEventListener("keydown", event => {
-    if (event.key === "Escape" && !modal.hidden) closeModal();
+  modal.addEventListener("keydown", event => {
+    if (event.key !== "Escape") return;
+    event.preventDefault();
+    event.stopPropagation();
   });
   form.addEventListener("submit", event => {
     event.preventDefault();
@@ -878,12 +881,21 @@ function setupComplaintRecords() {
       createdAt: currentItem ? currentItem.createdAt : now,
       updatedAt: now
     });
-    if (!next.title || !next.school || !next.date || !next.audience) return;
-    items = editingId
+    if (!next.title || !next.school || !next.date || !next.audience) {
+      if (formStatus) formStatus.textContent = "필수 입력 항목을 확인해 주세요.";
+      return;
+    }
+    const nextItems = editingId
       ? items.map(item => item.id === editingId ? next : item)
       : [next, ...items];
+    const savedAt = saveComplaintRecords(nextItems);
+    if (!savedAt) {
+      if (formStatus) formStatus.textContent = "저장하지 못했습니다. 입력 내용을 유지한 채 다시 시도해 주세요.";
+      return;
+    }
+    items = nextItems;
     saveLastSchool(next.school);
-    saveComplaintRecords(items);
+    if (formStatus) formStatus.textContent = "";
     closeModal();
     render();
     showToast(currentItem ? "기록을 수정했습니다." : "새 기록을 저장했습니다.");
@@ -5237,6 +5249,11 @@ document.addEventListener("DOMContentLoaded", () => {
       seriesId: original && original.seriesId ? original.seriesId : createAcademicSeriesId()
     };
     const hasContent = Boolean(entry.title || entry.memo || entry.url);
+    if (!hasContent) {
+      setStatus("일정 제목, 메모 또는 URL 중 하나를 입력해 주세요.");
+      if (titleInput) titleInput.focus({ preventScroll: true });
+      return;
+    }
 
     if (!original) {
       if (hasContent) {
@@ -5365,8 +5382,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   if (modalCloseBtn) modalCloseBtn.addEventListener("click", closeAcademicModal);
   if (modal) {
-    modal.addEventListener("click", event => {
-      if (event.target === modal) closeAcademicModal();
+    modal.addEventListener("keydown", event => {
+      if (event.key !== "Escape") return;
+      event.preventDefault();
+      event.stopPropagation();
     });
   }
   if (fullscreenBtn && modal) {
