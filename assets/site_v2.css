@@ -25312,6 +25312,58 @@ html body #app-content #daily :is(#edit-daily-1, #edit-daily-2):focus-within {
   }
 }
 
+/* 2026-07-12 mobile sidebar density: keep the primary TOC through staff service visible. */
+@media (max-width: 900px) {
+  html body #appSidebar.app-sidebar,
+  html body.sidebar-open #appSidebar.app-sidebar,
+  html body #appSidebar.app-sidebar.is-open {
+    padding-top: max(6px, env(safe-area-inset-top)) !important;
+    padding-bottom: max(6px, env(safe-area-inset-bottom)) !important;
+  }
+
+  html body #appSidebar.app-sidebar .sidebar-head {
+    min-height: 48px !important;
+    padding: 2px 0 4px !important;
+    margin-bottom: 2px !important;
+  }
+
+  html body #appSidebar.app-sidebar .sidebar-nav {
+    gap: 3px !important;
+  }
+
+  html body #appSidebar.app-sidebar .sidebar-nav-group {
+    gap: 2px !important;
+    margin-bottom: 3px !important;
+  }
+
+  html body #appSidebar.app-sidebar .sidebar-nav > .sidebar-nav-group > a {
+    min-height: 32px !important;
+    padding: 5px 8px !important;
+    border-radius: 8px !important;
+    font-size: 15px !important;
+    line-height: 1.15 !important;
+  }
+
+  html body #appSidebar.app-sidebar .sidebar-subnav {
+    grid-auto-rows: minmax(28px, auto) !important;
+    column-gap: 8px !important;
+    row-gap: 3px !important;
+    margin: 0 0 4px !important;
+  }
+
+  html body #appSidebar.app-sidebar .sidebar-subnav a {
+    min-height: 28px !important;
+    padding: 3px 7px !important;
+    border-radius: 8px !important;
+    font-size: 13.5px !important;
+    line-height: 1.15 !important;
+  }
+
+  html body #appSidebar.app-sidebar .sidebar-section {
+    margin-top: 3px !important;
+  }
+}
+
 /* 2026-07-11 bookmarks: match the vendor-management edit/save button exactly. */
 html body #app-content :is(
   #editBtnBookmarks#editBtnBookmarks#editBtnBookmarks#editBtnBookmarks,
