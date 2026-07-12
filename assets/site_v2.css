@@ -5197,10 +5197,6 @@ nav a.active, .mobile-nav-list a.active {
   justify-content: flex-start !important;
   width: 100% !important;
 }
-.home-grid-left .daily-kkul-copy  .daily-kkul-copy p {
-    text-align: center;
-  }
-
 /* 27. Affordance & Trendy UI Overrides (2026-06-15) */
 
 /* Accordion Rows -> Lift effect & interactive + */
