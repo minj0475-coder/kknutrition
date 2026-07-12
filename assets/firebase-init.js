@@ -1019,6 +1019,9 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
 
       const updateData = {};
       editables.forEach(el => {
+        if (pageId === 'daily' && (document.activeElement === el || el.contains(document.activeElement))) {
+          document.activeElement.blur();
+        }
         el.removeAttribute('contenteditable');
         updateData[el.id] = el.innerHTML;
       });

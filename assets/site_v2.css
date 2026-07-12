@@ -25245,14 +25245,13 @@ html body #app-content #home #homeMemoCard #openMemoModalBtn.memo-full-btn.memo-
   transform: none !important;
 }
 
-/* 2026-07-12 daily schedule: suppress the transient inner focus ring while saving. */
+/* 2026-07-12 daily schedule: never show an inner focus ring during edit/save. */
 html body #app-content #daily :is(#edit-daily-1, #edit-daily-2),
-html body #app-content #daily :is(#edit-daily-1, #edit-daily-2):focus,
-html body #app-content #daily :is(#edit-daily-1, #edit-daily-2):focus-visible,
-html body #app-content #daily :is(#edit-daily-1, #edit-daily-2):focus-within {
+html body #app-content #daily :is(#edit-daily-1, #edit-daily-2) * {
   outline: 0 !important;
   outline-offset: 0 !important;
   box-shadow: none !important;
+  transition: none !important;
 }
 
 /* 2026-07-12 mobile sidebar: neutral ChatGPT-like hierarchy and two-column alignment. */
