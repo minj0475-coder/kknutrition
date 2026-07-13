@@ -25614,7 +25614,7 @@ html body #app-content #daily :is(#edit-daily-1, #edit-daily-2):focus-within {
 @media (max-width: 900px) {
   html body #appSidebar.app-sidebar .sidebar-nav {
     gap: 7px !important;
-    padding: 0 10px !important;
+    padding: 10px 10px 0 !important;
   }
 
   html body #appSidebar.app-sidebar .sidebar-nav-group {
