@@ -25009,6 +25009,189 @@ html body #app-content #annual #edit-annual-2[contenteditable="true"]:focus {
   }
 }
 
+/* Desktop sidebar refinement: quieter typography, panel control, and smoother rail motion. */
+@keyframes desktopSidebarContentIn {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (min-width: 901px) {
+  html body:not(.sidebar-collapsed) #appSidebar.app-sidebar,
+  html body.sidebar-open #appSidebar.app-sidebar {
+    width: 288px !important;
+    min-width: 288px !important;
+    max-width: 288px !important;
+    padding: 16px 12px 18px !important;
+    border-right: 1px solid #ececec !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+    scrollbar-width: thin;
+    scrollbar-color: #c9c9c9 transparent;
+    transition: width .28s cubic-bezier(.22, 1, .36, 1), box-shadow .18s ease !important;
+  }
+
+  html body:not(.sidebar-collapsed) #app-content,
+  html body.sidebar-open #app-content {
+    padding-left: 288px !important;
+    transition: padding-left .28s cubic-bezier(.22, 1, .36, 1) !important;
+  }
+
+  html body.sidebar-collapsed #appSidebar.app-sidebar,
+  html body.sidebar-collapsed #app-content {
+    transition-duration: .28s !important;
+    transition-timing-function: cubic-bezier(.22, 1, .36, 1) !important;
+  }
+
+  html body:not(.sidebar-collapsed) #appSidebar.app-sidebar::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  html body:not(.sidebar-collapsed) #appSidebar.app-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  html body:not(.sidebar-collapsed) #appSidebar.app-sidebar::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: #c9c9c9;
+  }
+
+  html body:not(.sidebar-collapsed) #appSidebar.app-sidebar .sidebar-head,
+  html body.sidebar-open #appSidebar.app-sidebar .sidebar-head {
+    min-height: 58px !important;
+    height: 58px !important;
+    margin-bottom: 8px !important;
+  }
+
+  html body:not(.sidebar-collapsed) #appSidebar.app-sidebar button#sidebarCloseBtn.sidebar-icon-btn,
+  html body.sidebar-open #appSidebar.app-sidebar button#sidebarCloseBtn.sidebar-icon-btn {
+    top: -1px !important;
+    right: 10px !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    border: 0 !important;
+    border-radius: 10px !important;
+    background: transparent !important;
+    color: #6b7280 !important;
+    box-shadow: none !important;
+    transition: background-color .16s ease, color .16s ease, transform .16s ease !important;
+  }
+
+  html body:not(.sidebar-collapsed) #appSidebar.app-sidebar button#sidebarCloseBtn.sidebar-icon-btn:hover,
+  html body:not(.sidebar-collapsed) #appSidebar.app-sidebar button#sidebarCloseBtn.sidebar-icon-btn:focus-visible,
+  html body.sidebar-open #appSidebar.app-sidebar button#sidebarCloseBtn.sidebar-icon-btn:hover,
+  html body.sidebar-open #appSidebar.app-sidebar button#sidebarCloseBtn.sidebar-icon-btn:focus-visible {
+    background: #f1f1f1 !important;
+    color: #202123 !important;
+    outline: 0 !important;
+  }
+
+  html body:not(.sidebar-collapsed) #appSidebar.app-sidebar #sidebarCloseBtn svg,
+  html body.sidebar-open #appSidebar.app-sidebar #sidebarCloseBtn svg {
+    display: block !important;
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  html body:not(.sidebar-collapsed) #appSidebar.app-sidebar .sidebar-nav,
+  html body:not(.sidebar-collapsed) #appSidebar.app-sidebar .sidebar-section,
+  html body.sidebar-open #appSidebar.app-sidebar .sidebar-nav,
+  html body.sidebar-open #appSidebar.app-sidebar .sidebar-section {
+    animation: desktopSidebarContentIn .24s cubic-bezier(.22, 1, .36, 1) both;
+  }
+
+  html body:not(.sidebar-collapsed) #appSidebar.app-sidebar .sidebar-nav,
+  html body.sidebar-open #appSidebar.app-sidebar .sidebar-nav {
+    gap: 3px !important;
+    margin-bottom: 14px !important;
+  }
+
+  html body:not(.sidebar-collapsed) #appSidebar.app-sidebar .sidebar-nav > .sidebar-nav-group > a,
+  html body:not(.sidebar-collapsed) #appSidebar.app-sidebar .sidebar-nav > a,
+  html body.sidebar-open #appSidebar.app-sidebar .sidebar-nav > .sidebar-nav-group > a,
+  html body.sidebar-open #appSidebar.app-sidebar .sidebar-nav > a {
+    min-height: 40px !important;
+    padding: 9px 12px !important;
+    border-radius: 10px !important;
+    color: #202123 !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    line-height: 1.35 !important;
+  }
+
+  html body:not(.sidebar-collapsed) #appSidebar.app-sidebar .sidebar-subnav,
+  html body.sidebar-open #appSidebar.app-sidebar .sidebar-subnav {
+    gap: 2px !important;
+    margin: 2px 0 10px 8px !important;
+    padding-left: 12px !important;
+    border-left: 0 !important;
+  }
+
+  html body:not(.sidebar-collapsed) #appSidebar.app-sidebar .sidebar-subnav a,
+  html body.sidebar-open #appSidebar.app-sidebar .sidebar-subnav a {
+    min-height: 30px !important;
+    padding: 5px 9px !important;
+    border-radius: 9px !important;
+    color: #5f6368 !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    line-height: 1.35 !important;
+  }
+
+  html body:not(.sidebar-collapsed) #appSidebar.app-sidebar :is(.sidebar-nav a, .sidebar-subnav a, .sidebar-recent-list a):hover,
+  html body.sidebar-open #appSidebar.app-sidebar :is(.sidebar-nav a, .sidebar-subnav a, .sidebar-recent-list a):hover {
+    background: #f4f4f4 !important;
+    color: #202123 !important;
+  }
+
+  html body:not(.sidebar-collapsed) #appSidebar.app-sidebar :is(.sidebar-nav a, .sidebar-subnav a).active,
+  html body.sidebar-open #appSidebar.app-sidebar :is(.sidebar-nav a, .sidebar-subnav a).active {
+    background: #ececec !important;
+    color: #202123 !important;
+    font-weight: 650 !important;
+  }
+
+  html body:not(.sidebar-collapsed) #appSidebar.app-sidebar .sidebar-section,
+  html body.sidebar-open #appSidebar.app-sidebar .sidebar-section {
+    margin-top: 18px !important;
+    padding: 18px 8px 0 !important;
+    border-top: 0 !important;
+  }
+
+  html body:not(.sidebar-collapsed) #appSidebar.app-sidebar .sidebar-section-title,
+  html body.sidebar-open #appSidebar.app-sidebar .sidebar-section-title {
+    margin: 0 0 8px 2px !important;
+    color: #202123 !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+  }
+
+  html body:not(.sidebar-collapsed) #appSidebar.app-sidebar .sidebar-recent-list,
+  html body.sidebar-open #appSidebar.app-sidebar .sidebar-recent-list {
+    gap: 2px !important;
+  }
+
+  html body:not(.sidebar-collapsed) #appSidebar.app-sidebar .sidebar-recent-list a,
+  html body:not(.sidebar-collapsed) #appSidebar.app-sidebar .sidebar-empty,
+  html body.sidebar-open #appSidebar.app-sidebar .sidebar-recent-list a,
+  html body.sidebar-open #appSidebar.app-sidebar .sidebar-empty {
+    min-height: 34px !important;
+    padding: 6px 10px !important;
+    border-radius: 9px !important;
+    color: #5f6368 !important;
+    font-size: 13.5px !important;
+    font-weight: 500 !important;
+    line-height: 1.35 !important;
+  }
+}
+
 /* Keep the mobile menu button shadow from being clipped by the app bar. */
 @media (max-width: 900px) {
   html body #app-content > header.top,
