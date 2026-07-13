@@ -25325,10 +25325,10 @@ html body #app-content #daily:is(.is-page-editing, :has(#editBtnDaily.saving)) >
   transition: none !important;
 }
 
-/* 2026-07-12 home hero: keep the cloud tail tucked behind the search field. */
+/* 2026-07-13 home hero: reveal the ribbon while keeping only the cloud tip behind search. */
 html body #app-content #home.page-section .home-search-hero__image-wrap {
   z-index: 1 !important;
-  margin-bottom: -8px !important;
+  margin-bottom: 8px !important;
 }
 
 html body #app-content #home.page-section .home-search-hero__search-wrap {
@@ -25342,7 +25342,7 @@ html body #app-content #home.page-section .home-global-search {
 
 @media (max-width: 620px) {
   html body #app-content #home.page-section .home-search-hero__image-wrap {
-    margin-bottom: -14px !important;
+    margin-bottom: -4px !important;
   }
 }
 
