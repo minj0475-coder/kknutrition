@@ -561,16 +561,16 @@ function getComplaintCopyText(item) {
     item.title || "",
     `${item.school || ""} · ${item.date || ""}`,
     "",
-    "■ 사례",
+    "사례",
     item.caseText || "",
     "",
-    "■ 대응",
+    "대응",
     item.response || "",
     "",
-    "■ 대응 문구",
+    "대응 문구",
     item.phrase || "",
     "",
-    "■ 처리 결과",
+    "처리 결과",
     item.result || ""
   ].join("\n").trim();
 }
@@ -825,10 +825,10 @@ function setupComplaintRecords() {
 
       card.appendChild(makeTextNode("h2", "complaint-card-title", item.title));
       card.appendChild(makeTextNode("p", "complaint-card-meta", `${item.school} · ${item.date}`));
-      appendSection(card, "■ 사례", item.caseText);
-      appendSection(card, "■ 대응", item.response);
-      appendSection(card, "■ 대응 문구", item.phrase, { copyPhrase: true });
-      appendSection(card, "■ 처리 결과", item.result);
+      appendSection(card, "사례", item.caseText);
+      appendSection(card, "대응", item.response);
+      appendSection(card, "대응 문구", item.phrase, { copyPhrase: true });
+      appendSection(card, "처리 결과", item.result);
       list.appendChild(card);
     });
     syncComplaintEditControls();
