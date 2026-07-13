@@ -5199,12 +5199,18 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderWeeklyTable() {
     if (!weekList) return;
     const query = (searchInput ? searchInput.value : "").trim().toLowerCase();
+    const todayKey = makeAcademicKey(new Date());
     weekList.innerHTML = "";
 
     getWeeks().forEach(week => {
       const weekEvents = [];
-      week.dates.forEach(date => {
-        if (date.getMonth() !== state.month) return;
+      const visibleWeekDates = week.dates.filter(date => {
+        if (date.getMonth() !== state.month) return false;
+        return makeAcademicKey(date) >= todayKey;
+      });
+      if (!visibleWeekDates.length) return;
+
+      visibleWeekDates.forEach(date => {
         const key = makeAcademicKey(date);
         const events = getAcademicEventsForKey(key, userEvents).filter(event => academicMatchesQuery(key, [event], query));
         events.forEach(event => weekEvents.push({ key, event }));
@@ -5224,9 +5230,14 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
       const rangeButton = group.querySelector(".academic-week-range");
       const items = group.querySelector(".academic-week-items");
-      rangeButton.addEventListener("click", () => {
-        academicWeekCollapsed[weekId] = !academicWeekCollapsed[weekId];
-        renderWeeklyTable();
+      rangeButton.addEventListener("click", event => {
+        event.preventDefault();
+        event.stopPropagation();
+        const nextCollapsed = !group.classList.contains("is-collapsed");
+        academicWeekCollapsed[weekId] = nextCollapsed;
+        group.classList.toggle("is-collapsed", nextCollapsed);
+        rangeButton.setAttribute("aria-expanded", nextCollapsed ? "false" : "true");
+        items.hidden = nextCollapsed;
       });
       if (weekEvents.length) {
         weekEvents.forEach(({ key, event }) => {
