@@ -21569,6 +21569,10 @@ html body #app-content #monthly .academic-week-items {
   gap: 8px !important;
 }
 
+html body #app-content #monthly .academic-week-items[hidden] {
+  display: none !important;
+}
+
 html body #app-content #monthly .academic-week-row {
   display: grid !important;
   grid-template-columns: 70px minmax(0, 1fr) auto !important;
