@@ -25519,9 +25519,16 @@ html body #app-content #home.page-section .home-global-search {
     --home-kkul-float-x: -50%;
     --home-kkul-float-y: 4px;
     --home-kkul-float-scale: 1.34;
-    animation: none !important;
+    animation: homeKkulSoftFloat 6.4s ease-in-out infinite !important;
     transform: translateX(-50%) translateY(4px) scale(1.34) !important;
     transform-origin: center center !important;
+  }
+}
+
+@media (max-width: 620px) and (prefers-reduced-motion: reduce) {
+  html body #app-content #home.page-section > main.wrap > .home-search-hero img.hero-asset,
+  html body #app-content #home.page-section .home-search-hero img.hero-asset {
+    animation: none !important;
   }
 }
 
