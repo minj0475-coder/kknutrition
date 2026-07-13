@@ -21901,7 +21901,7 @@ html body {
   --kkul-mobile-logo-left: 14px;
   --kkul-mobile-logo-top: 12px;
   --kkul-mobile-logo-box: 48px;
-  --kkul-mobile-logo-image: 42px;
+  --kkul-mobile-logo-image: 46px;
   --kkul-desktop-rail-logo-left: 10px;
   --kkul-desktop-rail-logo-top: 12px;
   --kkul-desktop-rail-logo-box: 46px;
@@ -21988,6 +21988,9 @@ html body {
     height: var(--kkul-mobile-logo-image) !important;
     min-width: var(--kkul-mobile-logo-image) !important;
     min-height: var(--kkul-mobile-logo-image) !important;
+    max-width: var(--kkul-mobile-logo-image) !important;
+    max-height: var(--kkul-mobile-logo-image) !important;
+    object-fit: contain !important;
     transform: none !important;
     translate: 0 0 !important;
   }
@@ -24944,7 +24947,7 @@ html body #app-content #annual #edit-annual-2[contenteditable="true"]:focus {
   html body.sidebar-open #appSidebar.app-sidebar button#sidebarCloseBtn.sidebar-icon-btn,
   html body #appSidebar.app-sidebar.is-open button#sidebarCloseBtn.sidebar-icon-btn {
     position: absolute !important;
-    top: max(8px, env(safe-area-inset-top)) !important;
+    top: max(7px, env(safe-area-inset-top)) !important;
     right: 14px !important;
     display: inline-flex !important;
     align-items: center !important;
