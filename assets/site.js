@@ -2999,29 +2999,45 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileSidebarQuery = window.matchMedia("(max-width: 900px)");
   let sidebarTouchStartX = 0;
   let sidebarTouchStartY = 0;
+  let sidebarOverlayHideTimer = 0;
 
   function isSidebarOpen() {
     return Boolean(sidebar && sidebar.classList.contains("is-open"));
   }
 
   function openDrawer() {
+    window.clearTimeout(sidebarOverlayHideTimer);
     document.body.classList.remove("sidebar-collapsed");
+    if (sidebarOverlay) sidebarOverlay.hidden = false;
     document.body.classList.add("sidebar-open");
     if (sidebar) sidebar.classList.add("is-open");
-    if (sidebarOverlay) sidebarOverlay.hidden = false;
+    if (sidebar) sidebar.setAttribute("aria-hidden", "false");
+    if (mobileMenuBtn) mobileMenuBtn.setAttribute("aria-expanded", "true");
     if(mobileDrawer) mobileDrawer.classList.add('active');
     try { sessionStorage.setItem(SIDEBAR_OPEN_KEY, "1"); } catch(e) {}
+    if (mobileSidebarQuery.matches && sidebarCloseBtn) {
+      window.setTimeout(() => sidebarCloseBtn.focus({ preventScroll: true }), 280);
+    }
   }
 
-  function closeDrawer() {
+  function closeDrawer(options = {}) {
+    const restoreFocus = options.restoreFocus !== false;
     document.body.classList.remove("sidebar-open");
     if (sidebar) sidebar.classList.remove("is-open");
-    if (sidebarOverlay) sidebarOverlay.hidden = true;
+    if (sidebar && mobileSidebarQuery.matches) sidebar.setAttribute("aria-hidden", "true");
+    if (mobileMenuBtn) mobileMenuBtn.setAttribute("aria-expanded", "false");
+    window.clearTimeout(sidebarOverlayHideTimer);
+    sidebarOverlayHideTimer = window.setTimeout(() => {
+      if (sidebarOverlay && !isSidebarOpen()) sidebarOverlay.hidden = true;
+    }, 300);
     if (window.matchMedia("(min-width: 901px)").matches) {
       document.body.classList.add("sidebar-collapsed");
     }
     if(mobileDrawer) mobileDrawer.classList.remove('active');
     try { sessionStorage.setItem(SIDEBAR_OPEN_KEY, "0"); } catch(e) {}
+    if (restoreFocus && mobileSidebarQuery.matches && mobileMenuBtn) {
+      mobileMenuBtn.focus({ preventScroll: true });
+    }
   }
 
   let shouldRestoreSidebar = false;
@@ -3030,6 +3046,8 @@ document.addEventListener('DOMContentLoaded', () => {
     openDrawer();
   } else if (window.matchMedia("(min-width: 901px)").matches) {
     document.body.classList.add("sidebar-collapsed");
+  } else if (sidebar) {
+    sidebar.setAttribute("aria-hidden", "true");
   }
 
   if (mobileMenuBtn) {
@@ -3078,20 +3096,50 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 
   drawerLinks.forEach(link => {
-    link.addEventListener('click', closeDrawer);
+    link.addEventListener('click', () => closeDrawer({ restoreFocus: false }));
   });
   sidebarLinks.forEach(link => {
     link.addEventListener("click", () => {
-      if (window.matchMedia("(max-width: 900px)").matches) closeDrawer();
+      if (window.matchMedia("(max-width: 900px)").matches) closeDrawer({ restoreFocus: false });
     });
   });
   buildSidebarToc();
   if (sidebar) {
     sidebar.addEventListener("click", event => {
       const link = event.target.closest("a[href]");
-      if (link && window.matchMedia("(max-width: 900px)").matches) closeDrawer();
+      if (link && window.matchMedia("(max-width: 900px)").matches) closeDrawer({ restoreFocus: false });
     });
   }
+  document.addEventListener("keydown", event => {
+    if (!mobileSidebarQuery.matches || !isSidebarOpen()) return;
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeDrawer();
+      return;
+    }
+    if (event.key !== "Tab" || !sidebar) return;
+    const focusable = [...sidebar.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])')]
+      .filter(element => element.getClientRects().length > 0);
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+  mobileSidebarQuery.addEventListener("change", event => {
+    if (!sidebar) return;
+    if (event.matches) {
+      sidebar.setAttribute("aria-hidden", isSidebarOpen() ? "false" : "true");
+      return;
+    }
+    sidebar.setAttribute("aria-hidden", "false");
+    if (mobileMenuBtn) mobileMenuBtn.setAttribute("aria-expanded", "false");
+  });
   setupSidebarSearch(sidebarSearch, closeDrawer);
   renderRecentPages();
 });
