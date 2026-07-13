@@ -25546,6 +25546,25 @@ html body #app-content section#bookmarks.page-section #bookmarkGrid.bookmark-gri
   box-sizing: border-box !important;
 }
 
+/* 2026-07-13 work notes: reserve edit controls so the card never resizes. */
+html body #app-content #today-menu .work-note-card:not(.is-editing) #workNoteAddBtn {
+  display: inline-grid !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+html body #app-content #today-menu .work-note-card:not(.is-editing) #workNoteDeleteBtn {
+  display: inline-flex !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+html body #app-content #today-menu .work-note-card:not(.is-editing) .work-note-textbox {
+  border: 1px solid transparent !important;
+  border-radius: 12px !important;
+  box-sizing: border-box !important;
+}
+
 /* 2026-07-11 final: every edit/save button matches the vendor-management action button. */
 html body #app-content :is(
   #editBtnDaily#editBtnDaily#editBtnDaily#editBtnDaily#editBtnDaily,
