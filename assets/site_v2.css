@@ -11966,24 +11966,28 @@ body #app-content .academic-pill {
 body #app-content .academic-pill.color-rose,
 body #app-content .academic-pill.user {
   color: #9a4654 !important;
+  -webkit-text-fill-color: #9a4654 !important;
   background: #fff1f3 !important;
   border-color: #ffd6de !important;
 }
 
 body #app-content .academic-pill.color-mint {
   color: #2f6b57 !important;
+  -webkit-text-fill-color: #2f6b57 !important;
   background: #ecfdf5 !important;
   border-color: #ccefe0 !important;
 }
 
 body #app-content .academic-pill.color-blue {
   color: #315f8c !important;
+  -webkit-text-fill-color: #315f8c !important;
   background: #eff6ff !important;
   border-color: #cfe1ff !important;
 }
 
 body #app-content .academic-pill.color-gold {
   color: #856322 !important;
+  -webkit-text-fill-color: #856322 !important;
   background: #fffbeb !important;
   border-color: #fde68a !important;
 }
@@ -15225,6 +15229,7 @@ html body #app-content .academic-pill.color-gray,
 html body #app-content .academic-pill.user.color-gray {
   background: #ececef !important;
   color: #52525b !important;
+  -webkit-text-fill-color: #52525b !important;
 }
 
 @media (max-width: 700px) {
