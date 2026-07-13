@@ -25006,6 +25006,14 @@ html body #app-content #annual #edit-annual-2[contenteditable="true"]:focus {
   }
 }
 
+/* Keep the mobile menu button shadow from being clipped by the app bar. */
+@media (max-width: 900px) {
+  html body #app-content > header.top,
+  html body #app-content > header.top .top-inner {
+    overflow: visible !important;
+  }
+}
+
 @media (max-width: 900px) and (prefers-reduced-motion: reduce) {
   html body #appSidebar.app-sidebar,
   html body #sidebarOverlay.sidebar-overlay:not([hidden]),
