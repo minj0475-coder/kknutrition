@@ -2660,6 +2660,7 @@ function updateTabs() {
 window.addEventListener('hashchange', updateTabs);
 document.addEventListener('DOMContentLoaded', () => {
   restoreHashBeforeFirstRender();
+  buildSidebarToc();
   updateTabs();
 });
 
