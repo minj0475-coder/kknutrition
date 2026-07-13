@@ -13821,9 +13821,22 @@ html body #app-content #sheetLinkOpenBtn::before {
 
 html body #app-content #sheetLinkOpenBtn svg,
 html body #app-content #sheetLinkSaveBtn svg {
+  display: block !important;
   width: 24px !important;
   height: 24px !important;
+  min-width: 24px !important;
+  min-height: 24px !important;
+  max-width: 24px !important;
+  max-height: 24px !important;
   flex: 0 0 24px !important;
+  transform: none !important;
+  filter: none !important;
+  shape-rendering: geometricPrecision;
+}
+
+html body #app-content #sheetLinkOpenBtn svg path,
+html body #app-content #sheetLinkSaveBtn svg path {
+  vector-effect: non-scaling-stroke;
 }
 
 html body #app-content #sheetLinkOpenBtn:focus-visible,
