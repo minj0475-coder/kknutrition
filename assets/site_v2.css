@@ -25540,6 +25540,12 @@ html body #app-content :is(
   }
 }
 
+/* 2026-07-13 bookmarks: keep card sizing stable before, during, and after editing. */
+html body #app-content section#bookmarks.page-section #bookmarkGrid.bookmark-grid > .bookmark-card {
+  min-height: 58px !important;
+  box-sizing: border-box !important;
+}
+
 /* 2026-07-11 final: every edit/save button matches the vendor-management action button. */
 html body #app-content :is(
   #editBtnDaily#editBtnDaily#editBtnDaily#editBtnDaily#editBtnDaily,
