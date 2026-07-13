@@ -25379,7 +25379,7 @@ html body #app-content #home.page-section .home-global-search {
 
 @media (max-width: 620px) {
   html body #app-content #home.page-section .home-search-hero__image-wrap {
-    margin-bottom: -4px !important;
+    margin-bottom: -14px !important;
   }
 }
 
