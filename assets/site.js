@@ -2572,9 +2572,9 @@ const ACTIVE_HASH_KEY = "kkulkkoori_active_hash_v1";
 const SIDEBAR_OPEN_KEY = "kkulkkoori_sidebar_open_v1";
 const MOBILE_PAGE_TITLES = {
   home: "",
-  daily: "하루 일정",
-  monthly: "한 달 일정",
-  annual: "연간 일정",
+  daily: "일정",
+  monthly: "일정",
+  annual: "일정",
   "today-menu": "급식노트",
   complaints: "의견·민원 대응",
   bookmarks: "북마크",
