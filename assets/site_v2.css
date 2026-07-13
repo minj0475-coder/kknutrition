@@ -2998,6 +2998,9 @@ tbody tr:nth-child(even) td{
   text-overflow:ellipsis;
   white-space:nowrap;
 }
+#todayMenuStatus.upload-status-v2{
+  color:#6b7280;
+}
 .ok{color:var(--primary-dark);font-weight:900}
 .error{color:#9f3a38;font-weight:900}
 .date-section-v2{
