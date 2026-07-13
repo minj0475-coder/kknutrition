@@ -25314,6 +25314,30 @@ html body #app-content #daily :is(#edit-daily-1, #edit-daily-2) * {
   }
 }
 
+/* 2026-07-13 daily schedule: the outer cards are the only edit/save indicator. */
+html body #app-content #daily.is-page-editing :is(
+  #edit-daily-1#edit-daily-1,
+  #edit-daily-2#edit-daily-2
+),
+html body #app-content #daily:has(#editBtnDaily.saving) :is(
+  #edit-daily-1#edit-daily-1,
+  #edit-daily-2#edit-daily-2
+),
+html body #app-content #daily.is-page-editing :is(
+  #edit-daily-1#edit-daily-1,
+  #edit-daily-2#edit-daily-2
+):is(:focus, :focus-visible, :focus-within),
+html body #app-content #daily:has(#editBtnDaily.saving) :is(
+  #edit-daily-1#edit-daily-1,
+  #edit-daily-2#edit-daily-2
+):is(:focus, :focus-visible, :focus-within) {
+  border: 0 !important;
+  outline: 0 !important;
+  outline-offset: 0 !important;
+  box-shadow: none !important;
+  transition: none !important;
+}
+
 /* 2026-07-12 daily schedule: retain only the thin outer edit line during save. */
 html body #app-content #daily:is(.is-page-editing, :has(#editBtnDaily.saving)) > main.wrap > .card,
 html body #app-content #daily:is(.is-page-editing, :has(#editBtnDaily.saving)) > main.wrap > .card:hover,
