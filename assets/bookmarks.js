@@ -332,15 +332,17 @@ function favicon(url) {
 }
 
 const LOCAL_ICONS = {
-  "goe.eduptl.kr": "assets/images/bookmarks/goe.eduptl.kr.png",
+  "goe.eduptl.kr": "assets/images/bookmarks/goe.eduptl.kr.svg",
   "mail.korea.kr": "assets/images/bookmarks/mail.korea.kr.ico",
   "gimpo.haccpcook.or.kr": "assets/images/bookmarks/gimpo.haccpcook.or.kr.png",
-  "dairy.schoolmilk.or.kr": "assets/images/bookmarks/dairy.schoolmilk.or.kr.ico",
+  "dairy.schoolmilk.or.kr": "assets/images/bookmarks/dairy.schoolmilk.or.kr.svg",
   "school.iamservice.net": "assets/images/bookmarks/school.iamservice.net.ico",
   "www.gwp.or.kr": "assets/images/bookmarks/www.gwp.or.kr.png",
-  "www.ekape.or.kr": "assets/images/bookmarks/www.ekape.or.kr.ico",
+  "www.ekape.or.kr": "assets/images/bookmarks/www.ekape.or.kr.svg",
   "www.s2b.kr": "assets/images/bookmarks/www.s2b.kr.ico",
-  "www.moaform.com": "assets/images/bookmarks/www.moaform.com.ico",
+  "www.moaform.com": "assets/images/bookmarks/www.moaform.com.svg",
+  "www.gpoe.kr": "assets/images/bookmarks/cheongsu-e.gpoe.kr.png",
+  "cheongsu-e.gpoe.kr": "assets/images/bookmarks/cheongsu-e.gpoe.kr.png",
   "ercedu.hunet.co.kr": "assets/images/bookmarks/ercedu.hunet.co.kr.png",
   "www.foodsafetykorea.go.kr": "assets/images/bookmarks/www.foodsafetykorea.go.kr.png"
 };

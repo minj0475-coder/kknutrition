@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="축산물원패스">
+  <rect width="96" height="96" rx="20" fill="#ffffff"/>
+  <path d="M17 55a31 31 0 0 1 62 0" fill="none" stroke="#aeb2b8" stroke-width="11" stroke-linecap="round"/>
+  <path d="M20 63c10-1 17-10 24-25 3-6 7-8 11-3 7 9 10 23 23 29" fill="none" stroke="#2a2b31" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M18 62c12-2 18-12 25-26" fill="none" stroke="#2378b7" stroke-width="6" stroke-linecap="round"/>
+  <path d="M54 35c7 8 10 23 24 29" fill="none" stroke="#e64c52" stroke-width="6" stroke-linecap="round"/>
+</svg>

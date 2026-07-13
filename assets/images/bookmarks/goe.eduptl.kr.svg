@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="업무포털">
+  <rect width="96" height="96" rx="20" fill="#f6f7f9"/>
+  <rect x="15" y="10" width="48" height="38" rx="8" fill="#e34772"/>
+  <rect x="43" y="34" width="43" height="35" rx="7" fill="#5a55aa"/>
+  <rect x="11" y="53" width="48" height="33" rx="7" fill="#57c6a5"/>
+  <rect x="32" y="25" width="38" height="43" rx="8" fill="#ffffff" opacity=".86"/>
+</svg>
