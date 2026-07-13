@@ -11965,25 +11965,25 @@ body #app-content .academic-pill {
 
 body #app-content .academic-pill.color-rose,
 body #app-content .academic-pill.user {
-  color: #9f1239 !important;
+  color: #9a4654 !important;
   background: #fff1f3 !important;
   border-color: #ffd6de !important;
 }
 
 body #app-content .academic-pill.color-mint {
-  color: #166454 !important;
+  color: #2f6b57 !important;
   background: #ecfdf5 !important;
   border-color: #ccefe0 !important;
 }
 
 body #app-content .academic-pill.color-blue {
-  color: #1d4ed8 !important;
+  color: #315f8c !important;
   background: #eff6ff !important;
   border-color: #cfe1ff !important;
 }
 
 body #app-content .academic-pill.color-gold {
-  color: #92400e !important;
+  color: #856322 !important;
   background: #fffbeb !important;
   border-color: #fde68a !important;
 }
@@ -15224,7 +15224,7 @@ html body #app-content .academic-week-list .academic-week-group .academic-week-r
 html body #app-content .academic-pill.color-gray,
 html body #app-content .academic-pill.user.color-gray {
   background: #ececef !important;
-  color: #3f4248 !important;
+  color: #52525b !important;
 }
 
 @media (max-width: 700px) {
