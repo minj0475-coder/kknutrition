@@ -25525,6 +25525,15 @@ html body #app-content #home.page-section .home-global-search {
   }
 }
 
+/* Mobile vendor cards use one label color across both contact sections. */
+@media (max-width: 768px) {
+  html body #app-content #promo-contacts #promoContactPanel
+    .promo-contact-table:not(.vendor-network-table) td:nth-child(-n + 4)::before {
+    color: #6b7280 !important;
+    opacity: 1 !important;
+  }
+}
+
 html body #app-content #daily :is(#edit-daily-1, #edit-daily-2),
 html body #app-content #daily :is(#edit-daily-1, #edit-daily-2):focus,
 html body #app-content #daily :is(#edit-daily-1, #edit-daily-2):focus-visible,
