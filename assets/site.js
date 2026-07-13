@@ -5220,7 +5220,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const group = document.createElement("section");
       group.className = "academic-week-group";
       const weekId = `${state.year}-${padAcademicDate(state.month + 1)}-${week.label}`;
-      const isCollapsed = Boolean(academicWeekCollapsed[weekId]);
+      const isCurrentWeek = week.dates.some(date => makeAcademicKey(date) === todayKey);
+      const hasManualState = Object.prototype.hasOwnProperty.call(academicWeekCollapsed, weekId);
+      const isCollapsed = hasManualState ? academicWeekCollapsed[weekId] : !isCurrentWeek;
       group.classList.toggle("is-collapsed", isCollapsed);
       group.innerHTML = `
         <button class="academic-week-range" type="button" aria-expanded="${isCollapsed ? "false" : "true"}">
