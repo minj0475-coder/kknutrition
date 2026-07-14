@@ -2788,10 +2788,28 @@ function setupUnsavedNavigationGuard() {
     confirmBtn.addEventListener('click', confirmNav);
   };
 
+  let lastAllowedHash = window.location.hash || '#home';
+  let restoringBlockedHash = false;
+
   window.addEventListener('beforeunload', event => {
     if (!window.hasUnsavedChanges()) return;
     event.preventDefault();
     event.returnValue = '';
+  });
+
+  window.addEventListener('hashchange', () => {
+    const targetHash = window.location.hash || '#home';
+    if (restoringBlockedHash) {
+      restoringBlockedHash = false;
+      return;
+    }
+    if (!window.hasUnsavedChanges()) {
+      lastAllowedHash = targetHash;
+      return;
+    }
+    restoringBlockedHash = true;
+    window.location.hash = lastAllowedHash;
+    showUnsavedModal(targetHash);
   });
 
   document.addEventListener('click', event => {
