@@ -3837,6 +3837,7 @@ const VENDOR_NETWORK_DEFAULT = [
   { group: "쌀", company: "", phone: "", email: "" }
 ];
 const PROMO_CONTACTS_KEY = "kkulkkoori_promo_contacts_v1";
+const PROMO_CONTACT_USAGE_KEY = "kkulkkoori_promo_contact_usage_v1";
 const PROMO_CONTACTS_DEFAULT = [
   { company: "아미", phone: "123-456-789", link: "", memo: "큐알코드(9-11월단가표)" },
   { company: "오뚜기", phone: "010-1234-5678", link: "", memo: "" },
@@ -3899,6 +3900,37 @@ function savePromoContacts(rows, options = {}) {
   } catch(e) {}
 }
 
+function getPromoUsageKey(row) {
+  return String(row && row.company || "").trim().toLowerCase();
+}
+
+function readPromoContactUsage() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(PROMO_CONTACT_USAGE_KEY) || "{}");
+    return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
+  } catch(e) {}
+  return {};
+}
+
+function savePromoContactUsage(usage) {
+  try {
+    localStorage.setItem(PROMO_CONTACT_USAGE_KEY, JSON.stringify(usage || {}));
+  } catch(e) {}
+}
+
+function recordPromoContactUse(row) {
+  const key = getPromoUsageKey(row);
+  if (!key) return;
+  const usage = readPromoContactUsage();
+  const entry = usage[key] && typeof usage[key] === "object" ? usage[key] : {};
+  usage[key] = {
+    company: String(row.company || "").trim(),
+    count: Math.min((Number(entry.count) || 0) + 1, 9999),
+    lastUsedAt: Date.now()
+  };
+  savePromoContactUsage(usage);
+}
+
 function copyTextValue(text, statusEl) {
   const value = String(text || "").trim();
   if (!value) {
@@ -3955,6 +3987,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const vendorFullscreenBtn = document.getElementById("vendorNetworkFullscreenBtn");
   const vendorAccordion = document.getElementById("vendorNetworkAccordion");
   const fullscreenBtn = document.getElementById("promoFullscreenBtn");
+  const promoMobileList = document.getElementById("promoMobileList");
   const vendorPanel = document.getElementById("vendorNetworkPanel");
   const panel = document.getElementById("promoContactPanel");
   const emptyState = document.getElementById("promoEmptyState");
@@ -4388,6 +4421,8 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.addEventListener("click", () => {
           const field = btn.getAttribute("data-copy-field");
           copyTextValue(rows[index][field], statusEl);
+          recordPromoContactUse(rows[index]);
+          renderPromoMobileContacts(filtered, query);
         });
       });
 
@@ -4398,9 +4433,142 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       updateOpenLink(tr, row.link);
+      const openLink = tr.querySelector(".promo-open-link");
+      if (openLink) {
+        openLink.addEventListener("click", () => {
+          recordPromoContactUse(rows[index]);
+          renderPromoMobileContacts(filtered, query);
+        });
+      }
       tableBody.appendChild(tr);
     });
+    renderPromoMobileContacts(filtered, query);
     syncPromoEditControls();
+  }
+
+  function getPinnedPromoContacts(filtered, query) {
+    if (query) return [];
+    const usage = readPromoContactUsage();
+    return filtered
+      .filter(({ row }) => {
+        const entry = usage[getPromoUsageKey(row)];
+        return entry && (Number(entry.count) > 0 || Number(entry.lastUsedAt) > 0);
+      })
+      .sort((a, b) => {
+        const aUsage = usage[getPromoUsageKey(a.row)] || {};
+        const bUsage = usage[getPromoUsageKey(b.row)] || {};
+        const countGap = (Number(bUsage.count) || 0) - (Number(aUsage.count) || 0);
+        if (countGap) return countGap;
+        return (Number(bUsage.lastUsedAt) || 0) - (Number(aUsage.lastUsedAt) || 0);
+      })
+      .slice(0, 4);
+  }
+
+  function renderPromoMobileContacts(filtered, query) {
+    if (!promoMobileList) return;
+    promoMobileList.innerHTML = "";
+    if (!filtered.length) return;
+
+    const pinned = getPinnedPromoContacts(filtered, query);
+    const pinnedIndexes = new Set(pinned.map(item => item.index));
+    if (pinned.length) {
+      promoMobileList.appendChild(createPromoMobileSection("자주 쓰는 업체", pinned, true));
+    }
+    const regular = filtered.filter(item => !pinnedIndexes.has(item.index));
+    if (regular.length) {
+      promoMobileList.appendChild(createPromoMobileSection("", regular, false));
+    }
+  }
+
+  function createPromoMobileSection(title, items, pinned) {
+    const section = document.createElement("section");
+    section.className = `promo-mobile-section${pinned ? " is-pinned" : ""}`;
+    if (title) {
+      const heading = document.createElement("h3");
+      heading.className = "promo-mobile-section-title";
+      heading.textContent = title;
+      section.appendChild(heading);
+    }
+    items.forEach(({ row, index }) => {
+      section.appendChild(createPromoMobileCard(row, index, pinned));
+    });
+    return section;
+  }
+
+  function createPromoMobileCard(row, index, pinned) {
+    const details = document.createElement("details");
+    details.className = `promo-mobile-card${pinned ? " is-pinned" : ""}`;
+    details.innerHTML = `
+      <summary class="promo-mobile-summary">
+        <span class="promo-mobile-main">
+          <strong class="promo-mobile-company"></strong>
+          <span class="promo-mobile-meta"></span>
+        </span>
+        <span class="promo-mobile-actions">
+          <button class="promo-copy-btn copy-icon-btn" type="button" data-copy-field="phone" aria-label="연락처 복사" title="복사"></button>
+          <a class="promo-open-link open-icon-btn" href="#" target="_blank" rel="noopener" aria-label="전자 단가 링크 열기" title="열기"></a>
+        </span>
+      </summary>
+      <div class="promo-mobile-detail">
+        <label><span>업체명</span><input class="promo-cell-input" data-field="company" value=""></label>
+        <label><span>연락처</span><input class="promo-cell-input" data-field="phone" value=""></label>
+        <label><span>전자 단가</span><input class="promo-cell-input" data-field="link" value=""></label>
+        <label><span>메모</span><textarea class="promo-cell-input" data-field="memo"></textarea></label>
+        <div class="promo-mobile-tools">
+          <button class="promo-copy-btn copy-icon-btn" type="button" data-copy-field="link" aria-label="전자 단가 링크 복사" title="복사"></button>
+          <button class="promo-delete-btn delete-icon-btn" type="button" aria-label="홍보 업체 연락처 행 삭제" title="삭제"></button>
+        </div>
+      </div>
+    `;
+
+    const company = details.querySelector(".promo-mobile-company");
+    const meta = details.querySelector(".promo-mobile-meta");
+    company.textContent = row.company || "업체명 없음";
+    meta.textContent = [row.phone, row.memo].map(value => String(value || "").trim()).filter(Boolean).join(" · ");
+
+    details.querySelectorAll("[data-field]").forEach(input => {
+      const field = input.getAttribute("data-field");
+      input.value = row[field] || "";
+      input.addEventListener("input", () => {
+        if (!promoEditMode) return;
+        rows[index][field] = input.value;
+        markPromoDirty();
+        if (field === "link") updateOpenLink(details, rows[index].link);
+        if (field === "company") company.textContent = rows[index].company || "업체명 없음";
+        if (field === "phone" || field === "memo") {
+          meta.textContent = [rows[index].phone, rows[index].memo].map(value => String(value || "").trim()).filter(Boolean).join(" · ");
+        }
+      });
+    });
+
+    details.querySelectorAll("[data-copy-field]").forEach(btn => {
+      btn.addEventListener("click", event => {
+        event.preventDefault();
+        event.stopPropagation();
+        const field = btn.getAttribute("data-copy-field");
+        copyTextValue(rows[index][field], statusEl);
+        recordPromoContactUse(rows[index]);
+        renderPromoContacts();
+      });
+    });
+
+    const openLink = details.querySelector(".promo-open-link");
+    if (openLink) {
+      openLink.addEventListener("click", event => {
+        event.stopPropagation();
+        recordPromoContactUse(rows[index]);
+        renderPromoContacts();
+      });
+    }
+
+    details.querySelector(".promo-delete-btn").addEventListener("click", () => {
+      if (!promoEditMode) return;
+      rows.splice(index, 1);
+      persistAndRender();
+    });
+
+    updateOpenLink(details, row.link);
+    return details;
   }
 
   function updateOpenLink(tr, link) {
