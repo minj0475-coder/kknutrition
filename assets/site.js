@@ -2680,7 +2680,8 @@ function setupUnsavedNavigationGuard() {
     const staffNoticeUnsaved = (typeof window.isStaffNoticeEditMode === 'function' && window.isStaffNoticeEditMode());
     const promoContactsUnsaved = (typeof window.isPromoContactsEditMode === 'function' && window.isPromoContactsEditMode());
     const complaintUnsaved = (typeof window.isComplaintEditMode === 'function' && window.isComplaintEditMode());
-    return hasEditablePageContent() || hasSectionEditMode() || bookmarkUnsaved || workNoteUnsaved || messageTemplateUnsaved || staffNoticeUnsaved || promoContactsUnsaved || complaintUnsaved;
+    const memoUnsaved = (typeof window.isMemoModalDirty === 'function' && window.isMemoModalDirty());
+    return hasEditablePageContent() || hasSectionEditMode() || bookmarkUnsaved || workNoteUnsaved || messageTemplateUnsaved || staffNoticeUnsaved || promoContactsUnsaved || complaintUnsaved || memoUnsaved;
   };
 
   window.clearUnsavedEditModes = () => {
@@ -2695,6 +2696,7 @@ function setupUnsavedNavigationGuard() {
     if (typeof window.exitStaffNoticeEditMode === 'function') window.exitStaffNoticeEditMode();
     if (typeof window.exitPromoContactsEditMode === 'function') window.exitPromoContactsEditMode();
     if (typeof window.exitComplaintEditMode === 'function') window.exitComplaintEditMode();
+    if (typeof window.exitMemoModalEditMode === 'function') window.exitMemoModalEditMode();
     document.querySelectorAll('.work-note-card.is-editing, .message-template-card.is-editing, #staff-notice.is-editing, #vendorNetworkPanel.is-editing, #promoContactPanel.is-editing, #complaints.is-editing').forEach(card => {
       card.classList.remove('is-editing');
     });

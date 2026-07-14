@@ -619,6 +619,21 @@ function cloneMemoItems(items) {
     : [];
 }
 
+function areMemoItemsEqual(a, b) {
+  const left = cloneMemoItems(a);
+  const right = cloneMemoItems(b);
+  if (left.length !== right.length) return false;
+  return left.every((item, index) => (
+    item.text === right[index].text && item.checked === right[index].checked
+  ));
+}
+
+function isMemoModalDirty() {
+  return Boolean(memoDraftMemos) && !areMemoItemsEqual(memoDraftMemos, memos);
+}
+
+window.isMemoModalDirty = isMemoModalDirty;
+
 function renderMemoList(containerId, isHome) {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -816,6 +831,51 @@ function closeMemoModal() {
     }, 200);
   }
   updateAllMemosDOM();
+}
+
+window.exitMemoModalEditMode = closeMemoModal;
+
+function showMemoUnsavedModal(onConfirm) {
+  const modal = document.getElementById("unsavedModalOverlay");
+  const closeBtn = document.getElementById("unsavedModalCloseBtn");
+  const cancelBtn = document.getElementById("unsavedModalCancelBtn");
+  const confirmBtn = document.getElementById("unsavedModalConfirmBtn");
+  if (!modal || !closeBtn || !cancelBtn || !confirmBtn) {
+    onConfirm();
+    return;
+  }
+
+  const cleanupAndClose = () => {
+    modal.style.opacity = "0";
+    modal.style.pointerEvents = "none";
+    modal.classList.remove("active");
+    window.setTimeout(() => { modal.style.display = "none"; }, 180);
+    closeBtn.removeEventListener("click", cleanupAndClose);
+    cancelBtn.removeEventListener("click", cleanupAndClose);
+    confirmBtn.removeEventListener("click", confirmClose);
+  };
+
+  const confirmClose = () => {
+    cleanupAndClose();
+    onConfirm();
+  };
+
+  modal.style.display = "flex";
+  void modal.offsetWidth;
+  modal.style.opacity = "1";
+  modal.style.pointerEvents = "auto";
+  modal.classList.add("active", "unsaved-modal-overlay");
+  closeBtn.addEventListener("click", cleanupAndClose);
+  cancelBtn.addEventListener("click", cleanupAndClose);
+  confirmBtn.addEventListener("click", confirmClose);
+}
+
+function requestCloseMemoModal() {
+  if (isMemoModalDirty()) {
+    showMemoUnsavedModal(closeMemoModal);
+    return;
+  }
+  closeMemoModal();
 }
 
 /* =========================================================
@@ -1084,7 +1144,8 @@ window.hasUnsavedChanges = () => {
   const workNoteUnsaved = (typeof window.isWorkNoteEditMode === 'function' && window.isWorkNoteEditMode());
   const messageTemplateUnsaved = (typeof window.isMessageTemplateEditMode === 'function' && window.isMessageTemplateEditMode());
   const promoContactsUnsaved = (typeof window.isPromoContactsEditMode === 'function' && window.isPromoContactsEditMode());
-  return otherUnsaved || bookmarkUnsaved || workNoteUnsaved || messageTemplateUnsaved || promoContactsUnsaved;
+  const memoUnsaved = (typeof window.isMemoModalDirty === 'function' && window.isMemoModalDirty());
+  return otherUnsaved || bookmarkUnsaved || workNoteUnsaved || messageTemplateUnsaved || promoContactsUnsaved || memoUnsaved;
 };
 
 window.clearUnsavedEditModes = () => {
@@ -1110,6 +1171,7 @@ window.clearUnsavedEditModes = () => {
   if (typeof window.exitMessageTemplateEditMode === 'function') window.exitMessageTemplateEditMode();
   if (typeof window.exitPromoContactsEditMode === 'function') window.exitPromoContactsEditMode();
   if (typeof window.exitAcademicCalendarEditMode === 'function') window.exitAcademicCalendarEditMode();
+  if (typeof window.exitMemoModalEditMode === 'function') window.exitMemoModalEditMode();
 };
 
 window.addEventListener('beforeunload', (e) => {
@@ -1216,14 +1278,14 @@ function init() {
   if (openBtn) openBtn.addEventListener("click", openMemoModal);
   
   const closeBtn = document.getElementById("closeMemoModalBtn");
-  if (closeBtn) closeBtn.addEventListener("click", closeMemoModal);
+  if (closeBtn) closeBtn.addEventListener("click", requestCloseMemoModal);
   const saveMemoBtn = document.getElementById("saveMemoModalBtn");
   if (saveMemoBtn) saveMemoBtn.addEventListener("click", saveMemoModal);
   
   const overlay = document.getElementById("memoModalOverlay");
   if (overlay) {
     overlay.addEventListener("click", (e) => {
-      if (e.target === overlay) closeMemoModal();
+      if (e.target === overlay) requestCloseMemoModal();
     });
   }
 
