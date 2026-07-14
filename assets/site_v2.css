@@ -25878,6 +25878,18 @@ html body #app-content #daily :is(#edit-daily-1, #edit-daily-2):focus-within {
   transition: none !important;
 }
 
+/* 2026-07-14 mobile schedule labels: keep the pink cue, but make it quiet and worklike. */
+@media (max-width: 640px) {
+  html body #app-content #daily :is(#edit-daily-1, #edit-daily-2) .schedule-table td:nth-child(2),
+  html body #app-content #monthly #edit-monthly-1 .schedule-table.monthly-table td:nth-child(2) {
+    background: #fffafa !important;
+    color: #6f5f5b !important;
+    -webkit-text-fill-color: #6f5f5b !important;
+    border-color: #f1dddd !important;
+    box-shadow: none !important;
+  }
+}
+
 @media (max-width: 280px) {
   html body #appSidebar.app-sidebar .sidebar-subnav {
     grid-template-columns: minmax(0, 1fr) !important;
