@@ -4274,8 +4274,8 @@ document.addEventListener("DOMContentLoaded", () => {
         tr.innerHTML = `
           <td><input class="promo-cell-input" data-vendor-field="group" aria-label="업체군" value=""></td>
           <td><input class="promo-cell-input" data-vendor-field="company" aria-label="업체명" value=""></td>
-          <td><input class="promo-cell-input" data-vendor-field="phone" aria-label="전화번호" value=""></td>
-          <td><input class="promo-cell-input" data-vendor-field="email" aria-label="이메일" value=""></td>
+          <td><div class="vendor-copy-field"><input class="promo-cell-input" data-vendor-field="phone" aria-label="전화번호" value=""><button class="vendor-copy-btn copy-icon-btn" type="button" data-vendor-copy-field="phone" aria-label="전화번호 복사" title="복사"></button></div></td>
+          <td><div class="vendor-copy-field"><input class="promo-cell-input" data-vendor-field="email" aria-label="이메일" value=""><button class="vendor-copy-btn copy-icon-btn" type="button" data-vendor-copy-field="email" aria-label="이메일 복사" title="복사"></button></div></td>
           <td class="promo-row-tools"><button class="promo-delete-btn delete-icon-btn" type="button" aria-label="업체 연락망 행 삭제" title="삭제"></button></td>
         `;
         bindVendorInputs(tr, index, row);
@@ -4305,6 +4305,14 @@ document.addEventListener("DOMContentLoaded", () => {
       if (field === "group") {
         input.addEventListener("change", renderVendorNetwork);
       }
+    });
+    root.querySelectorAll("[data-vendor-copy-field]").forEach(button => {
+      const field = button.getAttribute("data-vendor-copy-field");
+      const input = root.querySelector(`[data-vendor-field="${field}"]`);
+      const syncDisabled = () => { button.disabled = !String(input ? input.value : "").trim(); };
+      syncDisabled();
+      if (input) input.addEventListener("input", syncDisabled);
+      button.addEventListener("click", () => copyTextValue(input ? input.value : row[field], statusEl));
     });
     bindPromoCellKeyboard(root);
   }
@@ -4351,8 +4359,8 @@ document.addEventListener("DOMContentLoaded", () => {
           card.innerHTML = `
             <label><span>업체군</span><input class="promo-cell-input" data-vendor-field="group" value=""></label>
             <label><span>업체명</span><input class="promo-cell-input" data-vendor-field="company" value=""></label>
-            <label><span>전화번호</span><input class="promo-cell-input" data-vendor-field="phone" value=""></label>
-            <label><span>이메일</span><input class="promo-cell-input" data-vendor-field="email" value=""></label>
+            <label><span>전화번호</span><div class="vendor-copy-field"><input class="promo-cell-input" data-vendor-field="phone" value=""><button class="vendor-copy-btn copy-icon-btn" type="button" data-vendor-copy-field="phone" aria-label="전화번호 복사" title="복사"></button></div></label>
+            <label><span>이메일</span><div class="vendor-copy-field"><input class="promo-cell-input" data-vendor-field="email" value=""><button class="vendor-copy-btn copy-icon-btn" type="button" data-vendor-copy-field="email" aria-label="이메일 복사" title="복사"></button></div></label>
             <div class="vendor-accordion-tools"><button class="promo-delete-btn delete-icon-btn" type="button" aria-label="업체 연락망 행 삭제" title="삭제"></button></div>
           `;
           bindVendorInputs(card, index, row);
