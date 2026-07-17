@@ -26271,8 +26271,12 @@ html body #app-content .home-search-hero__image-wrap picture {
 
 /* Keep neutral fills and hover feedback on one cool ChatGPT-like palette. */
 :root {
-  --kkn-neutral-fill: #f7f7f8;
-  --kkn-neutral-hover: #ececf1;
+  --kkn-neutral-fill: #f7f8fa;
+  --kkn-neutral-hover: #f1f3f5;
+  --gray-soft: var(--kkn-neutral-fill) !important;
+  --table-head: var(--kkn-neutral-fill) !important;
+  --table-cell-soft: var(--kkn-neutral-fill) !important;
+  --hover-soft: var(--kkn-neutral-hover) !important;
   --ui-soft: var(--kkn-neutral-fill) !important;
   --ui-soft-2: var(--kkn-neutral-fill) !important;
   --ui-hover: var(--kkn-neutral-hover) !important;
@@ -26295,16 +26299,28 @@ html body :is(#app-content#app-content#app-content, #appSidebar#appSidebar#appSi
   .promo-mobile-card.is-pinned,
   .vendor-frequent-card,
   .promo-empty-state
-):not(#monthly *):not([class*="academic-"]):not([class*="academic-"] *) {
+):not([class*="academic-"]):not([class*="academic-"] *) {
   background-color: var(--kkn-neutral-fill) !important;
 }
 
 @media (hover: hover) and (pointer: fine) {
   html body :is(#app-content#app-content#app-content, #appSidebar#appSidebar#appSidebar) :is(
     .btn,
+    .file-label-v2,
     .download-btn,
     .excel-upload-btn,
+    .copy-btn,
+    .copy-btn-inline,
+    .add-btn,
+    .plus-btn,
+    .sync-btn,
+    .small-btn,
+    .info-btn,
+    .materials-btn,
+    .staff-link-btn,
     .memo-full-btn,
+    .memo-add-btn,
+    .memo-modal-header button,
     .home-today-link,
     .today-menu-show-all-btn,
     .promo-btn,
@@ -26322,17 +26338,28 @@ html body :is(#app-content#app-content#app-content, #appSidebar#appSidebar#appSi
     .sidebar-subnav a,
     .sidebar-recent-list a,
     .sidebar-search-result,
+    .quick,
+    .recipe-list-item,
+    .bookmark-chip,
+    .materials-detail summary,
+    .staff-accordion summary,
     .work-note-toc-item,
     .work-note-copy-btn,
     .message-template-copy,
     .message-template-copy-inline,
     .staff-notice-copy-inline,
+    .staff-notice-add-btn,
+    .staff-notice-delete,
     .vendor-accordion-toggle,
     .vendor-category-row-add-btn,
+    .vendor-frequent-summary,
     .annual-inline-sheet-link,
     .annual-sheet-links-summary,
+    .home-global-search__clear,
+    .home-search-result,
+    .home-search-more,
     .complaint-icon-btn
-  ):not(#monthly *):not([class*="academic-"]):not([class*="academic-"] *):not(
+  ):not([class*="academic-"]):not([class*="academic-"] *):not(
     .active,
     .is-active,
     .selected,
@@ -26353,9 +26380,20 @@ html body :is(#app-content#app-content#app-content, #appSidebar#appSidebar#appSi
     background-color: var(--kkn-neutral-hover) !important;
   }
 
-  html body #app-content#app-content#app-content :is(table, .schedule-table, .annual-table, .promo-contact-table) tr:not(#monthly *):hover > td {
+  html body #app-content#app-content#app-content :is(table, .schedule-table, .annual-table, .promo-contact-table) tr:not([class*="academic-"]):not([class*="academic-"] *):hover > td {
     background-color: var(--kkn-neutral-hover) !important;
   }
+}
+
+html body #appSidebar#appSidebar.app-sidebar :is(
+  .sidebar-nav a.active,
+  .sidebar-subnav a.active,
+  .sidebar-recent-list a.active,
+  .sidebar-nav a[aria-current="page"],
+  .sidebar-subnav a[aria-current="page"],
+  .sidebar-recent-list a[aria-current="page"]
+) {
+  background-color: var(--kkn-neutral-hover) !important;
 }
 
 /* Sidebar TOC items use fill changes only, never outlined menu boxes. */
@@ -26770,7 +26808,7 @@ html body #app-content #promo-contacts .vendor-frequent-card {
   overflow: hidden !important;
   border: 1px solid var(--kkn-box-line) !important;
   border-radius: 12px !important;
-  background: #fbfaf9 !important;
+  background: var(--kkn-neutral-fill) !important;
 }
 
 html body #app-content #promo-contacts .vendor-frequent-summary {
