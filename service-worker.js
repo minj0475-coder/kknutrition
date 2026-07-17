@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kknutrition-pwa-v56';
+const CACHE_NAME = 'kknutrition-pwa-v57';
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -6,7 +6,7 @@ const CORE_ASSETS = [
   './assets/auth.js?v=20260710_001',
   './assets/data-guard.js?v=20260714_001',
   './assets/bookmarks.js?v=20260713_004',
-  './assets/site.js?v=20260717_004',
+  './assets/site.js?v=20260717_005',
   './assets/images/home-kkul-hero-display.webp'
 ];
 

@@ -4343,6 +4343,23 @@ document.addEventListener("DOMContentLoaded", () => {
         phoneButton.disabled = !String(phoneInput ? phoneInput.value : row.phone || "").trim();
       };
       syncPhoneMode();
+      window.requestAnimationFrame(syncPhoneMode);
+      const handlePhoneModeChange = () => {
+        if (!phoneButton.isConnected) {
+          if (typeof mobilePhoneQuery.removeEventListener === "function") {
+            mobilePhoneQuery.removeEventListener("change", handlePhoneModeChange);
+          } else if (typeof mobilePhoneQuery.removeListener === "function") {
+            mobilePhoneQuery.removeListener(handlePhoneModeChange);
+          }
+          return;
+        }
+        syncPhoneMode();
+      };
+      if (typeof mobilePhoneQuery.addEventListener === "function") {
+        mobilePhoneQuery.addEventListener("change", handlePhoneModeChange);
+      } else if (typeof mobilePhoneQuery.addListener === "function") {
+        mobilePhoneQuery.addListener(handlePhoneModeChange);
+      }
       syncPhoneDisabled();
       if (phoneInput) phoneInput.addEventListener("input", syncPhoneDisabled);
       phoneButton.addEventListener("click", event => {
