@@ -15829,15 +15829,17 @@ html body #app-content #today-menu .message-template-body label:first-of-type {
     justify-self: end !important;
     max-width: 42vw !important;
     padding: 6px 10px !important;
-    border: 1px solid #ead9d7 !important;
+    border: 1px solid var(--kkn-box-line) !important;
     border-radius: 10px !important;
-    background: #fffafa !important;
-    color: #8f4a51 !important;
+    background: var(--kkn-neutral-fill) !important;
+    color: #4f5565 !important;
+    -webkit-text-fill-color: #4f5565 !important;
     font-size: 13px !important;
     font-weight: 750 !important;
     line-height: 1.25 !important;
     white-space: normal !important;
     text-align: center !important;
+    box-shadow: none !important;
   }
 
   html body #app-content #daily #edit-daily-1 .schedule-table td:nth-child(3),
@@ -25915,18 +25917,6 @@ html body #app-content #daily :is(#edit-daily-1, #edit-daily-2):focus-within {
   outline-offset: 0 !important;
   box-shadow: none !important;
   transition: none !important;
-}
-
-/* 2026-07-14 mobile schedule labels: keep the pink cue, but make it quiet and worklike. */
-@media (max-width: 640px) {
-  html body #app-content #daily :is(#edit-daily-1, #edit-daily-2) .schedule-table td:nth-child(2),
-  html body #app-content #monthly #edit-monthly-1 .schedule-table.monthly-table td:nth-child(2) {
-    background: #fffafa !important;
-    color: #6f5f5b !important;
-    -webkit-text-fill-color: #6f5f5b !important;
-    border-color: #f1dddd !important;
-    box-shadow: none !important;
-  }
 }
 
 @media (max-width: 280px) {
