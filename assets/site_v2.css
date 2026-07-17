@@ -26557,3 +26557,9 @@ html body #app-content #new-substitute button#substituteCopyBtn.copy-panel-btn::
   width: var(--kkn-icon-glyph-size) !important;
   height: var(--kkn-icon-glyph-size) !important;
 }
+
+/* Anchor the cooking-method magnifier to the search field, not the stacked control group. */
+html body #app-content #today-menu #todayMenuCooking .menu-search-box::before {
+  top: 22px !important;
+  translate: 0 -50% !important;
+}
