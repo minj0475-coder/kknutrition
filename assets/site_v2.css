@@ -26261,3 +26261,99 @@ html body #app-content .home-search-hero__image-wrap picture {
     translate: 0 0 !important;
   }
 }
+
+/* Match every portal search magnifier to the home search icon. */
+html body {
+  --kkn-search-match-size: 22px;
+  --kkn-search-match-color: var(--muted);
+}
+
+html body #app-content :is(
+  .complaint-search span,
+  #bookmarks .search-wrap .search-icon,
+  #promo-contacts .promo-contact-master-search span,
+  .academic-search span
+),
+html body #appSidebar .sidebar-search-wrap svg {
+  width: var(--kkn-search-match-size) !important;
+  height: var(--kkn-search-match-size) !important;
+  min-width: var(--kkn-search-match-size) !important;
+  min-height: var(--kkn-search-match-size) !important;
+  color: var(--kkn-search-match-color) !important;
+  line-height: 1 !important;
+}
+
+html body #app-content :is(
+  .complaint-search span,
+  #promo-contacts .promo-contact-master-search span
+) {
+  display: inline-grid !important;
+  place-items: center !important;
+  align-self: center !important;
+}
+
+html body #app-content :is(
+  .complaint-search span svg,
+  #bookmarks .search-wrap svg.search-icon,
+  #promo-contacts .promo-contact-master-search span svg
+),
+html body #appSidebar .sidebar-search-wrap svg {
+  width: var(--kkn-search-match-size) !important;
+  height: var(--kkn-search-match-size) !important;
+  min-width: var(--kkn-search-match-size) !important;
+  min-height: var(--kkn-search-match-size) !important;
+  color: var(--kkn-search-match-color) !important;
+  stroke: currentColor !important;
+  stroke-width: 1.8 !important;
+  fill: none !important;
+}
+
+html body #app-content #bookmarks .search-wrap svg.search-icon,
+html body #appSidebar .sidebar-search-wrap svg {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
+
+html body #app-content #promo-contacts .promo-contact-master-search span::before {
+  content: none !important;
+  display: none !important;
+}
+
+html body #app-content .academic-search span {
+  left: 16px !important;
+  top: 50% !important;
+  translate: 0 -50% !important;
+}
+
+html body #app-content .academic-search span::before,
+html body #app-content #today-menu .menu-search-box::before {
+  content: "" !important;
+  display: block !important;
+  width: var(--kkn-search-match-size) !important;
+  height: var(--kkn-search-match-size) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: var(--kkn-search-match-color) !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='m21 21-4.35-4.35M10.75 18.5a7.75 7.75 0 1 1 0-15.5 7.75 7.75 0 0 1 0 15.5Z'/%3E%3C/svg%3E") center / contain no-repeat !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='m21 21-4.35-4.35M10.75 18.5a7.75 7.75 0 1 1 0-15.5 7.75 7.75 0 0 1 0 15.5Z'/%3E%3C/svg%3E") center / contain no-repeat !important;
+}
+
+html body #app-content #today-menu .menu-search-box {
+  position: relative !important;
+}
+
+html body #app-content #today-menu .menu-search-box::before {
+  position: absolute !important;
+  left: 16px !important;
+  top: 50% !important;
+  translate: 0 -50% !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+}
+
+html body #app-content #today-menu .menu-search-box .menu-search-input[type="search"] {
+  padding-left: 50px !important;
+}
