@@ -3848,6 +3848,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Promo contacts table
 const VENDOR_NETWORK_KEY = "kkulkkoori_vendor_network_v1";
+const VENDOR_NETWORK_USAGE_KEY = "kkulkkoori_vendor_contact_usage_v1";
 const VENDOR_GROUPS_KEY = "kkulkkoori_vendor_groups_v1";
 const VENDOR_GROUPS_DEFAULT = ["농산물", "축산물", "수산물", "공산품", "우유", "소모품", "기타"];
 const VENDOR_NETWORK_DEFAULT = [
@@ -3904,6 +3905,42 @@ function saveVendorNetwork(rows, options = {}) {
     localStorage.setItem(VENDOR_NETWORK_KEY, value);
     if (options.sync !== false) notifyNoteDataChanged(VENDOR_NETWORK_KEY, value);
   } catch(e) {}
+}
+
+function getVendorUsageKey(row) {
+  const group = String(row && row.group || "").trim().toLowerCase();
+  const company = String(row && row.company || "").trim().toLowerCase();
+  if (company) return `${group}|${company}`;
+  const phone = String(row && row.phone || "").trim().toLowerCase();
+  const email = String(row && row.email || "").trim().toLowerCase();
+  return `${group}|${phone}|${email}`;
+}
+
+function readVendorNetworkUsage() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(VENDOR_NETWORK_USAGE_KEY) || "{}");
+    return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
+  } catch(e) {}
+  return {};
+}
+
+function saveVendorNetworkUsage(usage) {
+  try {
+    localStorage.setItem(VENDOR_NETWORK_USAGE_KEY, JSON.stringify(usage || {}));
+  } catch(e) {}
+}
+
+function recordVendorNetworkUse(row) {
+  const key = getVendorUsageKey(row);
+  if (!key) return;
+  const usage = readVendorNetworkUsage();
+  const entry = usage[key] && typeof usage[key] === "object" ? usage[key] : {};
+  usage[key] = {
+    company: String(row && row.company || "").trim(),
+    count: Math.min((Number(entry.count) || 0) + 1, 9999),
+    lastUsedAt: Date.now()
+  };
+  saveVendorNetworkUsage(usage);
 }
 
 function readPromoContacts() {
@@ -4328,7 +4365,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const syncDisabled = () => { button.disabled = !String(input ? input.value : "").trim(); };
       syncDisabled();
       if (input) input.addEventListener("input", syncDisabled);
-      button.addEventListener("click", () => copyTextValue(input ? input.value : row[field], statusEl));
+      button.addEventListener("click", event => {
+        event.preventDefault();
+        event.stopPropagation();
+        copyTextValue(input ? input.value : row[field], statusEl);
+        recordVendorNetworkUse(row);
+        window.requestAnimationFrame(renderVendorNetwork);
+      });
     });
     const phoneButton = root.querySelector("[data-vendor-phone-action]");
     if (phoneButton) {
@@ -4368,14 +4411,97 @@ document.addEventListener("DOMContentLoaded", () => {
         const phone = phoneInput ? phoneInput.value : row.phone;
         if (mobilePhoneQuery.matches) openPhoneDialer(phone, statusEl);
         else copyTextValue(phone, statusEl);
+        recordVendorNetworkUse(row);
+        window.requestAnimationFrame(renderVendorNetwork);
       });
     }
     bindPromoCellKeyboard(root);
   }
 
+  function getPinnedVendorNetwork(filtered, query) {
+    if (query) return [];
+    const usage = readVendorNetworkUsage();
+    return filtered
+      .filter(({ row }) => {
+        if (!String(row && row.company || "").trim()) return false;
+        const entry = usage[getVendorUsageKey(row)];
+        return entry && (Number(entry.count) > 0 || Number(entry.lastUsedAt) > 0);
+      })
+      .sort((a, b) => {
+        const aUsage = usage[getVendorUsageKey(a.row)] || {};
+        const bUsage = usage[getVendorUsageKey(b.row)] || {};
+        const countGap = (Number(bUsage.count) || 0) - (Number(aUsage.count) || 0);
+        if (countGap) return countGap;
+        return (Number(bUsage.lastUsedAt) || 0) - (Number(aUsage.lastUsedAt) || 0);
+      })
+      .slice(0, 4);
+  }
+
+  function createVendorFrequentCard(row, index) {
+    const details = document.createElement("details");
+    details.className = "vendor-frequent-card";
+    details.innerHTML = `
+      <summary class="vendor-frequent-summary">
+        <span class="vendor-frequent-main">
+          <strong class="vendor-frequent-company"></strong>
+          <span class="vendor-frequent-meta"></span>
+        </span>
+        <span class="vendor-frequent-actions">
+          <button class="vendor-copy-btn copy-icon-btn phone-action-btn" type="button" data-vendor-phone-action aria-label="전화번호 복사" title="복사"></button>
+          <button class="vendor-copy-btn copy-icon-btn" type="button" data-vendor-copy-field="email" aria-label="이메일 복사" title="복사"></button>
+        </span>
+      </summary>
+      <div class="vendor-frequent-detail">
+        <label><span>업체군</span><input class="promo-cell-input" data-vendor-field="group" value=""></label>
+        <label><span>업체명</span><input class="promo-cell-input" data-vendor-field="company" value=""></label>
+        <label><span>전화번호</span><input class="promo-cell-input" data-vendor-field="phone" value=""></label>
+        <label><span>이메일</span><input class="promo-cell-input" data-vendor-field="email" value=""></label>
+        <div class="vendor-accordion-tools"><button class="promo-delete-btn delete-icon-btn" type="button" aria-label="업체 연락망 행 삭제" title="삭제"></button></div>
+      </div>
+    `;
+
+    const company = details.querySelector(".vendor-frequent-company");
+    const meta = details.querySelector(".vendor-frequent-meta");
+    const syncSummary = () => {
+      company.textContent = row.company || "업체명 없음";
+      meta.textContent = [getVendorGroupLabel(row.group), row.phone]
+        .map(value => String(value || "").trim())
+        .filter(Boolean)
+        .join(" · ");
+    };
+    bindVendorInputs(details, index, row);
+    details.querySelectorAll("[data-vendor-field]").forEach(input => {
+      input.addEventListener("input", syncSummary);
+    });
+    details.querySelector(".promo-delete-btn").addEventListener("click", event => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (!promoEditMode) return;
+      vendorRows.splice(index, 1);
+      markPromoDirty();
+      renderVendorNetwork();
+    });
+    syncSummary();
+    return details;
+  }
+
   function renderVendorNetworkAccordion(filtered, query) {
     if (!vendorAccordion) return;
     vendorAccordion.innerHTML = "";
+    const pinned = getPinnedVendorNetwork(filtered, query);
+    if (pinned.length) {
+      const frequentSection = document.createElement("section");
+      frequentSection.className = "vendor-frequent-section";
+      frequentSection.innerHTML = `
+        <h3 class="vendor-frequent-title">자주 쓰는 업체</h3>
+        <div class="vendor-frequent-list"></div>
+      `;
+      const frequentList = frequentSection.querySelector(".vendor-frequent-list");
+      pinned.forEach(({ row, index }) => {
+        frequentList.appendChild(createVendorFrequentCard(row, index));
+      });
+      vendorAccordion.appendChild(frequentSection);
+    }
     const groups = new Map(vendorGroups.map(group => [group, []]));
     filtered.forEach(item => {
       const label = getVendorGroupLabel(item.row.group);
