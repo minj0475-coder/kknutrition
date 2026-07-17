@@ -4330,6 +4330,20 @@ document.addEventListener("DOMContentLoaded", () => {
       if (input) input.addEventListener("input", syncDisabled);
       button.addEventListener("click", () => copyTextValue(input ? input.value : row[field], statusEl));
     });
+    const phoneButton = root.querySelector("[data-vendor-phone-action]");
+    if (phoneButton) {
+      const phoneInput = root.querySelector('[data-vendor-field="phone"]');
+      const syncPhoneDisabled = () => {
+        phoneButton.disabled = !String(phoneInput ? phoneInput.value : row.phone || "").trim();
+      };
+      syncPhoneDisabled();
+      if (phoneInput) phoneInput.addEventListener("input", syncPhoneDisabled);
+      phoneButton.addEventListener("click", event => {
+        event.preventDefault();
+        event.stopPropagation();
+        openPhoneDialer(phoneInput ? phoneInput.value : row.phone, statusEl);
+      });
+    }
     bindPromoCellKeyboard(root);
   }
 
@@ -4375,7 +4389,7 @@ document.addEventListener("DOMContentLoaded", () => {
           card.innerHTML = `
             <label><span>업체군</span><input class="promo-cell-input" data-vendor-field="group" value=""></label>
             <label><span>업체명</span><input class="promo-cell-input" data-vendor-field="company" value=""></label>
-            <label><span>전화번호</span><div class="vendor-copy-field"><input class="promo-cell-input" data-vendor-field="phone" value=""><button class="vendor-copy-btn copy-icon-btn" type="button" data-vendor-copy-field="phone" aria-label="전화번호 복사" title="복사"></button></div></label>
+            <label><span>전화번호</span><div class="vendor-copy-field"><input class="promo-cell-input" data-vendor-field="phone" value=""><button class="vendor-copy-btn phone-action-btn" type="button" data-vendor-phone-action aria-label="전화번호로 전화 걸기" title="전화 걸기"></button></div></label>
             <label><span>이메일</span><div class="vendor-copy-field"><input class="promo-cell-input" data-vendor-field="email" value=""><button class="vendor-copy-btn copy-icon-btn" type="button" data-vendor-copy-field="email" aria-label="이메일 복사" title="복사"></button></div></label>
             <div class="vendor-accordion-tools"><button class="promo-delete-btn delete-icon-btn" type="button" aria-label="업체 연락망 행 삭제" title="삭제"></button></div>
           `;
