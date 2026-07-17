@@ -26368,6 +26368,22 @@ html body :is(#app-content#app-content#app-content, #appSidebar#appSidebar#appSi
   }
 }
 
+/* Sidebar TOC items use fill changes only, never outlined menu boxes. */
+html body #appSidebar#appSidebar.app-sidebar :is(
+  .sidebar-nav a,
+  .sidebar-subnav a,
+  .sidebar-recent-list a
+),
+html body #appSidebar#appSidebar.app-sidebar :is(
+  .sidebar-nav a,
+  .sidebar-subnav a,
+  .sidebar-recent-list a
+):is(:hover, :active, :focus-visible, .active, [aria-current="page"]) {
+  border: 0 !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
 /* Match every portal search magnifier to the home search icon. */
 html body {
   --kkn-search-match-size: 22px;
