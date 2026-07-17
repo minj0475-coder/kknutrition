@@ -54,7 +54,7 @@ const SHEET_LINK_KEY = "kkulkkoori_service_sheet_link";
 const DAILY_KKUL_KEY = "kkulkkoori_daily_character";
 const DAILY_KKUL_IMAGES = Array.from(
   { length: 56 },
-  (_, index) => `assets/images/kkul-display/kkul_${index + 1}.png`
+  (_, index) => `assets/images/kkul-display/kkul_${index + 1}.webp`
 );
 const DAILY_KKUL_MESSAGES = [
   { type: "quote", text: "“가장 중요한 것은 눈에 보이지 않아요.” — 생텍쥐페리, 《어린 왕자》" },
@@ -144,7 +144,11 @@ function setupDailyKkul() {
   if (DAILY_KKUL_IMAGES.length) {
     image.hidden = false;
     image.addEventListener("load", () => image.classList.add("is-ready"), { once: true });
-    image.src = DAILY_KKUL_IMAGES[picked.imageIndex % DAILY_KKUL_IMAGES.length];
+    const optimizedSrc = DAILY_KKUL_IMAGES[picked.imageIndex % DAILY_KKUL_IMAGES.length];
+    image.addEventListener("error", () => {
+      if (image.src.endsWith(".webp")) image.src = optimizedSrc.replace(/\.webp$/, ".png");
+    }, { once: true });
+    image.src = optimizedSrc;
   } else {
     image.hidden = true;
     image.removeAttribute("src");
@@ -1905,7 +1909,7 @@ function chooseNewestMenuPayload(current, candidate) {
 async function loadRemoteMenuData() {
   if (!location.protocol.startsWith("http")) return null;
   try {
-    const response = await fetch(`${MENU_REMOTE_URL}?v=${Date.now()}`, { cache: "no-store" });
+    const response = await fetch(MENU_REMOTE_URL, { cache: "no-cache" });
     if (!response.ok) return null;
     return normalizeMenuPayloadObject(await response.json(), "remote");
   } catch (error) {

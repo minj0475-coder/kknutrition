@@ -26217,3 +26217,20 @@ html body #app-content :is(
     font-size: var(--kkn-action-font-size) !important;
   }
 }
+/* Mobile delivery optimization: preserve the existing artwork without an image-box edge. */
+html body #app-content .daily-kkul-image-wrap,
+html body #app-content .daily-kkul-image-wrap picture,
+html body #app-content .daily-kkul-image-wrap img {
+  border: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html body #app-content .daily-kkul-image-wrap img {
+  display: block !important;
+}
+
+html body #app-content .home-search-hero__image-wrap picture {
+  display: contents;
+}
