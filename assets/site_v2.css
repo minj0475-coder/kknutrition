@@ -24437,14 +24437,16 @@ html body #app-content :is(
 
 /* 2026-07-11 unified text color system. */
 :root {
-  --kkn-text-strong: #202123 !important;
+  --kkn-text-heading: #202123 !important;
+  --kkn-text-body: #374151 !important;
   --kkn-text-muted: #6b7280 !important;
   --kkn-text-placeholder: #8a8f98 !important;
-  --text: var(--kkn-text-strong) !important;
-  --heading: var(--kkn-text-strong) !important;
-  --text-main: var(--kkn-text-strong) !important;
-  --ui-text: var(--kkn-text-strong) !important;
-  --navy: var(--kkn-text-strong) !important;
+  --kkn-text-strong: var(--kkn-text-heading) !important;
+  --text: var(--kkn-text-body) !important;
+  --heading: var(--kkn-text-heading) !important;
+  --text-main: var(--kkn-text-body) !important;
+  --ui-text: var(--kkn-text-body) !important;
+  --navy: var(--kkn-text-heading) !important;
   --muted: var(--kkn-text-muted) !important;
   --text-muted: var(--kkn-text-muted) !important;
   --ui-muted: var(--kkn-text-muted) !important;
@@ -24452,7 +24454,7 @@ html body #app-content :is(
 }
 
 html body #app-content {
-  color: var(--kkn-text-strong) !important;
+  color: var(--kkn-text-body) !important;
 }
 
 html body #app-content :is(
@@ -24480,7 +24482,7 @@ html body #app-content :is(
   .vendor-category-name,
   .staff-accordion-title
 ) {
-  color: var(--kkn-text-strong) !important;
+  color: var(--kkn-text-heading) !important;
 }
 
 html body #app-content :is(
@@ -24499,7 +24501,7 @@ html body #app-content :is(
   .promo-cell-input,
   .sheet-link-input
 ) {
-  color: var(--kkn-text-strong) !important;
+  color: var(--kkn-text-body) !important;
 }
 
 html body #app-content :is(
@@ -26561,4 +26563,44 @@ html body #app-content .academic-nav-btn {
 html body #app-content #new-substitute button#substituteCopyBtn.copy-panel-btn::before {
   width: var(--kkn-icon-glyph-size) !important;
   height: var(--kkn-icon-glyph-size) !important;
+}
+
+/* Keep ordinary text on one three-level palette while preserving semantic colors. */
+html body #app-content :is(
+  .menu-tag,
+  .date-badge,
+  .annual-inline-sheet-link,
+  .complaint-chip
+) {
+  color: var(--kkn-text-body) !important;
+}
+
+html body :is(#app-content, #appSidebar) :is(
+  .mini,
+  .subtitle,
+  .kicker,
+  .promo-empty-state,
+  .sidebar-empty
+) {
+  color: var(--kkn-text-muted) !important;
+}
+
+html body #appSidebar.app-sidebar :is(
+  .sidebar-subnav a,
+  .sidebar-recent-list a
+):not(.active):not([aria-current="page"]) {
+  color: var(--kkn-text-body) !important;
+}
+
+html body #app-content #promo-contacts .promo-contact-table td::before,
+html body .auth-desc {
+  color: var(--kkn-text-muted) !important;
+}
+
+html body #app-content #promo-contacts .vendor-accordion-toggle em {
+  color: var(--kkn-text-muted) !important;
+}
+
+html body #app-content #staff .staff-notice-delete {
+  color: var(--kkn-text-muted) !important;
 }
