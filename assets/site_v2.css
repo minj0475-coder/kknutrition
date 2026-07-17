@@ -26344,7 +26344,7 @@ html body #app-content .academic-search span {
 }
 
 html body #app-content .academic-search span::before,
-html body #app-content #today-menu .menu-search-box::before {
+html body #app-content #today-menu .menu-search-input-shell::before {
   content: "" !important;
   display: block !important;
   width: var(--kkn-search-match-size) !important;
@@ -26359,11 +26359,16 @@ html body #app-content #today-menu .menu-search-box::before {
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='m21 21-4.35-4.35M10.75 18.5a7.75 7.75 0 1 1 0-15.5 7.75 7.75 0 0 1 0 15.5Z'/%3E%3C/svg%3E") center / contain no-repeat !important;
 }
 
-html body #app-content #today-menu .menu-search-box {
+html body #app-content #today-menu .menu-search-input-shell {
   position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  min-width: 0 !important;
 }
 
-html body #app-content #today-menu .menu-search-box::before {
+html body #app-content #today-menu .menu-search-input-shell::before {
   position: absolute !important;
   left: 16px !important;
   top: 50% !important;
@@ -26556,10 +26561,4 @@ html body #app-content .academic-nav-btn {
 html body #app-content #new-substitute button#substituteCopyBtn.copy-panel-btn::before {
   width: var(--kkn-icon-glyph-size) !important;
   height: var(--kkn-icon-glyph-size) !important;
-}
-
-/* Anchor the cooking-method magnifier to the search field, not the stacked control group. */
-html body #app-content #today-menu #todayMenuCooking .menu-search-box::before {
-  top: 22px !important;
-  translate: 0 -50% !important;
 }
