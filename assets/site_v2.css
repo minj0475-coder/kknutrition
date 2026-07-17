@@ -26775,3 +26775,18 @@ html body #app-content #promo-contacts .vendor-frequent-detail label {
     align-items: center !important;
   }
 }
+
+/* Let 24px vector strokes scale cleanly inside 20px desktop glyph boxes. */
+@media (min-width: 901px) {
+  html body :is(#app-content#app-content#app-content, #appSidebar#appSidebar#appSidebar) :is(button, a) > svg :is(path, line, polyline, polygon, rect, circle, ellipse) {
+    vector-effect: none !important;
+  }
+
+  html body #app-content #staff .staff-notice-add-btn::before {
+    height: 1.5px !important;
+  }
+
+  html body #app-content #staff .staff-notice-add-btn::after {
+    width: 1.5px !important;
+  }
+}
