@@ -26279,6 +26279,95 @@ html body #app-content .home-search-hero__image-wrap picture {
   }
 }
 
+/* Keep neutral fills and hover feedback on one cool ChatGPT-like palette. */
+:root {
+  --kkn-neutral-fill: #f7f7f8;
+  --kkn-neutral-hover: #ececf1;
+  --ui-soft: var(--kkn-neutral-fill) !important;
+  --ui-soft-2: var(--kkn-neutral-fill) !important;
+  --ui-hover: var(--kkn-neutral-hover) !important;
+  --ui-pressed: var(--kkn-neutral-hover) !important;
+  --portal-control-hover: var(--kkn-neutral-hover) !important;
+  --portal-action-button-bg-hover: var(--kkn-neutral-hover) !important;
+}
+
+html body :is(#app-content#app-content#app-content, #appSidebar#appSidebar#appSidebar) :is(
+  th,
+  .num,
+  .date-badge,
+  .menu-tag,
+  .complaint-chip:not(.audience),
+  .annual-inline-sheet-link,
+  .vendor-category-manager,
+  .vendor-accordion-panel,
+  .vendor-accordion-toggle em,
+  .promo-mobile-detail,
+  .promo-mobile-card.is-pinned,
+  .vendor-frequent-card,
+  .promo-empty-state
+):not(#monthly *):not([class*="academic-"]):not([class*="academic-"] *) {
+  background-color: var(--kkn-neutral-fill) !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html body :is(#app-content#app-content#app-content, #appSidebar#appSidebar#appSidebar) :is(
+    .btn,
+    .download-btn,
+    .excel-upload-btn,
+    .memo-full-btn,
+    .home-today-link,
+    .today-menu-show-all-btn,
+    .promo-btn,
+    .icon-only-btn,
+    .copy-icon-btn,
+    .open-icon-btn,
+    .annual-sheet-save-btn,
+    .annual-sheet-open-btn,
+    .fab-edit-btn,
+    .fab-bookmark-edit-btn,
+    .quiet-edit-toggle,
+    .close-drawer-btn,
+    .sidebar-icon-btn,
+    .sidebar-nav a,
+    .sidebar-subnav a,
+    .sidebar-recent-list a,
+    .sidebar-search-result,
+    .work-note-toc-item,
+    .work-note-copy-btn,
+    .message-template-copy,
+    .message-template-copy-inline,
+    .staff-notice-copy-inline,
+    .vendor-accordion-toggle,
+    .vendor-category-row-add-btn,
+    .annual-inline-sheet-link,
+    .annual-sheet-links-summary,
+    .complaint-icon-btn
+  ):not(#monthly *):not([class*="academic-"]):not([class*="academic-"] *):not(
+    .active,
+    .is-active,
+    .selected,
+    .is-selected,
+    .saving,
+    .primary,
+    .save,
+    .danger,
+    .delete-icon-btn,
+    .promo-delete-btn,
+    .message-template-delete,
+    .vendor-category-delete-btn,
+    [aria-selected="true"],
+    [aria-pressed="true"],
+    [aria-current="page"],
+    [type="submit"]
+  ):hover {
+    background-color: var(--kkn-neutral-hover) !important;
+  }
+
+  html body #app-content#app-content#app-content :is(table, .schedule-table, .annual-table, .promo-contact-table) tr:not(#monthly *):hover > td {
+    background-color: var(--kkn-neutral-hover) !important;
+  }
+}
+
 /* Match every portal search magnifier to the home search icon. */
 html body {
   --kkn-search-match-size: 22px;
