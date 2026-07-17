@@ -24248,7 +24248,8 @@ html body #app-content #complaints:not(.active) .complaint-edit-btn {
 
 /* 2026-07-11 unified neutral line color for existing gray borders. */
 :root {
-  --kkn-unified-line: rgba(32, 33, 35, 0.10) !important;
+  --kkn-box-line: rgba(32, 33, 35, 0.10);
+  --kkn-unified-line: var(--kkn-box-line) !important;
   --line: var(--kkn-unified-line) !important;
   --line-strong: var(--kkn-unified-line) !important;
   --ui-line: var(--kkn-unified-line) !important;
@@ -26373,4 +26374,48 @@ html body #app-content #today-menu .menu-search-box::before {
 
 html body #app-content #today-menu .menu-search-box .menu-search-input[type="search"] {
   padding-left: 50px !important;
+}
+
+/* Use the home search field's neutral outline for portal boxes and dividers. */
+html body :is(#app-content, #appSidebar) :is(
+  .card,
+  .hero,
+  .note,
+  .panel,
+  .table-wrap,
+  fieldset,
+  input,
+  textarea,
+  select,
+  button,
+  table,
+  [class$="-card"],
+  [class$="-panel"],
+  [class$="-box"],
+  [class$="-table"],
+  [class$="-group"],
+  [class$="-accordion"],
+  [class$="-results"],
+  [class$="-tool"],
+  [class$="-modal"]
+):not(:focus):not(:focus-within):not(.active):not(.is-active):not(.selected):not(.saving):not(.primary):not(.danger):not(.success):not([aria-selected="true"]):not([aria-pressed="true"]) {
+  border-color: var(--kkn-box-line) !important;
+}
+
+html body :is(#app-content, #appSidebar) :is(
+  th,
+  td,
+  hr,
+  .divider,
+  [class$="-divider"],
+  [class$="-row"],
+  [class$="-header"],
+  [class$="-footer"]
+) {
+  border-color: var(--kkn-box-line) !important;
+}
+
+html body #appSidebar,
+html body #app-content > header.top {
+  border-color: var(--kkn-box-line) !important;
 }
