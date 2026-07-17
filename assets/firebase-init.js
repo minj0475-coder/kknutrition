@@ -1071,8 +1071,6 @@ document.querySelectorAll('.fab-edit-btn').forEach(btn => {
       }
     } else {
       // Save mode
-      targetBtn.textContent = "저장 중...";
-      
       if (pageId === 'annual') {
         syncAnnualMobileCardsToTable();
       }
