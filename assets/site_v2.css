@@ -26560,6 +26560,48 @@ html body #app-content .academic-nav-btn {
   line-height: 1 !important;
 }
 
+/* Use one neutral color for existing borders without creating new outlines. */
+html body :is(#app-content#app-content, #appSidebar#appSidebar) *:not(
+  #monthly,
+  #monthly *,
+  [class*="academic-"],
+  [class*="academic-"] *,
+  .is-page-editing,
+  .is-page-editing *,
+  .is-editing,
+  .is-editing *,
+  .edit-mode-card,
+  .edit-mode-card *,
+  .active,
+  .is-active,
+  .selected,
+  .is-selected,
+  .saving,
+  .primary,
+  .danger,
+  .success,
+  .warning,
+  .error,
+  .mobile-drawer,
+  .daily-kkul-message,
+  .today-menu-empty,
+  .complaint-empty,
+  .unsaved-modal-confirm,
+  [aria-selected="true"],
+  [aria-pressed="true"],
+  :hover,
+  :focus,
+  :focus-within,
+  :active,
+  :checked
+) {
+  border-color: var(--kkn-box-line) !important;
+}
+
+html body #app-content#app-content #today-menu#today-menu .work-note-toc-item:not(.active):not(:hover):not(:focus-visible) {
+  border-color: var(--kkn-box-line) !important;
+}
+
 html body #app-content #new-substitute button#substituteCopyBtn.copy-panel-btn::before {
   width: var(--kkn-icon-glyph-size) !important;
   height: var(--kkn-icon-glyph-size) !important;
