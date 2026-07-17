@@ -3973,6 +3973,18 @@ function copyTextValue(text, statusEl) {
   }
 }
 
+function openPhoneDialer(phone, statusEl) {
+  const displayPhone = String(phone || "").trim();
+  const dialPhone = displayPhone.replace(/[^\d+*#,;]/g, "");
+  if (!dialPhone) {
+    if (statusEl) statusEl.textContent = "전화할 연락처가 없습니다.";
+    return false;
+  }
+  if (statusEl) statusEl.textContent = "전화 앱을 엽니다: " + displayPhone;
+  window.location.href = `tel:${dialPhone}`;
+  return true;
+}
+
 function fallbackCopyText(value, done) {
   const area = document.createElement("textarea");
   area.value = value;
@@ -4535,7 +4547,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <span class="promo-mobile-meta"></span>
         </span>
         <span class="promo-mobile-actions">
-          <button class="promo-copy-btn copy-icon-btn" type="button" data-copy-field="phone" aria-label="연락처 복사" title="복사"></button>
+          <button class="promo-copy-btn phone-action-btn" type="button" data-phone-action aria-label="연락처로 전화 걸기" title="전화 걸기"></button>
           <a class="promo-open-link open-icon-btn" href="#" target="_blank" rel="noopener" aria-label="전자 단가 링크 열기" title="열기"></a>
         </span>
       </summary>
@@ -4570,6 +4582,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     });
+
+    const phoneButton = details.querySelector("[data-phone-action]");
+    if (phoneButton) {
+      phoneButton.addEventListener("click", event => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (!openPhoneDialer(rows[index].phone, statusEl)) return;
+        recordPromoContactUse(rows[index]);
+      });
+    }
 
     details.querySelectorAll("[data-copy-field]").forEach(btn => {
       btn.addEventListener("click", event => {
