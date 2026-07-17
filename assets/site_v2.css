@@ -4584,8 +4584,7 @@ th {
 
 .annual-month-card .annual-task,
 .annual-month-card .annual-task:nth-child(odd),
-.annual-month-card .annual-task:nth-child(even),
-.annual-month-card .annual-task:hover {
+.annual-month-card .annual-task:nth-child(even) {
   background: #FFFFFF !important;
   color: var(--text) !important;
   border-bottom: 1px solid var(--line) !important;
@@ -26404,6 +26403,31 @@ html body #auth-screen {
   html body #app-content#app-content#app-content #today-menu .message-template-card:not(.is-editing) .message-template-item > summary:hover {
     background-color: var(--kkn-neutral-hover) !important;
   }
+
+  html body #app-content#app-content#app-content #daily :is(.schedule-table, .simple-table) tbody > tr:hover > :is(th, td),
+  html body #app-content#app-content#app-content #monthly #edit-monthly-1 .monthly-table tbody > tr:hover > :is(th, td),
+  html body #app-content#app-content#app-content #annual :is(.annual-table, .simple-table) tbody > tr:hover > :is(th, td),
+  html body #app-content#app-content#app-content #annual .annual-mobile-list .annual-task:hover {
+    background-color: var(--kkn-neutral-hover) !important;
+  }
+
+  html body #app-content#app-content#app-content #monthly .academic-day:not(.is-selected):hover,
+  html body #app-content#app-content#app-content #monthly .academic-week-range:hover,
+  html body #app-content#app-content#app-content #monthly .academic-week-row.academic-week-row:hover,
+  html body #app-content#app-content#app-content #monthly .academic-apply-option:hover {
+    background-color: var(--kkn-neutral-hover) !important;
+    background-image: none !important;
+    border-color: var(--kkn-box-line) !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+}
+
+html body #app-content#app-content#app-content #daily .table-group,
+html body #app-content#app-content#app-content #monthly #edit-monthly-1 .table-group,
+html body #app-content#app-content#app-content #monthly .academic-week-range,
+html body #app-content#app-content#app-content #monthly .academic-empty {
+  background-color: var(--kkn-neutral-fill) !important;
 }
 
 html body #appSidebar#appSidebar.app-sidebar :is(
