@@ -26406,9 +26406,13 @@ html body #auth-screen {
 
   html body #app-content#app-content#app-content #daily :is(.schedule-table, .simple-table) tbody > tr:hover > :is(th, td),
   html body #app-content#app-content#app-content #monthly #edit-monthly-1 .monthly-table tbody > tr:hover > :is(th, td),
-  html body #app-content#app-content#app-content #annual :is(.annual-table, .simple-table) tbody > tr:hover > :is(th, td),
+  html body #app-content#app-content#app-content #annual :is(.annual-table, .simple-table) tbody > tr:hover > :is(th, td):not(.month-cell),
   html body #app-content#app-content#app-content #annual .annual-mobile-list .annual-task:hover {
     background-color: var(--kkn-neutral-hover) !important;
+  }
+
+  html body #app-content#app-content#app-content #annual .annual-table tbody > tr:hover > .month-cell {
+    background-color: #ffffff !important;
   }
 
   html body #app-content#app-content#app-content #monthly .academic-day:not(.is-selected):hover,
