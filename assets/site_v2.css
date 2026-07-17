@@ -26400,6 +26400,10 @@ html body #auth-screen {
   html body #app-content#app-content #staff .staff-accordion summary:focus-visible::after {
     background-color: var(--kkn-neutral-hover) !important;
   }
+
+  html body #app-content#app-content#app-content #today-menu .message-template-card:not(.is-editing) .message-template-item > summary:hover {
+    background-color: var(--kkn-neutral-hover) !important;
+  }
 }
 
 html body #appSidebar#appSidebar.app-sidebar :is(
