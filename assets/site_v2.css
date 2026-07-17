@@ -26234,3 +26234,9 @@ html body #app-content .daily-kkul-image-wrap img {
 html body #app-content .home-search-hero__image-wrap picture {
   display: contents;
 }
+
+@media (max-width: 900px) {
+  html body #app-content > header.top .top-inner {
+    gap: 16px !important;
+  }
+}
