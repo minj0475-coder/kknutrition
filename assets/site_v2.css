@@ -26310,8 +26310,11 @@ html body #appSidebar .sidebar-search-wrap svg {
 
 html body #app-content #bookmarks .search-wrap svg.search-icon,
 html body #appSidebar .sidebar-search-wrap svg {
-  top: 50% !important;
-  transform: translateY(-50%) !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+  transform: none !important;
 }
 
 html body #app-content #promo-contacts .promo-contact-master-search span::before {

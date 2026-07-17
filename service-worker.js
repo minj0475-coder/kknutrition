@@ -1,8 +1,8 @@
-const CACHE_NAME = 'kknutrition-pwa-v51';
+const CACHE_NAME = 'kknutrition-pwa-v52';
 const CORE_ASSETS = [
   './',
   './index.html',
-  './assets/site_v2.css?v=20260717_005',
+  './assets/site_v2.css?v=20260717_006',
   './assets/auth.js?v=20260710_001',
   './assets/data-guard.js?v=20260714_001',
   './assets/bookmarks.js?v=20260713_004',
