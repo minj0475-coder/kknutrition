@@ -1199,7 +1199,7 @@ document.addEventListener('click', (e) => {
       modal.style.cssText = 'display: none; z-index: 10000; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; backdrop-filter: blur(4px); transition: opacity 0.2s;';
       modal.innerHTML = `
         <div class="memo-modal unsaved-modal" style="max-width: 360px; width: 90%; background: var(--card); border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.15); margin: auto;">
-          <button id="unsavedModalCloseBtn" class="unsaved-modal-close" type="button" aria-label="닫기" style="position: absolute; top: 16px; right: 16px; background: transparent; border: none; padding: 8px; cursor: pointer; color: var(--text); border-radius: 50%; transition: background 0.2s;" onmouseover="this.style.background='var(--line)'" onmouseout="this.style.background='transparent'">
+          <button id="unsavedModalCloseBtn" class="unsaved-modal-close" type="button" aria-label="닫기" style="position: absolute; top: 16px; right: 16px; background: transparent; border: none; padding: 8px; cursor: pointer; color: var(--text); border-radius: 50%; transition: background 0.2s;">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
           </button>
           <div class="unsaved-modal-body" style="padding: 32px 24px 24px; text-align: center;">

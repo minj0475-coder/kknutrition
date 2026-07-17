@@ -26272,7 +26272,7 @@ html body #app-content .home-search-hero__image-wrap picture {
 /* Keep neutral fills and hover feedback on one cool ChatGPT-like palette. */
 :root {
   --kkn-neutral-fill: #f7f8fa;
-  --kkn-neutral-hover: #f1f3f5;
+  --kkn-neutral-hover: #f5f6f8;
   --gray-soft: var(--kkn-neutral-fill) !important;
   --table-head: var(--kkn-neutral-fill) !important;
   --table-cell-soft: var(--kkn-neutral-fill) !important;
@@ -26292,6 +26292,9 @@ html body :is(#app-content#app-content#app-content, #appSidebar#appSidebar#appSi
   .menu-tag,
   .complaint-chip:not(.audience),
   .annual-inline-sheet-link,
+  .annual-sheet-save-btn,
+  .annual-sheet-open-btn,
+  .plain-method,
   .vendor-category-manager,
   .vendor-accordion-panel,
   .vendor-accordion-toggle em,
@@ -26341,6 +26344,7 @@ html body :is(#app-content#app-content#app-content, #appSidebar#appSidebar#appSi
     .quick,
     .recipe-list-item,
     .bookmark-chip,
+    .bm-favorite-btn,
     .materials-detail summary,
     .staff-accordion summary,
     .work-note-toc-item,
@@ -26358,6 +26362,8 @@ html body :is(#app-content#app-content#app-content, #appSidebar#appSidebar#appSi
     .home-global-search__clear,
     .home-search-result,
     .home-search-more,
+    #unsavedModalCloseBtn,
+    #unsavedModalCancelBtn,
     .complaint-icon-btn
   ):not([class*="academic-"]):not([class*="academic-"] *):not(
     .active,
@@ -26385,6 +26391,17 @@ html body :is(#app-content#app-content#app-content, #appSidebar#appSidebar#appSi
   }
 }
 
+html body #auth-screen {
+  background-color: var(--kkn-neutral-fill) !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html body #app-content#app-content #staff .staff-accordion summary:hover::after,
+  html body #app-content#app-content #staff .staff-accordion summary:focus-visible::after {
+    background-color: var(--kkn-neutral-hover) !important;
+  }
+}
+
 html body #appSidebar#appSidebar.app-sidebar :is(
   .sidebar-nav a.active,
   .sidebar-subnav a.active,
@@ -26393,6 +26410,10 @@ html body #appSidebar#appSidebar.app-sidebar :is(
   .sidebar-subnav a[aria-current="page"],
   .sidebar-recent-list a[aria-current="page"]
 ) {
+  background-color: var(--kkn-neutral-hover) !important;
+}
+
+html body #app-content#app-content #today-menu .work-note-toc-item[aria-pressed="true"] {
   background-color: var(--kkn-neutral-hover) !important;
 }
 
