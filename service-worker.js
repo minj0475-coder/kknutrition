@@ -1,12 +1,12 @@
-const CACHE_NAME = 'kknutrition-pwa-v55';
+const CACHE_NAME = 'kknutrition-pwa-v56';
 const CORE_ASSETS = [
   './',
   './index.html',
-  './assets/site_v2.css?v=20260717_008',
+  './assets/site_v2.css?v=20260717_009',
   './assets/auth.js?v=20260710_001',
   './assets/data-guard.js?v=20260714_001',
   './assets/bookmarks.js?v=20260713_004',
-  './assets/site.js?v=20260717_003',
+  './assets/site.js?v=20260717_004',
   './assets/images/home-kkul-hero-display.webp'
 ];
 
