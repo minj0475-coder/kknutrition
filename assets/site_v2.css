@@ -26419,3 +26419,141 @@ html body #appSidebar,
 html body #app-content > header.top {
   border-color: var(--kkn-box-line) !important;
 }
+
+/* Keep every icon control crisp and visually consistent without button outlines. */
+:root {
+  --kkn-icon-control-color: #202123;
+  --kkn-icon-glyph-size: 20px;
+  --kkn-icon-stroke-width: 1.9;
+}
+
+html body :is(#app-content#app-content#app-content, #appSidebar#appSidebar#appSidebar) :is(
+  .icon-only-btn,
+  .copy-icon-btn,
+  .open-icon-btn,
+  .delete-icon-btn,
+  .promo-copy-btn,
+  .promo-open-link,
+  .promo-delete-btn,
+  .memo-full-btn,
+  .annual-sheet-save-btn,
+  .annual-sheet-open-btn,
+  .academic-nav-btn,
+  .mobile-menu-btn,
+  .sidebar-icon-btn,
+  .close-drawer-btn,
+  .bm-delete-btn,
+  .complaint-icon-btn,
+  .vendor-category-add-btn,
+  .vendor-category-delete-btn,
+  .staff-notice-add-btn,
+  .message-template-delete,
+  .phone-action-btn
+),
+html body :is(#app-content#app-content#app-content, #appSidebar#appSidebar#appSidebar) :is(button, a)[aria-label]:has(> svg):not(:has(> span)) {
+  border: 0 !important;
+  border-color: transparent !important;
+  color: var(--kkn-icon-control-color) !important;
+  -webkit-text-fill-color: var(--kkn-icon-control-color) !important;
+  box-shadow: none !important;
+}
+
+html body :is(#app-content#app-content#app-content, #appSidebar#appSidebar#appSidebar) :is(
+  .icon-only-btn,
+  .copy-icon-btn,
+  .open-icon-btn,
+  .delete-icon-btn,
+  .promo-copy-btn,
+  .promo-open-link,
+  .promo-delete-btn,
+  .memo-full-btn,
+  .annual-sheet-save-btn,
+  .annual-sheet-open-btn,
+  .academic-nav-btn,
+  .mobile-menu-btn,
+  .sidebar-icon-btn,
+  .close-drawer-btn,
+  .bm-delete-btn,
+  .complaint-icon-btn,
+  .vendor-category-add-btn,
+  .vendor-category-delete-btn,
+  .staff-notice-add-btn,
+  .message-template-delete,
+  .phone-action-btn
+):is(:hover, :active, :focus-visible) {
+  border: 0 !important;
+  border-color: transparent !important;
+  color: var(--kkn-icon-control-color) !important;
+  -webkit-text-fill-color: var(--kkn-icon-control-color) !important;
+}
+
+html body :is(#app-content#app-content#app-content, #appSidebar#appSidebar#appSidebar) :is(button, a) > svg {
+  width: var(--kkn-icon-glyph-size) !important;
+  height: var(--kkn-icon-glyph-size) !important;
+  min-width: var(--kkn-icon-glyph-size) !important;
+  min-height: var(--kkn-icon-glyph-size) !important;
+  max-width: var(--kkn-icon-glyph-size) !important;
+  max-height: var(--kkn-icon-glyph-size) !important;
+  flex: 0 0 var(--kkn-icon-glyph-size) !important;
+  color: var(--kkn-icon-control-color) !important;
+  stroke: currentColor !important;
+  stroke-width: var(--kkn-icon-stroke-width) !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+  shape-rendering: geometricPrecision;
+}
+
+html body :is(#app-content#app-content#app-content, #appSidebar#appSidebar#appSidebar) :is(button, a) > svg :is(path, line, polyline, polygon, rect, circle, ellipse) {
+  vector-effect: non-scaling-stroke;
+}
+
+html body :is(#app-content#app-content#app-content, #appSidebar#appSidebar#appSidebar) :is(
+  .copy-icon-btn,
+  .open-icon-btn,
+  .delete-icon-btn,
+  .promo-copy-btn,
+  .promo-open-link,
+  .promo-delete-btn,
+  .memo-full-btn,
+  .annual-sheet-save-btn,
+  .annual-sheet-open-btn,
+  .bm-delete-btn,
+  .complaint-icon-btn,
+  .vendor-category-add-btn,
+  .vendor-category-delete-btn,
+  .message-template-delete,
+  .phone-action-btn
+)::before {
+  width: var(--kkn-icon-glyph-size) !important;
+  height: var(--kkn-icon-glyph-size) !important;
+  min-width: var(--kkn-icon-glyph-size) !important;
+  min-height: var(--kkn-icon-glyph-size) !important;
+  max-width: var(--kkn-icon-glyph-size) !important;
+  max-height: var(--kkn-icon-glyph-size) !important;
+  flex: 0 0 var(--kkn-icon-glyph-size) !important;
+  background-color: currentColor !important;
+  color: inherit !important;
+}
+
+html body #app-content #staff .staff-notice-add-btn::before {
+  width: 14px !important;
+  height: 2px !important;
+  background: currentColor !important;
+}
+
+html body #app-content #staff .staff-notice-add-btn::after {
+  width: 2px !important;
+  height: 14px !important;
+  background: currentColor !important;
+}
+
+html body #app-content .academic-nav-btn {
+  font-size: 22px !important;
+  font-weight: 500 !important;
+  line-height: 1 !important;
+}
+
+html body #app-content #new-substitute button#substituteCopyBtn.copy-panel-btn::before {
+  width: var(--kkn-icon-glyph-size) !important;
+  height: var(--kkn-icon-glyph-size) !important;
+}
