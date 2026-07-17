@@ -26236,6 +26236,13 @@ html body #app-content .home-search-hero__image-wrap picture {
 }
 
 @media (max-width: 900px) {
+  html body #app-content #home .daily-kkul-image,
+  html body #app-content #home .daily-kkul-image-wrap img,
+  html body #app-content #home .daily-kkul-card.daily-kkul-card .daily-kkul-image {
+    filter: none !important;
+    -webkit-filter: none !important;
+  }
+
   html body #app-content > header.top .top-inner {
     gap: 16px !important;
   }
