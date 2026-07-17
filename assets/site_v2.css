@@ -26612,9 +26612,14 @@ html body #app-content :is(
   .menu-tag,
   .date-badge,
   .annual-inline-sheet-link,
-  .complaint-chip
+  .complaint-chip:not(.audience)
 ) {
   color: var(--kkn-text-body) !important;
+}
+
+html body #app-content #complaints .complaint-chip.audience {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
 html body :is(#app-content, #appSidebar) :is(
