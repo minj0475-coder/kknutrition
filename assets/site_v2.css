@@ -341,7 +341,7 @@ body{
   margin:0;
   background:var(--bg-main);
   color:var(--text-main);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--portal-font);
   line-height:1.6;
   letter-spacing:-.025em;
 }
@@ -3668,7 +3668,7 @@ nav{
   font-size:22px;
   font-weight: 500;
   line-height:0;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: var(--portal-font);
   padding-bottom: 2px; /* 폰트 특성상 +가 살짝 쳐지는 현상 보정 */
 }
 .staff-accordion[open] summary{
@@ -5438,7 +5438,7 @@ html body #bookmarks .search-wrap input {
   border-radius: 14px !important;
   background: #ffffff !important;
   color: #111827 !important;
-  font-family: Arial, sans-serif !important;
+  font-family: var(--portal-font) !important;
   font-size: 14px !important;
   line-height: 44px !important;
   box-shadow: 0 1px 2px rgba(0, 0, 0, .03) !important;
@@ -6448,7 +6448,7 @@ nav a.active {
   border-radius: 4px;
   padding: 2px 6px;
   font-size: 11px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: var(--portal-font);
   color: var(--heading);
   font-weight: 600;
   margin: 0 2px;
@@ -21706,7 +21706,7 @@ html body #app-content #monthly :is(#academicPrevMonthBtn, #academicNextMonthBtn
   width: 40px !important;
   min-width: 40px !important;
   padding: 0 0 2px !important;
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif !important;
+  font-family: var(--portal-font) !important;
   font-size: 22px !important;
   font-weight: 800 !important;
   line-height: 1 !important;
