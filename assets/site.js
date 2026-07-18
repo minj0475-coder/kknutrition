@@ -4688,9 +4688,11 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderPromoMobileContacts(filtered, query) {
     if (!promoMobileList) return;
     promoMobileList.innerHTML = "";
+    promoMobileList.classList.remove("has-pinned");
     if (!filtered.length) return;
 
     const pinned = getPinnedPromoContacts(filtered, query);
+    promoMobileList.classList.toggle("has-pinned", pinned.length > 0);
     const pinnedIndexes = new Set(pinned.map(item => item.index));
     if (pinned.length) {
       promoMobileList.appendChild(createPromoMobileSection("자주 쓰는 업체", pinned, true));

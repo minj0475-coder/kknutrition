@@ -11332,6 +11332,131 @@ body #promo-contacts .vendor-network-search {
   }
 }
 
+@media (min-width: 761px) {
+  html body #app-content #promo-contacts #promoContactPanel .promo-mobile-list.has-pinned {
+    display: grid !important;
+    gap: 12px !important;
+    padding: 0 0 16px !important;
+    background: #ffffff !important;
+  }
+
+  html body #app-content #promo-contacts #promoContactPanel .promo-mobile-section:not(.is-pinned) {
+    display: none !important;
+  }
+
+  html body #app-content #promo-contacts #promoContactPanel .promo-mobile-section.is-pinned {
+    display: grid !important;
+    gap: 10px !important;
+  }
+
+  html body #app-content #promo-contacts #promoContactPanel .promo-mobile-section-title {
+    margin: 0 !important;
+    padding: 2px 2px 0 !important;
+    color: var(--kkn-text-muted) !important;
+    font-size: 13px !important;
+    font-weight: 850 !important;
+  }
+
+  html body #app-content #promo-contacts #promoContactPanel .promo-mobile-card.is-pinned {
+    overflow: hidden !important;
+    border: 1px solid var(--kkn-box-line) !important;
+    border-radius: 12px !important;
+    background: var(--kkn-neutral-fill) !important;
+  }
+
+  html body #app-content #promo-contacts #promoContactPanel .promo-mobile-summary {
+    min-height: 58px !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto 18px !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 10px 14px !important;
+    cursor: pointer !important;
+    list-style: none !important;
+  }
+
+  html body #app-content #promo-contacts #promoContactPanel .promo-mobile-summary::-webkit-details-marker {
+    display: none !important;
+  }
+
+  html body #app-content #promo-contacts #promoContactPanel .promo-mobile-summary::after {
+    content: "" !important;
+    width: 9px !important;
+    height: 9px !important;
+    border-right: 2px solid currentColor !important;
+    border-bottom: 2px solid currentColor !important;
+    transform: rotate(45deg) translateY(-1px) !important;
+    transition: transform .18s ease !important;
+  }
+
+  html body #app-content #promo-contacts #promoContactPanel .promo-mobile-card[open] .promo-mobile-summary::after {
+    transform: rotate(225deg) translateY(-1px) !important;
+  }
+
+  html body #app-content #promo-contacts #promoContactPanel .promo-mobile-main {
+    min-width: 0 !important;
+    display: grid !important;
+    gap: 4px !important;
+  }
+
+  html body #app-content #promo-contacts #promoContactPanel :is(.promo-mobile-company, .promo-mobile-meta) {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  html body #app-content #promo-contacts #promoContactPanel .promo-mobile-company {
+    color: var(--kkn-text-heading) !important;
+    font-size: 15px !important;
+    font-weight: 850 !important;
+  }
+
+  html body #app-content #promo-contacts #promoContactPanel .promo-mobile-meta,
+  html body #app-content #promo-contacts #promoContactPanel .promo-mobile-detail label > span {
+    color: var(--kkn-text-muted) !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+  }
+
+  html body #app-content #promo-contacts #promoContactPanel .promo-mobile-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+
+  html body #app-content #promo-contacts #promoContactPanel .promo-mobile-actions :is(.promo-copy-btn, .promo-open-link) {
+    width: 36px !important;
+    min-width: 36px !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  html body #app-content #promo-contacts #promoContactPanel .promo-mobile-detail {
+    display: grid !important;
+    grid-template-columns: minmax(140px, 1fr) minmax(140px, 1fr) minmax(180px, 1.25fr) minmax(180px, 1.25fr) auto !important;
+    gap: 8px !important;
+    align-items: end !important;
+    padding: 12px !important;
+    border-top: 1px solid var(--kkn-box-line) !important;
+    background: #ffffff !important;
+  }
+
+  html body #app-content #promo-contacts #promoContactPanel .promo-mobile-detail label {
+    min-width: 0 !important;
+    display: grid !important;
+    gap: 5px !important;
+  }
+
+  html body #app-content #promo-contacts #promoContactPanel .promo-mobile-tools {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 6px !important;
+  }
+}
+
 /* 2026-06-22 sidebar repair: readable title, one logo while open, mobile full drawer. */
 body .app-sidebar .sidebar-head {
   display: flex !important;
