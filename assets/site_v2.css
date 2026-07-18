@@ -26852,7 +26852,10 @@ html body #app-content #promo-contacts .vendor-frequent-detail label {
     display: none !important;
   }
 
-  html body #app-content #promo-contacts .vendor-copy-field .vendor-frequent-email-detail-copy {
+  html body #app-content #promo-contacts .vendor-copy-field :is(
+    .vendor-frequent-phone-detail-copy,
+    .vendor-frequent-email-detail-copy
+  ) {
     display: inline-flex !important;
   }
 
