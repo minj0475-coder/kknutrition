@@ -11468,6 +11468,13 @@ html body #app-content #promo-contacts #promoContactPanel .promo-mobile-detail .
   margin: 0 !important;
 }
 
+/* Desktop promo summaries stay compact; copy actions live in the expanded fields. */
+@media (min-width: 761px) {
+  html body #app-content #promo-contacts #promoContactPanel .promo-mobile-summary .promo-copy-btn {
+    display: none !important;
+  }
+}
+
 /* 2026-06-22 sidebar repair: readable title, one logo while open, mobile full drawer. */
 body .app-sidebar .sidebar-head {
   display: flex !important;
