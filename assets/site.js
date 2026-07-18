@@ -3849,6 +3849,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // Promo contacts table
 const VENDOR_NETWORK_KEY = "kkulkkoori_vendor_network_v1";
 const VENDOR_NETWORK_USAGE_KEY = "kkulkkoori_vendor_contact_usage_v1";
+const VENDOR_FREQUENT_LIMIT = 4;
 const VENDOR_GROUPS_KEY = "kkulkkoori_vendor_groups_v1";
 const VENDOR_GROUPS_DEFAULT = ["농산물", "축산물", "수산물", "공산품", "우유", "소모품", "기타"];
 const VENDOR_NETWORK_DEFAULT = [
@@ -4421,7 +4422,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function getPinnedVendorNetwork(filtered, query) {
     if (query) return [];
     const usage = readVendorNetworkUsage();
-    return filtered
+    const ranked = filtered
       .filter(({ row }) => {
         if (!String(row && row.company || "").trim()) return false;
         const entry = usage[getVendorUsageKey(row)];
@@ -4434,7 +4435,19 @@ document.addEventListener("DOMContentLoaded", () => {
         if (countGap) return countGap;
         return (Number(bUsage.lastUsedAt) || 0) - (Number(aUsage.lastUsedAt) || 0);
       })
-      .slice(0, 4);
+      .slice(0, VENDOR_FREQUENT_LIMIT);
+    const selectedIndexes = new Set(ranked.map(({ index }) => index));
+
+    if (ranked.length < VENDOR_FREQUENT_LIMIT) {
+      for (const item of filtered) {
+        if (ranked.length >= VENDOR_FREQUENT_LIMIT) break;
+        if (!String(item.row && item.row.company || "").trim() || selectedIndexes.has(item.index)) continue;
+        ranked.push(item);
+        selectedIndexes.add(item.index);
+      }
+    }
+
+    return ranked;
   }
 
   function createVendorFrequentCard(row, index) {
