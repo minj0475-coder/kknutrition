@@ -26876,3 +26876,23 @@ html body #app-content#app-content #today-menu .message-template-item[open] > su
     background-color: var(--kkn-neutral-hover) !important;
   }
 }
+
+/* Match the mobile promo card heading size and inset to the vendor card. */
+@media (max-width: 760px) {
+  html body #app-content #promo-contacts .promo-contact-card .promo-contact-toolbar,
+  html body #promo-contacts .promo-contact-card .promo-contact-toolbar {
+    align-items: start !important;
+  }
+
+  html body #app-content #promo-contacts .promo-contact-card .promo-contact-title .section-title,
+  html body #promo-contacts .promo-contact-card .promo-contact-title .section-title {
+    font-size: 21px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  html body #app-content #promo-contacts .promo-contact-card .promo-contact-title .section-title,
+  html body #promo-contacts .promo-contact-card .promo-contact-title .section-title {
+    font-size: 17px !important;
+  }
+}
