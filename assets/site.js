@@ -4738,11 +4738,10 @@ document.addEventListener("DOMContentLoaded", () => {
       </summary>
       <div class="promo-mobile-detail">
         <label><span>업체명</span><input class="promo-cell-input" data-field="company" value=""></label>
-        <label><span>연락처</span><input class="promo-cell-input" data-field="phone" value=""></label>
-        <label><span>전자 단가</span><input class="promo-cell-input" data-field="link" value=""></label>
+        <label><span>연락처</span><div class="promo-copy-field promo-mobile-copy-field"><input class="promo-cell-input" data-field="phone" value=""><button class="promo-copy-btn copy-icon-btn" type="button" data-copy-field="phone" aria-label="연락처 복사" title="복사"></button></div></label>
+        <label><span>전자 단가</span><div class="promo-copy-field promo-mobile-copy-field"><input class="promo-cell-input" data-field="link" value=""><button class="promo-copy-btn copy-icon-btn" type="button" data-copy-field="link" aria-label="전자 단가 링크 복사" title="복사"></button></div></label>
         <label><span>메모</span><textarea class="promo-cell-input" data-field="memo"></textarea></label>
         <div class="promo-mobile-tools">
-          <button class="promo-copy-btn copy-icon-btn" type="button" data-copy-field="link" aria-label="전자 단가 링크 복사" title="복사"></button>
           <button class="promo-delete-btn delete-icon-btn" type="button" aria-label="홍보 업체 연락처 행 삭제" title="삭제"></button>
         </div>
       </div>
@@ -4785,7 +4784,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const field = btn.getAttribute("data-copy-field");
         copyTextValue(rows[index][field], statusEl);
         recordPromoContactUse(rows[index]);
-        renderPromoContacts();
       });
     });
 

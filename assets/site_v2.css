@@ -11457,6 +11457,17 @@ body #promo-contacts .vendor-network-search {
   }
 }
 
+html body #app-content #promo-contacts #promoContactPanel .promo-mobile-detail .promo-mobile-copy-field {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 40px !important;
+  gap: 6px !important;
+  align-items: center !important;
+}
+
+html body #app-content #promo-contacts #promoContactPanel .promo-mobile-detail .promo-mobile-copy-field .promo-copy-btn {
+  margin: 0 !important;
+}
+
 /* 2026-06-22 sidebar repair: readable title, one logo while open, mobile full drawer. */
 body .app-sidebar .sidebar-head {
   display: flex !important;
