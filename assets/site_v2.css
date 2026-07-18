@@ -27082,3 +27082,19 @@ html body #app-content #promo-contacts #promoContactPanel .promo-mobile-list.has
 html body #app-content #memoModalOverlay.memo-modal-overlay {
   z-index: 2000 !important;
 }
+
+/* Align desktop promo cards and table, and match the vendor card's white detail surface. */
+html body #app-content#app-content#app-content #promo-contacts #promoContactPanel#promoContactPanel .promo-mobile-detail {
+  background-color: #ffffff !important;
+}
+
+@media (min-width: 761px) {
+  html body #app-content #promo-contacts #promoContactPanel .promo-table-wrap {
+    padding: 0 0 18px !important;
+  }
+
+  html body #app-content #promo-contacts #promoContactPanel .promo-mobile-detail .promo-cell-input {
+    height: 47px !important;
+    min-height: 47px !important;
+  }
+}
