@@ -27049,3 +27049,18 @@ html body #app-content#app-content #today-menu .message-template-item[open] > su
     font-size: 17px !important;
   }
 }
+
+/* Staff cards: show the neutral fill only while the card is being pressed. */
+html body #app-content#app-content #staff .staff-accordion > summary {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html body #app-content#app-content #staff .staff-accordion > summary:is(:hover, :focus) {
+  background-color: transparent !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+html body #app-content#app-content #staff .staff-accordion > summary:active {
+  background-color: var(--kkn-neutral-hover) !important;
+}
