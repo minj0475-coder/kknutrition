@@ -27064,3 +27064,16 @@ html body #app-content#app-content #staff .staff-accordion > summary:is(:hover, 
 html body #app-content#app-content #staff .staff-accordion > summary:active {
   background-color: var(--kkn-neutral-hover) !important;
 }
+
+/* Keep both frequently-used vendor sections aligned beneath their fixed headings. */
+html body #app-content #promo-contacts :is(
+  .vendor-frequent-title,
+  .promo-mobile-section-title
+) {
+  color: var(--kkn-text-muted) !important;
+}
+
+html body #app-content #promo-contacts .vendor-frequent-section,
+html body #app-content #promo-contacts #promoContactPanel .promo-mobile-list.has-pinned {
+  margin-top: -6px !important;
+}
