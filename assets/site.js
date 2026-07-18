@@ -4460,14 +4460,14 @@ document.addEventListener("DOMContentLoaded", () => {
           <span class="vendor-frequent-meta"></span>
         </span>
         <span class="vendor-frequent-actions">
-          <button class="vendor-copy-btn copy-icon-btn phone-action-btn" type="button" data-vendor-phone-action aria-label="전화번호 복사" title="복사"></button>
+          <button class="vendor-copy-btn copy-icon-btn phone-action-btn vendor-frequent-phone-summary-action" type="button" data-vendor-phone-action aria-label="전화번호 복사" title="복사"></button>
           <button class="vendor-copy-btn copy-icon-btn vendor-frequent-email-summary-copy" type="button" data-vendor-copy-field="email" aria-label="이메일 복사" title="복사"></button>
         </span>
       </summary>
       <div class="vendor-frequent-detail">
         <label><span>업체군</span><input class="promo-cell-input" data-vendor-field="group" value=""></label>
         <label><span>업체명</span><input class="promo-cell-input" data-vendor-field="company" value=""></label>
-        <label><span>전화번호</span><input class="promo-cell-input" data-vendor-field="phone" value=""></label>
+        <label><span>전화번호</span><div class="vendor-copy-field"><input class="promo-cell-input" data-vendor-field="phone" value=""><button class="vendor-copy-btn copy-icon-btn vendor-frequent-phone-detail-copy" type="button" data-vendor-copy-field="phone" aria-label="전화번호 복사" title="복사"></button></div></label>
         <label><span>이메일</span><div class="vendor-copy-field"><input class="promo-cell-input" data-vendor-field="email" value=""><button class="vendor-copy-btn copy-icon-btn vendor-frequent-email-detail-copy" type="button" data-vendor-copy-field="email" aria-label="이메일 복사" title="복사"></button></div></label>
         <div class="vendor-accordion-tools"><button class="promo-delete-btn delete-icon-btn" type="button" aria-label="업체 연락망 행 삭제" title="삭제"></button></div>
       </div>

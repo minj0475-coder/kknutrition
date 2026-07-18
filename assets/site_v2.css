@@ -26797,7 +26797,10 @@ html body #app-content #promo-contacts .vendor-frequent-actions .vendor-copy-btn
   padding: 0 !important;
 }
 
-html body #app-content #promo-contacts .vendor-frequent-email-detail-copy {
+html body #app-content #promo-contacts :is(
+  .vendor-frequent-phone-detail-copy,
+  .vendor-frequent-email-detail-copy
+) {
   display: none !important;
 }
 
@@ -26815,6 +26818,28 @@ html body #app-content #promo-contacts .vendor-frequent-detail label {
   min-width: 0 !important;
   display: grid !important;
   gap: 5px !important;
+}
+
+@media (min-width: 761px) {
+  html body #app-content #promo-contacts .vendor-frequent-summary {
+    grid-template-columns: minmax(0, 1fr) 18px !important;
+    padding: 10px 14px !important;
+  }
+
+  html body #app-content #promo-contacts .vendor-frequent-actions {
+    display: none !important;
+  }
+
+  html body #app-content #promo-contacts .vendor-copy-field :is(
+    .vendor-frequent-phone-detail-copy,
+    .vendor-frequent-email-detail-copy
+  ) {
+    display: inline-flex !important;
+  }
+
+  html body #app-content #promo-contacts .vendor-frequent-detail .vendor-copy-field .promo-cell-input {
+    padding-right: 46px !important;
+  }
 }
 
 @media (max-width: 760px) {
