@@ -4914,6 +4914,10 @@ document.addEventListener("DOMContentLoaded", () => {
       renderVendorNetwork();
       if (statusEl) statusEl.textContent = "다른 기기의 최신 업체 연락망을 불러왔습니다.";
     }
+    if (event.detail.key === VENDOR_NETWORK_USAGE_KEY) {
+      renderVendorNetwork();
+      if (statusEl) statusEl.textContent = "다른 기기의 자주 쓰는 업체를 불러왔습니다.";
+    }
     if (event.detail.key === VENDOR_GROUPS_KEY) {
       vendorGroups = readVendorGroups();
       renderVendorCategoryManager();
