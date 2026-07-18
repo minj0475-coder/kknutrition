@@ -27077,3 +27077,8 @@ html body #app-content #promo-contacts .vendor-frequent-section,
 html body #app-content #promo-contacts #promoContactPanel .promo-mobile-list.has-pinned {
   margin-top: -6px !important;
 }
+
+/* Keep the memo backdrop above the collapsed desktop sidebar and its logo rail. */
+html body #app-content #memoModalOverlay.memo-modal-overlay {
+  z-index: 2000 !important;
+}
