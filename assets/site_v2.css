@@ -4408,35 +4408,6 @@ td:first-child,
   }
 }
 
-/* 오늘의 꿀꿀이 카드 레이아웃 정리 */
-.daily-kkul-card {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  gap: 32px !important;
-  padding: 36px 48px !important;
-}
-.daily-kkul-copy {
-  border: none !important;
-  background: transparent !important;
-  padding: 0 !important;
-  flex: 1 !important;
-}
-.daily-kkul-image-wrap img {
-  flex-shrink: 0 !important;
-  width: 120px !important;
-  height: auto !important;
-  object-fit: contain !important;
-}
-
-@media(max-width: 640px) {
-  .daily-kkul-card {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    padding: 24px !important;
-  }
-}
-
 /* ==============================================================
 글자색 및 가독성 강제 보정 (Gravity 긴급 수정)
 ============================================================== */
