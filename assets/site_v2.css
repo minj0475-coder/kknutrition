@@ -26839,3 +26839,19 @@ html body #app-content #promo-contacts .vendor-frequent-detail label {
     width: 1.5px !important;
   }
 }
+
+/* Mobile message cards: keep the tap fill inside the rounded card shape. */
+html body #app-content#app-content #today-menu .message-template-item > summary {
+  border-radius: calc(var(--portal-card-radius) - 1px) !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html body #app-content#app-content #today-menu .message-template-item[open] > summary {
+  border-radius: calc(var(--portal-card-radius) - 1px) calc(var(--portal-card-radius) - 1px) 0 0 !important;
+}
+
+@media (hover: none), (pointer: coarse) {
+  html body #app-content#app-content #today-menu .message-template-card:not(.is-editing) .message-template-item > summary:active {
+    background-color: var(--kkn-neutral-hover) !important;
+  }
+}
