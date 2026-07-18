@@ -54,6 +54,7 @@ const CLOUD_SYNC_KEYS = [
   "kkulkkoori_vendor_contact_usage_v1",
   "kkulkkoori_vendor_groups_v1",
   "kkulkkoori_promo_contacts_v1",
+  "kkulkkoori_promo_contact_usage_v1",
   "kkulkkoori_academic_events_v1",
   "kkulkkoori_cheongsu_recipes_v3"
 ];
@@ -148,7 +149,44 @@ function stableCloudTemplateKey(item) {
   return stableCloudBodyKey(item);
 }
 
+const CLOUD_USAGE_KEYS = new Set([
+  "kkulkkoori_vendor_contact_usage_v1",
+  "kkulkkoori_promo_contact_usage_v1"
+]);
+
+function parseCloudUsageValue(value) {
+  try {
+    const parsed = JSON.parse(String(value || "{}"));
+    if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) return parsed;
+  } catch (error) {}
+  return null;
+}
+
+function mergeCloudUsageValues(localValue, remoteValue) {
+  const local = parseCloudUsageValue(localValue);
+  const remote = parseCloudUsageValue(remoteValue);
+  if (!local || !remote) return null;
+
+  const merged = {};
+  const usageKeys = Array.from(new Set([...Object.keys(remote), ...Object.keys(local)])).sort();
+  usageKeys.forEach(usageKey => {
+    const localEntry = local[usageKey] && typeof local[usageKey] === "object" ? local[usageKey] : {};
+    const remoteEntry = remote[usageKey] && typeof remote[usageKey] === "object" ? remote[usageKey] : {};
+    const localLastUsedAt = Number(localEntry.lastUsedAt) || 0;
+    const remoteLastUsedAt = Number(remoteEntry.lastUsedAt) || 0;
+    const latestEntry = localLastUsedAt >= remoteLastUsedAt ? localEntry : remoteEntry;
+    const otherEntry = latestEntry === localEntry ? remoteEntry : localEntry;
+    merged[usageKey] = {
+      company: String(latestEntry.company || otherEntry.company || "").trim(),
+      count: Math.max(Number(localEntry.count) || 0, Number(remoteEntry.count) || 0),
+      lastUsedAt: Math.max(localLastUsedAt, remoteLastUsedAt)
+    };
+  });
+  return JSON.stringify(merged);
+}
+
 function mergeCloudListValues(key, localValue, remoteValue, remoteUpdatedAt) {
+  if (CLOUD_USAGE_KEYS.has(key)) return mergeCloudUsageValues(localValue, remoteValue);
   if (key !== "kkulkkoori_work_notes_v1" && key !== "kkulkkoori_message_templates_v1") return null;
   const local = parseCloudJsonValue(localValue);
   const remote = parseCloudJsonValue(remoteValue);

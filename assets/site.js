@@ -3927,7 +3927,9 @@ function readVendorNetworkUsage() {
 
 function saveVendorNetworkUsage(usage) {
   try {
-    localStorage.setItem(VENDOR_NETWORK_USAGE_KEY, JSON.stringify(usage || {}));
+    const value = JSON.stringify(usage || {});
+    localStorage.setItem(VENDOR_NETWORK_USAGE_KEY, value);
+    notifyNoteDataChanged(VENDOR_NETWORK_USAGE_KEY, value);
   } catch(e) {}
 }
 
@@ -3974,7 +3976,9 @@ function readPromoContactUsage() {
 
 function savePromoContactUsage(usage) {
   try {
-    localStorage.setItem(PROMO_CONTACT_USAGE_KEY, JSON.stringify(usage || {}));
+    const value = JSON.stringify(usage || {});
+    localStorage.setItem(PROMO_CONTACT_USAGE_KEY, value);
+    notifyNoteDataChanged(PROMO_CONTACT_USAGE_KEY, value);
   } catch(e) {}
 }
 
@@ -4932,6 +4936,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (event.detail.key === VENDOR_NETWORK_USAGE_KEY) {
       renderVendorNetwork();
       if (statusEl) statusEl.textContent = "다른 기기의 자주 쓰는 업체를 불러왔습니다.";
+    }
+    if (event.detail.key === PROMO_CONTACT_USAGE_KEY) {
+      renderPromoContacts();
+      if (statusEl) statusEl.textContent = "다른 기기의 자주 쓰는 홍보업체를 불러왔습니다.";
     }
     if (event.detail.key === VENDOR_GROUPS_KEY) {
       vendorGroups = readVendorGroups();
