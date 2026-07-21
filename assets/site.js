@@ -5499,6 +5499,37 @@ document.addEventListener("DOMContentLoaded", () => {
     renderCalendar();
   }
 
+  function toggleAcademicDayDone(key) {
+    if (!isAcademicEditMode()) return;
+    const occurrences = getUserAcademicEventOccurrencesForKey(userEvents, key);
+    if (!occurrences.length) return;
+    const nextDone = !occurrences.every(({ event }) => Boolean(event.done));
+
+    occurrences.forEach(({ event, startKey, endKey }) => {
+      if (Boolean(event.done) === nextDone) return;
+      if (startKey === endKey) {
+        event.done = nextDone;
+        return;
+      }
+
+      addAcademicSkipDate(event, key);
+      const dayEvents = getUserAcademicEventsForKey(userEvents, key);
+      dayEvents.push({
+        ...event,
+        endDate: key,
+        done: nextDone,
+        skipDates: [],
+        seriesId: createAcademicSeriesId(),
+        parentSeriesId: event.seriesId || ""
+      });
+      setUserAcademicEventsForKey(userEvents, key, dayEvents);
+    });
+
+    state.selectedKey = key;
+    renderAll();
+    setStatus(nextDone ? "해당 날짜의 일정을 모두 완료했습니다." : "해당 날짜의 일정 완료를 모두 해제했습니다.");
+  }
+
   function openAcademicModal(key, userEventIndex = null, sourceKey = key, prefillEvent = null) {
     if (!isAcademicEditMode()) {
       selectDate(key, userEventIndex, sourceKey, prefillEvent);
@@ -5532,6 +5563,7 @@ document.addEventListener("DOMContentLoaded", () => {
     dates.forEach(date => {
       const key = makeAcademicKey(date);
       const events = getAcademicEventsForKey(key, userEvents);
+      const userOccurrences = getUserAcademicEventOccurrencesForKey(userEvents, key);
       const isCurrentMonth = date.getMonth() === state.month;
       const isToday = key === makeAcademicKey(today);
       const isSelected = key === state.selectedKey;
@@ -5557,6 +5589,17 @@ document.addEventListener("DOMContentLoaded", () => {
           ${events.length ? `<span class="academic-pill-count">${events.length}</span>` : ""}
         </div>
       `;
+      const pillCount = button.querySelector(".academic-pill-count");
+      if (pillCount && userOccurrences.length && isAcademicEditMode()) {
+        const allDone = userOccurrences.every(({ event }) => Boolean(event.done));
+        pillCount.classList.add("is-actionable");
+        pillCount.title = allDone ? "이 날짜 일정 전체 완료 해제" : "이 날짜 일정 전체 완료";
+        pillCount.addEventListener("click", clickEvent => {
+          clickEvent.preventDefault();
+          clickEvent.stopPropagation();
+          toggleAcademicDayDone(key);
+        });
+      }
       events.slice(0, 3).forEach(event => {
         const pill = document.createElement("span");
         pill.className = `academic-pill ${event.type} ${event.color ? `color-${event.color}` : ""} ${event.done ? "is-done" : ""} ${event.weight === "bold" ? "is-bold" : ""}`;

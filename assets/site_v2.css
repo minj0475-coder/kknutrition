@@ -7795,9 +7795,13 @@ textarea.promo-cell-input {
 }
 
 .academic-pill-count {
-  color: #9b8582;
+  color: #8a9199;
   font-size: 11px;
   font-weight: 900;
+}
+
+.academic-pill-count.is-actionable {
+  cursor: pointer;
 }
 
 .academic-pill {
