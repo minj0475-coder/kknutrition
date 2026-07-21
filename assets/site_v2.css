@@ -26449,10 +26449,10 @@ html body #app-content#app-content #monthly .academic-pill-count.is-actionable {
 
 @media (hover: hover) and (pointer: fine) {
   html body #app-content#app-content #monthly .academic-pill-count.is-actionable:hover {
-    background-color: #f4f4f5 !important;
-    color: #4b5563 !important;
-    -webkit-text-fill-color: #4b5563 !important;
-    box-shadow: 0 0 0 4px #f4f4f5 !important;
+    background-color: #e5e7eb !important;
+    color: #374151 !important;
+    -webkit-text-fill-color: #374151 !important;
+    box-shadow: 0 0 0 4px #e5e7eb !important;
     transform: none !important;
   }
 }
