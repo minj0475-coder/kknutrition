@@ -7795,7 +7795,7 @@ textarea.promo-cell-input {
 }
 
 .academic-pill-count {
-  color: #8a9199;
+  color: #6b7280;
   font-size: 11px;
   font-weight: 900;
 }
@@ -26428,6 +26428,39 @@ html body #appSidebar#appSidebar.app-sidebar :is(
 
 html body #app-content#app-content #today-menu .work-note-toc-item[aria-pressed="true"] {
   background-color: var(--kkn-neutral-hover) !important;
+}
+
+/* Academic calendar event count: portal-muted text with a quiet ChatGPT-like hover. */
+html body #app-content#app-content #monthly .academic-pill-count {
+  color: #6b7280 !important;
+  -webkit-text-fill-color: #6b7280 !important;
+}
+
+html body #app-content#app-content #monthly .academic-pill-count.is-actionable {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  margin-left: 2px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html body #app-content#app-content #monthly .academic-pill-count.is-actionable:hover {
+    border-color: #e5e7eb !important;
+    background-color: #f4f4f5 !important;
+    color: #4b5563 !important;
+    -webkit-text-fill-color: #4b5563 !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
 }
 
 /* Sidebar TOC items use fill changes only, never outlined menu boxes. */
