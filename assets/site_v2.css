@@ -26436,29 +26436,23 @@ html body #app-content#app-content #monthly .academic-pill-count {
   -webkit-text-fill-color: #6b7280 !important;
 }
 
+html body #app-content#app-content #monthly .academic-date-line {
+  gap: 4px !important;
+}
+
 html body #app-content#app-content #monthly .academic-pill-count.is-actionable {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 22px;
-  height: 22px;
-  padding: 0 6px;
-  margin-left: 2px;
-  border: 1px solid transparent;
-  border-radius: 6px;
-  background: transparent;
+  border-radius: 3px;
   box-shadow: none;
   transform: none;
-  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+  transition: background-color 160ms ease, box-shadow 160ms ease, color 160ms ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
   html body #app-content#app-content #monthly .academic-pill-count.is-actionable:hover {
-    border-color: #e5e7eb !important;
     background-color: #f4f4f5 !important;
     color: #4b5563 !important;
     -webkit-text-fill-color: #4b5563 !important;
-    box-shadow: none !important;
+    box-shadow: 0 0 0 4px #f4f4f5 !important;
     transform: none !important;
   }
 }
