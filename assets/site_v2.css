@@ -15727,6 +15727,7 @@ html body #app-content section#monthly.page-section .academic-day.is-sunday:not(
 html body #app-content section#monthly.page-section .academic-day.is-saturday:not(.is-other-month) .academic-date-num,
 html body #app-content section#monthly.page-section .academic-day.is-holiday:not(.is-other-month) .academic-date-num {
   color: #e03131 !important;
+  -webkit-text-fill-color: #e03131 !important;
 }
 
 html body #app-content section#monthly.page-section .academic-weekdays span:first-child {
