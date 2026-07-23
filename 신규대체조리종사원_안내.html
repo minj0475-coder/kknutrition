@@ -223,6 +223,10 @@
       border-color:#9fc4ff;
       background:#f8fbff;
     }
+    .link-card:focus-visible{
+      outline:3px solid #f5c842;
+      outline-offset:3px;
+    }
     .link-card strong{
       display:block;
       color:var(--navy);
@@ -234,6 +238,52 @@
       color:#475569;
       font-size:14px;
       font-weight:800;
+    }
+    .edu-side .link-card{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 44px;
+      align-items:center;
+      column-gap:12px;
+      min-height:96px;
+      border:2px solid var(--blue);
+      padding:16px 18px;
+      background:#f1f7ff;
+      box-shadow:0 4px 12px rgba(47,111,203,.12);
+      transition:background-color .18s ease,box-shadow .18s ease,transform .18s ease;
+    }
+    .edu-side .link-card::after{
+      content:"→";
+      grid-column:2;
+      grid-row:1 / span 2;
+      width:44px;
+      height:44px;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      background:var(--blue);
+      color:#fff;
+      font-size:25px;
+      font-weight:900;
+      line-height:1;
+    }
+    .edu-side .link-card:hover,
+    .edu-side .link-card:focus-visible{
+      background:#e4f0ff;
+      box-shadow:0 7px 18px rgba(47,111,203,.2);
+      transform:translateY(-2px);
+    }
+    .edu-side .link-card strong{
+      grid-column:1;
+      font-size:18px;
+      line-height:1.35;
+      margin-bottom:6px;
+    }
+    .edu-side .link-card span{
+      grid-column:1;
+      color:#1f5fae;
+      font-size:16px;
+      line-height:1.45;
+      font-weight:900;
     }
     .steps{
       counter-reset:step;
@@ -482,11 +532,11 @@
             <div class="links">
               <a class="link-card" href="https://www.youtube.com/watch?v=443cmandj7c" target="_blank" rel="noopener">
                 <strong>1주일 이하 근로자</strong>
-                <span>유튜브 교육 영상 바로가기</span>
+                <span>여기를 눌러 교육 영상 보기</span>
               </a>
               <a class="link-card" href="https://www.gtie.go.kr/lh/ms/ac/atnlcAplyListView.do?srchCrseNm=%EC%95%88%EC%A0%84%EB%B3%B4%EA%B1%B4&menuId=null" target="_blank" rel="noopener">
                 <strong>1주일 초과 근로자</strong>
-                <span>교육 사이트 바로가기</span>
+                <span>여기를 눌러 교육 사이트 열기</span>
               </a>
             </div>
             <div class="note">교육 이수 후 이수증을 행정실에 제출하시면 교육수당 지급이 가능합니다.</div>
