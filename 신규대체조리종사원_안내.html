@@ -239,7 +239,8 @@
       font-size:14px;
       font-weight:800;
     }
-    .edu-side .link-card{
+    .edu-side .link-card,
+    .crime-link{
       display:grid;
       grid-template-columns:minmax(0,1fr) 44px;
       align-items:center;
@@ -251,7 +252,8 @@
       box-shadow:0 4px 12px rgba(47,111,203,.12);
       transition:background-color .18s ease,box-shadow .18s ease,transform .18s ease;
     }
-    .edu-side .link-card::after{
+    .edu-side .link-card::after,
+    .crime-link::after{
       content:"→";
       grid-column:2;
       grid-row:2;
@@ -268,19 +270,23 @@
       line-height:1;
     }
     .edu-side .link-card:hover,
-    .edu-side .link-card:focus-visible{
+    .edu-side .link-card:focus-visible,
+    .crime-link:hover,
+    .crime-link:focus-visible{
       background:#e4f0ff;
       box-shadow:0 7px 18px rgba(47,111,203,.2);
       transform:translateY(-2px);
     }
-    .edu-side .link-card strong{
+    .edu-side .link-card strong,
+    .crime-link strong{
       grid-column:1 / -1;
       grid-row:1;
       font-size:18px;
       line-height:1.35;
       margin-bottom:6px;
     }
-    .edu-side .link-card span{
+    .edu-side .link-card span,
+    .crime-link span{
       grid-column:1;
       grid-row:2;
       color:#1f5fae;
