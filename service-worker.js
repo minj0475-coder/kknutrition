@@ -1,13 +1,14 @@
-const CACHE_NAME = 'kknutrition-pwa-v106';
+const CACHE_NAME = 'kknutrition-pwa-v107';
 const CORE_ASSETS = [
   './',
   './index.html',
-  './assets/site_v2.css?v=20260721_024',
+  './assets/site_v2.css?v=20260724_001',
   './assets/auth.js?v=20260710_001',
   './assets/data-guard.js?v=20260717_002',
   './assets/bookmarks.js?v=20260713_004',
-  './assets/site.js?v=20260721_015',
-  './assets/images/home-kkul-hero-display.webp'
+  './assets/site.js?v=20260724_001',
+  './assets/images/home-kkul-hero-display.webp',
+  './assets/new-substitute-cook-guide-qr.png?v=20260724_001'
 ];
 
 self.addEventListener('install', (event) => {

@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://minj0475-coder.github.io/kknutrition/assets/og-image.png?v=20260704_001">
 <meta property="og:url" content="https://minj0475-coder.github.io/kknutrition/">
 <title>급식 업무 포털</title>
-<link rel="stylesheet" href="assets/site_v2.css?v=20260721_024">
+<link rel="stylesheet" href="assets/site_v2.css?v=20260724_001">
 <link rel="manifest" href="manifest.json?v=6">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/app-icon-192.png?v=6">
 <link rel="apple-touch-icon" href="assets/app-icon-180.png?v=6">
@@ -1109,9 +1109,32 @@
   </div>
   <p id="substituteCopyStatus" class="mini" aria-live="polite"></p>
 
-  <div class="download-card button-row">
-    <a class="download-btn" href="신규대체조리종사원_안내.html?v=20260723_001" target="_blank" rel="noopener">신규 대체 조리종사원 안내</a>
+  <div class="substitute-guide-card">
+    <div class="substitute-guide-summary">
+      <span class="substitute-qr-preview" aria-hidden="true">
+        <img src="assets/new-substitute-cook-guide-qr.png?v=20260724_001" alt="">
+      </span>
+      <span class="substitute-guide-copy">
+        <strong>신규 대체 조리종사원 안내</strong>
+        <span>안내 페이지를 열거나 QR 이미지를 공유해 보세요.</span>
+      </span>
+    </div>
+    <div class="substitute-guide-actions">
+      <a class="substitute-action-btn" href="신규대체조리종사원_안내.html?v=20260723_001" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+        <span>안내 열기</span>
+      </a>
+      <button id="substituteQrCopyBtn" class="substitute-action-btn" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        <span>QR 이미지 복사</span>
+      </button>
+      <a id="substituteQrDownloadBtn" class="substitute-action-btn" href="assets/new-substitute-cook-guide-qr.png?v=20260724_001" download="신규대체조리종사원_안내_QR.png">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 20h14"/></svg>
+        <span>QR 다운로드</span>
+      </a>
+    </div>
   </div>
+  <p id="substituteQrStatus" class="mini substitute-qr-status" aria-live="polite"></p>
     </div>
   </details>
 </section>
@@ -1274,12 +1297,12 @@
 <script src="assets/auth.js?v=20260710_001" defer></script>
 <script src="assets/data-guard.js?v=20260717_002" defer></script>
 <script src="assets/bookmarks.js?v=20260713_004" defer></script>
-<script src="assets/site.js?v=20260721_015" defer></script>
+<script src="assets/site.js?v=20260724_001" defer></script>
 <script type="module" src="assets/firebase-init.js?v=20260718_002" defer></script>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('service-worker.js?v=20260721_008');
+      navigator.serviceWorker.register('service-worker.js?v=20260724_001');
     });
   }
 </script>

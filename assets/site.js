@@ -188,9 +188,72 @@ async function copySubstituteMessage() {
   }
 }
 
+const SUBSTITUTE_QR_IMAGE_URL = "assets/new-substitute-cook-guide-qr.png?v=20260724_001";
+
+function setSubstituteQrStatus(message) {
+  const status = document.getElementById("substituteQrStatus");
+  if (!status) return;
+  status.textContent = message;
+  window.clearTimeout(status._clearTimer);
+  status._clearTimer = window.setTimeout(() => {
+    status.textContent = "";
+  }, 3200);
+}
+
+function downloadSubstituteQrImage() {
+  const link = document.createElement("a");
+  link.href = SUBSTITUTE_QR_IMAGE_URL;
+  link.download = "신규대체조리종사원_안내_QR.png";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+}
+
+async function copySubstituteQrImage() {
+  const button = document.getElementById("substituteQrCopyBtn");
+  const label = button ? button.querySelector("span") : null;
+  const canCopyPng = navigator.clipboard
+    && typeof navigator.clipboard.write === "function"
+    && typeof window.ClipboardItem === "function"
+    && (!window.ClipboardItem.supports || window.ClipboardItem.supports("image/png"));
+
+  if (!canCopyPng) {
+    downloadSubstituteQrImage();
+    setSubstituteQrStatus("이 브라우저에서는 이미지 복사를 지원하지 않아 QR을 다운로드했습니다.");
+    return;
+  }
+
+  try {
+    const pngBlob = fetch(SUBSTITUTE_QR_IMAGE_URL, { cache: "force-cache" }).then(response => {
+      if (!response.ok) throw new Error("QR image request failed");
+      return response.blob();
+    }).then(blob => {
+      if (blob.type === "image/png") return blob;
+      return blob.arrayBuffer().then(buffer => new Blob([buffer], { type: "image/png" }));
+    });
+
+    await navigator.clipboard.write([
+      new ClipboardItem({ "image/png": pngBlob })
+    ]);
+
+    if (button) button.classList.add("is-copied");
+    if (label) label.textContent = "복사됨";
+    setSubstituteQrStatus("QR 이미지를 복사했습니다. 원하는 곳에 붙여넣어 보세요.");
+    window.setTimeout(() => {
+      if (button) button.classList.remove("is-copied");
+      if (label) label.textContent = "QR 이미지 복사";
+    }, 1800);
+  } catch(e) {
+    downloadSubstituteQrImage();
+    setSubstituteQrStatus("이미지 복사가 제한되어 QR을 대신 다운로드했습니다.");
+  }
+}
+
 function setupStaffAccordion() {
   const copyBtn = document.getElementById("substituteCopyBtn");
   if (copyBtn) copyBtn.addEventListener("click", copySubstituteMessage);
+  const qrCopyBtn = document.getElementById("substituteQrCopyBtn");
+  if (qrCopyBtn) qrCopyBtn.addEventListener("click", copySubstituteQrImage);
 }
 
 const MESSAGE_TEMPLATES_KEY = "kkulkkoori_message_templates_v1";
