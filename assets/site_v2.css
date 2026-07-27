@@ -7717,13 +7717,32 @@ textarea.promo-cell-input {
 }
 
 .academic-pill-count {
+  position: relative;
+  display: inline-flex;
+  min-width: 22px;
+  min-height: 22px;
+  align-items: center;
+  justify-content: center;
   color: #6b7280;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 900;
+  line-height: 1;
 }
 
 .academic-pill-count.is-actionable {
+  border-radius: 7px;
+  background: #f3f4f6;
   cursor: pointer;
+}
+
+.academic-pill-count.is-actionable::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 36px;
+  height: 36px;
+  transform: translate(-50%, -50%);
+  content: "";
 }
 
 .academic-pill {
@@ -26364,7 +26383,7 @@ html body #app-content#app-content #monthly .academic-date-line {
 }
 
 html body #app-content#app-content #monthly .academic-pill-count.is-actionable {
-  border-radius: 3px;
+  border-radius: 7px;
   box-shadow: none;
   transform: none;
   transition: background-color 160ms ease, box-shadow 160ms ease, color 160ms ease;
