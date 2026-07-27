@@ -7723,6 +7723,8 @@ textarea.promo-cell-input {
   min-height: 22px;
   align-items: center;
   justify-content: center;
+  border-radius: 7px;
+  background: #f3f4f6;
   color: #6b7280;
   font-size: 12px;
   font-weight: 900;
@@ -7730,8 +7732,6 @@ textarea.promo-cell-input {
 }
 
 .academic-pill-count.is-actionable {
-  border-radius: 7px;
-  background: #f3f4f6;
   cursor: pointer;
 }
 
@@ -26372,21 +26372,19 @@ html body #app-content#app-content #today-menu .work-note-toc-item[aria-pressed=
   background-color: var(--kkn-neutral-hover) !important;
 }
 
-/* Academic calendar event count: portal-muted text with a quiet ChatGPT-like hover. */
+/* Academic calendar event count: persistent quiet background with an edit-mode hover. */
 html body #app-content#app-content #monthly .academic-pill-count {
+  border-radius: 7px;
+  background-color: #f3f4f6 !important;
   color: #6b7280 !important;
   -webkit-text-fill-color: #6b7280 !important;
+  box-shadow: none;
+  transform: none;
+  transition: background-color 160ms ease, box-shadow 160ms ease, color 160ms ease;
 }
 
 html body #app-content#app-content #monthly .academic-date-line {
   gap: 6px !important;
-}
-
-html body #app-content#app-content #monthly .academic-pill-count.is-actionable {
-  border-radius: 7px;
-  box-shadow: none;
-  transform: none;
-  transition: background-color 160ms ease, box-shadow 160ms ease, color 160ms ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
