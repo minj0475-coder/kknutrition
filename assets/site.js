@@ -3107,7 +3107,16 @@ document.addEventListener('DOMContentLoaded', () => {
     return Boolean(sidebar && sidebar.classList.contains("is-open"));
   }
 
+  function isMemoModalOpen() {
+    const memoModalOverlay = document.getElementById("memoModalOverlay");
+    return Boolean(
+      memoModalOverlay
+      && (memoModalOverlay.classList.contains("active") || memoModalOverlay.style.display !== "none")
+    );
+  }
+
   function openDrawer() {
+    if (mobileSidebarQuery.matches && isMemoModalOpen()) return;
     window.clearTimeout(sidebarOverlayHideTimer);
     document.body.classList.remove("sidebar-collapsed");
     if (sidebarOverlay) sidebarOverlay.hidden = false;
@@ -3180,13 +3189,26 @@ document.addEventListener('DOMContentLoaded', () => {
   if (sidebarOverlay) sidebarOverlay.addEventListener("click", closeDrawer);
 
   document.addEventListener("touchstart", event => {
-    if (!mobileSidebarQuery.matches || event.touches.length !== 1) return;
+    if (!mobileSidebarQuery.matches || isMemoModalOpen() || event.touches.length !== 1) {
+      sidebarTouchStartX = 0;
+      sidebarTouchStartY = 0;
+      return;
+    }
     sidebarTouchStartX = event.touches[0].clientX;
     sidebarTouchStartY = event.touches[0].clientY;
   }, { passive: true });
 
   document.addEventListener("touchend", event => {
-    if (!mobileSidebarQuery.matches || !sidebarTouchStartX || event.changedTouches.length !== 1) return;
+    if (
+      !mobileSidebarQuery.matches
+      || isMemoModalOpen()
+      || !sidebarTouchStartX
+      || event.changedTouches.length !== 1
+    ) {
+      sidebarTouchStartX = 0;
+      sidebarTouchStartY = 0;
+      return;
+    }
     const touch = event.changedTouches[0];
     const deltaX = touch.clientX - sidebarTouchStartX;
     const deltaY = touch.clientY - sidebarTouchStartY;
