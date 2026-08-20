@@ -213,7 +213,9 @@
       background:#f8fbff;
     }
     .employment-docs-title{
-      display:block;
+      display:flex;
+      align-items:center;
+      gap:9px;
       margin-bottom:10px;
       color:var(--navy);
       font-size:17px;
@@ -243,19 +245,9 @@
       outline:3px solid #f5c842;
       outline-offset:3px;
     }
-    .employment-docs-link-text strong,
-    .employment-docs-link-text span{
-      display:block;
-    }
-    .employment-docs-link-text strong{
+    .employment-docs-link > strong{
       font-size:18px;
       line-height:1.35;
-    }
-    .employment-docs-link-text span{
-      margin-top:2px;
-      font-size:14px;
-      font-weight:800;
-      opacity:.92;
     }
     .employment-docs-link-arrow{
       width:40px;
@@ -581,12 +573,9 @@
           <li><span class="check">✓</span>성범죄경력조회 동의서</li>
         </ul>
         <div class="employment-docs">
-          <strong class="employment-docs-title">채용시 서류</strong>
+          <strong class="employment-docs-title"><span class="check">✓</span>채용시 서류</strong>
           <a class="employment-docs-link" href="https://drive.google.com/file/d/1CHfaxxij-I5ywjuKOYcygX_tARUJSy3l/view?usp=drive_link" target="_blank" rel="noopener" aria-label="채용시 서류를 구글 드라이브에서 새 창으로 열기">
-            <span class="employment-docs-link-text">
-              <strong>채용시 서류 바로가기</strong>
-              <span>여기를 눌러 구글 드라이브에서 확인하세요</span>
-            </span>
+            <strong>채용시 서류 바로가기</strong>
             <span class="employment-docs-link-arrow" aria-hidden="true">→</span>
           </a>
         </div>
