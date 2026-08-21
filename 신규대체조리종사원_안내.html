@@ -390,28 +390,30 @@
     .copy-codes{
       display:grid;
       grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:8px;
+      gap:10px;
       margin-top:10px;
     }
     .code-copy-btn{
-      min-height:48px;
+      min-height:54px;
       display:flex;
       align-items:center;
       gap:8px;
-      padding:8px 9px;
-      border:1px solid #f5d36a;
-      border-radius:10px;
-      background:#fff3bf;
-      color:#755300;
+      padding:10px 11px;
+      border:1px solid #c7d9ef;
+      border-radius:12px;
+      background:linear-gradient(180deg,#fff 0%,#f3f8ff 100%);
+      color:var(--navy);
       font:inherit;
       font-weight:900;
       text-align:left;
       cursor:pointer;
-      transition:background-color .18s ease,border-color .18s ease,transform .18s ease;
+      box-shadow:0 3px 10px rgba(23,52,95,.08);
+      transition:background-color .18s ease,border-color .18s ease,box-shadow .18s ease,transform .18s ease;
     }
     .code-copy-btn:hover{
-      background:#ffeda3;
-      border-color:#e8c342;
+      background:#edf5ff;
+      border-color:#8eb8f3;
+      box-shadow:0 5px 14px rgba(47,111,203,.15);
       transform:translateY(-1px);
     }
     .code-copy-btn:focus-visible{
@@ -419,28 +421,30 @@
       outline-offset:2px;
     }
     .code-copy-btn.is-copied{
-      background:#e7f7ee;
+      background:#effaf4;
       border-color:#75c999;
       color:#17623a;
     }
     .code-copy-label{
       font-size:13px;
+      color:#58708f;
     }
     .code-copy-value{
-      font-size:16px;
-      letter-spacing:.02em;
+      font-size:17px;
+      letter-spacing:.035em;
     }
     .code-copy-action{
       margin-left:auto;
-      padding:4px 7px;
-      border-radius:7px;
-      background:#fff;
-      color:#1f5fae;
+      padding:5px 9px;
+      border-radius:999px;
+      background:var(--blue);
+      color:#fff;
       font-size:13px;
       white-space:nowrap;
     }
     .code-copy-btn.is-copied .code-copy-action{
-      color:#17623a;
+      background:#2f8f5b;
+      color:#fff;
     }
     .copy-status{
       display:block;
