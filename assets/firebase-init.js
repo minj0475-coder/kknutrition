@@ -631,21 +631,39 @@ function saveLocalMemos() {
   return writeLocalMemos(Date.now());
 }
 
+async function uploadCurrentMemos(minimumUpdatedAt = 0) {
+  if (!db) return false;
+
+  const nextUpdatedAt = Math.max(
+    Date.now(),
+    Number(memoUpdatedAt) || 0,
+    Number(minimumUpdatedAt) || 0
+  );
+  if (writeLocalMemos(nextUpdatedAt) === false) {
+    updateAllMemosDOM();
+    return false;
+  }
+
+  memoPendingLocalWriteAt = nextUpdatedAt;
+  try {
+    await setDoc(doc(db, "memos", MEMO_DOC_ID), {
+      items: memos,
+      updatedAt: nextUpdatedAt
+    });
+    return true;
+  } catch (error) {
+    console.error("Firestore 메모 저장 실패:", error);
+    return false;
+  }
+}
+
 async function saveMemos() {
   if (saveLocalMemos() === false) {
     updateAllMemosDOM();
     return;
   }
   if (db && isFirebaseLoaded) {
-    try {
-      memoPendingLocalWriteAt = memoUpdatedAt || Date.now();
-      await setDoc(doc(db, "memos", MEMO_DOC_ID), {
-        items: memos,
-        updatedAt: memoUpdatedAt
-      });
-    } catch (error) {
-      console.error("Firestore 저장 실패:", error);
-    }
+    await uploadCurrentMemos(memoUpdatedAt);
   }
 }
 
@@ -1353,21 +1371,40 @@ function init() {
       isFirebaseLoaded = true;
       if (snapshot.exists()) {
         const data = snapshot.data();
-        if (data.items) {
+        if (Array.isArray(data.items)) {
+          const remoteItems = cloneMemoItems(data.items);
           const remoteUpdatedAt = Number(data.updatedAt) || 0;
+          const localUpdatedAt = Math.max(
+            Number(memoUpdatedAt) || 0,
+            Number(readMemoLocalMeta().updatedAt) || 0,
+            readSavedMemoUpdatedAt()
+          );
+          const localHasUserMemos = hasUserMemos(memos);
+          const remoteHasUserMemos = hasUserMemos(remoteItems);
+
           if (memoPendingLocalWriteAt && remoteUpdatedAt >= memoPendingLocalWriteAt) {
             memoPendingLocalWriteAt = 0;
           }
           if (memoPendingLocalWriteAt && memoPendingLocalWriteAt > remoteUpdatedAt) {
-            setDoc(doc(db, "memos", MEMO_DOC_ID), {
-              items: memos,
-              updatedAt: memoPendingLocalWriteAt
-            }).catch((error) => console.error("Firestore 메모 최신 로컬 업로드 대기 실패:", error));
+            uploadCurrentMemos(memoPendingLocalWriteAt);
             return;
           }
-          if (JSON.stringify(memos) !== JSON.stringify(data.items) || (remoteUpdatedAt && remoteUpdatedAt !== memoUpdatedAt)) {
-            memos = data.items;
-            writeLocalMemos(remoteUpdatedAt || Date.now(), { allowEmpty: true });
+
+          if (localHasUserMemos && !remoteHasUserMemos) {
+            uploadCurrentMemos(remoteUpdatedAt + 1);
+            return;
+          }
+
+          if (localHasUserMemos && localUpdatedAt >= remoteUpdatedAt) {
+            if (!areMemoItemsEqual(memos, remoteItems) || localUpdatedAt > remoteUpdatedAt) {
+              uploadCurrentMemos(Math.max(localUpdatedAt, remoteUpdatedAt + 1));
+            }
+            return;
+          }
+
+          if (remoteHasUserMemos && (!localHasUserMemos || remoteUpdatedAt > localUpdatedAt)) {
+            memos = remoteItems;
+            writeLocalMemos(remoteUpdatedAt || Date.now(), { allowEmpty: false });
             updateAllMemosDOM();
           }
         }
