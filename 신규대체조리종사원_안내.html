@@ -387,14 +387,67 @@
       color:#64748b;
       font-weight:750;
     }
-    .hl{
-      display:inline-block;
-      margin:4px 4px 0 0;
-      padding:3px 7px;
-      border-radius:7px;
-      background:#fff3bf;
+    .copy-codes{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:8px;
+      margin-top:10px;
+    }
+    .code-copy-btn{
+      min-height:48px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 9px;
       border:1px solid #f5d36a;
+      border-radius:10px;
+      background:#fff3bf;
       color:#755300;
+      font:inherit;
+      font-weight:900;
+      text-align:left;
+      cursor:pointer;
+      transition:background-color .18s ease,border-color .18s ease,transform .18s ease;
+    }
+    .code-copy-btn:hover{
+      background:#ffeda3;
+      border-color:#e8c342;
+      transform:translateY(-1px);
+    }
+    .code-copy-btn:focus-visible{
+      outline:3px solid var(--blue);
+      outline-offset:2px;
+    }
+    .code-copy-btn.is-copied{
+      background:#e7f7ee;
+      border-color:#75c999;
+      color:#17623a;
+    }
+    .code-copy-label{
+      font-size:13px;
+    }
+    .code-copy-value{
+      font-size:16px;
+      letter-spacing:.02em;
+    }
+    .code-copy-action{
+      margin-left:auto;
+      padding:4px 7px;
+      border-radius:7px;
+      background:#fff;
+      color:#1f5fae;
+      font-size:13px;
+      white-space:nowrap;
+    }
+    .code-copy-btn.is-copied .code-copy-action{
+      color:#17623a;
+    }
+    .copy-status{
+      display:block;
+      min-height:1.5em;
+      margin-top:5px;
+      color:#17623a;
+      font-size:13px;
       font-weight:900;
     }
     .info-list{
@@ -444,22 +497,27 @@
       margin-top:18px;
     }
     .phone{
-      background:#fff;
-      border:1px solid #bad4fb;
+      background:var(--blue);
+      border:2px solid var(--blue);
       border-radius:10px;
-      padding:9px 12px;
+      padding:10px 14px;
       white-space:nowrap;
-      min-height:48px;
+      min-height:54px;
       display:flex;
       align-items:center;
-      color:var(--navy);
-      font-weight:800;
+      justify-content:center;
+      gap:7px;
+      color:#fff;
+      font-size:17px;
+      font-weight:900;
       text-decoration:none;
-      transition:background-color .18s ease,border-color .18s ease;
+      box-shadow:0 5px 14px rgba(47,111,203,.2);
+      transition:background-color .18s ease,box-shadow .18s ease,transform .18s ease;
     }
     .phone:hover{
-      background:#f8fbff;
-      border-color:#8eb8f3;
+      background:#245da9;
+      box-shadow:0 7px 18px rgba(47,111,203,.28);
+      transform:translateY(-2px);
     }
     .phone:focus-visible{
       outline:3px solid #f5c842;
@@ -538,6 +596,7 @@
       }
       td[data-label]:first-child::before{display:none}
       .links{grid-template-columns:1fr}
+      .copy-codes{grid-template-columns:1fr}
       .toc{gap:7px;margin-top:14px}
       .toc a{
         width:calc(50% - 4px);
@@ -657,7 +716,7 @@
       <p><strong>취업예정자 범죄경력회보서</strong>는 본인인증 후 발급하는 서류입니다. 직접 출력이 가능하시면 미리 출력해 오시면 좋습니다. 출력이 어려우시면 본인 휴대폰만 준비해 오셔도 출근 후 함께 진행하겠습니다.</p>
       <a class="link-card action-link-card crime-link" href="https://crims.police.go.kr/" target="_blank" rel="noopener">
         <strong>범죄경력회보서 발급시스템 바로가기</strong>
-        <span>https://crims.police.go.kr/</span>
+        <span>눌러서 발급시스템 열기</span>
       </a>
 
       <ol class="steps">
@@ -665,7 +724,21 @@
         <li><div>메인 페이지 오른쪽 상단에서 로그인을 선택합니다.</div></li>
         <li><div>취업예정자가 본인 명의 인증방식을 선택해 로그인합니다.</div></li>
         <li><div>메인화면에서 취업예정자 발급동의 신청을 선택합니다.</div></li>
-        <li><div>시설 아이디와 검증번호를 입력 후 조회합니다.<span class="sub"><span class="hl">시설번호: ADKKRW</span><span class="hl">검증번호: 3712</span></span></div></li>
+        <li><div>시설 아이디와 검증번호를 입력 후 조회합니다.
+          <span class="copy-codes">
+            <button class="code-copy-btn" type="button" data-copy-value="ADKKRW" data-copy-label="시설번호">
+              <span class="code-copy-label">시설번호</span>
+              <span class="code-copy-value">ADKKRW</span>
+              <span class="code-copy-action">복사</span>
+            </button>
+            <button class="code-copy-btn" type="button" data-copy-value="3712" data-copy-label="검증번호">
+              <span class="code-copy-label">검증번호</span>
+              <span class="code-copy-value">3712</span>
+              <span class="code-copy-action">복사</span>
+            </button>
+          </span>
+          <span class="copy-status" id="codeCopyStatus" aria-live="polite"></span>
+        </div></li>
         <li><div>취업하려는 시설이 맞는지 확인 후 동의 버튼을 선택합니다.</div></li>
         <li><div>회보서 발급을 신청합니다.<span class="sub">인쇄유형은 직접출력을 선택합니다.</span></div></li>
         <li><div>신청 내역을 작성하고 발급 진행 상태를 확인합니다.</div></li>
@@ -676,8 +749,60 @@
     </section>
 
     <footer>
-      <a class="phone" href="tel:031-997-2567" aria-label="급식실 031-997-2567로 전화하기">문의 | 급식실 031-997-2567</a>
+      <a class="phone" href="tel:031-997-2567" aria-label="급식실 031-997-2567로 전화하기"><span aria-hidden="true">☎</span><span>급식실에 전화하기</span><strong>031-997-2567</strong></a>
     </footer>
   </main>
+  <script>
+    (() => {
+      const status = document.getElementById("codeCopyStatus");
+      let resetTimer;
+
+      const fallbackCopy = value => {
+        const textarea = document.createElement("textarea");
+        textarea.value = value;
+        textarea.setAttribute("readonly", "");
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
+        const copied = document.execCommand("copy");
+        textarea.remove();
+        if (!copied) throw new Error("copy failed");
+      };
+
+      document.querySelectorAll(".code-copy-btn").forEach(button => {
+        button.addEventListener("click", async () => {
+          const value = button.dataset.copyValue || "";
+          const label = button.dataset.copyLabel || "번호";
+          const action = button.querySelector(".code-copy-action");
+
+          try {
+            if (navigator.clipboard && window.isSecureContext) {
+              await navigator.clipboard.writeText(value);
+            } else {
+              fallbackCopy(value);
+            }
+
+            document.querySelectorAll(".code-copy-btn").forEach(item => {
+              item.classList.remove("is-copied");
+              item.querySelector(".code-copy-action").textContent = "복사";
+            });
+            button.classList.add("is-copied");
+            action.textContent = "복사됨";
+            status.textContent = `${label} ${value} 복사가 완료되었습니다.`;
+
+            clearTimeout(resetTimer);
+            resetTimer = setTimeout(() => {
+              button.classList.remove("is-copied");
+              action.textContent = "복사";
+              status.textContent = "";
+            }, 3000);
+          } catch (error) {
+            status.textContent = "복사하지 못했습니다. 번호를 길게 눌러 복사해 주세요.";
+          }
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
