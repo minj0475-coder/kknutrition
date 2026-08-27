@@ -35,6 +35,7 @@
     "cookingMethodUploadedData_v3",
     "cookingMethodUploadedData_v4",
     "cookingMethodUploadedData_v5",
+    "kkulkkoori_school_lunch_tv_v1",
     "kkulkkoori_cheongsu_recipes_v3",
     "kkulkkoori_annual_sheet_links_v1",
     "kkulkkoori_vendor_network_v1",

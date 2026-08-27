@@ -3366,9 +3366,10 @@ function buildSidebarToc() {
     const headings = getSidebarCustomHeadings(customGroup) || (pageId === "today-menu"
       ? [
         { id: "todayMenuCooking", text: "조리방법 조회" },
+        { href: "school-lunch-tv.html", text: "급식TV" },
         { id: "workNotes", text: "생각서랍" },
         { id: "messageTemplates", text: "문자내용 정리" }
-      ].filter(item => document.getElementById(item.id))
+      ].filter(item => item.href || document.getElementById(item.id))
       : pageId === "complaints" ? []
       : section ? [...section.querySelectorAll(":scope main section.card h2, :scope main section.card summary")]
       .map((heading, index) => {
@@ -3394,7 +3395,7 @@ function buildSidebarToc() {
       sub.className = "sidebar-subnav";
       headings.forEach(item => {
         const a = document.createElement("a");
-        a.href = `#${item.id}`;
+        a.href = item.href || `#${item.id}`;
         a.textContent = item.text;
         sub.appendChild(a);
       });

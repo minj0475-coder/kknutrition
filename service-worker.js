@@ -1,12 +1,13 @@
-const CACHE_NAME = 'kknutrition-pwa-v109';
+const CACHE_NAME = 'kknutrition-pwa-v110';
 const CORE_ASSETS = [
   './',
   './index.html',
-  './assets/site_v2.css?v=20260727_003',
+  './school-lunch-tv.html',
+  './assets/site_v2.css?v=20260828_001',
   './assets/auth.js?v=20260710_001',
-  './assets/data-guard.js?v=20260717_002',
+  './assets/data-guard.js?v=20260828_001',
   './assets/bookmarks.js?v=20260713_004',
-  './assets/site.js?v=20260727_001',
+  './assets/site.js?v=20260828_001',
   './assets/images/home-kkul-hero-display.webp',
   './assets/new-substitute-cook-guide-qr.png?v=20260724_001'
 ];

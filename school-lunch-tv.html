@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="theme-color" content="#fbf7ec" />
+<title>오늘의 급식 TV</title>
+<link rel="manifest" href="manifest.json?v=6" />
+<link rel="icon" type="image/png" sizes="192x192" href="assets/app-icon-192.png?v=6" />
+<script>
+  if (localStorage.getItem('kknutrition_portal_auth') !== 'true') {
+    location.replace('index.html#today-menu');
+  }
+</script>
+<script src="assets/data-guard.js?v=20260828_001"></script>
+<style>
+  :root{
+    --bg:#fbf7ec;
+    --card:#fffdf8;
+    --green:#315d45;
+    --green2:#8caf68;
+    --orange:#f58a35;
+    --sky:#87c8dc;
+    --ink:#23372c;
+    --muted:#6e7f74;
+    --line:#dfe8dc;
+    --shadow:0 12px 30px rgba(51,78,57,.10);
+    --radius:28px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR","Segoe UI",sans-serif;color:var(--ink);background:#e9eee7}
+  button,input,textarea,select{font:inherit}
+  button{cursor:pointer}
+
+  /* 관리자 화면 */
+  .app{display:grid;grid-template-columns:360px 1fr;min-height:100vh}
+  .panel{
+    padding:22px 20px 28px;background:#fff;border-right:1px solid #e6e9e4;overflow:auto
+  }
+  .panel h1{font-size:23px;margin:0 0 6px;color:var(--green)}
+  .panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:4px}
+  .panel-head h1{margin:0}
+  .back-link{display:inline-flex;align-items:center;gap:5px;color:var(--green);font-size:12px;font-weight:800;text-decoration:none;white-space:nowrap}
+  .back-link:hover{text-decoration:underline}
+  .panel .sub{font-size:13px;color:#758078;margin-bottom:20px;line-height:1.55}
+  .section{padding:17px 0;border-top:1px solid #edf0ec}
+  .section:first-of-type{border-top:none;padding-top:0}
+  .section h2{font-size:15px;margin:0 0 10px}
+  .field{margin:10px 0}
+  .field label{display:block;font-size:12px;font-weight:700;color:#657067;margin-bottom:6px}
+  input[type="text"],input[type="date"],textarea,select{
+    width:100%;padding:11px 12px;border:1px solid #d9dfd9;border-radius:12px;background:#fff;outline:none
+  }
+  input:focus,textarea:focus,select:focus{border-color:#8caf68;box-shadow:0 0 0 3px rgba(140,175,104,.14)}
+  textarea{min-height:74px;resize:vertical}
+  .menu-row{display:grid;grid-template-columns:minmax(0,1fr) 92px 34px;gap:7px;margin:7px 0}
+  .icon-btn{border:1px solid #dde4dc;background:#f7f9f6;border-radius:10px}
+  .btn{
+    border:none;border-radius:13px;padding:11px 14px;font-weight:800
+  }
+  .btn.primary{background:var(--green);color:white}
+  .btn.secondary{background:#eef5ea;color:var(--green)}
+  .btn.orange{background:var(--orange);color:#fff}
+  .btn.full{width:100%;margin-top:8px}
+  .checkline{display:flex;gap:8px;align-items:center;font-size:13px;margin:8px 0}
+  .upload{
+    border:1.5px dashed #b9c8b7;border-radius:16px;padding:14px;text-align:center;background:#fafcf9
+  }
+  .upload input{width:100%}
+  .mini{font-size:11px;color:#7f887f;line-height:1.5;margin-top:7px}
+  .menu-source{margin-top:10px;padding:11px 12px;border-radius:12px;background:#f4f8f1;color:#5f7062;font-size:12px;line-height:1.5}
+  .menu-source.ok{background:#edf7e9;color:#315d45}
+  .menu-source.warn{background:#fff6e9;color:#8b5a2b}
+  .actions{position:sticky;bottom:0;padding-top:12px;background:linear-gradient(transparent,#fff 20%)}
+
+  /* 미리보기 영역 */
+  .stage-wrap{display:flex;align-items:center;justify-content:center;padding:22px;min-width:0}
+  .stage{
+    width:min(100%, calc((100vh - 44px)*16/9));
+    aspect-ratio:16/9;
+    background:var(--bg);
+    border-radius:22px;
+    box-shadow:0 18px 55px rgba(37,60,44,.18);
+    overflow:hidden;
+    position:relative;
+  }
+  .slide{
+    position:absolute;inset:0;opacity:0;visibility:hidden;pointer-events:none;
+    transition:opacity .55s ease, visibility .55s ease
+  }
+  .slide.active{opacity:1;visibility:visible;pointer-events:auto}
+
+  /* 메인 TV 화면 - 55인치 TV 가독성 최적화 */
+  .daily{
+    height:100%;padding:2.8% 4.2% 2.7%;position:relative;overflow:hidden;
+    background:
+      radial-gradient(circle at 8% 14%, rgba(140,175,104,.14) 0 4.5%, transparent 4.7%),
+      radial-gradient(circle at 94% 10%, rgba(135,200,220,.20) 0 5.5%, transparent 5.7%),
+      radial-gradient(circle at 89% 91%, rgba(245,138,53,.10) 0 8%, transparent 8.2%),
+      linear-gradient(180deg,#fffdf7 0%,#faf6eb 100%);
+  }
+  .daily:after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:3.4%;
+    background:linear-gradient(90deg,rgba(140,175,104,.18),rgba(135,200,220,.12),rgba(245,138,53,.14));
+  }
+  .leaf{position:absolute;border-radius:100% 0 100% 0;background:#9bbc6d;opacity:.72;transform:rotate(35deg)}
+  .leaf.a{width:24px;height:12px;left:3.1%;top:7.4%}
+  .leaf.b{width:19px;height:9px;right:4%;top:20%;transform:rotate(-22deg)}
+  .sun{position:absolute;right:4.1%;top:4.1%;width:48px;height:48px;border-radius:50%;background:#ffc44f;box-shadow:0 0 0 8px rgba(255,196,79,.12)}
+  .sun:before,.sun:after{content:"";position:absolute;background:#755321;border-radius:50%;width:4px;height:4px;top:18px}
+  .sun:before{left:14px}.sun:after{right:14px}
+  .sun .smile{position:absolute;width:14px;height:7px;border-bottom:3px solid #755321;border-radius:0 0 20px 20px;left:17px;top:25px}
+
+  .topline{display:flex;justify-content:center;align-items:center;min-height:4.2%;position:relative;z-index:2}
+  .school-name{
+    position:absolute;left:0;top:0;color:#718078;font-size:clamp(12px,1vw,18px);
+    font-weight:850;letter-spacing:-.02em
+  }
+  .date{text-align:center;color:var(--green);font-size:clamp(17px,1.45vw,27px);font-weight:850;letter-spacing:.005em}
+  .title{
+    text-align:center;font-weight:950;font-size:clamp(42px,5.15vw,88px);line-height:1;
+    margin:.35% 0 1.7%;letter-spacing:-.06em;color:var(--green)
+  }
+  .title span{color:var(--orange)}
+  .main-grid{
+    display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,.82fr);
+    gap:2%;height:71.5%;position:relative;z-index:2
+  }
+  .photo-card,.menu-card{
+    background:rgba(255,255,255,.91);
+    border:1px solid rgba(112,151,97,.28);
+    border-radius:30px;
+    box-shadow:0 16px 34px rgba(50,76,57,.10);
+    overflow:hidden
+  }
+  .photo-card{
+    position:relative;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(145deg,#fff 0%,#f8f5ec 100%)
+  }
+  .photo-card:after{
+    content:"";position:absolute;inset:0;border-radius:30px;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.72);pointer-events:none
+  }
+  .photo-card img{
+    width:100%;height:100%;object-fit:contain;display:none;background:#fff;
+    transition:filter .2s ease, transform .2s ease
+  }
+  .photo-card.cover img{object-fit:cover}
+  .photo-card.bright img{filter:brightness(1.08) contrast(1.02) saturate(1.03)}
+  .photo-empty{text-align:center;color:#748578;padding:8%}
+  .photo-empty .plate{font-size:clamp(58px,8vw,120px);display:block;margin-bottom:2%}
+  .photo-empty strong{font-size:clamp(19px,2vw,34px);display:block}
+  .photo-empty small{font-size:clamp(11px,1vw,18px)}
+  .photo-label{
+    position:absolute;left:3.2%;top:3.4%;z-index:3;
+    padding:.48em .85em;background:rgba(49,93,69,.90);color:white;
+    border-radius:999px;font-weight:850;font-size:clamp(11px,.95vw,16px);backdrop-filter:blur(8px);
+    box-shadow:0 5px 14px rgba(49,93,69,.15)
+  }
+
+  .menu-card{
+    padding:4.5% 5.2% 4.2%;display:flex;flex-direction:column;
+    background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(251,253,248,.96))
+  }
+  .menu-head{
+    display:flex;align-items:center;gap:10px;margin-bottom:2.4%;
+    padding-bottom:2.5%;border-bottom:1px solid rgba(112,151,97,.16)
+  }
+  .menu-head .dot{width:12px;height:12px;border-radius:50%;background:var(--orange);flex:none;box-shadow:0 0 0 5px rgba(245,138,53,.10)}
+  .menu-head h3{margin:0;color:var(--green);font-size:clamp(19px,1.7vw,29px);font-weight:950}
+  .menu-list{display:flex;flex:1;flex-direction:column;justify-content:center;gap:2.2%}
+  .menu-item{
+    display:flex;align-items:center;gap:10px;
+    min-height:0;padding:.48em .58em;border-radius:15px;
+    background:linear-gradient(90deg,rgba(140,175,104,.105),rgba(255,255,255,.30));
+    font-size:clamp(18px,1.82vw,31px);font-weight:900;line-height:1.18;letter-spacing:-.045em;
+    word-break:keep-all
+  }
+
+  .menu-list.six
+
+  .menu-list.dense{gap:1.45%}
+  .menu-list.dense .menu-item{font-size:clamp(16px,1.55vw,27px);padding:.38em .5em}
+  .menu-list.very-dense{gap:1%}
+  .menu-list.very-dense .menu-item{font-size:clamp(14px,1.35vw,24px);padding:.28em .45em}
+
+  .menu-item .menu-name{flex:1;min-width:0}
+  .menu-item .allergy{
+    flex:none;display:inline-flex;align-items:center;gap:.22em;
+    padding:.34em .62em;border-radius:999px;
+    background:#fff3ea;color:#c56224;border:1px solid #f1ccb0;
+    font-size:.46em;font-weight:900;letter-spacing:-.02em;white-space:nowrap
+  }
+  .menu-item .allergy:before{
+    content:"알레르기";font-size:.78em;color:#b77951;font-weight:850
+  }
+  .menu-list.dense .menu-item .allergy{font-size:.44em}
+  .menu-list.very-dense .menu-item .allergy{font-size:.42em}
+
+
+
+
+
+
+  .footer{
+    position:absolute;left:35%;bottom:1.35%;transform:translateX(-50%);z-index:3;
+    font-size:clamp(13px,1.22vw,21px);font-weight:850;color:var(--green);white-space:nowrap
+  }
+  .footer .accent{color:var(--orange)}
+  .allergy-legend{
+    position:absolute;right:4.2%;bottom:1.25%;z-index:3;
+    font-size:clamp(9px,.72vw,13px);font-weight:750;color:#879088;white-space:nowrap
+  }
+  .footer{max-width:88%;text-align:center;overflow:hidden;text-overflow:ellipsis}
+  /* 특별 메뉴 화면 */
+  .special{
+    height:100%;padding:2.9% 4.5%;
+    background:
+      radial-gradient(circle at 92% 8%, rgba(135,200,220,.20) 0 5%, transparent 5.2%),
+      radial-gradient(circle at 8% 92%, rgba(140,175,104,.14) 0 10%, transparent 10.2%),
+      linear-gradient(180deg,#fffdf7 0%,#faf6eb 100%);
+    position:relative
+  }
+  .special .special-title{
+    text-align:center;font-size:clamp(38px,5vw,82px);font-weight:950;line-height:1.05;letter-spacing:-.05em;color:var(--green);margin:.4% 0 .7%
+  }
+  .special .special-title span{color:var(--orange)}
+  .special .kicker{text-align:center;color:#6d9561;font-weight:850;font-size:clamp(15px,1.5vw,25px);margin-bottom:2%}
+  .special-card{
+    height:67%;border:1px solid rgba(112,151,97,.30);border-radius:32px;background:rgba(255,255,255,.91);
+    box-shadow:0 16px 34px rgba(50,76,57,.10);display:grid;grid-template-columns:1.05fr .95fr;overflow:hidden
+  }
+  .special-copy{padding:6.5% 6%;display:flex;flex-direction:column;justify-content:center}
+  .special-name{font-size:clamp(28px,3.55vw,60px);font-weight:950;color:var(--green);letter-spacing:-.05em;line-height:1.1;margin-bottom:4%}
+  .tags{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:5%}
+  .tag{padding:.55em 1em;border-radius:999px;font-size:clamp(12px,1.25vw,21px);font-weight:850;background:#eef5e8;color:var(--green);border:1px solid #bad099}
+  .tag.orange{background:#fff2e8;color:#df6e1d;border-color:#f4af77}
+  .special-desc{font-size:clamp(16px,1.6vw,28px);font-weight:760;line-height:1.55;color:#355241;white-space:pre-line}
+  .special-media{background:#f8fbf5;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+  .special-media img{width:100%;height:100%;object-fit:cover;display:none}
+  .special-media .placeholder{font-size:clamp(68px,10vw,145px)}
+  .special-note{
+    position:absolute;left:50%;bottom:4%;transform:translateX(-50%);
+    color:#b65e20;font-weight:900;font-size:clamp(15px,1.5vw,26px);white-space:nowrap
+  }
+
+  /* TV 모드 */
+  body.tv .app{display:block}
+  body.tv .panel{display:none}
+  body.tv .stage-wrap{padding:0;width:100vw;height:100vh;background:#000;display:flex;align-items:center;justify-content:center}
+  body.tv .stage{width:min(100vw,calc(100vh * 16 / 9));height:min(100vh,calc(100vw * 9 / 16));aspect-ratio:16/9;border-radius:0;box-shadow:none}
+  body.tv{overflow:hidden;background:#000;cursor:none}
+  .tv-hint{
+    position:absolute;right:14px;bottom:12px;z-index:20;background:rgba(0,0,0,.55);color:#fff;
+    padding:7px 10px;border-radius:9px;font-size:12px;opacity:0;transition:.2s;pointer-events:none
+  }
+  body.tv:hover .tv-hint{opacity:1}
+  @media (max-width:900px){
+    .app{grid-template-columns:1fr}
+    .panel{border-right:none;border-bottom:1px solid #e6e9e4}
+    .stage-wrap{padding:12px}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="panel">
+    <div class="panel-head">
+      <h1>오늘의 급식 TV</h1>
+      <a class="back-link" href="index.html#today-menu" aria-label="급식노트로 돌아가기">← 급식노트</a>
+    </div>
+    <div class="sub">식판사진 1장과 메뉴만 입력하면 55인치 TV용 화면이 자동으로 완성됩니다.</div>
+
+    <div class="section">
+      <h2>1. 기본 정보</h2>
+      <div class="field">
+        <label>날짜</label>
+        <input id="dateInput" type="date">
+      </div>
+      <button class="btn secondary full" id="loadMenuBtn" type="button">조리방법 조회 식단 불러오기</button>
+      <div class="menu-source" id="menuSourceStatus" role="status" aria-live="polite">업로드한 식단을 확인하고 있습니다.</div>
+      <div class="field">
+        <label>학교명</label>
+        <input id="schoolNameInput" type="text" value="청수초등학교" placeholder="학교명">
+      </div>
+      <div class="mini">하단 영양·식생활 문구는 날짜에 따라 매일 자동으로 바뀝니다.</div>
+    </div>
+
+    <div class="section">
+      <h2>2. 오늘의 식판사진</h2>
+      <div class="upload">
+        <input id="photoInput" type="file" accept="image/*">
+        <div class="mini">휴대폰 식판사진을 올리면 TV용 크기로 자동 최적화합니다.</div>
+      </div>
+      <div class="field">
+        <label>사진 표시 방식</label>
+        <select id="fitSelect">
+          <option value="contain">전체 보기</option>
+          <option value="cover">화면 꽉 채우기</option>
+        </select>
+      </div>
+      <label class="checkline"><input id="brightToggle" type="checkbox" checked> 식판사진을 살짝 밝게 표시</label>
+      <button class="btn secondary full" id="clearPhotoBtn">식판사진 지우기</button>
+    </div>
+
+    <div class="section">
+      <h2>3. 메뉴</h2>
+      <div class="mini" style="margin-bottom:8px">알레르기 번호는 쉼표로 입력하세요. 예: 5,6,16 → TV에는 ⑤⑥⑯으로 표시됩니다.</div>
+      <div id="menuInputs"></div>
+      <button class="btn secondary full" id="addMenuBtn">+ 메뉴 추가</button>
+    </div>
+
+    <div class="section">
+      <h2>4. 특별 메뉴 설명 페이지</h2>
+      <label class="checkline"><input id="specialToggle" type="checkbox"> 특별 메뉴 페이지 사용</label>
+      <div id="specialFields" style="display:none">
+        <div class="field">
+          <label>특별 메뉴명</label>
+          <input id="specialName" type="text" placeholder="예: 제주고기국수">
+        </div>
+        <div class="field">
+          <label>짧은 설명</label>
+          <textarea id="specialDesc" placeholder="예: 제주에서 즐겨 먹는 돼지고기 국수예요!"></textarea>
+        </div>
+        <div class="field">
+          <label>강조 문구 1</label>
+          <input id="tag1" type="text" placeholder="예: 제주 향토음식">
+        </div>
+        <div class="field">
+          <label>강조 문구 2</label>
+          <input id="tag2" type="text" placeholder="예: 따뜻한 고기국수">
+        </div>
+        <div class="field">
+          <label>하단 한마디</label>
+          <input id="specialNoteInput" type="text" placeholder="예: 오늘도 맛있게!">
+        </div>
+        <div class="upload">
+          <input id="specialPhotoInput" type="file" accept="image/*">
+          <div class="mini">선택사항입니다. 없으면 오늘 식판사진을 사용합니다.</div>
+        </div>
+        <div class="field">
+          <label>자동 전환 간격</label>
+          <select id="intervalSelect">
+            <option value="6000">6초</option>
+            <option value="8000" selected>8초</option>
+            <option value="10000">10초</option>
+            <option value="12000">12초</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn orange full" id="saveBtn">저장</button>
+      <button class="btn primary full" id="tvBtn">TV 전체화면 보기</button>
+      <div class="mini">TV 화면에서 ESC 키를 누르면 관리자 화면으로 돌아옵니다.</div>
+    </div>
+  </aside>
+
+  <main class="stage-wrap">
+    <div class="stage" id="stage">
+      <section class="slide daily active" id="dailySlide">
+        <div class="leaf a"></div><div class="leaf b"></div>
+        <div class="sun"><span class="smile"></span></div>
+        <div class="topline">
+          <div class="school-name" id="schoolNameText">청수초등학교</div>
+          <div class="date" id="dateText"></div>
+        </div>
+        <div class="title">오늘의 <span>급식</span></div>
+
+        <div class="main-grid">
+          <div class="photo-card" id="photoCard">
+            <div class="photo-label">오늘의 실제 식판</div>
+            <img id="photoPreview" alt="오늘의 식판사진">
+            <div class="photo-empty" id="photoEmpty">
+              <span class="plate">🍱</span>
+              <strong>오늘의 식판사진</strong>
+              <small>관리자 화면에서 사진을 올려주세요</small>
+            </div>
+          </div>
+
+          <div class="menu-card">
+            <div class="menu-head"><span class="dot"></span><h3>오늘의 메뉴</h3></div>
+            <div class="menu-list" id="menuList"></div>
+          </div>
+        </div>
+
+        <div class="footer" id="nutritionFooter"></div>
+        <div class="allergy-legend">알레르기 번호는 학교 알레르기 표시 기준에 따라 안내됩니다.</div>
+      </section>
+
+      <section class="slide special" id="specialSlide">
+        <div class="date" id="specialDateText"></div>
+        <div class="special-title">특별 <span>메뉴 안내</span></div>
+        <div class="kicker">오늘의 추천 메뉴</div>
+        <div class="special-card">
+          <div class="special-copy">
+            <div class="special-name" id="specialNameText">특별 메뉴</div>
+            <div class="tags" id="tagsBox"></div>
+            <div class="special-desc" id="specialDescText">오늘의 특별 메뉴를 소개합니다.</div>
+          </div>
+          <div class="special-media">
+            <img id="specialPhotoPreview" alt="특별 메뉴 사진">
+            <div class="placeholder" id="specialPlaceholder">🍽️</div>
+          </div>
+        </div>
+        <div class="special-note" id="specialNoteText">오늘도 맛있게!</div>
+      </section>
+      <div class="tv-hint">ESC: 관리자 화면</div>
+    </div>
+  </main>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const menuWrap = $('#menuInputs');
+const menuList = $('#menuList');
+const state = {
+  photo:null,
+  specialPhoto:null,
+  timer:null,
+  slide:0,
+  menuSource:[],
+  menuSourceFile:''
+};
+
+const TV_STORAGE_KEY = 'kkulkkoori_school_lunch_tv_v1';
+const LEGACY_TV_STORAGE_KEY = 'schoolLunchTV';
+const MENU_STORAGE_KEY = 'cookingMethodUploadedData_v5';
+const MENU_DB_NAME = 'CookingMethodUploadDB';
+const MENU_DB_STORE = 'payload';
+
+function menuRow(value='', allergy=''){
+  const row = document.createElement('div');
+  row.className='menu-row';
+  row.innerHTML=`<input type="text" class="menuInput" value="${escapeHtml(value)}" placeholder="메뉴명">
+                 <input type="text" class="allergyInput" value="${escapeHtml(allergy)}" placeholder="예: 5,6">
+                 <button class="icon-btn" title="삭제">×</button>`;
+  row.querySelector('.menuInput').addEventListener('input', render);
+  row.querySelector('.allergyInput').addEventListener('input', render);
+  row.querySelector('button').addEventListener('click',()=>{ row.remove(); render(); });
+  menuWrap.appendChild(row);
+}
+function escapeHtml(v=''){
+  return String(v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+}
+
+function parseMenuPayload(value, source=''){
+  try{
+    const parsed=typeof value==='string'?JSON.parse(value):value;
+    const data=Array.isArray(parsed)?parsed:parsed?.data;
+    if(!Array.isArray(data)||!data.length) return null;
+    return {data,savedAt:Number(parsed?.savedAt||0),fileName:parsed?.fileName||'',source};
+  }catch(e){return null}
+}
+function newerMenuPayload(current,candidate){
+  if(!candidate) return current;
+  if(!current||candidate.savedAt>current.savedAt) return candidate;
+  return current;
+}
+function loadMenuFromIndexedDB(){
+  return new Promise(resolve=>{
+    if(!window.indexedDB) return resolve(null);
+    const request=indexedDB.open(MENU_DB_NAME,1);
+    request.onerror=()=>resolve(null);
+    request.onupgradeneeded=()=>{
+      if(!request.result.objectStoreNames.contains(MENU_DB_STORE)) request.result.createObjectStore(MENU_DB_STORE);
+    };
+    request.onsuccess=()=>{
+      const db=request.result;
+      const tx=db.transaction(MENU_DB_STORE,'readonly');
+      const get=tx.objectStore(MENU_DB_STORE).get('latest');
+      get.onsuccess=()=>{db.close();resolve(get.result||null)};
+      get.onerror=()=>{db.close();resolve(null)};
+    };
+  });
+}
+async function loadMenuSource(){
+  let latest=null;
+  try{latest=newerMenuPayload(latest,parseMenuPayload(localStorage.getItem(MENU_STORAGE_KEY),'이 기기'))}catch(e){}
+  latest=newerMenuPayload(latest,parseMenuPayload(await loadMenuFromIndexedDB(),'이 기기'));
+  try{
+    const response=await fetch('data/today-menu.json?v='+Date.now(),{cache:'no-store'});
+    if(response.ok) latest=newerMenuPayload(latest,parseMenuPayload(await response.json(),'공용 식단'));
+  }catch(e){}
+  state.menuSource=latest?.data||[];
+  state.menuSourceFile=latest?.fileName||'';
+  return latest;
+}
+function splitMenuAndAllergy(rawName='',rawAllergy=''){
+  let name=String(rawName).trim();
+  let allergy=String(rawAllergy||'').trim();
+  if(!allergy){
+    const bracket=name.match(/[([]\s*((?:\d{1,2}\s*[.,/]\s*)*\d{1,2})\s*[)\]]\s*$/);
+    const dotted=name.match(/((?:\d{1,2}\.){1,19})\s*$/);
+    const match=bracket||dotted;
+    if(match){
+      allergy=(match[1].match(/\d{1,2}/g)||[]).join(',');
+      name=name.slice(0,match.index).trim();
+    }
+  }
+  return {name,allergy};
+}
+function replaceMenuRows(items){
+  menuWrap.innerHTML='';
+  const normalized=(items||[]).map(item=>splitMenuAndAllergy(item?.name||item,item?.allergy||''));
+  (normalized.length?normalized:[{name:'',allergy:''}]).forEach(item=>menuRow(item.name,item.allergy));
+  render();
+}
+function setMenuSourceStatus(message,type=''){
+  const target=$('#menuSourceStatus');
+  target.textContent=message;
+  target.className='menu-source'+(type?' '+type:'');
+}
+function applyMenuForSelectedDate(clearWhenMissing=false){
+  const key=$('#dateInput').value;
+  const section=state.menuSource.find(item=>item?.key===key);
+  if(section?.items?.length){
+    replaceMenuRows(section.items);
+    const file=state.menuSourceFile?` · ${state.menuSourceFile}`:'';
+    setMenuSourceStatus(`${section.date||key} 식단에서 ${section.items.length}개 메뉴를 불러왔습니다${file}.`,'ok');
+    return true;
+  }
+  if(clearWhenMissing) replaceMenuRows([]);
+  const message=state.menuSource.length
+    ? '선택한 날짜의 식단이 없습니다. 급식노트에서 해당 날짜가 포함된 메뉴 파일을 업로드해 주세요.'
+    : '불러올 식단이 없습니다. 급식노트의 조리방법 조회에서 메뉴 파일을 먼저 업로드해 주세요.';
+  setMenuSourceStatus(message,'warn');
+  return false;
+}
+async function refreshMenuFromSource(clearWhenMissing=true){
+  setMenuSourceStatus('업로드한 식단을 확인하고 있습니다.');
+  await loadMenuSource();
+  applyMenuForSelectedDate(clearWhenMissing);
+}
+function fmtDate(v){
+  const d=v?new Date(v+'T00:00:00'):new Date();
+  const days=['일요일','월요일','화요일','수요일','목요일','금요일','토요일'];
+  return `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 ${days[d.getDay()]}`;
+}
+function readFile(input, cb){
+  const f=input.files && input.files[0];
+  if(!f) return;
+  const r=new FileReader();
+  r.onload=e=>{
+    const img=new Image();
+    img.onload=()=>{
+      const maxSide=1800;
+      let w=img.naturalWidth, h=img.naturalHeight;
+      const scale=Math.min(1, maxSide/Math.max(w,h));
+      w=Math.max(1,Math.round(w*scale));
+      h=Math.max(1,Math.round(h*scale));
+      const canvas=document.createElement('canvas');
+      canvas.width=w; canvas.height=h;
+      const ctx=canvas.getContext('2d');
+      ctx.drawImage(img,0,0,w,h);
+      let out;
+      try{ out=canvas.toDataURL('image/jpeg',.86); }
+      catch(err){ out=e.target.result; }
+      cb(out);
+    };
+    img.onerror=()=>cb(e.target.result);
+    img.src=e.target.result;
+  };
+  r.readAsDataURL(f);
+}
+
+const nutritionPhrases = [
+  ['골고루 먹으면', '몸도 마음도 튼튼해져요!'],
+  ['채소와 과일은', '우리 몸의 알록달록 에너지!'],
+  ['한 입씩 천천히,', '꼭꼭 씹어 먹어요!'],
+  ['아침·점심·저녁,', '규칙적인 식사가 좋아요!'],
+  ['다양한 음식을', '골고루 맛보는 습관!'],
+  ['오늘도 채소 한 입,', '건강 한 걸음!'],
+  ['물은 우리 몸을', '촉촉하게 지켜줘요!'],
+  ['달고 짠 음식은 조금,', '신선한 음식은 다양하게!'],
+  ['음식은 필요한 만큼,', '남김은 조금씩 줄여요!'],
+  ['제철 음식에는', '계절의 맛이 담겨 있어요!'],
+  ['편식보다 한 입 도전,', '새로운 맛을 만나봐요!'],
+  ['천천히 먹으면', '음식 맛도 더 잘 느껴져요!'],
+  ['좋은 식습관은', '매일의 작은 선택에서 시작해요!'],
+  ['오늘의 한 끼가', '내일의 힘이 돼요!'],
+  ['건강한 식사는', '즐겁게 먹는 것부터 시작해요!'],
+  ['여러 가지 색의 식품을', '골고루 먹어봐요!'],
+  ['밥도 반찬도 골고루,', '균형 있게 먹어요!'],
+  ['먹기 전 손 씻기,', '건강한 식사의 첫걸음!'],
+  ['음식을 소중히,', '먹을 만큼만 받아요!'],
+  ['즐겁게 먹고,', '고마운 마음도 함께 나눠요!']
+];
+
+function dailyNutritionPhrase(dateValue){
+  const base = dateValue || new Date().toISOString().slice(0,10);
+  let hash = 0;
+  for(let i=0;i<base.length;i++) hash = ((hash<<5)-hash) + base.charCodeAt(i);
+  const idx = Math.abs(hash) % nutritionPhrases.length;
+  return nutritionPhrases[idx];
+}
+
+
+function formatAllergy(raw=''){
+  const value = raw.trim();
+  if(!value) return '';
+  const circled = {
+    1:'①',2:'②',3:'③',4:'④',5:'⑤',6:'⑥',7:'⑦',8:'⑧',9:'⑨',10:'⑩',
+    11:'⑪',12:'⑫',13:'⑬',14:'⑭',15:'⑮',16:'⑯',17:'⑰',18:'⑱',19:'⑲'
+  };
+  const parts = value.split(/[,\s/]+/).filter(Boolean);
+  if(parts.length && parts.every(p=>/^\d+$/.test(p))){
+    return parts.map(p=>circled[Number(p)] || p).join('');
+  }
+  return value;
+}
+
+function render(){
+  const d=fmtDate($('#dateInput').value);
+  $('#dateText').textContent=d;
+  $('#specialDateText').textContent=d;
+
+  const phrase = dailyNutritionPhrase($('#dateInput').value);
+  $('#nutritionFooter').innerHTML = `<span>${escapeHtml(phrase[0])}</span> <span class="accent">${escapeHtml(phrase[1])}</span>`;
+
+  const rows=[...document.querySelectorAll('.menu-row')].map(row=>({
+    name:row.querySelector('.menuInput').value.trim(),
+    allergy:row.querySelector('.allergyInput').value.trim()
+  })).filter(x=>x.name);
+  const menus=rows.map(x=>x.name);
+  menuList.innerHTML='';
+  menuList.className='menu-list';
+  if(menus.length>=7 || menus.some(x=>x.length>=12)) menuList.classList.add('dense');
+  if(menus.length>=9) menuList.classList.add('very-dense');
+  rows.forEach(item=>{
+    const div=document.createElement('div');
+    div.className='menu-item';
+
+    const name=document.createElement('span');
+    name.className='menu-name';
+    name.textContent=item.name;
+    div.appendChild(name);
+
+    const allergyText=formatAllergy(item.allergy);
+    if(allergyText){
+      const allergy=document.createElement('span');
+      allergy.className='allergy';
+      allergy.textContent=allergyText;
+      div.appendChild(allergy);
+    }
+
+    menuList.appendChild(div);
+  });
+
+  $('#schoolNameText').textContent=$('#schoolNameInput').value.trim() || '우리 학교';
+  $('#photoCard').classList.toggle('cover',$('#fitSelect').value==='cover');
+  $('#photoCard').classList.toggle('bright',$('#brightToggle').checked);
+
+  const useSpecial=$('#specialToggle').checked;
+  $('#specialFields').style.display=useSpecial?'block':'none';
+
+  $('#specialNameText').textContent=$('#specialName').value.trim() || '특별 메뉴';
+  $('#specialDescText').textContent=$('#specialDesc').value.trim() || '오늘의 특별 메뉴를 소개합니다.';
+  $('#specialNoteText').textContent=$('#specialNoteInput').value.trim() || '오늘도 맛있게!';
+
+  const tags=[$('#tag1').value.trim(),$('#tag2').value.trim()].filter(Boolean);
+  $('#tagsBox').innerHTML='';
+  tags.forEach((t,i)=>{
+    const s=document.createElement('span');
+    s.className='tag'+(i===1?' orange':'');
+    s.textContent=t;
+    $('#tagsBox').appendChild(s);
+  });
+
+  updateSpecialPhoto();
+}
+function showPhoto(img, empty, data){
+  if(data){
+    img.src=data; img.style.display='block'; empty.style.display='none';
+  }else{
+    img.removeAttribute('src'); img.style.display='none'; empty.style.display='block';
+  }
+}
+function updateSpecialPhoto(){
+  const data=state.specialPhoto || state.photo;
+  showPhoto($('#specialPhotoPreview'),$('#specialPlaceholder'),data);
+}
+function stopSlides(){
+  clearInterval(state.timer); state.timer=null; state.slide=0;
+  $('#dailySlide').classList.add('active');
+  $('#specialSlide').classList.remove('active');
+}
+function startSlides(){
+  stopSlides();
+  if(!$('#specialToggle').checked) return;
+  const interval=parseInt($('#intervalSelect').value,10)||8000;
+  state.timer=setInterval(()=>{
+    state.slide=1-state.slide;
+    $('#dailySlide').classList.toggle('active',state.slide===0);
+    $('#specialSlide').classList.toggle('active',state.slide===1);
+  },interval);
+}
+function save(){
+  const data={
+    date:$('#dateInput').value,
+    schoolName:$('#schoolNameInput').value,
+    bright:$('#brightToggle').checked,
+    menus:[...document.querySelectorAll('.menu-row')].map(row=>({
+      name:row.querySelector('.menuInput').value,
+      allergy:row.querySelector('.allergyInput').value
+    })),
+    fit:$('#fitSelect').value,
+    special:$('#specialToggle').checked,
+    specialName:$('#specialName').value,
+    specialDesc:$('#specialDesc').value,
+    tag1:$('#tag1').value,
+    tag2:$('#tag2').value,
+    specialNote:$('#specialNoteInput').value,
+    interval:$('#intervalSelect').value,
+    photo:state.photo,
+    specialPhoto:state.specialPhoto
+  };
+  try{
+    localStorage.setItem(TV_STORAGE_KEY,JSON.stringify(data));
+    $('#saveBtn').textContent='저장 완료 ✓';
+    setTimeout(()=>$('#saveBtn').textContent='저장',1200);
+  }catch(e){
+    alert('사진 용량이 너무 커 저장되지 않았습니다. 사진은 화면에는 계속 표시됩니다.');
+  }
+}
+function load(){
+  const today=new Date();
+  $('#dateInput').value=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+  let data=null;
+  try{
+    const saved=localStorage.getItem(TV_STORAGE_KEY)||localStorage.getItem(LEGACY_TV_STORAGE_KEY);
+    data=JSON.parse(saved||'null');
+    if(data&&!localStorage.getItem(TV_STORAGE_KEY)) localStorage.setItem(TV_STORAGE_KEY,JSON.stringify(data));
+  }catch(e){}
+  replaceMenuRows(data?.menus||[]);
+
+  if(data){
+    if(data.date) $('#dateInput').value=data.date;
+    $('#schoolNameInput').value=data.schoolName||'청수초등학교';
+    $('#brightToggle').checked=data.bright!==false;
+    $('#fitSelect').value=data.fit||'contain';
+    $('#specialToggle').checked=!!data.special;
+    $('#specialName').value=data.specialName||'';
+    $('#specialDesc').value=data.specialDesc||'';
+    $('#tag1').value=data.tag1||'';
+    $('#tag2').value=data.tag2||'';
+    $('#specialNoteInput').value=data.specialNote||'';
+    $('#intervalSelect').value=data.interval||'8000';
+    state.photo=data.photo||null;
+    state.specialPhoto=data.specialPhoto||null;
+  }
+  showPhoto($('#photoPreview'),$('#photoEmpty'),state.photo);
+  render();
+}
+$('#addMenuBtn').addEventListener('click',()=>{menuRow('','');render()});
+$('#clearPhotoBtn').addEventListener('click',()=>{
+  state.photo=null;
+  $('#photoInput').value='';
+  showPhoto($('#photoPreview'),$('#photoEmpty'),null);
+  updateSpecialPhoto();
+});
+$('#photoInput').addEventListener('change',()=>readFile($('#photoInput'),data=>{
+  state.photo=data;showPhoto($('#photoPreview'),$('#photoEmpty'),state.photo);updateSpecialPhoto();
+}));
+$('#specialPhotoInput').addEventListener('change',()=>readFile($('#specialPhotoInput'),data=>{
+  state.specialPhoto=data;updateSpecialPhoto();
+}));
+['dateInput','schoolNameInput','fitSelect','brightToggle','specialToggle','specialName','specialDesc','tag1','tag2','specialNoteInput','intervalSelect'].forEach(id=>{
+  $('#'+id).addEventListener(['specialToggle','brightToggle','fitSelect','intervalSelect'].includes(id)?'change':'input',render);
+});
+$('#dateInput').addEventListener('change',()=>applyMenuForSelectedDate(true));
+$('#loadMenuBtn').addEventListener('click',()=>refreshMenuFromSource(true));
+$('#saveBtn').addEventListener('click',save);
+$('#tvBtn').addEventListener('click',async()=>{
+  render();startSlides();document.body.classList.add('tv');
+  try{ history.replaceState(null,'','#tv'); }catch(e){}
+  try{ await document.documentElement.requestFullscreen?.(); }catch(e){}
+});
+document.addEventListener('fullscreenchange',()=>{
+  if(!document.fullscreenElement && document.body.classList.contains('tv')){
+    document.body.classList.remove('tv');stopSlides();
+    try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){}
+  }
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){document.body.classList.remove('tv');stopSlides();}
+});
+async function initialize(){
+  load();
+  await refreshMenuFromSource(false);
+  if(location.hash==='#tv'){
+    document.body.classList.add('tv');
+    render();
+    startSlides();
+  }
+}
+initialize();
+</script>
+</body>
+</html>

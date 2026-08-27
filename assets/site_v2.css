@@ -27219,3 +27219,38 @@ html body #app-content #new-substitute .substitute-qr-status {
     min-height: 46px !important;
   }
 }
+/* 급식노트에서 독립형 급식TV 화면으로 이동하는 간결한 실행 카드 */
+.meal-tv-launch-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.meal-tv-launch-card .section-title {
+  margin-bottom: 6px;
+}
+
+.meal-tv-launch-card p {
+  margin: 0;
+  color: var(--muted, #68736d);
+  line-height: 1.55;
+}
+
+.meal-tv-launch-btn {
+  flex: 0 0 auto;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .meal-tv-launch-card {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .meal-tv-launch-btn {
+    text-align: center;
+  }
+}
