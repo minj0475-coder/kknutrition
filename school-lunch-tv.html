@@ -107,10 +107,11 @@
   .leaf{position:absolute;border-radius:100% 0 100% 0;background:#9bbc6d;opacity:.72;transform:rotate(35deg)}
   .leaf.a{width:24px;height:12px;left:3.1%;top:7.4%}
   .leaf.b{width:19px;height:9px;right:4%;top:20%;transform:rotate(-22deg)}
-  .sun{position:absolute;right:4.1%;top:4.1%;width:48px;height:48px;border-radius:50%;background:#ffc44f;box-shadow:0 0 0 8px rgba(255,196,79,.12)}
-  .sun:before,.sun:after{content:"";position:absolute;background:#755321;border-radius:50%;width:4px;height:4px;top:18px}
-  .sun:before{left:14px}.sun:after{right:14px}
-  .sun .smile{position:absolute;width:14px;height:7px;border-bottom:3px solid #755321;border-radius:0 0 20px 20px;left:17px;top:25px}
+  .tv-mascot{
+    position:absolute;right:3.5%;top:2.5%;z-index:2;
+    width:clamp(72px,7.2vw,124px);height:auto;
+    filter:drop-shadow(0 9px 13px rgba(79,67,52,.12));transform:rotate(2deg)
+  }
 
   .topline{display:flex;justify-content:center;align-items:center;min-height:4.2%;position:relative;z-index:2}
   .school-name{
@@ -142,16 +143,19 @@
     content:"";position:absolute;inset:0;border-radius:30px;
     box-shadow:inset 0 0 0 1px rgba(255,255,255,.72);pointer-events:none
   }
-  .photo-card img{
+  .photo-card > #photoPreview{
     width:100%;height:100%;object-fit:contain;display:none;background:#fff;
     transition:filter .2s ease, transform .2s ease
   }
-  .photo-card.cover img{object-fit:cover}
-  .photo-card.bright img{filter:brightness(1.08) contrast(1.02) saturate(1.03)}
+  .photo-card.cover > #photoPreview{object-fit:cover}
+  .photo-card.bright > #photoPreview{filter:brightness(1.08) contrast(1.02) saturate(1.03)}
   .photo-empty{text-align:center;color:#748578;padding:8%}
-  .photo-empty .plate{font-size:clamp(58px,8vw,120px);display:block;margin-bottom:2%}
-  .photo-empty strong{font-size:clamp(19px,2vw,34px);display:block}
-  .photo-empty small{font-size:clamp(11px,1vw,18px)}
+  .photo-empty-mascot{
+    display:block;width:clamp(112px,12vw,205px);height:auto;margin:0 auto 3%;
+    filter:drop-shadow(0 12px 16px rgba(82,66,58,.12))
+  }
+  .photo-empty strong{font-size:clamp(22px,2.25vw,39px);display:block;color:var(--green);letter-spacing:-.04em}
+  .photo-empty small{display:block;margin-top:1.2%;font-size:clamp(13px,1.15vw,21px);font-weight:750;color:#7c887f}
   .photo-label{
     position:absolute;left:3.2%;top:3.4%;z-index:3;
     padding:.48em .85em;background:rgba(49,93,69,.90);color:white;
@@ -168,22 +172,20 @@
     padding-bottom:2.5%;border-bottom:1px solid rgba(112,151,97,.16)
   }
   .menu-head .dot{width:12px;height:12px;border-radius:50%;background:var(--orange);flex:none;box-shadow:0 0 0 5px rgba(245,138,53,.10)}
-  .menu-head h3{margin:0;color:var(--green);font-size:clamp(19px,1.7vw,29px);font-weight:950}
+  .menu-head h3{margin:0;color:var(--green);font-size:clamp(21px,1.88vw,33px);font-weight:950}
   .menu-list{display:flex;flex:1;flex-direction:column;justify-content:center;gap:2.2%}
   .menu-item{
     display:flex;align-items:center;gap:10px;
     min-height:0;padding:.48em .58em;border-radius:15px;
     background:linear-gradient(90deg,rgba(140,175,104,.105),rgba(255,255,255,.30));
-    font-size:clamp(18px,1.82vw,31px);font-weight:900;line-height:1.18;letter-spacing:-.045em;
+    font-size:clamp(20px,2vw,35px);font-weight:900;line-height:1.18;letter-spacing:-.045em;
     word-break:keep-all
   }
 
-  .menu-list.six
-
   .menu-list.dense{gap:1.45%}
-  .menu-list.dense .menu-item{font-size:clamp(16px,1.55vw,27px);padding:.38em .5em}
+  .menu-list.dense .menu-item{font-size:clamp(18px,1.72vw,30px);padding:.38em .5em}
   .menu-list.very-dense{gap:1%}
-  .menu-list.very-dense .menu-item{font-size:clamp(14px,1.35vw,24px);padding:.28em .45em}
+  .menu-list.very-dense .menu-item{font-size:clamp(16px,1.52vw,27px);padding:.28em .45em}
 
   .menu-item .menu-name{flex:1;min-width:0}
   .menu-item .allergy{
@@ -204,13 +206,14 @@
 
 
   .footer{
-    position:absolute;left:35%;bottom:1.35%;transform:translateX(-50%);z-index:3;
-    font-size:clamp(13px,1.22vw,21px);font-weight:850;color:var(--green);white-space:nowrap
+    position:absolute;left:35%;bottom:1.65%;transform:translateX(-50%);z-index:3;
+    padding:.28em .72em;border-radius:999px;background:rgba(255,253,247,.82);
+    font-size:clamp(15px,1.4vw,25px);font-weight:900;color:var(--green);white-space:nowrap
   }
   .footer .accent{color:var(--orange)}
   .allergy-legend{
-    position:absolute;right:4.2%;bottom:1.25%;z-index:3;
-    font-size:clamp(9px,.72vw,13px);font-weight:750;color:#879088;white-space:nowrap
+    position:absolute;right:4.2%;bottom:1.55%;z-index:3;
+    font-size:clamp(10px,.82vw,15px);font-weight:800;color:#77837b;white-space:nowrap
   }
   .footer{max-width:88%;text-align:center;overflow:hidden;text-overflow:ellipsis}
   /* 특별 메뉴 화면 */
@@ -362,7 +365,7 @@
     <div class="stage" id="stage">
       <section class="slide daily active" id="dailySlide">
         <div class="leaf a"></div><div class="leaf b"></div>
-        <div class="sun"><span class="smile"></span></div>
+        <img class="tv-mascot" src="assets/images/kkul-face-logo-small.png?v=1" alt="" aria-hidden="true">
         <div class="topline">
           <div class="school-name" id="schoolNameText">청수초등학교</div>
           <div class="date" id="dateText"></div>
@@ -374,9 +377,9 @@
             <div class="photo-label">오늘의 실제 식판</div>
             <img id="photoPreview" alt="오늘의 식판사진">
             <div class="photo-empty" id="photoEmpty">
-              <span class="plate">🍱</span>
-              <strong>오늘의 식판사진</strong>
-              <small>관리자 화면에서 사진을 올려주세요</small>
+              <img class="photo-empty-mascot" src="assets/images/kkul-face-logo-small.png?v=1" alt="">
+              <strong>오늘 급식 사진을 준비 중이에요!</strong>
+              <small>사진이 등록되면 맛있는 식판을 보여드릴게요.</small>
             </div>
           </div>
 
