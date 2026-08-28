@@ -46,11 +46,14 @@
   .panel-kicker{display:block;margin-bottom:2px;color:#8a8a91;font-size:10px;font-weight:800;letter-spacing:.08em}
   .panel h1{font-size:21px;line-height:1.2;margin:0;color:#202123;letter-spacing:-.035em}
   .back-link{
-    display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 11px;
+    display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;min-width:38px;padding:0;
     color:#4f4f55;background:#fff;border:1px solid #dedee2;border-radius:11px;
-    font-size:12px;font-weight:800;text-decoration:none;white-space:nowrap;box-shadow:0 1px 2px rgba(32,33,35,.03)
+    text-decoration:none;box-shadow:0 1px 2px rgba(32,33,35,.03);transition:background .16s ease,border-color .16s ease,color .16s ease,transform .16s ease
   }
   .back-link:hover{border-color:#b8b8be;background:#f3f3f4;color:#202123}
+  .back-link:active{transform:scale(.96)}
+  .back-link:focus-visible{outline:3px solid rgba(32,33,35,.14);outline-offset:2px}
+  .back-link svg{width:18px;height:18px;display:block}
   .section{
     margin:0 0 12px;padding:16px;background:#fff;border:1px solid #e4e4e7;border-radius:16px;
     box-shadow:0 1px 3px rgba(32,33,35,.035)
@@ -284,7 +287,9 @@
           <h1>급식TV 관리자</h1>
         </div>
       </div>
-      <a class="back-link" href="index.html#today-menu" aria-label="급식노트로 돌아가기">← 급식노트</a>
+      <a class="back-link" href="index.html#home" aria-label="꿀꿀포털 홈으로 가기" title="포털 홈">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 18.5zM9 20v-6h6v6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
     </div>
     <div class="section">
       <h2>1. 기본 정보</h2>
