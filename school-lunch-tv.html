@@ -47,10 +47,10 @@
   .panel h1{font-size:21px;line-height:1.2;margin:0;color:#202123;letter-spacing:-.035em}
   .back-link{
     display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;min-width:38px;padding:0;
-    color:#4f4f55;background:#fff;border:1px solid #dedee2;border-radius:11px;
-    text-decoration:none;box-shadow:0 1px 2px rgba(32,33,35,.03);transition:background .16s ease,border-color .16s ease,color .16s ease,transform .16s ease
+    color:#56565d;background:transparent;border:0;border-radius:10px;
+    text-decoration:none;box-shadow:none;transition:background .16s ease,color .16s ease,transform .16s ease
   }
-  .back-link:hover{border-color:#b8b8be;background:#f3f3f4;color:#202123}
+  .back-link:hover{background:#ececef;color:#202123}
   .back-link:active{transform:scale(.96)}
   .back-link:focus-visible{outline:3px solid rgba(32,33,35,.14);outline-offset:2px}
   .back-link svg{width:18px;height:18px;display:block}
@@ -73,9 +73,10 @@
   .menu-row .allergyInput{grid-column:1/-1;grid-row:2}
   .menu-row-actions{grid-column:2;grid-row:1;display:flex;gap:5px}
   .menu-row-actions .icon-btn{width:34px;min-width:34px;min-height:44px;padding:0;font-weight:900}
-  .icon-btn{border:1px solid #dedee2;background:#fff;color:#606066;border-radius:10px}
-  .icon-btn:hover{background:#f3f3f4;color:#202123}
-  .icon-btn:disabled{opacity:.35;cursor:default;background:#f5f5f6;color:#8d8d94}
+  .icon-btn{border:0;background:transparent;color:#606066;border-radius:9px;box-shadow:none}
+  .icon-btn:hover{background:#ececef;color:#202123}
+  .icon-btn:focus-visible{outline:3px solid rgba(32,33,35,.12);outline-offset:1px}
+  .icon-btn:disabled{opacity:.32;cursor:default;background:transparent;color:#8d8d94}
   .btn{
     min-height:42px;border:1px solid #dedee2;border-radius:11px;padding:10px 14px;
     background:#fff;color:#202123;font-weight:850;box-shadow:0 1px 2px rgba(32,33,35,.04)
