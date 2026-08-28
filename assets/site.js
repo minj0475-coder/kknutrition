@@ -1897,6 +1897,7 @@ function parseMenuRows(rows) {
       item.name = menuCleanText(item.name);
       if (!item.name) continue;
       item.materials = menuCleanText(item.materials || "");
+      item.allergy = window.KKNAllergy ? window.KKNAllergy.inferFromIngredients(item.materials).join(", ") : "";
       item.method = menuCleanText(item.method || "");
       if (!item.method) {
         item.method = "등록된 조리방법 없음";

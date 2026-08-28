@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kknutrition-pwa-v118';
+const CACHE_NAME = 'kknutrition-pwa-v119';
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -7,7 +7,8 @@ const CORE_ASSETS = [
   './assets/auth.js?v=20260710_001',
   './assets/data-guard.js?v=20260828_001',
   './assets/bookmarks.js?v=20260713_004',
-  './assets/site.js?v=20260828_001',
+  './assets/allergy.js?v=20260828_001',
+  './assets/site.js?v=20260828_002',
   './assets/images/home-kkul-hero-display.webp',
   './assets/images/kkul-face-logo-small.png?v=1',
   './assets/new-substitute-cook-guide-qr.png?v=20260724_001'
