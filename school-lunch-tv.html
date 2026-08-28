@@ -165,7 +165,6 @@
     width:100%;height:100%;object-fit:contain;display:none;background:#fff;
     transition:filter .2s ease,transform .2s ease
   }
-  .photo-card.cover > #photoPreview{object-fit:cover}
   .photo-card.bright > #photoPreview{filter:brightness(1.06) contrast(1.025) saturate(1.035)}
   .photo-empty{text-align:center;color:#748578;padding:8%}
   .photo-empty-mascot{
@@ -335,13 +334,6 @@
       <div class="upload">
         <input id="photoInput" type="file" accept="image/*">
         <div class="mini">휴대폰 식판사진을 올리면 TV용 크기로 자동 최적화합니다.</div>
-      </div>
-      <div class="field">
-        <label>사진 표시 방식</label>
-        <select id="fitSelect">
-          <option value="contain">전체 보기</option>
-          <option value="cover">화면 꽉 채우기</option>
-        </select>
       </div>
       <label class="checkline"><input id="brightToggle" type="checkbox" checked> 식판사진을 살짝 밝게 표시</label>
       <button class="btn secondary full" id="clearPhotoBtn">식판사진 지우기</button>
@@ -685,7 +677,6 @@ function render(){
   });
 
   $('#schoolNameText').textContent=$('#schoolNameInput').value.trim() || '우리 학교';
-  $('#photoCard').classList.toggle('cover',$('#fitSelect').value==='cover');
   $('#photoCard').classList.toggle('bright',$('#brightToggle').checked);
 
   const useSpecial=$('#specialToggle').checked;
@@ -753,7 +744,6 @@ function save(){
       name:row.querySelector('.menuInput').value,
       allergy:row.querySelector('.allergyInput').value
     })),
-    fit:$('#fitSelect').value,
     special:$('#specialToggle').checked,
     specialName:$('#specialName').value,
     specialDesc:$('#specialDesc').value,
@@ -787,7 +777,6 @@ function load(){
     if(data.date) $('#dateInput').value=data.date;
     $('#schoolNameInput').value=data.schoolName||'청수초등학교';
     $('#brightToggle').checked=data.bright!==false;
-    $('#fitSelect').value=data.fit||'contain';
     $('#specialToggle').checked=!!data.special;
     $('#specialName').value=data.specialName||'';
     $('#specialDesc').value=data.specialDesc||'';
@@ -814,8 +803,8 @@ $('#photoInput').addEventListener('change',()=>readFile($('#photoInput'),data=>{
 $('#specialPhotoInput').addEventListener('change',()=>readFile($('#specialPhotoInput'),data=>{
   state.specialPhoto=data;updateSpecialPhoto();
 }));
-['dateInput','schoolNameInput','fitSelect','brightToggle','specialToggle','specialName','specialDesc','tag1','tag2','specialNoteInput','intervalSelect'].forEach(id=>{
-  $('#'+id).addEventListener(['specialToggle','brightToggle','fitSelect','intervalSelect'].includes(id)?'change':'input',render);
+['dateInput','schoolNameInput','brightToggle','specialToggle','specialName','specialDesc','tag1','tag2','specialNoteInput','intervalSelect'].forEach(id=>{
+  $('#'+id).addEventListener(['specialToggle','brightToggle','intervalSelect'].includes(id)?'change':'input',render);
 });
 $('#dateInput').addEventListener('change',()=>applyMenuForSelectedDate(true));
 $('#loadMenuBtn').addEventListener('click',()=>refreshMenuFromSource(true));

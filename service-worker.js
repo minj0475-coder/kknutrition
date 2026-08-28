@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kknutrition-pwa-v127';
+const CACHE_NAME = 'kknutrition-pwa-v128';
 const CORE_ASSETS = [
   './',
   './index.html',
