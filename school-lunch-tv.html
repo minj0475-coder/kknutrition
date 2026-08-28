@@ -113,32 +113,20 @@
 
   /* 메인 TV 화면 - 55인치 TV 가독성 최적화 */
   .daily{
-    height:100%;padding:2.45% 3.7% 2.7%;position:relative;overflow:hidden;
-    background:
-      radial-gradient(circle at 8% 14%, rgba(140,175,104,.14) 0 4.5%, transparent 4.7%),
-      radial-gradient(circle at 94% 10%, rgba(135,200,220,.20) 0 5.5%, transparent 5.7%),
-      radial-gradient(circle at 89% 91%, rgba(245,138,53,.10) 0 8%, transparent 8.2%),
-      linear-gradient(180deg,#fffdf7 0%,#faf6eb 100%);
+    height:100%;padding:2.6% 3.7% 2.9%;position:relative;overflow:hidden;
+    background:linear-gradient(180deg,#fffefb 0%,#f8f6ef 100%);
   }
-  .daily:after{
-    content:"";position:absolute;left:0;right:0;bottom:0;height:3.4%;
-    background:linear-gradient(90deg,rgba(140,175,104,.18),rgba(135,200,220,.12),rgba(245,138,53,.14));
-  }
-  .leaf{position:absolute;border-radius:100% 0 100% 0;background:#9bbc6d;opacity:.72;transform:rotate(35deg)}
-  .leaf.a{width:24px;height:12px;left:3.1%;top:7.4%}
-  .leaf.b{width:19px;height:9px;right:4%;top:20%;transform:rotate(-22deg)}
   .topline{display:flex;justify-content:center;align-items:center;min-height:4.2%;position:relative;z-index:2}
   .school-name{
-    position:absolute;left:0;top:.1em;color:#5d7065;font-size:clamp(14px,1.08vw,20px);
+    position:absolute;left:0;top:.05em;color:#405a4b;font-size:clamp(16px,1.28vw,24px);
     font-weight:900;letter-spacing:-.025em
   }
   .date{
-    padding:.24em .68em;text-align:center;color:var(--green);font-size:clamp(17px,1.4vw,26px);font-weight:900;letter-spacing:.005em;
-    background:rgba(255,255,255,.58);border-radius:999px
+    padding:0;text-align:center;color:#52695c;font-size:clamp(19px,1.5vw,28px);font-weight:900;letter-spacing:0
   }
   .title{
-    text-align:center;font-weight:950;font-size:clamp(42px,5vw,86px);line-height:1;
-    margin:.25% 0 1.5%;letter-spacing:-.06em;color:var(--green)
+    text-align:center;font-weight:950;font-size:clamp(42px,4.65vw,80px);line-height:1;
+    margin:.45% 0 1.65%;letter-spacing:-.06em;color:var(--green)
   }
   .title span{color:var(--orange)}
   .main-grid{
@@ -146,10 +134,10 @@
     gap:1.8%;height:72.4%;position:relative;z-index:2
   }
   .photo-card,.menu-card{
-    background:rgba(255,255,255,.91);
-    border:1px solid rgba(112,151,97,.22);
-    border-radius:32px;
-    box-shadow:0 18px 44px rgba(50,76,57,.11);
+    background:#fff;
+    border:1px solid #dfe7dd;
+    border-radius:26px;
+    box-shadow:0 10px 28px rgba(50,76,57,.08);
     overflow:hidden
   }
   .photo-card{
@@ -157,8 +145,8 @@
     aspect-ratio:var(--photo-aspect,4/3);flex:0 1 auto;max-width:58%;background:#fff
   }
   .photo-card:after{
-    content:"";position:absolute;inset:0;z-index:3;border-radius:32px;
-    box-shadow:inset 0 0 0 1px rgba(255,255,255,.72);pointer-events:none
+    content:"";position:absolute;inset:0;z-index:3;border-radius:26px;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.65);pointer-events:none
   }
   .photo-card > #photoPreview{
     width:100%;height:100%;object-fit:contain;display:none;background:#fff;
@@ -172,45 +160,41 @@
   }
   .photo-empty strong{font-size:clamp(22px,2.25vw,39px);display:block;color:var(--green);letter-spacing:-.04em}
   .menu-card{
-    position:relative;min-width:0;flex:1;padding:4.15% 4.8% 4%;display:flex;flex-direction:column;
-    background:linear-gradient(180deg,rgba(255,255,255,.97),rgba(249,252,247,.98))
+    position:relative;min-width:0;flex:1;padding:3.8% 4.7% 3.5%;display:flex;flex-direction:column;
+    background:#fff
   }
-  .menu-card:before{content:"";position:absolute;left:7%;right:7%;top:0;height:7px;border-radius:0 0 999px 999px;background:linear-gradient(90deg,var(--green2),var(--sky),var(--orange));opacity:.82}
   .menu-head{
-    display:flex;align-items:center;gap:12px;margin-bottom:2.5%;
-    padding-bottom:2.7%;border-bottom:1px solid rgba(112,151,97,.14)
+    display:flex;align-items:center;margin-bottom:1.5%;
+    padding-bottom:3%;border-bottom:2px solid #dde7dd
   }
-  .menu-head .dot{width:13px;height:13px;border-radius:5px;background:var(--orange);flex:none;transform:rotate(12deg);box-shadow:0 0 0 5px rgba(245,138,53,.10)}
-  .menu-head h3{margin:0;color:var(--green);font-size:clamp(23px,1.95vw,35px);font-weight:950;letter-spacing:-.035em}
-  .menu-list{display:flex;flex:1;flex-direction:column;justify-content:center;gap:2.2%}
+  .menu-head h3{margin:0;color:var(--green);font-size:clamp(25px,2.15vw,39px);font-weight:950;letter-spacing:-.035em}
+  .menu-list{display:flex;flex:1;flex-direction:column;justify-content:center;gap:0}
   .menu-item{
-    position:relative;display:flex;align-items:center;gap:12px;
-    min-height:0;padding:.5em .62em .5em .82em;border:1px solid rgba(112,151,97,.10);border-radius:17px;
-    background:linear-gradient(90deg,rgba(140,175,104,.13),rgba(255,255,255,.45));
-    font-size:clamp(20px,2vw,35px);font-weight:900;line-height:1.18;letter-spacing:-.045em;
-    word-break:keep-all;box-shadow:0 5px 14px rgba(49,93,69,.035)
+    position:relative;display:flex;align-items:center;gap:15px;
+    min-height:0;padding:.52em .15em;border:0;border-bottom:1px solid #e8ede8;border-radius:0;
+    background:none;font-size:clamp(22px,2.15vw,39px);font-weight:900;line-height:1.18;letter-spacing:-.045em;
+    word-break:keep-all;box-shadow:none
   }
-  .menu-item:before{content:"";align-self:stretch;width:6px;min-height:1.25em;border-radius:999px;background:var(--green2);flex:none}
+  .menu-item:last-child{border-bottom:0}
+  .menu-item:before{content:"";width:10px;height:10px;border-radius:50%;background:var(--green2);flex:none}
   .menu-item:nth-child(3n+2):before{background:var(--sky)}
   .menu-item:nth-child(3n):before{background:var(--orange)}
 
-  .menu-list.dense{gap:1.45%}
-  .menu-list.dense .menu-item{font-size:clamp(18px,1.72vw,30px);padding:.38em .5em}
-  .menu-list.very-dense{gap:1%}
-  .menu-list.very-dense .menu-item{font-size:clamp(16px,1.52vw,27px);padding:.28em .45em}
+  .menu-list.dense .menu-item{font-size:clamp(19px,1.82vw,33px);padding:.4em .12em}
+  .menu-list.very-dense .menu-item{font-size:clamp(17px,1.62vw,29px);padding:.3em .1em}
 
   .menu-item .menu-name{flex:1;min-width:0}
   .menu-item .allergy{
     flex:none;display:inline-flex;align-items:center;justify-content:center;gap:.28em;max-width:49%;
-    padding:.4em .68em;border-radius:999px;
-    background:#fff3ea;color:#c56224;border:1px solid #f1ccb0;
-    font-size:clamp(17px,1.18vw,23px);font-weight:950;line-height:1.14;letter-spacing:-.025em;white-space:normal;text-align:center
+    padding:.4em .68em;border-radius:10px;
+    background:#fff1e7;color:#ad511d;border:0;
+    font-size:clamp(18px,1.28vw,25px);font-weight:950;line-height:1.14;letter-spacing:-.025em;white-space:normal;text-align:center
   }
   .menu-item .allergy:before{
     content:"알레르기";font-size:.72em;color:#a96b45;font-weight:900
   }
-  .menu-list.dense .menu-item .allergy{font-size:clamp(15px,1vw,20px)}
-  .menu-list.very-dense .menu-item .allergy{font-size:clamp(14px,.9vw,18px)}
+  .menu-list.dense .menu-item .allergy{font-size:clamp(16px,1.08vw,21px)}
+  .menu-list.very-dense .menu-item .allergy{font-size:clamp(15px,.96vw,19px)}
 
 
 
@@ -220,7 +204,7 @@
   .footer{
     position:absolute;left:50%;bottom:2.45%;transform:translateX(-50%);z-index:3;
     padding:0;background:none;border:0;box-shadow:none;
-    font-size:clamp(14px,1.75vw,32px);font-weight:950;line-height:1.2;color:var(--green);white-space:nowrap;
+    font-size:clamp(16px,1.85vw,34px);font-weight:950;line-height:1.2;color:var(--green);white-space:nowrap;
     text-shadow:0 2px 0 rgba(255,255,255,.96),0 0 14px rgba(255,255,255,.9)
   }
   .footer .accent{color:var(--orange)}
@@ -228,10 +212,7 @@
   /* 특별 메뉴 화면 */
   .special{
     height:100%;padding:2.9% 4.5%;
-    background:
-      radial-gradient(circle at 92% 8%, rgba(135,200,220,.20) 0 5%, transparent 5.2%),
-      radial-gradient(circle at 8% 92%, rgba(140,175,104,.14) 0 10%, transparent 10.2%),
-      linear-gradient(180deg,#fffdf7 0%,#faf6eb 100%);
+    background:linear-gradient(180deg,#fffefb 0%,#f8f6ef 100%);
     position:relative
   }
   .special .special-title{
@@ -240,8 +221,8 @@
   .special .special-title span{color:var(--orange)}
   .special .kicker{text-align:center;color:#6d9561;font-weight:850;font-size:clamp(15px,1.5vw,25px);margin-bottom:2%}
   .special-card{
-    height:67%;border:1px solid rgba(112,151,97,.30);border-radius:32px;background:rgba(255,255,255,.91);
-    box-shadow:0 16px 34px rgba(50,76,57,.10);display:grid;grid-template-columns:1.05fr .95fr;overflow:hidden
+    height:67%;border:1px solid #dfe7dd;border-radius:26px;background:#fff;
+    box-shadow:0 10px 28px rgba(50,76,57,.08);display:grid;grid-template-columns:1.05fr .95fr;overflow:hidden
   }
   .special-copy{padding:6.5% 6%;display:flex;flex-direction:column;justify-content:center}
   .special-name{font-size:clamp(28px,3.55vw,60px);font-weight:950;color:var(--green);letter-spacing:-.05em;line-height:1.1;margin-bottom:4%}
@@ -393,7 +374,6 @@
   <main class="stage-wrap">
     <div class="stage" id="stage">
       <section class="slide daily active" id="dailySlide">
-        <div class="leaf a"></div><div class="leaf b"></div>
         <div class="topline">
           <div class="school-name" id="schoolNameText">청수초등학교</div>
           <div class="date" id="dateText"></div>
@@ -410,7 +390,7 @@
           </div>
 
           <div class="menu-card">
-            <div class="menu-head"><span class="dot"></span><h3>오늘의 메뉴</h3></div>
+            <div class="menu-head"><h3>오늘의 메뉴</h3></div>
             <div class="menu-list" id="menuList"></div>
           </div>
         </div>
