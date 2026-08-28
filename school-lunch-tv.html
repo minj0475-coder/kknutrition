@@ -114,7 +114,7 @@
 
   /* 메인 TV 화면 - 55인치 TV 가독성 최적화 */
   .daily{
-    height:100%;padding:2.8% 4.2% 2.7%;position:relative;overflow:hidden;
+    height:100%;padding:2.45% 3.7% 2.7%;position:relative;overflow:hidden;
     background:
       radial-gradient(circle at 8% 14%, rgba(140,175,104,.14) 0 4.5%, transparent 4.7%),
       radial-gradient(circle at 94% 10%, rgba(135,200,220,.20) 0 5.5%, transparent 5.7%),
@@ -130,24 +130,29 @@
   .leaf.b{width:19px;height:9px;right:4%;top:20%;transform:rotate(-22deg)}
   .topline{display:flex;justify-content:center;align-items:center;min-height:4.2%;position:relative;z-index:2}
   .school-name{
-    position:absolute;left:0;top:0;color:#718078;font-size:clamp(12px,1vw,18px);
-    font-weight:850;letter-spacing:-.02em
+    position:absolute;left:0;top:-.2em;display:inline-flex;align-items:center;gap:.5em;
+    padding:.42em .72em;background:rgba(255,255,255,.72);border:1px solid rgba(112,151,97,.14);border-radius:999px;
+    color:#64766c;font-size:clamp(12px,.94vw,17px);font-weight:850;letter-spacing:-.02em;backdrop-filter:blur(8px)
   }
-  .date{text-align:center;color:var(--green);font-size:clamp(17px,1.45vw,27px);font-weight:850;letter-spacing:.005em}
+  .school-name:before{content:"";width:.55em;height:.55em;border-radius:50%;background:var(--green2);box-shadow:0 0 0 .28em rgba(140,175,104,.12)}
+  .date{
+    padding:.24em .68em;text-align:center;color:var(--green);font-size:clamp(17px,1.4vw,26px);font-weight:900;letter-spacing:.005em;
+    background:rgba(255,255,255,.58);border-radius:999px
+  }
   .title{
-    text-align:center;font-weight:950;font-size:clamp(42px,5.15vw,88px);line-height:1;
-    margin:.35% 0 1.7%;letter-spacing:-.06em;color:var(--green)
+    text-align:center;font-weight:950;font-size:clamp(42px,5vw,86px);line-height:1;
+    margin:.25% 0 1.5%;letter-spacing:-.06em;color:var(--green)
   }
   .title span{color:var(--orange)}
   .main-grid{
     display:flex;
-    gap:2%;height:71.5%;position:relative;z-index:2
+    gap:1.8%;height:72.4%;position:relative;z-index:2
   }
   .photo-card,.menu-card{
     background:rgba(255,255,255,.91);
-    border:1px solid rgba(112,151,97,.28);
-    border-radius:30px;
-    box-shadow:0 16px 34px rgba(50,76,57,.10);
+    border:1px solid rgba(112,151,97,.22);
+    border-radius:32px;
+    box-shadow:0 18px 44px rgba(50,76,57,.11);
     overflow:hidden
   }
   .photo-card{
@@ -155,7 +160,7 @@
     aspect-ratio:var(--photo-aspect,4/3);flex:0 1 auto;max-width:58%;background:#fff
   }
   .photo-card:after{
-    content:"";position:absolute;inset:0;z-index:3;border-radius:30px;
+    content:"";position:absolute;inset:0;z-index:3;border-radius:32px;
     box-shadow:inset 0 0 0 1px rgba(255,255,255,.72);pointer-events:none
   }
   .photo-card > #photoPreview{
@@ -170,31 +175,28 @@
     filter:drop-shadow(0 12px 16px rgba(82,66,58,.12))
   }
   .photo-empty strong{font-size:clamp(22px,2.25vw,39px);display:block;color:var(--green);letter-spacing:-.04em}
-  .photo-label{
-    position:absolute;left:2.7%;top:2.9%;z-index:4;
-    padding:.46em .8em;background:rgba(255,255,255,.88);color:var(--green);border:1px solid rgba(255,255,255,.74);
-    border-radius:999px;font-weight:900;font-size:clamp(11px,.92vw,16px);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-    box-shadow:0 7px 18px rgba(31,50,38,.16)
-  }
-
   .menu-card{
-    min-width:0;flex:1;padding:4.5% 5.2% 4.2%;display:flex;flex-direction:column;
-    background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(251,253,248,.96))
+    position:relative;min-width:0;flex:1;padding:4.15% 4.8% 4%;display:flex;flex-direction:column;
+    background:linear-gradient(180deg,rgba(255,255,255,.97),rgba(249,252,247,.98))
   }
+  .menu-card:before{content:"";position:absolute;left:7%;right:7%;top:0;height:7px;border-radius:0 0 999px 999px;background:linear-gradient(90deg,var(--green2),var(--sky),var(--orange));opacity:.82}
   .menu-head{
-    display:flex;align-items:center;gap:10px;margin-bottom:2.4%;
-    padding-bottom:2.5%;border-bottom:1px solid rgba(112,151,97,.16)
+    display:flex;align-items:center;gap:12px;margin-bottom:2.5%;
+    padding-bottom:2.7%;border-bottom:1px solid rgba(112,151,97,.14)
   }
-  .menu-head .dot{width:12px;height:12px;border-radius:50%;background:var(--orange);flex:none;box-shadow:0 0 0 5px rgba(245,138,53,.10)}
-  .menu-head h3{margin:0;color:var(--green);font-size:clamp(21px,1.88vw,33px);font-weight:950}
+  .menu-head .dot{width:13px;height:13px;border-radius:5px;background:var(--orange);flex:none;transform:rotate(12deg);box-shadow:0 0 0 5px rgba(245,138,53,.10)}
+  .menu-head h3{margin:0;color:var(--green);font-size:clamp(23px,1.95vw,35px);font-weight:950;letter-spacing:-.035em}
   .menu-list{display:flex;flex:1;flex-direction:column;justify-content:center;gap:2.2%}
   .menu-item{
-    display:flex;align-items:center;gap:10px;
-    min-height:0;padding:.48em .58em;border-radius:15px;
-    background:linear-gradient(90deg,rgba(140,175,104,.105),rgba(255,255,255,.30));
+    position:relative;display:flex;align-items:center;gap:12px;
+    min-height:0;padding:.5em .62em .5em .82em;border:1px solid rgba(112,151,97,.10);border-radius:17px;
+    background:linear-gradient(90deg,rgba(140,175,104,.13),rgba(255,255,255,.45));
     font-size:clamp(20px,2vw,35px);font-weight:900;line-height:1.18;letter-spacing:-.045em;
-    word-break:keep-all
+    word-break:keep-all;box-shadow:0 5px 14px rgba(49,93,69,.035)
   }
+  .menu-item:before{content:"";align-self:stretch;width:6px;min-height:1.25em;border-radius:999px;background:var(--green2);flex:none}
+  .menu-item:nth-child(3n+2):before{background:var(--sky)}
+  .menu-item:nth-child(3n):before{background:var(--orange)}
 
   .menu-list.dense{gap:1.45%}
   .menu-list.dense .menu-item{font-size:clamp(18px,1.72vw,30px);padding:.38em .5em}
@@ -203,16 +205,16 @@
 
   .menu-item .menu-name{flex:1;min-width:0}
   .menu-item .allergy{
-    flex:none;display:inline-flex;align-items:center;gap:.22em;
-    padding:.34em .62em;border-radius:999px;
+    flex:none;display:inline-flex;align-items:center;justify-content:center;gap:.28em;max-width:49%;
+    padding:.4em .68em;border-radius:999px;
     background:#fff3ea;color:#c56224;border:1px solid #f1ccb0;
-    font-size:.46em;font-weight:900;letter-spacing:-.02em;white-space:nowrap
+    font-size:clamp(17px,1.18vw,23px);font-weight:950;line-height:1.14;letter-spacing:-.025em;white-space:normal;text-align:center
   }
   .menu-item .allergy:before{
-    content:"알레르기";font-size:.78em;color:#b77951;font-weight:850
+    content:"알레르기";font-size:.72em;color:#a96b45;font-weight:900
   }
-  .menu-list.dense .menu-item .allergy{font-size:.44em}
-  .menu-list.very-dense .menu-item .allergy{font-size:.42em}
+  .menu-list.dense .menu-item .allergy{font-size:clamp(15px,1vw,20px)}
+  .menu-list.very-dense .menu-item .allergy{font-size:clamp(14px,.9vw,18px)}
 
 
 
@@ -221,8 +223,9 @@
 
   .footer{
     position:absolute;left:50%;bottom:3%;transform:translateX(-50%);z-index:3;
-    padding:.28em .72em;border-radius:999px;background:rgba(255,253,247,.82);
-    font-size:clamp(15px,1.4vw,25px);font-weight:900;color:var(--green);white-space:nowrap
+    padding:.38em .92em;border:1px solid rgba(112,151,97,.12);border-radius:999px;background:rgba(255,255,255,.84);
+    box-shadow:0 8px 22px rgba(49,93,69,.08);backdrop-filter:blur(10px);
+    font-size:clamp(15px,1.35vw,24px);font-weight:900;color:var(--green);white-space:nowrap
   }
   .footer .accent{color:var(--orange)}
   .footer{max-width:88%;text-align:center;overflow:hidden;text-overflow:ellipsis}
@@ -412,7 +415,6 @@
 
         <div class="main-grid">
           <div class="photo-card" id="photoCard">
-            <div class="photo-label">오늘의 식판 사진</div>
             <img id="photoPreview" alt="오늘의 식판사진">
             <div class="photo-empty" id="photoEmpty">
               <img class="photo-empty-mascot" src="assets/images/kkul-face-logo-small.png?v=1" alt="">
