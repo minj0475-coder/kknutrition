@@ -68,9 +68,14 @@
   input:focus,textarea:focus,select:focus{border-color:#8f8f98;box-shadow:0 0 0 3px rgba(32,33,35,.07)}
   textarea{min-height:74px;resize:vertical}
   input[type="checkbox"]{accent-color:#202123}
-  .menu-row{display:grid;grid-template-columns:minmax(0,1fr) 105px 38px;gap:7px;margin:8px 0}
+  .menu-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px;margin:10px 0;padding:9px;background:#fafafa;border:1px solid #ececef;border-radius:12px}
+  .menu-row .menuInput{grid-column:1;grid-row:1}
+  .menu-row .allergyInput{grid-column:1/-1;grid-row:2}
+  .menu-row-actions{grid-column:2;grid-row:1;display:flex;gap:5px}
+  .menu-row-actions .icon-btn{width:34px;min-width:34px;min-height:44px;padding:0;font-weight:900}
   .icon-btn{border:1px solid #dedee2;background:#fff;color:#606066;border-radius:10px}
   .icon-btn:hover{background:#f3f3f4;color:#202123}
+  .icon-btn:disabled{opacity:.35;cursor:default;background:#f5f5f6;color:#8d8d94}
   .btn{
     min-height:42px;border:1px solid #dedee2;border-radius:11px;padding:10px 14px;
     background:#fff;color:#202123;font-weight:850;box-shadow:0 1px 2px rgba(32,33,35,.04)
@@ -255,10 +260,11 @@
     .field{margin:9px 0}
     .field label{margin-bottom:6px}
     input[type="text"],input[type="date"],textarea,select{min-height:44px;font-size:16px}
-    .menu-row{grid-template-columns:minmax(0,1fr) 40px;gap:7px;margin:9px 0;padding:8px;background:#fafafa;border:1px solid #ececef;border-radius:12px}
+    .menu-row{grid-template-columns:minmax(0,1fr) auto;gap:7px;margin:9px 0;padding:8px}
     .menu-row .menuInput{grid-column:1;grid-row:1}
     .menu-row .allergyInput{grid-column:1/-1;grid-row:2}
-    .menu-row .icon-btn{grid-column:2;grid-row:1;min-height:44px}
+    .menu-row-actions{grid-column:2;grid-row:1}
+    .menu-row-actions .icon-btn{width:38px;min-width:38px;min-height:44px}
     .actions{
       position:fixed;left:0;right:0;bottom:0;z-index:40;display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);gap:8px;
       padding:10px 12px max(10px,env(safe-area-inset-bottom));background:rgba(248,248,248,.94);border-top:1px solid rgba(222,222,226,.9);
@@ -419,7 +425,9 @@ const state = {
   specialPhoto:null,
   timer:null,
   slide:0,
-  menuSource:[]
+  menuSource:[],
+  savedMenuOrderDate:'',
+  savedMenuOrder:[]
 };
 
 const TV_STORAGE_KEY = 'kkulkkoori_school_lunch_tv_v1';
@@ -433,11 +441,34 @@ function menuRow(value='', allergy=''){
   row.className='menu-row';
   row.innerHTML=`<input type="text" class="menuInput" value="${escapeHtml(value)}" placeholder="메뉴명">
                  <input type="text" class="allergyInput" value="${escapeHtml(allergy)}" placeholder="예: 대두, 밀">
-                 <button class="icon-btn" title="삭제">×</button>`;
+                 <div class="menu-row-actions">
+                   <button type="button" class="icon-btn move-up" title="위로 이동" aria-label="${escapeHtml(value||'메뉴')} 위로 이동">↑</button>
+                   <button type="button" class="icon-btn move-down" title="아래로 이동" aria-label="${escapeHtml(value||'메뉴')} 아래로 이동">↓</button>
+                   <button type="button" class="icon-btn delete-menu" title="삭제" aria-label="${escapeHtml(value||'메뉴')} 삭제">×</button>
+                 </div>`;
   row.querySelector('.menuInput').addEventListener('input', render);
   row.querySelector('.allergyInput').addEventListener('input', render);
-  row.querySelector('button').addEventListener('click',()=>{ row.remove(); render(); });
+  row.querySelector('.move-up').addEventListener('click',()=>moveMenuRow(row,-1));
+  row.querySelector('.move-down').addEventListener('click',()=>moveMenuRow(row,1));
+  row.querySelector('.delete-menu').addEventListener('click',()=>{ row.remove(); render(); });
   menuWrap.appendChild(row);
+}
+function updateMenuOrderButtons(){
+  const rows=[...menuWrap.querySelectorAll('.menu-row')];
+  rows.forEach((row,index)=>{
+    row.querySelector('.move-up').disabled=index===0;
+    row.querySelector('.move-down').disabled=index===rows.length-1;
+  });
+}
+function moveMenuRow(row,direction){
+  if(direction<0){
+    const previous=row.previousElementSibling;
+    if(previous) menuWrap.insertBefore(row,previous);
+  }else{
+    const next=row.nextElementSibling;
+    if(next) menuWrap.insertBefore(next,row);
+  }
+  render();
 }
 function escapeHtml(v=''){
   return String(v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
@@ -500,6 +531,29 @@ function splitMenuAndAllergy(rawName='',rawAllergy='',rawMaterials=''){
   if(window.KKNAllergy) allergy=window.KKNAllergy.normalize(allergy);
   return {name,allergy};
 }
+function menuNameOf(item){
+  return splitMenuAndAllergy(item?.name||item,item?.allergy||'',item?.materials||'').name;
+}
+function menuSortRank(item){
+  const name=menuNameOf(item).replace(/[([][^)\]]*[)\]]/g,'').replace(/[\d.,/]+$/g,'').replace(/\s+/g,'');
+  if(/밥|죽|덮밥|비빔밥|볶음밥|김밥|주먹밥|리조또/.test(name)) return 10;
+  if(/(국|탕|찌개|전골|곰탕|설렁탕|육개장|스프|수제비|칼국수|우동|라면|쌀국수)$/.test(name)) return 20;
+  if(/불고기|갈비|떡갈비|제육|돈가스|돈까스|커틀릿|치킨|닭|수육|보쌈|족발|스테이크|함박|생선|고등어|삼치|가자미|조기|연어|장어|오징어|낙지|주꾸미|새우|탕수육|강정|소시지|햄|미트볼|완자|두부|계란|달걀|만두|구이|튀김/.test(name)) return 30;
+  if(/김치|깍두기|석박지|겉절이|동치미|총각|열무|오이소박이/.test(name)) return 50;
+  if(/우유|요구르트|요거트|주스|음료|아이스크림|푸딩|젤리|케이크|쿠키|과일|사과|배$|귤|오렌지|바나나|포도|수박|참외|딸기|키위|파인애플|망고|멜론|꿀떡|백설기/.test(name)) return 60;
+  return 40;
+}
+function autoSortMenuItems(items){
+  return [...(items||[])].map((item,index)=>({item,index,rank:menuSortRank(item)}))
+    .sort((a,b)=>a.rank-b.rank||a.index-b.index).map(entry=>entry.item);
+}
+function applySavedMenuOrder(items,dateKey){
+  if(state.savedMenuOrderDate!==dateKey||!state.savedMenuOrder.length) return items;
+  const positions=new Map(state.savedMenuOrder.map((name,index)=>[String(name).trim(),index]));
+  return items.map((item,index)=>({item,index,position:positions.get(menuNameOf(item))}))
+    .sort((a,b)=>(a.position??Number.MAX_SAFE_INTEGER)-(b.position??Number.MAX_SAFE_INTEGER)||a.index-b.index)
+    .map(entry=>entry.item);
+}
 function replaceMenuRows(items){
   menuWrap.innerHTML='';
   const normalized=(items||[]).map(item=>splitMenuAndAllergy(item?.name||item,item?.allergy||'',item?.materials||''));
@@ -510,7 +564,7 @@ function applyMenuForSelectedDate(clearWhenMissing=false){
   const key=$('#dateInput').value;
   const section=state.menuSource.find(item=>item?.key===key);
   if(section?.items?.length){
-    replaceMenuRows(section.items);
+    replaceMenuRows(applySavedMenuOrder(autoSortMenuItems(section.items),key));
     return true;
   }
   if(clearWhenMissing) replaceMenuRows([]);
@@ -591,6 +645,7 @@ function formatAllergy(raw=''){
 }
 
 function render(){
+  updateMenuOrderButtons();
   const d=fmtDate($('#dateInput').value);
   $('#dateText').textContent=d;
   $('#specialDateText').textContent=d;
@@ -687,14 +742,16 @@ function startSlides(){
   },interval);
 }
 function save(){
+  const savedMenus=[...document.querySelectorAll('.menu-row')].map(row=>({
+    name:row.querySelector('.menuInput').value,
+    allergy:row.querySelector('.allergyInput').value
+  }));
   const data={
     date:$('#dateInput').value,
     schoolName:$('#schoolNameInput').value,
     bright:$('#brightToggle').checked,
-    menus:[...document.querySelectorAll('.menu-row')].map(row=>({
-      name:row.querySelector('.menuInput').value,
-      allergy:row.querySelector('.allergyInput').value
-    })),
+    menus:savedMenus,
+    menuOrder:savedMenus.map(item=>item.name.trim()).filter(Boolean),
     special:$('#specialToggle').checked,
     specialName:$('#specialName').value,
     specialDesc:$('#specialDesc').value,
@@ -707,6 +764,8 @@ function save(){
   };
   try{
     localStorage.setItem(TV_STORAGE_KEY,JSON.stringify(data));
+    state.savedMenuOrderDate=data.date;
+    state.savedMenuOrder=data.menuOrder;
     $('#saveBtn').textContent='저장 완료 ✓';
     setTimeout(()=>$('#saveBtn').textContent='저장',1200);
   }catch(e){
@@ -726,6 +785,8 @@ function load(){
 
   if(data){
     if(data.date) $('#dateInput').value=data.date;
+    state.savedMenuOrderDate=data.date||'';
+    state.savedMenuOrder=Array.isArray(data.menuOrder)?data.menuOrder:[];
     $('#schoolNameInput').value=data.schoolName||'청수초등학교';
     $('#brightToggle').checked=data.bright!==false;
     $('#specialToggle').checked=!!data.special;
