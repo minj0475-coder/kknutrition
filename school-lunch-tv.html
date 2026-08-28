@@ -107,12 +107,6 @@
   .leaf{position:absolute;border-radius:100% 0 100% 0;background:#9bbc6d;opacity:.72;transform:rotate(35deg)}
   .leaf.a{width:24px;height:12px;left:3.1%;top:7.4%}
   .leaf.b{width:19px;height:9px;right:4%;top:20%;transform:rotate(-22deg)}
-  .tv-mascot{
-    position:absolute;right:3.5%;top:2.5%;z-index:2;
-    width:clamp(72px,7.2vw,124px);height:auto;
-    filter:drop-shadow(0 9px 13px rgba(79,67,52,.12));transform:rotate(2deg)
-  }
-
   .topline{display:flex;justify-content:center;align-items:center;min-height:4.2%;position:relative;z-index:2}
   .school-name{
     position:absolute;left:0;top:0;color:#718078;font-size:clamp(12px,1vw,18px);
@@ -211,10 +205,6 @@
     font-size:clamp(15px,1.4vw,25px);font-weight:900;color:var(--green);white-space:nowrap
   }
   .footer .accent{color:var(--orange)}
-  .allergy-legend{
-    position:absolute;right:4.2%;bottom:3%;z-index:3;
-    font-size:clamp(10px,.82vw,15px);font-weight:800;color:#77837b;white-space:nowrap
-  }
   .footer{max-width:88%;text-align:center;overflow:hidden;text-overflow:ellipsis}
   /* 특별 메뉴 화면 */
   .special{
@@ -309,7 +299,7 @@
 
     <div class="section">
       <h2>3. 메뉴</h2>
-      <div class="mini" style="margin-bottom:8px">알레르기 번호는 쉼표로 입력하세요. 예: 5,6,16 → TV에는 ⑤⑥⑯으로 표시됩니다.</div>
+      <div class="mini" style="margin-bottom:8px">알레르기 정보는 한글로 입력하세요. 예: 대두, 밀</div>
       <div id="menuInputs"></div>
       <button class="btn secondary full" id="addMenuBtn">+ 메뉴 추가</button>
     </div>
@@ -365,7 +355,6 @@
     <div class="stage" id="stage">
       <section class="slide daily active" id="dailySlide">
         <div class="leaf a"></div><div class="leaf b"></div>
-        <img class="tv-mascot" src="assets/images/kkul-face-logo-small.png?v=1" alt="" aria-hidden="true">
         <div class="topline">
           <div class="school-name" id="schoolNameText">청수초등학교</div>
           <div class="date" id="dateText"></div>
@@ -390,7 +379,6 @@
         </div>
 
         <div class="footer" id="nutritionFooter"></div>
-        <div class="allergy-legend">알레르기 번호는 학교 알레르기 표시 기준에 따라 안내됩니다.</div>
       </section>
 
       <section class="slide special" id="specialSlide">
@@ -438,7 +426,7 @@ function menuRow(value='', allergy=''){
   const row = document.createElement('div');
   row.className='menu-row';
   row.innerHTML=`<input type="text" class="menuInput" value="${escapeHtml(value)}" placeholder="메뉴명">
-                 <input type="text" class="allergyInput" value="${escapeHtml(allergy)}" placeholder="예: 5,6">
+                 <input type="text" class="allergyInput" value="${escapeHtml(allergy)}" placeholder="예: 대두, 밀">
                  <button class="icon-btn" title="삭제">×</button>`;
   row.querySelector('.menuInput').addEventListener('input', render);
   row.querySelector('.allergyInput').addEventListener('input', render);
