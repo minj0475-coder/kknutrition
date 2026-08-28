@@ -34,9 +34,9 @@
   button{cursor:pointer}
 
   /* 관리자 화면 */
-  .app{display:grid;grid-template-columns:400px 1fr;min-height:100vh;background:#f4f4f5}
+  .app{display:grid;grid-template-columns:400px 1fr;height:100vh;min-height:100vh;overflow:hidden;background:#f4f4f5}
   .panel{
-    padding:22px 20px 28px;background:#f8f8f8;border-right:1px solid #e5e5e7;overflow:auto;color:#202123
+    height:100vh;padding:22px 20px 28px;background:#f8f8f8;border-right:1px solid #e5e5e7;overflow:auto;color:#202123
   }
   .panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
   .panel-brand{display:flex;align-items:center;min-width:0;gap:11px}
@@ -93,7 +93,7 @@
   .actions{position:sticky;bottom:-1px;padding:13px 0 2px;background:linear-gradient(transparent,#f8f8f8 18%)}
 
   /* 미리보기 영역 */
-  .stage-wrap{display:flex;align-items:center;justify-content:center;padding:24px;min-width:0;background:#f1f1f2}
+  .stage-wrap{display:flex;align-items:center;justify-content:center;height:100vh;padding:24px;min-width:0;background:#f1f1f2}
   .stage{
     width:min(100%, calc((100vh - 44px)*16/9));
     aspect-ratio:16/9;
@@ -267,9 +267,9 @@
   }
   body.tv:hover .tv-hint{opacity:1}
   @media (max-width:900px){
-    .app{grid-template-columns:1fr}
-    .panel{border-right:none;border-bottom:1px solid #e5e5e7}
-    .stage-wrap{padding:12px}
+    .app{grid-template-columns:1fr;height:auto;overflow:visible}
+    .panel{height:auto;overflow:visible;border-right:none;border-bottom:1px solid #e5e5e7}
+    .stage-wrap{height:auto;padding:12px}
   }
 </style>
 </head>
