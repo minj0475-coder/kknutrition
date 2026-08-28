@@ -130,11 +130,9 @@
   .leaf.b{width:19px;height:9px;right:4%;top:20%;transform:rotate(-22deg)}
   .topline{display:flex;justify-content:center;align-items:center;min-height:4.2%;position:relative;z-index:2}
   .school-name{
-    position:absolute;left:0;top:-.2em;display:inline-flex;align-items:center;gap:.5em;
-    padding:.42em .72em;background:rgba(255,255,255,.72);border:1px solid rgba(112,151,97,.14);border-radius:999px;
-    color:#64766c;font-size:clamp(12px,.94vw,17px);font-weight:850;letter-spacing:-.02em;backdrop-filter:blur(8px)
+    position:absolute;left:0;top:.1em;color:#5d7065;font-size:clamp(14px,1.08vw,20px);
+    font-weight:900;letter-spacing:-.025em
   }
-  .school-name:before{content:"";width:.55em;height:.55em;border-radius:50%;background:var(--green2);box-shadow:0 0 0 .28em rgba(140,175,104,.12)}
   .date{
     padding:.24em .68em;text-align:center;color:var(--green);font-size:clamp(17px,1.4vw,26px);font-weight:900;letter-spacing:.005em;
     background:rgba(255,255,255,.58);border-radius:999px
@@ -222,10 +220,10 @@
 
 
   .footer{
-    position:absolute;left:50%;bottom:3%;transform:translateX(-50%);z-index:3;
-    padding:.38em .92em;border:1px solid rgba(112,151,97,.12);border-radius:999px;background:rgba(255,255,255,.84);
-    box-shadow:0 8px 22px rgba(49,93,69,.08);backdrop-filter:blur(10px);
-    font-size:clamp(15px,1.35vw,24px);font-weight:900;color:var(--green);white-space:nowrap
+    position:absolute;left:50%;bottom:2.45%;transform:translateX(-50%);z-index:3;
+    padding:0;background:none;border:0;box-shadow:none;
+    font-size:clamp(14px,1.75vw,32px);font-weight:950;line-height:1.2;color:var(--green);white-space:nowrap;
+    text-shadow:0 2px 0 rgba(255,255,255,.96),0 0 14px rgba(255,255,255,.9)
   }
   .footer .accent{color:var(--orange)}
   .footer{max-width:88%;text-align:center;overflow:hidden;text-overflow:ellipsis}
