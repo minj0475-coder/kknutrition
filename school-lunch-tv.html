@@ -34,48 +34,66 @@
   button{cursor:pointer}
 
   /* 관리자 화면 */
-  .app{display:grid;grid-template-columns:360px 1fr;min-height:100vh}
+  .app{display:grid;grid-template-columns:400px 1fr;min-height:100vh;background:#f4f4f5}
   .panel{
-    padding:22px 20px 28px;background:#fff;border-right:1px solid #e6e9e4;overflow:auto
+    padding:22px 20px 28px;background:#f8f8f8;border-right:1px solid #e5e5e7;overflow:auto;color:#202123
   }
-  .panel h1{font-size:23px;margin:0 0 6px;color:var(--green)}
-  .panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:4px}
-  .panel-head h1{margin:0}
-  .back-link{display:inline-flex;align-items:center;gap:5px;color:var(--green);font-size:12px;font-weight:800;text-decoration:none;white-space:nowrap}
-  .back-link:hover{text-decoration:underline}
-  .panel .sub{font-size:13px;color:#758078;margin-bottom:20px;line-height:1.55}
-  .section{padding:17px 0;border-top:1px solid #edf0ec}
-  .section:first-of-type{border-top:none;padding-top:0}
-  .section h2{font-size:15px;margin:0 0 10px}
-  .field{margin:10px 0}
-  .field label{display:block;font-size:12px;font-weight:700;color:#657067;margin-bottom:6px}
+  .panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+  .panel-brand{display:flex;align-items:center;min-width:0;gap:11px}
+  .panel-brand img{width:44px;height:44px;object-fit:contain;flex:none;filter:drop-shadow(0 5px 10px rgba(32,33,35,.08))}
+  .panel-title-wrap{min-width:0}
+  .panel-kicker{display:block;margin-bottom:2px;color:#8a8a91;font-size:10px;font-weight:800;letter-spacing:.08em}
+  .panel h1{font-size:21px;line-height:1.2;margin:0;color:#202123;letter-spacing:-.035em}
+  .back-link{
+    display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 11px;
+    color:#4f4f55;background:#fff;border:1px solid #dedee2;border-radius:11px;
+    font-size:12px;font-weight:800;text-decoration:none;white-space:nowrap;box-shadow:0 1px 2px rgba(32,33,35,.03)
+  }
+  .back-link:hover{border-color:#b8b8be;background:#f3f3f4;color:#202123}
+  .panel .sub{font-size:12px;color:#71717a;margin:0 2px 17px;line-height:1.6}
+  .section{
+    margin:0 0 12px;padding:16px;background:#fff;border:1px solid #e4e4e7;border-radius:16px;
+    box-shadow:0 1px 3px rgba(32,33,35,.035)
+  }
+  .section h2{font-size:15px;margin:0 0 12px;color:#202123;letter-spacing:-.02em}
+  .field{margin:11px 0}
+  .field label{display:block;font-size:12px;font-weight:800;color:#62626a;margin-bottom:7px}
   input[type="text"],input[type="date"],textarea,select{
-    width:100%;padding:11px 12px;border:1px solid #d9dfd9;border-radius:12px;background:#fff;outline:none
+    width:100%;min-height:44px;padding:11px 12px;border:1px solid #dcdce1;border-radius:11px;
+    background:#fff;color:#202123;outline:none;box-shadow:0 1px 2px rgba(32,33,35,.02)
   }
-  input:focus,textarea:focus,select:focus{border-color:#8caf68;box-shadow:0 0 0 3px rgba(140,175,104,.14)}
+  input:focus,textarea:focus,select:focus{border-color:#8f8f98;box-shadow:0 0 0 3px rgba(32,33,35,.07)}
   textarea{min-height:74px;resize:vertical}
-  .menu-row{display:grid;grid-template-columns:minmax(0,1fr) 92px 34px;gap:7px;margin:7px 0}
-  .icon-btn{border:1px solid #dde4dc;background:#f7f9f6;border-radius:10px}
+  input[type="checkbox"]{accent-color:#202123}
+  .menu-row{display:grid;grid-template-columns:minmax(0,1fr) 105px 38px;gap:7px;margin:8px 0}
+  .icon-btn{border:1px solid #dedee2;background:#fff;color:#606066;border-radius:10px}
+  .icon-btn:hover{background:#f3f3f4;color:#202123}
   .btn{
-    border:none;border-radius:13px;padding:11px 14px;font-weight:800
+    min-height:42px;border:1px solid #dedee2;border-radius:11px;padding:10px 14px;
+    background:#fff;color:#202123;font-weight:850;box-shadow:0 1px 2px rgba(32,33,35,.04)
   }
-  .btn.primary{background:var(--green);color:white}
-  .btn.secondary{background:#eef5ea;color:var(--green)}
-  .btn.orange{background:var(--orange);color:#fff}
+  .btn:hover{border-color:#b8b8be;background:#f3f3f4}
+  .btn.primary{background:#202123;color:#fff;border-color:#202123}
+  .btn.primary:hover{background:#34343a;border-color:#34343a}
+  .btn.secondary{background:#fff;color:#34343a}
+  .btn.orange{background:#fff;color:#202123}
   .btn.full{width:100%;margin-top:8px}
-  .checkline{display:flex;gap:8px;align-items:center;font-size:13px;margin:8px 0}
+  .checkline{display:flex;gap:8px;align-items:center;font-size:13px;font-weight:700;color:#4f4f55;margin:9px 0}
   .upload{
-    border:1.5px dashed #b9c8b7;border-radius:16px;padding:14px;text-align:center;background:#fafcf9
+    border:1px dashed #c9c9cf;border-radius:13px;padding:13px;text-align:center;background:#fafafa
   }
   .upload input{width:100%}
-  .mini{font-size:11px;color:#7f887f;line-height:1.5;margin-top:7px}
-  .menu-source{margin-top:10px;padding:11px 12px;border-radius:12px;background:#f4f8f1;color:#5f7062;font-size:12px;line-height:1.5}
-  .menu-source.ok{background:#edf7e9;color:#315d45}
-  .menu-source.warn{background:#fff6e9;color:#8b5a2b}
-  .actions{position:sticky;bottom:0;padding-top:12px;background:linear-gradient(transparent,#fff 20%)}
+  .upload input::file-selector-button{
+    margin-right:9px;padding:8px 11px;border:1px solid #dedee2;border-radius:9px;background:#fff;color:#34343a;font-weight:800;cursor:pointer
+  }
+  .mini{font-size:11px;color:#85858d;line-height:1.55;margin-top:7px}
+  .menu-source{margin-top:10px;padding:10px 11px;border:1px solid #e5e5e7;border-radius:11px;background:#f7f7f8;color:#62626a;font-size:11px;line-height:1.55}
+  .menu-source.ok{background:#f4f7f4;color:#385543;border-color:#dfe7df}
+  .menu-source.warn{background:#faf7f2;color:#765b3d;border-color:#eee3d5}
+  .actions{position:sticky;bottom:-1px;padding:13px 0 2px;background:linear-gradient(transparent,#f8f8f8 18%)}
 
   /* 미리보기 영역 */
-  .stage-wrap{display:flex;align-items:center;justify-content:center;padding:22px;min-width:0}
+  .stage-wrap{display:flex;align-items:center;justify-content:center;padding:24px;min-width:0;background:#f1f1f2}
   .stage{
     width:min(100%, calc((100vh - 44px)*16/9));
     aspect-ratio:16/9;
@@ -250,7 +268,7 @@
   body.tv:hover .tv-hint{opacity:1}
   @media (max-width:900px){
     .app{grid-template-columns:1fr}
-    .panel{border-right:none;border-bottom:1px solid #e6e9e4}
+    .panel{border-right:none;border-bottom:1px solid #e5e5e7}
     .stage-wrap{padding:12px}
   }
 </style>
@@ -259,7 +277,13 @@
 <div class="app">
   <aside class="panel">
     <div class="panel-head">
-      <h1>오늘의 급식 TV</h1>
+      <div class="panel-brand">
+        <img src="assets/images/kkul-face-logo-small.png?v=1" alt="">
+        <div class="panel-title-wrap">
+          <span class="panel-kicker">급식 업무 포털</span>
+          <h1>급식TV 관리자</h1>
+        </div>
+      </div>
       <a class="back-link" href="index.html#today-menu" aria-label="급식노트로 돌아가기">← 급식노트</a>
     </div>
     <div class="sub">식판사진 1장과 메뉴만 입력하면 55인치 TV용 화면이 자동으로 완성됩니다.</div>
@@ -362,7 +386,7 @@
 
         <div class="main-grid">
           <div class="photo-card" id="photoCard">
-            <div class="photo-label">오늘의 실제 식판</div>
+            <div class="photo-label">오늘의 식판 사진</div>
             <img id="photoPreview" alt="오늘의 식판사진">
             <div class="photo-empty" id="photoEmpty">
               <img class="photo-empty-mascot" src="assets/images/kkul-face-logo-small.png?v=1" alt="">
