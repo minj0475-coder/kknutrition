@@ -451,12 +451,12 @@ function openTvMediaDB(){
     request.onsuccess=()=>resolve(request.result);
   });
 }
-async function readDailyMedia(){
+async function readTvMediaRecord(key){
   try{
     const db=await openTvMediaDB();
     return await new Promise(resolve=>{
       const tx=db.transaction(TV_MEDIA_DB_STORE,'readonly');
-      const request=tx.objectStore(TV_MEDIA_DB_STORE).get('today');
+      const request=tx.objectStore(TV_MEDIA_DB_STORE).get(key);
       request.onsuccess=()=>resolve(request.result||null);
       request.onerror=()=>resolve(null);
       tx.oncomplete=()=>db.close();
@@ -464,17 +464,15 @@ async function readDailyMedia(){
     });
   }catch(e){return null}
 }
-async function writeDailyMedia(date,photo,specialPhoto){
+function readDailyMedia(){return readTvMediaRecord('today')}
+async function writeTvMediaRecord(key,value){
   try{
     const db=await openTvMediaDB();
     await new Promise((resolve,reject)=>{
       const tx=db.transaction(TV_MEDIA_DB_STORE,'readwrite');
       const store=tx.objectStore(TV_MEDIA_DB_STORE);
-      if(date===localDateKey()&&(photo||specialPhoto)){
-        store.put({date,photo:photo||null,specialPhoto:specialPhoto||null,savedAt:Date.now()},'today');
-      }else if(date===localDateKey()||!date){
-        store.delete('today');
-      }
+      if(value==null) store.delete(key);
+      else store.put(value,key);
       tx.oncomplete=()=>resolve();
       tx.onerror=()=>reject(tx.error);
       tx.onabort=()=>reject(tx.error);
@@ -482,6 +480,13 @@ async function writeDailyMedia(date,photo,specialPhoto){
     db.close();
     return true;
   }catch(e){return false}
+}
+async function writeDailyMedia(date,photo,specialPhoto){
+  if(date===localDateKey()&&(photo||specialPhoto)){
+    return writeTvMediaRecord('today',{date,photo:photo||null,specialPhoto:specialPhoto||null,savedAt:Date.now()});
+  }
+  if(date===localDateKey()||!date) return writeTvMediaRecord('today',null);
+  return true;
 }
 
 function menuRow(value='', allergy=''){
@@ -813,17 +818,22 @@ async function save(){
     tag1:$('#tag1').value,
     tag2:$('#tag2').value,
     specialNote:$('#specialNoteInput').value,
-    interval:$('#intervalSelect').value
+    interval:$('#intervalSelect').value,
+    savedAt:Date.now()
   };
+  let localSaved=false;
   try{
     localStorage.setItem(TV_STORAGE_KEY,JSON.stringify(data));
-    state.menuOverrides=menuOverrides;
-    state.savedMenuOrderDate=data.date;
-    state.savedMenuOrder=data.menuOrder;
-  }catch(e){
+    localSaved=true;
+  }catch(e){}
+  const databaseSaved=await writeTvMediaRecord('settings',data);
+  if(!localSaved&&!databaseSaved){
     alert('설정 저장에 실패했습니다. 브라우저 저장공간을 확인한 뒤 다시 시도해 주세요.');
     return;
   }
+  state.menuOverrides=menuOverrides;
+  state.savedMenuOrderDate=data.date;
+  state.savedMenuOrder=data.menuOrder;
   const mediaSaved=await writeDailyMedia(date,state.photo,state.specialPhoto);
   if(!mediaSaved){
     alert('설정은 저장했지만 사진 저장에 실패했습니다. 브라우저 저장공간을 확인해 주세요.');
@@ -832,14 +842,22 @@ async function save(){
   $('#saveBtn').textContent='저장 완료 ✓';
   setTimeout(()=>$('#saveBtn').textContent='저장',1200);
 }
-function load(){
-  $('#dateInput').value=localDateKey();
+function readLocalTvSettings(){
   let data=null;
   try{
     const saved=localStorage.getItem(TV_STORAGE_KEY)||localStorage.getItem(LEGACY_TV_STORAGE_KEY);
     data=JSON.parse(saved||'null');
     if(data&&!localStorage.getItem(TV_STORAGE_KEY)) localStorage.setItem(TV_STORAGE_KEY,JSON.stringify(data));
   }catch(e){}
+  return data;
+}
+function newerTvSettings(localData,databaseData){
+  if(!databaseData) return localData;
+  if(!localData) return databaseData;
+  return Number(databaseData.savedAt||0)>Number(localData.savedAt||0)?databaseData:localData;
+}
+function load(data=null){
+  $('#dateInput').value=localDateKey();
   replaceMenuRows(data?.menus||[]);
 
   if(data){
@@ -849,7 +867,6 @@ function load(){
     if(data.date&&Array.isArray(data.menus)&&!Object.prototype.hasOwnProperty.call(state.menuOverrides,data.date)){
       state.menuOverrides[data.date]=data.menus;
     }
-    if(data.date) $('#dateInput').value=data.date;
     state.savedMenuOrderDate=data.date||'';
     state.savedMenuOrder=Array.isArray(data.menuOrder)?data.menuOrder:[];
     $('#schoolNameInput').value=data.schoolName||'청수초등학교';
@@ -947,7 +964,10 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){document.body.classList.remove('tv');stopSlides();}
 });
 async function initialize(){
-  const savedData=load();
+  const localData=readLocalTvSettings();
+  const databaseData=await readTvMediaRecord('settings');
+  const savedData=newerTvSettings(localData,databaseData);
+  load(savedData);
   await loadDailyMedia(savedData);
   scheduleDailyMediaExpiry();
   await refreshMenuFromSource(false);
