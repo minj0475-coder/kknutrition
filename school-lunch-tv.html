@@ -227,10 +227,6 @@
     padding:8% 8.5%;display:flex;flex-direction:column;justify-content:center;position:relative;
     background:linear-gradient(145deg,#fff 0%,#fbfdf9 72%,#f4f8ef 100%)
   }
-  .special-copy::before{
-    content:"";width:12%;min-width:44px;height:7px;border-radius:999px;margin-bottom:5%;
-    background:linear-gradient(90deg,var(--green),#9aba69);box-shadow:0 4px 12px rgba(46,100,51,.18)
-  }
   .special-name{
     font-size:clamp(30px,4.05cqw,69px);font-weight:950;color:var(--green);
     letter-spacing:-.055em;line-height:1.06;margin-bottom:4.5%;word-break:keep-all;overflow-wrap:anywhere
@@ -243,8 +239,7 @@
   .tag.orange{background:#fff2e8;color:#df6e1d;border-color:#f4af77}
   .special-desc{
     font-size:clamp(16px,1.48cqw,25px);font-weight:740;line-height:1.62;color:#355241;white-space:pre-line;
-    padding:4.5% 5%;border:1px solid #e4ebdf;border-radius:20px;background:rgba(246,249,242,.9);
-    box-shadow:inset 4px 0 0 #c7d9ac;word-break:keep-all;overflow-wrap:anywhere
+    word-break:keep-all;overflow-wrap:anywhere
   }
   .special-media{
     margin:2.4% 2.4% 2.4% 0;border:1px solid #e1e9dc;border-radius:25px;
@@ -261,8 +256,7 @@
   .special-note{
     position:absolute;left:50%;bottom:3.2%;transform:translateX(-50%);max-width:82%;
     color:#a9551d;font-weight:900;font-size:clamp(15px,1.32cqw,23px);white-space:nowrap;
-    padding:.58em 1.45em;border-radius:999px;background:rgba(255,255,255,.9);border:1px solid #efd4c0;
-    box-shadow:0 8px 20px rgba(113,76,46,.1);overflow:hidden;text-overflow:ellipsis
+    overflow:hidden;text-overflow:ellipsis
   }
 
   /* TV 모드 */
