@@ -292,9 +292,10 @@
     .menu-row-actions .icon-btn{width:40px;min-width:40px;min-height:44px}
     .actions{
       position:fixed;left:0;right:0;bottom:0;width:100%;max-width:100vw;z-index:40;display:grid;
-      grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);gap:8px;
-      padding-top:10px;padding-right:max(12px,env(safe-area-inset-right));
-      padding-bottom:max(12px,env(safe-area-inset-bottom));padding-left:max(12px,env(safe-area-inset-left));
+      grid-template-columns:minmax(0,.68fr) minmax(0,1.32fr);gap:8px;
+      padding-top:10px;padding-right:max(22px,calc(env(safe-area-inset-right) + 8px));
+      padding-bottom:max(18px,calc(env(safe-area-inset-bottom) + 4px));
+      padding-left:max(22px,calc(env(safe-area-inset-left) + 8px));
       background:rgba(255,255,255,.96);border-top:1px solid rgba(32,33,35,.1);
       box-shadow:0 -8px 24px rgba(32,33,35,.07);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)
     }
