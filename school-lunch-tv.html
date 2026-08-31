@@ -65,6 +65,7 @@
     background:#fff;color:#374151;font-size:15px;font-weight:650;outline:none;box-shadow:none
   }
   input[type="date"]{display:block;inline-size:100%;min-inline-size:0;max-inline-size:100%}
+  .date-input-clip{width:100%;min-width:0;max-width:100%}
   input:focus,textarea:focus,select:focus{border-color:#202123;box-shadow:0 0 0 3px rgba(32,33,35,.07)}
   textarea{min-height:74px;resize:vertical}
   input[type="checkbox"]{accent-color:#c97878}
@@ -278,13 +279,14 @@
     .field{min-width:0;max-width:100%;margin:9px 0}
     .field label{margin-bottom:6px}
     input[type="text"],input[type="date"],textarea,select{min-height:44px;font-size:16px}
-    .date-field{overflow:hidden;border-radius:11px}
-    .date-field input[type="date"]{
+    .date-field{overflow:visible}
+    .date-input-clip{overflow:hidden;border-radius:12px}
+    .date-input-clip input[type="date"]{
       display:block;width:-webkit-fill-available;inline-size:100%;min-width:0;min-inline-size:0;
       max-width:100%;max-inline-size:100%;-webkit-appearance:none;appearance:none;overflow:hidden
     }
-    .date-field input[type="date"]::-webkit-date-and-time-value{min-width:0;text-align:left}
-    .date-field input[type="date"]::-webkit-calendar-picker-indicator{flex:0 0 auto;margin:0;padding:0}
+    .date-input-clip input[type="date"]::-webkit-date-and-time-value{min-width:0;text-align:left}
+    .date-input-clip input[type="date"]::-webkit-calendar-picker-indicator{flex:0 0 auto;margin:0;padding:0}
     .menu-row{grid-template-columns:minmax(0,1fr) auto;gap:7px;margin:9px 0;padding:8px}
     .menu-row .menuInput{grid-column:1;grid-row:1}
     .menu-row .allergyInput{grid-column:1/-1;grid-row:2}
@@ -340,7 +342,7 @@
       <h2>1. 기본 정보</h2>
       <div class="field date-field">
         <label>날짜</label>
-        <input id="dateInput" type="date">
+        <div class="date-input-clip"><input id="dateInput" type="date"></div>
       </div>
       <div class="field">
         <label>학교명</label>
