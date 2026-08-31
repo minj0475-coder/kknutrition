@@ -211,41 +211,34 @@
   .footer{max-width:88%;text-align:center;overflow:hidden;text-overflow:ellipsis}
   /* 특별 메뉴 화면 */
   .special{
-    height:100%;padding:3.1% 4.5%;
-    background:
-      radial-gradient(circle at 8% 12%,rgba(224,239,207,.78),transparent 28%),
-      radial-gradient(circle at 92% 88%,rgba(255,224,198,.66),transparent 30%),
-      linear-gradient(180deg,#fffefb 0%,#f6f5ee 100%);
+    height:100%;padding:3.5% 4.5%;background:#f7f8f4;
     position:absolute
   }
   .special-card{
-    height:84%;border:1px solid rgba(185,204,180,.72);border-radius:32px;background:#fff;
-    box-shadow:0 18px 45px rgba(48,73,54,.12);display:grid;
-    grid-template-columns:minmax(0,.94fr) minmax(0,1.06fr);overflow:hidden
+    height:100%;border:1px solid #dfe5dc;border-radius:28px;background:#fff;
+    box-shadow:0 12px 30px rgba(48,73,54,.08);display:grid;
+    grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);overflow:hidden
   }
   .special-copy{
-    padding:8% 8.5%;display:flex;flex-direction:column;justify-content:center;position:relative;
-    background:linear-gradient(145deg,#fff 0%,#fbfdf9 72%,#f4f8ef 100%)
+    padding:9%;display:flex;flex-direction:column;justify-content:center;position:relative;background:#fff
   }
   .special-name{
-    font-size:clamp(30px,4.05cqw,69px);font-weight:950;color:var(--green);
+    font-size:clamp(30px,3.85cqw,65px);font-weight:950;color:var(--green);
     letter-spacing:-.055em;line-height:1.06;margin-bottom:4.5%;word-break:keep-all;overflow-wrap:anywhere
   }
   .tags{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:5%}
   .tag{
     padding:.58em 1.05em;border-radius:999px;font-size:clamp(12px,1.12cqw,19px);font-weight:850;
-    background:#eef5e8;color:var(--green);border:1px solid #bad099;box-shadow:0 3px 9px rgba(48,83,52,.06)
+    background:#f1f6ed;color:var(--green);border:1px solid #cbdabd
   }
   .tag.orange{background:#fff2e8;color:#df6e1d;border-color:#f4af77}
   .special-desc{
-    font-size:clamp(16px,1.48cqw,25px);font-weight:740;line-height:1.62;color:#355241;white-space:pre-line;
+    font-size:clamp(16px,1.48cqw,25px);font-weight:680;line-height:1.62;color:#355241;white-space:pre-line;
     word-break:keep-all;overflow-wrap:anywhere
   }
   .special-media{
-    margin:2.4% 2.4% 2.4% 0;border:1px solid #e1e9dc;border-radius:25px;
-    background:radial-gradient(circle at 50% 42%,#fff 0%,#f1f7ea 70%);
-    display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
-    box-shadow:inset 0 0 0 8px rgba(255,255,255,.55)
+    margin:1.8% 1.8% 1.8% 0;border:1px solid #e1e6df;border-radius:22px;background:#f3f5f0;
+    display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden
   }
   .special-media img{width:100%;height:100%;object-fit:cover;display:none}
   .special-media .placeholder{
@@ -254,8 +247,8 @@
     box-shadow:0 16px 35px rgba(67,103,61,.12);border:1px solid rgba(199,216,190,.8)
   }
   .special-note{
-    position:absolute;left:50%;bottom:3.2%;transform:translateX(-50%);max-width:82%;
-    color:#a9551d;font-weight:900;font-size:clamp(15px,1.32cqw,23px);white-space:nowrap;
+    position:absolute;left:9%;right:9%;bottom:8%;max-width:82%;
+    color:#a35a28;font-weight:850;font-size:clamp(15px,1.18cqw,21px);white-space:nowrap;
     overflow:hidden;text-overflow:ellipsis
   }
 
@@ -306,11 +299,11 @@
     .stage .menu-list.dense .menu-item .allergy{font-size:1.15cqw}
     .stage .menu-list.very-dense .menu-item .allergy{font-size:1.02cqw}
     .stage .footer{font-size:1.85cqw}
-    .stage .special-name{font-size:4.05cqw}
+    .stage .special-name{font-size:3.85cqw}
     .stage .tag{font-size:1.12cqw}
     .stage .special-desc{font-size:1.48cqw}
     .stage .special-media .placeholder{font-size:8.4cqw}
-    .stage .special-note{font-size:1.32cqw}
+    .stage .special-note{font-size:1.18cqw}
     .stage-wrap{height:auto;padding:12px 12px calc(87px + env(safe-area-inset-bottom))}
     .stage{border-radius:15px;box-shadow:0 12px 36px rgba(37,60,44,.14)}
   }
@@ -436,13 +429,13 @@
             <div class="special-name" id="specialNameText">특별 메뉴</div>
             <div class="tags" id="tagsBox"></div>
             <div class="special-desc" id="specialDescText">오늘의 특별 메뉴를 소개합니다.</div>
+            <div class="special-note" id="specialNoteText">오늘도 맛있게!</div>
           </div>
           <div class="special-media">
             <img id="specialPhotoPreview" alt="특별 메뉴 사진">
             <div class="placeholder" id="specialPlaceholder">🍽️</div>
           </div>
         </div>
-        <div class="special-note" id="specialNoteText">오늘도 맛있게!</div>
       </section>
       <div class="tv-hint">ESC: 관리자 화면</div>
     </div>
