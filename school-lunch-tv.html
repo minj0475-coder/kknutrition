@@ -779,6 +779,7 @@ function render(){
   });
 
   updateSpecialPhoto();
+  if(!document.body.classList.contains('tv')&&!state.timer) showSlide(useSpecial?1:0);
 }
 function showPhoto(img, empty, data){
   const isMainPhoto=img.id==='photoPreview';
@@ -803,19 +804,21 @@ function updateSpecialPhoto(){
   const data=state.specialPhoto || state.photo;
   showPhoto($('#specialPhotoPreview'),$('#specialPlaceholder'),data);
 }
+function showSlide(index){
+  state.slide=index;
+  $('#dailySlide').classList.toggle('active',index===0);
+  $('#specialSlide').classList.toggle('active',index===1);
+}
 function stopSlides(){
-  clearInterval(state.timer); state.timer=null; state.slide=0;
-  $('#dailySlide').classList.add('active');
-  $('#specialSlide').classList.remove('active');
+  clearInterval(state.timer); state.timer=null;
+  showSlide(0);
 }
 function startSlides(){
   stopSlides();
   if(!$('#specialToggle').checked) return;
   const interval=parseInt($('#intervalSelect').value,10)||8000;
   state.timer=setInterval(()=>{
-    state.slide=1-state.slide;
-    $('#dailySlide').classList.toggle('active',state.slide===0);
-    $('#specialSlide').classList.toggle('active',state.slide===1);
+    showSlide(1-state.slide);
   },interval);
 }
 async function save(){
