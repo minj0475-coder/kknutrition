@@ -102,9 +102,9 @@
   .actions{position:sticky;bottom:-1px;padding:13px 0 2px;background:linear-gradient(transparent,#fff 18%)}
 
   /* 미리보기 영역 */
-  .stage-wrap{display:flex;align-items:center;justify-content:center;height:100vh;padding:24px;min-width:0;background:#f7f7f8}
+  .stage-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;height:100vh;padding:24px;min-width:0;background:#f7f7f8}
   .stage{
-    width:min(100%, calc((100vh - 44px)*16/9));
+    width:min(100%, calc((100vh - 108px)*16/9));
     aspect-ratio:16/9;
     background:var(--bg);
     border-radius:22px;
@@ -118,6 +118,21 @@
     transition:opacity .55s ease, visibility .55s ease
   }
   .slide.active{opacity:1;visibility:visible;pointer-events:auto}
+  .preview-nav{
+    display:grid;grid-template-columns:44px minmax(0,1fr) 44px;align-items:center;gap:8px;
+    width:min(100%,420px);min-height:44px;padding:4px;border:1px solid rgba(32,33,35,.1);
+    border-radius:14px;background:#fff;box-shadow:0 8px 24px rgba(32,33,35,.07)
+  }
+  .preview-nav button{
+    display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;
+    border:0;border-radius:10px;background:transparent;color:#202123
+  }
+  .preview-nav button:hover{background:#f3f4f6}
+  .preview-nav button:active{transform:scale(.96)}
+  .preview-nav button:focus-visible{outline:3px solid rgba(32,33,35,.12);outline-offset:1px}
+  .preview-nav svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+  .preview-page{text-align:center;min-width:0;color:#202123;font-size:14px;font-weight:850;letter-spacing:-.02em}
+  .preview-page-count{margin-left:5px;color:#8b8d93;font-size:12px;font-weight:750;letter-spacing:0}
 
   /* 메인 TV 화면 - 55인치 TV 가독성 최적화 */
   .daily{
@@ -258,8 +273,9 @@
   /* TV 모드 */
   body.tv .app{display:block}
   body.tv .panel{display:none}
-  body.tv .stage-wrap{padding:0;width:100vw;height:100vh;background:#000;display:flex;align-items:center;justify-content:center}
+  body.tv .stage-wrap{padding:0;width:100vw;height:100vh;background:#000;display:flex;align-items:center;justify-content:center;gap:0}
   body.tv .stage{width:min(100vw,calc(100vh * 16 / 9));height:min(100vh,calc(100vw * 9 / 16));aspect-ratio:16/9;border-radius:0;box-shadow:none}
+  body.tv .preview-nav{display:none}
   body.tv{overflow:hidden;background:#000;cursor:none}
   .tv-hint{
     position:absolute;right:14px;bottom:12px;z-index:20;background:rgba(0,0,0,.55);color:#fff;
@@ -320,8 +336,9 @@
     .stage .special-desc{font-size:1.75cqw}
     .stage .special-media .placeholder{font-size:8.4cqw}
     .stage .special-note{font-size:1.35cqw}
-    .stage-wrap{height:auto;margin-top:calc(-70px - env(safe-area-inset-bottom));padding:12px 12px calc(87px + env(safe-area-inset-bottom))}
+    .stage-wrap{height:auto;margin-top:calc(-70px - env(safe-area-inset-bottom));padding:12px 12px calc(87px + env(safe-area-inset-bottom));gap:10px}
     .stage{border-radius:15px;box-shadow:0 12px 36px rgba(32,33,35,.1)}
+    .preview-nav{width:min(100%,360px);min-height:44px}
     body.tv .tv-exit-btn{
       position:fixed;top:max(16px,calc(env(safe-area-inset-top) + 8px));
       left:max(16px,calc(env(safe-area-inset-left) + 8px));z-index:80;
@@ -464,6 +481,11 @@
       </section>
       <div class="tv-hint">ESC: 관리자 화면</div>
     </div>
+    <nav class="preview-nav" aria-label="미리보기 페이지 전환">
+      <button id="previewPrevBtn" type="button" aria-label="이전 미리보기 페이지"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+      <div class="preview-page" aria-live="polite"><span id="previewPageName">오늘의 급식</span><span class="preview-page-count" id="previewPageCount">1 / 2</span></div>
+      <button id="previewNextBtn" type="button" aria-label="다음 미리보기 페이지"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+    </nav>
     <button class="tv-exit-btn" id="tvExitBtn" type="button" aria-label="TV 전체화면을 닫고 관리자 화면으로 돌아가기">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/><path d="M9 12h10"/></svg>관리자로 돌아가기
     </button>
@@ -815,7 +837,7 @@ function render(){
   });
 
   updateSpecialPhoto();
-  if(!document.body.classList.contains('tv')&&!state.timer) showSlide(useSpecial?1:0);
+  if(!document.body.classList.contains('tv')&&!state.timer) showSlide(state.slide);
 }
 function showPhoto(img, empty, data){
   const isMainPhoto=img.id==='photoPreview';
@@ -844,6 +866,12 @@ function showSlide(index){
   state.slide=index;
   $('#dailySlide').classList.toggle('active',index===0);
   $('#specialSlide').classList.toggle('active',index===1);
+  $('#previewPageName').textContent=index===0?'오늘의 급식':'특별메뉴';
+  $('#previewPageCount').textContent=`${index+1} / 2`;
+}
+function turnPreviewPage(direction){
+  if(document.body.classList.contains('tv')) return;
+  showSlide((state.slide+direction+2)%2);
 }
 function stopSlides(){
   clearInterval(state.timer); state.timer=null;
@@ -1017,6 +1045,8 @@ async function exitTvMode(){
 }
 $('#tvBtn').addEventListener('click',enterTvMode);
 $('#tvExitBtn').addEventListener('click',exitTvMode);
+$('#previewPrevBtn').addEventListener('click',()=>turnPreviewPage(-1));
+$('#previewNextBtn').addEventListener('click',()=>turnPreviewPage(1));
 document.addEventListener('fullscreenchange',()=>{
   if(!document.fullscreenElement && document.body.classList.contains('tv')){
     document.body.classList.remove('tv');stopSlides();
