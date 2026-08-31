@@ -832,11 +832,14 @@ $('#specialPhotoInput').addEventListener('change',()=>readFile($('#specialPhotoI
 });
 $('#dateInput').addEventListener('change',()=>applyMenuForSelectedDate(true));
 $('#saveBtn').addEventListener('click',save);
-$('#tvBtn').addEventListener('click',async()=>{
+async function enterTvMode(){
   render();startSlides();document.body.classList.add('tv');
   try{ history.replaceState(null,'','#tv'); }catch(e){}
-  try{ await document.documentElement.requestFullscreen?.(); }catch(e){}
-});
+  if(!document.fullscreenElement){
+    try{ await document.documentElement.requestFullscreen?.(); }catch(e){}
+  }
+}
+$('#tvBtn').addEventListener('click',enterTvMode);
 document.addEventListener('fullscreenchange',()=>{
   if(!document.fullscreenElement && document.body.classList.contains('tv')){
     document.body.classList.remove('tv');stopSlides();
@@ -844,6 +847,11 @@ document.addEventListener('fullscreenchange',()=>{
   }
 });
 document.addEventListener('keydown',e=>{
+  if(e.key==='F5'){
+    e.preventDefault();
+    enterTvMode();
+    return;
+  }
   if(e.key==='Escape'){document.body.classList.remove('tv');stopSlides();}
 });
 async function initialize(){
