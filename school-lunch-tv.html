@@ -265,6 +265,7 @@
     position:absolute;right:14px;bottom:12px;z-index:20;background:rgba(0,0,0,.55);color:#fff;
     padding:7px 10px;border-radius:9px;font-size:12px;opacity:0;transition:.2s;pointer-events:none
   }
+  .tv-exit-btn{display:none}
   body.tv:hover .tv-hint{opacity:1}
   @media (max-width:900px){
     .app{grid-template-columns:1fr;width:100%;max-width:100%;height:auto;overflow:visible}
@@ -321,6 +322,15 @@
     .stage .special-note{font-size:1.35cqw}
     .stage-wrap{height:auto;margin-top:calc(-70px - env(safe-area-inset-bottom));padding:12px 12px calc(87px + env(safe-area-inset-bottom))}
     .stage{border-radius:15px;box-shadow:0 12px 36px rgba(32,33,35,.1)}
+    body.tv .tv-exit-btn{
+      position:fixed;top:max(16px,calc(env(safe-area-inset-top) + 8px));
+      left:max(16px,calc(env(safe-area-inset-left) + 8px));z-index:80;
+      display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:10px 14px;
+      border:1px solid rgba(255,255,255,.22);border-radius:999px;background:rgba(32,33,35,.82);color:#fff;
+      font-size:14px;font-weight:800;line-height:1;box-shadow:0 8px 24px rgba(0,0,0,.2);
+      backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);cursor:pointer
+    }
+    .tv-exit-btn svg{width:20px;height:20px;display:block;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
   }
 </style>
 </head>
@@ -454,6 +464,9 @@
       </section>
       <div class="tv-hint">ESC: 관리자 화면</div>
     </div>
+    <button class="tv-exit-btn" id="tvExitBtn" type="button" aria-label="TV 전체화면을 닫고 관리자 화면으로 돌아가기">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/><path d="M9 12h10"/></svg>관리자로 돌아가기
+    </button>
   </main>
 </div>
 
@@ -994,7 +1007,16 @@ async function enterTvMode(){
     try{ await document.documentElement.requestFullscreen?.(); }catch(e){}
   }
 }
+async function exitTvMode(){
+  document.body.classList.remove('tv');
+  stopSlides();
+  try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){}
+  if(document.fullscreenElement){
+    try{ await document.exitFullscreen?.(); }catch(e){}
+  }
+}
 $('#tvBtn').addEventListener('click',enterTvMode);
+$('#tvExitBtn').addEventListener('click',exitTvMode);
 document.addEventListener('fullscreenchange',()=>{
   if(!document.fullscreenElement && document.body.classList.contains('tv')){
     document.body.classList.remove('tv');stopSlides();
@@ -1007,7 +1029,7 @@ document.addEventListener('keydown',e=>{
     enterTvMode();
     return;
   }
-  if(e.key==='Escape'){document.body.classList.remove('tv');stopSlides();}
+  if(e.key==='Escape') exitTvMode();
 });
 async function initialize(){
   const localData=readLocalTvSettings();
