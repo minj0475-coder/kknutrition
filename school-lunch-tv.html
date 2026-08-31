@@ -65,7 +65,7 @@
     width:100%;min-width:0;max-width:100%;min-height:44px;padding:11px 12px;border:1px solid #ded8d1;border-radius:11px;
     background:#fff;color:#3f3a35;outline:none;box-shadow:0 1px 2px rgba(63,58,53,.02)
   }
-  input[type="date"]{display:block}
+  input[type="date"]{display:block;inline-size:100%;min-inline-size:0;max-inline-size:100%}
   input:focus,textarea:focus,select:focus{border-color:#c97878;box-shadow:0 0 0 3px rgba(201,120,120,.12)}
   textarea{min-height:74px;resize:vertical}
   input[type="checkbox"]{accent-color:#c97878}
@@ -265,18 +265,25 @@
   }
   body.tv:hover .tv-hint{opacity:1}
   @media (max-width:900px){
-    .app{grid-template-columns:1fr;height:auto;overflow:visible}
-    .panel{height:auto;min-height:0;padding:10px 12px calc(78px + env(safe-area-inset-bottom));overflow:visible;border-right:none;border-bottom:1px solid #e8e1d8}
+    .app{grid-template-columns:1fr;width:100%;max-width:100%;height:auto;overflow:visible}
+    .panel{width:100%;min-width:0;max-width:100%;height:auto;min-height:0;padding:10px 12px calc(78px + env(safe-area-inset-bottom));overflow:visible;border-right:none;border-bottom:1px solid #e8e1d8}
     .panel-head{height:48px;margin:0 0 12px -2px}
     .panel-brand{gap:9px}
     .panel-brand img{width:46px;height:46px}
     .panel h1{font-size:20px}
     .back-link{width:38px;height:38px;min-width:38px;border-radius:12px}
-    .section{margin-bottom:10px;padding:14px;border-radius:15px}
+    .section{min-width:0;max-width:100%;margin-bottom:10px;padding:14px;border-radius:15px}
     .section h2{margin-bottom:10px;font-size:15px}
-    .field{margin:9px 0}
+    .field{min-width:0;max-width:100%;margin:9px 0}
     .field label{margin-bottom:6px}
     input[type="text"],input[type="date"],textarea,select{min-height:44px;font-size:16px}
+    .date-field{overflow:hidden;border-radius:11px}
+    .date-field input[type="date"]{
+      display:block;width:-webkit-fill-available;inline-size:100%;min-width:0;min-inline-size:0;
+      max-width:100%;max-inline-size:100%;-webkit-appearance:none;appearance:none;overflow:hidden
+    }
+    .date-field input[type="date"]::-webkit-date-and-time-value{min-width:0;text-align:left}
+    .date-field input[type="date"]::-webkit-calendar-picker-indicator{flex:0 0 auto;margin:0;padding:0}
     .menu-row{grid-template-columns:minmax(0,1fr) auto;gap:7px;margin:9px 0;padding:8px}
     .menu-row .menuInput{grid-column:1;grid-row:1}
     .menu-row .allergyInput{grid-column:1/-1;grid-row:2}
@@ -329,7 +336,7 @@
     </div>
     <div class="section">
       <h2>1. 기본 정보</h2>
-      <div class="field">
+      <div class="field date-field">
         <label>날짜</label>
         <input id="dateInput" type="date">
       </div>
