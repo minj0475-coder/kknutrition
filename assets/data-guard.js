@@ -133,10 +133,28 @@
     }
   }
 
+  function sanitizeBackupValue(key, value) {
+    const textValue = String(value);
+    if (key !== "kkulkkoori_school_lunch_tv_v1") return textValue;
+    try {
+      const parsed = JSON.parse(textValue);
+      if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+        delete parsed.photo;
+        delete parsed.specialPhoto;
+        return JSON.stringify(parsed);
+      }
+    } catch (error) {}
+    return textValue;
+  }
+
   function trimBackups(store, limit) {
     Object.keys(store.keys).forEach((key) => {
       const entries = Array.isArray(store.keys[key]) ? store.keys[key] : [];
-      store.keys[key] = entries.slice(0, limit);
+      store.keys[key] = entries.slice(0, limit).map(entry => (
+        entry && typeof entry === "object"
+          ? { ...entry, value: sanitizeBackupValue(key, entry.value) }
+          : entry
+      ));
       if (store.keys[key].length === 0) delete store.keys[key];
     });
   }
@@ -161,7 +179,7 @@
   function backupValue(key, value, reason) {
     if (!isProtectedKey(key) || value == null || value === "") return false;
 
-    const textValue = String(value);
+    const textValue = sanitizeBackupValue(key, value);
     const store = readBackupStore();
     const entries = Array.isArray(store.keys[key]) ? store.keys[key] : [];
     if (entries[0] && entries[0].value === textValue) return false;

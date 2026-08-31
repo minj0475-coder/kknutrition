@@ -13,7 +13,7 @@
     location.replace('index.html#today-menu');
   }
 </script>
-<script src="assets/data-guard.js?v=20260828_001"></script>
+<script src="assets/data-guard.js?v=20260831_001"></script>
 <script src="assets/allergy.js?v=20260828_002"></script>
 <style>
   :root{
@@ -420,6 +420,7 @@ const menuList = $('#menuList');
 const state = {
   photo:null,
   specialPhoto:null,
+  mediaExpiryTimer:null,
   timer:null,
   slide:0,
   menuSource:[],
@@ -433,6 +434,55 @@ const LEGACY_TV_STORAGE_KEY = 'schoolLunchTV';
 const MENU_STORAGE_KEY = 'cookingMethodUploadedData_v5';
 const MENU_DB_NAME = 'CookingMethodUploadDB';
 const MENU_DB_STORE = 'payload';
+const TV_MEDIA_DB_NAME = 'SchoolLunchTVMediaDB';
+const TV_MEDIA_DB_STORE = 'dailyMedia';
+
+function localDateKey(date=new Date()){
+  return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+}
+function openTvMediaDB(){
+  return new Promise((resolve,reject)=>{
+    if(!window.indexedDB) return reject(new Error('IndexedDB unavailable'));
+    const request=indexedDB.open(TV_MEDIA_DB_NAME,1);
+    request.onerror=()=>reject(request.error);
+    request.onupgradeneeded=()=>{
+      if(!request.result.objectStoreNames.contains(TV_MEDIA_DB_STORE)) request.result.createObjectStore(TV_MEDIA_DB_STORE);
+    };
+    request.onsuccess=()=>resolve(request.result);
+  });
+}
+async function readDailyMedia(){
+  try{
+    const db=await openTvMediaDB();
+    return await new Promise(resolve=>{
+      const tx=db.transaction(TV_MEDIA_DB_STORE,'readonly');
+      const request=tx.objectStore(TV_MEDIA_DB_STORE).get('today');
+      request.onsuccess=()=>resolve(request.result||null);
+      request.onerror=()=>resolve(null);
+      tx.oncomplete=()=>db.close();
+      tx.onabort=()=>db.close();
+    });
+  }catch(e){return null}
+}
+async function writeDailyMedia(date,photo,specialPhoto){
+  try{
+    const db=await openTvMediaDB();
+    await new Promise((resolve,reject)=>{
+      const tx=db.transaction(TV_MEDIA_DB_STORE,'readwrite');
+      const store=tx.objectStore(TV_MEDIA_DB_STORE);
+      if(date===localDateKey()&&(photo||specialPhoto)){
+        store.put({date,photo:photo||null,specialPhoto:specialPhoto||null,savedAt:Date.now()},'today');
+      }else if(date===localDateKey()||!date){
+        store.delete('today');
+      }
+      tx.oncomplete=()=>resolve();
+      tx.onerror=()=>reject(tx.error);
+      tx.onabort=()=>reject(tx.error);
+    });
+    db.close();
+    return true;
+  }catch(e){return false}
+}
 
 function menuRow(value='', allergy=''){
   const row = document.createElement('div');
@@ -588,7 +638,7 @@ function readFile(input, cb){
   r.onload=e=>{
     const img=new Image();
     img.onload=()=>{
-      const maxSide=1800;
+      const maxSide=1600;
       let w=img.naturalWidth, h=img.naturalHeight;
       const scale=Math.min(1, maxSide/Math.max(w,h));
       w=Math.max(1,Math.round(w*scale));
@@ -598,7 +648,7 @@ function readFile(input, cb){
       const ctx=canvas.getContext('2d');
       ctx.drawImage(img,0,0,w,h);
       let out;
-      try{ out=canvas.toDataURL('image/jpeg',.86); }
+      try{ out=canvas.toDataURL('image/jpeg',.82); }
       catch(err){ out=e.target.result; }
       cb(out);
     };
@@ -743,7 +793,7 @@ function startSlides(){
     $('#specialSlide').classList.toggle('active',state.slide===1);
   },interval);
 }
-function save(){
+async function save(){
   const savedMenus=[...document.querySelectorAll('.menu-row')].map(row=>({
     name:row.querySelector('.menuInput').value,
     allergy:row.querySelector('.allergyInput').value
@@ -763,24 +813,27 @@ function save(){
     tag1:$('#tag1').value,
     tag2:$('#tag2').value,
     specialNote:$('#specialNoteInput').value,
-    interval:$('#intervalSelect').value,
-    photo:state.photo,
-    specialPhoto:state.specialPhoto
+    interval:$('#intervalSelect').value
   };
   try{
     localStorage.setItem(TV_STORAGE_KEY,JSON.stringify(data));
     state.menuOverrides=menuOverrides;
     state.savedMenuOrderDate=data.date;
     state.savedMenuOrder=data.menuOrder;
-    $('#saveBtn').textContent='저장 완료 ✓';
-    setTimeout(()=>$('#saveBtn').textContent='저장',1200);
   }catch(e){
-    alert('사진 용량이 너무 커 저장되지 않았습니다. 사진은 화면에는 계속 표시됩니다.');
+    alert('설정 저장에 실패했습니다. 브라우저 저장공간을 확인한 뒤 다시 시도해 주세요.');
+    return;
   }
+  const mediaSaved=await writeDailyMedia(date,state.photo,state.specialPhoto);
+  if(!mediaSaved){
+    alert('설정은 저장했지만 사진 저장에 실패했습니다. 브라우저 저장공간을 확인해 주세요.');
+    return;
+  }
+  $('#saveBtn').textContent='저장 완료 ✓';
+  setTimeout(()=>$('#saveBtn').textContent='저장',1200);
 }
 function load(){
-  const today=new Date();
-  $('#dateInput').value=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+  $('#dateInput').value=localDateKey();
   let data=null;
   try{
     const saved=localStorage.getItem(TV_STORAGE_KEY)||localStorage.getItem(LEGACY_TV_STORAGE_KEY);
@@ -808,11 +861,47 @@ function load(){
     $('#tag2').value=data.tag2||'';
     $('#specialNoteInput').value=data.specialNote||'';
     $('#intervalSelect').value=data.interval||'8000';
-    state.photo=data.photo||null;
-    state.specialPhoto=data.specialPhoto||null;
   }
   showPhoto($('#photoPreview'),$('#photoEmpty'),state.photo);
   render();
+  return data;
+}
+async function loadDailyMedia(legacyData=null){
+  const today=localDateKey();
+  let media=await readDailyMedia();
+  if(media&&media.date!==today){
+    await writeDailyMedia('',null,null);
+    media=null;
+  }
+  if($('#dateInput').value!==today){
+    state.photo=null;
+    state.specialPhoto=null;
+  }else if(media){
+    state.photo=media.photo||null;
+    state.specialPhoto=media.specialPhoto||null;
+  }else if(legacyData?.date===today&&(legacyData.photo||legacyData.specialPhoto)){
+    state.photo=legacyData.photo||null;
+    state.specialPhoto=legacyData.specialPhoto||null;
+    await writeDailyMedia(today,state.photo,state.specialPhoto);
+  }else{
+    state.photo=null;
+    state.specialPhoto=null;
+  }
+  showPhoto($('#photoPreview'),$('#photoEmpty'),state.photo);
+  render();
+}
+function scheduleDailyMediaExpiry(){
+  clearTimeout(state.mediaExpiryTimer);
+  const now=new Date();
+  const tomorrow=new Date(now.getFullYear(),now.getMonth(),now.getDate()+1);
+  state.mediaExpiryTimer=setTimeout(async()=>{
+    state.photo=null;
+    state.specialPhoto=null;
+    await writeDailyMedia('',null,null);
+    showPhoto($('#photoPreview'),$('#photoEmpty'),null);
+    render();
+    scheduleDailyMediaExpiry();
+  },tomorrow.getTime()-now.getTime()+1000);
 }
 $('#addMenuBtn').addEventListener('click',()=>{menuRow('','');render()});
 $('#clearPhotoBtn').addEventListener('click',()=>{
@@ -830,7 +919,10 @@ $('#specialPhotoInput').addEventListener('change',()=>readFile($('#specialPhotoI
 ['dateInput','schoolNameInput','brightToggle','specialToggle','specialName','specialDesc','tag1','tag2','specialNoteInput','intervalSelect'].forEach(id=>{
   $('#'+id).addEventListener(['specialToggle','brightToggle','intervalSelect'].includes(id)?'change':'input',render);
 });
-$('#dateInput').addEventListener('change',()=>applyMenuForSelectedDate(true));
+$('#dateInput').addEventListener('change',async()=>{
+  applyMenuForSelectedDate(true);
+  await loadDailyMedia();
+});
 $('#saveBtn').addEventListener('click',save);
 async function enterTvMode(){
   render();startSlides();document.body.classList.add('tv');
@@ -855,7 +947,9 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){document.body.classList.remove('tv');stopSlides();}
 });
 async function initialize(){
-  load();
+  const savedData=load();
+  await loadDailyMedia(savedData);
+  scheduleDailyMediaExpiry();
   await refreshMenuFromSource(false);
   if(location.hash==='#tv'){
     document.body.classList.add('tv');
