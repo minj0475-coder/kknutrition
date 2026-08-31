@@ -423,6 +423,7 @@ const state = {
   timer:null,
   slide:0,
   menuSource:[],
+  menuOverrides:{},
   savedMenuOrderDate:'',
   savedMenuOrder:[]
 };
@@ -559,6 +560,10 @@ function replaceMenuRows(items){
 }
 function applyMenuForSelectedDate(clearWhenMissing=false){
   const key=$('#dateInput').value;
+  if(Object.prototype.hasOwnProperty.call(state.menuOverrides,key)){
+    replaceMenuRows(state.menuOverrides[key]);
+    return true;
+  }
   const section=state.menuSource.find(item=>item?.key===key);
   if(section?.items?.length){
     replaceMenuRows(applySavedMenuOrder(autoSortMenuItems(section.items),key));
@@ -743,11 +748,14 @@ function save(){
     name:row.querySelector('.menuInput').value,
     allergy:row.querySelector('.allergyInput').value
   }));
+  const date=$('#dateInput').value;
+  const menuOverrides={...state.menuOverrides,[date]:savedMenus};
   const data={
-    date:$('#dateInput').value,
+    date,
     schoolName:$('#schoolNameInput').value,
     bright:$('#brightToggle').checked,
     menus:savedMenus,
+    menuOverrides,
     menuOrder:savedMenus.map(item=>item.name.trim()).filter(Boolean),
     special:$('#specialToggle').checked,
     specialName:$('#specialName').value,
@@ -761,6 +769,7 @@ function save(){
   };
   try{
     localStorage.setItem(TV_STORAGE_KEY,JSON.stringify(data));
+    state.menuOverrides=menuOverrides;
     state.savedMenuOrderDate=data.date;
     state.savedMenuOrder=data.menuOrder;
     $('#saveBtn').textContent='저장 완료 ✓';
@@ -781,6 +790,12 @@ function load(){
   replaceMenuRows(data?.menus||[]);
 
   if(data){
+    if(data.menuOverrides&&typeof data.menuOverrides==='object'&&!Array.isArray(data.menuOverrides)){
+      state.menuOverrides=Object.fromEntries(Object.entries(data.menuOverrides).filter(([,menus])=>Array.isArray(menus)));
+    }
+    if(data.date&&Array.isArray(data.menus)&&!Object.prototype.hasOwnProperty.call(state.menuOverrides,data.date)){
+      state.menuOverrides[data.date]=data.menus;
+    }
     if(data.date) $('#dateInput').value=data.date;
     state.savedMenuOrderDate=data.date||'';
     state.savedMenuOrder=Array.isArray(data.menuOrder)?data.menuOrder:[];
