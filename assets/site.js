@@ -627,7 +627,7 @@ function setupMealCommittee() {
   const yearEl = document.getElementById("mealCommitteeYear");
   const operationEl = document.getElementById("mealCommitteeOperation");
   const tableBody = document.getElementById("mealCommitteeTableBody");
-  const editBtn = document.getElementById("mealCommitteeEditBtn");
+  const editBtn = document.getElementById("mealCommitteeEditSaveBtn");
   const addBtn = document.getElementById("mealCommitteeAddBtn");
   const statusEl = document.getElementById("mealCommitteeStatus");
   if (!card || !yearEl || !operationEl || !tableBody || !editBtn || !addBtn) return;
@@ -731,23 +731,35 @@ function setupMealCommittee() {
     });
   };
 
-  editBtn.addEventListener("click", () => {
-    if (!isEditing) {
-      isEditing = true;
-      draft = readMealCommittee();
-      render(draft);
-      setStatus("위원 명단을 수정한 뒤 저장을 눌러 주세요.");
-      document.getElementById("mealCommitteeYearInput")?.focus({ preventScroll: true });
-      return;
-    }
+  const enterEditMode = () => {
+    if (isEditing) return;
+    isEditing = true;
+    draft = readMealCommittee();
+    render(draft);
+    setStatus("위원 명단을 수정한 뒤 저장을 눌러 주세요.");
+  };
+
+  const saveEditMode = async () => {
+    if (!isEditing) return true;
     try {
       const saved = saveMealCommittee(collectDraft());
       isEditing = false;
       render(saved);
       setStatus("위원 명단을 저장했습니다.");
+      return true;
     } catch(e) {
       setStatus("저장하지 못했습니다. 브라우저 저장 공간을 확인해 주세요.");
+      return false;
     }
+  };
+
+  editBtn.addEventListener("click", async () => {
+    if (typeof window.toggleTodayMenuWritingEditMode === "function") {
+      await window.toggleTodayMenuWritingEditMode();
+      return;
+    }
+    if (!isEditing) enterEditMode();
+    else await saveEditMode();
   });
 
   addBtn.addEventListener("click", () => {
@@ -758,6 +770,8 @@ function setupMealCommittee() {
   });
 
   window.isMealCommitteeEditMode = () => isEditing;
+  window.enterMealCommitteeEditMode = enterEditMode;
+  window.saveMealCommitteeEditMode = saveEditMode;
   window.exitMealCommitteeEditMode = () => {
     isEditing = false;
     render(readMealCommittee());
@@ -1843,15 +1857,20 @@ function setupWorkNotes() {
 }
 
 window.toggleTodayMenuWritingEditMode = async function toggleTodayMenuWritingEditMode() {
+  const committeeEditing = typeof window.isMealCommitteeEditMode === "function" && window.isMealCommitteeEditMode();
   const workEditing = typeof window.isWorkNoteEditMode === "function" && window.isWorkNoteEditMode();
   const templateEditing = typeof window.isMessageTemplateEditMode === "function" && window.isMessageTemplateEditMode();
 
-  if (!workEditing || !templateEditing) {
+  if (!committeeEditing || !workEditing || !templateEditing) {
+    if (typeof window.enterMealCommitteeEditMode === "function") window.enterMealCommitteeEditMode();
     if (typeof window.enterWorkNoteEditMode === "function") window.enterWorkNoteEditMode();
     if (typeof window.enterMessageTemplateEditMode === "function") window.enterMessageTemplateEditMode();
     return;
   }
 
+  const committeeSaved = typeof window.saveMealCommitteeEditMode === "function"
+    ? await window.saveMealCommitteeEditMode()
+    : true;
   const workSaved = typeof window.saveWorkNoteEditMode === "function"
     ? await window.saveWorkNoteEditMode()
     : true;
@@ -1859,18 +1878,20 @@ window.toggleTodayMenuWritingEditMode = async function toggleTodayMenuWritingEdi
     ? await window.saveMessageTemplateEditMode()
     : true;
 
+  if (!committeeSaved && typeof window.enterMealCommitteeEditMode === "function") window.enterMealCommitteeEditMode();
   if (!workSaved && typeof window.enterWorkNoteEditMode === "function") window.enterWorkNoteEditMode();
   if (!templateSaved && typeof window.enterMessageTemplateEditMode === "function") window.enterMessageTemplateEditMode();
 };
 
 function setupTodayMenuWritingFloatObserver() {
   const todayMenu = document.getElementById("today-menu");
+  const mealCommittee = document.getElementById("mealCommittee");
   const workNotes = document.getElementById("workNotes");
   const messageTemplates = document.getElementById("messageTemplates");
-  if (!todayMenu || !workNotes || !messageTemplates) return;
+  if (!todayMenu || !mealCommittee || !workNotes || !messageTemplates) return;
 
   const clear = () => {
-    document.body.classList.remove("today-menu-work-visible", "today-menu-template-visible");
+    document.body.classList.remove("today-menu-committee-visible", "today-menu-work-visible", "today-menu-template-visible");
   };
 
   const isTodayMenuActive = () => todayMenu.classList.contains("active") || location.hash === "#today-menu";
@@ -1893,15 +1914,18 @@ function setupTodayMenuWritingFloatObserver() {
       return;
     }
 
+    const committeeScore = getVisibleScore(mealCommittee);
     const workScore = getVisibleScore(workNotes);
     const templateScore = getVisibleScore(messageTemplates);
     clear();
 
-    if (workScore <= 0 && templateScore <= 0) return;
-    if (templateScore > workScore) {
+    if (committeeScore <= 0 && workScore <= 0 && templateScore <= 0) return;
+    if (templateScore >= workScore && templateScore >= committeeScore) {
       document.body.classList.add("today-menu-template-visible");
-    } else {
+    } else if (workScore >= committeeScore) {
       document.body.classList.add("today-menu-work-visible");
+    } else {
+      document.body.classList.add("today-menu-committee-visible");
     }
   };
 
@@ -1920,6 +1944,7 @@ function setupTodayMenuWritingFloatObserver() {
       root: null,
       threshold: [0, 0.15, 0.35, 0.6]
     });
+    observer.observe(mealCommittee);
     observer.observe(workNotes);
     observer.observe(messageTemplates);
   }
@@ -2939,7 +2964,8 @@ function updateTabs() {
     mobilePageTitle.textContent = MOBILE_PAGE_TITLES[hash.slice(1)] || "";
   }
   document.querySelectorAll('nav a, .drawer-nav a, .sidebar-nav a, .sidebar-subnav a').forEach(link => {
-    if (link.getAttribute('href') === hash) {
+    const activeHash = link.closest('.sidebar-subnav') ? requestedHash : hash;
+    if (link.getAttribute('href') === activeHash) {
       link.classList.add('active');
     } else {
       link.classList.remove('active');
@@ -3000,7 +3026,7 @@ function setupUnsavedNavigationGuard() {
     document.querySelectorAll('.work-note-card.is-editing, .message-template-card.is-editing, .meal-committee-card.is-editing, #staff-notice.is-editing, #vendorNetworkPanel.is-editing, #promoContactPanel.is-editing, #complaints.is-editing').forEach(card => {
       card.classList.remove('is-editing');
     });
-    document.querySelectorAll('#workNoteEditSaveBtn, #messageTemplateEditSaveBtn, #promoContactsEditSaveBtn, #editBtnBookmarks').forEach(btn => {
+    document.querySelectorAll('#mealCommitteeEditSaveBtn, #workNoteEditSaveBtn, #messageTemplateEditSaveBtn, #promoContactsEditSaveBtn, #editBtnBookmarks').forEach(btn => {
       btn.textContent = "수정";
       btn.classList.remove('saving');
     });
@@ -3587,6 +3613,7 @@ function buildSidebarToc() {
       ? [
         { id: "todayMenuCooking", text: "조리방법 조회" },
         { href: "school-lunch-tv.html", text: "급식TV" },
+        { id: "mealCommittee", text: "학교급식소위원회" },
         { id: "workNotes", text: "생각서랍" },
         { id: "messageTemplates", text: "문자내용 정리" }
       ].filter(item => item.href || document.getElementById(item.id))
