@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://minj0475-coder.github.io/kknutrition/assets/og-image.png?v=20260704_001">
 <meta property="og:url" content="https://minj0475-coder.github.io/kknutrition/">
 <title>급식 업무 포털</title>
-<link rel="stylesheet" href="assets/site_v2.css?v=20260828_001">
+<link rel="stylesheet" href="assets/site_v2.css?v=20260902_002">
 <link rel="manifest" href="manifest.json?v=6">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/app-icon-192.png?v=6">
 <link rel="apple-touch-icon" href="assets/app-icon-180.png?v=6">
@@ -866,6 +866,35 @@
     </div>
     <a class="btn meal-tv-launch-btn" href="school-lunch-tv.html?v=20260831_021">급식TV 열기</a>
   </div>
+  <section class="card meal-committee-card" id="mealCommittee">
+    <div class="meal-committee-head">
+      <div>
+        <h2 class="section-title">학교급식소위원회</h2>
+        <p class="meal-committee-year" id="mealCommitteeYear"></p>
+      </div>
+      <button id="mealCommitteeEditBtn" class="promo-btn quiet-edit-toggle" type="button">수정</button>
+    </div>
+    <p class="meal-committee-operation" id="mealCommitteeOperation"></p>
+    <div class="meal-committee-table-wrap">
+      <table class="meal-committee-table" aria-label="학교급식소위원회 명단">
+        <thead>
+          <tr>
+            <th scope="col">구분</th>
+            <th scope="col">위원</th>
+            <th scope="col">학생 정보</th>
+            <th scope="col">연락처</th>
+            <th scope="col">비고</th>
+            <th class="meal-committee-edit-column" scope="col">관리</th>
+          </tr>
+        </thead>
+        <tbody id="mealCommitteeTableBody"></tbody>
+      </table>
+    </div>
+    <div class="meal-committee-actions">
+      <button id="mealCommitteeAddBtn" class="btn light" type="button">위원 추가</button>
+    </div>
+    <p id="mealCommitteeStatus" class="mini meal-committee-status" aria-live="polite"></p>
+  </section>
     <div id="todayMenuTodaySection" class="today-menu-today-section"></div>
     <div id="todayMenuSearchResult" class="today-menu-results" style="display:none;"></div>
     <div id="todayMenuNoResult" class="today-menu-empty" style="display:none;">검색 결과가 없습니다.</div>
@@ -1302,15 +1331,15 @@
 </div>
 
 <script src="assets/auth.js?v=20260710_001" defer></script>
-<script src="assets/data-guard.js?v=20260831_001" defer></script>
+<script src="assets/data-guard.js?v=20260902_001" defer></script>
 <script src="assets/bookmarks.js?v=20260713_004" defer></script>
 <script src="assets/allergy.js?v=20260828_002" defer></script>
-<script src="assets/site.js?v=20260828_002" defer></script>
-<script type="module" src="assets/firebase-init.js?v=20260718_003" defer></script>
+<script src="assets/site.js?v=20260902_001" defer></script>
+<script type="module" src="assets/firebase-init.js?v=20260902_001" defer></script>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('service-worker.js?v=20260831_049');
+      navigator.serviceWorker.register('service-worker.js?v=20260902_002');
     });
   }
 </script>

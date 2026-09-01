@@ -27254,3 +27254,225 @@ html body #app-content #new-substitute .substitute-qr-status {
     text-align: center;
   }
 }
+
+.meal-committee-card {
+  margin-top: 18px;
+}
+
+.meal-committee-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.meal-committee-head .section-title {
+  margin-bottom: 4px;
+}
+
+.meal-committee-year,
+.meal-committee-operation,
+.meal-committee-status {
+  margin: 0;
+}
+
+.meal-committee-year {
+  color: var(--muted, #68736d);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.meal-committee-operation {
+  display: inline-flex;
+  margin-top: 14px;
+  padding: 7px 11px;
+  border: 1px solid rgba(32, 33, 35, 0.09);
+  border-radius: 999px;
+  background: #f7f7f8;
+  color: #4f5551;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.meal-committee-table-wrap {
+  margin-top: 16px;
+  overflow-x: auto;
+  border: 1px solid rgba(32, 33, 35, 0.09);
+  border-radius: 14px;
+}
+
+.meal-committee-table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+.meal-committee-table th,
+.meal-committee-table td {
+  padding: 12px 13px;
+  border-bottom: 1px solid rgba(32, 33, 35, 0.07);
+  text-align: left;
+  vertical-align: middle;
+  line-height: 1.45;
+}
+
+.meal-committee-table th {
+  background: #f7f7f8;
+  color: #555b57;
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.meal-committee-table td {
+  color: #2f3331;
+  font-size: 14px;
+}
+
+.meal-committee-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.meal-committee-phone {
+  color: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.meal-committee-phone:hover,
+.meal-committee-phone:focus-visible {
+  text-decoration: underline;
+}
+
+.meal-committee-input {
+  width: 100%;
+  min-width: 98px;
+  min-height: 40px;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: 1px solid rgba(32, 33, 35, 0.16);
+  border-radius: 9px;
+  background: #fff;
+  color: #202123;
+  font: inherit;
+}
+
+.meal-committee-input:focus {
+  border-color: #9c7772;
+  outline: 3px solid rgba(156, 119, 114, 0.14);
+}
+
+.meal-committee-year .meal-committee-input {
+  max-width: 160px;
+}
+
+.meal-committee-operation:has(.meal-committee-input) {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.meal-committee-operation .meal-committee-input {
+  max-width: 460px;
+}
+
+.meal-committee-edit-column,
+.meal-committee-actions {
+  display: none;
+}
+
+.meal-committee-card.is-editing .meal-committee-edit-column {
+  display: table-cell;
+}
+
+.meal-committee-card.is-editing .meal-committee-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.meal-committee-card.is-editing {
+  border-color: var(--kkn-edit-card-line, rgba(239, 166, 166, 0.86));
+  box-shadow: 0 0 0 2px var(--kkn-edit-card-ring, rgba(239, 166, 166, 0.20)), var(--shadow-flat);
+}
+
+.meal-committee-delete-btn {
+  border: 0;
+  background: transparent;
+  color: #a45b55;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.meal-committee-status {
+  min-height: 20px;
+  margin-top: 10px;
+  color: var(--muted, #68736d);
+}
+
+@media (max-width: 640px) {
+  .meal-committee-head {
+    align-items: center;
+  }
+
+  .meal-committee-table-wrap {
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .meal-committee-table {
+    min-width: 0 !important;
+  }
+
+  .meal-committee-table thead {
+    display: none;
+  }
+
+  .meal-committee-table tbody,
+  .meal-committee-table tr,
+  .meal-committee-table td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .meal-committee-table tr {
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    border: 1px solid rgba(32, 33, 35, 0.09);
+    border-radius: 12px;
+    background: #fff;
+  }
+
+  .meal-committee-table td {
+    display: grid;
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: 9px;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(32, 33, 35, 0.06);
+  }
+
+  .meal-committee-table td::before {
+    content: attr(data-label);
+    color: var(--muted, #68736d);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .meal-committee-table td:last-child {
+    border-bottom: 0;
+  }
+
+  .meal-committee-card.is-editing .meal-committee-edit-column {
+    display: grid;
+  }
+
+  .meal-committee-operation .meal-committee-input,
+  .meal-committee-year .meal-committee-input {
+    max-width: none;
+  }
+}

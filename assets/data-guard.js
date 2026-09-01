@@ -28,6 +28,7 @@
     "kkulkkoori_service_sheet_link",
     "kkulkkoori_work_notes_v1",
     "kkulkkoori_message_templates_v1",
+    "kkulkkoori_meal_committee_v1",
     "kkulkkoori_staff_notices_v1",
     "kkulkkoori_complaint_records_v1",
     "kkulkkoori_complaint_last_school_v1",

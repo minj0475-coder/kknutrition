@@ -558,6 +558,223 @@ function escapeTemplateHtml(value) {
   }[char]));
 }
 
+const MEAL_COMMITTEE_KEY = "kkulkkoori_meal_committee_v1";
+const DEFAULT_MEAL_COMMITTEE = {
+  academicYear: "2026학년도",
+  operationNote: "학교운영위원회와 통합 운영",
+  members: [
+    { role: "학부모위원", name: "김정선", student: "", phone: "010-8735-4872", note: "급식 소위원장" },
+    { role: "학부모위원", name: "류승희", student: "", phone: "010-6306-4693", note: "" },
+    { role: "학부모위원", name: "민지원", student: "5-11", phone: "010-9340-9592", note: "" },
+    { role: "학부모위원", name: "박가영", student: "6-4 이재범", phone: "010-8568-8840", note: "" },
+    { role: "학부모위원", name: "송나영", student: "4-11 양승혁", phone: "010-4922-4585", note: "" },
+    { role: "학부모위원", name: "이성호", student: "2-8 이해선", phone: "010-2313-8683", note: "" },
+    { role: "학부모위원", name: "최연수", student: "유치 손주원", phone: "010-3717-0620", note: "" },
+    { role: "교원위원", name: "최현순 교감", student: "", phone: "", note: "" },
+    { role: "학생위원", name: "조이준", student: "6-1", phone: "", note: "" },
+    { role: "간사", name: "김민정", student: "", phone: "", note: "영양교사" }
+  ]
+};
+
+function normalizeMealCommitteeMember(member = {}) {
+  return {
+    role: String(member.role || "").trim(),
+    name: String(member.name || "").trim(),
+    student: String(member.student || "").trim(),
+    phone: String(member.phone || "").trim(),
+    note: String(member.note || "").trim()
+  };
+}
+
+function cloneDefaultMealCommittee() {
+  return {
+    academicYear: DEFAULT_MEAL_COMMITTEE.academicYear,
+    operationNote: DEFAULT_MEAL_COMMITTEE.operationNote,
+    members: DEFAULT_MEAL_COMMITTEE.members.map(normalizeMealCommitteeMember)
+  };
+}
+
+function normalizeMealCommittee(data) {
+  if (!data || typeof data !== "object") return cloneDefaultMealCommittee();
+  return {
+    academicYear: String(data.academicYear || "").trim() || DEFAULT_MEAL_COMMITTEE.academicYear,
+    operationNote: String(data.operationNote || "").trim(),
+    members: Array.isArray(data.members)
+      ? data.members.map(normalizeMealCommitteeMember)
+      : cloneDefaultMealCommittee().members
+  };
+}
+
+function readMealCommittee() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(MEAL_COMMITTEE_KEY) || "null");
+    if (saved) return normalizeMealCommittee(saved);
+  } catch(e) {}
+  return cloneDefaultMealCommittee();
+}
+
+function saveMealCommittee(data) {
+  const normalized = normalizeMealCommittee(data);
+  const payload = { version: 1, updatedAt: Date.now(), ...normalized };
+  const value = JSON.stringify(payload);
+  localStorage.setItem(MEAL_COMMITTEE_KEY, value);
+  notifyNoteDataChanged(MEAL_COMMITTEE_KEY, value, payload.updatedAt);
+  return payload;
+}
+
+function setupMealCommittee() {
+  const card = document.getElementById("mealCommittee");
+  const yearEl = document.getElementById("mealCommitteeYear");
+  const operationEl = document.getElementById("mealCommitteeOperation");
+  const tableBody = document.getElementById("mealCommitteeTableBody");
+  const editBtn = document.getElementById("mealCommitteeEditBtn");
+  const addBtn = document.getElementById("mealCommitteeAddBtn");
+  const statusEl = document.getElementById("mealCommitteeStatus");
+  if (!card || !yearEl || !operationEl || !tableBody || !editBtn || !addBtn) return;
+
+  let isEditing = false;
+  let draft = readMealCommittee();
+
+  const setStatus = message => {
+    if (statusEl) statusEl.textContent = message || "";
+  };
+  const makeInput = (value, field, label) => {
+    const input = document.createElement("input");
+    input.type = field === "phone" ? "tel" : "text";
+    input.className = "meal-committee-input";
+    input.value = value;
+    input.dataset.field = field;
+    input.setAttribute("aria-label", label);
+    return input;
+  };
+
+  const collectDraft = () => {
+    if (!isEditing) return draft;
+    const members = [...tableBody.querySelectorAll("tr")].map(row => {
+      const member = {};
+      row.querySelectorAll("[data-field]").forEach(input => {
+        member[input.dataset.field] = input.value;
+      });
+      return normalizeMealCommitteeMember(member);
+    }).filter(member => Object.values(member).some(Boolean));
+    draft = normalizeMealCommittee({
+      academicYear: document.getElementById("mealCommitteeYearInput")?.value || "",
+      operationNote: document.getElementById("mealCommitteeOperationInput")?.value || "",
+      members
+    });
+    return draft;
+  };
+
+  const render = data => {
+    draft = normalizeMealCommittee(data);
+    card.classList.toggle("is-editing", isEditing);
+    editBtn.textContent = isEditing ? "저장" : "수정";
+    editBtn.classList.toggle("saving", isEditing);
+
+    yearEl.replaceChildren();
+    if (isEditing) {
+      const input = makeInput(draft.academicYear, "academicYear", "학년도");
+      input.id = "mealCommitteeYearInput";
+      yearEl.appendChild(input);
+    } else {
+      yearEl.textContent = draft.academicYear;
+    }
+
+    operationEl.replaceChildren();
+    if (isEditing) {
+      const input = makeInput(draft.operationNote, "operationNote", "운영 방식");
+      input.id = "mealCommitteeOperationInput";
+      input.placeholder = "운영 방식을 입력하세요";
+      operationEl.appendChild(input);
+    } else {
+      operationEl.textContent = draft.operationNote;
+    }
+
+    tableBody.replaceChildren();
+    draft.members.forEach((member, index) => {
+      const row = document.createElement("tr");
+      row.dataset.index = String(index);
+      ["role", "name", "student", "phone", "note"].forEach(field => {
+        const labels = { role: "구분", name: "위원", student: "학생 정보", phone: "연락처", note: "비고" };
+        const cell = document.createElement("td");
+        cell.dataset.label = labels[field];
+        if (isEditing) {
+          cell.appendChild(makeInput(member[field], field, `${index + 1}번 위원 ${labels[field]}`));
+        } else if (field === "phone" && member.phone) {
+          const link = document.createElement("a");
+          link.className = "meal-committee-phone";
+          link.href = `tel:${member.phone.replace(/\D/g, "")}`;
+          link.textContent = member.phone;
+          cell.appendChild(link);
+        } else {
+          cell.textContent = member[field];
+        }
+        row.appendChild(cell);
+      });
+
+      const actionCell = document.createElement("td");
+      actionCell.className = "meal-committee-edit-column";
+      actionCell.dataset.label = "관리";
+      const deleteBtn = document.createElement("button");
+      deleteBtn.type = "button";
+      deleteBtn.className = "meal-committee-delete-btn";
+      deleteBtn.textContent = "삭제";
+      deleteBtn.setAttribute("aria-label", `${member.name || index + 1} 위원 삭제`);
+      deleteBtn.addEventListener("click", () => {
+        collectDraft();
+        draft.members.splice(index, 1);
+        render(draft);
+      });
+      actionCell.appendChild(deleteBtn);
+      row.appendChild(actionCell);
+      tableBody.appendChild(row);
+    });
+  };
+
+  editBtn.addEventListener("click", () => {
+    if (!isEditing) {
+      isEditing = true;
+      draft = readMealCommittee();
+      render(draft);
+      setStatus("위원 명단을 수정한 뒤 저장을 눌러 주세요.");
+      document.getElementById("mealCommitteeYearInput")?.focus({ preventScroll: true });
+      return;
+    }
+    try {
+      const saved = saveMealCommittee(collectDraft());
+      isEditing = false;
+      render(saved);
+      setStatus("위원 명단을 저장했습니다.");
+    } catch(e) {
+      setStatus("저장하지 못했습니다. 브라우저 저장 공간을 확인해 주세요.");
+    }
+  });
+
+  addBtn.addEventListener("click", () => {
+    collectDraft();
+    draft.members.push(normalizeMealCommitteeMember({ role: "학부모위원" }));
+    render(draft);
+    tableBody.querySelector("tr:last-child [data-field='name']")?.focus({ preventScroll: true });
+  });
+
+  window.isMealCommitteeEditMode = () => isEditing;
+  window.exitMealCommitteeEditMode = () => {
+    isEditing = false;
+    render(readMealCommittee());
+    setStatus("");
+  };
+  window.addEventListener("kknutrition:cloud-data-applied", event => {
+    if (event.detail?.key === MEAL_COMMITTEE_KEY && !isEditing) render(readMealCommittee());
+  });
+  window.addEventListener("storage", event => {
+    if (event.key === MEAL_COMMITTEE_KEY && !isEditing) render(readMealCommittee());
+  });
+
+  render(draft);
+}
+
+document.addEventListener("DOMContentLoaded", setupMealCommittee);
+
 const COMPLAINT_RECORDS_KEY = "kkulkkoori_complaint_records_v1";
 const COMPLAINT_LAST_SCHOOL_KEY = "kkulkkoori_complaint_last_school_v1";
 const COMPLAINT_AUDIENCES = ["전체", "관리자", "행정실", "교직원", "학생", "학부모", "기타"];
@@ -2752,17 +2969,18 @@ function setupUnsavedNavigationGuard() {
 
   const hasEditablePageContent = () => Boolean(document.querySelector('.editable-content[contenteditable="true"]'));
   const hasSectionEditMode = () => Boolean(document.querySelector(
-    '.work-note-card.is-editing, .message-template-card.is-editing, #staff-notice.is-editing, #vendorNetworkPanel.is-editing, #promoContactPanel.is-editing, #complaints.is-editing, #bookmarks .edit-mode-card'
+    '.work-note-card.is-editing, .message-template-card.is-editing, .meal-committee-card.is-editing, #staff-notice.is-editing, #vendorNetworkPanel.is-editing, #promoContactPanel.is-editing, #complaints.is-editing, #bookmarks .edit-mode-card'
   ));
   window.hasUnsavedChanges = () => {
     const bookmarkUnsaved = (typeof window.isBookmarkEditMode === 'function' && window.isBookmarkEditMode());
     const workNoteUnsaved = (typeof window.isWorkNoteEditMode === 'function' && window.isWorkNoteEditMode());
     const messageTemplateUnsaved = (typeof window.isMessageTemplateEditMode === 'function' && window.isMessageTemplateEditMode());
+    const mealCommitteeUnsaved = (typeof window.isMealCommitteeEditMode === 'function' && window.isMealCommitteeEditMode());
     const staffNoticeUnsaved = (typeof window.isStaffNoticeEditMode === 'function' && window.isStaffNoticeEditMode());
     const promoContactsUnsaved = (typeof window.isPromoContactsEditMode === 'function' && window.isPromoContactsEditMode());
     const complaintUnsaved = (typeof window.isComplaintEditMode === 'function' && window.isComplaintEditMode());
     const memoUnsaved = (typeof window.isMemoModalDirty === 'function' && window.isMemoModalDirty());
-    return hasEditablePageContent() || hasSectionEditMode() || bookmarkUnsaved || workNoteUnsaved || messageTemplateUnsaved || staffNoticeUnsaved || promoContactsUnsaved || complaintUnsaved || memoUnsaved;
+    return hasEditablePageContent() || hasSectionEditMode() || bookmarkUnsaved || workNoteUnsaved || messageTemplateUnsaved || mealCommitteeUnsaved || staffNoticeUnsaved || promoContactsUnsaved || complaintUnsaved || memoUnsaved;
   };
 
   window.clearUnsavedEditModes = () => {
@@ -2774,11 +2992,12 @@ function setupUnsavedNavigationGuard() {
     if (typeof window.exitBookmarkEditMode === 'function') window.exitBookmarkEditMode();
     if (typeof window.exitWorkNoteEditMode === 'function') window.exitWorkNoteEditMode();
     if (typeof window.exitMessageTemplateEditMode === 'function') window.exitMessageTemplateEditMode();
+    if (typeof window.exitMealCommitteeEditMode === 'function') window.exitMealCommitteeEditMode();
     if (typeof window.exitStaffNoticeEditMode === 'function') window.exitStaffNoticeEditMode();
     if (typeof window.exitPromoContactsEditMode === 'function') window.exitPromoContactsEditMode();
     if (typeof window.exitComplaintEditMode === 'function') window.exitComplaintEditMode();
     if (typeof window.exitMemoModalEditMode === 'function') window.exitMemoModalEditMode();
-    document.querySelectorAll('.work-note-card.is-editing, .message-template-card.is-editing, #staff-notice.is-editing, #vendorNetworkPanel.is-editing, #promoContactPanel.is-editing, #complaints.is-editing').forEach(card => {
+    document.querySelectorAll('.work-note-card.is-editing, .message-template-card.is-editing, .meal-committee-card.is-editing, #staff-notice.is-editing, #vendorNetworkPanel.is-editing, #promoContactPanel.is-editing, #complaints.is-editing').forEach(card => {
       card.classList.remove('is-editing');
     });
     document.querySelectorAll('#workNoteEditSaveBtn, #messageTemplateEditSaveBtn, #promoContactsEditSaveBtn, #editBtnBookmarks').forEach(btn => {
