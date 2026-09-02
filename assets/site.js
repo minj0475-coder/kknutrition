@@ -1715,7 +1715,7 @@ function setupWorkNotes() {
     if (!workNoteEditMode) {
       workNoteEditMode = true;
       syncWorkNoteEditControls();
-      bodyInput.focus();
+      bodyInput.focus({ preventScroll: true });
       setStatus("\uC218\uC815 \uBAA8\uB4DC\uC785\uB2C8\uB2E4.");
     }
   };
