@@ -27354,11 +27354,19 @@ html body #app-content #today-menu #mealCommittee.is-editing .meal-committee-add
 }
 
 .meal-committee-head .section-title {
-  margin-bottom: 4px;
+  margin: 0;
 }
 
-.meal-committee-card.is-editing .meal-committee-head .section-title {
-  margin-bottom: 12px;
+.meal-committee-title-line {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.meal-committee-card.is-editing .meal-committee-title-line {
+  align-items: center;
 }
 
 .meal-committee-year,
@@ -27615,9 +27623,13 @@ html body #app-content #today-menu :is(.meal-committee-add-btn, .meal-committee-
     display: grid;
   }
 
-  .meal-committee-operation .meal-committee-input,
-  .meal-committee-year .meal-committee-input {
+  .meal-committee-operation .meal-committee-input {
     max-width: none;
+  }
+
+  .meal-committee-title-line .meal-committee-year .meal-committee-input {
+    width: 140px;
+    max-width: 140px;
   }
 }
 
