@@ -27392,6 +27392,8 @@ html body #app-content #today-menu #mealCommittee.is-editing .meal-committee-add
 
 .meal-committee-operation {
   display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
   margin-top: 14px;
   padding: 8px 12px;
   border: 1px solid var(--kkn-box-line, var(--line));
@@ -27400,6 +27402,7 @@ html body #app-content #today-menu #mealCommittee.is-editing .meal-committee-add
   color: var(--kkn-text-muted, var(--muted));
   font-size: 14px;
   line-height: 1.35;
+  box-sizing: border-box;
 }
 
 html body #app-content #today-menu #mealCommittee .meal-committee-table-wrap {
