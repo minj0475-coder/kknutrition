@@ -27334,6 +27334,7 @@ html body #app-content #today-menu.active main.wrap {
 }
 
 .meal-committee-card {
+  --meal-committee-line: rgba(32, 33, 35, 0.07);
   margin-top: 18px;
 }
 
@@ -27346,6 +27347,10 @@ html body #app-content #today-menu.active main.wrap {
 
 .meal-committee-head .section-title {
   margin-bottom: 4px;
+}
+
+.meal-committee-card.is-editing .meal-committee-head .section-title {
+  margin-bottom: 12px;
 }
 
 .meal-committee-year,
@@ -27372,10 +27377,10 @@ html body #app-content #today-menu.active main.wrap {
   line-height: 1.35;
 }
 
-.meal-committee-table-wrap {
+html body #app-content #today-menu #mealCommittee .meal-committee-table-wrap {
   margin-top: 16px;
   overflow-x: auto;
-  border: 1px solid var(--kkn-box-line, var(--line));
+  border: 0.5px solid var(--meal-committee-line) !important;
   border-radius: 14px;
   background: #ffffff;
 }
@@ -27389,11 +27394,11 @@ html body #app-content #today-menu.active main.wrap {
   background: #ffffff;
 }
 
-.meal-committee-table th,
-.meal-committee-table td {
+html body #app-content #today-menu #mealCommittee .meal-committee-table th,
+html body #app-content #today-menu #mealCommittee .meal-committee-table td {
   padding: 12px 14px;
-  border-right: 1px solid var(--kkn-box-line, var(--line));
-  border-bottom: 1px solid var(--kkn-box-line, var(--line));
+  border-right: 0.5px solid var(--meal-committee-line) !important;
+  border-bottom: 0.5px solid var(--meal-committee-line) !important;
   text-align: left;
   vertical-align: middle;
   line-height: 1.45;
@@ -27412,12 +27417,12 @@ html body #app-content #today-menu.active main.wrap {
   font-size: 14px;
 }
 
-.meal-committee-table :is(th, td):last-child {
-  border-right: 0;
+html body #app-content #today-menu #mealCommittee .meal-committee-table :is(th, td):last-child {
+  border-right: 0 !important;
 }
 
-.meal-committee-table tbody tr:last-child td {
-  border-bottom: 0;
+html body #app-content #today-menu #mealCommittee .meal-committee-table tbody tr:last-child td {
+  border-bottom: 0 !important;
 }
 
 .meal-committee-contact {
@@ -27519,13 +27524,13 @@ html body #app-content #today-menu .meal-committee-phone-action {
     align-items: center;
   }
 
-  .meal-committee-table-wrap {
+  html body #app-content #today-menu #mealCommittee .meal-committee-table-wrap {
     overflow: visible;
-    border: 0;
+    border: 0 !important;
     border-radius: 0;
   }
 
-  html body #app-content #today-menu .meal-committee-table {
+  html body #app-content #today-menu #mealCommittee .meal-committee-table {
     width: 100% !important;
     min-width: 0 !important;
   }
@@ -27542,21 +27547,21 @@ html body #app-content #today-menu .meal-committee-phone-action {
     box-sizing: border-box;
   }
 
-  .meal-committee-table tr {
+  html body #app-content #today-menu #mealCommittee .meal-committee-table tr {
     margin-bottom: 10px;
     padding: 9px 13px;
-    border: 1px solid var(--kkn-box-line, var(--line));
+    border: 0.5px solid var(--meal-committee-line) !important;
     border-radius: 14px;
     background: #ffffff;
   }
 
-  .meal-committee-table td {
+  html body #app-content #today-menu #mealCommittee .meal-committee-table td {
     display: grid;
     grid-template-columns: 76px minmax(0, 1fr);
     gap: 9px;
     padding: 7px 0;
-    border-right: 0;
-    border-bottom: 1px solid var(--kkn-box-line, var(--line));
+    border-right: 0 !important;
+    border-bottom: 0.5px solid var(--meal-committee-line) !important;
   }
 
   .meal-committee-table td::before {
@@ -27566,16 +27571,16 @@ html body #app-content #today-menu .meal-committee-phone-action {
     font-weight: 750;
   }
 
-  .meal-committee-table td:last-child {
-    border-bottom: 0;
+  html body #app-content #today-menu #mealCommittee .meal-committee-table td:last-child {
+    border-bottom: 0 !important;
   }
 
   .meal-committee-card:not(.is-editing) .meal-committee-edit-column {
     display: none;
   }
 
-  .meal-committee-card:not(.is-editing) .meal-committee-table td:nth-last-child(2) {
-    border-bottom: 0;
+  html body #app-content #today-menu #mealCommittee:not(.is-editing) .meal-committee-table td:nth-last-child(2) {
+    border-bottom: 0 !important;
   }
 
   .meal-committee-card.is-editing .meal-committee-edit-column {
