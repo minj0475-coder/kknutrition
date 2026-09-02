@@ -27393,9 +27393,11 @@ html body #app-content #today-menu #mealCommittee .meal-committee-table-wrap {
   background: #ffffff;
 }
 
-.meal-committee-table {
+html body #app-content #today-menu #mealCommittee .meal-committee-table {
   width: 100%;
   min-width: 820px;
+  border: 0 !important;
+  border-radius: 0 !important;
   border-collapse: separate;
   border-spacing: 0;
   table-layout: fixed;
