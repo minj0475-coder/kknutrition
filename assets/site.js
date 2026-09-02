@@ -634,6 +634,7 @@ function setupMealCommittee() {
 
   let isEditing = false;
   let draft = readMealCommittee();
+  const mobilePhoneQuery = window.matchMedia("(max-width: 900px)");
 
   const setStatus = message => {
     if (statusEl) statusEl.textContent = message || "";
@@ -701,11 +702,26 @@ function setupMealCommittee() {
         if (isEditing) {
           cell.appendChild(makeInput(member[field], field, `${index + 1}번 위원 ${labels[field]}`));
         } else if (field === "phone" && member.phone) {
-          const link = document.createElement("a");
-          link.className = "meal-committee-phone";
-          link.href = `tel:${member.phone.replace(/\D/g, "")}`;
-          link.textContent = member.phone;
-          cell.appendChild(link);
+          const contact = document.createElement("div");
+          contact.className = "meal-committee-contact";
+
+          const phoneText = document.createElement("span");
+          phoneText.className = "meal-committee-phone-text";
+          phoneText.textContent = member.phone;
+
+          const phoneAction = document.createElement("button");
+          const isMobilePhone = mobilePhoneQuery.matches;
+          phoneAction.type = "button";
+          phoneAction.className = `meal-committee-phone-action copy-icon-btn${isMobilePhone ? " phone-action-btn" : ""}`;
+          phoneAction.setAttribute("aria-label", `${member.name || "위원"} 연락처 ${isMobilePhone ? "전화 걸기" : "복사"}`);
+          phoneAction.title = isMobilePhone ? "전화 걸기" : "복사";
+          phoneAction.addEventListener("click", () => {
+            if (mobilePhoneQuery.matches) openPhoneDialer(member.phone, statusEl);
+            else copyTextValue(member.phone, statusEl);
+          });
+
+          contact.append(phoneText, phoneAction);
+          cell.appendChild(contact);
         } else {
           cell.textContent = member[field];
         }
@@ -783,6 +799,14 @@ function setupMealCommittee() {
   window.addEventListener("storage", event => {
     if (event.key === MEAL_COMMITTEE_KEY && !isEditing) render(readMealCommittee());
   });
+  const handlePhoneModeChange = () => {
+    if (!isEditing) render(draft);
+  };
+  if (typeof mobilePhoneQuery.addEventListener === "function") {
+    mobilePhoneQuery.addEventListener("change", handlePhoneModeChange);
+  } else if (typeof mobilePhoneQuery.addListener === "function") {
+    mobilePhoneQuery.addListener(handlePhoneModeChange);
+  }
 
   render(draft);
 }
@@ -1857,6 +1881,10 @@ function setupWorkNotes() {
 }
 
 window.toggleTodayMenuWritingEditMode = async function toggleTodayMenuWritingEditMode() {
+  const scrollPosition = { x: window.scrollX, y: window.scrollY };
+  const restoreScrollPosition = () => {
+    window.requestAnimationFrame(() => window.scrollTo(scrollPosition.x, scrollPosition.y));
+  };
   const committeeEditing = typeof window.isMealCommitteeEditMode === "function" && window.isMealCommitteeEditMode();
   const workEditing = typeof window.isWorkNoteEditMode === "function" && window.isWorkNoteEditMode();
   const templateEditing = typeof window.isMessageTemplateEditMode === "function" && window.isMessageTemplateEditMode();
@@ -1865,6 +1893,7 @@ window.toggleTodayMenuWritingEditMode = async function toggleTodayMenuWritingEdi
     if (typeof window.enterMealCommitteeEditMode === "function") window.enterMealCommitteeEditMode();
     if (typeof window.enterWorkNoteEditMode === "function") window.enterWorkNoteEditMode();
     if (typeof window.enterMessageTemplateEditMode === "function") window.enterMessageTemplateEditMode();
+    restoreScrollPosition();
     return;
   }
 
@@ -1881,6 +1910,7 @@ window.toggleTodayMenuWritingEditMode = async function toggleTodayMenuWritingEdi
   if (!committeeSaved && typeof window.enterMealCommitteeEditMode === "function") window.enterMealCommitteeEditMode();
   if (!workSaved && typeof window.enterWorkNoteEditMode === "function") window.enterWorkNoteEditMode();
   if (!templateSaved && typeof window.enterMessageTemplateEditMode === "function") window.enterMessageTemplateEditMode();
+  restoreScrollPosition();
 };
 
 function setupTodayMenuWritingFloatObserver() {
