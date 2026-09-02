@@ -733,8 +733,9 @@ function setupMealCommittee() {
       actionCell.dataset.label = "관리";
       const deleteBtn = document.createElement("button");
       deleteBtn.type = "button";
-      deleteBtn.className = "meal-committee-delete-btn";
-      deleteBtn.textContent = "삭제";
+      deleteBtn.className = "icon-only-btn meal-committee-delete-btn";
+      deleteBtn.title = "위원 삭제";
+      deleteBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>';
       deleteBtn.setAttribute("aria-label", `${member.name || index + 1} 위원 삭제`);
       deleteBtn.addEventListener("click", () => {
         collectDraft();
@@ -752,7 +753,7 @@ function setupMealCommittee() {
     isEditing = true;
     draft = readMealCommittee();
     render(draft);
-    setStatus("위원 명단을 수정한 뒤 저장을 눌러 주세요.");
+    setStatus("");
   };
 
   const saveEditMode = async () => {

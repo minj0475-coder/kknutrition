@@ -27345,6 +27345,14 @@ html body #app-content #today-menu.active main.wrap {
   gap: 16px;
 }
 
+html body #app-content #today-menu #mealCommittee:not(.is-editing) .meal-committee-add-btn {
+  display: none !important;
+}
+
+html body #app-content #today-menu #mealCommittee.is-editing .meal-committee-add-btn {
+  display: inline-flex !important;
+}
+
 .meal-committee-head .section-title {
   margin-bottom: 4px;
 }
@@ -27489,8 +27497,7 @@ html body #app-content #today-menu .meal-committee-phone-action {
   max-width: 460px;
 }
 
-.meal-committee-edit-column,
-.meal-committee-actions {
+.meal-committee-edit-column {
   display: none;
 }
 
@@ -27498,19 +27505,38 @@ html body #app-content #today-menu .meal-committee-phone-action {
   display: table-cell;
 }
 
-.meal-committee-card.is-editing .meal-committee-actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 12px;
+.meal-committee-table .meal-committee-edit-column {
+  width: 72px;
+  text-align: center !important;
 }
 
-.meal-committee-delete-btn {
-  border: 0;
-  background: transparent;
-  color: var(--danger, #a45b55);
-  font: inherit;
-  font-weight: 800;
-  cursor: pointer;
+html body #app-content #today-menu :is(.meal-committee-add-btn, .meal-committee-delete-btn) {
+  width: var(--kkn-icon-button-box, 40px) !important;
+  height: var(--kkn-icon-button-box, 40px) !important;
+  min-width: var(--kkn-icon-button-box, 40px) !important;
+  min-height: var(--kkn-icon-button-box, 40px) !important;
+  max-width: var(--kkn-icon-button-box, 40px) !important;
+  max-height: var(--kkn-icon-button-box, 40px) !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  background: transparent !important;
+  color: var(--kkn-icon-color, #202123) !important;
+  box-shadow: none !important;
+}
+
+html body #app-content #today-menu :is(.meal-committee-add-btn, .meal-committee-delete-btn) svg {
+  width: var(--kkn-action-icon-size, 20px) !important;
+  height: var(--kkn-action-icon-size, 20px) !important;
+  min-width: var(--kkn-action-icon-size, 20px) !important;
+  min-height: var(--kkn-action-icon-size, 20px) !important;
+  stroke-width: var(--kkn-icon-stroke-width, 1.8) !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html body #app-content #today-menu :is(.meal-committee-add-btn, .meal-committee-delete-btn):hover {
+    background: var(--kkn-neutral-hover, #f1f1f1) !important;
+  }
 }
 
 .meal-committee-status {
