@@ -859,42 +859,6 @@
     </div>
     </div>
   </div>
-  <div class="card meal-tv-launch-card">
-    <div>
-      <h2 class="section-title">급식TV</h2>
-      <p>조리방법 조회에 업로드한 식단을 날짜별로 자동 불러와 TV 화면을 만들 수 있습니다.</p>
-    </div>
-    <a class="btn meal-tv-launch-btn" href="school-lunch-tv.html?v=20260831_021">급식TV 열기</a>
-  </div>
-  <section class="card meal-committee-card" id="mealCommittee">
-    <div class="meal-committee-head">
-      <div class="meal-committee-title-line">
-        <p class="meal-committee-year" id="mealCommitteeYear"></p>
-        <h2 class="section-title">학교급식소위원회</h2>
-      </div>
-      <button id="mealCommitteeAddBtn" class="icon-only-btn meal-committee-add-btn" type="button" aria-label="위원 추가" title="위원 추가">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
-      </button>
-      <button id="mealCommitteeEditSaveBtn" class="fab-edit-btn promo-btn quiet-edit-toggle" type="button">수정</button>
-    </div>
-    <p class="meal-committee-operation" id="mealCommitteeOperation"></p>
-    <div class="schedule-wrap meal-committee-table-wrap">
-      <table class="simple-table meal-committee-table" aria-label="학교급식소위원회 명단">
-        <thead>
-          <tr>
-            <th scope="col">구분</th>
-            <th scope="col">위원</th>
-            <th scope="col">학생 정보</th>
-            <th scope="col">연락처</th>
-            <th scope="col">비고</th>
-            <th class="meal-committee-edit-column" scope="col">관리</th>
-          </tr>
-        </thead>
-        <tbody id="mealCommitteeTableBody"></tbody>
-      </table>
-    </div>
-    <p id="mealCommitteeStatus" class="mini meal-committee-status" aria-live="polite"></p>
-  </section>
     <div id="todayMenuTodaySection" class="today-menu-today-section"></div>
     <div id="todayMenuSearchResult" class="today-menu-results" style="display:none;"></div>
     <div id="todayMenuNoResult" class="today-menu-empty" style="display:none;">검색 결과가 없습니다.</div>
@@ -909,6 +873,44 @@
     <div id="todayMenuShowAllWrapBottom" class="today-menu-show-all-wrap" style="display:none;">
       <button id="todayMenuShowAllBtnBottom" class="btn today-menu-show-all-btn bottom-btn" type="button">전체 식단 접기</button>
     </div>
+</section>
+
+<div class="card meal-tv-launch-card">
+  <div>
+    <h2 class="section-title">급식TV</h2>
+    <p>조리방법 조회에 업로드한 식단을 날짜별로 자동 불러와 TV 화면을 만들 수 있습니다.</p>
+  </div>
+  <a class="btn meal-tv-launch-btn" href="school-lunch-tv.html?v=20260831_021">급식TV 열기</a>
+</div>
+
+<section class="card meal-committee-card" id="mealCommittee">
+  <div class="meal-committee-head">
+    <div class="meal-committee-title-line">
+      <p class="meal-committee-year" id="mealCommitteeYear"></p>
+      <h2 class="section-title">학교급식소위원회</h2>
+    </div>
+    <button id="mealCommitteeAddBtn" class="icon-only-btn meal-committee-add-btn" type="button" aria-label="위원 추가" title="위원 추가">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+    </button>
+    <button id="mealCommitteeEditSaveBtn" class="fab-edit-btn promo-btn quiet-edit-toggle" type="button">수정</button>
+  </div>
+  <p class="meal-committee-operation" id="mealCommitteeOperation"></p>
+  <div class="schedule-wrap meal-committee-table-wrap">
+    <table class="simple-table meal-committee-table" aria-label="학교급식소위원회 명단">
+      <thead>
+        <tr>
+          <th scope="col">구분</th>
+          <th scope="col">위원</th>
+          <th scope="col">학생 정보</th>
+          <th scope="col">연락처</th>
+          <th scope="col">비고</th>
+          <th class="meal-committee-edit-column" scope="col">관리</th>
+        </tr>
+      </thead>
+      <tbody id="mealCommitteeTableBody"></tbody>
+    </table>
+  </div>
+  <p id="mealCommitteeStatus" class="mini meal-committee-status" aria-live="polite"></p>
 </section>
 
 <section class="card work-note-card" id="workNotes">
@@ -1339,7 +1341,7 @@
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('service-worker.js?v=20260902_014');
+      navigator.serviceWorker.register('service-worker.js?v=20260902_015');
     });
   }
 </script>
