@@ -3643,7 +3643,7 @@ function buildSidebarToc() {
     const headings = getSidebarCustomHeadings(customGroup) || (pageId === "today-menu"
       ? [
         { id: "todayMenuCooking", text: "조리방법 조회" },
-        { href: "school-lunch-tv.html", text: "급식TV" },
+        { href: "school-lunch-tv.html?v=20260831_021", text: "급식TV", newTab: true },
         { id: "mealCommittee", text: "학교급식소위원회" },
         { id: "workNotes", text: "생각서랍" },
         { id: "messageTemplates", text: "문자내용 정리" }
@@ -3675,6 +3675,10 @@ function buildSidebarToc() {
         const a = document.createElement("a");
         a.href = item.href || `#${item.id}`;
         a.textContent = item.text;
+        if (item.newTab) {
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+        }
         sub.appendChild(a);
       });
       group.appendChild(sub);
