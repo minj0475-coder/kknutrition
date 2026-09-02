@@ -27359,14 +27359,10 @@ html body #app-content #today-menu #mealCommittee.is-editing .meal-committee-add
 
 .meal-committee-title-line {
   display: flex;
-  align-items: baseline;
-  gap: 8px;
+  align-items: center;
+  gap: 12px;
   min-width: 0;
   flex-wrap: wrap;
-}
-
-.meal-committee-card.is-editing .meal-committee-title-line {
-  align-items: center;
 }
 
 .meal-committee-year,
@@ -27376,9 +27372,22 @@ html body #app-content #today-menu #mealCommittee.is-editing .meal-committee-add
 }
 
 .meal-committee-year {
-  color: var(--muted, #68736d);
-  font-size: 14px;
-  font-weight: 700;
+  color: var(--kkn-text-heading, #202123);
+  font-size: 16px;
+  font-weight: 750;
+  line-height: 1.25;
+}
+
+.meal-committee-card:not(.is-editing) .meal-committee-year {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 7px 11px;
+  border: 1px solid var(--kkn-box-line, var(--line));
+  border-radius: 10px;
+  background: var(--kkn-neutral-fill, #f7f7f8);
+  box-sizing: border-box;
 }
 
 .meal-committee-operation {
@@ -27494,6 +27503,9 @@ html body #app-content #today-menu .meal-committee-phone-action {
 
 .meal-committee-year .meal-committee-input {
   max-width: 160px;
+  color: var(--kkn-text-heading, #202123);
+  font-size: 16px;
+  font-weight: 750;
 }
 
 .meal-committee-operation:has(.meal-committee-input) {
