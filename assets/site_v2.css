@@ -27394,7 +27394,7 @@ html body #app-content #today-menu #mealCommittee.is-editing .meal-committee-add
   display: inline-flex;
   width: fit-content;
   max-width: 100%;
-  margin-top: 14px;
+  margin-top: 10px;
   padding: 8px 12px;
   border: 1px solid var(--kkn-box-line, var(--line));
   border-radius: 12px;
@@ -27406,7 +27406,7 @@ html body #app-content #today-menu #mealCommittee.is-editing .meal-committee-add
 }
 
 html body #app-content #today-menu #mealCommittee .meal-committee-table-wrap {
-  margin-top: 16px;
+  margin-top: 12px;
   overflow-x: auto;
   border: 0.5px solid var(--meal-committee-line) !important;
   border-radius: 14px;
