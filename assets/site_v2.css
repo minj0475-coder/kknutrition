@@ -27675,3 +27675,73 @@ html body #app-content #today-menu.active {
     border-radius: 15px !important;
   }
 }
+
+/* 2026-09-04 local-search removal: keep each tab's remaining controls compact and balanced. */
+html body #app-content #monthly .academic-calendar-card .academic-toolbar {
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  grid-template-areas: "month actions" !important;
+  gap: 12px !important;
+}
+
+html body #app-content #monthly .academic-calendar-card .academic-toolbar > div:first-child {
+  grid-area: month !important;
+  min-width: 0 !important;
+}
+
+html body #app-content #monthly .academic-calendar-card .academic-actions {
+  grid-area: actions !important;
+  justify-self: end !important;
+}
+
+html body #app-content #bookmarks .bookmark-controls {
+  display: block !important;
+  margin: 0 0 18px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html body #app-content #bookmarks .filter-chips {
+  width: 100% !important;
+  padding: 2px 0 4px !important;
+}
+
+html body #app-content #complaints .complaint-controls {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 14px 16px !important;
+}
+
+html body #app-content #complaints .complaint-filter-row {
+  min-width: 0 !important;
+  margin: 0 !important;
+}
+
+html body #app-content #complaints .complaint-add-btn {
+  width: auto !important;
+  min-width: 94px !important;
+  margin: 0 !important;
+  justify-self: end !important;
+}
+
+@media (max-width: 640px) {
+  html body #app-content #monthly .academic-calendar-card .academic-toolbar {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    grid-template-areas: "month actions" !important;
+    gap: 8px !important;
+  }
+
+  html body #app-content #complaints .complaint-controls {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 10px !important;
+    padding: 12px !important;
+  }
+
+  html body #app-content #complaints .complaint-add-btn {
+    width: 100% !important;
+    justify-self: stretch !important;
+  }
+}

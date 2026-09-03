@@ -888,10 +888,6 @@ function saveComplaintRecords(items, options = {}) {
   }
 }
 
-function getComplaintSearchBlob(item) {
-  return COMPLAINT_FIELDS.map(key => String(item[key] || "")).join(" ").toLowerCase();
-}
-
 function getComplaintCopyText(item) {
   return [
     `[${item.audience || "기타"}] ${item.category || "미분류"}`,
@@ -943,7 +939,6 @@ function setupComplaintRecords() {
   const page = document.getElementById("complaints");
   const list = document.getElementById("complaintList");
   const empty = document.getElementById("complaintEmpty");
-  const searchInput = document.getElementById("complaintSearchInput");
   const filters = document.getElementById("complaintAudienceFilters");
   const addBtn = document.getElementById("complaintAddBtn");
   const editBtn = document.getElementById("editBtnComplaints");
@@ -953,7 +948,7 @@ function setupComplaintRecords() {
   const cancelBtn = document.getElementById("complaintCancelBtn");
   const formStatus = document.getElementById("complaintFormStatus");
   const toast = document.getElementById("complaintToast");
-  if (!page || !list || !empty || !searchInput || !filters || !addBtn || !modal || !form) return;
+  if (!page || !list || !empty || !filters || !addBtn || !modal || !form) return;
 
   const inputs = {
     title: document.getElementById("complaintTitleInput"),
@@ -1055,12 +1050,7 @@ function setupComplaintRecords() {
   };
 
   const getVisibleItems = () => {
-    const query = String(searchInput.value || "").trim().toLowerCase();
-    return sortComplaintRecords(items).filter(item => {
-      const audienceMatch = activeAudience === "전체" || item.audience === activeAudience;
-      const searchMatch = !query || getComplaintSearchBlob(item).includes(query);
-      return audienceMatch && searchMatch;
-    });
+    return sortComplaintRecords(items).filter(item => activeAudience === "전체" || item.audience === activeAudience);
   };
 
   const makeTextNode = (tag, className, text) => {
@@ -1107,7 +1097,7 @@ function setupComplaintRecords() {
       return;
     }
     if (!visible.length) {
-      empty.textContent = "검색 조건에 맞는 기록이 없습니다.";
+      empty.textContent = "선택한 대상에 맞는 기록이 없습니다.";
       empty.hidden = false;
       return;
     }
@@ -1195,7 +1185,6 @@ function setupComplaintRecords() {
       else window.saveComplaintEditMode();
     });
   }
-  searchInput.addEventListener("input", render);
   if (closeBtn) closeBtn.addEventListener("click", closeModal);
   if (cancelBtn) cancelBtn.addEventListener("click", closeModal);
   modal.addEventListener("keydown", event => {
@@ -4430,11 +4419,9 @@ function withUrlProtocol(url) {
 document.addEventListener("DOMContentLoaded", () => {
   const tableBody = document.getElementById("promoContactTableBody");
   const vendorBody = document.getElementById("vendorNetworkTableBody");
-  if (!tableBody && !vendorBody) return;
+  const promoEditBtn = document.getElementById("promoContactsEditSaveBtn");
+  if ((!tableBody && !vendorBody) || !promoEditBtn) return;
 
-  const globalSearchInput = document.getElementById("promoContactsGlobalSearch");
-  const searchInput = document.getElementById("promoContactSearch");
-  const vendorSearchInput = document.getElementById("vendorNetworkSearch");
   const addBtn = document.getElementById("promoAddRowBtn");
   const vendorAddBtn = document.getElementById("vendorNetworkAddRowBtn");
   const vendorCategoryManageBtn = document.getElementById("vendorCategoryManageBtn");
@@ -4455,15 +4442,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const openVendorGroups = new Set();
   let promoEditMode = false;
   let promoDirty = false;
-  const promoEditBtn = document.createElement("button");
-  promoEditBtn.id = "promoContactsEditSaveBtn";
-  promoEditBtn.className = "promo-btn quiet-edit-toggle";
-  promoEditBtn.type = "button";
-  promoEditBtn.textContent = "\uC218\uC815";
-  const promoGlobalSearch = document.querySelector("#promo-contacts .promo-contact-global-search");
-  if (promoGlobalSearch && !document.getElementById("promoContactsEditSaveBtn")) {
-    promoGlobalSearch.appendChild(promoEditBtn);
-  }
 
   function markPromoDirty() {
     promoDirty = true;
@@ -4536,11 +4514,6 @@ document.addEventListener("DOMContentLoaded", () => {
     syncPromoEditControls();
     setPromoStatus("");
   };
-
-  function getPromoContactQuery() {
-    const input = globalSearchInput || searchInput;
-    return input ? input.value.trim().toLowerCase() : "";
-  }
 
   function getVendorGroupLabel(value) {
     const group = String(value || "").trim();
@@ -4671,16 +4644,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function getVendorQuery() {
-    const input = globalSearchInput || vendorSearchInput;
-    return input ? input.value.trim().toLowerCase() : "";
-  }
-
-  function vendorMatchesQuery(row, query) {
-    if (!query) return true;
-    return [row.group, row.company, row.phone, row.email].join(" ").toLowerCase().includes(query);
-  }
-
   function focusNextPromoCell(current) {
     const cells = Array.from(document.querySelectorAll(".promo-contact-table .promo-cell-input"));
     const index = cells.indexOf(current);
@@ -4701,10 +4664,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderVendorNetwork() {
-    const query = getVendorQuery();
-    const filtered = vendorRows
-      .map((row, index) => ({ row, index }))
-      .filter(({ row }) => vendorMatchesQuery(row, query));
+    const filtered = vendorRows.map((row, index) => ({ row, index }));
 
     if (vendorBody) {
       vendorBody.innerHTML = "";
@@ -4728,7 +4688,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    renderVendorNetworkAccordion(filtered, query);
+    renderVendorNetworkAccordion(filtered);
     syncPromoEditControls();
   }
 
@@ -4804,8 +4764,7 @@ document.addEventListener("DOMContentLoaded", () => {
     bindPromoCellKeyboard(root);
   }
 
-  function getPinnedVendorNetwork(filtered, query) {
-    if (query) return [];
+  function getPinnedVendorNetwork(filtered) {
     const usage = readVendorNetworkUsage();
     const ranked = filtered
       .filter(({ row }) => {
@@ -4883,10 +4842,10 @@ document.addEventListener("DOMContentLoaded", () => {
     return details;
   }
 
-  function renderVendorNetworkAccordion(filtered, query) {
+  function renderVendorNetworkAccordion(filtered) {
     if (!vendorAccordion) return;
     vendorAccordion.innerHTML = "";
-    const pinned = getPinnedVendorNetwork(filtered, query);
+    const pinned = getPinnedVendorNetwork(filtered);
     if (pinned.length) {
       const frequentSection = document.createElement("section");
       frequentSection.className = "vendor-frequent-section";
@@ -4906,14 +4865,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!groups.has(label)) groups.set(label, []);
       groups.get(label).push(item);
     });
-    if (query) {
-      groups.forEach((items, label) => {
-        if (items.length) openVendorGroups.add(label);
-      });
-    }
-
     Array.from(groups.entries()).forEach(([label, items]) => {
-      const isOpen = query ? items.length > 0 : openVendorGroups.has(label);
+      const isOpen = openVendorGroups.has(label);
       const section = document.createElement("section");
       section.className = `vendor-accordion-group${isOpen ? " is-open" : ""}`;
       section.dataset.group = label;
@@ -4955,7 +4908,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         const empty = document.createElement("p");
         empty.className = "vendor-accordion-empty";
-        empty.textContent = query ? "검색 결과가 없습니다." : "등록된 업체가 없습니다.";
+        empty.textContent = "등록된 업체가 없습니다.";
         panel.appendChild(empty);
       }
       const addWrap = document.createElement("div");
@@ -4979,13 +4932,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderPromoContacts() {
-    const query = getPromoContactQuery();
-    const filtered = rows
-      .map((row, index) => ({ row, index }))
-      .filter(({ row }) => {
-        if (!query) return true;
-        return [row.company, row.phone, row.link, row.memo].join(" ").toLowerCase().includes(query);
-      });
+    const filtered = rows.map((row, index) => ({ row, index }));
 
     tableBody.innerHTML = "";
     if (emptyState) emptyState.hidden = filtered.length > 0;
@@ -5028,7 +4975,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const field = btn.getAttribute("data-copy-field");
           copyTextValue(rows[index][field], statusEl);
           recordPromoContactUse(rows[index]);
-          renderPromoMobileContacts(filtered, query);
+          renderPromoMobileContacts(filtered);
         });
       });
 
@@ -5043,17 +4990,16 @@ document.addEventListener("DOMContentLoaded", () => {
       if (openLink) {
         openLink.addEventListener("click", () => {
           recordPromoContactUse(rows[index]);
-          renderPromoMobileContacts(filtered, query);
+          renderPromoMobileContacts(filtered);
         });
       }
       tableBody.appendChild(tr);
     });
-    renderPromoMobileContacts(filtered, query);
+    renderPromoMobileContacts(filtered);
     syncPromoEditControls();
   }
 
-  function getPinnedPromoContacts(filtered, query) {
-    if (query) return [];
+  function getPinnedPromoContacts(filtered) {
     const usage = readPromoContactUsage();
     return filtered
       .filter(({ row }) => {
@@ -5070,13 +5016,13 @@ document.addEventListener("DOMContentLoaded", () => {
       .slice(0, 4);
   }
 
-  function renderPromoMobileContacts(filtered, query) {
+  function renderPromoMobileContacts(filtered) {
     if (!promoMobileList) return;
     promoMobileList.innerHTML = "";
     promoMobileList.classList.remove("has-pinned");
     if (!filtered.length) return;
 
-    const pinned = getPinnedPromoContacts(filtered, query);
+    const pinned = getPinnedPromoContacts(filtered);
     promoMobileList.classList.toggle("has-pinned", pinned.length > 0);
     const pinnedIndexes = new Set(pinned.map(item => item.index));
     if (pinned.length) {
@@ -5199,14 +5145,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  if (globalSearchInput) {
-    globalSearchInput.addEventListener("input", () => {
-      renderVendorNetwork();
-      renderPromoContacts();
-    });
-  }
-  if (searchInput) searchInput.addEventListener("input", renderPromoContacts);
-  if (vendorSearchInput) vendorSearchInput.addEventListener("input", renderVendorNetwork);
   if (vendorCategoryManageBtn && vendorCategoryManager) {
     vendorCategoryManageBtn.setAttribute("aria-expanded", "false");
     vendorCategoryManageBtn.addEventListener("click", () => {
@@ -5529,13 +5467,6 @@ function getAcademicEventsForKey(key, userEvents) {
   return events;
 }
 
-function academicMatchesQuery(key, events, query) {
-  if (!query) return true;
-  const dateText = formatAcademicDate(key);
-  const body = events.map(event => [event.title, event.memo, event.url, event.type].join(" ")).join(" ");
-  return `${dateText} ${body}`.toLowerCase().includes(query);
-}
-
 function normalizeAcademicUrl(url) {
   const value = String(url || "").trim();
   if (!value) return "";
@@ -5560,8 +5491,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const prevBtn = document.getElementById("academicPrevMonthBtn");
   const nextBtn = document.getElementById("academicNextMonthBtn");
   const todayBtn = document.getElementById("academicTodayBtn");
-  const searchInput = document.getElementById("academicSearch");
-  if (searchInput) searchInput.placeholder = "";
   const modal = document.getElementById("academicModal");
   const appContent = document.getElementById("app-content");
   if (modal && appContent && modal.parentElement !== appContent) appContent.appendChild(modal);
@@ -5788,8 +5717,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function startAcademicPillDrag(event, pill, academicEvent, key) {
     if (!isAcademicEditMode()) return;
-    const query = (searchInput ? searchInput.value : "").trim();
-    if (query || !academicEvent || academicEvent.source !== "user" || academicEvent.startKey !== key) return;
+    if (!academicEvent || academicEvent.source !== "user" || academicEvent.startKey !== key) return;
     if (getUserAcademicEventsForKey(userEvents, key).length < 2) return;
     academicDragState = {
       key,
@@ -5924,7 +5852,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderCalendar() {
     const dates = getMonthGridDates();
-    const query = (searchInput ? searchInput.value : "").trim().toLowerCase();
     if (monthLabel) monthLabel.textContent = `${state.year}년 ${state.month + 1}월`;
     grid.innerHTML = "";
 
@@ -5937,7 +5864,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const isSelected = key === state.selectedKey;
       const hasHoliday = events.some(event => event.type === "holiday");
       const day = date.getDay();
-      const matches = academicMatchesQuery(key, events, query);
       const button = document.createElement("button");
       button.type = "button";
       button.className = [
@@ -5947,8 +5873,7 @@ document.addEventListener("DOMContentLoaded", () => {
         isSelected ? "is-selected" : "",
         hasHoliday ? "is-holiday" : "",
         day === 0 ? "is-sunday" : "",
-        day === 6 ? "is-saturday" : "",
-        !matches ? "is-filter-dim" : ""
+        day === 6 ? "is-saturday" : ""
       ].filter(Boolean).join(" ");
       button.setAttribute("aria-label", formatAcademicDate(key));
       button.innerHTML = `
@@ -5972,7 +5897,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const pill = document.createElement("span");
         pill.className = `academic-pill ${event.type} ${event.color ? `color-${event.color}` : ""} ${event.done ? "is-done" : ""} ${event.weight === "bold" ? "is-bold" : ""}`;
         pill.textContent = event.title;
-        if (event.source === "user" && event.startKey === key && getUserAcademicEventsForKey(userEvents, key).length > 1 && !query) {
+        if (event.source === "user" && event.startKey === key && getUserAcademicEventsForKey(userEvents, key).length > 1) {
           pill.classList.add("is-sortable");
           pill.setAttribute("data-academic-date", key);
           pill.setAttribute("data-academic-user-index", String(event.userIndex));
@@ -6037,7 +5962,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderWeeklyTable() {
     if (!weekList) return;
-    const query = (searchInput ? searchInput.value : "").trim().toLowerCase();
     const todayKey = makeAcademicKey(new Date());
     weekList.innerHTML = "";
 
@@ -6051,7 +5975,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       visibleWeekDates.forEach(date => {
         const key = makeAcademicKey(date);
-        const events = getAcademicEventsForKey(key, userEvents).filter(event => academicMatchesQuery(key, [event], query));
+        const events = getAcademicEventsForKey(key, userEvents);
         events.forEach(event => weekEvents.push({ key, event }));
       });
 
@@ -6303,7 +6227,6 @@ document.addEventListener("DOMContentLoaded", () => {
       modal.classList.toggle("is-expanded");
     });
   }
-  if (searchInput) searchInput.addEventListener("input", renderAll);
   [grid, weekList].forEach(container => {
     if (!container) return;
     container.addEventListener("mouseover", event => {

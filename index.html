@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://minj0475-coder.github.io/kknutrition/assets/og-image.png?v=20260704_001">
 <meta property="og:url" content="https://minj0475-coder.github.io/kknutrition/">
 <title>급식 업무 포털</title>
-<link rel="stylesheet" href="assets/site_v2.css?v=20260902_015">
+<link rel="stylesheet" href="assets/site_v2.css?v=20260902_016">
 <link rel="manifest" href="manifest.json?v=6">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/app-icon-192.png?v=6">
 <link rel="apple-touch-icon" href="assets/app-icon-180.png?v=6">
@@ -299,10 +299,6 @@
       <button id="academicTodayBtn" class="academic-today-btn" type="button">오늘</button>
       <button id="academicNextMonthBtn" class="academic-nav-btn" type="button" aria-label="다음 달">›</button>
     </div>
-    <label class="academic-search" for="academicSearch">
-      <span>검색</span>
-      <input id="academicSearch" type="search" placeholder="일정, 메모, URL 검색">
-    </label>
   </div>
 
   <div class="academic-layout">
@@ -949,17 +945,9 @@
 
 <section id="complaints" class="page-section">
   <main class="wrap complaint-wrap">
-    <section class="complaint-controls card" aria-label="의견·민원 대응 검색 및 필터">
-      <div class="complaint-control-main-row">
-        <label class="complaint-search" for="complaintSearchInput">
-          <span aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="18" height="18"><path d="m21 21-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          </span>
-          <input id="complaintSearchInput" type="search" placeholder="사례·학교명·대응 문구를 검색하세요" autocomplete="off" aria-label="의견·민원 대응 기록 검색">
-        </label>
-        <button id="complaintAddBtn" class="complaint-add-btn" type="button" aria-label="의견·민원 대응 새 기록 추가">+ 새 기록</button>
-      </div>
+    <section class="complaint-controls card" aria-label="의견·민원 대응 대상별 필터">
       <div id="complaintAudienceFilters" class="complaint-filter-row" aria-label="대상별 필터"></div>
+      <button id="complaintAddBtn" class="complaint-add-btn" type="button" aria-label="의견·민원 대응 새 기록 추가">+ 새 기록</button>
     </section>
 
     <section class="complaint-list-section" aria-label="의견·민원 대응 기록 목록">
@@ -1016,10 +1004,6 @@
   <main class="wrap">
 
     <div class="bookmark-controls">
-      <div class="search-wrap">
-        <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="m21 21-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <input type="text" id="bookmarkSearch" placeholder="북마크 검색하기" autocomplete="off">
-      </div>
       <div class="filter-chips" id="bookmarkFilterChips">
       </div>
     </div>
@@ -1032,16 +1016,6 @@
 
 <section id="promo-contacts" class="page-section">
   <main class="wrap">
-
-    <div class="promo-contact-global-search" role="search">
-      <label class="promo-search promo-contact-master-search">
-        <span aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="18" height="18"><path d="m21 21-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-        </span>
-        <input id="promoContactsGlobalSearch" type="search" placeholder="업체 연락처 검색하기" autocomplete="off">
-      </label>
-    </div>
-
     <section class="card vendor-network-card" id="vendorNetworkPanel">
       <div class="promo-contact-toolbar">
         <div class="promo-contact-title">
@@ -1128,9 +1102,10 @@
           <tbody id="promoContactTableBody"></tbody>
         </table>
       </div>
-      <div id="promoEmptyState" class="promo-empty-state" hidden>검색 결과가 없습니다.</div>
+      <div id="promoEmptyState" class="promo-empty-state" hidden>등록된 홍보업체가 없습니다.</div>
       <p id="promoContactStatus" class="mini promo-contact-status" aria-live="polite"></p>
     </section>
+    <button id="promoContactsEditSaveBtn" class="fab-edit-btn promo-btn quiet-edit-toggle" type="button">수정</button>
   </main>
 </section>
 
@@ -1334,14 +1309,14 @@
 
 <script src="assets/auth.js?v=20260710_001" defer></script>
 <script src="assets/data-guard.js?v=20260902_001" defer></script>
-<script src="assets/bookmarks.js?v=20260713_004" defer></script>
+<script src="assets/bookmarks.js?v=20260713_005" defer></script>
 <script src="assets/allergy.js?v=20260828_002" defer></script>
-<script src="assets/site.js?v=20260902_007" defer></script>
+<script src="assets/site.js?v=20260902_008" defer></script>
 <script type="module" src="assets/firebase-init.js?v=20260902_001" defer></script>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('service-worker.js?v=20260902_019');
+      navigator.serviceWorker.register('service-worker.js?v=20260902_020');
     });
   }
 </script>

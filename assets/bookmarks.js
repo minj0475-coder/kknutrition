@@ -194,7 +194,6 @@ window.hasStoredBookmarkData = function() {
 
 // ---- State ----
 var currentCategory = '\uC804\uCCB4';
-var currentSearch = '';
 var isEditMode = false;
 var editingIdx = -1;
 
@@ -394,11 +393,6 @@ function renderBookmarks() {
     filtered = filtered.filter(function(item) { return item.category === currentCategory; });
     filtered.sort(sortFn);
   }
-  if (currentSearch.trim()) {
-    var q = currentSearch.toLowerCase();
-    filtered = filtered.filter(function(item) { return item.title.toLowerCase().indexOf(q) !== -1; });
-  }
-
   var html = '';
   if (filtered.length === 0 && !isEditMode) {
     html = '<div class="empty-bookmark">\uC870\uAC74\uC5D0 \uB9DE\uB294 \uBD81\uB9C8\uD06C\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.</div>';
@@ -494,14 +488,6 @@ window.bmToggleFavorite = function(idx) {
 document.addEventListener('DOMContentLoaded', function() {
   renderFilterChips();
   renderBookmarks();
-
-  var searchInput = document.getElementById('bookmarkSearch');
-  if (searchInput) {
-    searchInput.addEventListener('input', function(e) {
-      currentSearch = e.target.value;
-      renderBookmarks();
-    });
-  }
 
   var editBtn = document.getElementById('editBtnBookmarks');
   if (editBtn) {
