@@ -27223,42 +27223,6 @@ html body #app-content #new-substitute .substitute-qr-status {
     min-height: 46px !important;
   }
 }
-/* 급식노트에서 독립형 급식TV 화면으로 이동하는 간결한 실행 카드 */
-.meal-tv-launch-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  margin-top: 18px;
-}
-
-.meal-tv-launch-card .section-title {
-  margin-bottom: 6px;
-}
-
-.meal-tv-launch-card p {
-  margin: 0;
-  color: var(--muted, #68736d);
-  line-height: 1.55;
-}
-
-.meal-tv-launch-btn {
-  flex: 0 0 auto;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-@media (max-width: 640px) {
-  .meal-tv-launch-card {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .meal-tv-launch-btn {
-    text-align: center;
-  }
-}
-
 /* The meal-note sections share one edit state; show only the button for the current section. */
 html body #app-content #today-menu:not(.active) #mealCommitteeEditSaveBtn,
 html body:has(#workNotes:target) #app-content #today-menu.active #mealCommitteeEditSaveBtn,
@@ -27646,6 +27610,24 @@ html body #app-content #today-menu :is(.meal-committee-add-btn, .meal-committee-
     width: 140px;
     max-width: 140px;
   }
+}
+
+/* 2026-09-04 academic edit state: show the pink edit line only when both edit signals agree. */
+html body #app-content #monthly:not(.is-page-editing) > main.wrap > .card,
+html body #app-content #monthly:not(:has(#editBtnMonthly.saving)) > main.wrap > .card {
+  outline: 0 !important;
+  outline-offset: 0 !important;
+  border: 1px solid var(--kkn-unified-line, #e5e7eb) !important;
+  box-shadow: var(--shadow-flat) !important;
+  background-color: #ffffff !important;
+}
+
+html body #app-content #monthly.is-page-editing:has(#editBtnMonthly.saving) > main.wrap > .card {
+  outline: 0 !important;
+  outline-offset: 0 !important;
+  border: 1px solid var(--kkn-edit-card-line) !important;
+  box-shadow: 0 0 0 2px var(--kkn-edit-card-ring), var(--shadow-flat) !important;
+  background-color: #ffffff !important;
 }
 
 html body #app-content #today-menu.active #workNoteEditSaveBtn#workNoteEditSaveBtn#workNoteEditSaveBtn#workNoteEditSaveBtn#workNoteEditSaveBtn#workNoteEditSaveBtn,
