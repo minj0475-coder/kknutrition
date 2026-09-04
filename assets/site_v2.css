@@ -27599,6 +27599,15 @@ html body #app-content #today-menu :is(.meal-committee-add-btn, .meal-committee-
 
   .meal-committee-card.is-editing .meal-committee-edit-column {
     display: grid;
+    width: 100% !important;
+    grid-template-columns: 76px minmax(0, 1fr) !important;
+    align-items: center;
+    text-align: left !important;
+  }
+
+  .meal-committee-card.is-editing .meal-committee-delete-btn {
+    justify-self: end;
+    margin: 0 !important;
   }
 
   .meal-committee-operation .meal-committee-input {
