@@ -27674,6 +27674,28 @@ html body #app-content #monthly .academic-calendar-card .academic-actions {
   justify-self: end !important;
 }
 
+@media (min-width: 381px) {
+  html body #app-content #monthly .academic-calendar-card .academic-toolbar {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: start !important;
+    gap: 12px !important;
+  }
+
+  html body #app-content #monthly .academic-calendar-card .academic-toolbar > div:first-child,
+  html body #app-content #monthly .academic-calendar-card .academic-month-label {
+    width: auto !important;
+    flex: 0 0 auto !important;
+  }
+
+  html body #app-content #monthly .academic-calendar-card .academic-actions {
+    justify-self: start !important;
+    flex: 0 0 auto !important;
+  }
+}
+
 html body #app-content #bookmarks .bookmark-controls {
   display: block !important;
   margin: 0 0 18px !important;
