@@ -2411,9 +2411,9 @@ async function saveUploadedMenuData(data, fileName) {
   return methods;
 }
 
-async function loadSavedMenuData() {
+async function loadSavedMenuData(onLocalReady) {
+  const remotePromise = loadRemoteMenuData();
   let obj = null;
-  obj = chooseNewestMenuPayload(obj, await loadRemoteMenuData());
   try {
     obj = chooseNewestMenuPayload(obj, parseMenuPayload(localStorage.getItem(MENU_STORAGE_KEY)));
     for (const key of MENU_LEGACY_STORAGE_KEYS) {
@@ -2423,7 +2423,9 @@ async function loadSavedMenuData() {
   try { obj = chooseNewestMenuPayload(obj, parseMenuPayload(await loadMenuFromIndexedDB())); } catch (error) { console.warn("IndexedDB load failed", error); }
   try { obj = chooseNewestMenuPayload(obj, parseMenuPayload(sessionStorage.getItem(MENU_STORAGE_KEY))); } catch (error) { console.warn("sessionStorage load failed", error); }
   try { obj = chooseNewestMenuPayload(obj, parseMenuPayload(window.name)); } catch (error) { console.warn("window.name load failed", error); }
-  return obj;
+  if (obj && typeof onLocalReady === "function") onLocalReady(obj);
+  // Preserve the existing timestamp policy, including remote precedence on ties.
+  return chooseNewestMenuPayload(await remotePromise, obj);
 }
 
 function formatMenuDateVariants(dateText) {
@@ -2752,7 +2754,7 @@ async function setupTodayMenu() {
 
   const status = document.getElementById("todayMenuStatus");
   if (status) status.textContent = "저장된 업로드 자료 확인 중...";
-  const saved = await loadSavedMenuData();
+  const saved = await loadSavedMenuData(local => renderHomeTodayMenu(local.data));
   if (saved) {
     currentMenuFileName = saved.fileName || "";
     renderTodayMenuV2(saved.data);
@@ -6261,6 +6263,9 @@ function initHomeHeroKkulMotion() {
   const period = 6400;
   const lift = 7;
   let frameId = 0;
+  let isVisible = false;
+  let scale = 1;
+  let isCompact = false;
 
   function readScale() {
     const style = getComputedStyle(image);
@@ -6271,11 +6276,11 @@ function initHomeHeroKkulMotion() {
   }
 
   function tick(now) {
-    const isCompact = window.innerWidth <= 620;
+    frameId = 0;
+    if (!isVisible || document.hidden || (reduceMotion && reduceMotion.matches)) return;
     const x = isCompact ? "-50%" : "0px";
     const phase = (1 - Math.cos((now % period) / period * Math.PI * 2)) / 2;
     const y = (isCompact ? 4 : 18) - phase * lift;
-    const scale = isCompact ? 1.34 : readScale();
     const shadowScaleX = 0.9 + phase * 0.22;
     const shadowScaleY = 0.82 + phase * 0.16;
     const shadowOpacity = 0.2 + phase * 0.12;
@@ -6286,10 +6291,33 @@ function initHomeHeroKkulMotion() {
     frameId = window.requestAnimationFrame(tick);
   }
 
-  frameId = window.requestAnimationFrame(tick);
+  function updateMotion() {
+    if (frameId) window.cancelAnimationFrame(frameId);
+    frameId = 0;
+    if (!isVisible || document.hidden || (reduceMotion && reduceMotion.matches)) return;
+    isCompact = window.innerWidth <= 620;
+    scale = isCompact ? 1.34 : readScale();
+    frameId = window.requestAnimationFrame(tick);
+  }
+
+  if (typeof IntersectionObserver !== "undefined") {
+    const observer = new IntersectionObserver(entries => {
+      isVisible = entries[0].isIntersecting;
+      updateMotion();
+    });
+    observer.observe(hero);
+  } else {
+    isVisible = true;
+    updateMotion();
+  }
+  document.addEventListener("visibilitychange", updateMotion);
+  window.addEventListener("resize", updateMotion, { passive: true });
+  window.addEventListener("pageshow", updateMotion);
+  if (reduceMotion && reduceMotion.addEventListener) reduceMotion.addEventListener("change", updateMotion);
   window.addEventListener("pagehide", () => {
     if (frameId) window.cancelAnimationFrame(frameId);
-  }, { once: true });
+    frameId = 0;
+  });
 }
 
 function normalizeVendorGroups(groups) {
