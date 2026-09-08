@@ -3625,7 +3625,7 @@ function buildSidebarToc() {
     const headings = getSidebarCustomHeadings(customGroup) || (pageId === "today-menu"
       ? [
         { id: "todayMenuCooking", text: "조리방법 조회" },
-        { href: "school-lunch-tv.html?v=20260908_031", text: "급식TV", newTab: true },
+        { href: "school-lunch-tv.html?v=20260909_002", text: "급식TV", newTab: true },
         { id: "mealCommittee", text: "학교급식소위원회" },
         { id: "workNotes", text: "생각서랍" },
         { id: "messageTemplates", text: "문자내용 정리" }
