@@ -233,14 +233,13 @@
     position:absolute
   }
   .special-card{
-    height:100%;border:1px solid rgba(32,33,35,.1);border-radius:28px;background:#fff;
-    box-shadow:0 12px 30px rgba(32,33,35,.07);display:grid;
-    grid-template-columns:minmax(0,1fr);overflow:hidden
+    height:100%;border:0;border-radius:0;background:transparent;box-shadow:none;display:grid;
+    grid-template-columns:minmax(0,1fr);overflow:visible
   }
   .special-card.has-media{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}
   .special-card:not(.has-media) .special-copy{width:min(100%,1100px);justify-self:center;padding:7% 9%}
   .special-copy{
-    padding:9%;display:flex;flex-direction:column;justify-content:center;position:relative;background:#fff
+    padding:9%;display:flex;flex-direction:column;justify-content:center;position:relative;background:transparent
   }
   .special-name{
     font-size:clamp(32px,4.1cqw,70px);font-weight:950;color:var(--green);
