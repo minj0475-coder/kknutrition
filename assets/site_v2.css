@@ -24954,7 +24954,15 @@ html body #app-content #home.page-section > main.wrap > .home-grid {
 
 @media (max-width: 900px) {
   html body #app-content #home.page-section > main.wrap > .home-grid {
-    margin-top: clamp(48px, 7vw, 64px) !important;
+    margin-top: 0 !important;
+  }
+
+  html body #app-content #home.page-section > main.wrap {
+    gap: 20px !important;
+  }
+
+  html body #app-content #home.page-section > main.wrap > .home-search-hero.hero {
+    padding-bottom: 18px !important;
   }
 }
 
