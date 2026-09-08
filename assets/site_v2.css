@@ -27901,3 +27901,26 @@ html body #app-content #complaints .complaint-add-btn {
     justify-content: flex-end !important;
   }
 }
+
+/* 2026-09-09 home spacing: align the first dashboard card with the portal's card rhythm. */
+html body #app-content #home.page-section > main.wrap {
+  gap: clamp(16px, 2.4vw, 28px) !important;
+}
+
+html body #app-content #home.page-section > main.wrap > .home-grid {
+  margin-top: 0 !important;
+}
+
+html body #app-content #home.page-section > main.wrap > .home-search-hero.hero {
+  padding-bottom: clamp(24px, 3.2vw, 36px) !important;
+}
+
+@media (max-width: 900px) {
+  html body #app-content #home.page-section > main.wrap {
+    gap: 14px !important;
+  }
+
+  html body #app-content #home.page-section > main.wrap > .home-search-hero.hero {
+    padding-bottom: 0 !important;
+  }
+}
