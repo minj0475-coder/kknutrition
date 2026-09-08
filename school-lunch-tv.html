@@ -216,6 +216,15 @@
 
   .menu-list.dense .menu-item{font-size:clamp(20px,1.9cqw,35px);padding:.4em .12em}
   .menu-list.very-dense .menu-item{font-size:clamp(18px,1.68cqw,30px);padding:.3em .1em}
+  .menu-list{min-height:0}
+  .menu-list.fit-tight .menu-item{font-size:clamp(18px,1.58cqw,28px);padding:.3em .1em;line-height:1.12}
+  .menu-list.fit-tight .menu-item .allergy{font-size:clamp(15px,1.02cqw,20px);padding:.32em .52em}
+  .menu-list.fit-tighter .menu-item{font-size:clamp(16px,1.38cqw,25px);padding:.24em .08em;line-height:1.08}
+  .menu-list.fit-tighter .menu-item .allergy{font-size:clamp(14px,.9cqw,18px);padding:.28em .45em}
+  .menu-list.fit-compact .menu-item{font-size:clamp(14px,1.16cqw,22px);padding:.2em .06em;line-height:1.06}
+  .menu-list.fit-compact .menu-item .allergy{font-size:clamp(12px,.76cqw,16px);padding:.24em .38em}
+  .menu-list.fit-minimal .menu-item{font-size:clamp(11px,.94cqw,18px);padding:.16em .04em;line-height:1.04}
+  .menu-list.fit-minimal .menu-item .allergy{font-size:clamp(10px,.64cqw,14px);padding:.2em .32em}
 
   .menu-item .menu-name{flex:1;min-width:0;overflow-wrap:anywhere;word-break:break-word}
   .menu-item .allergy{
@@ -839,6 +848,16 @@ function formatAllergy(raw=''){
   return window.KKNAllergy ? window.KKNAllergy.normalize(value) : value;
 }
 
+function fitMenuListToCard(){
+  if(!menuList) return;
+  const fitClasses=['fit-tight','fit-tighter','fit-compact','fit-minimal'];
+  menuList.classList.remove(...fitClasses);
+  for(const className of fitClasses){
+    if(menuList.scrollHeight<=menuList.clientHeight+1) break;
+    menuList.classList.add(className);
+  }
+}
+
 function render(){
   updateMenuOrderButtons();
   const d=fmtDate($('#dateInput').value);
@@ -875,6 +894,7 @@ function render(){
 
     menuList.appendChild(div);
   });
+  fitMenuListToCard();
 
   $('#schoolNameText').textContent=$('#schoolNameInput').value.trim() || '우리 학교';
   $('#photoCard').classList.toggle('bright',$('#brightToggle').checked);
@@ -1148,7 +1168,9 @@ $('#stage').addEventListener('pointerup',event=>{
   if(Math.abs(deltaX)>=44&&Math.abs(deltaX)>Math.abs(deltaY)*1.2) turnPreviewPage(deltaX<0?1:-1);
 });
 $('#stage').addEventListener('pointercancel',()=>{previewSwipeStart=null});
+window.addEventListener('resize',fitMenuListToCard,{passive:true});
 document.addEventListener('fullscreenchange',()=>{
+  fitMenuListToCard();
   if(!document.fullscreenElement && document.body.classList.contains('tv')){
     document.body.classList.remove('tv');stopSlides();
     try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){}
