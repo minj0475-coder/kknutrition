@@ -27596,8 +27596,8 @@ html body #app-content #today-menu :is(.meal-committee-add-btn, .meal-committee-
     border-bottom: 0 !important;
   }
 
-  .meal-committee-card:not(.is-editing) .meal-committee-edit-column {
-    display: none;
+  html body #app-content #today-menu #mealCommittee:not(.is-editing) .meal-committee-table .meal-committee-edit-column {
+    display: none !important;
   }
 
   html body #app-content #today-menu #mealCommittee:not(.is-editing) .meal-committee-table td:nth-last-child(2) {

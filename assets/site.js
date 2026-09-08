@@ -4214,7 +4214,6 @@ window.addEventListener("kknutrition:cloud-data-applied", () => {
 window.addEventListener("storage", invalidateSiteSearchIndex);
 document.addEventListener("DOMContentLoaded", () => {
   setupHomeGlobalSearch();
-  window.setTimeout(() => buildSiteSearchIndex({ force: true }), 240);
 });
 
 // Promo contacts table

@@ -1,14 +1,14 @@
-const CACHE_NAME = 'kknutrition-pwa-v198';
+const CACHE_NAME = 'kknutrition-pwa-v199';
 const CORE_ASSETS = [
   './',
   './index.html',
   './school-lunch-tv.html?v=20260908_029',
-  './assets/site_v2.css?v=20260908_023',
+  './assets/site_v2.css?v=20260908_024',
   './assets/auth.js?v=20260710_001',
   './assets/data-guard.js?v=20260902_001',
   './assets/bookmarks.js?v=20260908_006',
   './assets/allergy.js?v=20260828_002',
-  './assets/site.js?v=20260908_017',
+  './assets/site.js?v=20260908_018',
   './assets/tv-sync.js?v=20260908_001',
   './assets/images/home-kkul-hero-display.webp',
   './assets/images/kkul-face-logo-small.png?v=1',
@@ -54,16 +54,34 @@ self.addEventListener('fetch', (event) => {
   }
 
   if (!isNavigation) return;
-  event.respondWith(
-    fetch(event.request)
-      .then((response) => {
+  const cachedNavigation = () => caches.match(event.request, { ignoreSearch: true });
+  const networkResponse = fetch(event.request)
+      .then(async (response) => {
         if (response.ok) {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+          const cache = await caches.open(CACHE_NAME);
+          await cache.put(event.request, response.clone());
         }
         return response;
-      })
-      .catch(() => caches.match(event.request).then((cached) => cached || caches.match('./index.html')))
-  );
+      });
+  // Keep refreshing the cached page even when a slow connection uses the fallback.
+  event.waitUntil(networkResponse.catch(() => {}));
+  event.respondWith((async () => {
+    let timeout;
+    try {
+      const response = await Promise.race([
+        networkResponse,
+        new Promise(resolve => { timeout = setTimeout(() => resolve(null), 2000); })
+      ]);
+      if (response) return response;
+      const cached = await cachedNavigation();
+      return cached || await networkResponse;
+    } catch (error) {
+      const cached = await cachedNavigation();
+      if (cached) return cached;
+      throw error;
+    } finally {
+      clearTimeout(timeout);
+    }
+  })());
 });
 
