@@ -54,7 +54,6 @@
   .back-link:hover{background:#f3f4f6;color:#202123}
   .back-link:active{transform:scale(.96)}
   .back-link:focus-visible{outline:3px solid rgba(32,33,35,.1);outline-offset:2px}
-  .back-link svg{width:20px;height:20px;display:block}
   .section{
     margin:0 0 12px;padding:18px;background:#fff;border:1px solid rgba(32,33,35,.1);border-radius:16px;box-shadow:none
   }
@@ -81,7 +80,8 @@
   .menu-row-actions{grid-column:2;grid-row:1;display:flex;gap:5px}
   .menu-row-actions .icon-btn{width:40px;min-width:40px;min-height:44px;padding:0;font-weight:900}
   .icon-btn{display:inline-flex;align-items:center;justify-content:center;border:0;background:transparent;color:#202123;border-radius:9px;box-shadow:none}
-  .icon-btn svg{width:20px;height:20px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  :is(.back-link,.icon-btn,.btn,.preview-nav button,.tv-exit-btn) svg{width:20px;height:20px;flex-shrink:0;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  :is(.back-link,.icon-btn,.btn,.preview-nav button,.tv-exit-btn) svg :is(path,line,polyline,rect,circle){stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
   .icon-btn:hover{background:#eceef1;color:#202123}
   .icon-btn:focus-visible{outline:3px solid rgba(32,33,35,.12);outline-offset:1px}
   .icon-btn:disabled{opacity:.28;cursor:default;background:transparent;color:#202123}
@@ -90,7 +90,6 @@
     background:#fff;color:#202123;font-size:14px;font-weight:740;box-shadow:none
   }
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px}
-  .btn svg{width:20px;height:20px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
   .btn:hover{border-color:rgba(32,33,35,.18);background:#f7f7f8}
   .btn.primary{background:#202123;color:#fff;border-color:#202123}
   .btn.primary:hover{background:#34343a;border-color:#34343a}
@@ -141,7 +140,6 @@
   #previewPrevBtn:active{transform:translate(-50%,-50%) scale(.94)}
   #previewNextBtn:active{transform:translate(50%,-50%) scale(.94)}
   .preview-nav button:focus-visible{outline:3px solid rgba(32,33,35,.12);outline-offset:1px}
-  .preview-nav svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
   .preview-page{
     display:flex;align-items:center;gap:8px;min-width:0;padding:3px 0;color:#55575c;
     font-size:13px;font-weight:800;letter-spacing:-.02em
@@ -365,7 +363,6 @@
       font-size:14px;font-weight:800;line-height:1;box-shadow:0 8px 24px rgba(0,0,0,.2);
       backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);cursor:pointer
     }
-    .tv-exit-btn svg{width:20px;height:20px;display:block;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
   }
 </style>
 </head>
@@ -402,7 +399,7 @@
         <input id="photoInput" type="file" accept="image/*">
       </div>
       <label class="checkline"><input id="brightToggle" type="checkbox" checked> 식판사진을 살짝 밝게 표시</label>
-      <button class="btn secondary full" id="clearPhotoBtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3m3 0-1 13H7L6 7m4 4v5m4-5v5"/></svg>식판사진 지우기</button>
+      <button class="btn secondary full" id="clearPhotoBtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="m19 6-1 14H6L5 6"/><path d="M10 11v5M14 11v5"/></svg>식판사진 지우기</button>
     </div>
 
     <div class="section">
@@ -610,7 +607,7 @@ function menuRow(value='', allergy=''){
                  <div class="menu-row-actions">
                    <button type="button" class="icon-btn move-up" title="위로 이동" aria-label="${escapeHtml(value||'메뉴')} 위로 이동"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg></button>
                    <button type="button" class="icon-btn move-down" title="아래로 이동" aria-label="${escapeHtml(value||'메뉴')} 아래로 이동"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
-                   <button type="button" class="icon-btn delete-menu" title="삭제" aria-label="${escapeHtml(value||'메뉴')} 삭제"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3m3 0-1 13H7L6 7m4 4v5m4-5v5"/></svg></button>
+                   <button type="button" class="icon-btn delete-menu" title="삭제" aria-label="${escapeHtml(value||'메뉴')} 삭제"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="m19 6-1 14H6L5 6"/><path d="M10 11v5M14 11v5"/></svg></button>
                  </div>`;
   row.querySelector('.menuInput').addEventListener('input', render);
   row.querySelector('.allergyInput').addEventListener('input', render);

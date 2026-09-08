@@ -1126,14 +1126,14 @@ function setupComplaintRecords() {
       copyAllBtn.type = "button";
       copyAllBtn.title = "전체 복사";
       copyAllBtn.setAttribute("aria-label", "의견·민원 대응 기록 전체 복사");
-      copyAllBtn.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 8h10v12H8zM6 16H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>';
+      copyAllBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
       copyAllBtn.addEventListener("click", () => writeComplaintText(getComplaintCopyText(item), () => showToast("전체 내용을 복사했습니다.")));
       const deleteBtn = document.createElement("button");
       deleteBtn.className = "icon-only-btn complaint-icon-btn danger";
       deleteBtn.type = "button";
       deleteBtn.title = "삭제";
       deleteBtn.setAttribute("aria-label", "의견·민원 대응 기록 삭제");
-      deleteBtn.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      deleteBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="m19 6-1 14H6L5 6"/><path d="M10 11v5M14 11v5"/></svg>';
       deleteBtn.addEventListener("click", () => {
         if (!window.confirm("이 기록을 삭제할까요?")) return;
         items = items.filter(candidate => candidate.id !== item.id);
@@ -3616,7 +3616,7 @@ function buildSidebarToc() {
     const headings = getSidebarCustomHeadings(customGroup) || (pageId === "today-menu"
       ? [
         { id: "todayMenuCooking", text: "조리방법 조회" },
-        { href: "school-lunch-tv.html?v=20260908_030", text: "급식TV", newTab: true },
+        { href: "school-lunch-tv.html?v=20260908_031", text: "급식TV", newTab: true },
         { id: "mealCommittee", text: "학교급식소위원회" },
         { id: "workNotes", text: "생각서랍" },
         { id: "messageTemplates", text: "문자내용 정리" }

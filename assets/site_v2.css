@@ -26645,6 +26645,9 @@ html body :is(#app-content#app-content#app-content, #appSidebar#appSidebar#appSi
 }
 
 html body :is(#app-content#app-content#app-content, #appSidebar#appSidebar#appSidebar) :is(button, a) > svg :is(path, line, polyline, polygon, rect, circle, ellipse) {
+  stroke-width: var(--kkn-icon-stroke-width) !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
   vector-effect: non-scaling-stroke;
 }
 
