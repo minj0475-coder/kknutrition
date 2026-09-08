@@ -319,17 +319,6 @@ function renderFilterChips() {
   });
 }
 
-// ---- Favicon ----
-function favicon(url) {
-  try {
-    var domain = new URL(url).hostname;
-    // Google의 안정적인 favicon API 사용 (sz=32로 더 호환성 높음)
-    return 'https://www.google.com/s2/favicons?domain=' + domain + '&sz=32';
-  } catch(e) {
-    return 'assets/app-icon-192.png';
-  }
-}
-
 const LOCAL_ICONS = {
   "goe.eduptl.kr": "assets/images/bookmarks/goe.eduptl.kr.svg",
   "mail.korea.kr": "assets/images/bookmarks/mail.korea.kr.ico",
@@ -340,7 +329,6 @@ const LOCAL_ICONS = {
   "www.ekape.or.kr": "assets/images/bookmarks/www.ekape.or.kr.svg",
   "www.s2b.kr": "assets/images/bookmarks/www.s2b.kr.ico",
   "www.moaform.com": "assets/images/bookmarks/www.moaform.com.svg",
-  "www.gpoe.kr": "assets/images/bookmarks/cheongsu-e.gpoe.kr.png",
   "cheongsu-e.gpoe.kr": "assets/images/bookmarks/cheongsu-e.gpoe.kr.png",
   "ercedu.hunet.co.kr": "assets/images/bookmarks/ercedu.hunet.co.kr.png",
   "www.foodsafetykorea.go.kr": "assets/images/bookmarks/www.foodsafetykorea.go.kr.png"
@@ -354,11 +342,32 @@ function extractDomain(url) {
   }
 }
 
+function bookmarkIconForUrl(url) {
+  try {
+    var parsed = new URL(url);
+    var domain = parsed.hostname;
+    var path = parsed.pathname || '/';
+    if (domain === 'minj0475-coder.github.io' && path.startsWith('/ggulggul-budget/')) {
+      return 'https://minj0475-coder.github.io/ggulggul-budget/favicon-32x32.png';
+    }
+    if (domain === 'www.gpoe.kr' && path.startsWith('/cheongsu-e/')) {
+      return 'assets/images/bookmarks/cheongsu-e.gpoe.kr.png';
+    }
+    if (domain === 'www.gpoe.kr' && path.startsWith('/gpoe/')) {
+      return 'https://www.gpoe.kr/favicon.ico';
+    }
+    return LOCAL_ICONS[domain] || '';
+  } catch(e) {
+    return '';
+  }
+}
+
 function faviconImg(url) {
   try {
     var domain = extractDomain(url);
-    if (LOCAL_ICONS[domain]) {
-      return '<span class="bm-favicon-frame" aria-hidden="true"><img src="' + LOCAL_ICONS[domain] + '" class="bm-favicon" alt="" loading="lazy"'
+    var matchedIcon = bookmarkIconForUrl(url);
+    if (matchedIcon) {
+      return '<span class="bm-favicon-frame" aria-hidden="true"><img src="' + matchedIcon + '" class="bm-favicon" alt="" loading="lazy"'
         + ' onerror="this.onerror=null;this.src=\'assets/app-icon-192.png\';"></span>';
     }
 
