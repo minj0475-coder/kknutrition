@@ -348,11 +348,8 @@
     .stage .special-note{font-size:1.35cqw}
     .stage-wrap{height:auto;margin-top:calc(-70px - env(safe-area-inset-bottom));padding:12px 12px calc(87px + env(safe-area-inset-bottom));gap:10px}
     .preview-shell{width:100%}
-    .stage{border-radius:15px;box-shadow:0 12px 36px rgba(32,33,35,.1)}
-    .preview-nav button{width:40px;height:40px;background:rgba(255,255,255,.9)}
-    #previewPrevBtn{left:10px;transform:translateY(-50%)}
-    #previewNextBtn{right:10px;transform:translateY(-50%)}
-    #previewPrevBtn:active,#previewNextBtn:active{transform:translateY(-50%) scale(.94)}
+    .stage{border-radius:15px;box-shadow:0 12px 36px rgba(32,33,35,.1);touch-action:pan-y}
+    .preview-nav{display:none}
     body.tv .tv-exit-btn{
       position:fixed;top:max(16px,calc(env(safe-area-inset-top) + 8px));
       left:max(16px,calc(env(safe-area-inset-left) + 8px));z-index:80;
@@ -1071,6 +1068,19 @@ $('#tvBtn').addEventListener('click',enterTvMode);
 $('#tvExitBtn').addEventListener('click',exitTvMode);
 $('#previewPrevBtn').addEventListener('click',()=>turnPreviewPage(-1));
 $('#previewNextBtn').addEventListener('click',()=>turnPreviewPage(1));
+let previewSwipeStart=null;
+$('#stage').addEventListener('pointerdown',event=>{
+  if(!window.matchMedia('(max-width: 900px)').matches||event.pointerType==='mouse'||document.body.classList.contains('tv')) return;
+  previewSwipeStart={id:event.pointerId,x:event.clientX,y:event.clientY};
+});
+$('#stage').addEventListener('pointerup',event=>{
+  if(!previewSwipeStart||previewSwipeStart.id!==event.pointerId) return;
+  const deltaX=event.clientX-previewSwipeStart.x;
+  const deltaY=event.clientY-previewSwipeStart.y;
+  previewSwipeStart=null;
+  if(Math.abs(deltaX)>=44&&Math.abs(deltaX)>Math.abs(deltaY)*1.2) turnPreviewPage(deltaX<0?1:-1);
+});
+$('#stage').addEventListener('pointercancel',()=>{previewSwipeStart=null});
 document.addEventListener('fullscreenchange',()=>{
   if(!document.fullscreenElement && document.body.classList.contains('tv')){
     document.body.classList.remove('tv');stopSlides();
