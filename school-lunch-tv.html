@@ -235,8 +235,10 @@
   .special-card{
     height:100%;border:1px solid rgba(32,33,35,.1);border-radius:28px;background:#fff;
     box-shadow:0 12px 30px rgba(32,33,35,.07);display:grid;
-    grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);overflow:hidden
+    grid-template-columns:minmax(0,1fr);overflow:hidden
   }
+  .special-card.has-media{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}
+  .special-card:not(.has-media) .special-copy{width:min(100%,1100px);justify-self:center;padding:7% 9%}
   .special-copy{
     padding:9%;display:flex;flex-direction:column;justify-content:center;position:relative;background:#fff
   }
@@ -258,12 +260,8 @@
     margin:1.8% 1.8% 1.8% 0;border:1px solid rgba(32,33,35,.1);border-radius:22px;background:#f7f7f8;
     display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden
   }
+  .special-media[hidden]{display:none}
   .special-media img{width:100%;height:100%;object-fit:cover;display:none}
-  .special-media .placeholder{
-    width:42%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:50%;
-    font-size:clamp(62px,8.4cqw,132px);background:rgba(255,255,255,.76);
-    box-shadow:0 16px 35px rgba(32,33,35,.1);border:1px solid rgba(32,33,35,.1)
-  }
   .special-note{
     position:absolute;left:9%;right:9%;bottom:8%;max-width:82%;
     color:#6b7280;font-weight:750;font-size:clamp(16px,1.35cqw,23px);white-space:nowrap;
@@ -334,7 +332,6 @@
     .stage .special-name{font-size:4.1cqw}
     .stage .tag{font-size:1.35cqw}
     .stage .special-desc{font-size:1.75cqw}
-    .stage .special-media .placeholder{font-size:8.4cqw}
     .stage .special-note{font-size:1.35cqw}
     .stage-wrap{height:auto;margin-top:calc(-70px - env(safe-area-inset-bottom));padding:12px 12px calc(87px + env(safe-area-inset-bottom));gap:10px}
     .stage{border-radius:15px;box-shadow:0 12px 36px rgba(32,33,35,.1)}
@@ -466,16 +463,15 @@
       </section>
 
       <section class="slide special" id="specialSlide">
-        <div class="special-card">
+        <div class="special-card" id="specialCard">
           <div class="special-copy">
             <div class="special-name" id="specialNameText">특별 메뉴</div>
             <div class="tags" id="tagsBox"></div>
             <div class="special-desc" id="specialDescText">오늘의 특별 메뉴를 소개합니다.</div>
             <div class="special-note" id="specialNoteText">오늘도 맛있게!</div>
           </div>
-          <div class="special-media">
+          <div class="special-media" id="specialMedia" hidden>
             <img id="specialPhotoPreview" alt="특별 메뉴 사진">
-            <div class="placeholder" id="specialPlaceholder">🍽️</div>
           </div>
         </div>
       </section>
@@ -843,7 +839,8 @@ function showPhoto(img, empty, data){
   const isMainPhoto=img.id==='photoPreview';
   const card=isMainPhoto?$('#photoCard'):null;
   if(data){
-    img.src=data; img.style.display='block'; empty.style.display='none';
+    img.src=data; img.style.display='block';
+    if(empty) empty.style.display='none';
     if(card){
       const applyAspect=()=>{
         if(!img.naturalWidth||!img.naturalHeight) return;
@@ -854,13 +851,17 @@ function showPhoto(img, empty, data){
       else img.addEventListener('load',applyAspect,{once:true});
     }
   }else{
-    img.removeAttribute('src'); img.style.display='none'; empty.style.display='block';
+    img.removeAttribute('src'); img.style.display='none';
+    if(empty) empty.style.display='block';
     if(card) card.style.removeProperty('--photo-aspect');
   }
 }
 function updateSpecialPhoto(){
   const data=state.specialPhoto || state.photo;
-  showPhoto($('#specialPhotoPreview'),$('#specialPlaceholder'),data);
+  const hasMedia=Boolean(data);
+  $('#specialCard').classList.toggle('has-media',hasMedia);
+  $('#specialMedia').hidden=!hasMedia;
+  showPhoto($('#specialPhotoPreview'),null,data);
 }
 function showSlide(index){
   state.slide=index;
