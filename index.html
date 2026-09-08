@@ -53,7 +53,12 @@
     </button>
   </div>
   <nav id="sidebarNav" class="sidebar-nav">
-    <a href="#home" data-toc-group="home">홈</a>
+    <div class="sidebar-nav-group">
+      <div class="sidebar-subnav">
+        <a href="#homeMemoCard">메모장</a>
+        <a href="#homeTodayCard">오늘의 식단</a>
+      </div>
+    </div>
     <a href="#daily" data-toc-group="schedule">일정</a>
     <a href="#today-menu" data-page="today-menu">급식노트</a>
     <a href="#complaints" data-page="complaints">의견·민원 대응</a>
@@ -1301,12 +1306,12 @@
 <script src="assets/data-guard.js?v=20260902_001" defer></script>
 <script src="assets/bookmarks.js?v=20260908_006" defer></script>
 <script src="assets/allergy.js?v=20260828_002" defer></script>
-<script src="assets/site.js?v=20260908_022" defer></script>
+<script src="assets/site.js?v=20260908_023" defer></script>
 <script type="module" src="assets/firebase-init.js?v=20260908_002" defer></script>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('service-worker.js?v=20260908_042');
+      navigator.serviceWorker.register('service-worker.js?v=20260908_043');
     });
   }
 </script>
