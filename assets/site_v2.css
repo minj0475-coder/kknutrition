@@ -15450,7 +15450,7 @@ html body #app-content #today-menu .card .section-title {
 }
 
 html body #app-content .message-template-card {
-  margin-top: 18px !important;
+  margin-top: 0 !important;
   padding: 22px !important;
   border: 1px solid #e8e8e8 !important;
   border-radius: 18px !important;
@@ -16991,10 +16991,6 @@ html body #app-content #today-menu #todayMenuAllSectionWrap.open {
 @media (max-width: 640px) {
   html body #app-content #today-menu #todayMenuShowAllWrap {
     margin-top: -8px !important;
-  }
-
-  html body #app-content #today-menu .message-template-card {
-    margin-top: 0 !important;
   }
 }
 
