@@ -735,7 +735,7 @@ function setupMealCommittee() {
       deleteBtn.type = "button";
       deleteBtn.className = "icon-only-btn meal-committee-delete-btn";
       deleteBtn.title = "위원 삭제";
-      deleteBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>';
+      deleteBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="m19 6-1 14H6L5 6"/><path d="M10 11v5M14 11v5"/></svg>';
       deleteBtn.setAttribute("aria-label", `${member.name || index + 1} 위원 삭제`);
       deleteBtn.addEventListener("click", () => {
         collectDraft();
