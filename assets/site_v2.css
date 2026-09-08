@@ -18155,7 +18155,7 @@ html body #promo-contacts .vendor-category-row-add-btn:hover {
   html body.sidebar-open #app-content,
   html body.sidebar-open #app-content#app-content,
   html body.sidebar-open div#app-content[style] {
-    margin-left: 200px !important;
+    margin-left: 272px !important;
     padding-left: 0 !important;
   }
 }
@@ -25158,8 +25158,9 @@ html body #app-content #annual #edit-annual-2[contenteditable="true"]:focus {
   }
 
   html body:not(.sidebar-collapsed) #app-content {
-    padding-left: 272px !important;
-    transition: padding-left .32s cubic-bezier(.22, 1, .36, 1) !important;
+    padding-left: 0 !important;
+    margin-left: 272px !important;
+    transition: margin-left .32s cubic-bezier(.22, 1, .36, 1) !important;
   }
 
   html body.sidebar-collapsed #appSidebar.app-sidebar,
@@ -27314,6 +27315,7 @@ html body #app-content #today-menu.active main.wrap {
 
 .meal-committee-card {
   --meal-committee-line: rgba(32, 33, 35, 0.07);
+  container: meal-committee / inline-size;
 }
 
 .meal-committee-head {
@@ -27548,7 +27550,7 @@ html body #app-content #today-menu :is(.meal-committee-add-btn, .meal-committee-
   color: var(--muted, #68736d);
 }
 
-@media (max-width: 640px) {
+@container meal-committee (max-width: 860px) {
   .meal-committee-head {
     align-items: center;
   }
