@@ -8,7 +8,7 @@ const CORE_ASSETS = [
   './assets/data-guard.js?v=20260902_001',
   './assets/bookmarks.js?v=20260908_006',
   './assets/allergy.js?v=20260828_002',
-  './assets/site.js?v=20260908_025',
+  './assets/site.js?v=20260909_026',
   './assets/tv-sync.js?v=20260908_001',
   './assets/images/home-kkul-hero-display.webp',
   './assets/images/kkul-face-logo-small.png?v=1',
