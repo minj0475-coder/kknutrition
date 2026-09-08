@@ -27790,3 +27790,114 @@ html body #app-content #complaints .complaint-add-btn {
     justify-self: stretch !important;
   }
 }
+
+/* 2026-09-09 responsive vendor panels: keep the table usable beside the desktop sidebar. */
+@media (min-width: 901px) and (max-width: 1180px) {
+  html body #app-content #promo-contacts .vendor-network-card,
+  html body #app-content #promo-contacts .promo-contact-card,
+  html body #promo-contacts .vendor-network-card,
+  html body #promo-contacts .promo-contact-card {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  html body #app-content #promo-contacts .promo-contact-toolbar,
+  html body #promo-contacts .promo-contact-toolbar {
+    flex-wrap: wrap !important;
+    min-width: 0 !important;
+    gap: 10px !important;
+  }
+
+  html body #app-content #promo-contacts .promo-contact-title,
+  html body #promo-contacts .promo-contact-title {
+    flex: 1 1 220px !important;
+    min-width: 0 !important;
+  }
+
+  html body #app-content #promo-contacts .promo-contact-actions,
+  html body #promo-contacts .promo-contact-actions {
+    flex: 0 1 auto !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  html body #app-content #promo-contacts .promo-table-wrap,
+  html body #promo-contacts .promo-table-wrap {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    padding-inline: 0 !important;
+    overflow-x: hidden !important;
+  }
+
+  html body #app-content #promo-contacts .promo-contact-table,
+  html body #promo-contacts .promo-contact-table {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    table-layout: fixed !important;
+  }
+
+  html body #app-content #promo-contacts .promo-contact-table th,
+  html body #app-content #promo-contacts .promo-contact-table td,
+  html body #promo-contacts .promo-contact-table th,
+  html body #promo-contacts .promo-contact-table td {
+    min-width: 0 !important;
+    padding-inline: 6px !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  html body #app-content #promo-contacts .promo-contact-table th {
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+    white-space: normal !important;
+  }
+
+  html body #app-content #promo-contacts .promo-cell-input,
+  html body #promo-contacts .promo-cell-input {
+    min-width: 0 !important;
+    padding-inline: 6px !important;
+    font-size: 13px !important;
+  }
+
+  html body #app-content #promo-contacts .promo-copy-field,
+  html body #promo-contacts .promo-copy-field {
+    min-width: 0 !important;
+    gap: 4px !important;
+    grid-template-columns: minmax(0, 1fr) 34px !important;
+  }
+
+  html body #app-content #promo-contacts .promo-copy-field:has(> :nth-child(3)),
+  html body #promo-contacts .promo-copy-field:has(> :nth-child(3)) {
+    grid-template-columns: minmax(0, 1fr) 34px 34px !important;
+  }
+
+  html body #app-content #promo-contacts .promo-copy-field .promo-copy-btn,
+  html body #app-content #promo-contacts .promo-copy-field .promo-open-link,
+  html body #promo-contacts .promo-copy-field .promo-copy-btn,
+  html body #promo-contacts .promo-copy-field .promo-open-link {
+    width: 34px !important;
+    min-width: 34px !important;
+    height: 34px !important;
+    min-height: 34px !important;
+    padding: 5px !important;
+  }
+
+  html body #app-content #promo-contacts .vendor-accordion-card,
+  html body #promo-contacts .vendor-accordion-card {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    align-items: end !important;
+  }
+
+  html body #app-content #promo-contacts .vendor-accordion-card label,
+  html body #promo-contacts .vendor-accordion-card .vendor-copy-field,
+  html body #promo-contacts .vendor-accordion-card .promo-cell-input,
+  html body #promo-contacts .vendor-accordion-card .vendor-accordion-tools {
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  html body #app-content #promo-contacts .vendor-accordion-card .vendor-accordion-tools {
+    grid-column: 1 / -1 !important;
+    justify-content: flex-end !important;
+  }
+}
