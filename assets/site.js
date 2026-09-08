@@ -3436,7 +3436,8 @@ document.addEventListener('DOMContentLoaded', () => {
       event.preventDefault();
       event.stopPropagation();
       if (mobileSidebarQuery.matches && logoLink.classList.contains("sidebar-logo-link")) {
-        closeDrawer();
+        window.location.hash = "#home";
+        closeDrawer({ restoreFocus: false });
         return;
       }
       if (!isSidebarOpen()) {
