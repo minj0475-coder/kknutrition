@@ -27597,16 +27597,24 @@ html body #app-content #today-menu :is(.meal-committee-add-btn, .meal-committee-
     border-bottom: 0 !important;
   }
 
-  .meal-committee-card.is-editing .meal-committee-edit-column {
-    display: grid;
+  html body #app-content #today-menu #mealCommittee.meal-committee-card.is-editing .meal-committee-table td.meal-committee-edit-column {
+    display: grid !important;
     width: 100% !important;
     grid-template-columns: 76px minmax(0, 1fr) !important;
-    align-items: center;
+    align-items: center !important;
+    gap: 9px !important;
+    padding: 7px 0 !important;
     text-align: left !important;
   }
 
+  .meal-committee-card.is-editing .meal-committee-edit-column::before {
+    grid-column: 1;
+    text-align: left;
+  }
+
   .meal-committee-card.is-editing .meal-committee-delete-btn {
-    justify-self: end;
+    grid-column: 2;
+    justify-self: start;
     margin: 0 !important;
   }
 
