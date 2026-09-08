@@ -273,7 +273,8 @@
   body.tv .stage-wrap{padding:0;width:100vw;height:100vh;background:#000;display:flex;align-items:center;justify-content:center;gap:0}
   body.tv .stage{width:min(100vw,calc(100vh * 16 / 9));height:min(100vh,calc(100vw * 9 / 16));aspect-ratio:16/9;border-radius:0;box-shadow:none}
   body.tv .preview-nav{display:none}
-  body.tv{overflow:hidden;background:#000;cursor:none}
+  body.tv{overflow:hidden;background:#000;cursor:none;caret-color:transparent}
+  body.tv *{caret-color:transparent!important}
   .tv-hint{
     position:absolute;right:14px;bottom:12px;z-index:20;background:rgba(0,0,0,.55);color:#fff;
     padding:7px 10px;border-radius:9px;font-size:12px;opacity:0;transition:.2s;pointer-events:none
@@ -1029,11 +1030,15 @@ $('#dateInput').addEventListener('change',async()=>{
 });
 $('#saveBtn').addEventListener('click',save);
 async function enterTvMode(){
+  if(document.activeElement instanceof HTMLElement) document.activeElement.blur();
+  window.getSelection?.()?.removeAllRanges();
   render();startSlides();document.body.classList.add('tv');
   try{ history.replaceState(null,'','#tv'); }catch(e){}
   if(!document.fullscreenElement){
     try{ await document.documentElement.requestFullscreen?.(); }catch(e){}
   }
+  if(document.activeElement instanceof HTMLElement) document.activeElement.blur();
+  window.getSelection?.()?.removeAllRanges();
 }
 async function exitTvMode(){
   document.body.classList.remove('tv');
