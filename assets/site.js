@@ -2523,29 +2523,10 @@ function renderHomeTodayMenu(data) {
     </div>`;
 }
 
+let renderPendingMenuSections = null;
+
 function renderTodayMenuV2(data) {
   currentMenuData = data || [];
-  const list = document.getElementById("todayMenuList");
-  if (list) {
-    list.innerHTML = currentMenuData.map(section => {
-      const names = section.items.map(item => item.name);
-      const meal = section.meal ? `<p class="meal-line-v2">${menuEsc(section.meal)}</p>` : "";
-      const cards = section.items.map(item => `
-        <article class="menu-card-v2">
-          <h3>${menuEsc(item.name)}</h3>
-          <details class="materials-detail"><summary>사용재료 보기</summary><pre>${menuEsc(item.materials || "등록된 사용재료 없음")}</pre></details>
-          <pre class="plain-method${item.muted ? " muted" : ""}">${menuEsc(item.method || "등록된 조리방법 없음")}</pre>
-        </article>`).join("");
-      return `
-        <section class="date-section-v2" data-date="${menuEsc(section.date)}" data-menu="${menuEsc(names.join(", "))}">
-          <div class="date-head-v2"><div><h2>${menuEsc(section.date)}</h2>${meal}</div></div>
-          <div class="menu-summary-v2">
-            ${names.map(n => `<span class="menu-tag">${menuEsc(n)}</span>`).join("")}
-          </div>
-          <div class="items-v2">${cards}</div>
-        </section>`;
-    }).join("");
-  }
   filterTodayMenuListV2();
   renderHomeTodayMenu(currentMenuData);
 }
@@ -2561,6 +2542,7 @@ function updateTodayMenuHeader(data, fileName, statusMessage) {
 }
 
 function filterTodayMenuListV2() {
+  renderPendingMenuSections = null;
   const search = document.getElementById("menuSearchInput");
   const todaySection = document.getElementById("todayMenuTodaySection");
   const showAllWrap = document.getElementById("todayMenuShowAllWrap");
@@ -2624,7 +2606,12 @@ function filterTodayMenuListV2() {
         todaySection.style.display = "";
 
         if (remainingData.length > 0) {
-          allSection.innerHTML = remainingData.map(s => renderSectionHTML(s)).join("");
+          allSection.innerHTML = "";
+          // Keep collapsed recipes as data until the user opens the full list.
+          renderPendingMenuSections = () => {
+            allSection.innerHTML = remainingData.map(s => renderSectionHTML(s)).join("");
+            renderPendingMenuSections = null;
+          };
           if (showAllWrap) showAllWrap.style.display = "";
           const showAllBtn = document.getElementById("todayMenuShowAllBtn");
           if (showAllBtn) {
@@ -2749,9 +2736,9 @@ async function setupTodayMenu() {
     if (isOpen) {
       allSectionWrap.classList.remove("open");
       if (showAllWrapBottom) showAllWrapBottom.style.display = "none";
-      const count = allSection.querySelectorAll(".date-section-v2").length;
       if (showAllBtn) showAllBtn.textContent = `전체 식단 보기`;
     } else {
+      if (renderPendingMenuSections) renderPendingMenuSections();
       allSectionWrap.classList.add("open");
       if (showAllWrapBottom) showAllWrapBottom.style.display = "";
       if (showAllBtn) showAllBtn.textContent = "전체 식단 접기";
