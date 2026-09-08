@@ -27293,6 +27293,17 @@ html body #app-content #today-menu.active main.wrap {
   }
 }
 
+/* Keep in-page menu destinations visible below the sticky mobile header. */
+@media (max-width: 900px) {
+  html {
+    scroll-padding-top: calc(72px + env(safe-area-inset-top)) !important;
+  }
+
+  html body #app-content .page-section [id] {
+    scroll-margin-top: calc(72px + env(safe-area-inset-top)) !important;
+  }
+}
+
 .meal-committee-card {
   --meal-committee-line: rgba(32, 33, 35, 0.07);
 }
