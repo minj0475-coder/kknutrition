@@ -15,6 +15,7 @@
 </script>
 <script src="assets/data-guard.js?v=20260831_001"></script>
 <script src="assets/allergy.js?v=20260828_002"></script>
+<script type="module" src="assets/tv-sync.js?v=20260908_001"></script>
 <style>
   :root{
     --portal-font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
@@ -528,6 +529,21 @@ const MENU_DB_STORE = 'payload';
 const TV_MEDIA_DB_NAME = 'SchoolLunchTVMediaDB';
 const TV_MEDIA_DB_STORE = 'dailyMedia';
 
+function waitForTvCloud(timeoutMs=7000){
+  if(window.KKNutritionTvCloud) return Promise.resolve(window.KKNutritionTvCloud);
+  return new Promise(resolve=>{
+    let settled=false;
+    const finish=()=>{
+      if(settled) return;
+      settled=true;
+      window.removeEventListener('kknutrition:tv-cloud-ready',finish);
+      resolve(window.KKNutritionTvCloud||null);
+    };
+    window.addEventListener('kknutrition:tv-cloud-ready',finish,{once:true});
+    window.setTimeout(finish,timeoutMs);
+  });
+}
+
 function localDateKey(date=new Date()){
   return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
 }
@@ -572,9 +588,9 @@ async function writeTvMediaRecord(key,value){
     return true;
   }catch(e){return false}
 }
-async function writeDailyMedia(date,photo,specialPhoto){
+async function writeDailyMedia(date,photo,specialPhoto,savedAt=Date.now()){
   if(date===localDateKey()&&(photo||specialPhoto)){
-    return writeTvMediaRecord('today',{date,photo:photo||null,specialPhoto:specialPhoto||null,savedAt:Date.now()});
+    return writeTvMediaRecord('today',{date,photo:photo||null,specialPhoto:specialPhoto||null,savedAt:Number(savedAt)||Date.now()});
   }
   if(date===localDateKey()||!date) return writeTvMediaRecord('today',null);
   return true;
@@ -734,18 +750,26 @@ function readFile(input, cb){
   r.onload=e=>{
     const img=new Image();
     img.onload=()=>{
-      const maxSide=1600;
+      const maxSide=1400;
       let w=img.naturalWidth, h=img.naturalHeight;
       const scale=Math.min(1, maxSide/Math.max(w,h));
       w=Math.max(1,Math.round(w*scale));
       h=Math.max(1,Math.round(h*scale));
       const canvas=document.createElement('canvas');
-      canvas.width=w; canvas.height=h;
-      const ctx=canvas.getContext('2d');
-      ctx.drawImage(img,0,0,w,h);
       let out;
-      try{ out=canvas.toDataURL('image/jpeg',.82); }
-      catch(err){ out=e.target.result; }
+      try{
+        let quality=.82;
+        do{
+          canvas.width=w; canvas.height=h;
+          canvas.getContext('2d').drawImage(img,0,0,w,h);
+          out=canvas.toDataURL('image/jpeg',quality);
+          if(out.length<=850000||Math.max(w,h)<=640) break;
+          const shrink=Math.max(.68,Math.min(.88,Math.sqrt(850000/out.length)*.94));
+          w=Math.max(1,Math.round(w*shrink));
+          h=Math.max(1,Math.round(h*shrink));
+          quality=Math.max(.68,quality-.04);
+        }while(true);
+      }catch(err){ out=e.target.result; }
       cb(out);
     };
     img.onerror=()=>cb(e.target.result);
@@ -931,16 +955,28 @@ async function save(){
     localSaved=true;
   }catch(e){}
   const databaseSaved=await writeTvMediaRecord('settings',data);
-  if(!localSaved&&!databaseSaved){
+  const cloud=await waitForTvCloud();
+  let cloudSettingsSaved=false;
+  try{ cloudSettingsSaved=Boolean(cloud&&await cloud.saveSettings(data)); }catch(error){ console.error('급식TV 설정 온라인 저장 실패:',error); }
+  if(!localSaved&&!databaseSaved&&!cloudSettingsSaved){
     alert('설정 저장에 실패했습니다. 브라우저 저장공간을 확인한 뒤 다시 시도해 주세요.');
     return;
   }
   state.menuOverrides=menuOverrides;
   state.savedMenuOrderDate=data.date;
   state.savedMenuOrder=data.menuOrder;
-  const mediaSaved=await writeDailyMedia(date,state.photo,state.specialPhoto);
+  const mediaSaved=await writeDailyMedia(date,state.photo,state.specialPhoto,data.savedAt);
   if(!mediaSaved){
     alert('설정은 저장했지만 사진 저장에 실패했습니다. 브라우저 저장공간을 확인해 주세요.');
+    return;
+  }
+  let cloudMediaSaved=date!==localDateKey();
+  if(date===localDateKey()){
+    try{ cloudMediaSaved=Boolean(cloud&&await cloud.saveMedia(date,state.photo,state.specialPhoto,data.savedAt)); }
+    catch(error){ console.error('급식TV 사진 온라인 저장 실패:',error); }
+  }
+  if(!cloudSettingsSaved||!cloudMediaSaved){
+    alert('이 기기에는 저장했지만 온라인 저장을 완료하지 못했습니다. 인터넷 연결을 확인한 뒤 다시 저장해 주세요.');
     return;
   }
   $('#saveBtn').textContent='저장 완료 ✓';
@@ -987,12 +1023,20 @@ function load(data=null){
   render();
   return data;
 }
-async function loadDailyMedia(legacyData=null){
+async function loadDailyMedia(legacyData=null,cloud=null,remoteMedia=null){
   const today=localDateKey();
   let media=await readDailyMedia();
   if(media&&media.date!==today){
     await writeDailyMedia('',null,null);
     media=null;
+  }
+  if(remoteMedia&&remoteMedia.date!==today) remoteMedia=null;
+  if(remoteMedia&&(!media||Number(remoteMedia.savedAt||0)>Number(media.savedAt||0))){
+    media=remoteMedia;
+    await writeDailyMedia(today,media.photo||null,media.specialPhoto||null,media.savedAt||Date.now());
+  }else if(media&&cloud&&(remoteMedia===null||(remoteMedia&&Number(media.savedAt||0)>Number(remoteMedia.savedAt||0)))){
+    cloud.saveMedia(today,media.photo||null,media.specialPhoto||null,media.savedAt||Date.now())
+      .catch(error=>console.error('급식TV 기존 사진 온라인 이전 실패:',error));
   }
   if($('#dateInput').value!==today){
     state.photo=null;
@@ -1097,10 +1141,18 @@ document.addEventListener('keydown',e=>{
 });
 async function initialize(){
   const localData=readLocalTvSettings();
-  const databaseData=await readTvMediaRecord('settings');
-  const savedData=newerTvSettings(localData,databaseData);
+  const cloud=await waitForTvCloud();
+  const [databaseData,cloudData,cloudMedia]=await Promise.all([
+    readTvMediaRecord('settings'),
+    cloud?cloud.readSettings():null,
+    cloud?cloud.readMedia():null
+  ]);
+  const savedData=newerTvSettings(newerTvSettings(localData,databaseData),cloudData);
   load(savedData);
-  await loadDailyMedia(savedData);
+  if(savedData&&cloud&&(cloudData===null||(cloudData&&Number(savedData.savedAt||0)>Number(cloudData.savedAt||0)))){
+    cloud.saveSettings(savedData).catch(error=>console.error('급식TV 기존 설정 온라인 이전 실패:',error));
+  }
+  await loadDailyMedia(savedData,cloud,cloudMedia);
   scheduleDailyMediaExpiry();
   await refreshMenuFromSource(false);
   if(location.hash==='#tv'){

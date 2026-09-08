@@ -479,9 +479,9 @@ const defaultMemos = [
 ];
 
 let memos = [];
-let isFirebaseLoaded = false;
 let memoUpdatedAt = 0;
 let memoDraftMemos = null;
+let memoCloudSavePending = false;
 
 function normalizeMemoPayload(value) {
   if (Array.isArray(value)) {
@@ -647,10 +647,13 @@ async function uploadCurrentMemos(minimumUpdatedAt = 0) {
 
   memoPendingLocalWriteAt = nextUpdatedAt;
   try {
-    await setDoc(doc(db, "memos", MEMO_DOC_ID), {
-      items: memos,
-      updatedAt: nextUpdatedAt
-    });
+    const payload = { items: memos, updatedAt: nextUpdatedAt };
+    try {
+      await withCloudSaveTimeout(setDoc(doc(db, "memos", MEMO_DOC_ID), payload));
+    } catch (sdkError) {
+      console.warn("메모 Firebase SDK 저장 재시도:", sdkError);
+      await uploadMemosViaRest(payload);
+    }
     return true;
   } catch (error) {
     console.error("Firestore 메모 저장 실패:", error);
@@ -663,9 +666,36 @@ async function saveMemos() {
     updateAllMemosDOM();
     return;
   }
-  if (db && isFirebaseLoaded) {
-    await uploadCurrentMemos(memoUpdatedAt);
+  if (db) return uploadCurrentMemos(memoUpdatedAt);
+  return false;
+}
+
+async function uploadMemosViaRest(payload) {
+  const values = cloneMemoItems(payload.items).map(item => ({
+    mapValue: {
+      fields: {
+        text: { stringValue: item.text },
+        checked: { booleanValue: item.checked }
+      }
+    }
+  }));
+  const url = `https://firestore.googleapis.com/v1/projects/${firebaseConfig.projectId}/databases/(default)/documents/memos/${MEMO_DOC_ID}`;
+  const response = await fetch(url, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      fields: {
+        items: { arrayValue: { values } },
+        updatedAt: { integerValue: String(Number(payload.updatedAt) || Date.now()) }
+      }
+    })
+  });
+  if (!response.ok) {
+    let detail = "";
+    try { detail = (await response.json()).error?.message || ""; } catch (error) {}
+    throw new Error(detail || `Memo REST save failed: ${response.status}`);
   }
+  return true;
 }
 
 function cloneMemoItems(items) {
@@ -687,7 +717,7 @@ function areMemoItemsEqual(a, b) {
 }
 
 function isMemoModalDirty() {
-  return Boolean(memoDraftMemos) && !areMemoItemsEqual(memoDraftMemos, memos);
+  return memoCloudSavePending || (Boolean(memoDraftMemos) && !areMemoItemsEqual(memoDraftMemos, memos));
 }
 
 window.isMemoModalDirty = isMemoModalDirty;
@@ -874,12 +904,21 @@ function openMemoModal() {
 async function saveMemoModal() {
   if (!memoDraftMemos) return;
   memos = cloneMemoItems(memoDraftMemos);
+  memoCloudSavePending = true;
+  const saved = await saveMemos();
+  if (!saved) {
+    memoDraftMemos = cloneMemoItems(memos);
+    updateAllMemosDOM();
+    alert("기기에는 저장했지만 온라인 저장을 완료하지 못했습니다. 인터넷 연결을 확인한 뒤 다시 저장해 주세요.");
+    return;
+  }
+  memoCloudSavePending = false;
   memoDraftMemos = null;
-  await saveMemos();
   closeMemoModal();
 }
 
 function closeMemoModal() {
+  memoCloudSavePending = false;
   memoDraftMemos = null;
   const overlay = document.getElementById("memoModalOverlay");
   if (overlay) {
@@ -1369,7 +1408,6 @@ function init() {
     });
 
     onSnapshot(doc(db, "memos", MEMO_DOC_ID), (snapshot) => {
-      isFirebaseLoaded = true;
       if (snapshot.exists()) {
         const data = snapshot.data();
         if (Array.isArray(data.items)) {
