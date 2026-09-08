@@ -3357,6 +3357,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let sidebarTouchStartX = 0;
   let sidebarTouchStartY = 0;
   let sidebarOverlayHideTimer = 0;
+  let sidebarFocusTimer = 0;
 
   function isSidebarOpen() {
     return Boolean(sidebar && sidebar.classList.contains("is-open"));
@@ -3374,7 +3375,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (mobileSidebarQuery.matches && isMemoModalOpen()) return;
     window.clearTimeout(sidebarOverlayHideTimer);
     document.body.classList.remove("sidebar-collapsed");
-    if (sidebarOverlay) sidebarOverlay.hidden = false;
+    if (sidebarOverlay && sidebarOverlay.hidden) {
+      sidebarOverlay.hidden = false;
+      // Establish the transparent state before starting the overlay fade.
+      if (mobileSidebarQuery.matches) getComputedStyle(sidebarOverlay).opacity;
+    }
     document.body.classList.add("sidebar-open");
     if (sidebar) sidebar.classList.add("is-open");
     if (sidebar) sidebar.setAttribute("aria-hidden", "false");
@@ -3382,11 +3387,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if(mobileDrawer) mobileDrawer.classList.add('active');
     try { sessionStorage.setItem(SIDEBAR_OPEN_KEY, "1"); } catch(e) {}
     if (mobileSidebarQuery.matches && sidebarCloseBtn) {
-      window.setTimeout(() => sidebarCloseBtn.focus({ preventScroll: true }), 280);
+      window.clearTimeout(sidebarFocusTimer);
+      sidebarFocusTimer = window.setTimeout(() => {
+        if (isSidebarOpen()) sidebarCloseBtn.focus({ preventScroll: true });
+      }, 320);
     }
   }
 
   function closeDrawer(options = {}) {
+    window.clearTimeout(sidebarFocusTimer);
     const restoreFocus = options.restoreFocus !== false;
     document.body.classList.remove("sidebar-open");
     if (sidebar) sidebar.classList.remove("is-open");
@@ -3395,7 +3404,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.clearTimeout(sidebarOverlayHideTimer);
     sidebarOverlayHideTimer = window.setTimeout(() => {
       if (sidebarOverlay && !isSidebarOpen()) sidebarOverlay.hidden = true;
-    }, 300);
+    }, 340);
     if (window.matchMedia("(min-width: 901px)").matches) {
       document.body.classList.add("sidebar-collapsed");
     }
