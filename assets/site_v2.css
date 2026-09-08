@@ -27904,7 +27904,7 @@ html body #app-content #complaints .complaint-add-btn {
 
 /* 2026-09-09 home spacing: align the first dashboard card with the portal's card rhythm. */
 html body #app-content #home.page-section > main.wrap {
-  gap: clamp(16px, 2.4vw, 28px) !important;
+  gap: clamp(14px, 1.6vw, 20px) !important;
 }
 
 html body #app-content #home.page-section > main.wrap > .home-grid {
@@ -27912,7 +27912,10 @@ html body #app-content #home.page-section > main.wrap > .home-grid {
 }
 
 html body #app-content #home.page-section > main.wrap > .home-search-hero.hero {
-  padding-bottom: clamp(24px, 3.2vw, 36px) !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  padding-bottom: clamp(12px, 1.6vw, 20px) !important;
 }
 
 @media (max-width: 900px) {

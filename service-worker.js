@@ -1,9 +1,9 @@
-const CACHE_NAME = 'kknutrition-pwa-v213';
+const CACHE_NAME = 'kknutrition-pwa-v214';
 const CORE_ASSETS = [
   './',
   './index.html',
   './school-lunch-tv.html?v=20260909_003',
-  './assets/site_v2.css?v=20260909_005',
+  './assets/site_v2.css?v=20260909_006',
   './assets/auth.js?v=20260710_001',
   './assets/data-guard.js?v=20260902_001',
   './assets/bookmarks.js?v=20260908_006',
