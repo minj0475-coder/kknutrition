@@ -913,8 +913,15 @@ async function saveMemoModal() {
     return;
   }
   memoCloudSavePending = false;
-  memoDraftMemos = null;
-  closeMemoModal();
+  memoDraftMemos = cloneMemoItems(memos);
+  updateAllMemosDOM();
+  const saveButton = document.getElementById("saveMemoModalBtn");
+  if (saveButton) {
+    saveButton.textContent = "저장 완료 ✓";
+    window.setTimeout(() => {
+      if (saveButton) saveButton.textContent = "저장";
+    }, 1200);
+  }
 }
 
 function closeMemoModal() {
@@ -1377,13 +1384,6 @@ function init() {
   const saveMemoBtn = document.getElementById("saveMemoModalBtn");
   if (saveMemoBtn) saveMemoBtn.addEventListener("click", saveMemoModal);
   
-  const overlay = document.getElementById("memoModalOverlay");
-  if (overlay) {
-    overlay.addEventListener("click", (e) => {
-      if (e.target === overlay) requestCloseMemoModal();
-    });
-  }
-
   if (db) {
     setupCloudDataSync();
     loadLocalMemos();
