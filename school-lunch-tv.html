@@ -239,6 +239,23 @@
   .menu-list.dense .menu-item .allergy{font-size:clamp(17px,1.15cqw,22px)}
   .menu-list.very-dense .menu-item .allergy{font-size:clamp(16px,1.02cqw,20px)}
 
+  /* 긴 메뉴도 한 글자만 다음 줄에 남지 않도록 메뉴명 영역을 우선 확보하고,
+     알레르기 배지는 메뉴명과 같은 시작선에서 읽히도록 왼쪽 정렬한다. */
+  .menu-item .menu-name{
+    flex:1 1 57%;
+    overflow-wrap:break-word;
+    word-break:keep-all;
+    text-align:left;
+    text-wrap:pretty
+  }
+  .menu-item .allergy{
+    flex:0 1 43%;
+    max-width:43%;
+    justify-content:flex-start;
+    text-align:left
+  }
+  .menu-item .allergy:before{flex:0 0 auto}
+
 
 
 
