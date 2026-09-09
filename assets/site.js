@@ -1665,6 +1665,11 @@ function setupWorkNotes() {
   const bodyInput = document.getElementById("workNoteBodyInput");
   const copyBtn = document.getElementById("workNoteCopyBtn");
   const deleteBtn = document.getElementById("workNoteDeleteBtn");
+  const pickerBtn = document.getElementById("workNotePickerBtn");
+  const pickerLabel = document.getElementById("workNotePickerLabel");
+  const pickerCloseBtn = document.getElementById("workNotePickerCloseBtn");
+  const pickerBackdrop = document.getElementById("workNotePickerBackdrop");
+  const pickerSearch = document.getElementById("workNotePickerSearch");
   const status = document.getElementById("workNoteStatus");
   if (!list || !bodyInput) return;
   const workNoteCard = list.closest(".work-note-card");
@@ -1689,6 +1694,29 @@ function setupWorkNotes() {
     window.clearTimeout(status._timer);
     if (message) status._timer = window.setTimeout(() => { status.textContent = ""; }, 1600);
   };
+  const setPickerOpen = open => {
+    const isOpen = Boolean(open);
+    workNoteCard?.classList.toggle("is-picker-open", isOpen);
+    if (pickerBtn) pickerBtn.setAttribute("aria-expanded", String(isOpen));
+    if (pickerBackdrop) pickerBackdrop.setAttribute("aria-hidden", String(!isOpen));
+    if (isOpen && pickerSearch) {
+      pickerSearch.value = "";
+    }
+    if (isOpen) {
+      pickerCloseBtn?.focus({ preventScroll: true });
+    } else if (document.activeElement === pickerCloseBtn || document.activeElement === pickerBackdrop) {
+      pickerBtn?.focus({ preventScroll: true });
+    }
+  };
+  pickerBtn?.addEventListener("click", () => setPickerOpen(true));
+  pickerCloseBtn?.addEventListener("click", () => setPickerOpen(false));
+  pickerBackdrop?.addEventListener("click", () => setPickerOpen(false));
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && workNoteCard?.classList.contains("is-picker-open")) {
+      event.preventDefault();
+      setPickerOpen(false);
+    }
+  });
   const persist = () => {
     lastLocalWorkNoteSaveAt = Date.now();
     workNoteDirty = true;
@@ -1762,7 +1790,21 @@ function setupWorkNotes() {
   const renderList = () => {
     normalizeActiveIndex();
     list.innerHTML = "";
-    notes.forEach((note, index) => {
+    const query = String(pickerSearch?.value || "").trim().toLocaleLowerCase("ko-KR");
+    const visibleNotes = notes
+      .map((note, index) => ({ note, index }))
+      .filter(({ note }) => {
+        if (!query) return true;
+        return `${note.title || ""} ${note.body || ""}`.toLocaleLowerCase("ko-KR").includes(query);
+      });
+    if (!visibleNotes.length) {
+      const empty = document.createElement("p");
+      empty.className = "work-note-picker-empty";
+      empty.textContent = "일치하는 생각서랍이 없습니다.";
+      list.appendChild(empty);
+      return;
+    }
+    visibleNotes.forEach(({ note, index }) => {
       const button = document.createElement("button");
       button.className = "work-note-toc-item";
       button.type = "button";
@@ -1775,15 +1817,18 @@ function setupWorkNotes() {
       `;
       button.addEventListener("click", () => {
         activeIndex = index;
+        setPickerOpen(false);
         render();
       });
       list.appendChild(button);
     });
   };
+  pickerSearch?.addEventListener("input", renderList);
   const renderEditor = () => {
     normalizeActiveIndex();
     const note = notes[activeIndex];
     bodyInput.value = note.body || "";
+    if (pickerLabel) pickerLabel.textContent = note.title || DEFAULT_WORK_NOTE_TITLE;
     bodyInput.placeholder = "첫 줄은 생각서랍 제목으로 표시됩니다.\n\n긴 작업 기준, 이미지 프롬프트, 반복해서 쓰는 문장 등을 적어두세요.";
     if (deleteBtn) deleteBtn.disabled = false;
     syncWorkNoteEditControls();
@@ -1800,6 +1845,7 @@ function setupWorkNotes() {
     notes[activeIndex].titleManual = false;
     notes[activeIndex].updatedAt = Date.now();
     persist();
+    if (pickerLabel) pickerLabel.textContent = notes[activeIndex].title || DEFAULT_WORK_NOTE_TITLE;
     renderList();
   });
   if (addBtn) {
