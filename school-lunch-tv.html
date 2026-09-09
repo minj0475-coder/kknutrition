@@ -444,10 +444,6 @@
         <label>날짜</label>
         <div class="date-input-clip"><input id="dateInput" type="date"></div>
       </div>
-      <div class="field">
-        <label>학교명</label>
-        <input id="schoolNameInput" type="text" value="청수초등학교" placeholder="학교명">
-      </div>
       <div class="mini">하단 영양·식생활 문구는 날짜에 따라 매일 자동으로 바뀝니다.</div>
     </div>
 
@@ -576,6 +572,7 @@ const state = {
   mediaExpiryTimer:null,
   timer:null,
   slide:0,
+  schoolName:'청수초등학교',
   menuSource:[],
   menuOverrides:{},
   savedMenuOrderDate:'',
@@ -925,7 +922,7 @@ function render(){
   });
   fitMenuListToCard();
 
-  $('#schoolNameText').textContent=$('#schoolNameInput').value.trim() || '우리 학교';
+  $('#schoolNameText').textContent=String(state.schoolName||'').trim() || '우리 학교';
   $('#photoCard').classList.toggle('bright',$('#brightToggle').checked);
 
   const useSpecial=$('#specialToggle').checked;
@@ -1007,7 +1004,7 @@ async function save(){
   const menuOverrides={...state.menuOverrides,[date]:savedMenus};
   const data={
     date,
-    schoolName:$('#schoolNameInput').value,
+    schoolName:state.schoolName,
     bright:$('#brightToggle').checked,
     menus:savedMenus,
     menuOverrides,
@@ -1081,7 +1078,7 @@ function load(data=null){
     }
     state.savedMenuOrderDate=data.date||'';
     state.savedMenuOrder=Array.isArray(data.menuOrder)?data.menuOrder:[];
-    $('#schoolNameInput').value=data.schoolName||'청수초등학교';
+    state.schoolName=String(data.schoolName||'청수초등학교');
     $('#brightToggle').checked=data.bright!==false;
     $('#specialToggle').checked=!!data.special;
     $('#specialName').value=data.specialName||'';
@@ -1153,7 +1150,7 @@ $('#photoInput').addEventListener('change',()=>readFile($('#photoInput'),data=>{
 $('#specialPhotoInput').addEventListener('change',()=>readFile($('#specialPhotoInput'),data=>{
   state.specialPhoto=data;updateSpecialPhoto();
 }));
-['dateInput','schoolNameInput','brightToggle','specialToggle','specialName','specialDesc','tag1','tag2','specialNoteInput','intervalSelect'].forEach(id=>{
+['dateInput','brightToggle','specialToggle','specialName','specialDesc','tag1','tag2','specialNoteInput','intervalSelect'].forEach(id=>{
   $('#'+id).addEventListener(['specialToggle','brightToggle','intervalSelect'].includes(id)?'change':'input',render);
 });
 $('#dateInput').addEventListener('change',async()=>{
