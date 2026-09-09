@@ -28194,3 +28194,12 @@ html body #app-content #today-menu .work-note-picker-backdrop {
     overflow-y: auto !important;
   }
 }
+
+/* 2026-09-09 mobile work-note picker: remove the pink leading marker. */
+@media (max-width: 760px) {
+  html body #app-content #today-menu .work-note-card.is-picker-open
+    .work-note-toc-item[aria-pressed="true"] {
+    border-color: #ececf1 !important;
+    box-shadow: none !important;
+  }
+}
