@@ -27928,6 +27928,47 @@ html body #app-content #home.page-section > main.wrap > .home-search-hero.hero {
   }
 }
 
+/* 2026-09-09 academic weekends: keep the optional weekend toggle aligned with Done. */
+html body #app-content #academicModal :is(
+  .academic-done-property,
+  .academic-weekend-property
+) input[type="checkbox"] {
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  min-height: 18px !important;
+  justify-self: start !important;
+  margin: 0 !important;
+  accent-color: #df7e8b !important;
+}
+
+@media (max-width: 760px) {
+  html body #app-content #academicModal :is(
+    .academic-done-property,
+    .academic-weekend-property
+  ) {
+    display: inline-grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    justify-content: start !important;
+    column-gap: 10px !important;
+    width: auto !important;
+    max-width: max-content !important;
+    padding: 2px 0 !important;
+  }
+
+  html body #app-content #academicModal :is(
+    .academic-done-property,
+    .academic-weekend-property
+  ) input[type="checkbox"] {
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
+    justify-self: start !important;
+  }
+}
+
 /* 2026-09-09 mobile work-note picker: keep the editor close while notes grow. */
 html body #app-content #today-menu .work-note-picker-btn,
 html body #app-content #today-menu .work-note-picker-sheet-head,

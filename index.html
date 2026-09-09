@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://minj0475-coder.github.io/kknutrition/assets/og-image.png?v=20260704_001">
 <meta property="og:url" content="https://minj0475-coder.github.io/kknutrition/">
 <title>급식 업무 포털</title>
-<link rel="stylesheet" href="assets/site_v2.css?v=20260909_008">
+<link rel="stylesheet" href="assets/site_v2.css?v=20260909_009">
 <link rel="manifest" href="manifest.json?v=6">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/app-icon-192.png?v=6">
 <link rel="apple-touch-icon" href="assets/app-icon-180.png?v=6">
@@ -366,6 +366,10 @@
       <label class="academic-property academic-done-property">
         <span>완료</span>
         <input id="academicEventDone" type="checkbox">
+      </label>
+      <label class="academic-property academic-weekend-property">
+        <span>주말에도 표시</span>
+        <input id="academicEventIncludeWeekends" type="checkbox">
       </label>
       <div class="academic-property academic-color-property">
         <span>색상</span>
@@ -1320,12 +1324,12 @@
 <script src="assets/data-guard.js?v=20260902_001" defer></script>
 <script src="assets/bookmarks.js?v=20260908_006" defer></script>
 <script src="assets/allergy.js?v=20260828_002" defer></script>
-<script src="assets/site.js?v=20260909_029" defer></script>
+<script src="assets/site.js?v=20260909_030" defer></script>
 <script type="module" src="assets/firebase-init.js?v=20260908_002" defer></script>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('service-worker.js?v=20260909_011');
+      navigator.serviceWorker.register('service-worker.js?v=20260909_012');
     });
   }
 </script>

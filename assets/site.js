@@ -5455,11 +5455,12 @@ function isAcademicNonWorkingDay(key) {
 
 function getUserAcademicEventOccurrencesForKey(userEvents, key) {
   const day = parseAcademicKey(key).getDay();
-  if (day === 0 || day === 6) return [];
+  const isWeekend = day === 0 || day === 6;
   const occurrences = [];
   Object.keys(userEvents || {}).sort().forEach(startKey => {
     getUserAcademicEventsForKey(userEvents, startKey).forEach((event, userIndex) => {
       if (!(event.title || event.memo || event.url)) return;
+      if (isWeekend && !event.includeWeekends) return;
       const endKey = getAcademicEventEndKey(startKey, event);
       const skipDates = Array.isArray(event.skipDates) ? event.skipDates : [];
       if (startKey <= key && key <= endKey && !skipDates.includes(key)) {
@@ -5540,6 +5541,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const applyScope = document.getElementById("academicApplyScope");
   const applyScopeInputs = applyScope ? applyScope.querySelectorAll("input[name='academicApplyScope']") : [];
   const doneInput = document.getElementById("academicEventDone");
+  const includeWeekendsInput = document.getElementById("academicEventIncludeWeekends");
   const colorInput = document.getElementById("academicEventColor");
   const colorButtons = modal ? modal.querySelectorAll("[data-academic-color]") : [];
   const memoInput = document.getElementById("academicEventMemo");
@@ -5826,6 +5828,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (dateInput) dateInput.value = editingEvent ? state.originalStartKey : key;
     if (endDateInput) endDateInput.value = editingEvent ? state.originalEndKey : key;
     if (doneInput) doneInput.checked = Boolean(current.done);
+    if (includeWeekendsInput) includeWeekendsInput.checked = Boolean(current.includeWeekends);
     setAcademicColor(current.color || "blue");
     if (memoInput) memoInput.value = current.memo || "";
     if (urlInput) urlInput.value = current.url || "";
@@ -6116,6 +6119,7 @@ document.addEventListener("DOMContentLoaded", () => {
       url: urlInput ? urlInput.value.trim() : "",
       endDate: endKey,
       done: doneInput ? doneInput.checked : false,
+      includeWeekends: includeWeekendsInput ? includeWeekendsInput.checked : false,
       weight: "normal",
       color: colorInput ? colorInput.value : "blue",
       seriesId: original && original.seriesId ? original.seriesId : createAcademicSeriesId()
@@ -6233,6 +6237,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (urlInput) urlInput.value = "";
     if (endDateInput) endDateInput.value = dateInput && dateInput.value ? dateInput.value : state.selectedKey;
     if (doneInput) doneInput.checked = false;
+    if (includeWeekendsInput) includeWeekendsInput.checked = false;
     setAcademicColor("blue");
     const original = getSelectedAcademicEvent();
     if (original) {
