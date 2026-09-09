@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://minj0475-coder.github.io/kknutrition/assets/og-image.png?v=20260704_001">
 <meta property="og:url" content="https://minj0475-coder.github.io/kknutrition/">
 <title>급식 업무 포털</title>
-<link rel="stylesheet" href="assets/site_v2.css?v=20260909_007">
+<link rel="stylesheet" href="assets/site_v2.css?v=20260909_008">
 <link rel="manifest" href="manifest.json?v=6">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/app-icon-192.png?v=6">
 <link rel="apple-touch-icon" href="assets/app-icon-180.png?v=6">
@@ -918,8 +918,8 @@
   <div class="work-note-shell">
     <aside class="work-note-toc" aria-label="생각서랍 목차">
       <div class="work-note-picker-sheet-head">
-        <strong>생각서랍 선택</strong>
-        <button id="workNotePickerCloseBtn" class="work-note-picker-close" type="button" aria-label="생각서랍 선택 닫기" title="닫기">
+        <strong>생각서랍 목록</strong>
+        <button id="workNotePickerCloseBtn" class="work-note-picker-close" type="button" aria-label="생각서랍 목록 닫기" title="닫기">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
         </button>
       </div>
@@ -938,7 +938,7 @@
       </div>
     </section>
   </div>
-  <button id="workNotePickerBackdrop" class="work-note-picker-backdrop" type="button" aria-label="생각서랍 선택 닫기" tabindex="-1"></button>
+  <button id="workNotePickerBackdrop" class="work-note-picker-backdrop" type="button" aria-label="생각서랍 목록 닫기" tabindex="-1"></button>
   <p id="workNoteStatus" class="mini work-note-status" aria-live="polite"></p>
 </section>
 
@@ -1325,7 +1325,7 @@
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('service-worker.js?v=20260909_010');
+      navigator.serviceWorker.register('service-worker.js?v=20260909_011');
     });
   }
 </script>
