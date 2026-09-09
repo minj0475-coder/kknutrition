@@ -169,10 +169,6 @@
     background:linear-gradient(180deg,#fff 0%,#f7f7f8 100%);
   }
   .topline{display:flex;justify-content:center;align-items:center;min-height:4.2%;position:relative;z-index:2}
-  .school-name{
-    position:absolute;left:0;top:.05em;color:#4b5563;font-size:clamp(16px,1.28cqw,24px);
-    font-weight:900;letter-spacing:-.025em
-  }
   .date{
     padding:0;text-align:center;color:#4b5563;font-size:clamp(19px,1.5cqw,28px);font-weight:900;letter-spacing:0
   }
@@ -335,7 +331,6 @@
   body.tv .stage-wrap{padding:0;width:100vw;height:100vh;background:#000;display:flex;align-items:center;justify-content:center;gap:0}
   body.tv .preview-shell{width:min(100vw,calc(100vh * 16 / 9));height:min(100vh,calc(100vw * 9 / 16));aspect-ratio:16/9}
   body.tv .stage{width:100%;height:100%;border-radius:0;box-shadow:none}
-  body.tv .school-name{display:none}
   body.tv .special{background:linear-gradient(180deg,#fff 0%,#f7f7f8 100%)}
   body.tv .preview-nav,body.tv .preview-page{display:none}
   body.tv{overflow:hidden;background:#000;cursor:none;caret-color:transparent}
@@ -382,7 +377,6 @@
       box-shadow:0 -8px 24px rgba(32,33,35,.07);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)
     }
     .actions .btn{width:100%;min-width:0;min-height:46px;margin:0;padding:10px 8px;font-size:14px;white-space:nowrap}
-    .stage .school-name{font-size:1.28cqw}
     .stage .date{font-size:1.5cqw}
     .stage .title{font-size:4.65cqw}
     .stage .photo-empty-mascot{width:12cqw}
@@ -414,7 +408,6 @@
 
   /* 미리보기 자체가 좁아져도 브라우저 창 너비와 관계없이 같은 비율로 축소 */
   @container (max-width:900px){
-    .stage .school-name{font-size:1.28cqw}
     .stage .date{font-size:1.5cqw}
     .stage .title{font-size:4.65cqw}
     .stage .photo-empty-mascot{width:12cqw}
@@ -522,7 +515,6 @@
       <div class="stage" id="stage">
       <section class="slide daily active" id="dailySlide">
         <div class="topline">
-          <div class="school-name" id="schoolNameText">청수초등학교</div>
           <div class="date" id="dateText"></div>
         </div>
         <div class="title">오늘의 <span>급식</span></div>
@@ -583,7 +575,6 @@ const state = {
   mediaExpiryTimer:null,
   timer:null,
   slide:0,
-  schoolName:'청수초등학교',
   menuSource:[],
   menuOverrides:{},
   savedMenuOrderDate:'',
@@ -937,7 +928,6 @@ function render(){
   });
   fitMenuListToCard();
 
-  $('#schoolNameText').textContent=String(state.schoolName||'').trim() || '우리 학교';
   $('#photoCard').classList.toggle('bright',$('#brightToggle').checked);
 
   const useSpecial=$('#specialToggle').checked;
@@ -1019,7 +1009,6 @@ async function save(){
   const menuOverrides={...state.menuOverrides,[date]:savedMenus};
   const data={
     date,
-    schoolName:state.schoolName,
     bright:$('#brightToggle').checked,
     menus:savedMenus,
     menuOverrides,
@@ -1093,7 +1082,6 @@ function load(data=null){
     }
     state.savedMenuOrderDate=data.date||'';
     state.savedMenuOrder=Array.isArray(data.menuOrder)?data.menuOrder:[];
-    state.schoolName=String(data.schoolName||'청수초등학교');
     $('#brightToggle').checked=data.bright!==false;
     $('#specialToggle').checked=!!data.special;
     $('#specialName').value=data.specialName||'';
