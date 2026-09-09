@@ -363,13 +363,13 @@
           </label>
         </div>
       </fieldset>
+      <label class="academic-property academic-weekend-property">
+        <span>주말 포함</span>
+        <input id="academicEventIncludeWeekends" type="checkbox">
+      </label>
       <label class="academic-property academic-done-property">
         <span>완료</span>
         <input id="academicEventDone" type="checkbox">
-      </label>
-      <label class="academic-property academic-weekend-property">
-        <span>주말에도 표시</span>
-        <input id="academicEventIncludeWeekends" type="checkbox">
       </label>
       <div class="academic-property academic-color-property">
         <span>색상</span>
@@ -1329,7 +1329,7 @@
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('service-worker.js?v=20260909_016');
+      navigator.serviceWorker.register('service-worker.js?v=20260909_017');
     });
   }
 </script>
