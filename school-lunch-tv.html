@@ -216,6 +216,13 @@
     background:#fff
   }
   .menu-list{display:flex;flex:1;flex-direction:column;justify-content:center;gap:0}
+  .menu-list-head{
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,43%);gap:clamp(5px,1.4cqw,15px);
+    align-items:center;flex:none;padding:0 .15em .42em;border-bottom:1px solid rgba(32,33,35,.08);
+    color:#a96b45;font-size:clamp(12px,1.05cqw,20px);font-weight:900;line-height:1.1;letter-spacing:-.02em
+  }
+  .menu-list-head[hidden]{display:none}
+  .menu-list-head span:last-child{text-align:left}
   .menu-item{
     position:relative;display:flex;align-items:center;gap:clamp(5px,1.4cqw,15px);width:100%;min-width:0;
     min-height:0;padding:.52em .15em;border:0;border-bottom:1px solid rgba(32,33,35,.08);border-radius:0;
@@ -265,9 +272,9 @@
     flex:0 1 43%;
     max-width:43%;
     justify-content:flex-start;
-    text-align:left
+    text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis
   }
-  .menu-item .allergy:before{flex:0 0 auto}
+  .menu-item .allergy:before{display:none}
 
 
 
@@ -529,6 +536,7 @@
           </div>
 
           <div class="menu-card">
+            <div class="menu-list-head" id="menuListHead" hidden><span>메뉴</span><span>알레르기</span></div>
             <div class="menu-list" id="menuList"></div>
           </div>
         </div>
@@ -567,6 +575,7 @@
 const $ = s => document.querySelector(s);
 const menuWrap = $('#menuInputs');
 const menuList = $('#menuList');
+const menuListHead = $('#menuListHead');
 const state = {
   photo:null,
   specialPhoto:null,
@@ -900,6 +909,8 @@ function render(){
   const menus=rows.map(x=>x.name);
   menuList.innerHTML='';
   menuList.className='menu-list';
+  const hasAllergies=rows.some(item=>Boolean(formatAllergy(item.allergy)));
+  if(menuListHead) menuListHead.hidden=!hasAllergies;
   if(menus.length>=7 || menus.some(x=>x.length>=12)) menuList.classList.add('dense');
   if(menus.length>=9) menuList.classList.add('very-dense');
   rows.forEach(item=>{
@@ -916,6 +927,8 @@ function render(){
       const allergy=document.createElement('span');
       allergy.className='allergy';
       allergy.textContent=allergyText;
+      allergy.title=allergyText;
+      allergy.setAttribute('aria-label',`알레르기 ${allergyText}`);
       div.appendChild(allergy);
     }
 
