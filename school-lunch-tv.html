@@ -74,6 +74,18 @@
   input:focus,textarea:focus,select:focus{border-color:#202123;box-shadow:0 0 0 3px rgba(32,33,35,.07)}
   textarea{min-height:74px;resize:vertical}
   input[type="checkbox"]{accent-color:#c97878}
+  /* Keep the TV brightness toggle lightweight and on-brand: a white control with a dark check. */
+  #brightToggle{
+    appearance:none;-webkit-appearance:none;display:inline-grid;place-content:center;flex:0 0 auto;
+    width:18px;height:18px;margin:0;border:1.5px solid rgba(32,33,35,.34);border-radius:5px;
+    background:#fff;color:#202123;cursor:pointer
+  }
+  #brightToggle::after{
+    content:"";width:8px;height:4px;border-left:2px solid #202123;border-bottom:2px solid #202123;
+    transform:rotate(-45deg) scale(0);transform-origin:center;transition:transform .14s ease
+  }
+  #brightToggle:checked::after{transform:rotate(-45deg) scale(1)}
+  #brightToggle:focus-visible{outline:3px solid rgba(32,33,35,.16);outline-offset:2px}
   .menu-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px;margin:10px 0;padding:9px;background:#f7f7f8;border:1px solid rgba(32,33,35,.08);border-radius:12px}
   .menu-row .menuInput{grid-column:1;grid-row:1}
   .menu-row .allergyInput{grid-column:1/-1;grid-row:2}
