@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://minj0475-coder.github.io/kknutrition/assets/og-image.png?v=20260704_001">
 <meta property="og:url" content="https://minj0475-coder.github.io/kknutrition/">
 <title>급식 업무 포털</title>
-<link rel="stylesheet" href="assets/site_v2.css?v=20260909_011">
+<link rel="stylesheet" href="assets/site_v2.css?v=20260910_003">
 <link rel="manifest" href="manifest.json?v=6">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/app-icon-192.png?v=6">
 <link rel="apple-touch-icon" href="assets/app-icon-180.png?v=6">
@@ -958,8 +958,15 @@
 
 <section id="complaints" class="page-section">
   <main class="wrap complaint-wrap">
-    <section class="complaint-controls card" aria-label="급식 소통·교육 대상별 필터">
-      <div id="complaintAudienceFilters" class="complaint-filter-row" aria-label="대상별 필터"></div>
+    <section class="complaint-controls card" aria-label="급식 소통·교육 필터">
+      <div class="complaint-filter-group">
+        <span class="complaint-filter-label">대상</span>
+        <div id="complaintAudienceFilters" class="complaint-filter-row" aria-label="대상별 필터"></div>
+      </div>
+      <div class="complaint-filter-group">
+        <span class="complaint-filter-label">분류</span>
+        <div id="complaintTypeFilters" class="complaint-filter-row" aria-label="분류별 필터"></div>
+      </div>
       <button id="complaintAddBtn" class="complaint-add-btn" type="button" aria-label="급식 소통·교육 새 기록 추가">+ 새 기록</button>
     </section>
 
@@ -1332,12 +1339,12 @@
 <script src="assets/data-guard.js?v=20260902_001" defer></script>
 <script src="assets/bookmarks.js?v=20260908_006" defer></script>
 <script src="assets/allergy.js?v=20260828_002" defer></script>
-<script src="assets/site.js?v=20260910_001" defer></script>
+    <script src="assets/site.js?v=20260910_003" defer></script>
 <script type="module" src="assets/firebase-init.js?v=20260909_003" defer></script>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('service-worker.js?v=20260910_001');
+      navigator.serviceWorker.register('service-worker.js?v=20260910_003');
     });
   }
 </script>

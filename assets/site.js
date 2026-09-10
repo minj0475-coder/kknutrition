@@ -817,6 +817,7 @@ document.addEventListener("DOMContentLoaded", setupMealCommittee);
 const COMPLAINT_RECORDS_KEY = "kkulkkoori_complaint_records_v1";
 const COMPLAINT_LAST_SCHOOL_KEY = "kkulkkoori_complaint_last_school_v1";
 const COMPLAINT_AUDIENCES = ["전체", "관리자", "행정실", "교직원", "학생", "학부모", "기타"];
+const COMPLAINT_TYPES = ["전체", "의견·문의", "민원 대응", "영양교육"];
 const COMPLAINT_FIELDS = [
   "recordType",
   "title",
@@ -942,6 +943,7 @@ function setupComplaintRecords() {
   const list = document.getElementById("complaintList");
   const empty = document.getElementById("complaintEmpty");
   const filters = document.getElementById("complaintAudienceFilters");
+  const typeFilters = document.getElementById("complaintTypeFilters");
   const addBtn = document.getElementById("complaintAddBtn");
   const editBtn = document.getElementById("editBtnComplaints");
   const modal = document.getElementById("complaintModal");
@@ -950,7 +952,7 @@ function setupComplaintRecords() {
   const cancelBtn = document.getElementById("complaintCancelBtn");
   const formStatus = document.getElementById("complaintFormStatus");
   const toast = document.getElementById("complaintToast");
-  if (!page || !list || !empty || !filters || !addBtn || !modal || !form) return;
+  if (!page || !list || !empty || !filters || !typeFilters || !addBtn || !modal || !form) return;
 
   const inputs = {
     title: document.getElementById("complaintTitleInput"),
@@ -967,6 +969,7 @@ function setupComplaintRecords() {
 
   let items = readComplaintRecords();
   let activeAudience = "전체";
+  let activeRecordType = "전체";
   let toastTimer = 0;
   let complaintEditMode = false;
   let editingId = "";
@@ -1054,7 +1057,10 @@ function setupComplaintRecords() {
   };
 
   const getVisibleItems = () => {
-    return sortComplaintRecords(items).filter(item => activeAudience === "전체" || item.audience === activeAudience);
+    return sortComplaintRecords(items).filter(item =>
+      (activeAudience === "전체" || item.audience === activeAudience) &&
+      (activeRecordType === "전체" || item.recordType === activeRecordType)
+    );
   };
 
   const makeTextNode = (tag, className, text) => {
@@ -1101,7 +1107,7 @@ function setupComplaintRecords() {
       return;
     }
     if (!visible.length) {
-      empty.textContent = "선택한 대상에 맞는 기록이 없습니다.";
+      empty.textContent = "선택한 대상·분류에 맞는 기록이 없습니다.";
       empty.hidden = false;
       return;
     }
@@ -1114,7 +1120,7 @@ function setupComplaintRecords() {
       top.className = "complaint-card-top";
       const chips = document.createElement("div");
       chips.className = "complaint-card-chips";
-      if (item.recordType) chips.appendChild(makeTextNode("span", "complaint-chip", item.recordType));
+      if (item.recordType) chips.appendChild(makeTextNode("span", "complaint-chip record-type", item.recordType));
       chips.appendChild(makeTextNode("span", "complaint-chip audience", item.audience || "기타"));
       if (item.category) chips.appendChild(makeTextNode("span", "complaint-chip", item.category));
       const actions = document.createElement("div");
@@ -1181,6 +1187,23 @@ function setupComplaintRecords() {
       render();
     });
     filters.appendChild(button);
+  });
+
+  COMPLAINT_TYPES.forEach(recordType => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "complaint-filter-chip";
+    button.textContent = recordType;
+    button.setAttribute("aria-label", recordType + " 분류 기록 보기");
+    button.setAttribute("aria-pressed", recordType === activeRecordType ? "true" : "false");
+    button.addEventListener("click", () => {
+      activeRecordType = recordType;
+      typeFilters.querySelectorAll(".complaint-filter-chip").forEach(chip => {
+        chip.setAttribute("aria-pressed", chip.textContent === activeRecordType ? "true" : "false");
+      });
+      render();
+    });
+    typeFilters.appendChild(button);
   });
 
   addBtn.addEventListener("click", () => openModal());

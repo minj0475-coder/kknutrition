@@ -23103,6 +23103,22 @@ html body #app-content #complaints .complaint-controls {
   align-items: stretch;
 }
 
+html body #app-content #complaints .complaint-filter-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+html body #app-content #complaints .complaint-filter-label {
+  flex: 0 0 auto;
+  min-width: 30px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
 html body #app-content #complaints .complaint-search {
   flex: 1 1 360px;
   min-width: 240px;
@@ -23213,6 +23229,13 @@ html body #app-content #complaints .complaint-chip {
 html body #app-content #complaints .complaint-chip.audience {
   background: #202123;
   color: #ffffff;
+}
+
+html body #app-content #complaints .complaint-chip.record-type {
+  border-color: rgba(235, 137, 153, 0.28);
+  background-color: #fff0f3 !important;
+  color: #a64b5b !important;
+  -webkit-text-fill-color: #a64b5b !important;
 }
 
 html body #app-content #complaints .complaint-icon-btn.icon-only-btn {
@@ -27967,6 +27990,14 @@ html body #app-content #academicModal :is(
     min-height: 20px !important;
     justify-self: start !important;
   }
+}
+
+/* Classification chips keep the portal's soft pink accent. */
+html body #app-content#app-content#app-content #complaints .complaint-chip.record-type {
+  border-color: rgba(235, 137, 153, 0.32) !important;
+  background-color: #fff0f3 !important;
+  color: #a64b5b !important;
+  -webkit-text-fill-color: #a64b5b !important;
 }
 
 /* 2026-09-09 mobile work-note picker: keep the editor close while notes grow. */
