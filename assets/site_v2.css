@@ -27994,10 +27994,10 @@ html body #app-content #academicModal :is(
 
 /* Classification chips keep the portal's soft pink accent. */
 html body #app-content#app-content#app-content #complaints .complaint-chip.record-type {
-  border-color: rgba(235, 137, 153, 0.32) !important;
-  background-color: #fff0f3 !important;
-  color: #a64b5b !important;
-  -webkit-text-fill-color: #a64b5b !important;
+  border-color: #efa6b1 !important;
+  background-color: #efa6b1 !important;
+  color: #202123 !important;
+  -webkit-text-fill-color: #202123 !important;
 }
 
 /* 2026-09-09 mobile work-note picker: keep the editor close while notes grow. */
