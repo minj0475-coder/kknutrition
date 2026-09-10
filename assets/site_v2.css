@@ -28033,8 +28033,35 @@ html body #app-content#app-content#app-content #complaints .complaint-filter-chi
 }
 
 html body #app-content#app-content#app-content #complaints .complaint-add-btn {
-  flex: 0 0 auto !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 42px !important;
+  width: 42px !important;
+  min-width: 42px !important;
+  height: 42px !important;
+  min-height: 42px !important;
   margin-left: auto !important;
+  padding: 0 !important;
+  border: 1px solid rgba(32, 33, 35, 0.12) !important;
+  border-radius: 13px !important;
+  background: #ffffff !important;
+  color: #202123 !important;
+  box-shadow: 0 8px 18px rgba(32, 33, 35, 0.08) !important;
+}
+
+html body #app-content#app-content#app-content #complaints .complaint-add-btn svg {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+html body #app-content#app-content#app-content #complaints .complaint-add-btn:hover,
+html body #app-content#app-content#app-content #complaints .complaint-add-btn:focus-visible {
+  border-color: #202123 !important;
+  background: #202123 !important;
+  color: #ffffff !important;
+  outline: none !important;
+  transform: translateY(-1px);
 }
 
 @media (max-width: 760px) {
@@ -28050,8 +28077,10 @@ html body #app-content#app-content#app-content #complaints .complaint-add-btn {
   }
 
   html body #app-content#app-content#app-content #complaints .complaint-add-btn {
-    width: 100% !important;
+    width: 42px !important;
+    min-width: 42px !important;
     margin-left: 0 !important;
+    align-self: flex-end !important;
   }
 }
 
