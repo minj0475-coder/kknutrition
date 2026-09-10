@@ -30,7 +30,7 @@ for (const recordType of ['의견·문의', '민원 대응', '영양교육']) {
   assert.equal(restored.recordType, recordType);
   assert.equal(restored.category, legacy.category);
   const copied = vm.runInContext('getComplaintCopyText(readComplaintRecords()[0])', context);
-  for (const label of [recordType, '주제·상황', '진행 내용', '안내·교육 문구', '결과·기록']) assert.ok(copied.includes(label));
+  for (const label of [recordType, '의도', '진행 내용', '안내·교육 내용 및 자료', '결과·기록']) assert.ok(copied.includes(label));
 }
 assert.equal(vm.runInContext('COMPLAINT_FIELDS.includes("recordType")', context), true);
 console.log('Communication records: legacy preservation, classification round-trip and copy labels passed');

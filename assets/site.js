@@ -897,13 +897,13 @@ function getComplaintCopyText(item) {
     item.title || "",
     `${item.school || ""} · ${item.date || ""}`,
     "",
-    "주제·상황",
+    "의도",
     item.caseText || "",
     "",
     "진행 내용",
     item.response || "",
     "",
-    "안내·교육 문구",
+    "안내·교육 내용 및 자료",
     item.phrase || "",
     "",
     "결과·기록",
@@ -1081,11 +1081,11 @@ function setupComplaintRecords() {
       copyBtn.className = "complaint-inline-copy";
       copyBtn.type = "button";
       copyBtn.textContent = "복사";
-      copyBtn.setAttribute("aria-label", "안내·교육 문구만 복사");
+      copyBtn.setAttribute("aria-label", "안내·교육 내용 및 자료만 복사");
       copyBtn.addEventListener("click", () => {
         writeComplaintText(body, () => {
           copyBtn.textContent = "복사됨";
-          showToast("안내·교육 문구를 복사했습니다.");
+          showToast("안내·교육 내용 및 자료를 복사했습니다.");
           window.setTimeout(() => { copyBtn.textContent = "복사"; }, 1200);
         });
       });
@@ -1163,9 +1163,9 @@ function setupComplaintRecords() {
 
       card.appendChild(makeTextNode("h2", "complaint-card-title", item.title));
       card.appendChild(makeTextNode("p", "complaint-card-meta", `${item.school} · ${item.date}`));
-      appendSection(card, "주제·상황", item.caseText);
+      appendSection(card, "의도", item.caseText);
       appendSection(card, "진행 내용", item.response);
-      appendSection(card, "안내·교육 문구", item.phrase, { copyPhrase: true });
+      appendSection(card, "안내·교육 내용 및 자료", item.phrase, { copyPhrase: true });
       appendSection(card, "결과·기록", item.result);
       list.appendChild(card);
     });
