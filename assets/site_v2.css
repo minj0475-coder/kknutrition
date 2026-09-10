@@ -28043,7 +28043,7 @@ html body #app-content#app-content#app-content #complaints .complaint-add-btn {
   min-height: 42px !important;
   margin-left: auto !important;
   padding: 0 !important;
-  border: 1px solid rgba(32, 33, 35, 0.12) !important;
+  border: 0 !important;
   border-radius: 13px !important;
   background: #ffffff !important;
   color: #202123 !important;
