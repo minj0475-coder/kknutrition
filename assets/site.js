@@ -1176,6 +1176,7 @@ function setupComplaintRecords() {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "complaint-filter-chip";
+    button.className = "complaint-filter-chip audience-filter";
     button.textContent = audience;
     button.setAttribute("aria-label", `${audience} 대상 기록 보기`);
     button.setAttribute("aria-pressed", audience === activeAudience ? "true" : "false");
@@ -1193,6 +1194,7 @@ function setupComplaintRecords() {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "complaint-filter-chip";
+    button.className = "complaint-filter-chip record-type-filter";
     button.textContent = recordType;
     button.setAttribute("aria-label", recordType + " 분류 기록 보기");
     button.setAttribute("aria-pressed", recordType === activeRecordType ? "true" : "false");

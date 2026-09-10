@@ -27992,6 +27992,69 @@ html body #app-content #academicModal :is(
   }
 }
 
+/* Filter hierarchy: audience uses black, classification uses the portal pink accent. */
+html body #app-content#app-content#app-content #complaints .complaint-controls {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 12px 18px !important;
+  padding: 14px 16px !important;
+}
+
+html body #app-content#app-content#app-content #complaints .complaint-filter-group {
+  flex: 0 1 auto !important;
+  gap: 10px !important;
+}
+
+html body #app-content#app-content#app-content #complaints .complaint-filter-row {
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+}
+
+html body #app-content#app-content#app-content #complaints .complaint-filter-chip {
+  border-color: rgba(32, 33, 35, 0.12) !important;
+  background: #ffffff !important;
+  color: #202123 !important;
+  -webkit-text-fill-color: #202123 !important;
+}
+
+html body #app-content#app-content#app-content #complaints .complaint-filter-chip.audience-filter[aria-pressed="true"] {
+  border-color: #202123 !important;
+  background: #202123 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html body #app-content#app-content#app-content #complaints .complaint-filter-chip.record-type-filter[aria-pressed="true"] {
+  border-color: #efa6b1 !important;
+  background: #efa6b1 !important;
+  color: #202123 !important;
+  -webkit-text-fill-color: #202123 !important;
+}
+
+html body #app-content#app-content#app-content #complaints .complaint-add-btn {
+  flex: 0 0 auto !important;
+  margin-left: auto !important;
+}
+
+@media (max-width: 760px) {
+  html body #app-content#app-content#app-content #complaints .complaint-controls {
+    align-items: stretch !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+
+  html body #app-content#app-content#app-content #complaints .complaint-filter-group {
+    width: 100% !important;
+    align-items: flex-start !important;
+  }
+
+  html body #app-content#app-content#app-content #complaints .complaint-add-btn {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+}
+
 /* Classification chips keep the portal's soft pink accent. */
 html body #app-content#app-content#app-content #complaints .complaint-chip.record-type {
   border-color: #efa6b1 !important;
