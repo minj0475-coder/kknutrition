@@ -818,6 +818,7 @@ const COMPLAINT_RECORDS_KEY = "kkulkkoori_complaint_records_v1";
 const COMPLAINT_LAST_SCHOOL_KEY = "kkulkkoori_complaint_last_school_v1";
 const COMPLAINT_AUDIENCES = ["전체", "관리자", "행정실", "교직원", "학생", "학부모", "기타"];
 const COMPLAINT_FIELDS = [
+  "recordType",
   "title",
   "school",
   "audience",
@@ -845,6 +846,7 @@ function normalizeComplaintRecord(item) {
       ? String(item.audience)
       : "기타",
     category: String(item && item.category || "").trim(),
+    recordType: ["의견·문의", "민원 대응", "영양교육"].includes(item && item.recordType) ? item.recordType : "",
     caseText: String(item && item.caseText || ""),
     response: String(item && item.response || ""),
     phrase: String(item && item.phrase || ""),
@@ -890,20 +892,20 @@ function saveComplaintRecords(items, options = {}) {
 
 function getComplaintCopyText(item) {
   return [
-    `[${item.audience || "기타"}] ${item.category || "미분류"}`,
+    `[${item.audience || "기타"}] ${[item.recordType, item.category].filter(Boolean).join(" · ") || "미분류"}`,
     item.title || "",
     `${item.school || ""} · ${item.date || ""}`,
     "",
-    "사례",
+    "주제·상황",
     item.caseText || "",
     "",
-    "대응",
+    "진행 내용",
     item.response || "",
     "",
-    "대응 문구",
+    "안내·교육 문구",
     item.phrase || "",
     "",
-    "처리 결과",
+    "결과·기록",
     item.result || ""
   ].join("\n").trim();
 }
@@ -956,6 +958,7 @@ function setupComplaintRecords() {
     date: document.getElementById("complaintDateInput"),
     audience: document.getElementById("complaintAudienceInput"),
     category: document.getElementById("complaintCategoryInput"),
+    recordType: document.getElementById("complaintTypeInput"),
     caseText: document.getElementById("complaintCaseInput"),
     response: document.getElementById("complaintResponseInput"),
     phrase: document.getElementById("complaintPhraseInput"),
@@ -1033,6 +1036,7 @@ function setupComplaintRecords() {
     setField("date", record.date || getKoreanDateValue());
     setField("audience", record.audience || "학부모");
     setField("category", record.category);
+    setField("recordType", record.recordType);
     setField("caseText", record.caseText);
     setField("response", record.response);
     setField("phrase", record.phrase);
@@ -1071,11 +1075,11 @@ function setupComplaintRecords() {
       copyBtn.className = "complaint-inline-copy";
       copyBtn.type = "button";
       copyBtn.textContent = "복사";
-      copyBtn.setAttribute("aria-label", "대응 문구만 복사");
+      copyBtn.setAttribute("aria-label", "안내·교육 문구만 복사");
       copyBtn.addEventListener("click", () => {
         writeComplaintText(body, () => {
           copyBtn.textContent = "복사됨";
-          showToast("대응 문구를 복사했습니다.");
+          showToast("안내·교육 문구를 복사했습니다.");
           window.setTimeout(() => { copyBtn.textContent = "복사"; }, 1200);
         });
       });
@@ -1092,7 +1096,7 @@ function setupComplaintRecords() {
     empty.textContent = "";
     empty.hidden = true;
     if (!items.length) {
-      empty.innerHTML = "아직 등록된 의견·민원 대응 기록이 없습니다.<br>새 기록을 추가해 보세요.";
+      empty.innerHTML = "아직 등록된 급식 소통·교육 기록이 없습니다.<br>새 기록을 추가해 보세요.";
       empty.hidden = false;
       return;
     }
@@ -1110,29 +1114,30 @@ function setupComplaintRecords() {
       top.className = "complaint-card-top";
       const chips = document.createElement("div");
       chips.className = "complaint-card-chips";
+      if (item.recordType) chips.appendChild(makeTextNode("span", "complaint-chip", item.recordType));
       chips.appendChild(makeTextNode("span", "complaint-chip audience", item.audience || "기타"));
-      chips.appendChild(makeTextNode("span", "complaint-chip", item.category || "미분류"));
+      if (item.category) chips.appendChild(makeTextNode("span", "complaint-chip", item.category));
       const actions = document.createElement("div");
       actions.className = "complaint-card-actions";
       const editRecordBtn = document.createElement("button");
       editRecordBtn.className = "icon-only-btn complaint-icon-btn complaint-record-edit";
       editRecordBtn.type = "button";
       editRecordBtn.title = "수정";
-      editRecordBtn.setAttribute("aria-label", "의견·민원 대응 기록 수정");
+      editRecordBtn.setAttribute("aria-label", "급식 소통·교육 기록 수정");
       editRecordBtn.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 20h4l11-11a2.8 2.8 0 0 0-4-4L4 16v4ZM13.5 6.5l4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
       editRecordBtn.addEventListener("click", () => openModal(item));
       const copyAllBtn = document.createElement("button");
       copyAllBtn.className = "icon-only-btn complaint-icon-btn";
       copyAllBtn.type = "button";
       copyAllBtn.title = "전체 복사";
-      copyAllBtn.setAttribute("aria-label", "의견·민원 대응 기록 전체 복사");
+      copyAllBtn.setAttribute("aria-label", "급식 소통·교육 기록 전체 복사");
       copyAllBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
       copyAllBtn.addEventListener("click", () => writeComplaintText(getComplaintCopyText(item), () => showToast("전체 내용을 복사했습니다.")));
       const deleteBtn = document.createElement("button");
       deleteBtn.className = "icon-only-btn complaint-icon-btn danger";
       deleteBtn.type = "button";
       deleteBtn.title = "삭제";
-      deleteBtn.setAttribute("aria-label", "의견·민원 대응 기록 삭제");
+      deleteBtn.setAttribute("aria-label", "급식 소통·교육 기록 삭제");
       deleteBtn.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="m19 6-1 14H6L5 6"/><path d="M10 11v5M14 11v5"/></svg>';
       deleteBtn.addEventListener("click", () => {
         if (!window.confirm("이 기록을 삭제할까요?")) return;
@@ -1152,10 +1157,10 @@ function setupComplaintRecords() {
 
       card.appendChild(makeTextNode("h2", "complaint-card-title", item.title));
       card.appendChild(makeTextNode("p", "complaint-card-meta", `${item.school} · ${item.date}`));
-      appendSection(card, "사례", item.caseText);
-      appendSection(card, "대응", item.response);
-      appendSection(card, "대응 문구", item.phrase, { copyPhrase: true });
-      appendSection(card, "처리 결과", item.result);
+      appendSection(card, "주제·상황", item.caseText);
+      appendSection(card, "진행 내용", item.response);
+      appendSection(card, "안내·교육 문구", item.phrase, { copyPhrase: true });
+      appendSection(card, "결과·기록", item.result);
       list.appendChild(card);
     });
     syncComplaintEditControls();
@@ -1203,6 +1208,7 @@ function setupComplaintRecords() {
       date: inputs.date.value || getKoreanDateValue(),
       audience: inputs.audience.value,
       category: inputs.category.value,
+      recordType: inputs.recordType.value,
       caseText: inputs.caseText.value,
       response: inputs.response.value,
       phrase: inputs.phrase.value,
@@ -2955,7 +2961,7 @@ const MOBILE_PAGE_TITLES = {
   monthly: "일정",
   annual: "일정",
   "today-menu": "급식노트",
-  complaints: "의견·민원 대응",
+  complaints: "급식 소통·교육",
   bookmarks: "북마크",
   "promo-contacts": "업체 관리",
   staff: "조리종사원"
@@ -3751,7 +3757,7 @@ function getSiteSearchPageLabel(section) {
     monthly: "한 달 일정",
     annual: "연간 일정",
     "today-menu": "급식노트",
-    complaints: "의견·민원 대응",
+    complaints: "급식 소통·교육",
     bookmarks: "북마크",
     "promo-contacts": "업체 연락처",
     staff: "조리종사원"
@@ -3820,7 +3826,7 @@ function collectSiteSearchStorageEntries(pushEntry) {
     { key: "kknutrition_memo", group: "메모장", href: "#homeMemoCard" },
     { key: "kkulkkoori_work_notes_v1", group: "생각서랍", href: "#workNotes" },
     { key: "kkulkkoori_message_templates_v1", group: "문자내용 정리", href: "#messageTemplates" },
-    { key: "kkulkkoori_complaint_records_v1", group: "의견·민원 대응", href: "#complaints" },
+    { key: "kkulkkoori_complaint_records_v1", group: "급식 소통·교육", href: "#complaints" },
     { key: "cookingMethodUploadedData_v5", group: "조리방법 자료", href: "#todayMenuCooking" },
     { key: "kkulkkoori_cheongsu_recipes_v3", group: "급식노트", href: "#today-menu" },
     { key: "kkulkkoori_academic_events_v1", group: "학사일정", href: "#monthly-item-2" },
