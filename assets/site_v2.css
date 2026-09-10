@@ -28013,7 +28013,7 @@ html body #app-content#app-content#app-content #complaints .complaint-filter-row
 
 html body #app-content#app-content#app-content #complaints .complaint-filter-chip {
   border-color: rgba(32, 33, 35, 0.12) !important;
-  background: #ffffff !important;
+  background: transparent !important;
   color: #202123 !important;
   -webkit-text-fill-color: #202123 !important;
 }
@@ -28045,9 +28045,9 @@ html body #app-content#app-content#app-content #complaints .complaint-add-btn {
   padding: 0 !important;
   border: 0 !important;
   border-radius: 13px !important;
-  background: #ffffff !important;
+  background: transparent !important;
   color: #202123 !important;
-  box-shadow: 0 8px 18px rgba(32, 33, 35, 0.08) !important;
+  box-shadow: none !important;
 }
 
 html body #app-content#app-content#app-content #complaints .complaint-add-btn svg {
