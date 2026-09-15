@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://minj0475-coder.github.io/kknutrition/assets/og-image.png?v=20260704_001">
 <meta property="og:url" content="https://minj0475-coder.github.io/kknutrition/">
 <title>급식 업무 포털</title>
-<link rel="stylesheet" href="assets/site_v2.css?v=20260910_009">
+<link rel="stylesheet" href="assets/site_v2.css?v=20260915_001">
 <link rel="manifest" href="manifest.json?v=6">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/app-icon-192.png?v=6">
 <link rel="apple-touch-icon" href="assets/app-icon-180.png?v=6">
@@ -833,6 +833,13 @@
 <button id="editBtnAnnual" class="fab-edit-btn promo-btn quiet-edit-toggle" type="button" data-target="annual">수정</button>
 </main></section>
 <section id="today-menu" class="page-section"><main class="wrap">
+<nav class="today-menu-section-tabs" aria-label="급식노트 메뉴">
+  <a class="today-menu-section-tab is-current" href="#today-menu" aria-current="page">급식노트</a>
+  <a class="today-menu-section-tab" href="https://script.google.com/macros/s/AKfycbxlkWYnClwpfngjZFRT-xNa0NwukMw2MDZYu-nfuG4DhDKDoq1np7gcpw3sXfOtAd7T/exec" target="_blank" rel="noopener noreferrer">
+    <span>오늘의 영양 퀴즈</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5h10v10M19 5 8 16M5 9v10h10" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</nav>
 <section id="todayMenuCooking">
   <div class="card">
     <h2 class="section-title">조리방법 조회</h2>
@@ -1346,7 +1353,7 @@
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('service-worker.js?v=20260910_010');
+      navigator.serviceWorker.register('service-worker.js?v=20260915_001');
     });
   }
 </script>
