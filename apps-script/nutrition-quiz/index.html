@@ -556,12 +556,13 @@
       const badgeText = document.getElementById('load-badge-text');
       const message = document.getElementById('load-message');
       quizLoadState = state;
+      message.classList.toggle('hidden', state === 'ready');
 
       if (state === 'ready') {
         startBtn.disabled = false;
         startText.textContent = '퀴즈 시작하기';
         badgeText.textContent = count + '문제 준비됨';
-        message.textContent = '준비가 끝났어요. 편안하게 시작해 보세요.';
+        message.textContent = '';
       } else if (state === 'empty') {
         startBtn.disabled = true;
         startText.textContent = '오늘의 퀴즈 준비 중';
