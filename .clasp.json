@@ -1,0 +1,16 @@
+{
+  "scriptId": "1Tn0-Lrc1mul-mU2YPqV0NukqeLywOY2i8jEOgfE3GlD9Y0pMhFJh8VLP",
+  "rootDir": "apps-script/nutrition-quiz",
+  "scriptExtensions": [
+    ".js",
+    ".gs"
+  ],
+  "htmlExtensions": [
+    ".html"
+  ],
+  "jsonExtensions": [
+    ".json"
+  ],
+  "filePushOrder": [],
+  "skipSubdirectories": false
+}
