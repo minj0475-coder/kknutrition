@@ -3705,7 +3705,12 @@ function buildSidebarToc() {
         { href: "school-lunch-tv.html?v=20260909_009", text: "급식TV", newTab: true },
         { id: "mealCommittee", text: "학교급식소위원회" },
         { id: "workNotes", text: "생각서랍" },
-        { id: "messageTemplates", text: "문자내용 정리" }
+        { id: "messageTemplates", text: "문자내용 정리" },
+        {
+          href: "https://script.google.com/macros/s/AKfycbxlkWYnClwpfngjZFRT-xNa0NwukMw2MDZYu-nfuG4DhDKDoq1np7gcpw3sXfOtAd7T/exec",
+          text: "오늘의 영양 퀴즈",
+          newTab: true
+        }
       ].filter(item => item.href || document.getElementById(item.id))
       : pageId === "complaints" ? []
       : section ? [...section.querySelectorAll(":scope main section.card h2, :scope main section.card summary")]
