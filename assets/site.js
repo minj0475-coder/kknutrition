@@ -3710,6 +3710,11 @@ function buildSidebarToc() {
           href: "https://script.google.com/macros/s/AKfycbxlkWYnClwpfngjZFRT-xNa0NwukMw2MDZYu-nfuG4DhDKDoq1np7gcpw3sXfOtAd7T/exec",
           text: "오늘의 영양 퀴즈",
           newTab: true
+        },
+        {
+          href: "https://docs.google.com/spreadsheets/d/1rzXMeRr3jqkO8wnYiIIYNa_gLj2nK0vzh2l6hL3x0rI/edit#gid=20260915",
+          text: "퀴즈 응답 현황",
+          newTab: true
         }
       ].filter(item => item.href || document.getElementById(item.id))
       : pageId === "complaints" ? []
