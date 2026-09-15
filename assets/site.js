@@ -3025,6 +3025,42 @@ function restoreHashBeforeFirstRender() {
   }
 }
 
+function stabilizeInitialNestedHash() {
+  const initialHash = window.location.hash;
+  const targetEl = initialHash ? document.querySelector(initialHash) : null;
+  if (!targetEl || targetEl.classList.contains("page-section")) return;
+
+  let cancelled = false;
+  const timers = [];
+  const cancel = () => {
+    cancelled = true;
+    timers.forEach(timer => window.clearTimeout(timer));
+    cleanup();
+  };
+  const cleanup = () => {
+    ["pointerdown", "touchstart", "wheel", "keydown"].forEach(eventName => {
+      window.removeEventListener(eventName, cancel);
+    });
+  };
+  const restorePosition = () => {
+    if (cancelled || window.location.hash !== initialHash || !targetEl.isConnected) return;
+    targetEl.scrollIntoView({ behavior: "auto", block: "start" });
+  };
+
+  ["pointerdown", "touchstart", "wheel", "keydown"].forEach(eventName => {
+    window.addEventListener(eventName, cancel, { passive: true, once: true });
+  });
+
+  [80, 260, 700, 1500, 3000].forEach(delay => {
+    timers.push(window.setTimeout(restorePosition, delay));
+  });
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(restorePosition).catch(() => {});
+  }
+  window.addEventListener("load", restorePosition, { once: true });
+  timers.push(window.setTimeout(cleanup, 3200));
+}
+
 function updateTabs() {
   const rawHash = window.location.hash;
   const requestedHash = rawHash || getStoredActiveHash();
@@ -3073,6 +3109,7 @@ document.addEventListener('DOMContentLoaded', () => {
   restoreHashBeforeFirstRender();
   buildSidebarToc();
   updateTabs();
+  stabilizeInitialNestedHash();
 });
 
 function setupUnsavedNavigationGuard() {
