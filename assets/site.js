@@ -3707,7 +3707,7 @@ function buildSidebarToc() {
         { id: "workNotes", text: "생각서랍" },
         { id: "messageTemplates", text: "문자내용 정리" },
         {
-          href: "https://script.google.com/macros/s/AKfycbxlkWYnClwpfngjZFRT-xNa0NwukMw2MDZYu-nfuG4DhDKDoq1np7gcpw3sXfOtAd7T/exec",
+          href: "https://script.google.com/macros/s/AKfycbxZaIRsof1Lp1Fu3f-xEL3HE9gADGUHEMt4sVu1FyHzV7lgP6TdhjQC7ox3nlRxMpM3/exec",
           text: "오늘의 영양 퀴즈",
           newTab: true
         },
