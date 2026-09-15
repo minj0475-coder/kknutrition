@@ -67,7 +67,6 @@
       box-shadow: 0 18px 55px rgba(32, 33, 35, .08);
     }
 
-    .section-head,
     .quiz-top,
     .result-top {
       display: flex;
@@ -85,14 +84,6 @@
       letter-spacing: -.025em;
     }
 
-    .section-copy {
-      margin: 5px 0 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.55;
-    }
-
-    .status-badge,
     .progress-badge {
       flex: 0 0 auto;
       display: inline-flex;
@@ -106,13 +97,6 @@
       font-size: 12px;
       font-weight: 800;
       white-space: nowrap;
-    }
-
-    .status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--pink);
     }
 
     .segmented {
@@ -430,7 +414,6 @@
       body { padding: 22px 12px 36px; }
       .hero { margin-bottom: 18px; }
       .surface { padding: 20px 16px; border-radius: 20px; }
-      .section-head { align-items: center; }
       .field-grid { grid-template-columns: 1fr 1fr; gap: 12px 10px; }
       .input-group.full { grid-column: 1 / -1; }
       .question { font-size: 19px; }
@@ -441,8 +424,6 @@
     @media (max-width: 360px) {
       body { padding-inline: 9px; }
       .surface { padding-inline: 13px; }
-      .section-head { align-items: flex-start; }
-      .status-badge { padding-inline: 8px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -457,14 +438,6 @@
     </header>
 
     <section id="user-screen" class="surface">
-      <div class="section-head">
-        <div>
-          <h2 class="section-title">참여 정보</h2>
-          <p class="section-copy">참여 유형과 정보를 입력해 주세요.</p>
-        </div>
-        <span class="status-badge" id="load-badge"><span class="status-dot"></span><span id="load-badge-text">불러오는 중</span></span>
-      </div>
-
       <div class="segmented" role="tablist" aria-label="참여 유형">
         <button type="button" class="tab-btn active" id="tab-student" role="tab" aria-selected="true" onclick="switchUserType('student')">학생</button>
         <button type="button" class="tab-btn" id="tab-staff" role="tab" aria-selected="false" onclick="switchUserType('staff')">교직원</button>
@@ -550,10 +523,9 @@
     let quizLoadState = 'loading';
     let answerLocked = false;
 
-    function setLoadState(state, count) {
+    function setLoadState(state) {
       const startBtn = document.getElementById('start-btn');
       const startText = document.getElementById('start-btn-text');
-      const badgeText = document.getElementById('load-badge-text');
       const message = document.getElementById('load-message');
       quizLoadState = state;
       message.classList.toggle('hidden', state === 'ready');
@@ -561,36 +533,32 @@
       if (state === 'ready') {
         startBtn.disabled = false;
         startText.textContent = '퀴즈 시작하기';
-        badgeText.textContent = count + '문제 준비됨';
         message.textContent = '';
       } else if (state === 'empty') {
         startBtn.disabled = true;
         startText.textContent = '오늘의 퀴즈 준비 중';
-        badgeText.textContent = '준비 중';
         message.textContent = '오늘 날짜의 문제가 등록되면 바로 참여할 수 있어요.';
       } else if (state === 'error') {
         startBtn.disabled = true;
         startText.textContent = '다시 불러와 주세요';
-        badgeText.textContent = '연결 확인';
         message.textContent = '문제를 불러오지 못했어요. 잠시 후 새로고침해 주세요.';
       } else {
         startBtn.disabled = true;
         startText.textContent = '퀴즈 불러오는 중…';
-        badgeText.textContent = '불러오는 중';
         message.textContent = '오늘의 문제를 준비하고 있어요.';
       }
     }
 
     function loadQuizzes() {
-      setLoadState('loading', 0);
+      setLoadState('loading');
       google.script.run
         .withSuccessHandler(function(data) {
           quizzes = Array.isArray(data) ? data : [];
-          setLoadState(quizzes.length ? 'ready' : 'empty', quizzes.length);
+          setLoadState(quizzes.length ? 'ready' : 'empty');
         })
         .withFailureHandler(function() {
           quizzes = [];
-          setLoadState('error', 0);
+          setLoadState('error');
         })
         .getTodayQuizzes();
     }
