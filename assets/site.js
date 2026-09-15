@@ -3739,20 +3739,11 @@ function buildSidebarToc() {
     const headings = getSidebarCustomHeadings(customGroup) || (pageId === "today-menu"
       ? [
         { id: "todayMenuCooking", text: "조리방법 조회" },
-        { href: "school-lunch-tv.html?v=20260909_009", text: "급식TV", newTab: true },
         { id: "mealCommittee", text: "학교급식소위원회" },
         { id: "workNotes", text: "생각서랍" },
         { id: "messageTemplates", text: "문자내용 정리" },
-        {
-          href: "https://script.google.com/macros/s/AKfycbxZaIRsof1Lp1Fu3f-xEL3HE9gADGUHEMt4sVu1FyHzV7lgP6TdhjQC7ox3nlRxMpM3/exec",
-          text: "오늘의 영양 퀴즈",
-          newTab: true
-        },
-        {
-          href: "https://docs.google.com/spreadsheets/d/1rzXMeRr3jqkO8wnYiIIYNa_gLj2nK0vzh2l6hL3x0rI/edit#gid=20260915",
-          text: "퀴즈 응답 현황",
-          newTab: true
-        }
+        { id: "nutritionQuizHub", text: "오늘의 영양 퀴즈" },
+        { href: "school-lunch-tv.html?v=20260909_009", text: "급식TV", newTab: true }
       ].filter(item => item.href || document.getElementById(item.id))
       : pageId === "complaints" ? []
       : section ? [...section.querySelectorAll(":scope main section.card h2, :scope main section.card summary")]

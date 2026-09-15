@@ -28337,3 +28337,265 @@ html body #app-content #today-menu .work-note-card.is-picker-open
     box-shadow: none !important;
   }
 }
+
+/* Nutrition quiz hub: one calm, unified destination for participation and results. */
+#today-menu .nutrition-quiz-hub {
+  position: relative;
+  display: grid;
+  gap: 28px;
+  overflow: hidden;
+  padding: clamp(30px, 5vw, 54px);
+  border: 1px solid rgba(63, 58, 53, .08);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 14% 8%, rgba(239, 166, 166, .16), transparent 34%),
+    linear-gradient(145deg, #fffdfc 0%, #ffffff 56%, #fbfaf8 100%);
+  box-shadow: 0 20px 55px rgba(63, 58, 53, .08);
+}
+
+#today-menu .nutrition-quiz-hub::after {
+  position: absolute;
+  right: -72px;
+  bottom: -86px;
+  width: 220px;
+  height: 220px;
+  border: 1px solid rgba(239, 166, 166, .18);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
+
+#today-menu .nutrition-quiz-hero {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#today-menu .nutrition-quiz-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 18px;
+  border: 1px solid rgba(63, 58, 53, .08);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, .9);
+  color: #3f3a35;
+  box-shadow: 0 10px 30px rgba(63, 58, 53, .09);
+}
+
+#today-menu .nutrition-quiz-mark svg {
+  width: 26px;
+  height: 26px;
+}
+
+#today-menu .nutrition-quiz-kicker {
+  margin: 0 0 9px;
+  color: #c97878;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+
+#today-menu .nutrition-quiz-hero h2 {
+  margin: 0;
+  color: #202123;
+  font-size: clamp(27px, 4vw, 40px);
+  font-weight: 820;
+  letter-spacing: -.045em;
+  line-height: 1.15;
+}
+
+#today-menu .nutrition-quiz-hero > p:last-child {
+  margin: 14px 0 0;
+  color: #6b7280;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+#today-menu .nutrition-quiz-actions {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  width: min(100%, 900px);
+  margin: 0 auto;
+}
+
+#today-menu .nutrition-quiz-link {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 22px;
+  align-items: center;
+  gap: 15px;
+  min-height: 132px;
+  padding: 21px;
+  border: 1px solid #e8e7e4;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, .92);
+  color: #202123;
+  box-shadow: 0 8px 24px rgba(32, 33, 35, .05);
+  text-decoration: none;
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+}
+
+#today-menu .nutrition-quiz-link-primary {
+  border-color: rgba(239, 166, 166, .52);
+  background: linear-gradient(140deg, #fff7f7 0%, #ffffff 76%);
+}
+
+#today-menu .nutrition-quiz-link:hover,
+#today-menu .nutrition-quiz-link:focus-visible {
+  border-color: rgba(201, 120, 120, .58);
+  background-color: #fff;
+  box-shadow: 0 16px 34px rgba(63, 58, 53, .11);
+  outline: none;
+  transform: translateY(-3px);
+}
+
+#today-menu .nutrition-quiz-link:focus-visible {
+  box-shadow: 0 0 0 4px rgba(239, 166, 166, .2), 0 16px 34px rgba(63, 58, 53, .11);
+}
+
+#today-menu .nutrition-quiz-link-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: #f7f7f8;
+  color: #3f3a35;
+}
+
+#today-menu .nutrition-quiz-link-primary .nutrition-quiz-link-icon {
+  background: #fce7e7;
+  color: #a76363;
+}
+
+#today-menu .nutrition-quiz-link-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+#today-menu .nutrition-quiz-link-copy {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+#today-menu .nutrition-quiz-link-label {
+  color: #a76363;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .05em;
+}
+
+#today-menu .nutrition-quiz-link-copy strong {
+  color: #202123;
+  font-size: 17px;
+  font-weight: 780;
+  letter-spacing: -.02em;
+  line-height: 1.35;
+}
+
+#today-menu .nutrition-quiz-link-copy > span:last-child {
+  color: #7b7f87;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+#today-menu .nutrition-quiz-link-arrow {
+  width: 21px;
+  height: 21px;
+  color: #9a9ca2;
+  transition: transform .2s ease, color .2s ease;
+}
+
+#today-menu .nutrition-quiz-link:hover .nutrition-quiz-link-arrow,
+#today-menu .nutrition-quiz-link:focus-visible .nutrition-quiz-link-arrow {
+  color: #a76363;
+  transform: translateX(3px);
+}
+
+.dark-mode #today-menu .nutrition-quiz-hub {
+  border-color: rgba(255, 255, 255, .08);
+  background:
+    radial-gradient(circle at 14% 8%, rgba(239, 166, 166, .12), transparent 34%),
+    linear-gradient(145deg, #242425 0%, #202123 100%);
+}
+
+.dark-mode #today-menu .nutrition-quiz-mark,
+.dark-mode #today-menu .nutrition-quiz-link {
+  border-color: rgba(255, 255, 255, .1);
+  background: #2b2c2f;
+  color: #f7f7f8;
+}
+
+.dark-mode #today-menu .nutrition-quiz-link-primary {
+  border-color: rgba(239, 166, 166, .35);
+  background: linear-gradient(140deg, #382d2f 0%, #2b2c2f 76%);
+}
+
+.dark-mode #today-menu .nutrition-quiz-hero h2,
+.dark-mode #today-menu .nutrition-quiz-link-copy strong {
+  color: #f7f7f8;
+}
+
+.dark-mode #today-menu .nutrition-quiz-hero > p:last-child,
+.dark-mode #today-menu .nutrition-quiz-link-copy > span:last-child {
+  color: #b4b7be;
+}
+
+.dark-mode #today-menu .nutrition-quiz-link-icon {
+  background: #38393c;
+  color: #e8e8ea;
+}
+
+.dark-mode #today-menu .nutrition-quiz-link-primary .nutrition-quiz-link-icon {
+  background: #533b3f;
+  color: #f3c4c4;
+}
+
+@media (max-width: 760px) {
+  #today-menu .nutrition-quiz-hub {
+    gap: 24px;
+    padding: 28px 18px 20px;
+    border-radius: 24px;
+  }
+
+  #today-menu .nutrition-quiz-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  #today-menu .nutrition-quiz-link {
+    grid-template-columns: 42px minmax(0, 1fr) 18px;
+    gap: 10px;
+    min-height: 112px;
+    padding: 16px;
+  }
+
+  #today-menu .nutrition-quiz-link-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  #today-menu .nutrition-quiz-link-icon svg {
+    width: 21px;
+    height: 21px;
+  }
+
+  #today-menu .nutrition-quiz-link-copy strong {
+    font-size: 15px;
+  }
+
+  #today-menu .nutrition-quiz-link-arrow {
+    width: 18px;
+    height: 18px;
+  }
+}
