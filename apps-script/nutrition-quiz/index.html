@@ -557,7 +557,7 @@
       } else if (state === 'empty') {
         startBtn.disabled = true;
         startText.textContent = '오늘의 퀴즈 준비 중';
-        message.textContent = '오늘 날짜의 문제가 등록되면 바로 참여할 수 있어요.';
+        message.textContent = '문제를 준비하지 못했어요. 잠시 후 새로고침해 주세요.';
       } else if (state === 'error') {
         startBtn.disabled = true;
         startText.textContent = '다시 불러와 주세요';
@@ -601,7 +601,7 @@
         return;
       }
       if (!quizzes || quizzes.length === 0) {
-        alert('오늘 날짜로 등록된 퀴즈가 없습니다.');
+        alert('오늘의 퀴즈를 준비하지 못했어요. 잠시 후 새로고침해 주세요.');
         return;
       }
 
