@@ -19,7 +19,7 @@
 <meta name="twitter:image" content="https://minj0475-coder.github.io/kknutrition/assets/og-image.png?v=20260704_001">
 <meta property="og:url" content="https://minj0475-coder.github.io/kknutrition/">
 <title>급식 업무 포털</title>
-<link rel="stylesheet" href="assets/site_v2.css?v=20260915_005">
+<link rel="stylesheet" href="assets/site_v2.css?v=20260917_001">
 <link rel="manifest" href="manifest.json?v=6">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/app-icon-192.png?v=6">
 <link rel="apple-touch-icon" href="assets/app-icon-180.png?v=6">
@@ -371,6 +371,32 @@
         <span>완료</span>
         <input id="academicEventDone" type="checkbox">
       </label>
+      <fieldset class="academic-property wide academic-repeat-property">
+        <legend>반복</legend>
+        <div class="academic-repeat-options" aria-label="일정 반복 설정">
+          <label class="academic-repeat-option">
+            <input id="academicRepeatMonthly" type="checkbox" value="monthly">
+            <span class="academic-repeat-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M7 3v3M17 3v3M4 9h16M6 5h12a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/><path d="M9 14h6M12 11v6"/></svg>
+            </span>
+            <span class="academic-repeat-copy"><strong>매월 반복</strong><small>매달 같은 날짜</small></span>
+            <span class="academic-repeat-check" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="m7 12 3 3 7-7"/></svg>
+            </span>
+          </label>
+          <label class="academic-repeat-option">
+            <input id="academicRepeatYearly" type="checkbox" value="yearly">
+            <span class="academic-repeat-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.34 5.66M20 5v6h-6"/><path d="M12 8v4l2.5 1.5"/></svg>
+            </span>
+            <span class="academic-repeat-copy"><strong>매년 반복</strong><small>매년 같은 날짜</small></span>
+            <span class="academic-repeat-check" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="m7 12 3 3 7-7"/></svg>
+            </span>
+          </label>
+        </div>
+        <p class="academic-repeat-help">필요한 반복 주기 하나만 선택할 수 있어요.</p>
+      </fieldset>
       <div class="academic-property academic-color-property">
         <span>색상</span>
         <input id="academicEventColor" type="hidden" value="blue">
@@ -1371,7 +1397,7 @@
 <script src="assets/data-guard.js?v=20260902_001" defer></script>
 <script src="assets/bookmarks.js?v=20260908_006" defer></script>
 <script src="assets/allergy.js?v=20260828_002" defer></script>
-    <script src="assets/site.js?v=20260915_005" defer></script>
+    <script src="assets/site.js?v=20260917_001" defer></script>
 <script type="module" src="assets/firebase-init.js?v=20260909_003" defer></script>
 <script>
   if ('serviceWorker' in navigator) {

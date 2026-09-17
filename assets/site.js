@@ -5516,6 +5516,62 @@ function getAcademicEventEndKey(startKey, event) {
   return /^\d{4}-\d{2}-\d{2}$/.test(endKey) && endKey >= startKey ? endKey : startKey;
 }
 
+function getAcademicRepeatType(event) {
+  const repeat = String(event && event.repeat || "none");
+  return repeat === "monthly" || repeat === "yearly" ? repeat : "none";
+}
+
+function addAcademicDays(key, amount) {
+  const date = parseAcademicKey(key);
+  date.setDate(date.getDate() + amount);
+  return makeAcademicKey(date);
+}
+
+function getAcademicDaySpan(startKey, endKey) {
+  const start = parseAcademicKey(startKey);
+  const end = parseAcademicKey(endKey);
+  return Math.max(0, Math.round((end - start) / 86400000));
+}
+
+function makeAcademicRepeatCandidate(year, month, day) {
+  const date = new Date(year, month, day);
+  return date.getFullYear() === year && date.getMonth() === month && date.getDate() === day
+    ? makeAcademicKey(date)
+    : "";
+}
+
+function getAcademicOccurrenceRange(startKey, event, key) {
+  const originalEndKey = getAcademicEventEndKey(startKey, event);
+  const repeat = getAcademicRepeatType(event);
+  if (repeat === "none") {
+    return startKey <= key && key <= originalEndKey
+      ? { occurrenceStartKey: startKey, occurrenceEndKey: originalEndKey }
+      : null;
+  }
+
+  const originalStart = parseAcademicKey(startKey);
+  const target = parseAcademicKey(key);
+  const span = getAcademicDaySpan(startKey, originalEndKey);
+  const stepDays = repeat === "monthly" ? 28 : 365;
+  const candidateCount = Math.ceil(span / stepDays) + 2;
+
+  for (let offset = 0; offset < candidateCount; offset += 1) {
+    let candidate = "";
+    if (repeat === "monthly") {
+      const monthDate = new Date(target.getFullYear(), target.getMonth() - offset, 1);
+      candidate = makeAcademicRepeatCandidate(monthDate.getFullYear(), monthDate.getMonth(), originalStart.getDate());
+    } else {
+      candidate = makeAcademicRepeatCandidate(target.getFullYear() - offset, originalStart.getMonth(), originalStart.getDate());
+    }
+    if (!candidate || candidate < startKey) continue;
+    const candidateEnd = addAcademicDays(candidate, span);
+    if (candidate <= key && key <= candidateEnd) {
+      return { occurrenceStartKey: candidate, occurrenceEndKey: candidateEnd };
+    }
+  }
+  return null;
+}
+
 function isAcademicNonWorkingDay(key) {
   const day = parseAcademicKey(key).getDay();
   if (day === 0 || day === 6) return true;
@@ -5530,10 +5586,17 @@ function getUserAcademicEventOccurrencesForKey(userEvents, key) {
     getUserAcademicEventsForKey(userEvents, startKey).forEach((event, userIndex) => {
       if (!(event.title || event.memo || event.url)) return;
       if (isWeekend && !event.includeWeekends) return;
-      const endKey = getAcademicEventEndKey(startKey, event);
+      const range = getAcademicOccurrenceRange(startKey, event, key);
+      if (!range) return;
       const skipDates = Array.isArray(event.skipDates) ? event.skipDates : [];
-      if (startKey <= key && key <= endKey && !skipDates.includes(key)) {
-        occurrences.push({ event, userIndex, startKey, endKey });
+      if (!skipDates.includes(key)) {
+        occurrences.push({
+          event,
+          userIndex,
+          startKey,
+          endKey: range.occurrenceEndKey,
+          occurrenceStartKey: range.occurrenceStartKey
+        });
       }
     });
   });
@@ -5556,7 +5619,7 @@ function getBuiltInAcademicEvents(key) {
 
 function getAcademicEventsForKey(key, userEvents) {
   const events = getBuiltInAcademicEvents(key).map(event => ({ ...event, source: "built-in" }));
-  getUserAcademicEventOccurrencesForKey(userEvents, key).forEach(({ event: user, userIndex, startKey, endKey }) => {
+  getUserAcademicEventOccurrencesForKey(userEvents, key).forEach(({ event: user, userIndex, startKey, endKey, occurrenceStartKey }) => {
     events.push({
       title: user.title || "사용자 일정",
       memo: user.memo || "",
@@ -5565,10 +5628,12 @@ function getAcademicEventsForKey(key, userEvents) {
       done: Boolean(user.done),
       color: user.color || "blue",
       weight: user.weight || "normal",
+      repeat: getAcademicRepeatType(user),
       type: "user",
       source: "user",
       userIndex,
       startKey,
+      occurrenceStartKey,
       seriesId: user.seriesId || ""
     });
   });
@@ -5611,6 +5676,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const applyScopeInputs = applyScope ? applyScope.querySelectorAll("input[name='academicApplyScope']") : [];
   const doneInput = document.getElementById("academicEventDone");
   const includeWeekendsInput = document.getElementById("academicEventIncludeWeekends");
+  const repeatInputs = modal ? modal.querySelectorAll(".academic-repeat-option input[type='checkbox']") : [];
   const colorInput = document.getElementById("academicEventColor");
   const colorButtons = modal ? modal.querySelectorAll("[data-academic-color]") : [];
   const memoInput = document.getElementById("academicEventMemo");
@@ -5740,6 +5806,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function getAcademicRepeat() {
+    const selected = Array.from(repeatInputs).find(input => input.checked);
+    return selected ? selected.value : "none";
+  }
+
+  function setAcademicRepeat(value) {
+    const nextRepeat = value === "monthly" || value === "yearly" ? value : "none";
+    Array.from(repeatInputs).forEach(input => {
+      input.checked = input.value === nextRepeat;
+    });
+  }
+
   function getSelectedAcademicEvent() {
     if (!Number.isInteger(state.selectedUserEventIndex)) return null;
     const events = getUserAcademicEventsForKey(userEvents, state.selectedSourceKey);
@@ -5779,7 +5857,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const originalStart = state.originalStartKey || state.selectedSourceKey;
     const originalEnd = state.originalEndKey || getAcademicEventEndKey(originalStart, event);
     const isRange = originalEnd > originalStart;
-    setAcademicApplyScope(isRange ? "series" : "single");
+    const isRepeating = getAcademicRepeatType(event) !== "none";
+    setAcademicApplyScope(isRepeating ? "single" : (isRange ? "series" : "single"));
+    if (isRepeating) syncAcademicDatesForScope("single");
   }
 
   function removeAcademicEventAt(sourceKey, index) {
@@ -5898,6 +5978,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (endDateInput) endDateInput.value = editingEvent ? state.originalEndKey : key;
     if (doneInput) doneInput.checked = Boolean(current.done);
     if (includeWeekendsInput) includeWeekendsInput.checked = Boolean(current.includeWeekends);
+    setAcademicRepeat((editingEvent && editingEvent.repeat) || current.repeat || "none");
     setAcademicColor(current.color || "blue");
     if (memoInput) memoInput.value = current.memo || "";
     if (urlInput) urlInput.value = current.url || "";
@@ -5911,9 +5992,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!occurrences.length) return;
     const nextDone = !occurrences.every(({ event }) => Boolean(event.done));
 
-    occurrences.forEach(({ event, startKey, endKey }) => {
+    occurrences.forEach(({ event, startKey, endKey, occurrenceStartKey }) => {
       if (Boolean(event.done) === nextDone) return;
-      if (startKey === endKey) {
+      const isRepeatingOccurrence = getAcademicRepeatType(event) !== "none" || occurrenceStartKey !== startKey;
+      if (!isRepeatingOccurrence && startKey === endKey) {
         event.done = nextDone;
         return;
       }
@@ -5924,6 +6006,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ...event,
         endDate: key,
         done: nextDone,
+        repeat: "none",
         skipDates: [],
         seriesId: createAcademicSeriesId(),
         parentSeriesId: event.seriesId || ""
@@ -6189,6 +6272,7 @@ document.addEventListener("DOMContentLoaded", () => {
       endDate: endKey,
       done: doneInput ? doneInput.checked : false,
       includeWeekends: includeWeekendsInput ? includeWeekendsInput.checked : false,
+      repeat: getAcademicRepeat(),
       weight: "normal",
       color: colorInput ? colorInput.value : "blue",
       seriesId: original && original.seriesId ? original.seriesId : createAcademicSeriesId()
@@ -6208,7 +6292,22 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } else if (scope === "single") {
       const isRange = originalEndKey > originalStartKey;
-      if (!isRange) {
+      const isRepeating = getAcademicRepeatType(original) !== "none";
+      if (isRepeating) {
+        addAcademicSkipDate(original, state.selectedOccurrenceKey);
+        setUserAcademicEventsForKey(userEvents, originalStartKey, getUserAcademicEventsForKey(userEvents, originalStartKey));
+        if (hasContent) {
+          const nextEvents = getUserAcademicEventsForKey(userEvents, state.selectedOccurrenceKey);
+          nextEvents.push({
+            ...entry,
+            endDate: state.selectedOccurrenceKey,
+            repeat: "none",
+            seriesId: createAcademicSeriesId(),
+            parentSeriesId: original.seriesId || ""
+          });
+          setUserAcademicEventsForKey(userEvents, state.selectedOccurrenceKey, nextEvents);
+        }
+      } else if (!isRange) {
         removeAcademicEventAt(originalStartKey, state.selectedUserEventIndex);
         if (hasContent) {
           entry.endDate = key;
@@ -6289,6 +6388,15 @@ document.addEventListener("DOMContentLoaded", () => {
   colorButtons.forEach(button => {
     button.addEventListener("click", () => {
       setAcademicColor(button.getAttribute("data-academic-color") || "blue");
+    });
+  });
+
+  Array.from(repeatInputs).forEach(input => {
+    input.addEventListener("change", () => {
+      if (!input.checked) return;
+      Array.from(repeatInputs).forEach(other => {
+        if (other !== input) other.checked = false;
+      });
     });
   });
 
