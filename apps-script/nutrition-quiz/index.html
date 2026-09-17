@@ -291,21 +291,18 @@
     .opt-btn:hover .option-number { background: #f7dadd; color: #744d53; }
 
     #result-screen {
-      padding: 22px;
+      padding: 24px;
       color: var(--ink);
     }
 
     .result-hero {
       display: grid;
-      gap: 18px;
+      gap: 20px;
       padding: 22px;
-      margin-bottom: 20px;
-      border: 1px solid rgba(239, 166, 166, .38);
-      border-radius: 20px;
-      background:
-        radial-gradient(circle at 100% 0, rgba(239, 166, 166, .18), transparent 42%),
-        linear-gradient(145deg, #fff8f8 0%, #fff 74%);
-      box-shadow: 0 8px 28px rgba(32, 33, 35, .05);
+      margin-bottom: 24px;
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      background: linear-gradient(145deg, #f7faf9 0%, #fff 72%);
     }
 
     .result-summary {
@@ -317,50 +314,67 @@
 
     .result-summary-copy { min-width: 0; }
 
-    .result-kicker {
-      margin: 0 0 7px;
-      color: var(--pink-deep);
-      font-size: 11px;
-      font-weight: 850;
-      letter-spacing: .09em;
+    .result-complete-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      color: #4b5563;
+      font-size: 12px;
+      font-weight: 800;
     }
 
-    .score-orb {
-      flex: 0 0 92px;
-      width: 92px;
-      height: 92px;
+    .result-complete-icon {
+      width: 34px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 11px;
+      background: #202123;
+      color: #fff;
+    }
+
+    .result-complete-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .score-card {
+      flex: 0 0 108px;
+      min-width: 108px;
+      min-height: 88px;
       display: grid;
-      place-content: center;
-      border: 1px solid rgba(201, 120, 120, .24);
-      border-radius: 50%;
-      background: rgba(255, 255, 255, .9);
-      box-shadow: 0 10px 28px rgba(201, 120, 120, .14);
-      text-align: center;
+      align-content: center;
+      justify-items: start;
+      padding: 14px 16px;
+      border: 1px solid #dfe4e2;
+      border-radius: 16px;
+      background: #fff;
     }
 
-    .score-orb-line {
+    .score-card-value {
       display: flex;
       align-items: baseline;
-      justify-content: center;
-      color: #7b7f87;
-      font-size: 14px;
-      font-weight: 750;
+      gap: 4px;
+      margin-top: 4px;
+      color: #6b7280;
+      font-size: 15px;
+      font-weight: 800;
     }
 
-    .score-orb strong {
+    .score-card-value strong {
       color: var(--ink);
-      font-size: 32px;
+      font-size: 30px;
       font-weight: 880;
       letter-spacing: -.055em;
       line-height: 1;
     }
 
-    .score-orb-label {
-      margin-top: 4px;
-      color: #8a8d94;
-      font-size: 10px;
+    .score-card-label {
+      color: #667085;
+      font-size: 11px;
       font-weight: 800;
-      letter-spacing: .08em;
     }
 
     .result-title {
@@ -380,8 +394,8 @@
     }
 
     .result-message {
-      padding-top: 16px;
-      border-top: 1px solid rgba(201, 120, 120, .16);
+      padding-top: 18px;
+      border-top: 1px solid #e5e7eb;
     }
 
     .score-display {
@@ -399,6 +413,22 @@
       font-size: 13px;
       line-height: 1.55;
       word-break: keep-all;
+    }
+
+    .score-progress {
+      height: 7px;
+      margin-top: 14px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e8eceb;
+    }
+
+    .score-progress-bar {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: #10a37f;
+      transition: width .45s ease;
     }
 
     .result-list-head {
@@ -427,9 +457,8 @@
     .result-item {
       padding: 19px;
       border: 1px solid var(--line);
-      border-radius: 17px;
+      border-radius: 16px;
       background: #fff;
-      box-shadow: 0 5px 18px rgba(32, 33, 35, .035);
     }
 
     .result-item-head {
@@ -441,10 +470,9 @@
     }
 
     .result-number {
-      color: #7b7f87;
-      font-size: 11px;
+      color: #667085;
+      font-size: 12px;
       font-weight: 850;
-      letter-spacing: .07em;
     }
 
     .result-chip {
@@ -459,7 +487,7 @@
     }
 
     .result-chip svg { width: 13px; height: 13px; }
-    .result-chip.correct { border-color: #c9e9df; background: var(--success-soft); color: var(--success); }
+    .result-chip.correct { border-color: #bfe4d9; background: var(--success-soft); color: var(--success); }
     .result-chip.wrong { border-color: #f1d5d8; background: var(--danger-soft); color: var(--danger); }
 
     .result-question {
@@ -480,7 +508,7 @@
 
     .answer-row {
       display: grid;
-      grid-template-columns: 86px minmax(0, 1fr);
+      grid-template-columns: 96px minmax(0, 1fr);
       align-items: center;
       gap: 10px;
       min-height: 42px;
@@ -556,7 +584,7 @@
       justify-content: center;
       border-radius: 9px;
       background: #fff;
-      color: var(--pink-deep);
+      color: #0f8a6a;
       box-shadow: 0 1px 2px rgba(32, 33, 35, .06);
     }
 
@@ -609,8 +637,8 @@
       #result-screen { padding: 16px; }
       .result-hero { padding: 18px; }
       .result-summary { align-items: flex-start; }
-      .score-orb { flex-basis: 78px; width: 78px; height: 78px; }
-      .score-orb strong { font-size: 27px; }
+      .score-card { flex-basis: 92px; min-width: 92px; min-height: 80px; padding: 12px 13px; }
+      .score-card-value strong { font-size: 27px; }
       .result-item { padding: 16px 14px; }
       .answer-row { grid-template-columns: 1fr; gap: 4px; }
       .result-list-head span { display: none; }
@@ -688,18 +716,22 @@
       <div class="result-hero">
         <div class="result-summary">
           <div class="result-summary-copy">
-            <p class="result-kicker">QUIZ COMPLETE</p>
-            <h2 class="result-title">퀴즈를 완료했어요!</h2>
+            <div class="result-complete-label">
+              <span class="result-complete-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 12 3 3 7-7"></path><circle cx="12" cy="12" r="9"></circle></svg></span>
+              <span>오늘의 학습 완료</span>
+            </div>
+            <h2 class="result-title">수고했어요!</h2>
             <p id="user-info-display" class="user-info"></p>
           </div>
-          <div class="score-orb" id="score-orb" role="img" aria-label="퀴즈 점수">
-            <div class="score-orb-line"><strong id="score-value">0</strong><span>&nbsp;/&nbsp;<span id="score-total">0</span></span></div>
-            <span class="score-orb-label">SCORE</span>
+          <div class="score-card" id="score-orb" role="img" aria-label="퀴즈 점수">
+            <span class="score-card-label">맞힌 문제</span>
+            <div class="score-card-value"><strong id="score-value">0</strong><span>/</span><span id="score-total">0</span></div>
           </div>
         </div>
         <div class="result-message">
           <strong id="score-display" class="score-display"></strong>
           <span id="score-message" class="score-message"></span>
+          <div class="score-progress" aria-hidden="true"><div id="score-progress-bar" class="score-progress-bar"></div></div>
         </div>
       </div>
 
@@ -868,11 +900,11 @@
           : '<div class="answer-row is-wrong"><span class="answer-label">내가 고른 답</span><strong><i class="answer-number">' + userAnswers[idx] + '</i>' + escapeHtml(selectedAnswer) + '</strong></div>' +
             '<div class="answer-row is-correct"><span class="answer-label">정답</span><strong><i class="answer-number">' + q.answer + '</i>' + escapeHtml(correctAnswer) + '</strong></div>';
         return '<article class="result-item ' + (isCorrect ? 'is-correct' : 'is-wrong') + '">' +
-          '<div class="result-item-head"><span class="result-number">QUESTION ' + String(idx + 1).padStart(2, '0') + '</span>' +
-          '<span class="result-chip ' + (isCorrect ? 'correct' : 'wrong') + '">' + statusIcon + (isCorrect ? '정답이에요' : '다시 알아봐요') + '</span></div>' +
+          '<div class="result-item-head"><span class="result-number">문제 ' + (idx + 1) + '</span>' +
+          '<span class="result-chip ' + (isCorrect ? 'correct' : 'wrong') + '">' + statusIcon + (isCorrect ? '정답' : '오답 확인') + '</span></div>' +
           '<h3 class="result-question">' + escapeHtml(q.question) + '</h3>' +
           '<div class="answer-summary">' + answerRows + '</div>' +
-          '<div class="explain"><span class="explain-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M8.5 14.5A6 6 0 1 1 15.5 14.5C14.5 15.3 14 16 14 17h-4c0-1-.5-1.7-1.5-2.5Z"></path></svg></span><span><strong>영양 한입</strong>' + escapeHtml(q.explain) + '</span></div>' +
+          '<div class="explain"><span class="explain-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M8.5 14.5A6 6 0 1 1 15.5 14.5C14.5 15.3 14 16 14 17h-4c0-1-.5-1.7-1.5-2.5Z"></path></svg></span><span><strong>영양 포인트</strong>' + escapeHtml(q.explain) + '</span></div>' +
           '</article>';
       }).join('');
 
@@ -886,6 +918,7 @@
       document.getElementById('score-orb').setAttribute('aria-label', quizzes.length + '문제 중 ' + correctCount + '문제 정답');
       document.getElementById('score-display').textContent = quizzes.length + '문제 중 ' + correctCount + '문제를 맞혔어요';
       document.getElementById('score-message').textContent = scoreMessage;
+      document.getElementById('score-progress-bar').style.width = (quizzes.length ? (correctCount / quizzes.length) * 100 : 0) + '%';
       document.getElementById('timer-text').innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg><span>결과를 안전하게 저장하고 있어요.</span>';
       window.scrollTo({ top: 0, behavior: 'smooth' });
 

@@ -11,10 +11,22 @@ const html = fs.readFileSync(
 test('quiz result screen exposes readable score and answer details', () => {
   assert.match(html, /id="score-value"/);
   assert.match(html, /id="score-message"/);
+  assert.match(html, /id="score-progress-bar"/);
+  assert.match(html, /오늘의 학습 완료/);
+  assert.match(html, /맞힌 문제/);
   assert.match(html, /내가 고른 답 · 정답/);
   assert.match(html, /escapeHtml\(selectedAnswer\)/);
   assert.match(html, /escapeHtml\(correctAnswer\)/);
   assert.match(html, /role="img" aria-label="퀴즈 점수"/);
+});
+
+test('quiz result styling follows the portal icon and neutral card system', () => {
+  assert.match(html, /\.result-complete-icon[\s\S]*width: 34px;/);
+  assert.match(html, /\.result-complete-icon svg[\s\S]*width: 18px;/);
+  assert.match(html, /\.score-progress-bar[\s\S]*background: #10a37f;/);
+  assert.match(html, /<span class="result-number">문제 /);
+  assert.doesNotMatch(html, /QUIZ COMPLETE/);
+  assert.doesNotMatch(html, /QUESTION ' \+/);
 });
 
 test('quiz result reading time is extended to thirty seconds', () => {
