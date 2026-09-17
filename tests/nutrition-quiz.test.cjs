@@ -78,3 +78,32 @@ test('bean sprout soup is not misclassified as a legume protein side dish', () =
   assert.ok(menuQuiz);
   assert.doesNotMatch(menuQuiz.question, /단백질 반찬으로 활용/);
 });
+
+test('automatic quiz wording stays natural and child-friendly', () => {
+  const bank = context.getNutritionQuizBank_();
+  const text = bank.flatMap(quiz => [
+    quiz.question,
+    quiz.menuQuestion || '',
+    ...quiz.options,
+    quiz.explain
+  ]).join(' ');
+
+  assert.doesNotMatch(text, /곡류 반찬|제 역할을 하도록|섭취 시|가장 좋은 기본 음료|가장 알맞은 이유/);
+  assert.doesNotMatch(text, /오늘 메뉴 '\{menu\}'/);
+  bank.forEach(quiz => {
+    assert.match(quiz.question, /\?$/);
+    assert.match(quiz.explain, /[.!요]$/);
+    if (quiz.menuQuestion) assert.doesNotMatch(quiz.menuQuestion, /’[은는이가을를와과]/);
+  });
+});
+
+test('today menu quiz reads naturally with the menu name inserted', () => {
+  const quizzes = context.buildAutomaticQuizzes_('2026-09-18', [
+    '통밀밥',
+    '조랭이떡국',
+    '사과오이초무침'
+  ]);
+  const menuQuiz = quizzes.find(quiz => quiz.source === 'today-menu');
+
+  assert.equal(menuQuiz.question, '오늘 메뉴의 ‘사과오이초무침’처럼 채소가 들어간 음식은 여러 색으로 골고루 먹는 것이 왜 좋을까요?');
+});
