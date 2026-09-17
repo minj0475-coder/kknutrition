@@ -13,6 +13,10 @@
       --pink: #efa6a6;
       --pink-deep: #c97878;
       --pink-soft: #fff2f5;
+      --success: #0f8a6a;
+      --success-soft: #ecf8f4;
+      --danger: #b75d63;
+      --danger-soft: #fff2f3;
     }
 
     * { box-sizing: border-box; }
@@ -161,6 +165,18 @@
 
     .input-group input::placeholder { color: #a5a6ae; }
 
+    .input-group select {
+      appearance: none;
+      -webkit-appearance: none;
+      padding-right: 48px;
+      background-color: #fff;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m8 10 4 4 4-4'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 17px center;
+      background-size: 18px 18px;
+      cursor: pointer;
+    }
+
     .primary-btn,
     .secondary-btn {
       width: 100%;
@@ -274,64 +290,146 @@
 
     .opt-btn:hover .option-number { background: #f7dadd; color: #744d53; }
 
-    #result-screen { color: #3f3a35; }
+    #result-screen {
+      padding: 22px;
+      color: var(--ink);
+    }
 
     .result-hero {
-      padding: 24px;
-      margin-bottom: 14px;
-      border: 1px solid #e2ddd3;
-      border-radius: 18px;
-      background: #fbf9f5;
-      box-shadow: 0 6px 18px rgba(53, 66, 71, .04);
-      text-align: left;
+      display: grid;
+      gap: 18px;
+      padding: 22px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(239, 166, 166, .38);
+      border-radius: 20px;
+      background:
+        radial-gradient(circle at 100% 0, rgba(239, 166, 166, .18), transparent 42%),
+        linear-gradient(145deg, #fff8f8 0%, #fff 74%);
+      box-shadow: 0 8px 28px rgba(32, 33, 35, .05);
     }
 
-    .result-icon {
-      width: 36px;
-      height: 36px;
-      display: inline-flex;
+    .result-summary {
+      display: flex;
       align-items: center;
-      justify-content: center;
-      margin-bottom: 18px;
-      border-radius: 11px;
-      background: #f1e7e3;
-      color: #86544f;
+      justify-content: space-between;
+      gap: 20px;
     }
 
-    .result-icon svg { width: 19px; height: 19px; }
+    .result-summary-copy { min-width: 0; }
+
+    .result-kicker {
+      margin: 0 0 7px;
+      color: var(--pink-deep);
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .09em;
+    }
+
+    .score-orb {
+      flex: 0 0 92px;
+      width: 92px;
+      height: 92px;
+      display: grid;
+      place-content: center;
+      border: 1px solid rgba(201, 120, 120, .24);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .9);
+      box-shadow: 0 10px 28px rgba(201, 120, 120, .14);
+      text-align: center;
+    }
+
+    .score-orb-line {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      color: #7b7f87;
+      font-size: 14px;
+      font-weight: 750;
+    }
+
+    .score-orb strong {
+      color: var(--ink);
+      font-size: 32px;
+      font-weight: 880;
+      letter-spacing: -.055em;
+      line-height: 1;
+    }
+
+    .score-orb-label {
+      margin-top: 4px;
+      color: #8a8d94;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
 
     .result-title {
       margin: 0;
-      color: #2f2a26;
-      font-size: 22px;
+      color: var(--ink);
+      font-size: clamp(22px, 5vw, 28px);
       font-weight: 850;
-      letter-spacing: -.035em;
+      letter-spacing: -.045em;
+      line-height: 1.25;
     }
 
     .user-info {
-      margin: 7px 0 0;
-      color: #6f665e;
+      margin: 8px 0 0;
+      color: var(--muted);
       font-size: 13px;
+      font-weight: 650;
+    }
+
+    .result-message {
+      padding-top: 16px;
+      border-top: 1px solid rgba(201, 120, 120, .16);
     }
 
     .score-display {
-      margin-top: 20px;
-      padding-top: 18px;
-      border-top: 1px solid #e2ddd3;
-      color: #2f2a26;
-      font-size: 20px;
-      font-weight: 850;
+      display: block;
+      color: var(--ink);
+      font-size: 17px;
+      font-weight: 830;
       letter-spacing: -.025em;
     }
 
-    .result-details { display: grid; gap: 10px; }
+    .score-message {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+      word-break: keep-all;
+    }
+
+    .result-list-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0 2px 10px;
+    }
+
+    .result-list-head h3 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 16px;
+      font-weight: 820;
+      letter-spacing: -.025em;
+    }
+
+    .result-list-head span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .result-details { display: grid; gap: 12px; }
 
     .result-item {
-      padding: 20px;
-      border: 1px solid #e2ddd3;
-      border-radius: 18px;
+      padding: 19px;
+      border: 1px solid var(--line);
+      border-radius: 17px;
       background: #fff;
-      box-shadow: 0 6px 18px rgba(53, 66, 71, .035);
+      box-shadow: 0 5px 18px rgba(32, 33, 35, .035);
     }
 
     .result-item-head {
@@ -339,94 +437,164 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      margin-bottom: 12px;
+      margin-bottom: 11px;
     }
 
     .result-number {
-      color: #6f665e;
-      font-size: 12px;
+      color: #7b7f87;
+      font-size: 11px;
       font-weight: 850;
-      letter-spacing: .04em;
+      letter-spacing: .07em;
     }
 
     .result-chip {
       display: inline-flex;
       align-items: center;
+      gap: 5px;
       padding: 5px 9px;
-      border: 1px solid transparent;
+      border: 1px solid;
       border-radius: 999px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 850;
     }
 
-    .result-chip.correct { background: #f1e7e3; color: #86544f; }
-    .result-chip.wrong { border-color: #e2ddd3; background: #fbf9f5; color: #6f665e; }
+    .result-chip svg { width: 13px; height: 13px; }
+    .result-chip.correct { border-color: #c9e9df; background: var(--success-soft); color: var(--success); }
+    .result-chip.wrong { border-color: #f1d5d8; background: var(--danger-soft); color: var(--danger); }
 
     .result-question {
       margin: 0;
-      color: #2f2a26;
+      color: var(--ink);
       font-size: 15px;
-      line-height: 1.55;
-      letter-spacing: -.015em;
+      font-weight: 730;
+      line-height: 1.6;
+      letter-spacing: -.02em;
       word-break: keep-all;
     }
 
     .answer-summary {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px 16px;
+      display: grid;
+      gap: 7px;
       margin-top: 14px;
-      padding: 11px 12px;
-      border: 1px solid #ebe7e3;
-      border-radius: 12px;
-      background: #fbf9f5;
-      color: #6f665e;
-      font-size: 13px;
     }
 
-    .answer-summary strong { color: #2f2a26; }
+    .answer-row {
+      display: grid;
+      grid-template-columns: 86px minmax(0, 1fr);
+      align-items: center;
+      gap: 10px;
+      min-height: 42px;
+      padding: 9px 11px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: var(--soft);
+    }
+
+    .answer-row.is-correct {
+      border-color: #cfeae2;
+      background: var(--success-soft);
+    }
+
+    .answer-row.is-wrong {
+      border-color: #f1dadd;
+      background: var(--danger-soft);
+    }
+
+    .answer-label {
+      color: #7b7f87;
+      font-size: 11px;
+      font-weight: 780;
+    }
+
+    .answer-row strong {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 740;
+      line-height: 1.45;
+      word-break: keep-all;
+    }
+
+    .answer-number {
+      flex: 0 0 24px;
+      width: 24px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: #fff;
+      color: #555762;
+      font-size: 11px;
+      font-style: normal;
+      font-weight: 850;
+      box-shadow: 0 1px 2px rgba(32, 33, 35, .08);
+    }
 
     .explain {
-      display: flex;
-      align-items: flex-start;
-      gap: 9px;
+      display: grid;
+      grid-template-columns: 28px minmax(0, 1fr);
+      gap: 10px;
       margin-top: 12px;
-      padding: 13px 14px;
-      border-left: 3px solid #a96f68;
-      border-radius: 0 10px 10px 0;
-      background: #fbf9f5;
-      color: #5d554e;
+      padding: 13px;
+      border-radius: 12px;
+      background: #f7f7f8;
+      color: #555762;
       font-size: 13px;
       line-height: 1.62;
       word-break: keep-all;
     }
 
-    .explain svg { flex: 0 0 17px; width: 17px; height: 17px; margin-top: 2px; color: #a96f68; }
+    .explain-icon {
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9px;
+      background: #fff;
+      color: var(--pink-deep);
+      box-shadow: 0 1px 2px rgba(32, 33, 35, .06);
+    }
+
+    .explain-icon svg { width: 15px; height: 15px; }
+
+    .explain strong {
+      display: block;
+      margin-bottom: 2px;
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .result-actions { margin-top: 16px; }
 
     .timer-notice {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 7px;
-      margin-top: 16px;
-      padding: 14px 0 0;
-      border-top: 1px solid #ebe7e3;
-      color: #6f665e;
+      margin: 0;
+      color: var(--muted);
       font-size: 12px;
-      font-weight: 750;
+      font-weight: 650;
       text-align: center;
     }
 
     .timer-notice svg { width: 15px; height: 15px; }
 
     #result-screen .secondary-btn {
-      border-color: #d2c8bc;
+      margin-top: 12px;
+      border-color: #dedee5;
       background: #fff;
-      color: #3f3a35;
+      color: var(--ink);
       box-shadow: none;
     }
 
-    #result-screen .secondary-btn:hover { background: #fbf9f5; }
+    #result-screen .secondary-btn:hover { background: var(--soft); }
 
     .hidden { display: none !important; }
 
@@ -438,7 +606,14 @@
       .input-group.full { grid-column: 1 / -1; }
       .question { font-size: 19px; }
       .opt-btn { min-height: 56px; padding: 11px 12px; }
+      #result-screen { padding: 16px; }
+      .result-hero { padding: 18px; }
+      .result-summary { align-items: flex-start; }
+      .score-orb { flex-basis: 78px; width: 78px; height: 78px; }
+      .score-orb strong { font-size: 27px; }
       .result-item { padding: 16px 14px; }
+      .answer-row { grid-template-columns: 1fr; gap: 4px; }
+      .result-list-head span { display: none; }
     }
 
     @media (max-width: 360px) {
@@ -511,24 +686,36 @@
 
     <section id="result-screen" class="surface hidden">
       <div class="result-hero">
-        <div class="result-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 12 3 3 7-7"></path><circle cx="12" cy="12" r="9"></circle></svg>
+        <div class="result-summary">
+          <div class="result-summary-copy">
+            <p class="result-kicker">QUIZ COMPLETE</p>
+            <h2 class="result-title">퀴즈를 완료했어요!</h2>
+            <p id="user-info-display" class="user-info"></p>
+          </div>
+          <div class="score-orb" id="score-orb" role="img" aria-label="퀴즈 점수">
+            <div class="score-orb-line"><strong id="score-value">0</strong><span>&nbsp;/&nbsp;<span id="score-total">0</span></span></div>
+            <span class="score-orb-label">SCORE</span>
+          </div>
         </div>
-        <h2 class="result-title">퀴즈를 완료했어요!</h2>
-        <p id="user-info-display" class="user-info"></p>
-        <div id="score-display" class="score-display"></div>
+        <div class="result-message">
+          <strong id="score-display" class="score-display"></strong>
+          <span id="score-message" class="score-message"></span>
+        </div>
       </div>
 
+      <div class="result-list-head"><h3>문제별 풀이</h3><span>정답과 해설을 확인해 보세요</span></div>
       <div id="result-details" class="result-details"></div>
 
-      <div class="timer-notice" id="timer-text" aria-live="polite">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
-        <span>결과를 안전하게 저장하고 있어요.</span>
+      <div class="result-actions">
+        <div class="timer-notice" id="timer-text" aria-live="polite">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+          <span>결과를 안전하게 저장하고 있어요.</span>
+        </div>
+        <button class="secondary-btn" type="button" onclick="resetApp()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 14-4-4 4-4"></path><path d="M5 10h9a5 5 0 0 1 5 5v1"></path></svg>
+          처음 화면으로 돌아가기
+        </button>
       </div>
-      <button class="secondary-btn" type="button" onclick="resetApp()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 14-4-4 4-4"></path><path d="M5 10h9a5 5 0 0 1 5 5v1"></path></svg>
-        처음 화면으로 돌아가기
-      </button>
     </section>
   </main>
 
@@ -669,18 +856,36 @@
 
       detailsDiv.innerHTML = quizzes.map(function(q, idx) {
         const isCorrect = userAnswers[idx] === q.answer;
+        const selectedAnswer = q.options[userAnswers[idx] - 1] || '';
+        const correctAnswer = q.options[q.answer - 1] || '';
         if (isCorrect) correctCount++;
         answersTextArr.push('Q' + (idx + 1) + ':' + userAnswers[idx] + '번');
-        return '<article class="result-item">' +
-          '<div class="result-item-head"><span class="result-number">QUESTION ' + (idx + 1) + '</span>' +
-          '<span class="result-chip ' + (isCorrect ? 'correct' : 'wrong') + '">' + (isCorrect ? '정답' : '다시 알아보기') + '</span></div>' +
+        const statusIcon = isCorrect
+          ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 12 3 3 7-7"></path><circle cx="12" cy="12" r="9"></circle></svg>'
+          : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m9 9 6 6M15 9l-6 6"></path></svg>';
+        const answerRows = isCorrect
+          ? '<div class="answer-row is-correct"><span class="answer-label">내가 고른 답 · 정답</span><strong><i class="answer-number">' + q.answer + '</i>' + escapeHtml(correctAnswer) + '</strong></div>'
+          : '<div class="answer-row is-wrong"><span class="answer-label">내가 고른 답</span><strong><i class="answer-number">' + userAnswers[idx] + '</i>' + escapeHtml(selectedAnswer) + '</strong></div>' +
+            '<div class="answer-row is-correct"><span class="answer-label">정답</span><strong><i class="answer-number">' + q.answer + '</i>' + escapeHtml(correctAnswer) + '</strong></div>';
+        return '<article class="result-item ' + (isCorrect ? 'is-correct' : 'is-wrong') + '">' +
+          '<div class="result-item-head"><span class="result-number">QUESTION ' + String(idx + 1).padStart(2, '0') + '</span>' +
+          '<span class="result-chip ' + (isCorrect ? 'correct' : 'wrong') + '">' + statusIcon + (isCorrect ? '정답이에요' : '다시 알아봐요') + '</span></div>' +
           '<h3 class="result-question">' + escapeHtml(q.question) + '</h3>' +
-          '<div class="answer-summary"><span>내 답 <strong>' + userAnswers[idx] + '번</strong></span><span>정답 <strong>' + q.answer + '번</strong></span></div>' +
-          '<div class="explain"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M8.5 14.5A6 6 0 1 1 15.5 14.5C14.5 15.3 14 16 14 17h-4c0-1-.5-1.7-1.5-2.5Z"></path></svg><span><strong>해설</strong><br>' + escapeHtml(q.explain) + '</span></div>' +
+          '<div class="answer-summary">' + answerRows + '</div>' +
+          '<div class="explain"><span class="explain-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M8.5 14.5A6 6 0 1 1 15.5 14.5C14.5 15.3 14 16 14 17h-4c0-1-.5-1.7-1.5-2.5Z"></path></svg></span><span><strong>영양 한입</strong>' + escapeHtml(q.explain) + '</span></div>' +
           '</article>';
       }).join('');
 
+      const scoreMessage = correctCount === quizzes.length
+        ? '멋져요! 오늘의 영양 지식을 모두 맞혔어요.'
+        : correctCount >= Math.ceil(quizzes.length * 0.6)
+          ? '잘했어요! 해설을 읽으면 더 오래 기억할 수 있어요.'
+          : '괜찮아요. 정답과 해설을 보며 한 번 더 배워봐요.';
+      document.getElementById('score-value').textContent = correctCount;
+      document.getElementById('score-total').textContent = quizzes.length;
+      document.getElementById('score-orb').setAttribute('aria-label', quizzes.length + '문제 중 ' + correctCount + '문제 정답');
       document.getElementById('score-display').textContent = quizzes.length + '문제 중 ' + correctCount + '문제를 맞혔어요';
+      document.getElementById('score-message').textContent = scoreMessage;
       document.getElementById('timer-text').innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg><span>결과를 안전하게 저장하고 있어요.</span>';
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -696,7 +901,7 @@
     }
 
     function startCountdown() {
-      let timeLeft = 10;
+      let timeLeft = 30;
       const timerNotice = document.getElementById('timer-text');
       updateTimer(timerNotice, timeLeft);
       if (countdownInterval) clearInterval(countdownInterval);
@@ -711,7 +916,7 @@
         }
       }, 1000);
 
-      autoResetTimer = setTimeout(function() { resetApp(); }, 10000);
+      autoResetTimer = setTimeout(function() { resetApp(); }, 30000);
     }
 
     function updateTimer(element, seconds) {
