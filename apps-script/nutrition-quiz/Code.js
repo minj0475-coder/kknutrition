@@ -3,6 +3,7 @@ const SPREADSHEET_ID =
 const TODAY_MENU_URL =
   'https://minj0475-coder.github.io/kknutrition/data/today-menu.json';
 const DAILY_QUIZ_COUNT = 3;
+const QUIZ_TIME_ZONE = 'Asia/Seoul';
 
 function doGet() {
   return HtmlService.createHtmlOutputFromFile('index')
@@ -13,7 +14,7 @@ function doGet() {
 function getTodayQuizzes() {
   const today = Utilities.formatDate(
     new Date(),
-    Session.getScriptTimeZone(),
+    QUIZ_TIME_ZONE,
     'yyyy-MM-dd'
   );
   const scheduledQuizzes = getScheduledQuizzes_(today);
@@ -48,7 +49,7 @@ function formatQuizDate_(value) {
   if (value instanceof Date) {
     return Utilities.formatDate(
       value,
-      Session.getScriptTimeZone(),
+      QUIZ_TIME_ZONE,
       'yyyy-MM-dd'
     );
   }
@@ -393,7 +394,7 @@ function saveQuizResult(resultData) {
 
   const now = Utilities.formatDate(
     new Date(),
-    Session.getScriptTimeZone(),
+    QUIZ_TIME_ZONE,
     'yyyy-MM-dd HH:mm:ss'
   );
 

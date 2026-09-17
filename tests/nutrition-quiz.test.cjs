@@ -12,6 +12,11 @@ const context = { console };
 vm.createContext(context);
 vm.runInContext(source, context);
 
+test('quiz dates use the Korean school timezone', () => {
+  assert.match(source, /const QUIZ_TIME_ZONE = 'Asia\/Seoul'/);
+  assert.doesNotMatch(source, /Session\.getScriptTimeZone\(\)/);
+});
+
 test('automatic nutrition quizzes are deterministic and always available', () => {
   const first = context.buildAutomaticQuizzes_('2026-12-25', []);
   const second = context.buildAutomaticQuizzes_('2026-12-25', []);
