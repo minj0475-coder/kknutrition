@@ -760,6 +760,7 @@
       </div>
       <h2 id="quiz-question" class="question">질문이 여기에 표시됩니다.</h2>
       <div id="quiz-options" class="options"></div>
+      <p id="next-hint" class="status-note hidden" onclick="goToNextQuestion()" style="cursor:pointer;">탭하면 바로 다음 문제로 이동해요</p>
     </section>
 
     <section id="result-screen" class="surface hidden">
@@ -950,6 +951,7 @@
       document.getElementById('quiz-progress').textContent = '문제 ' + (currentIdx + 1) + ' / ' + quizzes.length;
       document.getElementById('progress-bar').style.width = (((currentIdx + 1) / quizzes.length) * 100) + '%';
       document.getElementById('quiz-question').textContent = q.question;
+      document.getElementById('next-hint').classList.add('hidden');
       setHelper(pick(HELPER_IDLE, currentIdx), pick(HELPER_LINES, currentIdx), false, '');
 
       const optsDiv = document.getElementById('quiz-options');
@@ -958,6 +960,16 @@
           '<span class="option-number">' + (i + 1) + '</span>' +
           '<span>' + escapeHtml(opt) + '</span></button>';
       }).join('');
+    }
+
+    function goToNextQuestion() {
+      if (advanceTimer) { clearTimeout(advanceTimer); advanceTimer = null; }
+      currentIdx++;
+      if (currentIdx < quizzes.length) {
+        showQuestion();
+      } else {
+        showResults();
+      }
     }
 
     function selectAnswer(selectedOption) {
@@ -987,15 +999,10 @@
         setHelper(WRONG_IMAGE, pick(WRONG_LINES, currentIdx), true, 'is-wrong');
       }
 
+      document.getElementById('next-hint').classList.remove('hidden');
+
       if (advanceTimer) clearTimeout(advanceTimer);
-      advanceTimer = setTimeout(function() {
-        currentIdx++;
-        if (currentIdx < quizzes.length) {
-          showQuestion();
-        } else {
-          showResults();
-        }
-      }, 2200);
+      advanceTimer = setTimeout(goToNextQuestion, 1400);
     }
 
     function dropConfetti() {
