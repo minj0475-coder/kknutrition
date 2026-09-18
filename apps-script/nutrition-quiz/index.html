@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://minj0475-coder.github.io" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -812,6 +813,20 @@
     const HELPER_LINES = ['천천히 생각해 봐!', '이건 어떨까?', '조금만 더 힘내!'];
     const CORRECT_LINES = ['딩동댕! 정답이야', '우와, 잘했어!', '역시 대단해!'];
     const WRONG_LINES = ['괜찮아, 같이 알아 두자', '아쉬워! 다음엔 맞힐 거야', '이건 조금 어려웠지?'];
+    const RESULT_IMAGES = ['kkul_31.webp', 'kkul_29.webp', 'kkul_57.webp'];
+    const CORRECT_IMAGE = 'kkul_27.webp';
+    const WRONG_IMAGE = 'kkul_56.webp';
+
+    const preloadedImages = [];
+    function preloadMascotImages() {
+      const files = HELPER_IDLE.concat(RESULT_IMAGES, [CORRECT_IMAGE, WRONG_IMAGE]);
+      files.forEach(function(file) {
+        const img = new Image();
+        img.src = KKUL + file;
+        preloadedImages.push(img);
+      });
+    }
+    preloadMascotImages();
 
     let userType = 'student';
     let quizzes = [];
@@ -967,9 +982,9 @@
       });
 
       if (isCorrect) {
-        setHelper('kkul_27.webp', pick(CORRECT_LINES, currentIdx), true, 'is-correct');
+        setHelper(CORRECT_IMAGE, pick(CORRECT_LINES, currentIdx), true, 'is-correct');
       } else {
-        setHelper('kkul_56.webp', pick(WRONG_LINES, currentIdx), true, 'is-wrong');
+        setHelper(WRONG_IMAGE, pick(WRONG_LINES, currentIdx), true, 'is-wrong');
       }
 
       if (advanceTimer) clearTimeout(advanceTimer);
@@ -1036,8 +1051,8 @@
           : '괜찮아요. 정답과 해설을 보면서 한 번 더 배워 봐요.';
 
       const resultMascot = isPerfect
-        ? 'kkul_31.webp'
-        : correctCount >= Math.ceil(quizzes.length * 0.6) ? 'kkul_29.webp' : 'kkul_57.webp';
+        ? RESULT_IMAGES[0]
+        : correctCount >= Math.ceil(quizzes.length * 0.6) ? RESULT_IMAGES[1] : RESULT_IMAGES[2];
       document.getElementById('result-mascot').src = KKUL + resultMascot;
 
       document.getElementById('score-value').textContent = correctCount;
