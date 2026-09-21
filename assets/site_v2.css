@@ -26933,11 +26933,11 @@ html body #app-content #today-menu .work-note-card.is-picker-open
 
 #today-menu .nutrition-quiz-link {
   display: grid;
-  grid-template-columns: 40px minmax(0, 1fr) 18px;
+  grid-template-columns: 38px minmax(0, 1fr) 18px;
   align-items: center;
   gap: 14px;
-  min-height: 84px;
-  padding: 16px 18px;
+  min-height: 66px;
+  padding: 13px 16px;
   border: 1px solid rgba(32, 33, 35, .1);
   border-radius: 16px;
   background: #fff;
@@ -26959,9 +26959,9 @@ html body #app-content #today-menu .work-note-card.is-picker-open
 #today-menu .nutrition-quiz-link-icon {
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
   background: #f4f4f5;
   color: #202123;
 }
@@ -26972,36 +26972,22 @@ html body #app-content #today-menu .work-note-card.is-picker-open
 }
 
 #today-menu .nutrition-quiz-link-icon svg {
-  width: 22px;
-  height: 22px;
+  width: 21px;
+  height: 21px;
 }
 
 #today-menu .nutrition-quiz-link-copy {
-  display: grid;
-  gap: 2px;
   min-width: 0;
   word-break: keep-all;
 }
 
-#today-menu .nutrition-quiz-link-label {
-  color: #6e6e80;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1.4;
-}
-
 #today-menu .nutrition-quiz-link-copy strong {
+  display: block;
   color: #202123;
   font-size: 16px;
   font-weight: 700;
   letter-spacing: -.01em;
   line-height: 1.4;
-}
-
-#today-menu .nutrition-quiz-link-copy > span:last-child {
-  color: #6e6e80;
-  font-size: 13px;
-  line-height: 1.5;
 }
 
 #today-menu .nutrition-quiz-link-arrow {
@@ -27024,8 +27010,8 @@ html body #app-content #today-menu .work-note-card.is-picker-open
 
   #today-menu .nutrition-quiz-link {
     gap: 12px;
-    min-height: 76px;
-    padding: 14px 16px;
+    min-height: 62px;
+    padding: 12px 14px;
   }
 }
 
