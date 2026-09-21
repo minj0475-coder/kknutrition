@@ -70,6 +70,58 @@ function ensureQuizListSheet_() {
   return sheet;
 }
 
+/**
+ * today-menu.json에 올라와 있는 모든 날짜(현재는 9월 급식표)에 대해
+ * 메뉴 기반 퀴즈를 미리 만들어 '퀴즈목록' 시트에 채워 넣습니다.
+ * 이미 '퀴즈목록'에 등록되어 있는 날짜는 건드리지 않고 건너뜁니다
+ * (직접 수정해 둔 문제를 덮어쓰지 않기 위해서입니다).
+ *
+ * 사용법: Apps Script 편집기 상단에서 이 함수(generateAllMenuQuizzes)를
+ * 선택한 뒤 ▶ 실행 버튼을 누르면 됩니다. 실행 후 '퀴즈목록' 시트를 열어
+ * 문제를 확인하고, 마음에 안 드는 문항은 자유롭게 고치면 됩니다.
+ */
+function generateAllMenuQuizzes() {
+  const response = UrlFetchApp.fetch(TODAY_MENU_URL, {
+    muteHttpExceptions: true,
+    followRedirects: true
+  });
+  if (response.getResponseCode() !== 200) {
+    throw new Error('메뉴 데이터를 불러오지 못했습니다. (HTTP ' + response.getResponseCode() + ')');
+  }
+
+  const menuData = JSON.parse(response.getContentText());
+  const days = Array.isArray(menuData.data) ? menuData.data : [];
+
+  const sheet = ensureQuizListSheet_();
+  const existingDates = new Set(
+    sheet.getDataRange().getValues().slice(1).map(row => formatQuizDate_(row[0]))
+  );
+
+  const generated = [];
+  const skipped = [];
+
+  days.forEach(day => {
+    const dateKey = String(day && day.key || '').trim();
+    if (!dateKey) return;
+    if (existingDates.has(dateKey)) { skipped.push(dateKey); return; }
+
+    const menuNames = Array.isArray(day.items)
+      ? day.items
+        .filter(item => item && item.muted !== true && item.name)
+        .map(item => String(item.name).trim())
+      : [];
+
+    const quizzes = buildAutomaticQuizzes_(dateKey, menuNames);
+    saveAutoQuizzesToSheet_(dateKey, quizzes);
+    generated.push(dateKey);
+  });
+
+  const summary = '새로 생성: ' + generated.length + '일 (' + generated.join(', ') + ')' +
+    (skipped.length ? ' / 이미 있어서 건너뜀: ' + skipped.length + '일 (' + skipped.join(', ') + ')' : '');
+  Logger.log(summary);
+  return summary;
+}
+
 function getScheduledQuizzes_(today) {
   try {
     const sheet = SpreadsheetApp.openById(SPREADSHEET_ID)
