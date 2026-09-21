@@ -18,9 +18,56 @@ function getTodayQuizzes() {
     'yyyy-MM-dd'
   );
   const scheduledQuizzes = getScheduledQuizzes_(today);
-
   if (scheduledQuizzes.length) return scheduledQuizzes;
-  return buildAutomaticQuizzes_(today, getTodayMenuNames_(today));
+
+  // '퀴즈목록' 시트에 오늘 날짜로 등록된 문항이 없으면 메뉴 기반으로 자동 생성합니다.
+  // 여러 학생이 동시에 접속해도 문항이 중복 저장되지 않도록 잠금을 건 뒤,
+  // 생성한 문항을 '퀴즈목록' 시트에 그대로 기록해서 눈으로 확인하고 수동으로 고칠 수 있게 합니다.
+  const lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(5000);
+    const recheckedQuizzes = getScheduledQuizzes_(today);
+    if (recheckedQuizzes.length) return recheckedQuizzes;
+
+    const autoQuizzes = buildAutomaticQuizzes_(today, getTodayMenuNames_(today));
+    saveAutoQuizzesToSheet_(today, autoQuizzes);
+    return autoQuizzes;
+  } catch (error) {
+    console.warn('퀴즈 생성 잠금 처리 중 문제가 발생해 시트 저장 없이 진행합니다.', error);
+    return buildAutomaticQuizzes_(today, getTodayMenuNames_(today));
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function saveAutoQuizzesToSheet_(today, quizzes) {
+  try {
+    const sheet = ensureQuizListSheet_();
+    quizzes.forEach(quiz => {
+      sheet.appendRow([
+        today,
+        quiz.qNum,
+        quiz.question,
+        quiz.options[0],
+        quiz.options[1],
+        quiz.options[2],
+        quiz.answer,
+        quiz.explain
+      ]);
+    });
+  } catch (error) {
+    console.warn('자동 생성 퀴즈를 퀴즈목록 시트에 저장하지 못했습니다.', error);
+  }
+}
+
+function ensureQuizListSheet_() {
+  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  let sheet = ss.getSheetByName('퀴즈목록');
+  if (!sheet) {
+    sheet = ss.insertSheet('퀴즈목록');
+    sheet.appendRow(['날짜', '문항번호', '질문', '보기1', '보기2', '보기3', '정답(1~3)', '해설']);
+  }
+  return sheet;
 }
 
 function getScheduledQuizzes_(today) {
