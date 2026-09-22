@@ -20,10 +20,10 @@ test('quiz result screen exposes readable score and answer details', () => {
   assert.match(html, /role="img" aria-label="퀴즈 점수"/);
 });
 
-test('quiz result styling follows the portal icon and neutral card system', () => {
-  assert.match(html, /\.result-complete-icon[\s\S]*width: 34px;/);
-  assert.match(html, /\.result-complete-icon svg[\s\S]*width: 18px;/);
-  assert.match(html, /\.score-progress-bar[\s\S]*background: #10a37f;/);
+test('quiz result styling follows the current compact portal icon and palette', () => {
+  assert.match(html, /\.result-complete-icon[\s\S]*width: 28px;/);
+  assert.match(html, /\.result-complete-icon svg[\s\S]*width: 16px;/);
+  assert.match(html, /\.score-progress-bar[\s\S]*background: var\(--accent\);/);
   assert.match(html, /<span class="result-number">문제 /);
   assert.doesNotMatch(html, /QUIZ COMPLETE/);
   assert.doesNotMatch(html, /QUESTION ' \+/);

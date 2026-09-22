@@ -2978,7 +2978,6 @@ if ('scrollRestoration' in history) {
   history.scrollRestoration = 'manual';
 }
 
-const ACTIVE_HASH_KEY = "kkulkkoori_active_hash_v1";
 const SIDEBAR_OPEN_KEY = "kkulkkoori_sidebar_open_v1";
 const MOBILE_PAGE_TITLES = {
   home: "",
@@ -2991,39 +2990,6 @@ const MOBILE_PAGE_TITLES = {
   "promo-contacts": "업체 관리",
   staff: "조리종사원"
 };
-
-function getStoredActiveHash() {
-  const readHash = storage => {
-    try {
-      const hash = storage.getItem(ACTIVE_HASH_KEY);
-      return hash && document.querySelector(hash) ? hash : "";
-    } catch(e) {
-      return "";
-    }
-  };
-  return readHash(sessionStorage) || readHash(localStorage);
-}
-
-function storeActiveHash(hash) {
-  if (!hash || !document.querySelector(hash)) return;
-  try {
-    sessionStorage.setItem(ACTIVE_HASH_KEY, hash);
-  } catch(e) {}
-  try {
-    localStorage.setItem(ACTIVE_HASH_KEY, hash);
-  } catch(e) {}
-}
-
-function restoreHashBeforeFirstRender() {
-  if (window.location.hash) return;
-  const storedHash = getStoredActiveHash();
-  if (!storedHash || !document.querySelector(storedHash)) return;
-  try {
-    history.replaceState(null, "", storedHash);
-  } catch(e) {
-    window.location.hash = storedHash;
-  }
-}
 
 function stabilizeInitialNestedHash() {
   const initialHash = window.location.hash;
@@ -3063,7 +3029,7 @@ function stabilizeInitialNestedHash() {
 
 function updateTabs() {
   const rawHash = window.location.hash;
-  const requestedHash = rawHash || getStoredActiveHash();
+  const requestedHash = rawHash || '#home';
   let hash = requestedHash;
   const targetEl = requestedHash ? document.querySelector(requestedHash) : null;
   if (targetEl && !targetEl.classList.contains("page-section")) {
@@ -3073,7 +3039,6 @@ function updateTabs() {
   if (!hash || !document.querySelector(hash)) {
     hash = '#home';
   }
-  storeActiveHash(requestedHash && document.querySelector(requestedHash) ? requestedHash : hash);
   document.querySelectorAll('.page-section').forEach(section => {
     if ('#' + section.id === hash) {
       section.classList.add('active');
@@ -3106,7 +3071,6 @@ function updateTabs() {
 }
 window.addEventListener('hashchange', updateTabs);
 document.addEventListener('DOMContentLoaded', () => {
-  restoreHashBeforeFirstRender();
   buildSidebarToc();
   updateTabs();
   stabilizeInitialNestedHash();
