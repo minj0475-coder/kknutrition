@@ -2,7 +2,7 @@
 
 운영 중인 Google Apps Script 원본을 GitHub에서 함께 관리합니다.
 
-- 웹 앱: https://script.google.com/macros/s/AKfycbxZaIRsof1Lp1Fu3f-xEL3HE9gADGUHEMt4sVu1FyHzV7lgP6TdhjQC7ox3nlRxMpM3/exec
+- 웹 앱: https://script.google.com/macros/s/AKfycbwbMpeFIhvJUEm1b8YB_MYfyuJZJNtgX5d0eC5vdD-Dn_xurRHxLSuZ4o3ExpLr3svw/exec
 - 스프레드시트: https://docs.google.com/spreadsheets/d/1rzXMeRr3jqkO8wnYiIIYNa_gLj2nK0vzh2l6hL3x0rI/edit
 - Apps Script 프로젝트 ID: `1Tn0-Lrc1mul-mU2YPqV0NukqeLywOY2i8jEOgfE3GlD9Y0pMhFJh8VLP`
 
