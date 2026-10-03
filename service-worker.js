@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kknutrition-pwa-v250';
+const CACHE_NAME = 'kknutrition-pwa-v251';
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -84,4 +84,3 @@ self.addEventListener('fetch', (event) => {
     }
   })());
 });
-
