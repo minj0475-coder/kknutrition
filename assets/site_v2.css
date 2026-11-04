@@ -26361,13 +26361,18 @@ html body #app-content #bookmarks .filter-chips {
   padding: 2px 0 4px !important;
 }
 
-html body #app-content #bookmarks .bookmark-account-sheet-link {
+html body #app-content #promo-contacts .vendor-account-sheet-row {
+  padding: 12px 18px !important;
+  border-bottom: 1px solid #f0ece8 !important;
+  background: #fafafa !important;
+}
+
+html body #app-content #promo-contacts .vendor-account-sheet-link {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
   gap: 8px !important;
   min-height: 44px !important;
-  margin: 0 0 12px !important;
   padding: 10px 16px !important;
   border: 1px solid #c7d2fe !important;
   border-radius: 14px !important;
@@ -26381,23 +26386,27 @@ html body #app-content #bookmarks .bookmark-account-sheet-link {
   transition: background-color .18s ease, border-color .18s ease, transform .18s ease !important;
 }
 
-html body #app-content #bookmarks .bookmark-account-sheet-link:hover {
+html body #app-content #promo-contacts .vendor-account-sheet-link:hover {
   border-color: #a5b4fc !important;
   background: #e0e7ff !important;
   transform: translateY(-1px) !important;
 }
 
-html body #app-content #bookmarks .bookmark-account-sheet-link:focus-visible {
+html body #app-content #promo-contacts .vendor-account-sheet-link:focus-visible {
   outline: 3px solid rgba(99, 102, 241, .24) !important;
   outline-offset: 2px !important;
 }
 
-html body #app-content #bookmarks .bookmark-account-sheet-link svg {
+html body #app-content #promo-contacts .vendor-account-sheet-link svg {
   flex: 0 0 auto !important;
 }
 
 @media (max-width: 620px) {
-  html body #app-content #bookmarks .bookmark-account-sheet-link {
+  html body #app-content #promo-contacts .vendor-account-sheet-row {
+    padding: 10px 14px !important;
+  }
+
+  html body #app-content #promo-contacts .vendor-account-sheet-link {
     width: 100% !important;
   }
 }
