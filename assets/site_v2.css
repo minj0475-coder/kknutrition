@@ -26405,6 +26405,15 @@ html body #app-content#app-content#app-content #promo-contacts .vendor-account-s
   font-weight: 600 !important;
 }
 
+html body #app-content#app-content#app-content #promo-contacts .vendor-account-sheet-link > .vendor-account-sheet-external {
+  width: 14px !important;
+  height: 14px !important;
+  min-width: 14px !important;
+  min-height: 14px !important;
+  flex: 0 0 14px !important;
+  color: #64748b !important;
+}
+
 @media (max-width: 620px) {
   html body #app-content #promo-contacts .vendor-account-sheet-link {
     width: 36px !important;
@@ -26415,7 +26424,8 @@ html body #app-content#app-content#app-content #promo-contacts .vendor-account-s
     border-radius: 10px !important;
   }
 
-  html body #app-content #promo-contacts .vendor-account-sheet-label {
+  html body #app-content #promo-contacts .vendor-account-sheet-label,
+  html body #app-content #promo-contacts .vendor-account-sheet-external {
     position: absolute !important;
     width: 1px !important;
     height: 1px !important;
