@@ -26367,13 +26367,13 @@ html body #app-content #promo-contacts .vendor-account-sheet-link {
   justify-content: center !important;
   flex: 0 0 auto !important;
   gap: 7px !important;
-  height: 36px !important;
-  min-height: 36px !important;
-  padding: 0 8px !important;
+  height: 42px !important;
+  min-height: 42px !important;
+  padding: 0 10px !important;
   border: 0 !important;
-  border-radius: 10px !important;
+  border-radius: 12px !important;
   background: transparent !important;
-  color: #334155 !important;
+  color: #202123 !important;
   font-size: 13px !important;
   font-weight: 700 !important;
   line-height: 1 !important;
@@ -26383,8 +26383,8 @@ html body #app-content #promo-contacts .vendor-account-sheet-link {
 }
 
 html body #app-content #promo-contacts .vendor-account-sheet-link:hover {
-  background: #f5f7ff !important;
-  color: #4338ca !important;
+  background: #f1f1f1 !important;
+  color: #202123 !important;
 }
 
 html body #app-content #promo-contacts .vendor-account-sheet-link:focus-visible {
@@ -26408,7 +26408,10 @@ html body #app-content #promo-contacts .vendor-account-sheet-external {
   html body #app-content #promo-contacts .vendor-account-sheet-link {
     width: 36px !important;
     min-width: 36px !important;
+    height: 36px !important;
+    min-height: 36px !important;
     padding: 0 !important;
+    border-radius: 10px !important;
   }
 
   html body #app-content #promo-contacts .vendor-account-sheet-label,
