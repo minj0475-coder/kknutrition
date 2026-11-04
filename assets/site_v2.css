@@ -26399,8 +26399,14 @@ html body #app-content #promo-contacts .vendor-account-sheet-main-icon {
   color: currentColor !important;
 }
 
-html body #app-content #promo-contacts .vendor-account-sheet-external {
-  flex: 0 0 auto !important;
+html body #app-content#app-content#app-content #promo-contacts .vendor-account-sheet-link > .vendor-account-sheet-external {
+  width: 14px !important;
+  height: 14px !important;
+  min-width: 14px !important;
+  min-height: 14px !important;
+  max-width: 14px !important;
+  max-height: 14px !important;
+  flex: 0 0 14px !important;
   color: #94a3b8 !important;
 }
 
