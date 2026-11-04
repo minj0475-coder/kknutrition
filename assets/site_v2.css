@@ -26369,7 +26369,7 @@ html body #app-content #promo-contacts .vendor-account-sheet-link {
   gap: 7px !important;
   height: 36px !important;
   min-height: 36px !important;
-  padding: 4px 8px 4px 5px !important;
+  padding: 0 8px !important;
   border: 0 !important;
   border-radius: 10px !important;
   background: transparent !important;
@@ -26392,16 +26392,11 @@ html body #app-content #promo-contacts .vendor-account-sheet-link:focus-visible 
   outline-offset: 2px !important;
 }
 
-html body #app-content #promo-contacts .vendor-account-sheet-icon {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 28px !important;
-  height: 28px !important;
+html body #app-content #promo-contacts .vendor-account-sheet-main-icon {
+  width: 18px !important;
+  height: 18px !important;
   flex: 0 0 auto !important;
-  border-radius: 8px !important;
-  background: #eef2ff !important;
-  color: #6366f1 !important;
+  color: currentColor !important;
 }
 
 html body #app-content #promo-contacts .vendor-account-sheet-external {
@@ -26413,7 +26408,7 @@ html body #app-content #promo-contacts .vendor-account-sheet-external {
   html body #app-content #promo-contacts .vendor-account-sheet-link {
     width: 36px !important;
     min-width: 36px !important;
-    padding: 4px !important;
+    padding: 0 !important;
   }
 
   html body #app-content #promo-contacts .vendor-account-sheet-label,
