@@ -26366,27 +26366,25 @@ html body #app-content #promo-contacts .vendor-account-sheet-link {
   align-items: center !important;
   justify-content: center !important;
   flex: 0 0 auto !important;
-  gap: 6px !important;
+  gap: 7px !important;
   height: 36px !important;
   min-height: 36px !important;
-  padding: 0 12px !important;
-  border: 1px solid #e2e8f0 !important;
+  padding: 4px 8px 4px 5px !important;
+  border: 0 !important;
   border-radius: 10px !important;
-  background: #fff !important;
-  color: #475569 !important;
+  background: transparent !important;
+  color: #334155 !important;
   font-size: 13px !important;
   font-weight: 700 !important;
   line-height: 1 !important;
   text-decoration: none !important;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, .04) !important;
-  transition: color .18s ease, background-color .18s ease, border-color .18s ease, box-shadow .18s ease !important;
+  box-shadow: none !important;
+  transition: color .18s ease, background-color .18s ease !important;
 }
 
 html body #app-content #promo-contacts .vendor-account-sheet-link:hover {
-  border-color: #c7d2fe !important;
   background: #f5f7ff !important;
   color: #4338ca !important;
-  box-shadow: 0 3px 10px rgba(79, 70, 229, .08) !important;
 }
 
 html body #app-content #promo-contacts .vendor-account-sheet-link:focus-visible {
@@ -26394,19 +26392,32 @@ html body #app-content #promo-contacts .vendor-account-sheet-link:focus-visible 
   outline-offset: 2px !important;
 }
 
-html body #app-content #promo-contacts .vendor-account-sheet-link svg {
+html body #app-content #promo-contacts .vendor-account-sheet-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 28px !important;
+  height: 28px !important;
   flex: 0 0 auto !important;
+  border-radius: 8px !important;
+  background: #eef2ff !important;
   color: #6366f1 !important;
+}
+
+html body #app-content #promo-contacts .vendor-account-sheet-external {
+  flex: 0 0 auto !important;
+  color: #94a3b8 !important;
 }
 
 @media (max-width: 620px) {
   html body #app-content #promo-contacts .vendor-account-sheet-link {
     width: 36px !important;
     min-width: 36px !important;
-    padding: 0 !important;
+    padding: 4px !important;
   }
 
-  html body #app-content #promo-contacts .vendor-account-sheet-link span {
+  html body #app-content #promo-contacts .vendor-account-sheet-label,
+  html body #app-content #promo-contacts .vendor-account-sheet-external {
     position: absolute !important;
     width: 1px !important;
     height: 1px !important;
