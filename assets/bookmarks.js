@@ -661,10 +661,6 @@ function buildPortalLinkHubItems() {
     }
   }
 
-  bookmarkData.forEach(function(item) {
-    addLink(item.url, item.title, item.category === '기타' ? '기타 자료' : '급식업무 사이트', '내 북마크', { allowBareDomain: true });
-  });
-
   document.querySelectorAll('a[href]').forEach(function(anchor) {
     if (anchor.closest('#portalLinkHubGrid, #portalLinkHubFilters, #bookmarkGrid')) return;
     if (anchor.matches('.promo-open-link')) return;
