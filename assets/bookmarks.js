@@ -497,7 +497,7 @@ window.bmToggleFavorite = function(idx) {
 };
 
 // ---- Portal link hub ----
-var PORTAL_LINK_FILTERS = ['전체', '문자내용', '일정', '업체·전자단가', '스프레드시트', '급식업무 사이트', '기타 자료'];
+var PORTAL_LINK_FILTERS = ['전체', '문자내용', '일정', '업체·전자단가', '구글 드라이브', '급식업무 사이트', '기타 자료'];
 var portalLinkHubState = { category: '전체', query: '' };
 var portalLinkHubItems = [];
 
@@ -559,6 +559,14 @@ function portalLinkDomain(value) {
   }
 }
 
+function isGoogleDrivePortalLink(value) {
+  try {
+    return /^(?:docs|drive)\.google\.com$/i.test(new URL(value).hostname);
+  } catch (e) {
+    return false;
+  }
+}
+
 function extractPortalUrlsFromText(value) {
   var text = String(value || '');
   var matches = text.match(/(?:https?:\/\/|www\.)[^\s<>"'`]+/gi) || [];
@@ -577,7 +585,6 @@ function getPortalLinkSourceForElement(anchor, url) {
   if (anchor.closest('#messageTemplates')) return '문자내용';
   if (anchor.closest('#monthly, #annual')) return '일정';
   if (anchor.closest('#promo-contacts')) return '업체·전자단가';
-  if (/docs\.google\.com\/spreadsheets/i.test(url)) return '스프레드시트';
   if (anchor.closest('#bookmarks')) return '급식업무 사이트';
   return '급식업무 사이트';
 }
@@ -627,6 +634,9 @@ function buildPortalLinkHubItems() {
       existing.title = cleanTitle;
     }
     if (existing.sources.indexOf(cleanSource) < 0) existing.sources.push(cleanSource);
+    if (isGoogleDrivePortalLink(url) && existing.sources.indexOf('구글 드라이브') < 0) {
+      existing.sources.push('구글 드라이브');
+    }
     var cleanDetail = String(detail || '').replace(/\s+/g, ' ').trim();
     if (cleanDetail && existing.details.indexOf(cleanDetail) < 0) existing.details.push(cleanDetail);
   }
@@ -671,9 +681,6 @@ function buildPortalLinkHubItems() {
     var title = getPortalLinkTitleForElement(anchor, url);
     var source = getPortalLinkSourceForElement(anchor, url);
     addLink(url, title, source, '포털 화면');
-    if (/docs\.google\.com\/spreadsheets/i.test(url) && source !== '스프레드시트') {
-      addLink(url, title, '스프레드시트', '포털 화면');
-    }
   });
 
   getPortalListItems(readPortalLinkStorage('kkulkkoori_message_templates_v1')).forEach(function(item) {
@@ -702,7 +709,7 @@ function buildPortalLinkHubItems() {
   var annualLinks = readPortalLinkStorage('kkulkkoori_annual_sheet_links_v1');
   if (annualLinks && typeof annualLinks === 'object' && !Array.isArray(annualLinks)) {
     Object.keys(annualLinks).forEach(function(key) {
-      addLink(annualLinks[key], annualLabels[key] || '연간 일정 스프레드시트', '스프레드시트', '연간 일정', { allowBareDomain: true });
+      addLink(annualLinks[key], annualLabels[key] || '연간 일정 스프레드시트', '일정', '연간 일정', { allowBareDomain: true });
     });
   }
 
@@ -718,7 +725,7 @@ function buildPortalLinkHubItems() {
   var serviceSheet = localStorage.getItem('kkulkkoori_service_sheet_link') || '';
   if (serviceSheet) {
     var parsedServiceSheet = readPortalLinkStorage('kkulkkoori_service_sheet_link');
-    addLink(typeof parsedServiceSheet === 'string' ? parsedServiceSheet : serviceSheet, '복무 사용 현황표', '스프레드시트', '조리종사원', { allowBareDomain: true });
+    addLink(typeof parsedServiceSheet === 'string' ? parsedServiceSheet : serviceSheet, '복무 사용 현황표', '기타 자료', '조리종사원', { allowBareDomain: true });
   }
 
   collectTextLinks(readPortalLinkStorage('kkulkkoori_work_notes_v1'), '기타 자료', '생각서랍', 0);
