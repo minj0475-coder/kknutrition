@@ -467,6 +467,10 @@ function renderBookmarks() {
       });
     });
   }
+
+  if (typeof window.refreshPortalLinkHub === 'function') {
+    window.refreshPortalLinkHub();
+  }
 }
 
 // (bmDelete and bmOpenModal are defined above near getModal)
@@ -492,10 +496,321 @@ window.bmToggleFavorite = function(idx) {
   }
 };
 
+// ---- Portal link hub ----
+var PORTAL_LINK_FILTERS = ['전체', '문자내용', '일정', '업체·전자단가', '스프레드시트', '급식업무 사이트', '기타 자료'];
+var portalLinkHubState = { category: '전체', query: '' };
+var portalLinkHubItems = [];
+
+function escapePortalLinkHtml(value) {
+  return String(value == null ? '' : value).replace(/[&<>"']/g, function(char) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char];
+  });
+}
+
+function readPortalLinkStorage(key) {
+  try {
+    return JSON.parse(localStorage.getItem(key) || 'null');
+  } catch (e) {
+    return null;
+  }
+}
+
+function normalizePortalLinkUrl(value, options) {
+  var raw = String(value || '').trim();
+  if (!raw) return '';
+  raw = raw.replace(/[\s\u00a0]+$/g, '').replace(/[),.;\]}]+$/g, '');
+  if (/^www\./i.test(raw)) raw = 'https://' + raw;
+  if (!/^[a-z][a-z0-9+.-]*:/i.test(raw) && options && options.allowBareDomain && /^[^\s/]+\.[^\s]+/.test(raw)) {
+    raw = 'https://' + raw;
+  }
+  try {
+    var url = new URL(raw, location.href);
+    if (url.protocol !== 'http:' && url.protocol !== 'https:') return '';
+    if (url.username || url.password) return '';
+    var hasSensitiveParameter = false;
+    url.searchParams.forEach(function(_value, key) {
+      if (/(password|passwd|token|auth|api.?key|secret|credential)/i.test(key)) hasSensitiveParameter = true;
+    });
+    if (hasSensitiveParameter || /(?:^|[&#])(access_token|password|secret|credential)=/i.test(url.hash)) return '';
+    return url.href;
+  } catch (e) {
+    return '';
+  }
+}
+
+function canonicalPortalLinkUrl(value) {
+  try {
+    var url = new URL(value);
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'fbclid', 'gclid'].forEach(function(key) {
+      url.searchParams.delete(key);
+    });
+    url.hostname = url.hostname.toLowerCase();
+    return url.href;
+  } catch (e) {
+    return value;
+  }
+}
+
+function portalLinkDomain(value) {
+  try {
+    return new URL(value).hostname.replace(/^www\./i, '');
+  } catch (e) {
+    return '';
+  }
+}
+
+function extractPortalUrlsFromText(value) {
+  var text = String(value || '');
+  var matches = text.match(/(?:https?:\/\/|www\.)[^\s<>"'`]+/gi) || [];
+  return matches.map(function(url) {
+    return normalizePortalLinkUrl(url);
+  }).filter(Boolean);
+}
+
+function getPortalListItems(value) {
+  if (Array.isArray(value)) return value;
+  if (value && Array.isArray(value.items)) return value.items;
+  return [];
+}
+
+function getPortalLinkSourceForElement(anchor, url) {
+  if (anchor.closest('#messageTemplates')) return '문자내용';
+  if (anchor.closest('#monthly, #annual')) return '일정';
+  if (anchor.closest('#promo-contacts')) return '업체·전자단가';
+  if (/docs\.google\.com\/spreadsheets/i.test(url)) return '스프레드시트';
+  if (anchor.closest('#bookmarks')) return '급식업무 사이트';
+  return '급식업무 사이트';
+}
+
+function getPortalLinkTitleForElement(anchor, url) {
+  var nearbyTitle = '';
+  var sheetCard = anchor.closest('.sheet-link-card');
+  if (sheetCard) nearbyTitle = String(sheetCard.querySelector('strong')?.textContent || '').trim();
+  var title = nearbyTitle
+    || String(anchor.dataset.linkTitle || '').trim()
+    || String(anchor.getAttribute('aria-label') || '').trim()
+    || String(anchor.getAttribute('title') || '').trim()
+    || String(anchor.textContent || '').replace(/\s+/g, ' ').trim();
+  title = title.replace(/\s*(링크|사이트|스프레드시트)?\s*열기$/g, '').trim();
+  if (!title || /^(열기|바로가기|스프레드시트)$/i.test(title)) return portalLinkDomain(url) || '바로가기';
+  return title;
+}
+
+function buildPortalLinkHubItems() {
+  var itemMap = new Map();
+  var blockedFieldPattern = /(password|passwd|token|auth|api.?key|secret|credential|비밀번호)/i;
+
+  function addLink(rawUrl, title, source, detail, options) {
+    var url = normalizePortalLinkUrl(rawUrl, options);
+    if (!url) return;
+    var canonical = canonicalPortalLinkUrl(url);
+    var cleanTitle = String(title || '').replace(/[*_`#]/g, '').replace(/\s+/g, ' ').trim() || portalLinkDomain(url) || '바로가기';
+    if (/(작업\s*시작\s*전|가장\s*중요한\s*조건|원격\s*main|비밀번호|password|아이디\s*:)/i.test(cleanTitle)) {
+      cleanTitle = (source || '기타 자료') + ' 링크';
+    }
+    if (cleanTitle.length > 54) cleanTitle = cleanTitle.slice(0, 51).trim() + '…';
+    var cleanSource = PORTAL_LINK_FILTERS.indexOf(source) >= 0 && source !== '전체' ? source : '기타 자료';
+    var existing = itemMap.get(canonical);
+    if (!existing) {
+      existing = {
+        url: url,
+        title: cleanTitle,
+        domain: portalLinkDomain(url),
+        sources: [],
+        details: []
+      };
+      itemMap.set(canonical, existing);
+    }
+    var existingIsGeneric = /^(전자\s*단가|링크|바로가기|사이트|자료)$/i.test(existing.title);
+    var nextIsGeneric = /^(전자\s*단가|링크|바로가기|사이트|자료)$/i.test(cleanTitle);
+    if (existing.title === existing.domain || existingIsGeneric && !nextIsGeneric || existing.title.length < cleanTitle.length && existing.title.length < 8) {
+      existing.title = cleanTitle;
+    }
+    if (existing.sources.indexOf(cleanSource) < 0) existing.sources.push(cleanSource);
+    var cleanDetail = String(detail || '').replace(/\s+/g, ' ').trim();
+    if (cleanDetail && existing.details.indexOf(cleanDetail) < 0) existing.details.push(cleanDetail);
+  }
+
+  function addTextLinks(text, title, source, detail) {
+    extractPortalUrlsFromText(text).forEach(function(url) {
+      addLink(url, title, source, detail);
+    });
+  }
+
+  function collectTextLinks(value, source, context, depth) {
+    if (value == null || depth > 4) return;
+    if (typeof value === 'string') {
+      addTextLinks(value, context || source + ' 링크', source, context);
+      return;
+    }
+    if (Array.isArray(value)) {
+      value.forEach(function(item) {
+        var nextContext = item && typeof item === 'object'
+          ? String(item.title || item.name || item.company || item.date || context || '').trim()
+          : context;
+        collectTextLinks(item, source, nextContext, depth + 1);
+      });
+      return;
+    }
+    if (typeof value === 'object') {
+      var objectContext = String(value.title || value.name || value.company || value.date || context || '').trim();
+      Object.keys(value).forEach(function(key) {
+        if (blockedFieldPattern.test(key)) return;
+        collectTextLinks(value[key], source, objectContext, depth + 1);
+      });
+    }
+  }
+
+  bookmarkData.forEach(function(item) {
+    addLink(item.url, item.title, item.category === '기타' ? '기타 자료' : '급식업무 사이트', '내 북마크', { allowBareDomain: true });
+  });
+
+  document.querySelectorAll('a[href]').forEach(function(anchor) {
+    if (anchor.closest('#portalLinkHubGrid, #portalLinkHubFilters, #bookmarkGrid')) return;
+    if (anchor.matches('.promo-open-link')) return;
+    var rawHref = String(anchor.getAttribute('href') || '').trim();
+    if (!rawHref || rawHref.charAt(0) === '#' || /^(javascript:|mailto:|tel:)/i.test(rawHref)) return;
+    var url = normalizePortalLinkUrl(rawHref);
+    if (!url) return;
+    var title = getPortalLinkTitleForElement(anchor, url);
+    var source = getPortalLinkSourceForElement(anchor, url);
+    addLink(url, title, source, '포털 화면');
+    if (/docs\.google\.com\/spreadsheets/i.test(url) && source !== '스프레드시트') {
+      addLink(url, title, '스프레드시트', '포털 화면');
+    }
+  });
+
+  getPortalListItems(readPortalLinkStorage('kkulkkoori_message_templates_v1')).forEach(function(item) {
+    var title = String(item && item.title || '문자내용 링크').trim();
+    addTextLinks(item && item.body, title, '문자내용', title);
+  });
+
+  var academicEvents = readPortalLinkStorage('kkulkkoori_academic_events_v1');
+  if (academicEvents && typeof academicEvents === 'object' && !Array.isArray(academicEvents)) {
+    Object.keys(academicEvents).forEach(function(date) {
+      var events = Array.isArray(academicEvents[date]) ? academicEvents[date] : [academicEvents[date]];
+      events.forEach(function(event) {
+        if (!event || typeof event !== 'object') return;
+        var title = String(event.title || '학사일정 링크').trim();
+        addLink(event.url, title, '일정', date);
+        addTextLinks(event.memo, title, '일정', date);
+      });
+    });
+  }
+
+  var annualLabels = {
+    allergy: '알레르기 학생 조사',
+    milk: '우유 수요 조사',
+    parents: '학부모 봉사·모니터링 명단 및 일정'
+  };
+  var annualLinks = readPortalLinkStorage('kkulkkoori_annual_sheet_links_v1');
+  if (annualLinks && typeof annualLinks === 'object' && !Array.isArray(annualLinks)) {
+    Object.keys(annualLinks).forEach(function(key) {
+      addLink(annualLinks[key], annualLabels[key] || '연간 일정 스프레드시트', '스프레드시트', '연간 일정', { allowBareDomain: true });
+    });
+  }
+
+  var promoContacts = readPortalLinkStorage('kkulkkoori_promo_contacts_v1');
+  if (Array.isArray(promoContacts)) {
+    promoContacts.forEach(function(item) {
+      var company = String(item && item.company || '업체 전자단가').trim();
+      addLink(item && item.link, company, '업체·전자단가', '전자단가', { allowBareDomain: true });
+      addTextLinks(item && item.memo, company, '업체·전자단가', '업체 메모');
+    });
+  }
+
+  var serviceSheet = localStorage.getItem('kkulkkoori_service_sheet_link') || '';
+  if (serviceSheet) {
+    var parsedServiceSheet = readPortalLinkStorage('kkulkkoori_service_sheet_link');
+    addLink(typeof parsedServiceSheet === 'string' ? parsedServiceSheet : serviceSheet, '복무 사용 현황표', '스프레드시트', '조리종사원', { allowBareDomain: true });
+  }
+
+  collectTextLinks(readPortalLinkStorage('kkulkkoori_work_notes_v1'), '기타 자료', '생각서랍', 0);
+  collectTextLinks(readPortalLinkStorage('kkulkkoori_staff_notices_v1'), '기타 자료', '조리종사원 전달사항', 0);
+  collectTextLinks(readPortalLinkStorage('kkulkkoori_cheongsu_recipes_v3'), '기타 자료', '급식노트', 0);
+
+  return Array.from(itemMap.values()).sort(function(a, b) {
+    var sourceA = Math.min.apply(null, a.sources.map(function(source) { return PORTAL_LINK_FILTERS.indexOf(source); }));
+    var sourceB = Math.min.apply(null, b.sources.map(function(source) { return PORTAL_LINK_FILTERS.indexOf(source); }));
+    if (sourceA !== sourceB) return sourceA - sourceB;
+    return a.title.localeCompare(b.title, 'ko');
+  });
+}
+
+function renderPortalLinkHubFilters() {
+  var container = document.getElementById('portalLinkHubFilters');
+  if (!container) return;
+  var available = PORTAL_LINK_FILTERS.slice();
+  if (available.indexOf(portalLinkHubState.category) < 0) portalLinkHubState.category = '전체';
+  container.innerHTML = available.map(function(category) {
+    var active = category === portalLinkHubState.category;
+    return '<button class="portal-link-filter' + (active ? ' active' : '') + '" type="button" data-portal-link-filter="' + escapePortalLinkHtml(category) + '" aria-pressed="' + (active ? 'true' : 'false') + '">' + escapePortalLinkHtml(category) + '</button>';
+  }).join('');
+  container.querySelectorAll('[data-portal-link-filter]').forEach(function(button) {
+    button.addEventListener('click', function() {
+      portalLinkHubState.category = button.dataset.portalLinkFilter || '전체';
+      renderPortalLinkHubFilters();
+      renderPortalLinkHubGrid();
+    });
+  });
+}
+
+function renderPortalLinkHubGrid() {
+  var grid = document.getElementById('portalLinkHubGrid');
+  var count = document.getElementById('portalLinkHubCount');
+  var status = document.getElementById('portalLinkHubStatus');
+  if (!grid) return;
+  var query = String(portalLinkHubState.query || '').trim().toLowerCase();
+  var filtered = portalLinkHubItems.filter(function(item) {
+    if (portalLinkHubState.category !== '전체' && item.sources.indexOf(portalLinkHubState.category) < 0) return false;
+    if (!query) return true;
+    return [item.title, item.domain, item.sources.join(' '), item.details.join(' ')].join(' ').toLowerCase().indexOf(query) >= 0;
+  });
+  if (count) count.textContent = filtered.length + '개';
+  if (status) status.textContent = filtered.length ? '' : '조건에 맞는 링크가 없습니다.';
+  grid.innerHTML = filtered.map(function(item) {
+    var sourceBadges = item.sources.slice(0, 2).map(function(source) {
+      return '<span class="portal-link-source">' + escapePortalLinkHtml(source) + '</span>';
+    }).join('');
+    return '<a class="portal-link-card" href="' + escapePortalLinkHtml(item.url) + '" target="_blank" rel="noopener noreferrer">'
+      + faviconImg(item.url)
+      + '<span class="portal-link-copy">'
+      + '<strong>' + escapePortalLinkHtml(item.title) + '</strong>'
+      + '<span class="portal-link-meta"><span class="portal-link-domain">' + escapePortalLinkHtml(item.domain) + '</span>' + sourceBadges + '</span>'
+      + '</span>'
+      + '<span class="portal-link-open">바로가기<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>'
+      + '</a>';
+  }).join('');
+}
+
+function refreshPortalLinkHub() {
+  if (!document.getElementById('portalLinkHubGrid')) return;
+  portalLinkHubItems = buildPortalLinkHubItems();
+  renderPortalLinkHubFilters();
+  renderPortalLinkHubGrid();
+}
+
+function setupPortalLinkHub() {
+  var search = document.getElementById('portalLinkSearchInput');
+  if (!search) return;
+  search.addEventListener('input', function() {
+    portalLinkHubState.query = search.value || '';
+    renderPortalLinkHubGrid();
+  });
+  window.refreshPortalLinkHub = refreshPortalLinkHub;
+  refreshPortalLinkHub();
+  window.addEventListener('storage', refreshPortalLinkHub);
+  window.addEventListener('kknutrition:cloud-data-applied', refreshPortalLinkHub);
+  window.addEventListener('hashchange', function() {
+    if (location.hash === '#bookmarks') refreshPortalLinkHub();
+  });
+}
+
 // ---- Init ----
 document.addEventListener('DOMContentLoaded', function() {
   renderFilterChips();
   renderBookmarks();
+  setupPortalLinkHub();
 
   var editBtn = document.getElementById('editBtnBookmarks');
   if (editBtn) {

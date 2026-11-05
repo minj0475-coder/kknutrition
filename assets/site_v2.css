@@ -27096,6 +27096,342 @@ html body #app-content #today-menu .work-note-card.is-picker-open
   }
 }
 
+/* 2026-11-05 bookmarks: collect portal links in one searchable, source-aware hub. */
+html body #app-content #bookmarks > main.wrap {
+  display: grid !important;
+  gap: 24px !important;
+}
+
+html body #app-content #bookmarks :is(.portal-link-hub-card, .bookmark-folder-section) {
+  min-width: 0 !important;
+  padding: 22px !important;
+  border: 1px solid var(--kkn-unified-line, #e5e7eb) !important;
+  border-radius: var(--portal-card-radius, 16px) !important;
+  background: #ffffff !important;
+  box-shadow: var(--shadow-flat, none) !important;
+}
+
+html body #app-content #bookmarks :is(.portal-link-hub-head, .bookmark-folder-head) {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  margin: 0 0 18px !important;
+}
+
+html body #app-content #bookmarks :is(.portal-link-hub-head, .bookmark-folder-head) .section-title {
+  margin: 0 !important;
+  color: #202123 !important;
+  font-size: 20px !important;
+  font-weight: 760 !important;
+  letter-spacing: -.02em !important;
+  line-height: 1.35 !important;
+}
+
+html body #app-content #bookmarks :is(.portal-link-hub-head, .bookmark-folder-head) .mini {
+  margin: 5px 0 0 !important;
+  color: #6b7280 !important;
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+}
+
+html body #app-content #bookmarks .portal-link-hub-count {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 44px !important;
+  min-height: 30px !important;
+  padding: 0 10px !important;
+  border-radius: 999px !important;
+  background: var(--kkn-neutral-fill, #f7f8fa) !important;
+  color: #4b5563 !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+html body #app-content #bookmarks .portal-link-hub-tools {
+  display: grid !important;
+  gap: 12px !important;
+  margin-bottom: 16px !important;
+}
+
+html body #app-content #bookmarks .portal-link-search {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  width: min(100%, 460px) !important;
+  min-height: 42px !important;
+  color: #6b7280 !important;
+}
+
+html body #app-content #bookmarks .portal-link-search > svg {
+  position: absolute !important;
+  left: 13px !important;
+  width: 18px !important;
+  height: 18px !important;
+  pointer-events: none !important;
+}
+
+html body #app-content #bookmarks #portalLinkSearchInput {
+  width: 100% !important;
+  height: 42px !important;
+  min-height: 42px !important;
+  padding: 0 40px !important;
+  border: 1px solid var(--portal-control-line, #d9d9df) !important;
+  border-radius: 12px !important;
+  background: #ffffff !important;
+  color: #202123 !important;
+  font-family: var(--portal-font) !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+html body #app-content #bookmarks #portalLinkSearchInput:focus {
+  border-color: #aeb1b8 !important;
+  box-shadow: 0 0 0 3px rgba(32, 33, 35, .07) !important;
+}
+
+html body #app-content #bookmarks #portalLinkSearchInput::placeholder {
+  color: #9ca3af !important;
+}
+
+html body #app-content #bookmarks .portal-link-hub-filters {
+  display: flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  max-width: 100% !important;
+  padding: 1px 0 3px !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+}
+
+html body #app-content #bookmarks .portal-link-hub-filters::-webkit-scrollbar {
+  display: none !important;
+}
+
+html body #app-content #bookmarks .portal-link-filter {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 auto !important;
+  min-height: 36px !important;
+  padding: 0 12px !important;
+  border: 1px solid var(--portal-control-line, #d9d9df) !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+  color: #4b5563 !important;
+  font-family: var(--portal-font) !important;
+  font-size: 13px !important;
+  font-weight: 650 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+  transition: background-color .16s ease, border-color .16s ease, color .16s ease !important;
+}
+
+html body #app-content #bookmarks .portal-link-filter:hover {
+  border-color: var(--portal-control-line-hover, #c9c9d1) !important;
+  background: var(--kkn-neutral-hover, #f5f6f8) !important;
+  color: #202123 !important;
+}
+
+html body #app-content #bookmarks .portal-link-filter.active {
+  border-color: #202123 !important;
+  background: #202123 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html body #app-content #bookmarks .portal-link-filter:focus-visible,
+html body #app-content #bookmarks .portal-link-card:focus-visible {
+  outline: 2px solid #202123 !important;
+  outline-offset: 2px !important;
+}
+
+html body #app-content #bookmarks .portal-link-hub-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)) !important;
+  gap: 10px !important;
+}
+
+html body #app-content #bookmarks .portal-link-card {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  min-width: 0 !important;
+  min-height: 72px !important;
+  padding: 12px 14px !important;
+  border: 1px solid var(--kkn-unified-line, #e5e7eb) !important;
+  border-radius: 14px !important;
+  background: #ffffff !important;
+  color: #202123 !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: background-color .16s ease, border-color .16s ease !important;
+}
+
+html body #app-content #bookmarks .portal-link-card:hover {
+  border-color: var(--portal-control-line-hover, #c9c9d1) !important;
+  background: var(--kkn-neutral-hover, #f5f6f8) !important;
+  color: #202123 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+html body #app-content #bookmarks .portal-link-copy {
+  display: grid !important;
+  gap: 5px !important;
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
+}
+
+html body #app-content #bookmarks .portal-link-copy > strong {
+  min-width: 0 !important;
+  overflow: hidden !important;
+  color: #202123 !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  letter-spacing: -.01em !important;
+  line-height: 1.35 !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+html body #app-content #bookmarks .portal-link-meta {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  min-width: 0 !important;
+}
+
+html body #app-content #bookmarks .portal-link-domain {
+  min-width: 0 !important;
+  max-width: 150px !important;
+  overflow: hidden !important;
+  color: #7b8190 !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+html body #app-content #bookmarks .portal-link-source {
+  display: inline-flex !important;
+  align-items: center !important;
+  min-height: 20px !important;
+  padding: 0 7px !important;
+  border-radius: 999px !important;
+  background: var(--kkn-neutral-fill, #f7f8fa) !important;
+  color: #59606d !important;
+  font-size: 10px !important;
+  font-weight: 650 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+html body #app-content #bookmarks .portal-link-open {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 auto !important;
+  gap: 5px !important;
+  min-height: 34px !important;
+  padding: 0 10px !important;
+  border: 1px solid var(--portal-control-line, #d9d9df) !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+  color: #34373d !important;
+  font-size: 12px !important;
+  font-weight: 650 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+html body #app-content#app-content #bookmarks#bookmarks .portal-link-open > svg {
+  width: 14px !important;
+  height: 14px !important;
+  min-width: 14px !important;
+  min-height: 14px !important;
+  max-width: 14px !important;
+  max-height: 14px !important;
+  flex: 0 0 14px !important;
+}
+
+html body #app-content #bookmarks .portal-link-card:hover .portal-link-open {
+  border-color: var(--portal-control-line-hover, #c9c9d1) !important;
+  background: var(--kkn-neutral-hover, #f5f6f8) !important;
+}
+
+html body #app-content #bookmarks .portal-link-hub-status {
+  margin: 0 !important;
+  padding: 22px 0 4px !important;
+  color: #7b8190 !important;
+  text-align: center !important;
+}
+
+html body #app-content #bookmarks .portal-link-hub-status:empty {
+  display: none !important;
+}
+
+html body #app-content #bookmarks .bookmark-folder-section .bookmark-controls {
+  margin: 0 0 16px !important;
+}
+
+@media (max-width: 760px) {
+  html body #app-content #bookmarks > main.wrap {
+    gap: 16px !important;
+  }
+
+  html body #app-content #bookmarks :is(.portal-link-hub-card, .bookmark-folder-section) {
+    padding: 18px 14px !important;
+  }
+
+  html body #app-content #bookmarks :is(.portal-link-hub-head, .bookmark-folder-head) {
+    margin-bottom: 16px !important;
+  }
+
+  html body #app-content #bookmarks :is(.portal-link-hub-head, .bookmark-folder-head) .section-title {
+    font-size: 18px !important;
+  }
+
+  html body #app-content #bookmarks .portal-link-search {
+    width: 100% !important;
+  }
+
+  html body #app-content #bookmarks .portal-link-hub-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  html body #app-content #bookmarks .portal-link-card {
+    min-height: 68px !important;
+    padding: 11px 12px !important;
+  }
+
+  html body #app-content #bookmarks .portal-link-open {
+    min-height: 32px !important;
+    padding: 0 8px !important;
+    font-size: 11px !important;
+  }
+
+  html body #app-content #bookmarks .portal-link-domain {
+    max-width: 112px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  html body #app-content #bookmarks .portal-link-source:nth-of-type(n + 2) {
+    display: none !important;
+  }
+}
+
 /* Hidden editor sections must stay hidden even when layout rules use !important. */
 html body #app-content#app-content #academicModal .academic-apply-scope[hidden] {
   display: none !important;
