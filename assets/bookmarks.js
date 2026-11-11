@@ -561,7 +561,19 @@ function portalLinkDomain(value) {
 
 function isGoogleDrivePortalLink(value) {
   try {
-    return /^(?:docs|drive)\.google\.com$/i.test(new URL(value).hostname);
+    var hostname = new URL(value).hostname.toLowerCase();
+    return [
+      'docs.google.com',
+      'drive.google.com',
+      'script.google.com',
+      'sheets.google.com',
+      'slides.google.com',
+      'forms.google.com',
+      'forms.gle',
+      'docs.googleusercontent.com',
+      'drive.googleusercontent.com',
+      'drive.usercontent.google.com'
+    ].indexOf(hostname) >= 0;
   } catch (e) {
     return false;
   }
@@ -569,7 +581,7 @@ function isGoogleDrivePortalLink(value) {
 
 function extractPortalUrlsFromText(value) {
   var text = String(value || '');
-  var matches = text.match(/(?:https?:\/\/|www\.)[^\s<>"'`]+/gi) || [];
+  var matches = text.match(/(?:https?:\/\/|www\.)[^\s<>"'`\\]+/gi) || [];
   return matches.map(function(url) {
     return normalizePortalLinkUrl(url);
   }).filter(Boolean);
@@ -731,6 +743,38 @@ function buildPortalLinkHubItems() {
   collectTextLinks(readPortalLinkStorage('kkulkkoori_work_notes_v1'), '기타 자료', '생각서랍', 0);
   collectTextLinks(readPortalLinkStorage('kkulkkoori_staff_notices_v1'), '기타 자료', '조리종사원 전달사항', 0);
   collectTextLinks(readPortalLinkStorage('kkulkkoori_cheongsu_recipes_v3'), '기타 자료', '급식노트', 0);
+
+  document.querySelectorAll('input[type="url"], textarea').forEach(function(field) {
+    extractPortalUrlsFromText(field.value).forEach(function(url) {
+      if (!isGoogleDrivePortalLink(url)) return;
+      var title = String(field.getAttribute('aria-label') || field.getAttribute('title') || field.placeholder || '구글 드라이브 자료').trim();
+      addLink(url, title, '구글 드라이브', '포털 입력 자료');
+    });
+  });
+
+  function collectGoogleDriveLinksFromStorage(storage, detail) {
+    if (!storage) return;
+    try {
+      for (var storageIndex = 0; storageIndex < storage.length; storageIndex += 1) {
+        var storageKey = String(storage.key(storageIndex) || '');
+        if (!storageKey || /bookmark/i.test(storageKey)) continue;
+        extractPortalUrlsFromText(storage.getItem(storageKey) || '').forEach(function(url) {
+          if (isGoogleDrivePortalLink(url)) {
+            addLink(url, '구글 드라이브 자료', '구글 드라이브', detail);
+          }
+        });
+      }
+    } catch (e) { /* storage may be unavailable in restricted browsing modes */ }
+  }
+
+  collectGoogleDriveLinksFromStorage(localStorage, '포털 저장 자료');
+  collectGoogleDriveLinksFromStorage(sessionStorage, '포털 임시 저장 자료');
+
+  itemMap.forEach(function(item) {
+    if (isGoogleDrivePortalLink(item.url) && item.sources.indexOf('구글 드라이브') < 0) {
+      item.sources.push('구글 드라이브');
+    }
+  });
 
   return Array.from(itemMap.values()).sort(function(a, b) {
     var sourceA = Math.min.apply(null, a.sources.map(function(source) { return PORTAL_LINK_FILTERS.indexOf(source); }));
