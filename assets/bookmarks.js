@@ -628,6 +628,7 @@ function buildPortalLinkHubItems() {
     if (/(작업\s*시작\s*전|가장\s*중요한\s*조건|원격\s*main|비밀번호|password|아이디\s*:)/i.test(cleanTitle)) {
       cleanTitle = (source || '기타 자료') + ' 링크';
     }
+    if (cleanTitle === '기타 자료 링크' && new URL(url).origin === location.origin) return;
     if (cleanTitle.length > 54) cleanTitle = cleanTitle.slice(0, 51).trim() + '…';
     var cleanSource = PORTAL_LINK_FILTERS.indexOf(source) >= 0 && source !== '전체' ? source : '기타 자료';
     var existing = itemMap.get(canonical);
