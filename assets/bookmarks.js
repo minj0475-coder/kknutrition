@@ -690,6 +690,7 @@ function buildPortalLinkHubItems() {
     if (anchor.id === 'substituteQrDownloadBtn') return;
     if (anchor.matches('.promo-open-link')) return;
     var rawHref = String(anchor.getAttribute('href') || '').trim();
+    if (/school-lunch-tv\.html|신규대체조리종사원_안내\.html/i.test(rawHref)) return;
     if (!rawHref || rawHref.charAt(0) === '#' || /^(javascript:|mailto:|tel:)/i.test(rawHref)) return;
     var url = normalizePortalLinkUrl(rawHref);
     if (!url) return;
