@@ -790,7 +790,11 @@ function buildPortalLinkHubItems() {
 function renderPortalLinkHubFilters() {
   var container = document.getElementById('portalLinkHubFilters');
   if (!container) return;
-  var available = PORTAL_LINK_FILTERS.slice();
+  var available = PORTAL_LINK_FILTERS.filter(function(category) {
+    return category === '전체' || portalLinkHubItems.some(function(item) {
+      return item.sources.indexOf(category) >= 0;
+    });
+  });
   if (available.indexOf(portalLinkHubState.category) < 0) portalLinkHubState.category = '전체';
   container.innerHTML = available.map(function(category) {
     var active = category === portalLinkHubState.category;
