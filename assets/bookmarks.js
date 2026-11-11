@@ -595,6 +595,7 @@ function getPortalListItems(value) {
 
 function getPortalLinkSourceForElement(anchor, url) {
   if (anchor.closest('#messageTemplates')) return '문자내용';
+  if (anchor.matches('[data-annual-sheet-open], .annual-sheet-open-btn')) return '구글 드라이브';
   if (anchor.closest('#monthly, #annual')) return '일정';
   if (anchor.closest('#promo-contacts')) return '업체·전자단가';
   if (anchor.closest('#bookmarks')) return '급식업무 사이트';
@@ -721,7 +722,7 @@ function buildPortalLinkHubItems() {
   var annualLinks = readPortalLinkStorage('kkulkkoori_annual_sheet_links_v1');
   if (annualLinks && typeof annualLinks === 'object' && !Array.isArray(annualLinks)) {
     Object.keys(annualLinks).forEach(function(key) {
-      addLink(annualLinks[key], annualLabels[key] || '연간 일정 스프레드시트', '일정', '연간 일정', { allowBareDomain: true });
+      addLink(annualLinks[key], annualLabels[key] || '연간 일정 스프레드시트', '구글 드라이브', '연간 일정', { allowBareDomain: true });
     });
   }
 
@@ -771,8 +772,8 @@ function buildPortalLinkHubItems() {
   collectGoogleDriveLinksFromStorage(sessionStorage, '포털 임시 저장 자료');
 
   itemMap.forEach(function(item) {
-    if (isGoogleDrivePortalLink(item.url) && item.sources.indexOf('구글 드라이브') < 0) {
-      item.sources.push('구글 드라이브');
+    if (isGoogleDrivePortalLink(item.url) || item.sources.indexOf('구글 드라이브') >= 0) {
+      item.sources = ['구글 드라이브'];
     }
   });
 
