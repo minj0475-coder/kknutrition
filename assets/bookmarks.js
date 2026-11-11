@@ -501,6 +501,9 @@ var PORTAL_LINK_FILTERS = ['전체', '문자내용', '일정', '업체·전자�
 var PORTAL_LINK_TITLE_OVERRIDES = {
   '1FAIpQLScpbf-a8wOidVc0VAVz25Dg7lVqHI4SqnLQMZn9eM7GRajAAA': '[청수초등학교] 급식 메뉴 아이디어 공모전'
 };
+var PORTAL_LINK_SOURCE_OVERRIDES = {
+  '1l_Eo4vlMdeQzFI12w6Dw536ayA4ZSxoaUxoPQSoV4M8': '구글 드라이브'
+};
 var portalLinkHubState = { category: '전체', query: '' };
 var portalLinkHubItems = [];
 
@@ -783,7 +786,15 @@ function buildPortalLinkHubItems() {
   collectGoogleDriveLinksFromStorage(sessionStorage, '포털 임시 저장 자료');
 
   itemMap.forEach(function(item) {
-    if (item.sources.indexOf('업체·전자단가') >= 0) {
+    var sourceOverride = '';
+    Object.keys(PORTAL_LINK_SOURCE_OVERRIDES).some(function(linkId) {
+      if (item.url.indexOf(linkId) < 0) return false;
+      sourceOverride = PORTAL_LINK_SOURCE_OVERRIDES[linkId];
+      return true;
+    });
+    if (sourceOverride) {
+      item.sources = [sourceOverride];
+    } else if (item.sources.indexOf('업체·전자단가') >= 0) {
       item.sources = ['업체·전자단가'];
     } else if (isGoogleDrivePortalLink(item.url) || item.sources.indexOf('구글 드라이브') >= 0) {
       item.sources = ['구글 드라이브'];
