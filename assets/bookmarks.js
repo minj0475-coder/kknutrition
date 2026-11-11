@@ -686,6 +686,7 @@ function buildPortalLinkHubItems() {
 
   document.querySelectorAll('a[href]').forEach(function(anchor) {
     if (anchor.closest('#portalLinkHubGrid, #portalLinkHubFilters, #bookmarkGrid')) return;
+    if (anchor.id === 'substituteQrDownloadBtn') return;
     if (anchor.matches('.promo-open-link')) return;
     var rawHref = String(anchor.getAttribute('href') || '').trim();
     if (!rawHref || rawHref.charAt(0) === '#' || /^(javascript:|mailto:|tel:)/i.test(rawHref)) return;
