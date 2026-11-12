@@ -509,7 +509,7 @@ var PORTAL_LINK_TITLE_OVERRIDES = {
 var PORTAL_LINK_SOURCE_OVERRIDES = {
   '1l_Eo4vlMdeQzFI12w6Dw536ayA4ZSxoaUxoPQSoV4M8': '구글 드라이브'
 };
-var portalLinkHubState = { category: '전체', query: '' };
+var portalLinkHubState = { category: '전체' };
 var portalLinkHubItems = [];
 
 function escapePortalLinkHtml(value) {
@@ -846,11 +846,8 @@ function renderPortalLinkHubGrid() {
   var count = document.getElementById('portalLinkHubCount');
   var status = document.getElementById('portalLinkHubStatus');
   if (!grid) return;
-  var query = String(portalLinkHubState.query || '').trim().toLowerCase();
   var filtered = portalLinkHubItems.filter(function(item) {
-    if (portalLinkHubState.category !== '전체' && item.sources.indexOf(portalLinkHubState.category) < 0) return false;
-    if (!query) return true;
-    return [item.title, item.domain, item.sources.join(' '), item.details.join(' ')].join(' ').toLowerCase().indexOf(query) >= 0;
+    return portalLinkHubState.category === '전체' || item.sources.indexOf(portalLinkHubState.category) >= 0;
   });
   if (count) count.textContent = filtered.length + '개';
   if (status) status.textContent = filtered.length ? '' : '조건에 맞는 링크가 없습니다.';
@@ -877,12 +874,7 @@ function refreshPortalLinkHub() {
 }
 
 function setupPortalLinkHub() {
-  var search = document.getElementById('portalLinkSearchInput');
-  if (!search) return;
-  search.addEventListener('input', function() {
-    portalLinkHubState.query = search.value || '';
-    renderPortalLinkHubGrid();
-  });
+  if (!document.getElementById('portalLinkHubGrid')) return;
   window.refreshPortalLinkHub = refreshPortalLinkHub;
   refreshPortalLinkHub();
   window.addEventListener('storage', refreshPortalLinkHub);

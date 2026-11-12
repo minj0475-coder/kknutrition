@@ -27157,49 +27157,6 @@ html body #app-content #bookmarks .portal-link-hub-tools {
   margin-bottom: 16px !important;
 }
 
-html body #app-content #bookmarks .portal-link-search {
-  position: relative !important;
-  display: flex !important;
-  align-items: center !important;
-  width: min(100%, 460px) !important;
-  min-height: 42px !important;
-  color: #6b7280 !important;
-}
-
-html body #app-content #bookmarks .portal-link-search > svg {
-  position: absolute !important;
-  left: 13px !important;
-  width: 18px !important;
-  height: 18px !important;
-  pointer-events: none !important;
-}
-
-html body #app-content #bookmarks #portalLinkSearchInput {
-  width: 100% !important;
-  height: 42px !important;
-  min-height: 42px !important;
-  padding: 0 40px !important;
-  border: 1px solid var(--portal-control-line, #d9d9df) !important;
-  border-radius: 12px !important;
-  background: #ffffff !important;
-  color: #202123 !important;
-  font-family: var(--portal-font) !important;
-  font-size: 14px !important;
-  font-weight: 500 !important;
-  line-height: 1.2 !important;
-  box-shadow: none !important;
-  outline: none !important;
-}
-
-html body #app-content #bookmarks #portalLinkSearchInput:focus {
-  border-color: #aeb1b8 !important;
-  box-shadow: 0 0 0 3px rgba(32, 33, 35, .07) !important;
-}
-
-html body #app-content #bookmarks #portalLinkSearchInput::placeholder {
-  color: #9ca3af !important;
-}
-
 html body #app-content #bookmarks .portal-link-hub-filters {
   display: flex !important;
   align-items: center !important;
@@ -27400,10 +27357,6 @@ html body #app-content #bookmarks .bookmark-folder-section .bookmark-controls {
 
   html body #app-content #bookmarks :is(.portal-link-hub-head, .bookmark-folder-head) .section-title {
     font-size: 18px !important;
-  }
-
-  html body #app-content #bookmarks .portal-link-search {
-    width: 100% !important;
   }
 
   html body #app-content #bookmarks .portal-link-hub-grid {
