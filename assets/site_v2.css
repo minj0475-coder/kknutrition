@@ -27189,6 +27189,18 @@ html body #app-content #bookmarks .portal-link-filter.active {
   -webkit-text-fill-color: #ffffff !important;
 }
 
+html body #app-content #bookmarks #bookmarkFilterChips .bookmark-chip.active,
+html body #app-content #bookmarks #bookmarkFilterChips .bookmark-chip.active:hover,
+html body #app-content #bookmarks #bookmarkFilterChips .bookmark-chip.active:active,
+html body #app-content #bookmarks #bookmarkFilterChips .bookmark-chip.active:focus-visible {
+  border: 1px solid #202123 !important;
+  background: #202123 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
 html body #app-content #bookmarks .portal-link-filter:focus-visible,
 html body #app-content #bookmarks .portal-link-card:focus-visible {
   outline: 2px solid #202123 !important;
