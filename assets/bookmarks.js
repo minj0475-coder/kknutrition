@@ -998,27 +998,96 @@ function setupPortalLinkHub() {
   });
 }
 
+var styledXlsxLoadPromise = null;
+
+function ensureStyledXlsxLib() {
+  if (styledXlsxLoadPromise) return styledXlsxLoadPromise;
+  styledXlsxLoadPromise = new Promise(function(resolve, reject) {
+    var existingXlsx = window.XLSX;
+    var script = document.createElement('script');
+    script.src = 'assets/xlsx-style.bundle.js';
+    script.onload = function() {
+      var styledXlsx = window.XLSX;
+      window.XLSX = existingXlsx;
+      if (!styledXlsx || !styledXlsx.style_version) {
+        reject(new Error('Styled Excel library unavailable'));
+        return;
+      }
+      resolve(styledXlsx);
+    };
+    script.onerror = function() {
+      window.XLSX = existingXlsx;
+      reject(new Error('Styled Excel library failed to load'));
+    };
+    document.head.appendChild(script);
+  }).catch(function(error) {
+    styledXlsxLoadPromise = null;
+    throw error;
+  });
+  return styledXlsxLoadPromise;
+}
+
+function makeBookmarkExportSheet(xlsx, title, headers, dataRows, widths, date) {
+  var blank = headers.map(function() { return ''; });
+  var rows = [
+    [title].concat(blank.slice(1)),
+    [date + '  ·  총 ' + dataRows.length + '개'].concat(blank.slice(1)),
+    blank.slice(),
+    headers
+  ].concat(dataRows);
+  var sheet = xlsx.utils.aoa_to_sheet(rows);
+  var lastCol = xlsx.utils.encode_col(headers.length - 1);
+  sheet['!merges'] = [
+    { s: { r: 0, c: 0 }, e: { r: 0, c: headers.length - 1 } },
+    { s: { r: 1, c: 0 }, e: { r: 1, c: headers.length - 1 } }
+  ];
+  sheet['!cols'] = widths.map(function(width) { return { wch: width }; });
+  sheet['!rows'] = rows.map(function(_row, index) { return { hpt: index === 0 ? 36 : index === 1 ? 25 : index === 2 ? 10 : index === 3 ? 30 : 26 }; });
+  sheet['!autofilter'] = { ref: 'A4:' + lastCol + rows.length };
+  rows.forEach(function(row, rowIndex) {
+    row.forEach(function(_value, colIndex) {
+      var cell = sheet[xlsx.utils.encode_cell({ r: rowIndex, c: colIndex })];
+      if (!cell) return;
+      if (rowIndex === 0) {
+        cell.s = { fill: { fgColor: { rgb: '202123' } }, font: { name: '맑은 고딕', sz: 17, bold: true, color: { rgb: 'FFFFFF' } }, alignment: { vertical: 'center', horizontal: 'left', indent: 1 } };
+      } else if (rowIndex === 1) {
+        cell.s = { fill: { fgColor: { rgb: 'EDEFF3' } }, font: { name: '맑은 고딕', sz: 10, color: { rgb: '596273' } }, alignment: { vertical: 'center', horizontal: 'left', indent: 1 } };
+      } else if (rowIndex === 3) {
+        cell.s = { fill: { fgColor: { rgb: '343541' } }, font: { name: '맑은 고딕', sz: 11, bold: true, color: { rgb: 'FFFFFF' } }, alignment: { vertical: 'center', horizontal: 'left', indent: 1 } };
+      } else if (rowIndex > 3) {
+        var isUrl = headers[colIndex] === 'URL';
+        cell.s = {
+          fill: { fgColor: { rgb: rowIndex % 2 ? 'FFFFFF' : 'F7F8FA' } },
+          font: { name: '맑은 고딕', sz: 10, color: { rgb: isUrl ? '315E9A' : '202123' }, underline: isUrl },
+          alignment: { vertical: 'center', horizontal: 'left', indent: 1 },
+          border: { bottom: { style: 'hair', color: { rgb: 'E5E7EB' } } }
+        };
+        if (isUrl && /^https?:\/\//i.test(String(cell.v || ''))) cell.l = { Target: String(cell.v) };
+      }
+    });
+  });
+  return sheet;
+}
+
 async function exportBookmarkWorkbook() {
   var button = document.getElementById('bookmarkExcelExportBtn');
   if (!button || button.disabled) return;
   button.disabled = true;
   try {
-    var xlsx = await ensureXlsxLib();
+    var xlsx = await ensureStyledXlsxLib();
     var links = buildPortalLinkHubItems();
-    var linkRows = [['제목', '출처', 'URL']].concat(links.map(function(item) {
+    var linkRows = links.map(function(item) {
       return [item.title, item.sources.join(', '), item.url];
-    }));
-    var bookmarkRows = [['사이트명', '분류', 'URL', '즐겨찾기']].concat(bookmarkData.map(function(item) {
+    });
+    var bookmarkRows = bookmarkData.map(function(item) {
       return [String(item.title || ''), normalizeBookmarkCategory(item.category), String(item.url || ''), item.isFavorite ? '예' : '아니요'];
-    }));
+    });
     var workbook = xlsx.utils.book_new();
-    var linkSheet = xlsx.utils.aoa_to_sheet(linkRows);
-    var bookmarkSheet = xlsx.utils.aoa_to_sheet(bookmarkRows);
-    linkSheet['!cols'] = [{ wch: 42 }, { wch: 24 }, { wch: 75 }];
-    bookmarkSheet['!cols'] = [{ wch: 36 }, { wch: 16 }, { wch: 75 }, { wch: 12 }];
+    var date = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' });
+    var linkSheet = makeBookmarkExportSheet(xlsx, '링크 정리', ['제목', '출처', 'URL'], linkRows, [42, 24, 75], date);
+    var bookmarkSheet = makeBookmarkExportSheet(xlsx, '내 북마크', ['사이트명', '분류', 'URL', '즐겨찾기'], bookmarkRows, [36, 16, 75, 12], date);
     xlsx.utils.book_append_sheet(workbook, linkSheet, '링크 정리');
     xlsx.utils.book_append_sheet(workbook, bookmarkSheet, '내 북마크');
-    var date = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' });
     xlsx.writeFile(workbook, '급식업무_링크정리_내북마크_' + date + '.xlsx', { bookType: 'xlsx' });
   } catch (error) {
     console.error('Bookmark workbook export failed:', error);

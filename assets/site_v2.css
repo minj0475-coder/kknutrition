@@ -27128,43 +27128,37 @@ html body #app-content #bookmarks :is(.portal-link-hub-head, .bookmark-folder-he
   line-height: 1.35 !important;
 }
 
-html body #app-content #bookmarks :is(.portal-link-hub-head, .bookmark-folder-head) .mini {
-  margin: 5px 0 0 !important;
-  color: #6b7280 !important;
-  font-size: 13px !important;
-  line-height: 1.5 !important;
-}
-
 html body #app-content #bookmarks button.bookmark-excel-export {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
   flex: 0 0 auto !important;
   gap: 7px !important;
-  min-height: 36px !important;
-  padding: 0 12px !important;
-  border: 1px solid var(--portal-control-line, #d9d9df) !important;
-  border-radius: 10px !important;
-  background: #ffffff !important;
+  height: 42px !important;
+  min-height: 42px !important;
+  padding: 0 10px !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  background: transparent !important;
   color: #202123 !important;
   font-family: var(--portal-font) !important;
   font-size: 13px !important;
-  font-weight: 650 !important;
+  font-weight: 700 !important;
   line-height: 1 !important;
   white-space: nowrap !important;
   box-shadow: none !important;
   cursor: pointer !important;
-  transition: background-color .16s ease, border-color .16s ease !important;
+  transition: color .18s ease, background-color .18s ease !important;
 }
 
 html body #app-content #bookmarks button.bookmark-excel-export:hover {
-  border-color: var(--portal-control-line-hover, #c9c9d1) !important;
   background: var(--kkn-neutral-hover, #f5f6f8) !important;
+  color: #202123 !important;
   transform: none !important;
 }
 
 html body #app-content #bookmarks button.bookmark-excel-export:focus-visible {
-  outline: 2px solid #202123 !important;
+  outline: 3px solid rgba(99, 102, 241, .24) !important;
   outline-offset: 2px !important;
 }
 
@@ -27173,12 +27167,43 @@ html body #app-content #bookmarks button.bookmark-excel-export:disabled {
   cursor: wait !important;
 }
 
-html body #app-content #bookmarks button.bookmark-excel-export > svg {
-  width: 18px !important;
-  height: 18px !important;
-  min-width: 18px !important;
-  min-height: 18px !important;
-  flex: 0 0 18px !important;
+html body #app-content#app-content#app-content #bookmarks button.bookmark-excel-export > .bookmark-excel-main-icon {
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  min-height: 20px !important;
+  flex: 0 0 20px !important;
+  color: currentColor !important;
+}
+
+html body #app-content#app-content#app-content #bookmarks button.bookmark-excel-export > .bookmark-excel-label {
+  color: inherit !important;
+  -webkit-text-fill-color: currentColor !important;
+  font-weight: 600 !important;
+}
+
+html body #app-content#app-content#app-content #bookmarks button.bookmark-excel-export > .bookmark-excel-trailing-icon {
+  width: 14px !important;
+  height: 14px !important;
+  min-width: 14px !important;
+  min-height: 14px !important;
+  flex: 0 0 14px !important;
+  color: #64748b !important;
+}
+
+@media (max-width: 620px) {
+  html body #app-content #bookmarks button.bookmark-excel-export {
+    width: 36px !important;
+    min-width: 36px !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    padding: 0 !important;
+    border-radius: 10px !important;
+  }
+
+  html body #app-content#app-content#app-content #bookmarks button.bookmark-excel-export > :is(.bookmark-excel-label, .bookmark-excel-trailing-icon) {
+    display: none !important;
+  }
 }
 
 html body #app-content #bookmarks .portal-link-hub-tools {
