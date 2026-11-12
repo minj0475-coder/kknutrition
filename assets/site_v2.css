@@ -27208,21 +27208,21 @@ html body #app-content #bookmarks .portal-link-card {
   min-width: 0 !important;
   min-height: 72px !important;
   padding: 12px 14px !important;
-  border: 1px solid var(--line) !important;
-  border-radius: 12px !important;
-  background: #ffffff !important;
+  border: 1px solid var(--kkn-unified-line, #e5e7eb) !important;
+  border-radius: 16px !important;
+  background: var(--ui-bg, #ffffff) !important;
   color: #202123 !important;
   text-decoration: none !important;
   box-shadow: none !important;
   transform: none !important;
-  transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease !important;
+  transition: all .2s cubic-bezier(.165, .84, .44, 1) !important;
 }
 
 html body #app-content #bookmarks .portal-link-card:hover {
-  border-color: var(--primary-soft) !important;
-  background: #ffffff !important;
+  border-color: var(--kkn-unified-line, #e5e7eb) !important;
+  background: var(--ui-bg, #ffffff) !important;
   color: #202123 !important;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, .06) !important;
+  box-shadow: none !important;
   transform: translateY(-2px) !important;
 }
 
@@ -27230,7 +27230,7 @@ html body #app-content #bookmarks.is-page-editing .portal-link-edit-card,
 html body #app-content #bookmarks.is-page-editing .portal-link-edit-card:hover,
 html body #app-content #bookmarks.is-page-editing .portal-link-edit-card:focus-visible {
   border: 1px solid var(--kkn-edit-card-line) !important;
-  border-radius: 12px !important;
+  border-radius: 16px !important;
   outline: 0 !important;
   box-shadow: 0 0 0 2px var(--kkn-edit-card-ring), var(--shadow-flat) !important;
   background: #ffffff !important;
