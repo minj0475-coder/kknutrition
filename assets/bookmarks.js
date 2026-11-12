@@ -862,6 +862,9 @@ function renderPortalLinkHubFilters() {
       return item.sources.indexOf(category) >= 0;
     });
   });
+  available.sort(function(a, b) {
+    return Number(a === '업체·전자단가') - Number(b === '업체·전자단가');
+  });
   if (available.indexOf(portalLinkHubState.category) < 0) portalLinkHubState.category = '전체';
   container.innerHTML = available.map(function(category) {
     var active = category === portalLinkHubState.category;
