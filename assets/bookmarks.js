@@ -766,7 +766,15 @@ function buildPortalLinkHubItems() {
   }
 
   collectTextLinks(readPortalLinkStorage('kkulkkoori_work_notes_v1'), '기타 자료', '생각서랍', 0);
-  collectTextLinks(readPortalLinkStorage('kkulkkoori_staff_notices_v1'), '기타 자료', '조리종사원 전달사항', 0);
+  var staffNotices = readPortalLinkStorage('kkulkkoori_staff_notices_v1');
+  getPortalListItems(staffNotices).forEach(function(item) {
+    var title = String(item && item.title || '').trim();
+    if (title === '교육청 대체 인력풀 구인') {
+      collectTextLinks(item, '문자내용', title, 0);
+    } else {
+      collectTextLinks(item, '기타 자료', title || '조리종사원 전달사항', 0);
+    }
+  });
   collectTextLinks(readPortalLinkStorage('kkulkkoori_cheongsu_recipes_v3'), '기타 자료', '급식노트', 0);
 
   document.querySelectorAll('input[type="url"], textarea').forEach(function(field) {
