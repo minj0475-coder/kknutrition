@@ -27338,17 +27338,17 @@ html body #app-content #bookmarks .portal-link-open {
   padding: 0 !important;
   border: 0 !important;
   background: transparent !important;
-  color: #34373d !important;
+  color: var(--kkn-icon-color, #202123) !important;
 }
 
 html body #app-content#app-content #bookmarks#bookmarks .portal-link-open > svg {
-  width: 14px !important;
-  height: 14px !important;
-  min-width: 14px !important;
-  min-height: 14px !important;
-  max-width: 14px !important;
-  max-height: 14px !important;
-  flex: 0 0 14px !important;
+  width: var(--kkn-action-icon-size, 20px) !important;
+  height: var(--kkn-action-icon-size, 20px) !important;
+  min-width: var(--kkn-action-icon-size, 20px) !important;
+  min-height: var(--kkn-action-icon-size, 20px) !important;
+  max-width: var(--kkn-action-icon-size, 20px) !important;
+  max-height: var(--kkn-action-icon-size, 20px) !important;
+  flex: 0 0 var(--kkn-action-icon-size, 20px) !important;
 }
 
 html body #app-content #bookmarks .portal-link-hub-status {
