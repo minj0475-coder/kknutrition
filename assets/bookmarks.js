@@ -843,13 +843,11 @@ function renderPortalLinkHubFilters() {
 
 function renderPortalLinkHubGrid() {
   var grid = document.getElementById('portalLinkHubGrid');
-  var count = document.getElementById('portalLinkHubCount');
   var status = document.getElementById('portalLinkHubStatus');
   if (!grid) return;
   var filtered = portalLinkHubItems.filter(function(item) {
     return portalLinkHubState.category === '전체' || item.sources.indexOf(portalLinkHubState.category) >= 0;
   });
-  if (count) count.textContent = filtered.length + '개';
   if (status) status.textContent = filtered.length ? '' : '조건에 맞는 링크가 없습니다.';
   grid.innerHTML = filtered.map(function(item) {
     var sourceBadges = item.sources.slice(0, 2).map(function(source) {
