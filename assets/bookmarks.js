@@ -995,11 +995,42 @@ function setupPortalLinkHub() {
   });
 }
 
+async function exportBookmarkWorkbook() {
+  var button = document.getElementById('bookmarkExcelExportBtn');
+  if (!button || button.disabled) return;
+  button.disabled = true;
+  try {
+    var xlsx = await ensureXlsxLib();
+    var links = buildPortalLinkHubItems();
+    var linkRows = [['제목', '출처', 'URL']].concat(links.map(function(item) {
+      return [item.title, item.sources.join(', '), item.url];
+    }));
+    var bookmarkRows = [['사이트명', '분류', 'URL', '즐겨찾기']].concat(bookmarkData.map(function(item) {
+      return [String(item.title || ''), normalizeBookmarkCategory(item.category), String(item.url || ''), item.isFavorite ? '예' : '아니요'];
+    }));
+    var workbook = xlsx.utils.book_new();
+    var linkSheet = xlsx.utils.aoa_to_sheet(linkRows);
+    var bookmarkSheet = xlsx.utils.aoa_to_sheet(bookmarkRows);
+    linkSheet['!cols'] = [{ wch: 42 }, { wch: 24 }, { wch: 75 }];
+    bookmarkSheet['!cols'] = [{ wch: 36 }, { wch: 16 }, { wch: 75 }, { wch: 12 }];
+    xlsx.utils.book_append_sheet(workbook, linkSheet, '링크 정리');
+    xlsx.utils.book_append_sheet(workbook, bookmarkSheet, '내 북마크');
+    var date = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Seoul' });
+    xlsx.writeFile(workbook, '급식업무_링크정리_내북마크_' + date + '.xlsx', { bookType: 'xlsx' });
+  } catch (error) {
+    console.error('Bookmark workbook export failed:', error);
+    alert('엑셀 파일을 만드는 중 문제가 생겼습니다. 다시 시도해 주세요.');
+  } finally {
+    button.disabled = false;
+  }
+}
+
 // ---- Init ----
 document.addEventListener('DOMContentLoaded', function() {
   renderFilterChips();
   renderBookmarks();
   setupPortalLinkHub();
+  document.getElementById('bookmarkExcelExportBtn')?.addEventListener('click', exportBookmarkWorkbook);
 
   var editBtn = document.getElementById('editBtnBookmarks');
   if (editBtn) {
