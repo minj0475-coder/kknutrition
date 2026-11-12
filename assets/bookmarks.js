@@ -500,7 +500,6 @@ window.bmToggleFavorite = function(idx) {
 var PORTAL_LINK_FILTERS = ['전체', '문자내용', '일정', '업체·전자단가', '구글 드라이브', '급식업무 사이트', '기타 자료'];
 var PORTAL_LINK_TITLE_OVERRIDES = {
   '1FAIpQLScpbf-a8wOidVc0VAVz25Dg7lVqHI4SqnLQMZn9eM7GRajAAA': '[청수초등학교] 급식 메뉴 아이디어 공모전',
-  '1U554SSpIIjIbD7ALQB9vK_mbbUZkm8UF': '급식 메뉴 아이디어 공모전 첨부자료',
   '1TrzDxsxtQCNC1NwifOj79y52aCn033az': '오늘의 영양퀴즈 포스터',
   '1nOmyocicNMYiGxpSrxOT7oqD7ptJkXUh': '오늘의 영양퀴즈 A2 포스터',
   '1QekrFgI7Y6F8es6-8XkPQEHYZavXDeF1': '응시원서 및 자기소개서',
@@ -638,6 +637,7 @@ function buildPortalLinkHubItems() {
     if (url === 'https://litt.ly/cha0yang') return;
     var canonical = canonicalPortalLinkUrl(url);
     var cleanTitle = String(title || '').replace(/[*_`#]/g, '').replace(/\s+/g, ' ').trim() || portalLinkDomain(url) || '바로가기';
+    if (cleanTitle === '구글 드라이브 자료' || url.indexOf('1U554SSpIIjIbD7ALQB9vK_mbbUZkm8UF') >= 0) return;
     Object.keys(PORTAL_LINK_TITLE_OVERRIDES).some(function(linkId) {
       if (url.indexOf(linkId) < 0) return false;
       cleanTitle = PORTAL_LINK_TITLE_OVERRIDES[linkId];
