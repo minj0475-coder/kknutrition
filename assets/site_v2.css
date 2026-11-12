@@ -27215,15 +27215,15 @@ html body #app-content #bookmarks .portal-link-card {
   text-decoration: none !important;
   box-shadow: none !important;
   transform: none !important;
-  transition: background-color .16s ease, border-color .16s ease !important;
+  transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease !important;
 }
 
 html body #app-content #bookmarks .portal-link-card:hover {
-  border-color: var(--portal-control-line-hover, #c9c9d1) !important;
-  background: var(--kkn-neutral-hover, #f5f6f8) !important;
+  border-color: var(--primary-soft) !important;
+  background: #ffffff !important;
   color: #202123 !important;
-  box-shadow: none !important;
-  transform: none !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, .06) !important;
+  transform: translateY(-2px) !important;
 }
 
 html body #app-content #bookmarks .portal-link-copy {
@@ -27283,17 +27283,12 @@ html body #app-content #bookmarks .portal-link-open {
   align-items: center !important;
   justify-content: center !important;
   flex: 0 0 auto !important;
-  gap: 5px !important;
-  min-height: 34px !important;
-  padding: 0 10px !important;
-  border: 1px solid var(--portal-control-line, #d9d9df) !important;
-  border-radius: 10px !important;
-  background: #ffffff !important;
+  width: 20px !important;
+  height: 20px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
   color: #34373d !important;
-  font-size: 12px !important;
-  font-weight: 650 !important;
-  line-height: 1 !important;
-  white-space: nowrap !important;
 }
 
 html body #app-content#app-content #bookmarks#bookmarks .portal-link-open > svg {
@@ -27304,11 +27299,6 @@ html body #app-content#app-content #bookmarks#bookmarks .portal-link-open > svg 
   max-width: 14px !important;
   max-height: 14px !important;
   flex: 0 0 14px !important;
-}
-
-html body #app-content #bookmarks .portal-link-card:hover .portal-link-open {
-  border-color: var(--portal-control-line-hover, #c9c9d1) !important;
-  background: var(--kkn-neutral-hover, #f5f6f8) !important;
 }
 
 html body #app-content #bookmarks .portal-link-hub-status {
@@ -27350,12 +27340,6 @@ html body #app-content #bookmarks .bookmark-folder-section .bookmark-controls {
   html body #app-content #bookmarks .portal-link-card {
     min-height: 68px !important;
     padding: 11px 12px !important;
-  }
-
-  html body #app-content #bookmarks .portal-link-open {
-    min-height: 32px !important;
-    padding: 0 8px !important;
-    font-size: 11px !important;
   }
 
   html body #app-content #bookmarks .portal-link-domain {
