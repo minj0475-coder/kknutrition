@@ -898,7 +898,9 @@ function renderPortalLinkHubGrid() {
       + '<strong>' + escapePortalLinkHtml(item.title) + '</strong>'
       + '<span class="portal-link-meta"><span class="portal-link-domain">' + escapePortalLinkHtml(item.domain) + '</span>' + sourceBadges + '</span>'
       + '</span>'
-      + (isEditMode ? '' : '<span class="portal-link-open" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 5h5v5M19 5l-8 8M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>')
+      + (isEditMode
+        ? '<button class="portal-link-delete-btn" type="button" data-portal-delete-index="' + editIndex + '" aria-label="' + escapePortalLinkHtml(item.title) + ' 삭제" title="삭제"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="m19 6-1 14H6L5 6"></path><path d="M10 11v5M14 11v5"></path></svg></button>'
+        : '<span class="portal-link-open" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 5h5v5M19 5l-8 8M18 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>')
       + (isEditMode ? '</div>' : '</a>');
   }).join('');
   if (isEditMode) grid.insertAdjacentHTML('beforeend', '<button class="portal-link-card portal-link-edit-card portal-link-add-card" type="button" data-portal-add="true" aria-label="새 바로가기 추가"><span aria-hidden="true">＋</span> 새 바로가기 추가</button>');
@@ -943,14 +945,18 @@ function openPortalLinkEditor(index) {
     modal.hidden = true;
   };
   modal.querySelector('.portal-link-editor-delete').onclick = function() {
-    if (!item || !confirm('이 바로가기를 목록에서 삭제하시겠습니까?')) return;
-    if (item.addedIndex != null) portalLinkEdits.added.splice(item.addedIndex, 1);
-    else portalLinkEdits.changes[item.editKey] = { hidden: true };
-    savePortalLinkEdits();
-    modal.hidden = true;
+    if (item && deletePortalLinkItem(item)) modal.hidden = true;
   };
   modal.hidden = false;
   modal.querySelector('#portalLinkEditorName').focus();
+}
+
+function deletePortalLinkItem(item) {
+  if (!item || !confirm('이 바로가기를 목록에서 삭제하시겠습니까?')) return false;
+  if (item.addedIndex != null) portalLinkEdits.added.splice(item.addedIndex, 1);
+  else portalLinkEdits.changes[item.editKey] = { hidden: true };
+  savePortalLinkEdits();
+  return true;
 }
 
 function refreshPortalLinkHub() {
@@ -966,11 +972,18 @@ function setupPortalLinkHub() {
   var grid = document.getElementById('portalLinkHubGrid');
   grid.addEventListener('click', function(event) {
     if (!isEditMode) return;
+    var deleteButton = event.target.closest('[data-portal-delete-index]');
+    if (deleteButton) {
+      event.stopPropagation();
+      deletePortalLinkItem(portalLinkHubItems[Number(deleteButton.dataset.portalDeleteIndex)]);
+      return;
+    }
     var card = event.target.closest('[data-portal-edit-index], [data-portal-add]');
     if (card) openPortalLinkEditor(card.hasAttribute('data-portal-add') ? -1 : Number(card.dataset.portalEditIndex));
   });
   grid.addEventListener('keydown', function(event) {
     if (!isEditMode || (event.key !== 'Enter' && event.key !== ' ')) return;
+    if (event.target.closest('[data-portal-delete-index]')) return;
     var card = event.target.closest('[data-portal-edit-index]');
     if (card) { event.preventDefault(); openPortalLinkEditor(Number(card.dataset.portalEditIndex)); }
   });
