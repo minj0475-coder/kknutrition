@@ -499,7 +499,13 @@ window.bmToggleFavorite = function(idx) {
 // ---- Portal link hub ----
 var PORTAL_LINK_FILTERS = ['전체', '문자내용', '일정', '업체·전자단가', '구글 드라이브', '급식업무 사이트', '기타 자료'];
 var PORTAL_LINK_TITLE_OVERRIDES = {
-  '1FAIpQLScpbf-a8wOidVc0VAVz25Dg7lVqHI4SqnLQMZn9eM7GRajAAA': '[청수초등학교] 급식 메뉴 아이디어 공모전'
+  '1FAIpQLScpbf-a8wOidVc0VAVz25Dg7lVqHI4SqnLQMZn9eM7GRajAAA': '[청수초등학교] 급식 메뉴 아이디어 공모전',
+  '1U554SSpIIjIbD7ALQB9vK_mbbUZkm8UF': '급식 메뉴 아이디어 공모전 첨부자료',
+  '1TrzDxsxtQCNC1NwifOj79y52aCn033az': '오늘의 영양퀴즈 포스터',
+  '1nOmyocicNMYiGxpSrxOT7oqD7ptJkXUh': '오늘의 영양퀴즈 A2 포스터',
+  '1QekrFgI7Y6F8es6-8XkPQEHYZavXDeF1': '응시원서 및 자기소개서',
+  'AKfycbxGQK0VIkSy8PdkseVyoR6p848BP7HU8pfmpcOTbY_uldLJ_XLqFE_hHqd3wC97eXlg': '식생활 습관 개선 영양교육 성장일지',
+  'AKfycbxZaIRsof1Lp1Fu3f-xEL3HE9gADGUHEMt4sVu1FyHzV7lgP6TdhjQC7ox3nlRxMpM3': '오늘의 영양퀴즈'
 };
 var PORTAL_LINK_SOURCE_OVERRIDES = {
   '1l_Eo4vlMdeQzFI12w6Dw536ayA4ZSxoaUxoPQSoV4M8': '구글 드라이브'
@@ -629,6 +635,7 @@ function buildPortalLinkHubItems() {
   function addLink(rawUrl, title, source, detail, options) {
     var url = normalizePortalLinkUrl(rawUrl, options);
     if (!url) return;
+    if (url === 'https://litt.ly/cha0yang') return;
     var canonical = canonicalPortalLinkUrl(url);
     var cleanTitle = String(title || '').replace(/[*_`#]/g, '').replace(/\s+/g, ' ').trim() || portalLinkDomain(url) || '바로가기';
     Object.keys(PORTAL_LINK_TITLE_OVERRIDES).some(function(linkId) {
@@ -656,6 +663,9 @@ function buildPortalLinkHubItems() {
     var existingIsGeneric = /^(전자\s*단가|링크|바로가기|사이트|자료)$/i.test(existing.title);
     var nextIsGeneric = /^(전자\s*단가|링크|바로가기|사이트|자료)$/i.test(cleanTitle);
     if (existing.title === existing.domain || existingIsGeneric && !nextIsGeneric || existing.title.length < cleanTitle.length && existing.title.length < 8) {
+      existing.title = cleanTitle;
+    }
+    if (PORTAL_LINK_TITLE_OVERRIDES[Object.keys(PORTAL_LINK_TITLE_OVERRIDES).find(function(linkId) { return url.indexOf(linkId) >= 0; })]) {
       existing.title = cleanTitle;
     }
     if (existing.sources.indexOf(cleanSource) < 0) existing.sources.push(cleanSource);
